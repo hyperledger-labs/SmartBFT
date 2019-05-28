@@ -1,0 +1,91 @@
+// Copyright IBM Corp. All Rights Reserved.
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+syntax = "proto3";
+
+
+package protos;
+
+message Message {
+    oneof content {
+        PrePrepare pre_prepare = 1;
+        Prepare prepare = 2;
+        Commit commit = 3;
+        Error error = 4;
+        ViewChange view_change = 5;
+        SignedViewData view_data = 6;
+        NewView new_view = 7;
+        HeartBeat heart_beat = 8;
+    }
+}
+
+message PrePrepare {
+    uint64 view = 1;
+    uint64 seq = 2;
+    bytes payload = 3;
+    bytes header = 4;
+    bytes metadata = 5;	
+}
+
+message Prepare {
+    uint64 view = 1;
+    uint64 seq = 2;
+    bytes digest = 3;
+}
+
+message Commit {
+    uint64 view = 1;
+    uint64 seq = 2;
+    bytes digest = 3;
+    uint64 signer_id = 4;
+    bytes signature = 5; 
+}
+
+message Error {
+    uint64 view = 1;
+    uint64 seq = 2;
+    bytes digest = 3;
+    string reason = 4;
+}
+
+message ViewChange {
+    uint64 next_view = 1;
+    string reason = 2;
+}
+
+message ViewData {
+    uint64 next_view = 1;
+    Proposal last_decision = 2;
+    repeated Signature last_decision_signatures = 3;
+    PrePrepare last_pre_prepare = 4;
+    Prepare last_prepare = 5;
+    Commit last_commit = 6;
+}
+
+message SignedViewData {
+   bytes raw_view_data = 1;
+   Signature signature = 2;
+}
+
+message NewView {
+    repeated SignedViewData signed_view_data = 2;
+}
+
+message HeartBeat {
+    int64 view = 1;
+    uint64 seq = 2;
+}
+
+message Signature {
+    uint64 signer = 1;
+    bytes value = 2;
+}
+
+message Proposal {
+    bytes header = 1;
+    bytes payload = 2;
+    bytes metadata = 3;
+    uint64 verification_sequence = 4;
+}
