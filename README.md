@@ -1,5 +1,6 @@
 # Byzantine Fault-Tolerant (BFT) Replicated State Machine Library
 
+**Note:** This is sill a work in progress (WIP).
 
 This is a Byzantine fault-tolerant state machine replication library. 
 It is an open source library written in Go.
