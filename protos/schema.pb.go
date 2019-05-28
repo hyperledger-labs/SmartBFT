@@ -3,11 +3,9 @@
 
 package protos
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,7 +16,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type Message struct {
 	// Types that are valid to be assigned to Content:
@@ -40,17 +38,16 @@ func (m *Message) Reset()         { *m = Message{} }
 func (m *Message) String() string { return proto.CompactTextString(m) }
 func (*Message) ProtoMessage()    {}
 func (*Message) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{0}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{0}
 }
-
 func (m *Message) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Message.Unmarshal(m, b)
 }
 func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
 }
-func (m *Message) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Message.Merge(m, src)
+func (dst *Message) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Message.Merge(dst, src)
 }
 func (m *Message) XXX_Size() int {
 	return xxx_messageInfo_Message.Size(m)
@@ -176,9 +173,9 @@ func (m *Message) GetHeartBeat() *HeartBeat {
 	return nil
 }
 
-// XXX_OneofWrappers is for the internal use of the proto package.
-func (*Message) XXX_OneofWrappers() []interface{} {
-	return []interface{}{
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Message) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Message_OneofMarshaler, _Message_OneofUnmarshaler, _Message_OneofSizer, []interface{}{
 		(*Message_PrePrepare)(nil),
 		(*Message_Prepare)(nil),
 		(*Message_Commit)(nil),
@@ -188,6 +185,180 @@ func (*Message) XXX_OneofWrappers() []interface{} {
 		(*Message_NewView)(nil),
 		(*Message_HeartBeat)(nil),
 	}
+}
+
+func _Message_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Message)
+	// content
+	switch x := m.Content.(type) {
+	case *Message_PrePrepare:
+		b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.PrePrepare); err != nil {
+			return err
+		}
+	case *Message_Prepare:
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Prepare); err != nil {
+			return err
+		}
+	case *Message_Commit:
+		b.EncodeVarint(3<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Commit); err != nil {
+			return err
+		}
+	case *Message_Error:
+		b.EncodeVarint(4<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Error); err != nil {
+			return err
+		}
+	case *Message_ViewChange:
+		b.EncodeVarint(5<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ViewChange); err != nil {
+			return err
+		}
+	case *Message_ViewData:
+		b.EncodeVarint(6<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ViewData); err != nil {
+			return err
+		}
+	case *Message_NewView:
+		b.EncodeVarint(7<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.NewView); err != nil {
+			return err
+		}
+	case *Message_HeartBeat:
+		b.EncodeVarint(8<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.HeartBeat); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Message.Content has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Message_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Message)
+	switch tag {
+	case 1: // content.pre_prepare
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(PrePrepare)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_PrePrepare{msg}
+		return true, err
+	case 2: // content.prepare
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Prepare)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_Prepare{msg}
+		return true, err
+	case 3: // content.commit
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Commit)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_Commit{msg}
+		return true, err
+	case 4: // content.error
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Error)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_Error{msg}
+		return true, err
+	case 5: // content.view_change
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ViewChange)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_ViewChange{msg}
+		return true, err
+	case 6: // content.view_data
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(SignedViewData)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_ViewData{msg}
+		return true, err
+	case 7: // content.new_view
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(NewView)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_NewView{msg}
+		return true, err
+	case 8: // content.heart_beat
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(HeartBeat)
+		err := b.DecodeMessage(msg)
+		m.Content = &Message_HeartBeat{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Message_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Message)
+	// content
+	switch x := m.Content.(type) {
+	case *Message_PrePrepare:
+		s := proto.Size(x.PrePrepare)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Prepare:
+		s := proto.Size(x.Prepare)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Commit:
+		s := proto.Size(x.Commit)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_Error:
+		s := proto.Size(x.Error)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_ViewChange:
+		s := proto.Size(x.ViewChange)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_ViewData:
+		s := proto.Size(x.ViewData)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_NewView:
+		s := proto.Size(x.NewView)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *Message_HeartBeat:
+		s := proto.Size(x.HeartBeat)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
 }
 
 type PrePrepare struct {
@@ -205,17 +376,16 @@ func (m *PrePrepare) Reset()         { *m = PrePrepare{} }
 func (m *PrePrepare) String() string { return proto.CompactTextString(m) }
 func (*PrePrepare) ProtoMessage()    {}
 func (*PrePrepare) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{1}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{1}
 }
-
 func (m *PrePrepare) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PrePrepare.Unmarshal(m, b)
 }
 func (m *PrePrepare) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_PrePrepare.Marshal(b, m, deterministic)
 }
-func (m *PrePrepare) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PrePrepare.Merge(m, src)
+func (dst *PrePrepare) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PrePrepare.Merge(dst, src)
 }
 func (m *PrePrepare) XXX_Size() int {
 	return xxx_messageInfo_PrePrepare.Size(m)
@@ -274,17 +444,16 @@ func (m *Prepare) Reset()         { *m = Prepare{} }
 func (m *Prepare) String() string { return proto.CompactTextString(m) }
 func (*Prepare) ProtoMessage()    {}
 func (*Prepare) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{2}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{2}
 }
-
 func (m *Prepare) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Prepare.Unmarshal(m, b)
 }
 func (m *Prepare) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Prepare.Marshal(b, m, deterministic)
 }
-func (m *Prepare) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Prepare.Merge(m, src)
+func (dst *Prepare) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Prepare.Merge(dst, src)
 }
 func (m *Prepare) XXX_Size() int {
 	return xxx_messageInfo_Prepare.Size(m)
@@ -331,17 +500,16 @@ func (m *Commit) Reset()         { *m = Commit{} }
 func (m *Commit) String() string { return proto.CompactTextString(m) }
 func (*Commit) ProtoMessage()    {}
 func (*Commit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{3}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{3}
 }
-
 func (m *Commit) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Commit.Unmarshal(m, b)
 }
 func (m *Commit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Commit.Marshal(b, m, deterministic)
 }
-func (m *Commit) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Commit.Merge(m, src)
+func (dst *Commit) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Commit.Merge(dst, src)
 }
 func (m *Commit) XXX_Size() int {
 	return xxx_messageInfo_Commit.Size(m)
@@ -401,17 +569,16 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{4}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{4}
 }
-
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Error.Unmarshal(m, b)
 }
 func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 }
-func (m *Error) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error.Merge(m, src)
+func (dst *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(dst, src)
 }
 func (m *Error) XXX_Size() int {
 	return xxx_messageInfo_Error.Size(m)
@@ -462,17 +629,16 @@ func (m *ViewChange) Reset()         { *m = ViewChange{} }
 func (m *ViewChange) String() string { return proto.CompactTextString(m) }
 func (*ViewChange) ProtoMessage()    {}
 func (*ViewChange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{5}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{5}
 }
-
 func (m *ViewChange) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ViewChange.Unmarshal(m, b)
 }
 func (m *ViewChange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ViewChange.Marshal(b, m, deterministic)
 }
-func (m *ViewChange) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ViewChange.Merge(m, src)
+func (dst *ViewChange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ViewChange.Merge(dst, src)
 }
 func (m *ViewChange) XXX_Size() int {
 	return xxx_messageInfo_ViewChange.Size(m)
@@ -513,17 +679,16 @@ func (m *ViewData) Reset()         { *m = ViewData{} }
 func (m *ViewData) String() string { return proto.CompactTextString(m) }
 func (*ViewData) ProtoMessage()    {}
 func (*ViewData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{6}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{6}
 }
-
 func (m *ViewData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ViewData.Unmarshal(m, b)
 }
 func (m *ViewData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ViewData.Marshal(b, m, deterministic)
 }
-func (m *ViewData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ViewData.Merge(m, src)
+func (dst *ViewData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ViewData.Merge(dst, src)
 }
 func (m *ViewData) XXX_Size() int {
 	return xxx_messageInfo_ViewData.Size(m)
@@ -588,17 +753,16 @@ func (m *SignedViewData) Reset()         { *m = SignedViewData{} }
 func (m *SignedViewData) String() string { return proto.CompactTextString(m) }
 func (*SignedViewData) ProtoMessage()    {}
 func (*SignedViewData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{7}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{7}
 }
-
 func (m *SignedViewData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SignedViewData.Unmarshal(m, b)
 }
 func (m *SignedViewData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_SignedViewData.Marshal(b, m, deterministic)
 }
-func (m *SignedViewData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SignedViewData.Merge(m, src)
+func (dst *SignedViewData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SignedViewData.Merge(dst, src)
 }
 func (m *SignedViewData) XXX_Size() int {
 	return xxx_messageInfo_SignedViewData.Size(m)
@@ -634,17 +798,16 @@ func (m *NewView) Reset()         { *m = NewView{} }
 func (m *NewView) String() string { return proto.CompactTextString(m) }
 func (*NewView) ProtoMessage()    {}
 func (*NewView) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{8}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{8}
 }
-
 func (m *NewView) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_NewView.Unmarshal(m, b)
 }
 func (m *NewView) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_NewView.Marshal(b, m, deterministic)
 }
-func (m *NewView) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NewView.Merge(m, src)
+func (dst *NewView) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NewView.Merge(dst, src)
 }
 func (m *NewView) XXX_Size() int {
 	return xxx_messageInfo_NewView.Size(m)
@@ -674,17 +837,16 @@ func (m *HeartBeat) Reset()         { *m = HeartBeat{} }
 func (m *HeartBeat) String() string { return proto.CompactTextString(m) }
 func (*HeartBeat) ProtoMessage()    {}
 func (*HeartBeat) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{9}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{9}
 }
-
 func (m *HeartBeat) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HeartBeat.Unmarshal(m, b)
 }
 func (m *HeartBeat) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_HeartBeat.Marshal(b, m, deterministic)
 }
-func (m *HeartBeat) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_HeartBeat.Merge(m, src)
+func (dst *HeartBeat) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HeartBeat.Merge(dst, src)
 }
 func (m *HeartBeat) XXX_Size() int {
 	return xxx_messageInfo_HeartBeat.Size(m)
@@ -721,17 +883,16 @@ func (m *Signature) Reset()         { *m = Signature{} }
 func (m *Signature) String() string { return proto.CompactTextString(m) }
 func (*Signature) ProtoMessage()    {}
 func (*Signature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{10}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{10}
 }
-
 func (m *Signature) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Signature.Unmarshal(m, b)
 }
 func (m *Signature) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Signature.Marshal(b, m, deterministic)
 }
-func (m *Signature) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Signature.Merge(m, src)
+func (dst *Signature) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Signature.Merge(dst, src)
 }
 func (m *Signature) XXX_Size() int {
 	return xxx_messageInfo_Signature.Size(m)
@@ -770,17 +931,16 @@ func (m *Proposal) Reset()         { *m = Proposal{} }
 func (m *Proposal) String() string { return proto.CompactTextString(m) }
 func (*Proposal) ProtoMessage()    {}
 func (*Proposal) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1ba2179f55c66160, []int{11}
+	return fileDescriptor_schema_061ac2d5d059583c, []int{11}
 }
-
 func (m *Proposal) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Proposal.Unmarshal(m, b)
 }
 func (m *Proposal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Proposal.Marshal(b, m, deterministic)
 }
-func (m *Proposal) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Proposal.Merge(m, src)
+func (dst *Proposal) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Proposal.Merge(dst, src)
 }
 func (m *Proposal) XXX_Size() int {
 	return xxx_messageInfo_Proposal.Size(m)
@@ -834,9 +994,9 @@ func init() {
 	proto.RegisterType((*Proposal)(nil), "protos.Proposal")
 }
 
-func init() { proto.RegisterFile("protos/schema.proto", fileDescriptor_1ba2179f55c66160) }
+func init() { proto.RegisterFile("protos/schema.proto", fileDescriptor_schema_061ac2d5d059583c) }
 
-var fileDescriptor_1ba2179f55c66160 = []byte{
+var fileDescriptor_schema_061ac2d5d059583c = []byte{
 	// 701 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x5d, 0x6b, 0xd4, 0x4c,
 	0x14, 0xde, 0xcf, 0x7c, 0x9c, 0xdd, 0xee, 0xbb, 0xef, 0x58, 0x97, 0xa0, 0x5e, 0x94, 0x80, 0x50,
