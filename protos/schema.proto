@@ -24,9 +24,7 @@ message Message {
 message PrePrepare {
     uint64 view = 1;
     uint64 seq = 2;
-    bytes payload = 3;
-    bytes header = 4;
-    bytes metadata = 5;	
+    Proposal proposal = 3;
 }
 
 message Prepare {
@@ -39,8 +37,7 @@ message Commit {
     uint64 view = 1;
     uint64 seq = 2;
     bytes digest = 3;
-    uint64 signer_id = 4;
-    bytes signature = 5; 
+    Signature signature = 4;
 }
 
 message Error {
