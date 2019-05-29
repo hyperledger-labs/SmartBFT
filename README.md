@@ -1,8 +1,8 @@
-# Byzantine Fault-Tolerant (BFT) Replicated State Machine Library
+# Byzantine Fault-Tolerant Replicated State Machine Library
 
 **Note:** This is still a work in progress (WIP).
 
-This is a Byzantine fault-tolerant state machine replication library. 
+This is a Byzantine fault-tolerant (BFT) state machine replication (SMR) library. 
 It is an open source library written in Go.
 The implementation is inspired by the [BFT-SMaRt project](https://github.com/bft-smart/library). 
 For more information on this library see our [wiki page](https://github.com/SmartBFT-Go/consensus/wiki).
