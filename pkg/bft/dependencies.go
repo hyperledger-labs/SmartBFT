@@ -56,7 +56,7 @@ type WriteAheadLog interface {
 
 type Signer interface {
 	Sign([]byte) []byte
-	SignProposal(Proposal) []byte
+	SignProposal(Proposal) *Signature
 }
 
 type Verifier interface {

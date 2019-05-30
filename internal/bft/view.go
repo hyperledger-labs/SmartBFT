@@ -40,6 +40,7 @@ type View struct {
 	Logger           bft.Logger
 	Comm             Comm
 	Verifier         bft.Verifier
+	Signer           bft.Signer
 	ProposalSequence *uint64 // should be accessed atomically
 	PrevHeader       []byte
 	// Runtime
@@ -218,7 +219,7 @@ func (v *View) doStep() {
 		return
 	}
 
-	v.processPrepares(proposal)
+	v.processPrepares(proposal, proposalSequence)
 
 	signatures := v.processCommits(proposal)
 	if len(signatures) == 0 {
@@ -253,7 +254,7 @@ func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 	return &proposal
 }
 
-func (v *View) processPrepares(proposal *bft.Proposal) {
+func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 
@@ -270,6 +271,24 @@ func (v *View) processPrepares(proposal *bft.Proposal) {
 			collectedDigests++
 		}
 	}
+
+	sig := v.Signer.SignProposal(*proposal)
+
+	msg := &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   v.Number,
+				Digest: proposal.Digest(),
+				Seq:    proposalSequence,
+				Signature: &protos.Signature{
+					Signer: sig.Id,
+					Value:  sig.Value,
+				},
+			},
+		},
+	}
+
+	v.Comm.Broadcast(msg)
 }
 
 func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
