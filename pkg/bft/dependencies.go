@@ -5,7 +5,11 @@
 
 package bft
 
-import "github.com/SmartBFT-Go/consensus/protos"
+import (
+	"github.com/SmartBFT-Go/consensus/protos"
+	"encoding/asn1"
+	"fmt"
+)
 
 type Signature struct {
 	Id    uint64
@@ -17,6 +21,20 @@ type Proposal struct {
 	Header               []byte
 	Metadata             []byte
 	VerificationSequence uint64
+}
+
+func (p Proposal) Digest() []byte {
+	digest, err :=  asn1.Marshal(Proposal{
+		VerificationSequence: p.VerificationSequence,
+		Metadata: p.Metadata,
+		Payload: p.Payload,
+		Header: p.Header,
+	})
+
+	if err != nil {
+		panic(fmt.Sprintf("failed marshaling proposal: %v", err))
+	}
+	return digest
 }
 
 type Comm interface {
