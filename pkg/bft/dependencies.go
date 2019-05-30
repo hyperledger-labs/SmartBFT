@@ -6,9 +6,10 @@
 package bft
 
 import (
-	"github.com/SmartBFT-Go/consensus/protos"
 	"encoding/asn1"
 	"fmt"
+
+	"github.com/SmartBFT-Go/consensus/protos"
 )
 
 type Signature struct {
@@ -23,18 +24,19 @@ type Proposal struct {
 	VerificationSequence uint64
 }
 
-func (p Proposal) Digest() []byte {
-	digest, err :=  asn1.Marshal(Proposal{
+func (p Proposal) Digest() string {
+	rawBytes, err := asn1.Marshal(Proposal{
 		VerificationSequence: p.VerificationSequence,
-		Metadata: p.Metadata,
-		Payload: p.Payload,
-		Header: p.Header,
+		Metadata:             p.Metadata,
+		Payload:              p.Payload,
+		Header:               p.Header,
 	})
 
 	if err != nil {
 		panic(fmt.Sprintf("failed marshaling proposal: %v", err))
 	}
-	return digest
+
+	return ComputeDigest(rawBytes)
 }
 
 type Comm interface {
@@ -60,7 +62,7 @@ type Signer interface {
 type Verifier interface {
 	VerifyProposal(proposal Proposal, prevHeader []byte) error
 	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint, signature []byte, m []byte) error
+	VerifyConsenterSig(signer uint64, signature []byte, prop Proposal) error
 	VerificationSequence() uint64
 }
 
