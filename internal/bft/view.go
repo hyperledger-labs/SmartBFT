@@ -287,7 +287,7 @@ func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 				continue
 			}
 
-			err := v.Verifier.VerifyConsenterSig(commit.Signature.Signer, commit.Signature.Value, proposal.Metadata)
+			err := v.Verifier.VerifyConsenterSig(commit.Signature.Signer, commit.Signature.Value, *proposal)
 			if err != nil {
 				v.Logger.Warningf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
 				continue

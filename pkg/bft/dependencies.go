@@ -62,7 +62,7 @@ type Signer interface {
 type Verifier interface {
 	VerifyProposal(proposal Proposal, prevHeader []byte) error
 	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint64, signature []byte, m []byte) error
+	VerifyConsenterSig(signer uint64, signature []byte, prop Proposal) error
 	VerificationSequence() uint64
 }
 
