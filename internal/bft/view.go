@@ -6,9 +6,10 @@
 package bft
 
 import (
+	"sync/atomic"
+
 	"github.com/SmartBFT-Go/consensus/pkg/bft"
 	"github.com/SmartBFT-Go/consensus/protos"
-	"sync/atomic"
 )
 
 type Decider interface {
@@ -29,7 +30,8 @@ type Comm interface {
 
 type View struct {
 	// Configuration
-	ClusterSize      uint64
+	N                int
+	F                int
 	LeaderID         uint64
 	Number           uint64
 	Decider          Decider
@@ -37,22 +39,21 @@ type View struct {
 	Sync             Synchronizer
 	Logger           bft.Logger
 	Comm             Comm
-	Verifier bft.Verifier
+	Verifier         bft.Verifier
 	ProposalSequence *uint64 // should be accessed atomically
-	PrevHeader []byte
+	PrevHeader       []byte
 	// Runtime
 	incMsgs   chan *incMsg
 	proposals chan bft.Proposal // size of 1
 	// Current proposal
 	prepares *voteSet
-	commits *voteSet
+	commits  *voteSet
 	// Next proposal
 	nextPrepares *voteSet
-	nextCommits *voteSet
+	nextCommits  *voteSet
 
 	abortChan chan struct{}
 }
-
 
 func (v *View) ProcessMessages() {
 	v.setupVotes()
@@ -69,7 +70,7 @@ func (v *View) ProcessMessages() {
 
 func (v *View) setupVotes() {
 	// Prepares
-	acceptPrepares := func(message *protos.Message) bool {
+	acceptPrepares := func(_ uint64, message *protos.Message) bool {
 		return message.GetPrepare() != nil
 	}
 
@@ -84,8 +85,16 @@ func (v *View) setupVotes() {
 	v.nextPrepares.clear()
 
 	// Commits
-	acceptCommits := func(message *protos.Message) bool {
-		return message.GetCommit() != nil
+	acceptCommits := func(sender uint64, message *protos.Message) bool {
+		commit := message.GetCommit()
+		if commit == nil {
+			return false
+		}
+		if commit.Signature == nil {
+			return false
+		}
+		// Sender needs to match the inner signature sender
+		return commit.Signature.Signer == sender
 	}
 
 	v.commits = &voteSet{
@@ -121,12 +130,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgProposalSeq := bft.ProposalSequence(m)
 
 	// This message is either for this proposal or the next one (we might be behind the rest)
-	if msgProposalSeq != currentProposalSeq && msgProposalSeq != currentProposalSeq + 1 {
+	if msgProposalSeq != currentProposalSeq && msgProposalSeq != currentProposalSeq+1 {
 		v.Logger.Warningf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, currentProposalSeq)
 		return
 	}
 
-	msgForNextProposal := msgProposalSeq == currentProposalSeq + 1
+	msgForNextProposal := msgProposalSeq == currentProposalSeq+1
 
 	if msgViewNum != v.Number {
 		v.Logger.Warningf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
@@ -175,9 +184,9 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 	prop := pp.Proposal
 	proposal := bft.Proposal{
 		VerificationSequence: prop.VerificationSequence,
-		Metadata: prop.Metadata,
-		Payload: prop.Payload,
-		Header: prop.Header,
+		Metadata:             prop.Metadata,
+		Payload:              prop.Payload,
+		Header:               prop.Header,
 	}
 	select {
 	case v.proposals <- proposal:
@@ -193,8 +202,8 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 func (v *View) Run() {
 	for {
 		select {
-			case <- v.abortChan:
-				return
+		case <-v.abortChan:
+			return
 		default:
 			v.doStep()
 		}
@@ -203,46 +212,103 @@ func (v *View) Run() {
 
 func (v *View) doStep() {
 	proposalSequence := atomic.LoadUint64(v.ProposalSequence)
-	v.processPrePrepare(proposalSequence)
-	v.processPrepares()
-	v.processCommits()
-	v.maybeDecide()
+	proposal := v.processPrePrepare(proposalSequence)
+	if proposal == nil {
+		// Aborted view
+		return
+	}
+
+	v.processPrepares(proposal)
+
+	signatures := v.processCommits(proposal)
+	if len(signatures) == 0 {
+		return
+	}
+
+	v.maybeDecide(proposal, signatures)
 }
 
-func (v *View) processPrePrepare(proposalSequence uint64) {
-	proposal := <- v.proposals
+func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
+	proposal := <-v.proposals
 	err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
 	if err != nil {
 		v.Logger.Warningf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.SyncIfNeeded()
 		v.Abort()
-		return
+		return nil
 	}
 
 	msg := &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				Seq: proposalSequence,
-				View: v.Number,
+				Seq:    proposalSequence,
+				View:   v.Number,
 				Digest: proposal.Digest(),
 			},
 		},
 	}
 
 	v.Comm.Broadcast(msg)
+	return &proposal
 }
 
-func (v *View) processPrepares() {
+func (v *View) processPrepares(proposal *bft.Proposal) {
+	expectedDigest := proposal.Digest()
+	collectedDigests := 0
 
+	for collectedDigests < 2*v.F {
+		select {
+		case <-v.abortChan:
+			return
+		case vote := <-v.prepares.votes:
+			prepare := vote.GetPrepare()
+			if prepare.Digest != expectedDigest {
+				v.Logger.Warningf("Got digest %s but expected %s", prepare.Digest, expectedDigest)
+				continue
+			}
+			collectedDigests++
+		}
+	}
 }
 
-func (v *View) processCommits() {
+func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
+	expectedDigest := proposal.Digest()
+	signatures := make(map[uint64]bft.Signature)
 
+	for len(signatures) < 2*v.F {
+		select {
+		case <-v.abortChan:
+			return nil
+		case vote := <-v.commits.votes:
+			commit := vote.GetCommit()
+			if commit.Digest != expectedDigest {
+				v.Logger.Warningf("Got digest %s but expected %s", commit.Digest, expectedDigest)
+				continue
+			}
+
+			err := v.Verifier.VerifyConsenterSig(commit.Signature.Signer, commit.Signature.Value, proposal.Metadata)
+			if err != nil {
+				v.Logger.Warningf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
+				continue
+			}
+
+			signatures[commit.Signature.Signer] = bft.Signature{
+				Id:    commit.Signature.Signer,
+				Value: commit.Signature.Value,
+			}
+		}
+	}
+
+	var res []bft.Signature
+	for _, sig := range signatures {
+		res = append(res, sig)
+	}
+	return res
 }
 
-func (v *View) maybeDecide() {
-
+func (v *View) maybeDecide(proposal *bft.Proposal, signatures []bft.Signature) {
+	v.Decider.Decide(*proposal, signatures)
 }
 
 func (v *View) Propose() {
@@ -260,7 +326,7 @@ func (v *View) Abort() {
 }
 
 type voteSet struct {
-	validVote func(message *protos.Message) bool
+	validVote func(voter uint64, message *protos.Message) bool
 	voted     map[uint64]struct{}
 	votes     chan *protos.Message
 }
@@ -268,14 +334,14 @@ type voteSet struct {
 func (vs *voteSet) clear() {
 	// Drain the votes channel
 	for len(vs.votes) > 0 {
-		<- vs.votes
+		<-vs.votes
 	}
 
 	vs.voted = make(map[uint64]struct{})
 }
 
 func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
-	if ! vs.validVote(message) {
+	if !vs.validVote(voter, message) {
 		return
 	}
 
