@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"math"
 	"sync/atomic"
 
 	"github.com/SmartBFT-Go/consensus/pkg/bft"
@@ -121,12 +122,23 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// Ensure view number is equal to our view
 	msgViewNum := bft.ViewNumber(m)
-	//propSeq    := bft.ProposalSequence(m)
+	if msgViewNum != v.Number {
+		v.Logger.Warningf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
+		if sender != v.LeaderID {
+			return
+		}
+		// Else, we got a message with a wrong view from the leader.
+		v.FailureDetector.Complain()
+		v.Sync.SyncIfNeeded()
+		v.Abort()
+		return
+	}
+
 	// TODO: what if proposal sequence is wrong?
 	// we should handle it...
 	// but if we got a prepare or commit for sequence i,
 	// when we're in sequence i+1 then we should still send a prepare/commit again.
-	// leaving this as a TODO for now.
+	// leaving this as a task for now.
 	currentProposalSeq := atomic.LoadUint64(v.ProposalSequence)
 	msgProposalSeq := bft.ProposalSequence(m)
 
@@ -137,16 +149,6 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 
 	msgForNextProposal := msgProposalSeq == currentProposalSeq+1
-
-	if msgViewNum != v.Number {
-		v.Logger.Warningf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
-		if sender != v.LeaderID {
-			return
-		}
-		// Else, we got a message with a wrong view from the leader.
-		// TODO: invoke Sync()
-		v.FailureDetector.Complain()
-	}
 
 	if pp := m.GetPrePrepare(); pp != nil {
 		v.handlePrePrepare(sender, pp)
@@ -166,7 +168,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		if msgForNextProposal {
 			v.nextCommits.registerVote(sender, m)
 		} else {
-			v.nextCommits.registerVote(sender, m)
+			v.commits.registerVote(sender, m)
 		}
 		return
 	}
@@ -231,6 +233,7 @@ func (v *View) doStep() {
 
 func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 	proposal := <-v.proposals
+	// TODO think if there is any other validation the node should run on a proposal
 	err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
 	if err != nil {
 		v.Logger.Warningf("Received bad proposal from %d: %v", v.LeaderID, err)
@@ -257,8 +260,9 @@ func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
+	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
 
-	for collectedDigests < 2*v.F {
+	for collectedDigests < quorum - 1 {
 		select {
 		case <-v.abortChan:
 			return
@@ -278,7 +282,7 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 		Content: &protos.Message_Commit{
 			Commit: &protos.Commit{
 				View:   v.Number,
-				Digest: proposal.Digest(),
+				Digest: expectedDigest,
 				Seq:    proposalSequence,
 				Signature: &protos.Signature{
 					Signer: sig.Id,
@@ -294,8 +298,9 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]bft.Signature)
+	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
 
-	for len(signatures) < 2*v.F {
+	for len(signatures) < quorum - 1 {
 		select {
 		case <-v.abortChan:
 			return nil
