@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"go.uber.org/zap"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestViewBasic(t *testing.T) {
@@ -18,7 +18,7 @@ func TestViewBasic(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	view := &bft.View{
-		Logger: log,
+		Logger:           log,
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
