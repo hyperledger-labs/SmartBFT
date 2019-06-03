@@ -134,7 +134,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// Ensure view number is equal to our view
 	msgViewNum := bft.ViewNumber(m)
 	if msgViewNum != v.Number {
-		v.Logger.Warningf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
+		v.Logger.Warnf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
 		if sender != v.LeaderID {
 			return
 		}
@@ -155,7 +155,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != currentProposalSeq && msgProposalSeq != currentProposalSeq+1 {
-		v.Logger.Warningf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, currentProposalSeq)
+		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, currentProposalSeq)
 		return
 	}
 
@@ -187,11 +187,11 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 
 func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 	if pp.Proposal == nil {
-		v.Logger.Warningf("Got pre-prepare with empty proposal")
+		v.Logger.Warnf("Got pre-prepare with empty proposal")
 		return
 	}
 	if sender != v.LeaderID {
-		v.Logger.Warningf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
+		v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
 		return
 	}
 
@@ -209,7 +209,7 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 		// Log a warning because we shouldn't get 2 proposals from the leader within such a short time.
 		// We can have an outstanding proposal in the channel, but not more than 1.
 		currentProposalSeq := atomic.LoadUint64(v.ProposalSequence)
-		v.Logger.Warningf("Got proposal %d but currently still not processed proposal %d", pp.Seq, currentProposalSeq)
+		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, currentProposalSeq)
 	}
 }
 
@@ -247,7 +247,7 @@ func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 	// TODO think if there is any other validation the node should run on a proposal
 	err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
 	if err != nil {
-		v.Logger.Warningf("Received bad proposal from %d: %v", v.LeaderID, err)
+		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.SyncIfNeeded()
 		v.Abort()
@@ -280,7 +280,7 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
-				v.Logger.Warningf("Got digest %s but expected %s", prepare.Digest, expectedDigest)
+				v.Logger.Warnf("Got digest %s but expected %s", prepare.Digest, expectedDigest)
 				continue
 			}
 			collectedDigests++
@@ -318,13 +318,13 @@ func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 		case vote := <-v.commits.votes:
 			commit := vote.GetCommit()
 			if commit.Digest != expectedDigest {
-				v.Logger.Warningf("Got digest %s but expected %s", commit.Digest, expectedDigest)
+				v.Logger.Warnf("Got digest %s but expected %s", commit.Digest, expectedDigest)
 				continue
 			}
 
 			err := v.Verifier.VerifyConsenterSig(commit.Signature.Signer, commit.Signature.Value, *proposal)
 			if err != nil {
-				v.Logger.Warningf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
+				v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
 				continue
 			}
 
