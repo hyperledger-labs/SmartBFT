@@ -56,6 +56,18 @@ type View struct {
 	abortChan chan struct{}
 }
 
+func (v *View) Start() {
+	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
+	v.proposals = make(chan bft.Proposal, 1)
+	v.abortChan = make(chan struct{})
+	go func() {
+		v.ProcessMessages()
+	}()
+	go func() {
+		v.Run()
+	}()
+}
+
 func (v *View) ProcessMessages() {
 	v.setupVotes()
 
