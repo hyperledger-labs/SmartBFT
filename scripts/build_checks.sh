@@ -21,7 +21,7 @@ else
 fi
 
 make protos
-git status | grep -q "modified"
+git status | grep "pb.go" | grep -q "modified"
 if [ $? -eq 0 ];then
 	git status
 	echo "protobuf not up to date"
