@@ -32,7 +32,6 @@ type Comm interface {
 type View struct {
 	// Configuration
 	N                int
-	F                int
 	LeaderID         uint64
 	Number           uint64
 	Decider          Decider
@@ -260,7 +259,7 @@ func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
-	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
+	quorum := v.quorum()
 
 	for collectedDigests < quorum-1 {
 		select {
@@ -298,7 +297,7 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]bft.Signature)
-	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
+	quorum := v.quorum()
 
 	for len(signatures) < quorum-1 {
 		select {
@@ -347,6 +346,11 @@ func (v *View) Abort() {
 	default:
 		close(v.abortChan)
 	}
+}
+
+func (v *View) quorum() int {
+	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
+	return 2*f + 1
 }
 
 type voteSet struct {
