@@ -262,7 +262,7 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 	collectedDigests := 0
 	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
 
-	for collectedDigests < quorum - 1 {
+	for collectedDigests < quorum-1 {
 		select {
 		case <-v.abortChan:
 			return
@@ -300,7 +300,7 @@ func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 	signatures := make(map[uint64]bft.Signature)
 	quorum := int(math.Ceil((float64(v.N) + float64(v.F) + 1) / 2.0)) // TODO check quorum size
 
-	for len(signatures) < quorum - 1 {
+	for len(signatures) < quorum-1 {
 		select {
 		case <-v.abortChan:
 			return nil
