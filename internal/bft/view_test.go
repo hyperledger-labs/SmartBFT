@@ -9,10 +9,16 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestViewBasic(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
 	view := &bft.View{
+		Logger:           log,
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
