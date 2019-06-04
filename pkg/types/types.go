@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-package bft
+package types
 
 import (
 	"crypto/sha256"
@@ -16,7 +16,7 @@ type Proposal struct {
 	Payload              []byte
 	Header               []byte
 	Metadata             []byte
-	VerificationSequence uint64
+	VerificationSequence int64
 }
 
 type Signature struct {
