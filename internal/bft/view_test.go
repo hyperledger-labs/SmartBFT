@@ -24,6 +24,7 @@ func TestViewBasic(t *testing.T) {
 		Number:           1,
 		ProposalSequence: new(uint64),
 	}
-	view.Start()
+	end := view.Start()
 	view.Abort()
+	end.Wait()
 }

@@ -9,9 +9,15 @@ import (
 	"math"
 	"sync/atomic"
 
+	"sync"
+
 	"github.com/SmartBFT-Go/consensus/pkg/bft"
 	"github.com/SmartBFT-Go/consensus/protos"
 )
+
+type Future interface {
+	Wait()
+}
 
 type Decider interface {
 	Decide(proposal bft.Proposal, signatures []bft.Signature)
@@ -56,16 +62,24 @@ type View struct {
 	abortChan chan struct{}
 }
 
-func (v *View) Start() {
+func (v *View) Start() Future {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.proposals = make(chan bft.Proposal, 1)
 	v.abortChan = make(chan struct{})
+
+	var viewEnds sync.WaitGroup
+	viewEnds.Add(2)
+
 	go func() {
+		defer viewEnds.Done()
 		v.ProcessMessages()
 	}()
 	go func() {
+		defer viewEnds.Done()
 		v.Run()
 	}()
+
+	return &viewEnds
 }
 
 func (v *View) ProcessMessages() {
