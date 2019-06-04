@@ -6,14 +6,12 @@
 package bft
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"math"
 
 	"github.com/SmartBFT-Go/consensus/protos"
 )
 
-func ViewNumber(m *protos.Message) uint64 {
+func viewNumber(m *protos.Message) uint64 {
 	if pp := m.GetPrePrepare(); pp != nil {
 		return pp.GetView()
 	}
@@ -29,7 +27,7 @@ func ViewNumber(m *protos.Message) uint64 {
 	return math.MaxUint64
 }
 
-func ProposalSequence(m *protos.Message) uint64 {
+func proposalSequence(m *protos.Message) uint64 {
 	if pp := m.GetPrePrepare(); pp != nil {
 		return pp.Seq
 	}
@@ -43,11 +41,4 @@ func ProposalSequence(m *protos.Message) uint64 {
 	}
 
 	return math.MaxUint64
-}
-
-func ComputeDigest(rawBytes []byte) string {
-	h := sha256.New()
-	h.Write(rawBytes)
-	digest := h.Sum(nil)
-	return hex.EncodeToString(digest)
 }

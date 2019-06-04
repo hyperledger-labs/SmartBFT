@@ -7,11 +7,10 @@ package bft
 
 import (
 	"math"
+	"sync"
 	"sync/atomic"
 
-	"sync"
-
-	"github.com/SmartBFT-Go/consensus/pkg/bft"
+	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
 )
 
@@ -39,6 +38,26 @@ type Comm interface {
 	Broadcast(m *protos.Message)
 }
 
+type Logger interface {
+	Debugf(template string, args ...interface{})
+	Infof(template string, args ...interface{})
+	Errorf(template string, args ...interface{})
+	Warnf(template string, args ...interface{})
+	Panicf(template string, args ...interface{})
+}
+
+type Signer interface {
+	Sign([]byte) []byte
+	SignProposal(bft.Proposal) *bft.Signature
+}
+
+type Verifier interface {
+	VerifyProposal(proposal bft.Proposal, prevHeader []byte) error
+	VerifyRequest(val []byte) error
+	VerifyConsenterSig(signer uint64, signature []byte, prop bft.Proposal) error
+	VerificationSequence() uint64
+}
+
 type View struct {
 	// Configuration
 	N                int
@@ -47,10 +66,10 @@ type View struct {
 	Decider          Decider
 	FailureDetector  FailureDetector
 	Sync             Synchronizer
-	Logger           bft.Logger
+	Logger           Logger
 	Comm             Comm
-	Verifier         bft.Verifier
-	Signer           bft.Signer
+	Verifier         Verifier
+	Signer           Signer
 	ProposalSequence *uint64 // should be accessed atomically
 	PrevHeader       []byte
 	// Runtime
@@ -150,7 +169,7 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 
 func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// Ensure view number is equal to our view
-	msgViewNum := bft.ViewNumber(m)
+	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
 		v.Logger.Warnf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
 		if sender != v.LeaderID {
@@ -169,7 +188,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// when we're in sequence i+1 then we should still send a prepare/commit again.
 	// leaving this as a task for now.
 	currentProposalSeq := atomic.LoadUint64(v.ProposalSequence)
-	msgProposalSeq := bft.ProposalSequence(m)
+	msgProposalSeq := proposalSequence(m)
 
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != currentProposalSeq && msgProposalSeq != currentProposalSeq+1 {
