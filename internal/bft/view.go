@@ -19,18 +19,22 @@ type Future interface {
 	Wait()
 }
 
+//go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
 	Decide(proposal bft.Proposal, signatures []bft.Signature)
 }
 
+//go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
 type FailureDetector interface {
 	Complain()
 }
 
+//go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
 type Synchronizer interface {
 	SyncIfNeeded()
 }
 
+//go:generate mockery -dir . -name Comm -case underscore -output ./mocks/
 type Comm interface {
 	Broadcast(m *protos.Message)
 }
