@@ -6,8 +6,8 @@
 package bft
 
 import (
+	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
-	"github.com/SmartBFT-Go/consensus/pkg/types"
 )
 
 type Application interface {

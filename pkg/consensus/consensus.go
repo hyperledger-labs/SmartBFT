@@ -6,24 +6,25 @@
 package smartbft
 
 import (
-	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"sync"
+
+	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 )
 
 // Consensus submits requests to be total ordered,
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	Application bft.Application
-	Comm bft.Comm
-	Assembler bft.Assembler
-	WAL1 bft.WriteAheadLog
-	WAL2 bft.WriteAheadLog
-	Signer bft.Signer
-	Verifier bft.Verifier
+	Application      bft.Application
+	Comm             bft.Comm
+	Assembler        bft.Assembler
+	WAL1             bft.WriteAheadLog
+	WAL2             bft.WriteAheadLog
+	Signer           bft.Signer
+	Verifier         bft.Verifier
 	RequestInspector bft.RequestInspector
-	Synchronizer bft.Synchronizer
-	Logger bft.Logger
+	Synchronizer     bft.Synchronizer
+	Logger           bft.Logger
 }
 
 // Future waits until an event occurs
