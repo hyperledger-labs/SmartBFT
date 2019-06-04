@@ -102,8 +102,14 @@ func TestNormalPath(t *testing.T) {
 	})
 	decider := &mocks.Decider{}
 	deciderWG := sync.WaitGroup{}
+	decidedProposal := make(chan types.Proposal)
+	decidedSigs := make(chan []types.Signature)
 	decider.On("Decide", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
+		proposal, _ := args.Get(0).(types.Proposal)
+		decidedProposal <- proposal
+		sigs, _ := args.Get(1).([]types.Signature)
+		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
@@ -147,12 +153,13 @@ func TestNormalPath(t *testing.T) {
 	view.HandleMessage(1, pp)
 	commWG.Wait()
 
-	digest := types.Proposal{
+	proposal := types.Proposal{
 		Header:               []byte{0},
 		Payload:              []byte{1},
 		Metadata:             []byte{2},
 		VerificationSequence: 1,
-	}.Digest()
+	}
+	digest := proposal.Digest()
 
 	prepare := &protos.Message{
 		Content: &protos.Message_Prepare{
@@ -167,7 +174,6 @@ func TestNormalPath(t *testing.T) {
 	commWG.Add(1)
 	view.HandleMessage(1, prepare)
 	view.HandleMessage(2, prepare)
-	view.HandleMessage(3, prepare)
 	commWG.Wait()
 
 	deciderWG.Add(1)
@@ -199,21 +205,16 @@ func TestNormalPath(t *testing.T) {
 		},
 	}
 	view.HandleMessage(2, commit2)
-	commit3 := &protos.Message{
-		Content: &protos.Message_Commit{
-			Commit: &protos.Commit{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-				Signature: &protos.Signature{
-					Signer: 3,
-					Value:  []byte{4},
-				},
-			},
-		},
-	}
-	view.HandleMessage(3, commit3)
 	deciderWG.Wait()
+	dProp := <-decidedProposal
+	assert.Equal(t, proposal, dProp)
+	dSigs := <-decidedSigs
+	assert.Equal(t, 2, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.Id != 1 && sig.Id != 2 {
+			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		}
+	}
 
 	view.Abort()
 	end.Wait()
