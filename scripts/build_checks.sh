@@ -28,5 +28,11 @@ if [ $? -eq 0 ];then
 	exit 1
 fi
 
+go test -count 1 -race ./...
+if [[ $? -ne 0 ]];then
+    echo "unit tests failed"
+    exit 1
+fi
+
 
 exit 0
