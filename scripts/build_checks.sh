@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -xe
+
+go get -u golang.org/x/tools/cmd/goimports
+go get -u github.com/golang/protobuf/protoc-gen-go
+
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.8.0/protoc-3.8.0-linux-x86_64.zip
+unzip protoc-3.8.0-linux-x86_64.zip
+export PATH=$PATH:bin/
 
 unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xargs gofmt -l)
 
