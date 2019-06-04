@@ -261,7 +261,12 @@ func (v *View) doStep() {
 }
 
 func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
-	proposal := <-v.proposals
+	var proposal bft.Proposal
+	select {
+	case <-v.abortChan:
+		return nil
+	case proposal = <-v.proposals:
+	}
 	// TODO think if there is any other validation the node should run on a proposal
 	err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
 	if err != nil {
