@@ -16,7 +16,7 @@ func viewNumber(m *protos.Message) uint64 {
 		return pp.GetView()
 	}
 
-	if prp := m.GetPrePrepare(); prp != nil {
+	if prp := m.GetPrepare(); prp != nil {
 		return prp.GetView()
 	}
 
@@ -32,7 +32,7 @@ func proposalSequence(m *protos.Message) uint64 {
 		return pp.Seq
 	}
 
-	if prp := m.GetPrePrepare(); prp != nil {
+	if prp := m.GetPrepare(); prp != nil {
 		return prp.Seq
 	}
 

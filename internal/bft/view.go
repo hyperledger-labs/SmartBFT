@@ -10,7 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	bft "github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
 )
 
@@ -20,7 +20,7 @@ type Future interface {
 
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
-	Decide(proposal bft.Proposal, signatures []bft.Signature)
+	Decide(proposal types.Proposal, signatures []types.Signature)
 }
 
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
@@ -46,15 +46,17 @@ type Logger interface {
 	Panicf(template string, args ...interface{})
 }
 
+//go:generate mockery -dir . -name Signer -case underscore -output ./mocks/
 type Signer interface {
 	Sign([]byte) []byte
-	SignProposal(bft.Proposal) *bft.Signature
+	SignProposal(types.Proposal) *types.Signature
 }
 
+//go:generate mockery -dir . -name Verifier -case underscore -output ./mocks/
 type Verifier interface {
-	VerifyProposal(proposal bft.Proposal, prevHeader []byte) error
+	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
 	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint64, signature []byte, prop bft.Proposal) error
+	VerifyConsenterSig(signer uint64, signature []byte, prop types.Proposal) error
 	VerificationSequence() uint64
 }
 
@@ -74,7 +76,7 @@ type View struct {
 	PrevHeader       []byte
 	// Runtime
 	incMsgs   chan *incMsg
-	proposals chan bft.Proposal // size of 1
+	proposals chan types.Proposal // size of 1
 	// Current proposal
 	prepares *voteSet
 	commits  *voteSet
@@ -87,7 +89,7 @@ type View struct {
 
 func (v *View) Start() Future {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
-	v.proposals = make(chan bft.Proposal, 1)
+	v.proposals = make(chan types.Proposal, 1)
 	v.abortChan = make(chan struct{})
 
 	var viewEnds sync.WaitGroup
@@ -127,12 +129,12 @@ func (v *View) setupVotes() {
 	v.prepares = &voteSet{
 		validVote: acceptPrepares,
 	}
-	v.prepares.clear()
+	v.prepares.clear(v.N)
 
 	v.nextPrepares = &voteSet{
 		validVote: acceptPrepares,
 	}
-	v.nextPrepares.clear()
+	v.nextPrepares.clear(v.N)
 
 	// Commits
 	acceptCommits := func(sender uint64, message *protos.Message) bool {
@@ -150,12 +152,12 @@ func (v *View) setupVotes() {
 	v.commits = &voteSet{
 		validVote: acceptCommits,
 	}
-	v.commits.clear()
+	v.commits.clear(v.N)
 
 	v.nextCommits = &voteSet{
 		validVote: acceptCommits,
 	}
-	v.nextCommits.clear()
+	v.nextCommits.clear(v.N)
 }
 
 func (v *View) HandleMessage(sender uint64, m *protos.Message) {
@@ -172,6 +174,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
 		v.Logger.Warnf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
+		// TODO  when do we send the error message?
 		if sender != v.LeaderID {
 			return
 		}
@@ -233,8 +236,8 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 	}
 
 	prop := pp.Proposal
-	proposal := bft.Proposal{
-		VerificationSequence: prop.VerificationSequence,
+	proposal := types.Proposal{
+		VerificationSequence: int64(prop.VerificationSequence),
 		Metadata:             prop.Metadata,
 		Payload:              prop.Payload,
 		Header:               prop.Header,
@@ -279,8 +282,8 @@ func (v *View) doStep() {
 	v.maybeDecide(proposal, signatures)
 }
 
-func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
-	var proposal bft.Proposal
+func (v *View) processPrePrepare(proposalSequence uint64) *types.Proposal {
+	var proposal types.Proposal
 	select {
 	case <-v.abortChan:
 		return nil
@@ -310,7 +313,7 @@ func (v *View) processPrePrepare(proposalSequence uint64) *bft.Proposal {
 	return &proposal
 }
 
-func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) {
+func (v *View) processPrepares(proposal *types.Proposal, proposalSequence uint64) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 	quorum := v.quorum()
@@ -322,6 +325,7 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
+				// TODO is it ok that the vote is already registered?
 				v.Logger.Warnf("Got digest %s but expected %s", prepare.Digest, expectedDigest)
 				continue
 			}
@@ -348,9 +352,9 @@ func (v *View) processPrepares(proposal *bft.Proposal, proposalSequence uint64) 
 	v.Comm.Broadcast(msg)
 }
 
-func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
+func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	expectedDigest := proposal.Digest()
-	signatures := make(map[uint64]bft.Signature)
+	signatures := make(map[uint64]types.Signature)
 	quorum := v.quorum()
 
 	for len(signatures) < quorum-1 {
@@ -370,21 +374,21 @@ func (v *View) processCommits(proposal *bft.Proposal) []bft.Signature {
 				continue
 			}
 
-			signatures[commit.Signature.Signer] = bft.Signature{
+			signatures[commit.Signature.Signer] = types.Signature{
 				Id:    commit.Signature.Signer,
 				Value: commit.Signature.Value,
 			}
 		}
 	}
 
-	var res []bft.Signature
+	var res []types.Signature
 	for _, sig := range signatures {
 		res = append(res, sig)
 	}
 	return res
 }
 
-func (v *View) maybeDecide(proposal *bft.Proposal, signatures []bft.Signature) {
+func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
 	v.Decider.Decide(*proposal, signatures)
 }
 
@@ -413,13 +417,14 @@ type voteSet struct {
 	votes     chan *protos.Message
 }
 
-func (vs *voteSet) clear() {
+func (vs *voteSet) clear(n int) {
 	// Drain the votes channel
 	for len(vs.votes) > 0 {
 		<-vs.votes
 	}
 
-	vs.voted = make(map[uint64]struct{})
+	vs.voted = make(map[uint64]struct{}, n)
+	vs.votes = make(chan *protos.Message, n)
 }
 
 func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {

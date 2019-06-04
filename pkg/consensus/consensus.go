@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-package smartbft
+package consensus
 
 import (
 	"sync"

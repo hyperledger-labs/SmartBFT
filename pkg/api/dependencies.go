@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-package bft
+package api
 
 import (
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
