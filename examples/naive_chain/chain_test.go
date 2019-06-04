@@ -43,6 +43,19 @@ func TestBlock(t *testing.T) {
 	assert.Equal(t, block, block2)
 }
 
+func TestBlockHeader(t *testing.T) {
+	blockHeader := &BlockHeader{
+		PrevHash: "prev",
+		Sequence: 2,
+		DataHash: "hash",
+	}
+
+	headerBytes := blockHeader.ToBytes()
+	blockHeader2 := BlockHeaderFromBytes(headerBytes)
+	assert.Equal(t, blockHeader, blockHeader2)
+
+}
+
 func TestChain(t *testing.T) {
 	//network := make(map[int]chan protos.Message)
 }

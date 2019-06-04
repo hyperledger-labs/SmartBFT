@@ -83,7 +83,8 @@ func NewChain(id int, in Ingress, out Egress, logger smart.Logger) *Chain {
 	deliverChan := make(chan *Block)
 	node := NewNode(id, in, out, deliverChan, logger)
 	return &Chain{
-		node: node,
+		node:        node,
+		deliverChan: deliverChan,
 	}
 }
 

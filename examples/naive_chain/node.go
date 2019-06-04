@@ -137,7 +137,7 @@ func (n *Node) Start() {
 		go func(id uint64) {
 			for {
 				select {
-				case n.stopChan:
+				case <-n.stopChan:
 					return
 				case msg := <-in:
 					n.consensus.HandleMessage(id, msg)
