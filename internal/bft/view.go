@@ -266,7 +266,7 @@ func (v *View) run() {
 
 func (v *View) doStep() {
 	proposalSequence := atomic.LoadUint64(v.ProposalSequence)
-	proposal := v.processPrePrepare(proposalSequence)
+	proposal := v.processProposal(proposalSequence)
 	if proposal == nil {
 		// Aborted view
 		return
@@ -282,7 +282,7 @@ func (v *View) doStep() {
 	v.maybeDecide(proposal, signatures)
 }
 
-func (v *View) processPrePrepare(proposalSequence uint64) *types.Proposal {
+func (v *View) processProposal(proposalSequence uint64) *types.Proposal {
 	var proposal types.Proposal
 	select {
 	case <-v.abortChan:

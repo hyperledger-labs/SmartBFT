@@ -22,6 +22,8 @@ import (
 )
 
 func TestViewBasic(t *testing.T) {
+	// A simple test that starts a view and aborts it
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -38,6 +40,10 @@ func TestViewBasic(t *testing.T) {
 }
 
 func TestBadPrePrepare(t *testing.T) {
+	// Ensure that a prePrepare with a wrong view number sent by the leader causes a view abort,
+	// and that if the same message is from a follower then it is simply ignored.
+	// Same goes to a proposal that doesn't pass the verifier.
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	verifyLog := make(chan struct{})
@@ -128,6 +134,9 @@ func TestBadPrePrepare(t *testing.T) {
 }
 
 func TestBadPrepare(t *testing.T) {
+	// Ensure that a prepare with a wrong view number sent by the leader causes a view abort,
+	// and that a prepare with a wrong digest doesn't pass inspection
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	digestLog := make(chan struct{})
@@ -256,7 +265,136 @@ func TestBadPrepare(t *testing.T) {
 
 }
 
+func TestBadCommit(t *testing.T) {
+	// Ensure that a commit with a wrong digest or a bad signature doesn't pass inspection
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	digestLog := make(chan struct{})
+	verifyLog := make(chan struct{})
+	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
+			digestLog <- struct{}{}
+		}
+		if strings.Contains(entry.Message, "Couldn't verify 2's signature:") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	synchronizer := &mocks.Synchronizer{}
+	fd := &mocks.FailureDetector{}
+	comm := &mocks.Comm{}
+	comm.On("Broadcast", mock.Anything)
+	verifier := &mocks.Verifier{}
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
+	signer := &mocks.Signer{}
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		Id:    4,
+		Value: []byte{4},
+	})
+	view := &bft.View{
+		Logger:           log,
+		N:                4,
+		LeaderID:         1,
+		Number:           1,
+		ProposalSequence: new(uint64),
+		Sync:             synchronizer,
+		FailureDetector:  fd,
+		Comm:             comm,
+		Verifier:         verifier,
+		Signer:           signer,
+	}
+	end := view.Start()
+
+	pp := &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: 1,
+				Seq:  0,
+				Proposal: &protos.Proposal{
+					Header:               []byte{0},
+					Payload:              []byte{1},
+					Metadata:             []byte{2},
+					VerificationSequence: 1,
+				},
+			},
+		},
+	}
+
+	view.HandleMessage(1, pp)
+
+	proposal := types.Proposal{
+		Header:               []byte{0},
+		Payload:              []byte{1},
+		Metadata:             []byte{2},
+		VerificationSequence: 1,
+	}
+	digest := proposal.Digest()
+
+	prepare := &protos.Message{
+		Content: &protos.Message_Prepare{
+			Prepare: &protos.Prepare{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+			},
+		},
+	}
+
+	view.HandleMessage(1, prepare)
+	view.HandleMessage(2, prepare)
+
+	wrongProposal := types.Proposal{
+		Header:               []byte{1},
+		Payload:              []byte{2},
+		Metadata:             []byte{3},
+		VerificationSequence: 1,
+	}
+	wrongDigest := wrongProposal.Digest()
+
+	// commit with wrong digest
+	commit := &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   1,
+				Seq:    0,
+				Digest: wrongDigest,
+				Signature: &protos.Signature{
+					Signer: 1,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+
+	view.HandleMessage(1, commit)
+	<-digestLog
+
+	commit = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+				Signature: &protos.Signature{
+					Signer: 2,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+
+	view.HandleMessage(2, commit)
+	<-verifyLog
+
+	view.Abort()
+	end.Wait()
+}
+
 func TestNormalPath(t *testing.T) {
+	// A test that takes a view through all 3 phases (prePrepare, prepare, and commit) until it reaches a decision
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
