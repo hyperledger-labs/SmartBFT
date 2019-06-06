@@ -97,17 +97,17 @@ func (v *View) Start() Future {
 
 	go func() {
 		defer viewEnds.Done()
-		v.ProcessMessages()
+		v.processMessages()
 	}()
 	go func() {
 		defer viewEnds.Done()
-		v.Run()
+		v.run()
 	}()
 
 	return &viewEnds
 }
 
-func (v *View) ProcessMessages() {
+func (v *View) processMessages() {
 	v.setupVotes()
 
 	for {
@@ -253,7 +253,7 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 	}
 }
 
-func (v *View) Run() {
+func (v *View) run() {
 	for {
 		select {
 		case <-v.abortChan:
