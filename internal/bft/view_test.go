@@ -40,7 +40,13 @@ func TestViewBasic(t *testing.T) {
 func TestBadPrePrepare(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	verifyLog := make(chan struct{})
+	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Received bad proposal from 1:") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
 	synchronizer := &mocks.Synchronizer{}
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("SyncIfNeeded", mock.Anything).Run(func(args mock.Arguments) {
@@ -113,6 +119,7 @@ func TestBadPrePrepare(t *testing.T) {
 	syncWG.Add(1)
 	fdWG.Add(1)
 	view.HandleMessage(1, msg)
+	<-verifyLog
 	syncWG.Wait()
 	fdWG.Wait()
 
@@ -123,10 +130,10 @@ func TestBadPrePrepare(t *testing.T) {
 func TestBadPrepare(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	digestLog := make(chan bool)
+	digestLog := make(chan struct{})
 	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
-			digestLog <- true
+			digestLog <- struct{}{}
 		}
 		return nil
 	})).Sugar()
@@ -239,11 +246,9 @@ func TestBadPrepare(t *testing.T) {
 	}
 
 	view.HandleMessage(1, prepare)
-	b := <-digestLog
-	assert.True(t, b)
+	<-digestLog
 	view.HandleMessage(2, prepare)
-	b = <-digestLog
-	assert.True(t, b)
+	<-digestLog
 	signer.AssertNotCalled(t, "SignProposal", mock.Anything)
 
 	view.Abort()
