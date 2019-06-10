@@ -68,8 +68,6 @@ func TestChain(t *testing.T) {
 	quitChan := make(chan struct{})
 	defer close(quitChan)
 
-
-
 	network := make(map[int]chan *protos.Message)
 	n := 10
 
@@ -83,7 +81,6 @@ func TestChain(t *testing.T) {
 		chains[id] = setupNode(t, id, n, network, quitChan)
 	}
 
-	
 }
 
 func setupNode(t *testing.T, id, n int, network map[int]chan *protos.Message, abortChan <-chan struct{}) *Chain {
