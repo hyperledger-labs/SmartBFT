@@ -263,25 +263,7 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
-
-			// go to next sequence
-			v.nextSeqLock.Lock()
-
-			v.ProposalSequence++
-
-			// swap next prepares
-			tmpVotes := v.prepares
-			v.prepares = v.nextPrepares
-			tmpVotes.clear(v.N)
-			v.nextPrepares = tmpVotes
-
-			// swap next commits
-			tmpVotes = v.commits
-			v.commits = v.nextCommits
-			tmpVotes.clear(v.N)
-			v.nextCommits = tmpVotes
-
-			v.nextSeqLock.Unlock()
+			v.startNextSeq()
 		}
 	}
 }
@@ -413,6 +395,25 @@ func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signatur
 	mySig := v.Signer.SignProposal(*proposal)
 	signatures = append(signatures, *mySig)
 	v.Decider.Decide(*proposal, signatures)
+}
+
+func (v *View) startNextSeq() {
+	v.nextSeqLock.Lock()
+	defer v.nextSeqLock.Unlock()
+
+	v.ProposalSequence++
+
+	// swap next prepares
+	tmpVotes := v.prepares
+	v.prepares = v.nextPrepares
+	tmpVotes.clear(v.N)
+	v.nextPrepares = tmpVotes
+
+	// swap next commits
+	tmpVotes = v.commits
+	v.commits = v.nextCommits
+	tmpVotes.clear(v.N)
+	v.nextCommits = tmpVotes
 }
 
 func (v *View) Propose() {
