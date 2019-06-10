@@ -260,6 +260,14 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
+			// swap next votes
+			tmpVotes := v.prepares
+			v.prepares = v.nextPrepares
+			tmpVotes.clear(v.N)
+			tmpVotes = v.commits
+			v.commits = v.nextCommits
+			tmpVotes.clear(v.N)
+			v.nextCommits = tmpVotes
 		}
 	}
 }
