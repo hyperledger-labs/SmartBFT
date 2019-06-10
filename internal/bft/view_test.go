@@ -15,10 +15,84 @@ import (
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
+	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+)
+
+var (
+	proposal = types.Proposal{
+		Header:               []byte{0},
+		Payload:              []byte{1},
+		Metadata:             []byte{2},
+		VerificationSequence: 1,
+	}
+
+	digest = proposal.Digest()
+
+	wrongProposal = types.Proposal{
+		Header:               []byte{1},
+		Payload:              []byte{2},
+		Metadata:             []byte{3},
+		VerificationSequence: 1,
+	}
+
+	wrongDigest = wrongProposal.Digest()
+
+	prePrepare = &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: 1,
+				Seq:  0,
+				Proposal: &protos.Proposal{
+					Header:               []byte{0},
+					Payload:              []byte{1},
+					Metadata:             []byte{2},
+					VerificationSequence: 1,
+				},
+			},
+		},
+	}
+
+	prepare = &protos.Message{
+		Content: &protos.Message_Prepare{
+			Prepare: &protos.Prepare{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+			},
+		},
+	}
+
+	commit1 = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+				Signature: &protos.Signature{
+					Signer: 1,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+
+	commit2 = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+				Signature: &protos.Signature{
+					Signer: 2,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
 )
 
 func TestViewBasic(t *testing.T) {
@@ -32,7 +106,7 @@ func TestViewBasic(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 	}
 	end := view.Start()
 	view.Abort()
@@ -68,7 +142,7 @@ func TestBadPrePrepare(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 	}
@@ -76,25 +150,19 @@ func TestBadPrePrepare(t *testing.T) {
 
 	// TODO check with wrong sequence number
 	// prePrepare with wrong view number
-	msg := &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				View:     2,
-				Seq:      0,
-				Proposal: &protos.Proposal{},
-			},
-		},
-	}
+	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareWrongViewGet := prePrepareWrongView.GetPrePrepare()
+	prePrepareWrongViewGet.View = 2
 
 	// sent from node who is not the leader, simply ignore
-	view.HandleMessage(2, msg)
+	view.HandleMessage(2, prePrepareWrongView)
 	synchronizer.AssertNotCalled(t, "SyncIfNeeded")
 	fd.AssertNotCalled(t, "Complain")
 
 	// sent from the leader
 	syncWG.Add(1)
 	fdWG.Add(1)
-	view.HandleMessage(1, msg)
+	view.HandleMessage(1, prePrepareWrongView)
 	syncWG.Wait()
 	synchronizer.AssertCalled(t, "SyncIfNeeded")
 	fdWG.Wait()
@@ -102,29 +170,21 @@ func TestBadPrePrepare(t *testing.T) {
 
 	end.Wait()
 
+	view.ProposalSequence = 0
+
 	// check prePrepare with verifier returning error
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(errors.New(""))
 	view.Verifier = verifier
 	end = view.Start()
 
-	msg = &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				View:     1,
-				Seq:      0,
-				Proposal: &protos.Proposal{},
-			},
-		},
-	}
-
 	// sent from node who is not the leader, simply ignore
-	view.HandleMessage(2, msg)
+	view.HandleMessage(2, prePrepare)
 
 	// sent from the leader
 	syncWG.Add(1)
 	fdWG.Add(1)
-	view.HandleMessage(1, msg)
+	view.HandleMessage(1, prePrepare)
 	<-verifyLog
 	syncWG.Wait()
 	fdWG.Wait()
@@ -135,7 +195,7 @@ func TestBadPrePrepare(t *testing.T) {
 
 func TestBadPrepare(t *testing.T) {
 	// Ensure that a prepare with a wrong view number sent by the leader causes a view abort,
-	// and that a prepare with a wrong digest doesn't pass inspection
+	// and that a prepare with a wrong digest doesn't pass inspection.
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
@@ -173,7 +233,7 @@ func TestBadPrepare(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -182,81 +242,40 @@ func TestBadPrepare(t *testing.T) {
 	}
 	end := view.Start()
 
-	pp := &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				View: 1,
-				Seq:  0,
-				Proposal: &protos.Proposal{
-					Header:               []byte{0},
-					Payload:              []byte{1},
-					Metadata:             []byte{2},
-					VerificationSequence: 1,
-				},
-			},
-		},
-	}
-
 	commWG.Add(1)
-	view.HandleMessage(1, pp)
+	view.HandleMessage(1, prePrepare)
 	commWG.Wait()
 
-	proposal := types.Proposal{
-		Header:               []byte{0},
-		Payload:              []byte{1},
-		Metadata:             []byte{2},
-		VerificationSequence: 1,
-	}
-	digest := proposal.Digest()
-
 	// prepare with wrong view
-	prepare := &protos.Message{
-		Content: &protos.Message_Prepare{
-			Prepare: &protos.Prepare{
-				View:   2,
-				Seq:    0,
-				Digest: digest,
-			},
-		},
-	}
+	prepareWronngView := proto.Clone(prepare).(*protos.Message)
+	prepareWronngViewGet := prepareWronngView.GetPrepare()
+	prepareWronngViewGet.View = 2
 
 	// sent from the leader
 	syncWG.Add(1)
 	fdWG.Add(1)
-	view.HandleMessage(1, prepare)
+	view.HandleMessage(1, prepareWronngView)
 	syncWG.Wait()
 	fdWG.Wait()
 
 	end.Wait()
 
+	view.ProposalSequence = 0
+
 	end = view.Start()
 
 	commWG.Add(1)
-	view.HandleMessage(1, pp)
+	view.HandleMessage(1, prePrepare)
 	commWG.Wait()
 
-	wrongProposal := types.Proposal{
-		Header:               []byte{1},
-		Payload:              []byte{2},
-		Metadata:             []byte{3},
-		VerificationSequence: 1,
-	}
-	wrongDigest := wrongProposal.Digest()
-
 	// prepare with wrong digest
-	prepare = &protos.Message{
-		Content: &protos.Message_Prepare{
-			Prepare: &protos.Prepare{
-				View:   1,
-				Seq:    0,
-				Digest: wrongDigest,
-			},
-		},
-	}
+	prepareWronngDigest := proto.Clone(prepare).(*protos.Message)
+	prepareWronngDigestGet := prepareWronngDigest.GetPrepare()
+	prepareWronngDigestGet.Digest = wrongDigest
 
-	view.HandleMessage(1, prepare)
+	view.HandleMessage(1, prepareWronngDigest)
 	<-digestLog
-	view.HandleMessage(2, prepare)
+	view.HandleMessage(2, prepareWronngDigest)
 	<-digestLog
 	signer.AssertNotCalled(t, "SignProposal", mock.Anything)
 
@@ -266,7 +285,7 @@ func TestBadPrepare(t *testing.T) {
 }
 
 func TestBadCommit(t *testing.T) {
-	// Ensure that a commit with a wrong digest or a bad signature doesn't pass inspection
+	// Ensure that a commit with a wrong digest or a bad signature doesn't pass inspection.
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
@@ -298,7 +317,7 @@ func TestBadCommit(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -307,85 +326,20 @@ func TestBadCommit(t *testing.T) {
 	}
 	end := view.Start()
 
-	pp := &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				View: 1,
-				Seq:  0,
-				Proposal: &protos.Proposal{
-					Header:               []byte{0},
-					Payload:              []byte{1},
-					Metadata:             []byte{2},
-					VerificationSequence: 1,
-				},
-			},
-		},
-	}
-
-	view.HandleMessage(1, pp)
-
-	proposal := types.Proposal{
-		Header:               []byte{0},
-		Payload:              []byte{1},
-		Metadata:             []byte{2},
-		VerificationSequence: 1,
-	}
-	digest := proposal.Digest()
-
-	prepare := &protos.Message{
-		Content: &protos.Message_Prepare{
-			Prepare: &protos.Prepare{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-			},
-		},
-	}
+	view.HandleMessage(1, prePrepare)
 
 	view.HandleMessage(1, prepare)
 	view.HandleMessage(2, prepare)
 
-	wrongProposal := types.Proposal{
-		Header:               []byte{1},
-		Payload:              []byte{2},
-		Metadata:             []byte{3},
-		VerificationSequence: 1,
-	}
-	wrongDigest := wrongProposal.Digest()
-
 	// commit with wrong digest
-	commit := &protos.Message{
-		Content: &protos.Message_Commit{
-			Commit: &protos.Commit{
-				View:   1,
-				Seq:    0,
-				Digest: wrongDigest,
-				Signature: &protos.Signature{
-					Signer: 1,
-					Value:  []byte{4},
-				},
-			},
-		},
-	}
+	commitWrongDigest := proto.Clone(commit1).(*protos.Message)
+	commitWrongDigestGet := commitWrongDigest.GetCommit()
+	commitWrongDigestGet.Digest = wrongDigest
 
-	view.HandleMessage(1, commit)
+	view.HandleMessage(1, commitWrongDigest)
 	<-digestLog
 
-	commit = &protos.Message{
-		Content: &protos.Message_Commit{
-			Commit: &protos.Commit{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-				Signature: &protos.Signature{
-					Signer: 2,
-					Value:  []byte{4},
-				},
-			},
-		},
-	}
-
-	view.HandleMessage(2, commit)
+	view.HandleMessage(2, commit2)
 	<-verifyLog
 
 	view.Abort()
@@ -393,7 +347,7 @@ func TestBadCommit(t *testing.T) {
 }
 
 func TestNormalPath(t *testing.T) {
-	// A test that takes a view through all 3 phases (prePrepare, prepare, and commit) until it reaches a decision
+	// A test that takes a view through all 3 phases (prePrepare, prepare, and commit) until it reaches a decision.
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
@@ -431,7 +385,7 @@ func TestNormalPath(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -441,42 +395,9 @@ func TestNormalPath(t *testing.T) {
 	}
 	end := view.Start()
 
-	pp := &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				View: 1,
-				Seq:  0,
-				Proposal: &protos.Proposal{
-					Header:               []byte{0},
-					Payload:              []byte{1},
-					Metadata:             []byte{2},
-					VerificationSequence: 1,
-				},
-			},
-		},
-	}
-
 	commWG.Add(1)
-	view.HandleMessage(1, pp)
+	view.HandleMessage(1, prePrepare)
 	commWG.Wait()
-
-	proposal := types.Proposal{
-		Header:               []byte{0},
-		Payload:              []byte{1},
-		Metadata:             []byte{2},
-		VerificationSequence: 1,
-	}
-	digest := proposal.Digest()
-
-	prepare := &protos.Message{
-		Content: &protos.Message_Prepare{
-			Prepare: &protos.Prepare{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-			},
-		},
-	}
 
 	commWG.Add(1)
 	view.HandleMessage(1, prepare)
@@ -484,45 +405,157 @@ func TestNormalPath(t *testing.T) {
 	commWG.Wait()
 
 	deciderWG.Add(1)
-	commit1 := &protos.Message{
-		Content: &protos.Message_Commit{
-			Commit: &protos.Commit{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-				Signature: &protos.Signature{
-					Signer: 1,
-					Value:  []byte{4},
-				},
-			},
-		},
-	}
 	view.HandleMessage(1, commit1)
-	commit2 := &protos.Message{
-		Content: &protos.Message_Commit{
-			Commit: &protos.Commit{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
-				Signature: &protos.Signature{
-					Signer: 2,
-					Value:  []byte{4},
-				},
-			},
-		},
-	}
 	view.HandleMessage(2, commit2)
 	deciderWG.Wait()
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs := <-decidedSigs
-	assert.Equal(t, 2, len(dSigs))
+	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		}
+	}
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	commWG.Add(1)
+	view.HandleMessage(1, prePrepareNext)
+	commWG.Wait()
+
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	commWG.Add(1)
+	view.HandleMessage(1, prepareNext)
+	view.HandleMessage(2, prepareNext)
+	commWG.Wait()
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+
+	deciderWG.Add(1)
+	view.HandleMessage(1, commit1Next)
+	view.HandleMessage(2, commit2Next)
+	deciderWG.Wait()
+	dProp = <-decidedProposal
+	assert.Equal(t, proposal, dProp)
+	dSigs = <-decidedSigs
+	assert.Equal(t, 3, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
 
 	view.Abort()
 	end.Wait()
+}
+
+func TestTwoSequences(t *testing.T) {
+	// A test that takes a view through all 3 phases of two consecutive sequences,
+	// when all messages are sent in advanced for both sequences.
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	synchronizer := &mocks.Synchronizer{}
+	synchronizer.On("SyncIfNeeded", mock.Anything)
+	fd := &mocks.FailureDetector{}
+	fd.On("Complain", mock.Anything)
+	comm := &mocks.Comm{}
+	comm.On("Broadcast", mock.Anything)
+	decider := &mocks.Decider{}
+	deciderWG := sync.WaitGroup{}
+	decidedProposal := make(chan types.Proposal, 1)
+	decidedSigs := make(chan []types.Signature, 1)
+	decider.On("Decide", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		deciderWG.Done()
+		proposal, _ := args.Get(0).(types.Proposal)
+		decidedProposal <- proposal
+		sigs, _ := args.Get(1).([]types.Signature)
+		decidedSigs <- sigs
+	})
+	verifier := &mocks.Verifier{}
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	signer := &mocks.Signer{}
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		Id:    4,
+		Value: []byte{4},
+	})
+	view := &bft.View{
+		Logger:           log,
+		N:                4,
+		LeaderID:         1,
+		Number:           1,
+		ProposalSequence: 0,
+		Sync:             synchronizer,
+		FailureDetector:  fd,
+		Comm:             comm,
+		Decider:          decider,
+		Verifier:         verifier,
+		Signer:           signer,
+	}
+	end := view.Start()
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+
+	view.HandleMessage(1, prePrepare)
+	view.HandleMessage(1, prePrepareNext)
+
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+
+	view.HandleMessage(1, prepare)
+	view.HandleMessage(1, prepareNext)
+	view.HandleMessage(2, prepare)
+	view.HandleMessage(2, prepareNext)
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+
+	deciderWG.Add(2)
+	view.HandleMessage(1, commit1)
+	view.HandleMessage(1, commit1Next)
+	view.HandleMessage(2, commit2)
+	view.HandleMessage(2, commit2Next)
+	deciderWG.Wait()
+	dProp := <-decidedProposal
+	assert.Equal(t, proposal, dProp)
+	dSigs := <-decidedSigs
+	assert.Equal(t, 3, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		}
+	}
+	dProp = <-decidedProposal
+	assert.Equal(t, proposal, dProp)
+	dSigs = <-decidedSigs
+	assert.Equal(t, 3, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		}
+	}
+
+	view.Abort()
+	end.Wait()
+
 }

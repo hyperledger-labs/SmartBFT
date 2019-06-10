@@ -8,7 +8,6 @@ package bft
 import (
 	"math"
 	"sync"
-	"sync/atomic"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
@@ -72,7 +71,7 @@ type View struct {
 	Comm             Comm
 	Verifier         Verifier
 	Signer           Signer
-	ProposalSequence *uint64 // should be accessed atomically
+	ProposalSequence uint64
 	PrevHeader       []byte
 	// Runtime
 	incMsgs   chan *incMsg
@@ -85,6 +84,8 @@ type View struct {
 	nextCommits  *voteSet
 
 	abortChan chan struct{}
+
+	nextSeqLock sync.RWMutex // a lock on the sequence and all votes
 }
 
 func (v *View) Start() Future {
@@ -190,19 +191,22 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// but if we got a prepare or commit for sequence i,
 	// when we're in sequence i+1 then we should still send a prepare/commit again.
 	// leaving this as a task for now.
-	currentProposalSeq := atomic.LoadUint64(v.ProposalSequence)
+
+	v.nextSeqLock.RLock()
+	defer v.nextSeqLock.RUnlock()
+
 	msgProposalSeq := proposalSequence(m)
 
 	// This message is either for this proposal or the next one (we might be behind the rest)
-	if msgProposalSeq != currentProposalSeq && msgProposalSeq != currentProposalSeq+1 {
-		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, currentProposalSeq)
+	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
+		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, v.ProposalSequence)
 		return
 	}
 
-	msgForNextProposal := msgProposalSeq == currentProposalSeq+1
+	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		v.handlePrePrepare(sender, pp)
+		v.handlePrePrepare(sender, pp, v.ProposalSequence)
 		return
 	}
 
@@ -225,7 +229,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 }
 
-func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
+func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare, seq uint64) {
 	if pp.Proposal == nil {
 		v.Logger.Warnf("Got pre-prepare with empty proposal")
 		return
@@ -248,8 +252,7 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 		// A proposal is currently being handled.
 		// Log a warning because we shouldn't get 2 proposals from the leader within such a short time.
 		// We can have an outstanding proposal in the channel, but not more than 1.
-		currentProposalSeq := atomic.LoadUint64(v.ProposalSequence)
-		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, currentProposalSeq)
+		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, seq)
 	}
 }
 
@@ -260,19 +263,37 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
+
+			// go to next sequence
+			v.nextSeqLock.Lock()
+
+			v.ProposalSequence++
+
+			// swap next prepares
+			tmpVotes := v.prepares
+			v.prepares = v.nextPrepares
+			tmpVotes.clear(v.N)
+			v.nextPrepares = tmpVotes
+
+			// swap next commits
+			tmpVotes = v.commits
+			v.commits = v.nextCommits
+			tmpVotes.clear(v.N)
+			v.nextCommits = tmpVotes
+
+			v.nextSeqLock.Unlock()
 		}
 	}
 }
 
 func (v *View) doStep() {
-	proposalSequence := atomic.LoadUint64(v.ProposalSequence)
-	proposal := v.processProposal(proposalSequence)
+	proposal := v.processProposal(v.ProposalSequence)
 	if proposal == nil {
 		// Aborted view
 		return
 	}
 
-	v.processPrepares(proposal, proposalSequence)
+	v.processPrepares(proposal, v.ProposalSequence)
 
 	signatures := v.processCommits(proposal)
 	if len(signatures) == 0 {
@@ -389,6 +410,8 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
+	mySig := v.Signer.SignProposal(*proposal)
+	signatures = append(signatures, *mySig)
 	v.Decider.Decide(*proposal, signatures)
 }
 
