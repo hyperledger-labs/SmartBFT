@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 
+	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
@@ -81,7 +82,10 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 }
 
 func (n *Node) Broadcast(m *protos.Message) {
-	for _, out := range n.out {
+	for receiver, out := range n.out {
+		if n.id == receiver {
+			continue
+		}
 		out <- m
 	}
 }
@@ -97,7 +101,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 		txn := TransactionFromBytes(rawTxn)
 		txns = append(txns, Transaction{
 			ClientID: txn.ClientID,
-			Id:       txn.ClientID,
+			Id:       txn.Id,
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)
@@ -117,6 +121,7 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 		stopChan:    make(chan struct{}),
 	}
 	consensus := &smartbft.Consensus{
+		SelfID:           id,
 		Logger:           logger,
 		Comm:             node,
 		Signer:           node,
@@ -128,13 +133,29 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 		WAL1:             &wal.EphemeralWAL{},
 		WAL2:             &wal.EphemeralWAL{},
 	}
+	view := &algorithm.View{
+		Comm:            node,
+		N:               4,
+		FailureDetector: consensus,
+		Sync:            consensus,
+		Logger:          logger,
+		Decider:         consensus,
+		Signer:          node,
+		Verifier:        node,
+	}
+	consensus.View = view
 	node.consensus = consensus
+	consensus.Start()
+	node.Start()
 	return node
 }
 
 func (n *Node) Start() {
 	for id, in := range n.in {
-		go func(id uint64) {
+		if id == n.id {
+			continue
+		}
+		go func(id uint64, in <-chan *protos.Message) {
 			for {
 				select {
 				case <-n.stopChan:
@@ -143,12 +164,8 @@ func (n *Node) Start() {
 					n.consensus.HandleMessage(id, msg)
 				}
 			}
-		}(uint64(id))
+		}(uint64(id), in)
 	}
-}
-
-func (n *Node) HandleMessage(from uint64, message *protos.Message) {
-
 }
 
 func computeDigest(rawBytes []byte) string {

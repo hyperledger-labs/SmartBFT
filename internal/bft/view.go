@@ -108,6 +108,12 @@ func (v *View) Start() Future {
 	return &viewEnds
 }
 
+func (v *View) Sequence() uint64 {
+	v.nextSeqLock.RLock()
+	defer v.nextSeqLock.RUnlock()
+	return v.ProposalSequence
+}
+
 func (v *View) processMessages() {
 	v.setupVotes()
 
