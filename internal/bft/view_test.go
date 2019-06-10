@@ -506,12 +506,7 @@ func TestTwoSequences(t *testing.T) {
 	}
 	end := view.Start()
 
-	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
-	prePrepareNextGet := prePrepareNext.GetPrePrepare()
-	prePrepareNextGet.Seq = 1
-
 	view.HandleMessage(1, prePrepare)
-	view.HandleMessage(1, prePrepareNext)
 
 	prepareNext := proto.Clone(prepare).(*protos.Message)
 	prepareNextGet := prepareNext.GetPrepare()
@@ -535,6 +530,13 @@ func TestTwoSequences(t *testing.T) {
 	view.HandleMessage(1, commit1Next)
 	view.HandleMessage(2, commit2)
 	view.HandleMessage(2, commit2Next)
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+
+	view.HandleMessage(1, prePrepareNext)
+
 	deciderWG.Wait()
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
