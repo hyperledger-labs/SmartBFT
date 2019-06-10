@@ -106,7 +106,7 @@ func TestViewBasic(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 	}
 	end := view.Start()
 	view.Abort()
@@ -142,7 +142,7 @@ func TestBadPrePrepare(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 	}
@@ -169,6 +169,8 @@ func TestBadPrePrepare(t *testing.T) {
 	fd.AssertCalled(t, "Complain")
 
 	end.Wait()
+
+	view.ProposalSequence = 0
 
 	// check prePrepare with verifier returning error
 	verifier := &mocks.Verifier{}
@@ -231,7 +233,7 @@ func TestBadPrepare(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -257,6 +259,8 @@ func TestBadPrepare(t *testing.T) {
 	fdWG.Wait()
 
 	end.Wait()
+
+	view.ProposalSequence = 0
 
 	end = view.Start()
 
@@ -313,7 +317,7 @@ func TestBadCommit(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -381,7 +385,7 @@ func TestNormalPath(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
@@ -407,6 +411,43 @@ func TestNormalPath(t *testing.T) {
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs := <-decidedSigs
+	assert.Equal(t, 3, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		}
+	}
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	commWG.Add(1)
+	view.HandleMessage(1, prePrepareNext)
+	commWG.Wait()
+
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	commWG.Add(1)
+	view.HandleMessage(1, prepareNext)
+	view.HandleMessage(2, prepareNext)
+	commWG.Wait()
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+
+	deciderWG.Add(1)
+	view.HandleMessage(1, commit1Next)
+	view.HandleMessage(2, commit2Next)
+	deciderWG.Wait()
+	dProp = <-decidedProposal
+	assert.Equal(t, proposal, dProp)
+	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
 		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
@@ -455,7 +496,7 @@ func TestTwoSequences(t *testing.T) {
 		N:                4,
 		LeaderID:         1,
 		Number:           1,
-		ProposalSequence: new(uint64),
+		ProposalSequence: 0,
 		Sync:             synchronizer,
 		FailureDetector:  fd,
 		Comm:             comm,
