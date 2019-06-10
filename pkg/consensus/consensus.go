@@ -6,11 +6,9 @@
 package consensus
 
 import (
-	"sync"
-
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
-	types "github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/protos"
 )
 
@@ -18,6 +16,7 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
+	SelfID           int
 	Application      bft.Application
 	Comm             bft.Comm
 	Assembler        bft.Assembler
@@ -28,7 +27,7 @@ type Consensus struct {
 	RequestInspector bft.RequestInspector
 	Synchronizer     bft.Synchronizer
 	Logger           bft.Logger
-	view             *algorithm.View
+	View             *algorithm.View
 }
 
 func (c *Consensus) Complain() {
@@ -49,7 +48,7 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	c.view = &algorithm.View{
+	c.View = &algorithm.View{
 		Verifier:        c.Verifier,
 		Signer:          c.Signer,
 		Comm:            c.Comm,
@@ -62,16 +61,42 @@ func (c *Consensus) Start() Future {
 		PrevHeader:      nil,
 		N:               4,
 	}
-	var wg sync.WaitGroup
-	// TODO: start an actual node and run it...
-	return &wg
+	future := c.View.Start()
+	return future
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
-	c.view.HandleMessage(sender, m)
+	if algorithm.IsViewMessage(m) {
+		c.View.HandleMessage(sender, m)
+	}
+
 }
 
 // SubmitRequest submits a request to be total ordered into the consensus
 func (c *Consensus) SubmitRequest(req []byte) {
+	if !c.amLeader() {
+		return
+	}
 
+	proposal, _ := c.Assembler.AssembleProposal(nil, [][]byte{req})
+	msg := &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				Seq: c.View.Sequence(),
+				Proposal: &protos.Proposal{
+					Payload:  proposal.Payload,
+					Header:   proposal.Header,
+					Metadata: proposal.Metadata,
+				},
+			},
+		},
+	}
+
+	c.Comm.Broadcast(msg)
+	// Send the message to yourself
+	c.View.HandleMessage(uint64(c.SelfID), msg)
+}
+
+func (c *Consensus) amLeader() bool {
+	return c.SelfID == 0
 }

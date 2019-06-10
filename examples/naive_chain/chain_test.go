@@ -64,34 +64,43 @@ func TestBlockHeader(t *testing.T) {
 }
 
 func TestChain(t *testing.T) {
-
-	quitChan := make(chan struct{})
-	defer close(quitChan)
-
-	network := make(map[int]chan *protos.Message)
-	n := 10
+	network := make(map[int]map[int]chan *protos.Message)
+	n := 4
 
 	chains := make(map[int]*Chain)
 
 	for id := 0; id < n; id++ {
-		network[id] = make(chan *protos.Message)
+		network[id] = make(map[int]chan *protos.Message)
+		for i := 0; i < n; i++ {
+			network[id][i] = make(chan *protos.Message)
+		}
 	}
 
 	for id := 0; id < n; id++ {
-		chains[id] = setupNode(t, id, n, network, quitChan)
+		chains[id] = setupNode(t, id, n, network)
 	}
 
+	chains[0].Order(Transaction{
+		ClientID: "alice",
+		Id:       "1",
+	})
+
+	for _, chain := range chains {
+		block := chain.Listen()
+		assert.Equal(t, uint64(0), block.Sequence)
+		assert.Equal(t, []Transaction{{Id: "1", ClientID: "alice"}}, block.Transactions)
+	}
 }
 
-func setupNode(t *testing.T, id, n int, network map[int]chan *protos.Message, abortChan <-chan struct{}) *Chain {
+func setupNode(t *testing.T, id, n int, network map[int]map[int]chan *protos.Message) *Chain {
 	ingress := make(Ingress)
 	for from := 0; from < n; from++ {
-		ingress[from] = network[id]
+		ingress[from] = network[id][from]
 	}
 
 	egress := make(Egress)
 	for to := 0; to < n; to++ {
-		egress[to] = network[to]
+		egress[to] = network[to][id]
 	}
 
 	basicLog, err := zap.NewDevelopment()
@@ -100,23 +109,5 @@ func setupNode(t *testing.T, id, n int, network map[int]chan *protos.Message, ab
 
 	chain := NewChain(id, ingress, egress, logger)
 
-	for from := 0; from < n; from++ {
-		if from == id {
-			continue
-		}
-		go listenForMessages(from, ingress, chain.node.HandleMessage, abortChan)
-	}
-
 	return chain
-}
-
-func listenForMessages(from int, ingress Ingress, processMsg func(from uint64, msg *protos.Message), abortChan <-chan struct{}) {
-	for {
-		select {
-		case msg := <-ingress[from]:
-			processMsg(uint64(from), msg)
-		case <-abortChan:
-			return
-		}
-	}
 }
