@@ -407,9 +407,9 @@ func TestNormalPath(t *testing.T) {
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs := <-decidedSigs
-	assert.Equal(t, 2, len(dSigs))
+	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
@@ -498,18 +498,18 @@ func TestTwoSequences(t *testing.T) {
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs := <-decidedSigs
-	assert.Equal(t, 2, len(dSigs))
+	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
 	dProp = <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs = <-decidedSigs
-	assert.Equal(t, 2, len(dSigs))
+	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 {
+		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}

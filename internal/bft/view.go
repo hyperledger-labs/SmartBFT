@@ -408,6 +408,8 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
+	mySig := v.Signer.SignProposal(*proposal)
+	signatures = append(signatures, *mySig)
 	v.Decider.Decide(*proposal, signatures)
 }
 
