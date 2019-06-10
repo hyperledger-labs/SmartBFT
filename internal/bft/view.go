@@ -431,8 +431,8 @@ func (v *View) Abort() {
 }
 
 func (v *View) quorum() int {
-	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
-	return 2*f + 1
+	f := int(math.Floor(float64(v.N) / 3.0))
+	return int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
 }
 
 type voteSet struct {
