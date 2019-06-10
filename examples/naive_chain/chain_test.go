@@ -1,9 +1,16 @@
+// Copyright IBM Corp. All Rights Reserved.
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
 package naive
 
 import (
 	"testing"
 
+	"github.com/SmartBFT-Go/consensus/protos"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestTxn(t *testing.T) {
@@ -57,5 +64,62 @@ func TestBlockHeader(t *testing.T) {
 }
 
 func TestChain(t *testing.T) {
-	//network := make(map[int]chan protos.Message)
+
+	quitChan := make(chan struct{})
+	defer close(quitChan)
+
+
+
+	network := make(map[int]chan *protos.Message)
+	n := 10
+
+	chains := make(map[int]*Chain)
+
+	for id := 0; id < n; id++ {
+		network[id] = make(chan *protos.Message)
+	}
+
+	for id := 0; id < n; id++ {
+		chains[id] = setupNode(t, id, n, network, quitChan)
+	}
+
+	
+}
+
+func setupNode(t *testing.T, id, n int, network map[int]chan *protos.Message, abortChan <-chan struct{}) *Chain {
+	ingress := make(Ingress)
+	for from := 0; from < n; from++ {
+		ingress[from] = network[id]
+	}
+
+	egress := make(Egress)
+	for to := 0; to < n; to++ {
+		egress[to] = network[to]
+	}
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	chain := NewChain(id, ingress, egress, logger)
+
+	for from := 0; from < n; from++ {
+		if from == id {
+			continue
+		}
+		go listenForMessages(from, ingress, chain.node.HandleMessage, abortChan)
+	}
+
+	return chain
+}
+
+func listenForMessages(from int, ingress Ingress, processMsg func(from uint64, msg *protos.Message), abortChan <-chan struct{}) {
+	for {
+		select {
+		case msg := <-ingress[from]:
+			processMsg(uint64(from), msg)
+		case <-abortChan:
+			return
+		}
+	}
 }

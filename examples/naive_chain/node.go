@@ -147,6 +147,10 @@ func (n *Node) Start() {
 	}
 }
 
+func (n *Node) HandleMessage(from uint64, message *protos.Message) {
+
+}
+
 func computeDigest(rawBytes []byte) string {
 	h := sha256.New()
 	h.Write(rawBytes)
