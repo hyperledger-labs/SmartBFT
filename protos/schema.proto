@@ -67,6 +67,7 @@ message SignedViewData {
 }
 
 message NewView {
+    repeated string junk = 1;
     repeated SignedViewData signed_view_data = 2;
 }
 
