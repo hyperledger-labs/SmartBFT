@@ -260,14 +260,25 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
-			// swap next votes
+			// swap next prepares
+			v.prepares.VotesLock.Lock()
+			v.nextPrepares.VotesLock.Lock()
 			tmpVotes := v.prepares
 			v.prepares = v.nextPrepares
 			tmpVotes.clear(v.N)
+			v.nextPrepares = tmpVotes
+			v.prepares.VotesLock.Unlock()
+			v.nextPrepares.VotesLock.Unlock()
+
+			// swap next commits
+			v.commits.VotesLock.Lock()
+			v.nextCommits.VotesLock.Lock()
 			tmpVotes = v.commits
 			v.commits = v.nextCommits
 			tmpVotes.clear(v.N)
 			v.nextCommits = tmpVotes
+			v.commits.VotesLock.Unlock()
+			v.nextCommits.VotesLock.Unlock()
 		}
 	}
 }
@@ -423,6 +434,7 @@ type voteSet struct {
 	validVote func(voter uint64, message *protos.Message) bool
 	voted     map[uint64]struct{}
 	votes     chan *protos.Message
+	VotesLock sync.RWMutex
 }
 
 func (vs *voteSet) clear(n int) {
@@ -436,6 +448,9 @@ func (vs *voteSet) clear(n int) {
 }
 
 func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
+	vs.VotesLock.RLock()
+	defer vs.VotesLock.RUnlock()
+
 	if !vs.validVote(voter, message) {
 		return
 	}
