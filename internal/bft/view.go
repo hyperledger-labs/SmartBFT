@@ -206,7 +206,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		v.handlePrePrepare(sender, pp, v.ProposalSequence)
+		v.handlePrePrepare(sender, pp)
 		return
 	}
 
@@ -229,7 +229,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 }
 
-func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare, seq uint64) {
+func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
 	if pp.Proposal == nil {
 		v.Logger.Warnf("Got pre-prepare with empty proposal")
 		return
@@ -252,7 +252,7 @@ func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare, seq uint64
 		// A proposal is currently being handled.
 		// Log a warning because we shouldn't get 2 proposals from the leader within such a short time.
 		// We can have an outstanding proposal in the channel, but not more than 1.
-		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, seq)
+		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, v.ProposalSequence)
 	}
 }
 
@@ -287,13 +287,13 @@ func (v *View) run() {
 }
 
 func (v *View) doStep() {
-	proposal := v.processProposal(v.ProposalSequence)
+	proposal := v.processProposal()
 	if proposal == nil {
 		// Aborted view
 		return
 	}
 
-	v.processPrepares(proposal, v.ProposalSequence)
+	v.processPrepares(proposal)
 
 	signatures := v.processCommits(proposal)
 	if len(signatures) == 0 {
@@ -303,7 +303,7 @@ func (v *View) doStep() {
 	v.maybeDecide(proposal, signatures)
 }
 
-func (v *View) processProposal(proposalSequence uint64) *types.Proposal {
+func (v *View) processProposal() *types.Proposal {
 	var proposal types.Proposal
 	select {
 	case <-v.abortChan:
@@ -323,7 +323,7 @@ func (v *View) processProposal(proposalSequence uint64) *types.Proposal {
 	msg := &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				Seq:    proposalSequence,
+				Seq:    v.ProposalSequence,
 				View:   v.Number,
 				Digest: proposal.Digest(),
 			},
@@ -334,7 +334,7 @@ func (v *View) processProposal(proposalSequence uint64) *types.Proposal {
 	return &proposal
 }
 
-func (v *View) processPrepares(proposal *types.Proposal, proposalSequence uint64) {
+func (v *View) processPrepares(proposal *types.Proposal) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 	quorum := v.quorum()
@@ -361,7 +361,7 @@ func (v *View) processPrepares(proposal *types.Proposal, proposalSequence uint64
 			Commit: &protos.Commit{
 				View:   v.Number,
 				Digest: expectedDigest,
-				Seq:    proposalSequence,
+				Seq:    v.ProposalSequence,
 				Signature: &protos.Signature{
 					Signer: sig.Id,
 					Value:  sig.Value,
