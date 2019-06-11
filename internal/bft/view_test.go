@@ -7,6 +7,7 @@ package bft_test
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"sync"
 	"testing"
@@ -116,114 +117,52 @@ func TestViewBasic(t *testing.T) {
 func TestQuorum(t *testing.T) {
 	// Ensure that quorum size is as expected.
 
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	verifyLog := make(chan struct{})
-	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 4, F is 1, and the quorum size is 3") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
+	type quorum struct {
+		N int
+		F int
+		Q int
+	}
+
+	quorums := []quorum{{4, 1, 3}, {5, 1, 4}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
+		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
+
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
 	comm := &mocks.Comm{}
 	comm.On("Broadcast", mock.Anything)
 	view := &bft.View{
-		Logger:           log,
-		N:                4,
 		LeaderID:         1,
 		Number:           1,
 		ProposalSequence: 0,
 		Verifier:         verifier,
 		Comm:             comm,
 	}
-	end := view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	verifyLog := make(chan struct{})
 
-	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 5, F is 1, and the quorum size is 4") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	view.Logger = log
-	view.N = 5
-	view.ProposalSequence = 0
-	end = view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
+	for _, testCase := range quorums {
+		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, fmt.Sprintf("The number of nodes (N) is %d,"+
+					" F is %d, and the quorum size is %d", testCase.N, testCase.F, testCase.Q)) {
+					verifyLog <- struct{}{}
+				}
+				return nil
+			})).Sugar()
 
-	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 9, F is 2, and the quorum size is 6") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	view.Logger = log
-	view.N = 9
-	view.ProposalSequence = 0
-	end = view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
+			view.Logger = log
+			view.N = testCase.N
+			view.ProposalSequence = 0
+			end := view.Start()
+			view.HandleMessage(1, prePrepare)
+			<-verifyLog // during processPrepares
+			view.Abort()
+			<-verifyLog // during processCommits
+			end.Wait()
+		})
+	}
 
-	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 10, F is 3, and the quorum size is 7") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	view.Logger = log
-	view.N = 10
-	view.ProposalSequence = 0
-	end = view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
-
-	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 11, F is 3, and the quorum size is 8") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	view.Logger = log
-	view.N = 11
-	view.ProposalSequence = 0
-	end = view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
-
-	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 12, F is 3, and the quorum size is 8") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	view.Logger = log
-	view.N = 12
-	view.ProposalSequence = 0
-	end = view.Start()
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog // during processPrepares
-	view.Abort()
-	<-verifyLog // during processCommits
-	end.Wait()
 }
 
 func TestBadPrePrepare(t *testing.T) {
