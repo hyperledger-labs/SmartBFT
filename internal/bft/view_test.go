@@ -113,6 +113,119 @@ func TestViewBasic(t *testing.T) {
 	end.Wait()
 }
 
+func TestQuorum(t *testing.T) {
+	// Ensure that quorum size is as expected.
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	verifyLog := make(chan struct{})
+	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 4, F is 1, and the quorum size is 3") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	verifier := &mocks.Verifier{}
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	comm := &mocks.Comm{}
+	comm.On("Broadcast", mock.Anything)
+	view := &bft.View{
+		Logger:           log,
+		N:                4,
+		LeaderID:         1,
+		Number:           1,
+		ProposalSequence: 0,
+		Verifier:         verifier,
+		Comm:             comm,
+	}
+	end := view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+
+	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 5, F is 1, and the quorum size is 4") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	view.Logger = log
+	view.N = 5
+	view.ProposalSequence = 0
+	end = view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+
+	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 9, F is 3, and the quorum size is 7") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	view.Logger = log
+	view.N = 9
+	view.ProposalSequence = 0
+	end = view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+
+	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 10, F is 3, and the quorum size is 7") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	view.Logger = log
+	view.N = 10
+	view.ProposalSequence = 0
+	end = view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+
+	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 11, F is 3, and the quorum size is 8") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	view.Logger = log
+	view.N = 11
+	view.ProposalSequence = 0
+	end = view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+
+	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 12, F is 4, and the quorum size is 9") {
+			verifyLog <- struct{}{}
+		}
+		return nil
+	})).Sugar()
+	view.Logger = log
+	view.N = 12
+	view.ProposalSequence = 0
+	end = view.Start()
+	view.HandleMessage(1, prePrepare)
+	<-verifyLog // during processPrepares
+	view.Abort()
+	<-verifyLog // during processCommits
+	end.Wait()
+}
+
 func TestBadPrePrepare(t *testing.T) {
 	// Ensure that a prePrepare with a wrong view number sent by the leader causes a view abort,
 	// and that if the same message is from a follower then it is simply ignored.
