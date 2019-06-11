@@ -123,16 +123,8 @@ func TestQuorum(t *testing.T) {
 		Q int
 	}
 
-	var quorums []quorum
-	quorums = append(quorums, quorum{4, 1, 3})
-	quorums = append(quorums, quorum{5, 1, 4})
-	quorums = append(quorums, quorum{6, 1, 4})
-	quorums = append(quorums, quorum{7, 2, 5})
-	quorums = append(quorums, quorum{8, 2, 6})
-	quorums = append(quorums, quorum{9, 2, 6})
-	quorums = append(quorums, quorum{10, 3, 7})
-	quorums = append(quorums, quorum{11, 3, 8})
-	quorums = append(quorums, quorum{12, 3, 8})
+	quorums := []quorum{{4, 1, 3}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
+		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
 
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
