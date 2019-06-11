@@ -437,7 +437,7 @@ func (v *View) Abort() {
 }
 
 func (v *View) quorum() int {
-	f := int(math.Floor(float64(v.N) / 3.0))
+	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
 	q := int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
 	v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)
 	return q

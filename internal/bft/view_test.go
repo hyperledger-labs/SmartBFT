@@ -162,7 +162,7 @@ func TestQuorum(t *testing.T) {
 	end.Wait()
 
 	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 9, F is 3, and the quorum size is 7") {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 9, F is 2, and the quorum size is 6") {
 			verifyLog <- struct{}{}
 		}
 		return nil
@@ -210,7 +210,7 @@ func TestQuorum(t *testing.T) {
 	end.Wait()
 
 	log = basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The number of nodes (N) is 12, F is 4, and the quorum size is 9") {
+		if strings.Contains(entry.Message, "The number of nodes (N) is 12, F is 3, and the quorum size is 8") {
 			verifyLog <- struct{}{}
 		}
 		return nil
