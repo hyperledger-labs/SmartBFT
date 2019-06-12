@@ -90,6 +90,17 @@ func TestChain(t *testing.T) {
 		assert.Equal(t, uint64(0), block.Sequence)
 		assert.Equal(t, []Transaction{{Id: "1", ClientID: "alice"}}, block.Transactions)
 	}
+
+	chains[0].Order(Transaction{
+		ClientID: "bob",
+		Id:       "2",
+	})
+
+	for _, chain := range chains {
+		block := chain.Listen()
+		assert.Equal(t, uint64(1), block.Sequence)
+		assert.Equal(t, []Transaction{{Id: "2", ClientID: "bob"}}, block.Transactions)
+	}
 }
 
 func setupNode(t *testing.T, id, n int, network map[int]map[int]chan *protos.Message) *Chain {

@@ -9,6 +9,8 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 
+	"sync/atomic"
+
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
@@ -22,7 +24,7 @@ type Egress map[int]chan<- *protos.Message
 
 type Node struct {
 	stopChan    chan struct{}
-	nextSeq     int
+	nextSeq     uint64
 	prevHash    string
 	id          int
 	in          Ingress
@@ -75,7 +77,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 		Header: BlockHeader{
 			PrevHash: n.prevHash,
 			DataHash: computeDigest(blockData),
-			Sequence: int64(n.nextSeq),
+			Sequence: int64(atomic.LoadUint64(&n.nextSeq)),
 		}.ToBytes(),
 		Payload: BlockData{Transactions: requests}.ToBytes(),
 	}, nil
@@ -105,6 +107,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)
+	atomic.AddUint64(&n.nextSeq, 1)
 	n.deliverChan <- &Block{
 		Sequence:     uint64(header.Sequence),
 		PrevHash:     header.PrevHash,
