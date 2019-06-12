@@ -85,7 +85,7 @@ type View struct {
 
 	abortChan chan struct{}
 
-	nextSeqLock sync.RWMutex // a lock on the sequence and all votes
+	lock sync.RWMutex // a lock on the sequence and all votes
 }
 
 func (v *View) Start() Future {
@@ -109,8 +109,8 @@ func (v *View) Start() Future {
 }
 
 func (v *View) Sequence() uint64 {
-	v.nextSeqLock.RLock()
-	defer v.nextSeqLock.RUnlock()
+	v.lock.RLock()
+	defer v.lock.RUnlock()
 	return v.ProposalSequence
 }
 
@@ -177,6 +177,7 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (v *View) processMsg(sender uint64, m *protos.Message) {
+	v.Logger.Debugf("Got message %v from %d", m, sender)
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
@@ -198,13 +199,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// when we're in sequence i+1 then we should still send a prepare/commit again.
 	// leaving this as a task for now.
 
-	v.nextSeqLock.RLock()
-	defer v.nextSeqLock.RUnlock()
+	v.lock.RLock()
 
 	msgProposalSeq := proposalSequence(m)
 
 	// This message is either for this proposal or the next one (we might be behind the rest)
-	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
+	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence-1 && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, v.ProposalSequence)
 		return
 	}
@@ -212,9 +212,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
+		v.lock.RUnlock()
 		v.handlePrePrepare(sender, pp)
 		return
 	}
+
+	defer v.lock.RUnlock()
 
 	if prp := m.GetPrepare(); prp != nil {
 		if msgForNextProposal {
@@ -308,10 +311,14 @@ func (v *View) processProposal() *types.Proposal {
 		return nil
 	}
 
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+
 	msg := &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				Seq:    v.ProposalSequence,
+				Seq:    seq,
 				View:   v.Number,
 				Digest: proposal.Digest(),
 			},
@@ -344,12 +351,16 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 
 	sig := v.Signer.SignProposal(*proposal)
 
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+
 	msg := &protos.Message{
 		Content: &protos.Message_Commit{
 			Commit: &protos.Commit{
 				View:   v.Number,
 				Digest: expectedDigest,
-				Seq:    v.ProposalSequence,
+				Seq:    seq,
 				Signature: &protos.Signature{
 					Signer: sig.Id,
 					Value:  sig.Value,
@@ -401,13 +412,23 @@ func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signatur
 	mySig := v.Signer.SignProposal(*proposal)
 	signatures = append(signatures, *mySig)
 	v.Decider.Decide(*proposal, signatures)
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+	v.Logger.Infof("Decided on %d", seq)
 }
 
 func (v *View) startNextSeq() {
-	v.nextSeqLock.Lock()
-	defer v.nextSeqLock.Unlock()
+	v.lock.Lock()
+	defer v.lock.Unlock()
+
+	prevSeq := v.ProposalSequence
 
 	v.ProposalSequence++
+
+	nextSeq := v.ProposalSequence
+
+	v.Logger.Infof("Sequence: %d-->%d", prevSeq, nextSeq)
 
 	// swap next prepares
 	tmpVotes := v.prepares
@@ -439,7 +460,7 @@ func (v *View) Abort() {
 func (v *View) quorum() int {
 	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
 	q := int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
-	v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)
+	//v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)
 	return q
 }
 
