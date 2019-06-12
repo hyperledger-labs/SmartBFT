@@ -126,23 +126,24 @@ func TestQuorum(t *testing.T) {
 	quorums := []quorum{{4, 1, 3}, {5, 1, 4}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
 		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
 
-	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
-	comm := &mocks.Comm{}
-	comm.On("Broadcast", mock.Anything)
-	view := &bft.View{
-		LeaderID:         1,
-		Number:           1,
-		ProposalSequence: 0,
-		Verifier:         verifier,
-		Comm:             comm,
-	}
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	verifyLog := make(chan struct{})
-
 	for _, testCase := range quorums {
 		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
+			fmt.Println(testCase.N, testCase.F)
+			verifier := &mocks.Verifier{}
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+			comm := &mocks.Comm{}
+			comm.On("Broadcast", mock.Anything)
+			view := &bft.View{
+				LeaderID:         1,
+				Number:           1,
+				ProposalSequence: 0,
+				Verifier:         verifier,
+				Comm:             comm,
+			}
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			verifyLog := make(chan struct{}, 1)
+
 			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 				if strings.Contains(entry.Message, fmt.Sprintf("The number of nodes (N) is %d,"+
 					" F is %d, and the quorum size is %d", testCase.N, testCase.F, testCase.Q)) {
@@ -156,9 +157,8 @@ func TestQuorum(t *testing.T) {
 			view.ProposalSequence = 0
 			end := view.Start()
 			view.HandleMessage(1, prePrepare)
-			<-verifyLog // during processPrepares
+			<-verifyLog
 			view.Abort()
-			<-verifyLog // during processCommits
 			end.Wait()
 		})
 	}

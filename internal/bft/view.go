@@ -82,8 +82,8 @@ type View struct {
 	// Next proposal
 	nextPrepares *voteSet
 	nextCommits  *voteSet
-
-	abortChan chan struct{}
+	quorum       int
+	abortChan    chan struct{}
 
 	lock sync.RWMutex // a lock on the sequence and all votes
 }
@@ -93,8 +93,12 @@ func (v *View) Start() Future {
 	v.proposals = make(chan types.Proposal, 1)
 	v.abortChan = make(chan struct{})
 
+	v.quorum = v.computeQuorumSize()
+
 	var viewEnds sync.WaitGroup
 	viewEnds.Add(2)
+
+	v.setupVotes()
 
 	go func() {
 		defer viewEnds.Done()
@@ -115,8 +119,6 @@ func (v *View) Sequence() uint64 {
 }
 
 func (v *View) processMessages() {
-	v.setupVotes()
-
 	for {
 		select {
 		case <-v.abortChan:
@@ -332,9 +334,8 @@ func (v *View) processProposal() *types.Proposal {
 func (v *View) processPrepares(proposal *types.Proposal) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
-	quorum := v.quorum()
 
-	for collectedDigests < quorum-1 {
+	for collectedDigests < v.quorum-1 {
 		select {
 		case <-v.abortChan:
 			return
@@ -375,9 +376,8 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]types.Signature)
-	quorum := v.quorum()
 
-	for len(signatures) < quorum-1 {
+	for len(signatures) < v.quorum-1 {
 		select {
 		case <-v.abortChan:
 			return nil
@@ -457,7 +457,7 @@ func (v *View) Abort() {
 	}
 }
 
-func (v *View) quorum() int {
+func (v *View) computeQuorumSize() int {
 	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
 	q := int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
 	v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)
