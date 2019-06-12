@@ -82,8 +82,8 @@ type View struct {
 	// Next proposal
 	nextPrepares *voteSet
 	nextCommits  *voteSet
-
-	abortChan chan struct{}
+	quorum       int
+	abortChan    chan struct{}
 
 	lock sync.RWMutex // a lock on the sequence and all votes
 }
@@ -92,6 +92,8 @@ func (v *View) Start() Future {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.proposals = make(chan types.Proposal, 1)
 	v.abortChan = make(chan struct{})
+
+	v.quorum = v.computeQuorumSize()
 
 	var viewEnds sync.WaitGroup
 	viewEnds.Add(2)
@@ -332,7 +334,7 @@ func (v *View) processProposal() *types.Proposal {
 func (v *View) processPrepares(proposal *types.Proposal) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
-	quorum := v.quorum()
+	quorum := v.computeQuorumSize()
 
 	for collectedDigests < quorum-1 {
 		select {
@@ -375,7 +377,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]types.Signature)
-	quorum := v.quorum()
+	quorum := v.computeQuorumSize()
 
 	for len(signatures) < quorum-1 {
 		select {
@@ -457,7 +459,7 @@ func (v *View) Abort() {
 	}
 }
 
-func (v *View) quorum() int {
+func (v *View) computeQuorumSize() int {
 	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
 	q := int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
 	v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)

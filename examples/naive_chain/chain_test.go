@@ -8,6 +8,8 @@ package naive
 import (
 	"testing"
 
+	"fmt"
+
 	"github.com/SmartBFT-Go/consensus/protos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
@@ -64,42 +66,22 @@ func TestBlockHeader(t *testing.T) {
 }
 
 func TestChain(t *testing.T) {
-	network := make(map[int]map[int]chan *protos.Message)
-	n := 4
+	chains := setupNetwork(t, 4)
+	leader := chains[0]
 
-	chains := make(map[int]*Chain)
+	blockCount := 100
 
-	for id := 0; id < n; id++ {
-		network[id] = make(map[int]chan *protos.Message)
-		for i := 0; i < n; i++ {
-			network[id][i] = make(chan *protos.Message)
+	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
+		leader.Order(Transaction{
+			ClientID: "alice",
+			Id:       fmt.Sprintf("tx%d", blockSeq),
+		})
+
+		for _, chain := range chains {
+			block := chain.Listen()
+			assert.Equal(t, uint64(blockSeq), block.Sequence)
+			assert.Equal(t, []Transaction{{Id: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
 		}
-	}
-
-	for id := 0; id < n; id++ {
-		chains[id] = setupNode(t, id, n, network)
-	}
-
-	chains[0].Order(Transaction{
-		ClientID: "alice",
-		Id:       "1",
-	})
-
-	for _, chain := range chains {
-		block := chain.Listen()
-		assert.Equal(t, uint64(0), block.Sequence)
-		assert.Equal(t, []Transaction{{Id: "1", ClientID: "alice"}}, block.Transactions)
-	}
-
-	chains[0].Order(Transaction{
-		ClientID: "bob",
-		Id:       "2",
-	})
-
-	for _, chain := range chains {
-		block := chain.Listen()
-		assert.Equal(t, uint64(1), block.Sequence)
-		assert.Equal(t, []Transaction{{Id: "2", ClientID: "bob"}}, block.Transactions)
 	}
 }
 
@@ -121,4 +103,22 @@ func setupNode(t *testing.T, id, n int, network map[int]map[int]chan *protos.Mes
 	chain := NewChain(id, ingress, egress, logger)
 
 	return chain
+}
+
+func setupNetwork(t *testing.T, n int) map[int]*Chain {
+	network := make(map[int]map[int]chan *protos.Message)
+
+	chains := make(map[int]*Chain)
+
+	for id := 0; id < n; id++ {
+		network[id] = make(map[int]chan *protos.Message)
+		for i := 0; i < n; i++ {
+			network[id][i] = make(chan *protos.Message)
+		}
+	}
+
+	for id := 0; id < n; id++ {
+		chains[id] = setupNode(t, id, n, network)
+	}
+	return chains
 }
