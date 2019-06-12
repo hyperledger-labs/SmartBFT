@@ -98,6 +98,8 @@ func (v *View) Start() Future {
 	var viewEnds sync.WaitGroup
 	viewEnds.Add(2)
 
+	v.setupVotes()
+
 	go func() {
 		defer viewEnds.Done()
 		v.processMessages()
@@ -117,8 +119,6 @@ func (v *View) Sequence() uint64 {
 }
 
 func (v *View) processMessages() {
-	v.setupVotes()
-
 	for {
 		select {
 		case <-v.abortChan:
@@ -334,9 +334,8 @@ func (v *View) processProposal() *types.Proposal {
 func (v *View) processPrepares(proposal *types.Proposal) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
-	quorum := v.computeQuorumSize()
 
-	for collectedDigests < quorum-1 {
+	for collectedDigests < v.quorum-1 {
 		select {
 		case <-v.abortChan:
 			return
@@ -377,9 +376,8 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]types.Signature)
-	quorum := v.computeQuorumSize()
 
-	for len(signatures) < quorum-1 {
+	for len(signatures) < v.quorum-1 {
 		select {
 		case <-v.abortChan:
 			return nil
