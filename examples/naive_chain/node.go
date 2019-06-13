@@ -8,10 +8,8 @@ package naive
 import (
 	"crypto/sha256"
 	"encoding/hex"
-
 	"sync/atomic"
 
-	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
@@ -123,7 +121,7 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 		deliverChan: deliverChan,
 		stopChan:    make(chan struct{}),
 	}
-	consensus := &smartbft.Consensus{
+	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
 		Logger:           logger,
 		Comm:             node,
@@ -136,19 +134,7 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 		WAL1:             &wal.EphemeralWAL{},
 		WAL2:             &wal.EphemeralWAL{},
 	}
-	view := &algorithm.View{
-		Comm:            node,
-		N:               4,
-		FailureDetector: consensus,
-		Sync:            consensus,
-		Logger:          logger,
-		Decider:         consensus,
-		Signer:          node,
-		Verifier:        node,
-	}
-	consensus.View = view
-	node.consensus = consensus
-	consensus.Start()
+	node.consensus.Start()
 	node.Start()
 	return node
 }

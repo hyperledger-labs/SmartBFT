@@ -112,12 +112,6 @@ func (v *View) Start() Future {
 	return &viewEnds
 }
 
-func (v *View) Sequence() uint64 {
-	v.lock.RLock()
-	defer v.lock.RUnlock()
-	return v.ProposalSequence
-}
-
 func (v *View) processMessages() {
 	for {
 		select {
@@ -179,7 +173,6 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (v *View) processMsg(sender uint64, m *protos.Message) {
-	v.Logger.Debugf("Got message %v from %d", m, sender)
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
@@ -202,11 +195,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// leaving this as a task for now.
 
 	v.lock.RLock()
+	defer v.lock.RUnlock()
 
 	msgProposalSeq := proposalSequence(m)
-
+	v.Logger.Debugf("Got message %v from %d with seq %d", m, sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
-	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence-1 && msgProposalSeq != v.ProposalSequence+1 {
+	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, v.ProposalSequence)
 		return
 	}
@@ -214,12 +208,9 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		v.lock.RUnlock()
 		v.handlePrePrepare(sender, pp)
 		return
 	}
-
-	defer v.lock.RUnlock()
 
 	if prp := m.GetPrepare(); prp != nil {
 		if msgForNextProposal {
