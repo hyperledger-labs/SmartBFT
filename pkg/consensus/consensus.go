@@ -6,6 +6,8 @@
 package consensus
 
 import (
+	"sync/atomic"
+
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -28,6 +30,7 @@ type Consensus struct {
 	Synchronizer     bft.Synchronizer
 	Logger           bft.Logger
 	View             *algorithm.View
+	nextSeq          uint64
 }
 
 func (c *Consensus) Complain() {
@@ -39,6 +42,7 @@ func (c *Consensus) SyncIfNeeded() {
 }
 
 func (c *Consensus) Decide(proposal types.Proposal, signatures []types.Signature) {
+	atomic.AddUint64(&c.nextSeq, 1)
 	c.Application.Deliver(proposal, signatures)
 }
 
@@ -82,7 +86,7 @@ func (c *Consensus) SubmitRequest(req []byte) {
 	msg := &protos.Message{
 		Content: &protos.Message_PrePrepare{
 			PrePrepare: &protos.PrePrepare{
-				Seq: c.View.Sequence(),
+				Seq: atomic.LoadUint64(&c.nextSeq),
 				Proposal: &protos.Proposal{
 					Payload:  proposal.Payload,
 					Header:   proposal.Header,

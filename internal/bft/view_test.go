@@ -128,22 +128,13 @@ func TestQuorum(t *testing.T) {
 
 	for _, testCase := range quorums {
 		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
-			fmt.Println(testCase.N, testCase.F)
 			verifier := &mocks.Verifier{}
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
 			comm := &mocks.Comm{}
 			comm.On("Broadcast", mock.Anything)
-			view := &bft.View{
-				LeaderID:         1,
-				Number:           1,
-				ProposalSequence: 0,
-				Verifier:         verifier,
-				Comm:             comm,
-			}
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			verifyLog := make(chan struct{}, 1)
-
 			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 				if strings.Contains(entry.Message, fmt.Sprintf("The number of nodes (N) is %d,"+
 					" F is %d, and the quorum size is %d", testCase.N, testCase.F, testCase.Q)) {
@@ -151,12 +142,16 @@ func TestQuorum(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-
-			view.Logger = log
-			view.N = testCase.N
-			view.ProposalSequence = 0
+			view := &bft.View{
+				LeaderID:         1,
+				Number:           1,
+				ProposalSequence: 0,
+				Verifier:         verifier,
+				Comm:             comm,
+				N:                testCase.N,
+				Logger:           log,
+			}
 			end := view.Start()
-			view.HandleMessage(1, prePrepare)
 			<-verifyLog
 			view.Abort()
 			end.Wait()
