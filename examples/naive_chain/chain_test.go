@@ -6,9 +6,8 @@
 package naive
 
 import (
-	"testing"
-
 	"fmt"
+	"testing"
 
 	"github.com/SmartBFT-Go/consensus/protos"
 	"github.com/stretchr/testify/assert"
