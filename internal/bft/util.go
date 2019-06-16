@@ -8,7 +8,7 @@ package bft
 import (
 	"math"
 
-	"github.com/SmartBFT-Go/consensus/protos"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 func IsViewMessage(m *protos.Message) bool {

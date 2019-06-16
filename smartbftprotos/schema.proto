@@ -6,7 +6,7 @@
 syntax = "proto3";
 
 
-package protos;
+package smartbftprotos;
 
 message Message {
     oneof content {
