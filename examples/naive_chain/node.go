@@ -14,7 +14,7 @@ import (
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
-	"github.com/SmartBFT-Go/consensus/protos"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 type Ingress map[int]<-chan *protos.Message

@@ -10,7 +10,7 @@ import (
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
-	"github.com/SmartBFT-Go/consensus/protos"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 type Future interface {
