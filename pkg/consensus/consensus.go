@@ -64,6 +64,7 @@ func (c *Consensus) Start() Future {
 		LeaderID:        0,
 		PrevHeader:      nil,
 		N:               4,
+		Quorum:          3,
 	}
 	future := c.View.Start()
 	return future

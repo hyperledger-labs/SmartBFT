@@ -7,7 +7,6 @@ package bft_test
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"sync"
 	"testing"
@@ -106,58 +105,13 @@ func TestViewBasic(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
 	}
 	end := view.Start()
 	view.Abort()
 	end.Wait()
-}
-
-func TestQuorum(t *testing.T) {
-	// Ensure that quorum size is as expected.
-
-	type quorum struct {
-		N int
-		F int
-		Q int
-	}
-
-	quorums := []quorum{{4, 1, 3}, {5, 1, 4}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
-		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
-
-	for _, testCase := range quorums {
-		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
-			verifier := &mocks.Verifier{}
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
-			comm := &mocks.Comm{}
-			comm.On("Broadcast", mock.Anything)
-			basicLog, err := zap.NewDevelopment()
-			assert.NoError(t, err)
-			verifyLog := make(chan struct{}, 1)
-			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-				if strings.Contains(entry.Message, fmt.Sprintf("The number of nodes (N) is %d,"+
-					" F is %d, and the quorum size is %d", testCase.N, testCase.F, testCase.Q)) {
-					verifyLog <- struct{}{}
-				}
-				return nil
-			})).Sugar()
-			view := &bft.View{
-				LeaderID:         1,
-				Number:           1,
-				ProposalSequence: 0,
-				Verifier:         verifier,
-				Comm:             comm,
-				N:                testCase.N,
-				Logger:           log,
-			}
-			end := view.Start()
-			<-verifyLog
-			view.Abort()
-			end.Wait()
-		})
-	}
-
 }
 
 func TestBadPrePrepare(t *testing.T) {
@@ -188,6 +142,7 @@ func TestBadPrePrepare(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
 		Sync:             synchronizer,
@@ -279,6 +234,7 @@ func TestBadPrepare(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
 		Sync:             synchronizer,
@@ -363,6 +319,7 @@ func TestBadCommit(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
 		Sync:             synchronizer,
@@ -399,10 +356,6 @@ func TestNormalPath(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	synchronizer := &mocks.Synchronizer{}
-	synchronizer.On("SyncIfNeeded", mock.Anything)
-	fd := &mocks.FailureDetector{}
-	fd.On("Complain", mock.Anything)
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
 	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
@@ -431,16 +384,19 @@ func TestNormalPath(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
 		Comm:             comm,
 		Decider:          decider,
 		Verifier:         verifier,
 		Signer:           signer,
 	}
 	end := view.Start()
+
+	commWG.Add(1)
+	view.Propose(proposal)
+	commWG.Wait()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
@@ -513,10 +469,6 @@ func TestTwoSequences(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	synchronizer := &mocks.Synchronizer{}
-	synchronizer.On("SyncIfNeeded", mock.Anything)
-	fd := &mocks.FailureDetector{}
-	fd.On("Complain", mock.Anything)
 	comm := &mocks.Comm{}
 	comm.On("Broadcast", mock.Anything)
 	decider := &mocks.Decider{}
@@ -542,10 +494,9 @@ func TestTwoSequences(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
 		Comm:             comm,
 		Decider:          decider,
 		Verifier:         verifier,
