@@ -145,7 +145,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
-func (c *Controller) startView() {
+func (c *Controller) startView(proposalSequence uint64) {
 	// TODO view builder according to metadata returned by sync
 	view := View{
 		N:                c.N,
@@ -159,7 +159,7 @@ func (c *Controller) startView() {
 		Comm:             c.Comm,
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
-		ProposalSequence: 0,         // TODO start with different proposal seq
+		ProposalSequence: proposalSequence,
 		PrevHeader:       []byte{0}, // TODO start with real prev header
 	}
 
@@ -173,8 +173,8 @@ func (c *Controller) startView() {
 	c.viewAbortChan <- struct{}{}
 }
 
-// ViewChanged makes the controller abort the current view and start a new one with the given number
-func (c *Controller) ViewChanged(newViewNumber uint64) {
+// ViewChanged makes the controller abort the current view and start a new one with the given numbers
+func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
 	if !c.controllerStart {
 		c.Logger.Debugf("Aborting current view with number %d", atomic.LoadUint64(&c.currViewNumber))
 		c.viewLock.RLock()
@@ -187,7 +187,7 @@ func (c *Controller) ViewChanged(newViewNumber uint64) {
 	c.stopWG.Add(1)
 	go func() {
 		defer c.stopWG.Done()
-		c.startView()
+		c.startView(newProposalSequence)
 	}()
 	<-c.viewReadyChan
 	if c.iAmTheLeader() {
@@ -247,14 +247,14 @@ func (c *Controller) leader() {
 }
 
 // Start the controller
-func (c *Controller) Start(startViewNumber uint64) Future {
+func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) Future {
 	c.viewAbortChan = make(chan struct{})
 	c.stopChan = make(chan struct{})
 	c.deliverChan = make(chan struct{})
 	c.viewReadyChan = make(chan struct{})
 	c.quorum = c.computeQuorum()
 	c.controllerStart = true
-	c.ViewChanged(startViewNumber)
+	c.ViewChanged(startViewNumber, startProposalSequence)
 	return &c.stopWG
 }
 

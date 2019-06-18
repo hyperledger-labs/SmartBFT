@@ -34,8 +34,9 @@ func TestControllerBasic(t *testing.T) {
 		Logger:      log,
 		Application: app,
 	}
-	end := controller.Start(1)
+	end := controller.Start(1, 0)
 	controller.Decide(types.Proposal{}, nil)
+	controller.Stop()
 	controller.Stop()
 	end.Wait()
 }
@@ -73,7 +74,7 @@ func TestQuorum(t *testing.T) {
 				N:      testCase.N,
 				Logger: log,
 			}
-			end := controller.Start(1)
+			end := controller.Start(1, 0)
 			<-verifyLog
 			controller.Stop()
 			end.Wait()
@@ -91,10 +92,10 @@ func TestControllerViewChanged(t *testing.T) {
 		N:      4,
 		Logger: log,
 	}
-	end := controller.Start(1)
+	end := controller.Start(1, 0)
 
-	controller.ViewChanged(2)
-	controller.ViewChanged(3)
+	controller.ViewChanged(2, 1)
+	controller.ViewChanged(3, 2)
 
 	controller.Stop()
 	end.Wait()
@@ -112,7 +113,7 @@ func TestControllerLeader(t *testing.T) {
 		Logger:  log,
 		Batcher: batcher,
 	}
-	end := controller.Start(1)
+	end := controller.Start(1, 0)
 	controller.Stop()
 	end.Wait()
 }
@@ -157,7 +158,7 @@ func TestLeaderPropose(t *testing.T) {
 		Application: app,
 	}
 	commWG.Add(1)
-	end := controller.Start(1)
+	end := controller.Start(1, 0)
 	commWG.Wait() // propose
 
 	commWG.Add(1)
@@ -199,18 +200,40 @@ func TestLeaderChange(t *testing.T) {
 	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
+	synchronizer := &mocks.Synchronizer{}
+	syncWG := &sync.WaitGroup{}
+	synchronizer.On("SyncIfNeeded", mock.Anything).Run(func(args mock.Arguments) {
+		syncWG.Done()
+	})
+	fd := &mocks.FailureDetector{}
+	fdWG := &sync.WaitGroup{}
+	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+		fdWG.Done()
+	})
 	controller := bft.Controller{
-		ID:        2, // the next leader
-		N:         4,
-		Logger:    log,
-		Batcher:   batcher,
-		Verifier:  verifier,
-		Assembler: assembler,
-		Comm:      comm,
+		ID:              2, // the next leader
+		N:               4,
+		Logger:          log,
+		Batcher:         batcher,
+		Verifier:        verifier,
+		Assembler:       assembler,
+		Comm:            comm,
+		Synchronizer:    synchronizer,
+		FailureDetector: fd,
 	}
-	end := controller.Start(1)
+	end := controller.Start(1, 0)
+
+	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareWrongViewGet := prePrepareWrongView.GetPrePrepare()
+	prePrepareWrongViewGet.View = 2
+	fdWG.Add(1)
+	syncWG.Add(1)
+	controller.ProcessMessages(1, prePrepareWrongView)
+	fdWG.Wait()
+	syncWG.Wait()
+
 	commWG.Add(1)
-	controller.ViewChanged(2)
+	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	verifier.AssertNumberOfCalls(t, "VerifyRequest", 1)
