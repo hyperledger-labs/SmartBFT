@@ -22,6 +22,7 @@ type Proposal struct {
 type Signature struct {
 	Id    uint64
 	Value []byte
+	Msg   []byte
 }
 
 type RequestInfo struct {
