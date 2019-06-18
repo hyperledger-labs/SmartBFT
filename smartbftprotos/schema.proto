@@ -78,6 +78,7 @@ message HeartBeat {
 message Signature {
     uint64 signer = 1;
     bytes value = 2;
+    bytes msg = 3;
 }
 
 message Proposal {
