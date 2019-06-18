@@ -6,63 +6,17 @@
 package bft
 
 import (
-	"math"
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
-type Future interface {
-	Wait()
-}
-
-//go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
-type Decider interface {
-	Decide(proposal types.Proposal, signatures []types.Signature)
-}
-
-//go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
-type FailureDetector interface {
-	Complain()
-}
-
-//go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
-type Synchronizer interface {
-	SyncIfNeeded()
-}
-
-//go:generate mockery -dir . -name Comm -case underscore -output ./mocks/
-type Comm interface {
-	Broadcast(m *protos.Message)
-}
-
-type Logger interface {
-	Debugf(template string, args ...interface{})
-	Infof(template string, args ...interface{})
-	Errorf(template string, args ...interface{})
-	Warnf(template string, args ...interface{})
-	Panicf(template string, args ...interface{})
-}
-
-//go:generate mockery -dir . -name Signer -case underscore -output ./mocks/
-type Signer interface {
-	Sign([]byte) []byte
-	SignProposal(types.Proposal) *types.Signature
-}
-
-//go:generate mockery -dir . -name Verifier -case underscore -output ./mocks/
-type Verifier interface {
-	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
-	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint64, signature []byte, prop types.Proposal) error
-	VerificationSequence() uint64
-}
-
 type View struct {
 	// Configuration
-	N                int
+	N                uint64
 	LeaderID         uint64
+	Quorum           int
 	Number           uint64
 	Decider          Decider
 	FailureDetector  FailureDetector
@@ -82,8 +36,8 @@ type View struct {
 	// Next proposal
 	nextPrepares *voteSet
 	nextCommits  *voteSet
-	quorum       int
-	abortChan    chan struct{}
+
+	abortChan chan struct{}
 
 	lock sync.RWMutex // a lock on the sequence and all votes
 }
@@ -92,8 +46,6 @@ func (v *View) Start() Future {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.proposals = make(chan types.Proposal, 1)
 	v.abortChan = make(chan struct{})
-
-	v.quorum = v.computeQuorumSize()
 
 	var viewEnds sync.WaitGroup
 	viewEnds.Add(2)
@@ -326,7 +278,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 
-	for collectedDigests < v.quorum-1 {
+	for collectedDigests < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
 			return
@@ -368,7 +320,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]types.Signature)
 
-	for len(signatures) < v.quorum-1 {
+	for len(signatures) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
 			return nil
@@ -434,10 +386,29 @@ func (v *View) startNextSeq() {
 	v.nextCommits = tmpVotes
 }
 
-func (v *View) Propose() {
-
+// Propose broadcasts a prePrepare message with the given proposal
+func (v *View) Propose(proposal types.Proposal) {
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+	msg := &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: v.Number,
+				Seq:  seq,
+				Proposal: &protos.Proposal{
+					Header:               proposal.Header,
+					Payload:              proposal.Payload,
+					Metadata:             proposal.Metadata,
+					VerificationSequence: uint64(proposal.VerificationSequence),
+				},
+			},
+		},
+	}
+	v.Comm.Broadcast(msg)
 }
 
+// Abort forces the view to end
 func (v *View) Abort() {
 	select {
 	case <-v.abortChan:
@@ -448,20 +419,13 @@ func (v *View) Abort() {
 	}
 }
 
-func (v *View) computeQuorumSize() int {
-	f := int(math.Floor((float64(v.N) - 1.0) / 3.0))
-	q := int(math.Ceil((float64(v.N) + float64(f) + 1) / 2.0))
-	v.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", v.N, f, q)
-	return q
-}
-
 type voteSet struct {
 	validVote func(voter uint64, message *protos.Message) bool
 	voted     map[uint64]struct{}
 	votes     chan *protos.Message
 }
 
-func (vs *voteSet) clear(n int) {
+func (vs *voteSet) clear(n uint64) {
 	// Drain the votes channel
 	for len(vs.votes) > 0 {
 		<-vs.votes
