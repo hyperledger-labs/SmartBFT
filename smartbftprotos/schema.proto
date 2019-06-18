@@ -86,3 +86,8 @@ message Proposal {
     bytes metadata = 3;
     uint64 verification_sequence = 4;
 }
+
+message BlockMetadata {
+    uint64 view_id = 1;
+    uint64 latest_sequence = 2;
+}
