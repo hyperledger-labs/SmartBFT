@@ -26,7 +26,7 @@ type Logger interface {
 type Verifier interface {
 	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
 	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint64, signature []byte, prop types.Proposal) error
+	VerifyConsenterSig(signature types.Signature, prop types.Proposal) error
 	VerificationSequence() uint64
 }
 

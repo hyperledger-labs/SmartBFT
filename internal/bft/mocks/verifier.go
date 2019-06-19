@@ -24,13 +24,13 @@ func (_m *Verifier) VerificationSequence() uint64 {
 	return r0
 }
 
-// VerifyConsenterSig provides a mock function with given fields: signer, signature, prop
-func (_m *Verifier) VerifyConsenterSig(signer uint64, signature []byte, prop types.Proposal) error {
-	ret := _m.Called(signer, signature, prop)
+// VerifyConsenterSig provides a mock function with given fields: signature, prop
+func (_m *Verifier) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error {
+	ret := _m.Called(signature, prop)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(uint64, []byte, types.Proposal) error); ok {
-		r0 = rf(signer, signature, prop)
+	if rf, ok := ret.Get(0).(func(types.Signature, types.Proposal) error); ok {
+		r0 = rf(signature, prop)
 	} else {
 		r0 = ret.Error(0)
 	}
