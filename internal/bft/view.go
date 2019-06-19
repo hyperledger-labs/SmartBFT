@@ -308,7 +308,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 				Signature: &protos.Signature{
 					Signer: sig.Id,
 					Value:  sig.Value,
-					Msg: sig.Msg,
+					Msg:    sig.Msg,
 				},
 			},
 		},
@@ -333,9 +333,9 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 			}
 
 			err := v.Verifier.VerifyConsenterSig(types.Signature{
-				Id: commit.Signature.Signer,
+				Id:    commit.Signature.Signer,
 				Value: commit.Signature.Value,
-				Msg: commit.Signature.Msg,
+				Msg:   commit.Signature.Msg,
 			}, *proposal)
 			if err != nil {
 				v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
@@ -345,7 +345,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 			signatures[commit.Signature.Signer] = types.Signature{
 				Id:    commit.Signature.Signer,
 				Value: commit.Signature.Value,
-				Msg: commit.Signature.Msg,
+				Msg:   commit.Signature.Msg,
 			}
 		}
 	}

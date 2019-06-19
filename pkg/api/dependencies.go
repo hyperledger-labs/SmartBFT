@@ -46,7 +46,7 @@ type RequestInspector interface {
 }
 
 type Synchronizer interface {
-	Sync() (protos.BlockMetadata, uint64)
+	Sync() (protos.ViewMetadata, uint64)
 }
 
 type Logger interface {
