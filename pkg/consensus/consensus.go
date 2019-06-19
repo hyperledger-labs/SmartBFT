@@ -37,8 +37,8 @@ func (c *Consensus) Complain() {
 	panic("implement me")
 }
 
-func (c *Consensus) SyncIfNeeded() {
-	c.Synchronizer.Sync()
+func (c *Consensus) Sync() (protos.BlockMetadata, uint64) {
+	return c.Synchronizer.Sync()
 }
 
 func (c *Consensus) Decide(proposal types.Proposal, signatures []types.Signature) {

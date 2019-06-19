@@ -10,6 +10,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 type View struct {
@@ -28,8 +29,9 @@ type View struct {
 	ProposalSequence uint64
 	PrevHeader       []byte
 	// Runtime
-	incMsgs   chan *incMsg
-	proposals chan types.Proposal // size of 1
+	incMsgs       chan *incMsg
+	proposals     chan types.Proposal // size of 1
+	myProposalSig *types.Signature
 	// Current proposal
 	prepares *voteSet
 	commits  *voteSet
@@ -135,7 +137,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		}
 		// Else, we got a message with a wrong view from the leader.
 		v.FailureDetector.Complain()
-		v.Sync.SyncIfNeeded()
+		v.Sync.Sync()
 		v.Abort()
 		return
 	}
@@ -251,7 +253,7 @@ func (v *View) processProposal() *types.Proposal {
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
-		v.Sync.SyncIfNeeded()
+		v.Sync.Sync()
 		v.Abort()
 		return nil
 	}
@@ -293,7 +295,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 		}
 	}
 
-	sig := v.Signer.SignProposal(*proposal)
+	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
 	v.lock.RLock()
 	seq := v.ProposalSequence
@@ -306,9 +308,9 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 				Digest: expectedDigest,
 				Seq:    seq,
 				Signature: &protos.Signature{
-					Signer: sig.Id,
-					Value:  sig.Value,
-					Msg:    sig.Msg,
+					Signer: v.myProposalSig.Id,
+					Value:  v.myProposalSig.Value,
+					Msg: v.myProposalSig.Msg,
 				},
 			},
 		},
@@ -358,8 +360,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
-	mySig := v.Signer.SignProposal(*proposal)
-	signatures = append(signatures, *mySig)
+	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures)
 	v.lock.RLock()
 	seq := v.ProposalSequence
@@ -390,6 +391,21 @@ func (v *View) startNextSeq() {
 	v.commits = v.nextCommits
 	tmpVotes.clear(v.N)
 	v.nextCommits = tmpVotes
+}
+
+func (v *View) GetMetadata() []byte {
+	v.lock.RLock()
+	propSeq := v.ProposalSequence
+	v.lock.RUnlock()
+	md := &protos.BlockMetadata{
+		ViewId:         v.Number,
+		LatestSequence: propSeq,
+	}
+	metadata, err := proto.Marshal(md)
+	if err != nil {
+		v.Logger.Panicf("Faild marshaling metadata: %v")
+	}
+	return metadata
 }
 
 // Propose broadcasts a prePrepare message with the given proposal
