@@ -397,7 +397,7 @@ func (v *View) GetMetadata() []byte {
 	v.lock.RLock()
 	propSeq := v.ProposalSequence
 	v.lock.RUnlock()
-	md := &protos.BlockMetadata{
+	md := &protos.ViewMetadata{
 		ViewId:         v.Number,
 		LatestSequence: propSeq,
 	}

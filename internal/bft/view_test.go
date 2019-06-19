@@ -132,7 +132,7 @@ func TestBadPrePrepare(t *testing.T) {
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
 		syncWG.Done()
-	}).Return(protos.BlockMetadata{}, uint64(0))
+	}).Return(protos.ViewMetadata{}, uint64(0))
 	fd := &mocks.FailureDetector{}
 	fdWG := &sync.WaitGroup{}
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
@@ -212,7 +212,7 @@ func TestBadPrepare(t *testing.T) {
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 		syncWG.Done()
-	}).Return(protos.BlockMetadata{}, uint64(0))
+	}).Return(protos.ViewMetadata{}, uint64(0))
 	fd := &mocks.FailureDetector{}
 	fdWG := &sync.WaitGroup{}
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {

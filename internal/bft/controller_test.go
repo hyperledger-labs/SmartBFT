@@ -196,7 +196,7 @@ func TestLeaderChange(t *testing.T) {
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 		syncWG.Done()
-	}).Return(protos.BlockMetadata{}, uint64(0))
+	}).Return(protos.ViewMetadata{}, uint64(0))
 	fd := &mocks.FailureDetector{}
 	fdWG := &sync.WaitGroup{}
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
