@@ -310,6 +310,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 				Signature: &protos.Signature{
 					Signer: v.myProposalSig.Id,
 					Value:  v.myProposalSig.Value,
+					Msg:    v.myProposalSig.Msg,
 				},
 			},
 		},
@@ -333,7 +334,11 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 				continue
 			}
 
-			err := v.Verifier.VerifyConsenterSig(commit.Signature.Signer, commit.Signature.Value, *proposal)
+			err := v.Verifier.VerifyConsenterSig(types.Signature{
+				Id:    commit.Signature.Signer,
+				Value: commit.Signature.Value,
+				Msg:   commit.Signature.Msg,
+			}, *proposal)
 			if err != nil {
 				v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
 				continue
@@ -342,6 +347,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 			signatures[commit.Signature.Signer] = types.Signature{
 				Id:    commit.Signature.Signer,
 				Value: commit.Signature.Value,
+				Msg:   commit.Signature.Msg,
 			}
 		}
 	}
@@ -391,7 +397,7 @@ func (v *View) GetMetadata() []byte {
 	v.lock.RLock()
 	propSeq := v.ProposalSequence
 	v.lock.RUnlock()
-	md := &protos.BlockMetadata{
+	md := &protos.ViewMetadata{
 		ViewId:         v.Number,
 		LatestSequence: propSeq,
 	}

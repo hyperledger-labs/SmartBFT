@@ -37,7 +37,7 @@ func (c *Consensus) Complain() {
 	panic("implement me")
 }
 
-func (c *Consensus) Sync() (protos.BlockMetadata, uint64) {
+func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
 	return c.Synchronizer.Sync()
 }
 

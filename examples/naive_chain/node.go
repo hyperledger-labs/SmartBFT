@@ -31,7 +31,7 @@ type Node struct {
 	consensus   *smartbft.Consensus
 }
 
-func (*Node) Sync() (protos.BlockMetadata, uint64) {
+func (*Node) Sync() (protos.ViewMetadata, uint64) {
 	panic("implement me")
 }
 
@@ -51,7 +51,7 @@ func (*Node) VerifyRequest(val []byte) error {
 	return nil
 }
 
-func (*Node) VerifyConsenterSig(signer uint64, signature []byte, prop bft.Proposal) error {
+func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) error {
 	return nil
 }
 
