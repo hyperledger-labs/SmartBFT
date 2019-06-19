@@ -136,7 +136,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		}
 		// Else, we got a message with a wrong view from the leader.
 		v.FailureDetector.Complain()
-		v.Sync.SyncIfNeeded()
+		v.Sync.Sync()
 		v.Abort()
 		return
 	}
@@ -252,7 +252,7 @@ func (v *View) processProposal() *types.Proposal {
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
-		v.Sync.SyncIfNeeded()
+		v.Sync.Sync()
 		v.Abort()
 		return nil
 	}

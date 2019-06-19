@@ -52,7 +52,7 @@ type FailureDetector interface {
 
 //go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
 type Synchronizer interface {
-	SyncIfNeeded()
+	Sync() (protos.BlockMetadata, uint64)
 }
 
 //go:generate mockery -dir . -name Comm -case underscore -output ./mocks/

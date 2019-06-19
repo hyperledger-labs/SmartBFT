@@ -130,9 +130,9 @@ func TestBadPrePrepare(t *testing.T) {
 	})).Sugar()
 	synchronizer := &mocks.Synchronizer{}
 	syncWG := &sync.WaitGroup{}
-	synchronizer.On("SyncIfNeeded", mock.Anything).Run(func(args mock.Arguments) {
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
 		syncWG.Done()
-	})
+	}).Return(protos.BlockMetadata{}, uint64(0))
 	fd := &mocks.FailureDetector{}
 	fdWG := &sync.WaitGroup{}
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
@@ -158,7 +158,7 @@ func TestBadPrePrepare(t *testing.T) {
 
 	// sent from node who is not the leader, simply ignore
 	view.HandleMessage(2, prePrepareWrongView)
-	synchronizer.AssertNotCalled(t, "SyncIfNeeded")
+	synchronizer.AssertNotCalled(t, "Sync")
 	fd.AssertNotCalled(t, "Complain")
 
 	// sent from the leader
@@ -166,7 +166,7 @@ func TestBadPrePrepare(t *testing.T) {
 	fdWG.Add(1)
 	view.HandleMessage(1, prePrepareWrongView)
 	syncWG.Wait()
-	synchronizer.AssertCalled(t, "SyncIfNeeded")
+	synchronizer.AssertCalled(t, "Sync")
 	fdWG.Wait()
 	fd.AssertCalled(t, "Complain")
 
@@ -210,9 +210,9 @@ func TestBadPrepare(t *testing.T) {
 	})).Sugar()
 	synchronizer := &mocks.Synchronizer{}
 	syncWG := &sync.WaitGroup{}
-	synchronizer.On("SyncIfNeeded", mock.Anything).Run(func(args mock.Arguments) {
+	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 		syncWG.Done()
-	})
+	}).Return(protos.BlockMetadata{}, uint64(0))
 	fd := &mocks.FailureDetector{}
 	fdWG := &sync.WaitGroup{}
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
@@ -303,8 +303,6 @@ func TestBadCommit(t *testing.T) {
 		}
 		return nil
 	})).Sugar()
-	synchronizer := &mocks.Synchronizer{}
-	fd := &mocks.FailureDetector{}
 	comm := &mocks.Comm{}
 	comm.On("Broadcast", mock.Anything)
 	verifier := &mocks.Verifier{}
@@ -322,8 +320,6 @@ func TestBadCommit(t *testing.T) {
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
 		Comm:             comm,
 		Verifier:         verifier,
 		Signer:           signer,
