@@ -10,6 +10,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 type View struct {
@@ -384,6 +385,21 @@ func (v *View) startNextSeq() {
 	v.commits = v.nextCommits
 	tmpVotes.clear(v.N)
 	v.nextCommits = tmpVotes
+}
+
+func (v *View) GetMetadata() []byte {
+	v.lock.RLock()
+	propSeq := v.ProposalSequence
+	v.lock.RUnlock()
+	md := &protos.BlockMetadata{
+		ViewId:         v.Number,
+		LatestSequence: propSeq,
+	}
+	metadata, err := proto.Marshal(md)
+	if err != nil {
+		v.Logger.Panicf("Faild marshaling metadata: %v")
+	}
+	return metadata
 }
 
 // Propose broadcasts a prePrepare message with the given proposal

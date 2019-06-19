@@ -29,13 +29,14 @@ func TestControllerBasic(t *testing.T) {
 	app := &mocks.Application{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	controller := bft.Controller{
-		ID:          2, // not the leader
+		ID:          4, // not the leader
 		N:           4,
 		Logger:      log,
 		Application: app,
 	}
 	end := controller.Start(1, 0)
-	controller.Decide(types.Proposal{}, nil)
+	controller.ViewChanged(2, 1)
+	controller.ViewChanged(3, 2)
 	controller.Stop()
 	controller.Stop()
 	end.Wait()
@@ -83,30 +84,18 @@ func TestQuorum(t *testing.T) {
 
 }
 
-func TestControllerViewChanged(t *testing.T) {
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	log := basicLog.Sugar()
-	controller := bft.Controller{
-		ID:     4, // not the leader
-		N:      4,
-		Logger: log,
-	}
-	end := controller.Start(1, 0)
-
-	controller.ViewChanged(2, 1)
-	controller.ViewChanged(3, 2)
-
-	controller.Stop()
-	end.Wait()
-}
-
-func TestControllerLeader(t *testing.T) {
+func TestControllerLeaderBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch").Return([][]byte{})
+	batcherChan := make(chan struct{})
+	var once sync.Once
+	batcher.On("NextBatch").Run(func(args mock.Arguments) {
+		once.Do(func() {
+			batcherChan <- struct{}{}
+		})
+	}).Return([][]byte{})
 	controller := bft.Controller{
 		ID:      1, // the leader
 		N:       4,
@@ -114,8 +103,10 @@ func TestControllerLeader(t *testing.T) {
 		Batcher: batcher,
 	}
 	end := controller.Start(1, 0)
+	<-batcherChan
 	controller.Stop()
 	end.Wait()
+	batcher.AssertCalled(t, "NextBatch")
 }
 
 func TestLeaderPropose(t *testing.T) {
@@ -182,6 +173,7 @@ func TestLeaderPropose(t *testing.T) {
 
 	controller.Stop()
 	end.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 1)
 }
 
 func TestLeaderChange(t *testing.T) {
