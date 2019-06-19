@@ -29,8 +29,9 @@ type View struct {
 	ProposalSequence uint64
 	PrevHeader       []byte
 	// Runtime
-	incMsgs   chan *incMsg
-	proposals chan types.Proposal // size of 1
+	incMsgs       chan *incMsg
+	proposals     chan types.Proposal // size of 1
+	myProposalSig *types.Signature
 	// Current proposal
 	prepares *voteSet
 	commits  *voteSet
@@ -294,7 +295,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 		}
 	}
 
-	sig := v.Signer.SignProposal(*proposal)
+	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
 	v.lock.RLock()
 	seq := v.ProposalSequence
@@ -307,8 +308,8 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 				Digest: expectedDigest,
 				Seq:    seq,
 				Signature: &protos.Signature{
-					Signer: sig.Id,
-					Value:  sig.Value,
+					Signer: v.myProposalSig.Id,
+					Value:  v.myProposalSig.Value,
 				},
 			},
 		},
@@ -353,8 +354,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
-	mySig := v.Signer.SignProposal(*proposal)
-	signatures = append(signatures, *mySig)
+	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures)
 	v.lock.RLock()
 	seq := v.ProposalSequence
