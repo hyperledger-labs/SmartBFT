@@ -15,7 +15,7 @@ type Application interface {
 }
 
 type Comm interface {
-	Broadcast(m *protos.Message)
+	Broadcast(m *protos.Message) // broadcast message to others (not including yourself)
 	Send(targetID uint64, message *protos.Message)
 }
 

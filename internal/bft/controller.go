@@ -52,7 +52,7 @@ type FailureDetector interface {
 
 //go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
 type Synchronizer interface {
-	SyncIfNeeded()
+	Sync() (protos.BlockMetadata, uint64)
 }
 
 //go:generate mockery -dir . -name Comm -case underscore -output ./mocks/
@@ -110,8 +110,6 @@ type Controller struct {
 	deliverChan chan struct{}
 
 	viewReadyChan chan struct{}
-
-	controllerStart bool
 }
 
 func (c *Controller) iAmTheLeader() bool {
@@ -173,17 +171,16 @@ func (c *Controller) startView(proposalSequence uint64) {
 	c.viewAbortChan <- struct{}{}
 }
 
-// ViewChanged makes the controller abort the current view and start a new one with the given numbers
-func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
-	if !c.controllerStart {
-		c.Logger.Debugf("Aborting current view with number %d", atomic.LoadUint64(&c.currViewNumber))
-		c.viewLock.RLock()
-		c.currView.Abort()
-		c.viewLock.RUnlock()
-		<-c.viewAbortChan
-	}
+func (c *Controller) viewAbort() {
+	c.Logger.Debugf("Aborting current view with number %d", atomic.LoadUint64(&c.currViewNumber))
+	c.viewLock.RLock()
+	c.currView.Abort()
+	c.viewLock.RUnlock()
+	<-c.viewAbortChan
+}
+
+func (c *Controller) startNewView(newViewNumber uint64, newProposalSequence uint64) {
 	atomic.StoreUint64(&c.currViewNumber, newViewNumber)
-	c.controllerStart = false
 	c.stopWG.Add(1)
 	go func() {
 		defer c.stopWG.Done()
@@ -200,15 +197,21 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 	}
 }
 
-func (c *Controller) propose() {
+// ViewChanged makes the controller abort the current view and start a new one with the given numbers
+func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
+	c.viewAbort()
+	c.startNewView(newViewNumber, newProposalSequence)
+}
+
+func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
 		select {
 		case <-c.viewAbortChan:
 			c.viewAbortChan <- struct{}{}
-			return
+			return nil
 		case <-c.stopChan:
-			return
+			return nil
 		default:
 		}
 		requests := c.Batcher.NextBatch()
@@ -221,8 +224,16 @@ func (c *Controller) propose() {
 			validRequests = append(validRequests, req)
 		}
 	}
-	var metadata []byte // TODO get metadata
-	proposal, remainder := c.Assembler.AssembleProposal(metadata, validRequests)
+	return validRequests
+}
+
+func (c *Controller) propose() {
+	nextBatch := c.getNextBatch()
+	if nextBatch == nil {
+		return
+	}
+	metadata := c.currView.GetMetadata()
+	proposal, remainder := c.Assembler.AssembleProposal(metadata, nextBatch)
 	if len(remainder) != 0 {
 		c.Batcher.BatchRemainder(remainder)
 	}
@@ -253,8 +264,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.deliverChan = make(chan struct{})
 	c.viewReadyChan = make(chan struct{})
 	c.quorum = c.computeQuorum()
-	c.controllerStart = true
-	c.ViewChanged(startViewNumber, startProposalSequence)
+	c.startNewView(startViewNumber, startProposalSequence)
 	return &c.stopWG
 }
 
