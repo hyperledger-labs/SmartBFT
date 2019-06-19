@@ -310,7 +310,7 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 				Signature: &protos.Signature{
 					Signer: v.myProposalSig.Id,
 					Value:  v.myProposalSig.Value,
-					Msg: v.myProposalSig.Msg,
+					Msg:    v.myProposalSig.Msg,
 				},
 			},
 		},
