@@ -18,7 +18,7 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	SelfID           int
+	SelfID           uint64
 	Application      bft.Application
 	Comm             bft.Comm
 	Assembler        bft.Assembler
@@ -29,8 +29,9 @@ type Consensus struct {
 	RequestInspector bft.RequestInspector
 	Synchronizer     bft.Synchronizer
 	Logger           bft.Logger
-	View             *algorithm.View
+	controller       *algorithm.Controller
 	nextSeq          uint64
+	Requests         [][]byte
 }
 
 func (c *Consensus) Complain() {
@@ -38,10 +39,26 @@ func (c *Consensus) Complain() {
 }
 
 func (c *Consensus) Sync() (protos.BlockMetadata, uint64) {
-	return c.Synchronizer.Sync()
+	panic("implement me")
 }
 
-func (c *Consensus) Decide(proposal types.Proposal, signatures []types.Signature) {
+func (c *Consensus) Submit(request []byte) {
+	panic("implement me")
+}
+
+func (c *Consensus) BatchRemainder(remainder [][]byte) {
+	panic("implement me")
+}
+
+func (c *Consensus) NextBatch() [][]byte {
+	reqNum := atomic.LoadUint64(&c.nextSeq)
+	if len(c.Requests) <= int(reqNum) {
+		return nil
+	}
+	return [][]byte{c.Requests[reqNum]}
+}
+
+func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
 	atomic.AddUint64(&c.nextSeq, 1)
 	c.Application.Deliver(proposal, signatures)
 }
@@ -52,54 +69,29 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	c.View = &algorithm.View{
-		Verifier:        c.Verifier,
-		Signer:          c.Signer,
-		Comm:            c.Comm,
-		Logger:          c.Logger,
-		Decider:         c,
-		Number:          0,
-		Sync:            c,
-		FailureDetector: c,
-		LeaderID:        0,
-		PrevHeader:      nil,
+	c.controller = &algorithm.Controller{
+		ID:              c.SelfID,
 		N:               4,
-		Quorum:          3,
+		RequestPool:     c,
+		Batcher:         c,
+		Verifier:        c.Verifier,
+		Logger:          c.Logger,
+		Assembler:       c.Assembler,
+		Application:     c,
+		FailureDetector: c,
+		Synchronizer:    c,
+		Comm:            c.Comm,
+		Signer:          c.Signer,
 	}
-	future := c.View.Start()
+	future := c.controller.Start(0, 0)
 	return future
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 	if algorithm.IsViewMessage(m) {
-		c.View.HandleMessage(sender, m)
+		c.controller.ProcessMessages(sender, m)
 	}
 
-}
-
-// SubmitRequest submits a request to be total ordered into the consensus
-func (c *Consensus) SubmitRequest(req []byte) {
-	if !c.amLeader() {
-		return
-	}
-
-	proposal, _ := c.Assembler.AssembleProposal(nil, [][]byte{req})
-	msg := &protos.Message{
-		Content: &protos.Message_PrePrepare{
-			PrePrepare: &protos.PrePrepare{
-				Seq: atomic.LoadUint64(&c.nextSeq),
-				Proposal: &protos.Proposal{
-					Payload:  proposal.Payload,
-					Header:   proposal.Header,
-					Metadata: proposal.Metadata,
-				},
-			},
-		},
-	}
-
-	c.Comm.Broadcast(msg)
-	// Send the message to yourself
-	c.View.HandleMessage(uint64(c.SelfID), msg)
 }
 
 func (c *Consensus) amLeader() bool {

@@ -226,15 +226,19 @@ func (v *View) run() {
 
 func (v *View) doStep() {
 	proposal := v.processProposal()
+	v.Logger.Infof("Processed proposal %v", proposal)
 	if proposal == nil {
 		// Aborted view
 		return
 	}
 
 	v.processPrepares(proposal)
+	v.Logger.Infof("Processed prepares for proposal %v", proposal)
 
 	signatures := v.processCommits(proposal)
+	v.Logger.Infof("Processed commits for proposal %v", proposal)
 	if len(signatures) == 0 {
+		v.Logger.Debugf("Signatures len is 0")
 		return
 	}
 
@@ -422,6 +426,8 @@ func (v *View) Propose(proposal types.Proposal) {
 		},
 	}
 	v.Comm.Broadcast(msg)
+	v.HandleMessage(v.LeaderID, msg)
+	v.Logger.Debugf("Proposal broadcast and sent back to leader with ID %d", v.LeaderID)
 }
 
 // Abort forces the view to end
