@@ -24,7 +24,7 @@ type Node struct {
 	stopChan    chan struct{}
 	nextSeq     uint64
 	prevHash    string
-	id          int
+	id          uint64
 	in          Ingress
 	out         Egress
 	deliverChan chan<- *Block
@@ -65,7 +65,7 @@ func (*Node) Sign(msg []byte) []byte {
 
 func (n *Node) SignProposal(bft.Proposal) *bft.Signature {
 	return &bft.Signature{
-		Id: uint64(n.id),
+		Id: n.id,
 	}
 }
 
@@ -83,7 +83,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 
 func (n *Node) Broadcast(m *protos.Message) {
 	for receiver, out := range n.out {
-		if n.id == receiver {
+		if n.id == uint64(receiver) {
 			continue
 		}
 		out <- m
@@ -113,13 +113,17 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 	}
 }
 
-func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger) *Node {
+func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, txPool []Transaction) *Node {
 	node := &Node{
 		id:          id,
 		in:          in,
 		out:         out,
 		deliverChan: deliverChan,
 		stopChan:    make(chan struct{}),
+	}
+	var requests [][]byte
+	for _, tx := range txPool {
+		requests = append(requests, tx.ToBytes())
 	}
 	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
@@ -133,6 +137,7 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 		Synchronizer:     node,
 		WAL1:             &wal.EphemeralWAL{},
 		WAL2:             &wal.EphemeralWAL{},
+		Requests:         requests,
 	}
 	node.consensus.Start()
 	node.Start()
@@ -141,7 +146,7 @@ func NewNode(id int, in Ingress, out Egress, deliverChan chan<- *Block, logger s
 
 func (n *Node) Start() {
 	for id, in := range n.in {
-		if id == n.id {
+		if uint64(id) == n.id {
 			continue
 		}
 		go func(id uint64, in <-chan *protos.Message) {

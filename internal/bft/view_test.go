@@ -390,12 +390,8 @@ func TestNormalPath(t *testing.T) {
 	}
 	end := view.Start()
 
-	commWG.Add(1)
+	commWG.Add(2)
 	view.Propose(proposal)
-	commWG.Wait()
-
-	commWG.Add(1)
-	view.HandleMessage(1, prePrepare)
 	commWG.Wait()
 
 	commWG.Add(1)

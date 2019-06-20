@@ -219,22 +219,25 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
-			v.startNextSeq()
 		}
 	}
 }
 
 func (v *View) doStep() {
 	proposal := v.processProposal()
+	v.Logger.Infof("Processed proposal %v", proposal)
 	if proposal == nil {
 		// Aborted view
 		return
 	}
 
 	v.processPrepares(proposal)
+	v.Logger.Infof("Processed prepares for proposal %v", proposal)
 
 	signatures := v.processCommits(proposal)
+	v.Logger.Infof("Processed commits for proposal %v", proposal)
 	if len(signatures) == 0 {
+		v.Logger.Debugf("Signatures len is 0")
 		return
 	}
 
@@ -360,12 +363,13 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
-	signatures = append(signatures, *v.myProposalSig)
-	v.Decider.Decide(*proposal, signatures)
 	v.lock.RLock()
 	seq := v.ProposalSequence
 	v.lock.RUnlock()
-	v.Logger.Infof("Decided on %d", seq)
+	v.Logger.Infof("Deciding on seq %d", seq)
+	v.startNextSeq()
+	signatures = append(signatures, *v.myProposalSig)
+	v.Decider.Decide(*proposal, signatures)
 }
 
 func (v *View) startNextSeq() {
@@ -428,6 +432,8 @@ func (v *View) Propose(proposal types.Proposal) {
 		},
 	}
 	v.Comm.Broadcast(msg)
+	v.HandleMessage(v.LeaderID, msg)
+	v.Logger.Debugf("Proposal broadcast and sent back to leader with ID %d", v.LeaderID)
 }
 
 // Abort forces the view to end

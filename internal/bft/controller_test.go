@@ -148,13 +148,9 @@ func TestLeaderPropose(t *testing.T) {
 		Signer:      signer,
 		Application: app,
 	}
-	commWG.Add(1)
+	commWG.Add(2)
 	end := controller.Start(1, 0)
 	commWG.Wait() // propose
-
-	commWG.Add(1)
-	controller.ProcessMessages(1, prePrepare)
-	commWG.Wait()
 
 	commWG.Add(1)
 	controller.ProcessMessages(2, prepare)
@@ -185,6 +181,7 @@ func TestLeaderChange(t *testing.T) {
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyRequest", req).Return(nil)
+	verifier.On("VerifyProposal", proposal, mock.Anything).Return(nil)
 	assembler := &mocks.Assembler{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
 	comm := &mocks.Comm{}
@@ -224,12 +221,13 @@ func TestLeaderChange(t *testing.T) {
 	fdWG.Wait()
 	syncWG.Wait()
 
-	commWG.Add(1)
+	commWG.Add(2)
 	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	verifier.AssertNumberOfCalls(t, "VerifyRequest", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
+	comm.AssertNumberOfCalls(t, "Broadcast", 2)
 	controller.Stop()
 	end.Wait()
 }
