@@ -219,7 +219,6 @@ func (v *View) run() {
 			return
 		default:
 			v.doStep()
-			v.startNextSeq()
 		}
 	}
 }
@@ -364,12 +363,13 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
-	signatures = append(signatures, *v.myProposalSig)
-	v.Decider.Decide(*proposal, signatures)
 	v.lock.RLock()
 	seq := v.ProposalSequence
 	v.lock.RUnlock()
-	v.Logger.Infof("Decided on %d", seq)
+	v.Logger.Infof("Deciding on seq %d", seq)
+	v.startNextSeq()
+	signatures = append(signatures, *v.myProposalSig)
+	v.Decider.Decide(*proposal, signatures)
 }
 
 func (v *View) startNextSeq() {
