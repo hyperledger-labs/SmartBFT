@@ -108,8 +108,6 @@ type Controller struct {
 	stopWG   sync.WaitGroup
 
 	deliverChan chan struct{}
-
-	viewReadyChan chan struct{}
 }
 
 func (c *Controller) iAmTheLeader() bool {
@@ -143,7 +141,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
-func (c *Controller) startView(proposalSequence uint64) {
+func (c *Controller) startView(proposalSequence uint64) Future {
 	// TODO view builder according to metadata returned by sync
 	view := View{
 		N:                c.N,
@@ -164,11 +162,8 @@ func (c *Controller) startView(proposalSequence uint64) {
 	c.viewLock.Lock()
 	c.currView = view
 	c.Logger.Debugf("Starting view with number %d", atomic.LoadUint64(&c.currViewNumber))
-	end := c.currView.Start()
 	c.viewLock.Unlock()
-	c.viewReadyChan <- struct{}{}
-	end.Wait()
-	c.viewAbortChan <- struct{}{}
+	return c.currView.Start()
 }
 
 func (c *Controller) viewAbort() {
@@ -181,12 +176,13 @@ func (c *Controller) viewAbort() {
 
 func (c *Controller) startNewView(newViewNumber uint64, newProposalSequence uint64) {
 	atomic.StoreUint64(&c.currViewNumber, newViewNumber)
+	end := c.startView(newProposalSequence)
 	c.stopWG.Add(1)
 	go func() {
 		defer c.stopWG.Done()
-		c.startView(newProposalSequence)
+		end.Wait()
+		c.viewAbortChan <- struct{}{}
 	}()
-	<-c.viewReadyChan
 	if c.iAmTheLeader() {
 		c.Logger.Debugf("Starting leader thread")
 		c.stopWG.Add(1)
@@ -262,7 +258,6 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.viewAbortChan = make(chan struct{})
 	c.stopChan = make(chan struct{})
 	c.deliverChan = make(chan struct{})
-	c.viewReadyChan = make(chan struct{})
 	c.quorum = c.computeQuorum()
 	c.startNewView(startViewNumber, startProposalSequence)
 	return &c.stopWG
