@@ -136,8 +136,10 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 			return
 		}
 		// Else, we got a message with a wrong view from the leader.
+		if msgViewNum > v.Number {
+			v.Sync.Sync()
+		}
 		v.FailureDetector.Complain()
-		v.Sync.Sync()
 		v.Abort()
 		return
 	}
