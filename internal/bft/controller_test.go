@@ -162,7 +162,7 @@ func TestLeaderPropose(t *testing.T) {
 	commit3Get := commit3.GetCommit()
 	commit3Get.Signature.Signer = 3
 	appWG.Add(1)  // deliver
-	commWG.Add(1) // next proposal
+	commWG.Add(2) // next proposal
 	controller.ProcessMessages(3, commit3)
 	appWG.Wait()
 	commWG.Wait()

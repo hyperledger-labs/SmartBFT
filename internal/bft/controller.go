@@ -184,7 +184,7 @@ func (c *Controller) startNewView(newViewNumber uint64, newProposalSequence uint
 		c.viewAbortChan <- struct{}{}
 	}()
 	if c.iAmTheLeader() {
-		c.Logger.Debugf("Starting leader thread")
+		c.Logger.Debugf("Starting leader thread in view %d", atomic.LoadUint64(&c.currViewNumber))
 		c.stopWG.Add(1)
 		go func() {
 			defer c.stopWG.Done()
