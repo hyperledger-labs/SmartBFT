@@ -26,7 +26,7 @@ type Logger interface {
 type Verifier interface {
 	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
 	VerifyRequest(val []byte) error
-	VerifyConsenterSig(signer uint64, signature []byte, prop types.Proposal) error
+	VerifyConsenterSig(signature types.Signature, prop types.Proposal) error
 	VerificationSequence() uint64
 }
 
@@ -52,7 +52,7 @@ type FailureDetector interface {
 
 //go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
 type Synchronizer interface {
-	Sync() (protos.BlockMetadata, uint64)
+	Sync() (protos.ViewMetadata, uint64)
 }
 
 //go:generate mockery -dir . -name Comm -case underscore -output ./mocks/

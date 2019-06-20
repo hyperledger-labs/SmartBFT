@@ -11,14 +11,14 @@ type Synchronizer struct {
 }
 
 // Sync provides a mock function with given fields:
-func (_m *Synchronizer) Sync() (smartbftprotos.BlockMetadata, uint64) {
+func (_m *Synchronizer) Sync() (smartbftprotos.ViewMetadata, uint64) {
 	ret := _m.Called()
 
-	var r0 smartbftprotos.BlockMetadata
-	if rf, ok := ret.Get(0).(func() smartbftprotos.BlockMetadata); ok {
+	var r0 smartbftprotos.ViewMetadata
+	if rf, ok := ret.Get(0).(func() smartbftprotos.ViewMetadata); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(smartbftprotos.BlockMetadata)
+		r0 = ret.Get(0).(smartbftprotos.ViewMetadata)
 	}
 
 	var r1 uint64
