@@ -96,6 +96,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:382bb5a7fb4034db3b6a2d19e5a4a6bcf52f4750530603c01ca18a172fa3089b"
+  name = "golang.org/x/sync"
+  packages = ["semaphore"]
+  pruneopts = "UT"
+  revision = "112230192c580c3556b8cee6403af37a4fc5f28c"
+
+[[projects]]
+  branch = "master"
   digest = "1:c1e9186d6ddadf42c4f2c4029d873dc4d8c875c360c50190c0e8b8977d5e0554"
   name = "golang.org/x/tools"
   packages = [
@@ -124,7 +132,9 @@
     "github.com/stretchr/testify/assert",
     "github.com/stretchr/testify/mock",
     "go.uber.org/zap",
+    "go.uber.org/zap/zapcore",
     "golang.org/x/lint/golint",
+    "golang.org/x/sync/semaphore",
     "golang.org/x/tools/cmd/goimports",
   ]
   solver-name = "gps-cdcl"
