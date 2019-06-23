@@ -43,3 +43,7 @@ required = [
 [[constraint]]
   name = "go.uber.org/zap"
   version = "1.10.0"
+
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/sync"
