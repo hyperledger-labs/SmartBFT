@@ -254,7 +254,7 @@ func (v *View) processProposal() *types.Proposal {
 	case proposal = <-v.proposals:
 	}
 	// TODO think if there is any other validation the node should run on a proposal
-	err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
+	_, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader) // TODO use returned request info
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()

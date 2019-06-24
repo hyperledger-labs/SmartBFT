@@ -43,12 +43,12 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 	}
 }
 
-func (*Node) VerifyProposal(proposal bft.Proposal, prevHeader []byte) error {
-	return nil
+func (*Node) VerifyProposal(proposal bft.Proposal, prevHeader []byte) ([]bft.RequestInfo, error) {
+	return nil, nil
 }
 
-func (*Node) VerifyRequest(val []byte) error {
-	return nil
+func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
+	return bft.RequestInfo{}, nil
 }
 
 func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) error {

@@ -176,7 +176,7 @@ func TestBadPrePrepare(t *testing.T) {
 
 	// check prePrepare with verifier returning error
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(errors.New(""))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, errors.New(""))
 	view.Verifier = verifier
 	end = view.Start()
 
@@ -224,7 +224,7 @@ func TestBadPrepare(t *testing.T) {
 		commWG.Done()
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
@@ -306,7 +306,7 @@ func TestBadCommit(t *testing.T) {
 	comm := &mocks.Comm{}
 	comm.On("Broadcast", mock.Anything)
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -369,7 +369,7 @@ func TestNormalPath(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -475,7 +475,7 @@ func TestTwoSequences(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{

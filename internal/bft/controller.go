@@ -24,8 +24,8 @@ type Logger interface {
 
 //go:generate mockery -dir . -name Verifier -case underscore -output ./mocks/
 type Verifier interface {
-	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
-	VerifyRequest(val []byte) error
+	VerifyProposal(proposal types.Proposal, prevHeader []byte) ([]types.RequestInfo, error)
+	VerifyRequest(val []byte) (types.RequestInfo, error)
 	VerifyConsenterSig(signature types.Signature, prop types.Proposal) error
 	VerificationSequence() uint64
 }
@@ -210,7 +210,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		}
 		requests := c.Batcher.NextBatch()
 		for _, req := range requests {
-			err := c.Verifier.VerifyRequest(req)
+			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
 			if err != nil {
 				c.Logger.Warnf("Ignoring bad request: %v, verifier error is: %v", req, err)
 				continue
