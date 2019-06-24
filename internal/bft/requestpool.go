@@ -26,6 +26,7 @@ type RequestPool struct {
 	semaphore        *semaphore.Weighted
 	lock             sync.RWMutex
 	QueueSize        int64
+	existMap         map[string]bool
 }
 
 type Request struct {
@@ -37,6 +38,7 @@ type Request struct {
 func (rp *RequestPool) Start() {
 	rp.queue = make([]Request, 0)
 	rp.semaphore = semaphore.NewWeighted(rp.QueueSize)
+	rp.existMap = make(map[string]bool)
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
@@ -52,15 +54,15 @@ func (rp *RequestPool) Submit(request []byte) error {
 	}
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	for _, existingReq := range rp.queue {
-		if existingReq.ClientID == reqInfo.ClientID && existingReq.ID == reqInfo.ID {
-			rp.semaphore.Release(1)
-			err := fmt.Sprintf("a request with ID %v and client ID %v already exists in the pool", reqInfo.ID, reqInfo.ClientID)
-			rp.Log.Errorf(err)
-			return fmt.Errorf(err)
-		}
+	existStr := fmt.Sprintf("%v~%v",reqInfo.ClientID, reqInfo.ID)
+	if _, exist := rp.existMap[existStr] ; exist{
+		rp.semaphore.Release(1)
+		err := fmt.Sprintf("a request with ID %v and client ID %v already exists in the pool", reqInfo.ID, reqInfo.ClientID)
+		rp.Log.Errorf(err)
+		return fmt.Errorf(err)
 	}
 	rp.queue = append(rp.queue, req)
+	rp.existMap[existStr] = true
 	return nil
 }
 
@@ -78,20 +80,20 @@ func (rp *RequestPool) NextRequests(n int) []Request {
 func (rp *RequestPool) RemoveRequest(request Request) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	removed := false
-	for i, existingReq := range rp.queue {
-		if existingReq.ClientID == request.ClientID && existingReq.ID == request.ID {
-			rp.Log.Infof("Removed request %v from request pool", request)
-			rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
-			removed = true
-			rp.semaphore.Release(1)
-			break
+	existStr := fmt.Sprintf("%v~%v",request.ClientID, request.ID)
+	if _, exist := rp.existMap[existStr] ; exist {
+		for i, existingReq := range rp.queue {
+			if existingReq.ClientID == request.ClientID && existingReq.ID == request.ID {
+				rp.Log.Infof("Removed request %v from request pool", request)
+				rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
+				delete(rp.existMap, existStr)
+				rp.semaphore.Release(1)
+				return nil
+			}
 		}
 	}
-	if !removed {
-		err := fmt.Sprintf("Request %v is not in the pool at remove time", request)
-		rp.Log.Warnf(err)
-		return fmt.Errorf(err)
-	}
-	return nil
+	err := fmt.Sprintf("Request %v is not in the pool at remove time", request)
+	rp.Log.Warnf(err)
+	return fmt.Errorf(err)
+
 }

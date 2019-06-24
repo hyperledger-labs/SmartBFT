@@ -90,6 +90,7 @@ type Controller struct {
 	Synchronizer    Synchronizer
 	Comm            Comm
 	Signer          Signer
+	RequestInspector RequestInspector
 
 	quorum int
 
@@ -125,7 +126,8 @@ func (c *Controller) computeQuorum() int {
 func (c *Controller) SubmitRequest(request []byte) {
 	err := c.RequestPool.Submit(request)
 	if err != nil {
-		c.Logger.Warnf("Request %v was not submitted, error: %v", request, err)
+		info := c.RequestInspector.RequestID(request)
+		c.Logger.Warnf("Request %v was not submitted, error: %v", info, err)
 	}
 }
 
