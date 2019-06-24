@@ -1,0 +1,97 @@
+// Copyright IBM Corp. All Rights Reserved.
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+package bft
+
+import (
+	"context"
+	"fmt"
+	"sync"
+
+	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"golang.org/x/sync/semaphore"
+)
+
+//go:generate mockery -dir . -name RequestInspector -case underscore -output ./mocks/
+type RequestInspector interface {
+	RequestID(req []byte) types.RequestInfo
+}
+
+type RequestPool struct {
+	Log              Logger
+	RequestInspector RequestInspector
+	queue            []Request
+	semaphore        *semaphore.Weighted
+	lock             sync.RWMutex
+	QueueSize        int64
+}
+
+type Request struct {
+	ID       string
+	Request  []byte
+	ClientID string
+}
+
+func (rp *RequestPool) Start() {
+	rp.queue = make([]Request, 0)
+	rp.semaphore = semaphore.NewWeighted(rp.QueueSize)
+}
+
+// Submit a request into the pool, returns an error when request is already in the pool
+func (rp *RequestPool) Submit(request []byte) error {
+	reqInfo := rp.RequestInspector.RequestID(request)
+	req := Request{
+		ID:       reqInfo.ID,
+		Request:  request,
+		ClientID: reqInfo.ClientID,
+	}
+	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
+		return fmt.Errorf("error in acquiring semaphore: %v", err)
+	}
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+	for _, existingReq := range rp.queue {
+		if existingReq.ClientID == reqInfo.ClientID && existingReq.ID == reqInfo.ID {
+			rp.semaphore.Release(1)
+			err := fmt.Sprintf("a request with ID %v and client ID %v already exists in the pool", reqInfo.ID, reqInfo.ClientID)
+			rp.Log.Errorf(err)
+			return fmt.Errorf(err)
+		}
+	}
+	rp.queue = append(rp.queue, req)
+	return nil
+}
+
+// NextRequests return the next requests to be batched
+func (rp *RequestPool) NextRequests(n int) []Request {
+	rp.lock.RLock()
+	defer rp.lock.RUnlock()
+	if len(rp.queue) <= n {
+		return rp.queue
+	}
+	return rp.queue[:n]
+}
+
+// RemoveRequest removes the given request from the pool
+func (rp *RequestPool) RemoveRequest(request Request) error {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+	removed := false
+	for i, existingReq := range rp.queue {
+		if existingReq.ClientID == request.ClientID && existingReq.ID == request.ID {
+			rp.Log.Infof("Removed request %v from request pool", request)
+			rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
+			removed = true
+			rp.semaphore.Release(1)
+			break
+		}
+	}
+	if !removed {
+		err := fmt.Sprintf("Request %v is not in the pool at remove time", request)
+		rp.Log.Warnf(err)
+		return fmt.Errorf(err)
+	}
+	return nil
+}

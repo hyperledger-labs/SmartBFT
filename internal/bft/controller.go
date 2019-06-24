@@ -66,11 +66,6 @@ type Signer interface {
 	SignProposal(types.Proposal) *types.Signature
 }
 
-//go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
-type RequestPool interface {
-	Submit(request []byte)
-}
-
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
 	NextBatch() [][]byte
@@ -120,7 +115,7 @@ func (c *Controller) leaderID() uint64 {
 }
 
 func (c *Controller) computeQuorum() int {
-	f := int(math.Floor((float64(c.N) - 1.0) / 3.0))
+	f := int((int(c.N) - 1) / 3)
 	q := int(math.Ceil((float64(c.N) + float64(f) + 1) / 2.0))
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, f, q)
 	return q
@@ -128,7 +123,10 @@ func (c *Controller) computeQuorum() int {
 
 // SubmitRequest submits a request to go through consensus
 func (c *Controller) SubmitRequest(request []byte) {
-	c.RequestPool.Submit(request)
+	err := c.RequestPool.Submit(request)
+	if err != nil {
+		c.Logger.Warnf("Request %v was not submitted, error: %v", request, err)
+	}
 }
 
 // ProcessMessages dispatches the incoming message to the required component
