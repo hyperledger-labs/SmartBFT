@@ -24,8 +24,8 @@ type Logger interface {
 
 //go:generate mockery -dir . -name Verifier -case underscore -output ./mocks/
 type Verifier interface {
-	VerifyProposal(proposal types.Proposal, prevHeader []byte) error
-	VerifyRequest(val []byte) error
+	VerifyProposal(proposal types.Proposal, prevHeader []byte) ([]types.RequestInfo, error)
+	VerifyRequest(val []byte) (types.RequestInfo, error)
 	VerifyConsenterSig(signature types.Signature, prop types.Proposal) error
 	VerificationSequence() uint64
 }
@@ -66,11 +66,6 @@ type Signer interface {
 	SignProposal(types.Proposal) *types.Signature
 }
 
-//go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
-type RequestPool interface {
-	Submit(request []byte)
-}
-
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
 	NextBatch() [][]byte
@@ -83,18 +78,19 @@ type Future interface {
 
 type Controller struct {
 	// configuration
-	ID              uint64
-	N               uint64
-	RequestPool     RequestPool
-	Batcher         Batcher
-	Verifier        Verifier
-	Logger          Logger
-	Assembler       Assembler
-	Application     Application
-	FailureDetector FailureDetector
-	Synchronizer    Synchronizer
-	Comm            Comm
-	Signer          Signer
+	ID               uint64
+	N                uint64
+	RequestPool      RequestPool
+	Batcher          Batcher
+	Verifier         Verifier
+	Logger           Logger
+	Assembler        Assembler
+	Application      Application
+	FailureDetector  FailureDetector
+	Synchronizer     Synchronizer
+	Comm             Comm
+	Signer           Signer
+	RequestInspector RequestInspector
 
 	quorum int
 
@@ -120,7 +116,7 @@ func (c *Controller) leaderID() uint64 {
 }
 
 func (c *Controller) computeQuorum() int {
-	f := int(math.Floor((float64(c.N) - 1.0) / 3.0))
+	f := int((int(c.N) - 1) / 3)
 	q := int(math.Ceil((float64(c.N) + float64(f) + 1) / 2.0))
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, f, q)
 	return q
@@ -128,7 +124,11 @@ func (c *Controller) computeQuorum() int {
 
 // SubmitRequest submits a request to go through consensus
 func (c *Controller) SubmitRequest(request []byte) {
-	c.RequestPool.Submit(request)
+	err := c.RequestPool.Submit(request)
+	if err != nil {
+		info := c.RequestInspector.RequestID(request)
+		c.Logger.Warnf("Request %v was not submitted, error: %v", info, err)
+	}
 }
 
 // ProcessMessages dispatches the incoming message to the required component
@@ -212,7 +212,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		}
 		requests := c.Batcher.NextBatch()
 		for _, req := range requests {
-			err := c.Verifier.VerifyRequest(req)
+			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
 			if err != nil {
 				c.Logger.Warnf("Ignoring bad request: %v, verifier error is: %v", req, err)
 				continue

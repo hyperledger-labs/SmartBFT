@@ -57,7 +57,7 @@ func TestQuorum(t *testing.T) {
 	for _, testCase := range quorums {
 		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
 			verifier := &mocks.Verifier{}
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 			comm := &mocks.Comm{}
 			comm.On("Broadcast", mock.Anything)
 			basicLog, err := zap.NewDevelopment()
@@ -117,8 +117,8 @@ func TestLeaderPropose(t *testing.T) {
 	batcher := &mocks.Batcher{}
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyRequest", req).Return(nil)
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	assembler := &mocks.Assembler{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
@@ -180,8 +180,8 @@ func TestLeaderChange(t *testing.T) {
 	batcher := &mocks.Batcher{}
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyRequest", req).Return(nil)
-	verifier.On("VerifyProposal", proposal, mock.Anything).Return(nil)
+	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerifyProposal", proposal, mock.Anything).Return(nil, nil)
 	assembler := &mocks.Assembler{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
 	comm := &mocks.Comm{}

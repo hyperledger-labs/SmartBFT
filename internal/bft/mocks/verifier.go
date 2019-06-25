@@ -39,29 +39,45 @@ func (_m *Verifier) VerifyConsenterSig(signature types.Signature, prop types.Pro
 }
 
 // VerifyProposal provides a mock function with given fields: proposal, prevHeader
-func (_m *Verifier) VerifyProposal(proposal types.Proposal, prevHeader []byte) error {
+func (_m *Verifier) VerifyProposal(proposal types.Proposal, prevHeader []byte) ([]types.RequestInfo, error) {
 	ret := _m.Called(proposal, prevHeader)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(types.Proposal, []byte) error); ok {
+	var r0 []types.RequestInfo
+	if rf, ok := ret.Get(0).(func(types.Proposal, []byte) []types.RequestInfo); ok {
 		r0 = rf(proposal, prevHeader)
 	} else {
-		r0 = ret.Error(0)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]types.RequestInfo)
+		}
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.Proposal, []byte) error); ok {
+		r1 = rf(proposal, prevHeader)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // VerifyRequest provides a mock function with given fields: val
-func (_m *Verifier) VerifyRequest(val []byte) error {
+func (_m *Verifier) VerifyRequest(val []byte) (types.RequestInfo, error) {
 	ret := _m.Called(val)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func([]byte) error); ok {
+	var r0 types.RequestInfo
+	if rf, ok := ret.Get(0).(func([]byte) types.RequestInfo); ok {
 		r0 = rf(val)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(types.RequestInfo)
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func([]byte) error); ok {
+		r1 = rf(val)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }

@@ -176,7 +176,7 @@ func TestBadPrePrepare(t *testing.T) {
 
 	// check prePrepare with verifier returning error
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(errors.New(""))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, errors.New(""))
 	view.Verifier = verifier
 	end = view.Start()
 
@@ -224,7 +224,7 @@ func TestBadPrepare(t *testing.T) {
 		commWG.Done()
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
@@ -306,7 +306,7 @@ func TestBadCommit(t *testing.T) {
 	comm := &mocks.Comm{}
 	comm.On("Broadcast", mock.Anything)
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -369,7 +369,7 @@ func TestNormalPath(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -462,7 +462,10 @@ func TestTwoSequences(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	comm := &mocks.Comm{}
-	comm.On("Broadcast", mock.Anything)
+	commWG := sync.WaitGroup{}
+	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+		commWG.Done()
+	})
 	decider := &mocks.Decider{}
 	deciderWG := sync.WaitGroup{}
 	decidedProposal := make(chan types.Proposal, 1)
@@ -475,7 +478,7 @@ func TestTwoSequences(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -496,16 +499,20 @@ func TestTwoSequences(t *testing.T) {
 	}
 	end := view.Start()
 
+	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
+	commWG.Wait()
 
 	prepareNext := proto.Clone(prepare).(*protos.Message)
 	prepareNextGet := prepareNext.GetPrepare()
 	prepareNextGet.Seq = 1
 
+	commWG.Add(1)
 	view.HandleMessage(1, prepare)
 	view.HandleMessage(1, prepareNext)
 	view.HandleMessage(2, prepare)
 	view.HandleMessage(2, prepareNext)
+	commWG.Wait()
 
 	commit1Next := proto.Clone(commit1).(*protos.Message)
 	commit1NextGet := commit1Next.GetCommit()
@@ -525,7 +532,9 @@ func TestTwoSequences(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 
+	commWG.Add(2)
 	view.HandleMessage(1, prePrepareNext)
+	commWG.Wait()
 
 	deciderWG.Wait()
 	dProp := <-decidedProposal
