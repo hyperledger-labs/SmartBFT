@@ -65,12 +65,9 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	pool := algorithm.RequestPool{}
-	// TODO use request pool in example
 	c.controller = &algorithm.Controller{
 		ID:              c.SelfID,
 		N:               4,
-		RequestPool:     pool,
 		Batcher:         c,
 		Verifier:        c.Verifier,
 		Logger:          c.Logger,

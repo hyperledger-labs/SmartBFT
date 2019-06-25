@@ -72,6 +72,13 @@ type Batcher interface {
 	BatchRemainder(remainder [][]byte)
 }
 
+//go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
+type RequestPool interface {
+	Submit(request []byte) error
+	NextRequests(n int) []Request
+	RemoveRequest(request Request) error
+}
+
 type Future interface {
 	Wait()
 }

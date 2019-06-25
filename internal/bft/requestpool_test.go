@@ -24,7 +24,7 @@ func TestReqPoolBasic(t *testing.T) {
 	insp := &mocks.RequestInspector{}
 	byteReq1 := []byte{1}
 	insp.On("RequestID", byteReq1).Return(types.RequestInfo{ID: "1", ClientID: "1"})
-	pool := bft.RequestPool{
+	pool := bft.Pool{
 		Log:              log,
 		RequestInspector: insp,
 		QueueSize:        3,
@@ -93,6 +93,21 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.Equal(t, "1", next[0].ID)
 	assert.Len(t, next, 1)
 
+	err = pool.RemoveRequest(req1)
+	assert.NoError(t, err)
+
+	req3 := bft.Request{
+		ID:       "3",
+		ClientID: "3",
+		Request:  byteReq3,
+	}
+
+	err = pool.RemoveRequest(req3)
+	assert.NoError(t, err)
+
+	next = pool.NextRequests(1)
+	assert.Len(t, next, 0)
+
 }
 
 func TestEventuallySubmit(t *testing.T) {
@@ -101,7 +116,7 @@ func TestEventuallySubmit(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &mocks.RequestInspector{}
-	pool := bft.RequestPool{
+	pool := bft.Pool{
 		Log:              log,
 		RequestInspector: insp,
 		QueueSize:        50,
