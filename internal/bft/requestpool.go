@@ -54,8 +54,8 @@ func (rp *RequestPool) Submit(request []byte) error {
 	}
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	existStr := fmt.Sprintf("%v~%v",reqInfo.ClientID, reqInfo.ID)
-	if _, exist := rp.existMap[existStr] ; exist{
+	existStr := fmt.Sprintf("%v~%v", reqInfo.ClientID, reqInfo.ID)
+	if _, exist := rp.existMap[existStr]; exist {
 		rp.semaphore.Release(1)
 		err := fmt.Sprintf("a request with ID %v and client ID %v already exists in the pool", reqInfo.ID, reqInfo.ClientID)
 		rp.Log.Errorf(err)
@@ -80,20 +80,21 @@ func (rp *RequestPool) NextRequests(n int) []Request {
 func (rp *RequestPool) RemoveRequest(request Request) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	existStr := fmt.Sprintf("%v~%v",request.ClientID, request.ID)
-	if _, exist := rp.existMap[existStr] ; exist {
-		for i, existingReq := range rp.queue {
-			if existingReq.ClientID == request.ClientID && existingReq.ID == request.ID {
-				rp.Log.Infof("Removed request %v from request pool", request)
-				rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
-				delete(rp.existMap, existStr)
-				rp.semaphore.Release(1)
-				return nil
-			}
-		}
+	existStr := fmt.Sprintf("%v~%v", request.ClientID, request.ID)
+	if _, exist := rp.existMap[existStr]; !exist {
+		err := fmt.Sprintf("Request %v is not in the pool at remove time", request)
+		rp.Log.Warnf(err)
+		return fmt.Errorf(err)
 	}
-	err := fmt.Sprintf("Request %v is not in the pool at remove time", request)
-	rp.Log.Warnf(err)
-	return fmt.Errorf(err)
-
+	for i, existingReq := range rp.queue {
+		if existingReq.ClientID != request.ClientID || existingReq.ID != request.ID {
+			continue
+		}
+		rp.Log.Infof("Removed request %v from request pool", request)
+		rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
+		delete(rp.existMap, existStr)
+		rp.semaphore.Release(1)
+		return nil
+	}
+	panic("RemoveRequest should have returned earlier")
 }

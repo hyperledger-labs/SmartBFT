@@ -78,18 +78,18 @@ type Future interface {
 
 type Controller struct {
 	// configuration
-	ID              uint64
-	N               uint64
-	RequestPool     RequestPool
-	Batcher         Batcher
-	Verifier        Verifier
-	Logger          Logger
-	Assembler       Assembler
-	Application     Application
-	FailureDetector FailureDetector
-	Synchronizer    Synchronizer
-	Comm            Comm
-	Signer          Signer
+	ID               uint64
+	N                uint64
+	RequestPool      RequestPool
+	Batcher          Batcher
+	Verifier         Verifier
+	Logger           Logger
+	Assembler        Assembler
+	Application      Application
+	FailureDetector  FailureDetector
+	Synchronizer     Synchronizer
+	Comm             Comm
+	Signer           Signer
 	RequestInspector RequestInspector
 
 	quorum int
