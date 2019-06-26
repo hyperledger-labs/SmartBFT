@@ -67,16 +67,16 @@ func TestBlockHeader(t *testing.T) {
 func TestChain(t *testing.T) {
 	blockCount := 100
 
-	var transactions []Transaction
+	chains := setupNetwork(t, 4)
 
 	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
-		transactions = append(transactions, Transaction{
-			ClientID: "alice",
-			Id:       fmt.Sprintf("tx%d", blockSeq),
-		})
+		for _, chain := range chains {
+			chain.Order(Transaction{
+				ClientID: "alice",
+				Id:       fmt.Sprintf("tx%d", blockSeq),
+			})
+		}
 	}
-
-	chains := setupNetwork(t, 4, transactions)
 
 	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
@@ -87,7 +87,7 @@ func TestChain(t *testing.T) {
 	}
 }
 
-func setupNode(t *testing.T, id int, n int, network map[int]map[int]chan *protos.Message, txs []Transaction) *Chain {
+func setupNode(t *testing.T, id int, n int, network map[int]map[int]chan *protos.Message) *Chain {
 	ingress := make(Ingress)
 	for from := 0; from < n; from++ {
 		ingress[from] = network[id][from]
@@ -102,12 +102,12 @@ func setupNode(t *testing.T, id int, n int, network map[int]map[int]chan *protos
 	assert.NoError(t, err)
 	logger := basicLog.Sugar()
 
-	chain := NewChain(uint64(id), ingress, egress, logger, txs)
+	chain := NewChain(uint64(id), ingress, egress, logger)
 
 	return chain
 }
 
-func setupNetwork(t *testing.T, n int, transactions []Transaction) map[int]*Chain {
+func setupNetwork(t *testing.T, n int) map[int]*Chain {
 	network := make(map[int]map[int]chan *protos.Message)
 
 	chains := make(map[int]*Chain)
@@ -120,7 +120,7 @@ func setupNetwork(t *testing.T, n int, transactions []Transaction) map[int]*Chai
 	}
 
 	for id := 0; id < n; id++ {
-		chains[id] = setupNode(t, id, n, network, transactions)
+		chains[id] = setupNode(t, id, n, network)
 	}
 	return chains
 }
