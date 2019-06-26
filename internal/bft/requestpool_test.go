@@ -32,10 +32,9 @@ func TestReqPoolBasic(t *testing.T) {
 	pool.Start()
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
-	req1 := bft.Request{
+	req1 := types.RequestInfo{
 		ID:       "1",
 		ClientID: "1",
-		Request:  byteReq1,
 	}
 	err = pool.Submit(byteReq1)
 	assert.Error(t, err)
@@ -60,10 +59,9 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.NoError(t, err)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
-	req2 := bft.Request{
+	req2 := types.RequestInfo{
 		ID:       "2",
 		ClientID: "2",
-		Request:  byteReq2,
 	}
 	err = pool.RemoveRequest(req2)
 	assert.NoError(t, err)
@@ -96,10 +94,9 @@ func TestReqPoolBasic(t *testing.T) {
 	err = pool.RemoveRequest(req1)
 	assert.NoError(t, err)
 
-	req3 := bft.Request{
+	req3 := types.RequestInfo{
 		ID:       "3",
 		ClientID: "3",
-		Request:  byteReq3,
 	}
 
 	err = pool.RemoveRequest(req3)
@@ -134,12 +131,10 @@ func TestEventuallySubmit(t *testing.T) {
 			wg.Done()
 		}(i)
 		go func(i int) {
-			byteReq := []byte{byte(i)}
 			str := fmt.Sprintf("%d", i)
-			req := bft.Request{
+			req := types.RequestInfo{
 				ID:       str,
 				ClientID: str,
-				Request:  byteReq,
 			}
 			err := pool.RemoveRequest(req)
 			for err != nil {

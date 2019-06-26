@@ -77,7 +77,7 @@ func (rp *Pool) NextRequests(n int) []Request {
 }
 
 // RemoveRequest removes the given request from the pool
-func (rp *Pool) RemoveRequest(request Request) error {
+func (rp *Pool) RemoveRequest(request types.RequestInfo) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 	existStr := fmt.Sprintf("%v~%v", request.ClientID, request.ID)

@@ -50,7 +50,7 @@ func TestBatcherBasic(t *testing.T) {
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 
-	err = pool.RemoveRequest(bft.Request{ID: "1", ClientID: "1", Request: byteReq1})
+	err = pool.RemoveRequest(types.RequestInfo{ID: "1", ClientID: "1"})
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
@@ -75,7 +75,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq2, res[0])
 
-	err = pool.RemoveRequest(bft.Request{ID: "2", ClientID: "2", Request: byteReq2})
+	err = pool.RemoveRequest(types.RequestInfo{ID: "2", ClientID: "2"})
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
@@ -98,7 +98,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq1, res[0])
 	assert.Equal(t, byteReq3, res[1])
 
-	err = pool.RemoveRequest(bft.Request{ID: "3", ClientID: "3", Request: byteReq3})
+	err = pool.RemoveRequest(types.RequestInfo{ID: "3", ClientID: "3"})
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()

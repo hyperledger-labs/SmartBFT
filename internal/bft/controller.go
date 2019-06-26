@@ -42,7 +42,7 @@ type Application interface {
 
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
-	Decide(proposal types.Proposal, signatures []types.Signature)
+	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
 }
 
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
@@ -76,7 +76,7 @@ type Batcher interface {
 type RequestPool interface {
 	Submit(request []byte) error
 	NextRequests(n int) []Request
-	RemoveRequest(request Request) error
+	RemoveRequest(request types.RequestInfo) error
 }
 
 type Future interface {
@@ -285,10 +285,15 @@ func (c *Controller) Stop() {
 }
 
 // Decide delivers the decision to the application
-func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature) {
+func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	// TODO write to WAL?
-	// TODO remove and stop timeouts of included requests?
 	c.Application.Deliver(proposal, signatures)
+	// TODO stop timeouts of included requests?
+	for _, req := range requests {
+		if err := c.RequestPool.RemoveRequest(req); err != nil {
+			c.Logger.Warnf("Error during remove of request %v from the pool : %v", req, err)
+		}
+	}
 	if c.iAmTheLeader() {
 		c.deliverChan <- struct{}{}
 	}

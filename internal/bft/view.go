@@ -226,7 +226,7 @@ func (v *View) run() {
 }
 
 func (v *View) doStep() {
-	proposal := v.processProposal()
+	proposal, requests := v.processProposal()
 	v.Logger.Infof("Processed proposal %v", proposal)
 	if proposal == nil {
 		// Aborted view
@@ -243,24 +243,24 @@ func (v *View) doStep() {
 		return
 	}
 
-	v.maybeDecide(proposal, signatures)
+	v.maybeDecide(proposal, signatures, requests)
 }
 
-func (v *View) processProposal() *types.Proposal {
+func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 	var proposal types.Proposal
 	select {
 	case <-v.abortChan:
-		return nil
+		return nil, nil
 	case proposal = <-v.proposals:
 	}
 	// TODO think if there is any other validation the node should run on a proposal
-	_, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader) // TODO use returned request info
+	requests, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.Sync()
 		v.Abort()
-		return nil
+		return nil, nil
 	}
 
 	v.lock.RLock()
@@ -278,7 +278,7 @@ func (v *View) processProposal() *types.Proposal {
 	}
 
 	v.Comm.Broadcast(msg)
-	return &proposal
+	return &proposal, requests
 }
 
 func (v *View) processPrepares(proposal *types.Proposal) {
@@ -364,14 +364,14 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	return res
 }
 
-func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature) {
+func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.lock.RLock()
 	seq := v.ProposalSequence
 	v.lock.RUnlock()
 	v.Logger.Infof("Deciding on seq %d", seq)
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
-	v.Decider.Decide(*proposal, signatures)
+	v.Decider.Decide(*proposal, signatures, requests)
 }
 
 func (v *View) startNextSeq() {
