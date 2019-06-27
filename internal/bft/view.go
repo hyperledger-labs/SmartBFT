@@ -32,11 +32,11 @@ type View struct {
 	incMsgs       chan *incMsg
 	myProposalSig *types.Signature
 	// Current proposal
-	prePrepare *voteSet
+	prePrepare chan *protos.Message
 	prepares   *voteSet
 	commits    *voteSet
 	// Next proposal
-	nextPrePrepare *voteSet
+	nextPrePrepare chan *protos.Message
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
 
@@ -51,6 +51,9 @@ func (v *View) Start() Future {
 
 	var viewEnds sync.WaitGroup
 	viewEnds.Add(2)
+
+	v.prePrepare = make(chan *protos.Message, 1)
+	v.nextPrePrepare = make(chan *protos.Message, 1)
 
 	v.setupVotes()
 
@@ -78,33 +81,6 @@ func (v *View) processMessages() {
 }
 
 func (v *View) setupVotes() {
-	// PrepPrepare
-	acceptPrePrepares := func(sender uint64, message *protos.Message) bool {
-		pp := message.GetPrePrepare()
-		if pp == nil {
-			return false
-		}
-		if pp.Proposal == nil {
-			v.Logger.Warnf("Got pre-prepare with empty proposal")
-			return false
-		}
-		if sender != v.LeaderID {
-			v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
-			return false
-		}
-		return true
-	}
-
-	v.prePrepare = &voteSet{
-		validVote: acceptPrePrepares,
-	}
-	v.prePrepare.clear(1)
-
-	v.nextPrePrepare = &voteSet{
-		validVote: acceptPrePrepares,
-	}
-	v.nextPrePrepare.clear(1)
-
 	// Prepares
 	acceptPrepares := func(_ uint64, message *protos.Message) bool {
 		return message.GetPrepare() != nil
@@ -191,10 +167,18 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
+		if pp.Proposal == nil {
+			v.Logger.Warnf("Got pre-prepare with empty proposal")
+			return
+		}
+		if sender != v.LeaderID {
+			v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
+			return
+		}
 		if msgForNextProposal {
-			v.nextPrePrepare.registerVote(sender, m)
+			v.nextPrePrepare <- m
 		} else {
-			v.prePrepare.registerVote(sender, m)
+			v.prePrepare <- m
 		}
 		return
 	}
@@ -264,7 +248,7 @@ func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 	select {
 	case <-v.abortChan:
 		return nil, nil
-	case vote := <-v.prePrepare.votes:
+	case vote := <-v.prePrepare:
 		prop := vote.GetPrePrepare().Proposal
 		proposal = types.Proposal{
 			VerificationSequence: int64(prop.VerificationSequence),
@@ -410,13 +394,17 @@ func (v *View) startNextSeq() {
 	v.Logger.Infof("Sequence: %d-->%d", prevSeq, nextSeq)
 
 	// swap next prePrepare
-	tmpVotes := v.prePrepare
+	tmp := v.prePrepare
 	v.prePrepare = v.nextPrePrepare
-	tmpVotes.clear(1)
-	v.nextPrePrepare = tmpVotes
+	// clear tmp
+	for len(tmp) > 0 {
+		<-tmp
+	}
+	tmp = make(chan *protos.Message, 1)
+	v.nextPrePrepare = tmp
 
 	// swap next prepares
-	tmpVotes = v.prepares
+	tmpVotes := v.prepares
 	v.prepares = v.nextPrepares
 	tmpVotes.clear(v.N)
 	v.nextPrepares = tmpVotes
