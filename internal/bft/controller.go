@@ -145,6 +145,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.currView.HandleMessage(sender, m)
 		c.viewLock.RUnlock()
 	}
+	c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
@@ -288,6 +289,7 @@ func (c *Controller) Stop() {
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	// TODO write to WAL?
 	c.Application.Deliver(proposal, signatures)
+	c.Logger.Infof("Node %d delivered proposal", c.ID)
 	// TODO stop timeouts of included requests?
 	for _, req := range requests {
 		if err := c.RequestPool.RemoveRequest(req); err != nil {

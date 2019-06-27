@@ -30,14 +30,15 @@ type View struct {
 	PrevHeader       []byte
 	// Runtime
 	incMsgs       chan *incMsg
-	proposals     chan types.Proposal // size of 1
 	myProposalSig *types.Signature
 	// Current proposal
-	prepares *voteSet
-	commits  *voteSet
+	prePrepare *voteSet
+	prepares   *voteSet
+	commits    *voteSet
 	// Next proposal
-	nextPrepares *voteSet
-	nextCommits  *voteSet
+	nextPrePrepare *voteSet
+	nextPrepares   *voteSet
+	nextCommits    *voteSet
 
 	abortChan chan struct{}
 
@@ -46,7 +47,6 @@ type View struct {
 
 func (v *View) Start() Future {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
-	v.proposals = make(chan types.Proposal, 1)
 	v.abortChan = make(chan struct{})
 
 	var viewEnds sync.WaitGroup
@@ -78,6 +78,33 @@ func (v *View) processMessages() {
 }
 
 func (v *View) setupVotes() {
+	// PrepPrepare
+	acceptPrePrepares := func(sender uint64, message *protos.Message) bool {
+		pp := message.GetPrePrepare()
+		if pp == nil {
+			return false
+		}
+		if pp.Proposal == nil {
+			v.Logger.Warnf("Got pre-prepare with empty proposal")
+			return false
+		}
+		if sender != v.LeaderID {
+			v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
+			return false
+		}
+		return true
+	}
+
+	v.prePrepare = &voteSet{
+		validVote: acceptPrePrepares,
+	}
+	v.prePrepare.clear(1)
+
+	v.nextPrePrepare = &voteSet{
+		validVote: acceptPrePrepares,
+	}
+	v.nextPrePrepare.clear(1)
+
 	// Prepares
 	acceptPrepares := func(_ uint64, message *protos.Message) bool {
 		return message.GetPrepare() != nil
@@ -164,7 +191,11 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		v.handlePrePrepare(sender, pp)
+		if msgForNextProposal {
+			v.nextPrePrepare.registerVote(sender, m)
+		} else {
+			v.prePrepare.registerVote(sender, m)
+		}
 		return
 	}
 
@@ -187,33 +218,6 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 }
 
-func (v *View) handlePrePrepare(sender uint64, pp *protos.PrePrepare) {
-	if pp.Proposal == nil {
-		v.Logger.Warnf("Got pre-prepare with empty proposal")
-		return
-	}
-	if sender != v.LeaderID {
-		v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
-		return
-	}
-
-	prop := pp.Proposal
-	proposal := types.Proposal{
-		VerificationSequence: int64(prop.VerificationSequence),
-		Metadata:             prop.Metadata,
-		Payload:              prop.Payload,
-		Header:               prop.Header,
-	}
-	select {
-	case v.proposals <- proposal:
-	default:
-		// A proposal is currently being handled.
-		// Log a warning because we shouldn't get 2 proposals from the leader within such a short time.
-		// We can have an outstanding proposal in the channel, but not more than 1.
-		v.Logger.Warnf("Got proposal %d but currently still not processed proposal %d", pp.Seq, v.ProposalSequence)
-	}
-}
-
 func (v *View) run() {
 	for {
 		select {
@@ -227,17 +231,26 @@ func (v *View) run() {
 
 func (v *View) doStep() {
 	proposal, requests := v.processProposal()
-	v.Logger.Infof("Processed proposal %v", proposal)
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+	v.Logger.Infof("Processed proposal with seq %d", seq)
 	if proposal == nil {
 		// Aborted view
 		return
 	}
 
 	v.processPrepares(proposal)
-	v.Logger.Infof("Processed prepares for proposal %v", proposal)
+	v.lock.RLock()
+	seq = v.ProposalSequence
+	v.lock.RUnlock()
+	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
 
 	signatures := v.processCommits(proposal)
-	v.Logger.Infof("Processed commits for proposal %v", proposal)
+	v.lock.RLock()
+	seq = v.ProposalSequence
+	v.lock.RUnlock()
+	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
 	if len(signatures) == 0 {
 		v.Logger.Debugf("Signatures len is 0")
 		return
@@ -251,7 +264,14 @@ func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 	select {
 	case <-v.abortChan:
 		return nil, nil
-	case proposal = <-v.proposals:
+	case vote := <-v.prePrepare.votes:
+		prop := vote.GetPrePrepare().Proposal
+		proposal = types.Proposal{
+			VerificationSequence: int64(prop.VerificationSequence),
+			Metadata:             prop.Metadata,
+			Payload:              prop.Payload,
+			Header:               prop.Header,
+		}
 	}
 	// TODO think if there is any other validation the node should run on a proposal
 	requests, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
@@ -293,7 +313,10 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
 				// TODO is it ok that the vote is already registered?
-				v.Logger.Warnf("Got digest %s but expected %s", prepare.Digest, expectedDigest)
+				v.lock.RLock()
+				seq := v.ProposalSequence
+				v.lock.RUnlock()
+				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
 				continue
 			}
 			collectedDigests++
@@ -335,7 +358,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 		case vote := <-v.commits.votes:
 			commit := vote.GetCommit()
 			if commit.Digest != expectedDigest {
-				v.Logger.Warnf("Got digest %s but expected %s", commit.Digest, expectedDigest)
+				v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
 				continue
 			}
 
@@ -386,8 +409,14 @@ func (v *View) startNextSeq() {
 
 	v.Logger.Infof("Sequence: %d-->%d", prevSeq, nextSeq)
 
+	// swap next prePrepare
+	tmpVotes := v.prePrepare
+	v.prePrepare = v.nextPrePrepare
+	tmpVotes.clear(1)
+	v.nextPrePrepare = tmpVotes
+
 	// swap next prepares
-	tmpVotes := v.prepares
+	tmpVotes = v.prepares
 	v.prepares = v.nextPrepares
 	tmpVotes.clear(v.N)
 	v.nextPrepares = tmpVotes

@@ -203,7 +203,7 @@ func TestBadPrepare(t *testing.T) {
 	assert.NoError(t, err)
 	digestLog := make(chan struct{})
 	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
+		if strings.Contains(entry.Message, "Got wrong digest") {
 			digestLog <- struct{}{}
 		}
 		return nil
@@ -295,7 +295,7 @@ func TestBadCommit(t *testing.T) {
 	digestLog := make(chan struct{})
 	verifyLog := make(chan struct{})
 	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
+		if strings.Contains(entry.Message, "Got wrong digest") {
 			digestLog <- struct{}{}
 		}
 		if strings.Contains(entry.Message, "Couldn't verify 2's signature:") {
