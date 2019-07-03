@@ -66,6 +66,7 @@ func (rp *Pool) Submit(request []byte) error {
 	return nil
 }
 
+// SizeOfPool returns the number of requests currently residing the pool
 func (rp *Pool) SizeOfPool() int {
 	rp.lock.RLock()
 	defer rp.lock.RUnlock()

@@ -289,7 +289,7 @@ func (c *Controller) Stop() {
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	// TODO write to WAL?
 	c.Application.Deliver(proposal, signatures)
-	c.Logger.Infof("Node %d delivered proposal", c.ID)
+	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	// TODO stop timeouts of included requests?
 	for _, req := range requests {
 		if err := c.RequestPool.RemoveRequest(req); err != nil {
