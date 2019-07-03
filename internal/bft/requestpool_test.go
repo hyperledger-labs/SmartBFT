@@ -30,27 +30,35 @@ func TestReqPoolBasic(t *testing.T) {
 		QueueSize:        3,
 	}
 	pool.Start()
+	assert.Equal(t, 0, pool.SizeOfPool())
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
+	assert.Equal(t, 1, pool.SizeOfPool())
 	req1 := types.RequestInfo{
 		ID:       "1",
 		ClientID: "1",
 	}
 	err = pool.Submit(byteReq1)
 	assert.Error(t, err)
+	assert.Equal(t, 1, pool.SizeOfPool())
 	err = pool.RemoveRequest(req1)
 	assert.NoError(t, err)
+	assert.Equal(t, 0, pool.SizeOfPool())
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
+	assert.Equal(t, 1, pool.SizeOfPool())
 	err = pool.RemoveRequest(req1)
 	assert.NoError(t, err)
+	assert.Equal(t, 0, pool.SizeOfPool())
 
 	byteReq2 := []byte{2}
 	insp.On("RequestID", byteReq2).Return(types.RequestInfo{ID: "2", ClientID: "2"})
 	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
+	assert.Equal(t, 1, pool.SizeOfPool())
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
+	assert.Equal(t, 2, pool.SizeOfPool())
 	err = pool.Submit(byteReq1)
 	assert.Error(t, err)
 	err = pool.Submit(byteReq2)

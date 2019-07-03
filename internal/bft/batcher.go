@@ -24,24 +24,27 @@ func (b *Bundler) NextBatch() [][]byte {
 	}
 	b.remainder = make([][]byte, 0)
 	timeout := time.After(b.Timeout)
-	requetsOccupied := 0
 	for {
 		select {
 		case <-timeout:
-			return currBatch
+			return b.buildBatch(remainderOccupied, currBatch)
 		default:
-			reqs := b.Pool.NextRequests(b.BatchSize - remainderOccupied)
-			reqsBytes := make([][]byte, 0)
-			for i := requetsOccupied; i < len(reqs); i++ {
-				reqsBytes = append(reqsBytes, reqs[i].Request)
+			if b.Pool.SizeOfPool() >= b.BatchSize-remainderOccupied {
+				return b.buildBatch(remainderOccupied, currBatch)
 			}
-			requetsOccupied = len(reqs)
-			currBatch = append(currBatch, reqsBytes...)
-			if len(currBatch) == b.BatchSize {
-				return currBatch
-			}
+			time.Sleep(b.Timeout / 100)
 		}
 	}
+}
+
+func (b *Bundler) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
+	reqs := b.Pool.NextRequests(b.BatchSize - remainderOccupied)
+	reqsBytes := make([][]byte, 0)
+	for i := 0; i < len(reqs); i++ {
+		reqsBytes = append(reqsBytes, reqs[i].Request)
+	}
+	currBatch = append(currBatch, reqsBytes...)
+	return currBatch
 }
 
 func (b *Bundler) BatchRemainder(remainder [][]byte) {

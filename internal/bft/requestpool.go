@@ -66,6 +66,12 @@ func (rp *Pool) Submit(request []byte) error {
 	return nil
 }
 
+func (rp *Pool) SizeOfPool() int {
+	rp.lock.RLock()
+	defer rp.lock.RUnlock()
+	return len(rp.queue)
+}
+
 // NextRequests return the next requests to be batched
 func (rp *Pool) NextRequests(n int) []Request {
 	rp.lock.RLock()
