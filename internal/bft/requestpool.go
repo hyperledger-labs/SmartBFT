@@ -19,7 +19,7 @@ type RequestInspector interface {
 	RequestID(req []byte) types.RequestInfo
 }
 
-type RequestPool struct {
+type Pool struct {
 	Log              Logger
 	RequestInspector RequestInspector
 	queue            []Request
@@ -35,14 +35,14 @@ type Request struct {
 	ClientID string
 }
 
-func (rp *RequestPool) Start() {
+func (rp *Pool) Start() {
 	rp.queue = make([]Request, 0)
 	rp.semaphore = semaphore.NewWeighted(rp.QueueSize)
 	rp.existMap = make(map[string]bool)
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
-func (rp *RequestPool) Submit(request []byte) error {
+func (rp *Pool) Submit(request []byte) error {
 	reqInfo := rp.RequestInspector.RequestID(request)
 	req := Request{
 		ID:       reqInfo.ID,
@@ -66,8 +66,15 @@ func (rp *RequestPool) Submit(request []byte) error {
 	return nil
 }
 
+// SizeOfPool returns the number of requests currently residing the pool
+func (rp *Pool) SizeOfPool() int {
+	rp.lock.RLock()
+	defer rp.lock.RUnlock()
+	return len(rp.queue)
+}
+
 // NextRequests return the next requests to be batched
-func (rp *RequestPool) NextRequests(n int) []Request {
+func (rp *Pool) NextRequests(n int) []Request {
 	rp.lock.RLock()
 	defer rp.lock.RUnlock()
 	if len(rp.queue) <= n {
@@ -77,7 +84,7 @@ func (rp *RequestPool) NextRequests(n int) []Request {
 }
 
 // RemoveRequest removes the given request from the pool
-func (rp *RequestPool) RemoveRequest(request Request) error {
+func (rp *Pool) RemoveRequest(request types.RequestInfo) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 	existStr := fmt.Sprintf("%v~%v", request.ClientID, request.ID)

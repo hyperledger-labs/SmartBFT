@@ -44,7 +44,14 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 }
 
 func (*Node) VerifyProposal(proposal bft.Proposal, prevHeader []byte) ([]bft.RequestInfo, error) {
-	return nil, nil
+	blockData := BlockDataFromBytes(proposal.Payload)
+	requests := make([]bft.RequestInfo, 0)
+	for _, t := range blockData.Transactions {
+		tx := TransactionFromBytes(t)
+		reqInfo := bft.RequestInfo{ID: tx.Id, ClientID: tx.ClientID}
+		requests = append(requests, reqInfo)
+	}
+	return requests, nil
 }
 
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
@@ -113,17 +120,13 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 	}
 }
 
-func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, txPool []Transaction) *Node {
+func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger) *Node {
 	node := &Node{
 		id:          id,
 		in:          in,
 		out:         out,
 		deliverChan: deliverChan,
 		stopChan:    make(chan struct{}),
-	}
-	var requests [][]byte
-	for _, tx := range txPool {
-		requests = append(requests, tx.ToBytes())
 	}
 	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
@@ -137,7 +140,6 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		Synchronizer:     node,
 		WAL1:             &wal.EphemeralWAL{},
 		WAL2:             &wal.EphemeralWAL{},
-		Requests:         requests,
 	}
 	node.consensus.Start()
 	node.Start()

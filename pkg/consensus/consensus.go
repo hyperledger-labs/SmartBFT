@@ -7,6 +7,7 @@ package consensus
 
 import (
 	"sync/atomic"
+	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
@@ -31,7 +32,6 @@ type Consensus struct {
 	Logger           bft.Logger
 	controller       *algorithm.Controller
 	nextSeq          uint64
-	Requests         [][]byte
 }
 
 func (c *Consensus) Complain() {
@@ -40,18 +40,6 @@ func (c *Consensus) Complain() {
 
 func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
 	panic("implement me")
-}
-
-func (c *Consensus) BatchRemainder(remainder [][]byte) {
-	panic("implement me")
-}
-
-func (c *Consensus) NextBatch() [][]byte {
-	reqNum := atomic.LoadUint64(&c.nextSeq)
-	if len(c.Requests) <= int(reqNum) {
-		return nil
-	}
-	return [][]byte{c.Requests[reqNum]}
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
@@ -65,13 +53,24 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	pool := algorithm.RequestPool{}
-	// TODO use request pool in example
+	pool := &algorithm.Pool{
+		Log:              c.Logger,
+		RequestInspector: c.RequestInspector,
+		QueueSize:        200,
+	}
+	pool.Start()
+
+	batcher := &algorithm.Bundler{
+		Pool:      pool,
+		BatchSize: 1,
+		Timeout:   10 * time.Millisecond,
+	}
+
 	c.controller = &algorithm.Controller{
 		ID:              c.SelfID,
 		N:               4,
+		Batcher:         batcher,
 		RequestPool:     pool,
-		Batcher:         c,
 		Verifier:        c.Verifier,
 		Logger:          c.Logger,
 		Assembler:       c.Assembler,
@@ -92,6 +91,6 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 
 }
 
-func (c *Consensus) amLeader() bool {
-	return c.SelfID == 0
+func (c *Consensus) SubmitRequest(req []byte) {
+	c.controller.SubmitRequest(req)
 }

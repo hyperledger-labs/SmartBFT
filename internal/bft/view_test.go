@@ -203,7 +203,7 @@ func TestBadPrepare(t *testing.T) {
 	assert.NoError(t, err)
 	digestLog := make(chan struct{})
 	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
+		if strings.Contains(entry.Message, "Got wrong digest") {
 			digestLog <- struct{}{}
 		}
 		return nil
@@ -295,7 +295,7 @@ func TestBadCommit(t *testing.T) {
 	digestLog := make(chan struct{})
 	verifyLog := make(chan struct{})
 	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got digest") && strings.Contains(entry.Message, "but expected") {
+		if strings.Contains(entry.Message, "Got wrong digest") {
 			digestLog <- struct{}{}
 		}
 		if strings.Contains(entry.Message, "Couldn't verify 2's signature:") {
@@ -361,7 +361,7 @@ func TestNormalPath(t *testing.T) {
 	deciderWG := sync.WaitGroup{}
 	decidedProposal := make(chan types.Proposal)
 	decidedSigs := make(chan []types.Signature)
-	decider.On("Decide", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
 		proposal, _ := args.Get(0).(types.Proposal)
 		decidedProposal <- proposal
@@ -470,7 +470,7 @@ func TestTwoSequences(t *testing.T) {
 	deciderWG := sync.WaitGroup{}
 	decidedProposal := make(chan types.Proposal, 1)
 	decidedSigs := make(chan []types.Signature, 1)
-	decider.On("Decide", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
 		proposal, _ := args.Get(0).(types.Proposal)
 		decidedProposal <- proposal

@@ -79,9 +79,9 @@ type Chain struct {
 	node        *Node
 }
 
-func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, txPool []Transaction) *Chain {
+func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger) *Chain {
 	deliverChan := make(chan *Block)
-	node := NewNode(id, in, out, deliverChan, logger, txPool)
+	node := NewNode(id, in, out, deliverChan, logger)
 	return &Chain{
 		node:        node,
 		deliverChan: deliverChan,
@@ -91,4 +91,8 @@ func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, txPool []T
 func (chain *Chain) Listen() Block {
 	block := <-chain.deliverChan
 	return *block
+}
+
+func (chain *Chain) Order(txn Transaction) {
+	chain.node.consensus.SubmitRequest(txn.ToBytes())
 }

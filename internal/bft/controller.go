@@ -42,7 +42,7 @@ type Application interface {
 
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
-	Decide(proposal types.Proposal, signatures []types.Signature)
+	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
 }
 
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
@@ -70,6 +70,13 @@ type Signer interface {
 type Batcher interface {
 	NextBatch() [][]byte
 	BatchRemainder(remainder [][]byte)
+}
+
+type RequestPool interface {
+	Submit(request []byte) error
+	SizeOfPool() int
+	NextRequests(n int) []Request
+	RemoveRequest(request types.RequestInfo) error
 }
 
 type Future interface {
@@ -138,6 +145,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.currView.HandleMessage(sender, m)
 		c.viewLock.RUnlock()
 	}
+	c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
@@ -278,10 +286,16 @@ func (c *Controller) Stop() {
 }
 
 // Decide delivers the decision to the application
-func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature) {
+func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	// TODO write to WAL?
-	// TODO remove and stop timeouts of included requests?
 	c.Application.Deliver(proposal, signatures)
+	c.Logger.Debugf("Node %d delivered proposal", c.ID)
+	// TODO stop timeouts of included requests?
+	for _, req := range requests {
+		if err := c.RequestPool.RemoveRequest(req); err != nil {
+			c.Logger.Warnf("Error during remove of request %v from the pool : %v", req, err)
+		}
+	}
 	if c.iAmTheLeader() {
 		c.deliverChan <- struct{}{}
 	}
