@@ -8,7 +8,7 @@ package wal
 import "errors"
 
 type ephemeralWALRecord struct {
-	data []byte
+	data       []byte
 	truncateTo bool
 }
 
@@ -30,7 +30,7 @@ func (ew *EphemeralWAL) Append(data []byte, truncateTo bool) error {
 }
 
 func (ew *EphemeralWAL) ReadAll() ([][]byte, error) {
-	var clone = make([][]byte,0)
+	var clone = make([][]byte, 0)
 
 	for _, entry := range ew.records {
 		entryClone := make([]byte, len(entry.data))
@@ -42,6 +42,6 @@ func (ew *EphemeralWAL) ReadAll() ([][]byte, error) {
 }
 
 func (ew *EphemeralWAL) TruncateTo() error {
-		ew.records = ew.records[0:0]
-		return nil
+	ew.records = ew.records[0:0]
+	return nil
 }
