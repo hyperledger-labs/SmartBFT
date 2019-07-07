@@ -24,9 +24,9 @@ type Assembler interface {
 }
 
 type WriteAheadLog interface {
-	Append(entry []byte)
-	Read() [][]byte
-	Truncate()
+	Append(entry []byte, truncateTo bool) error
+	ReadAll() ([][]byte, error)
+	TruncateTo() error
 }
 
 type Signer interface {
