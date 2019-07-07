@@ -130,6 +130,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	}
 	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
+		N:                4,
 		Logger:           logger,
 		Comm:             node,
 		Signer:           node,
