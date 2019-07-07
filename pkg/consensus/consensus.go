@@ -20,6 +20,7 @@ import (
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
 	SelfID           uint64
+	N                uint64
 	Application      bft.Application
 	Comm             bft.Comm
 	Assembler        bft.Assembler
@@ -68,7 +69,7 @@ func (c *Consensus) Start() Future {
 
 	c.controller = &algorithm.Controller{
 		ID:              c.SelfID,
-		N:               4,
+		N:               c.N,
 		Batcher:         batcher,
 		RequestPool:     pool,
 		Verifier:        c.Verifier,
