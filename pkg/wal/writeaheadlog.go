@@ -242,7 +242,7 @@ func (w *WriteAheadLogFile) TruncateTo() error {
 // The data item will be added to the log, and internally marked with a flag that indicates whether
 // it is a truncation point. The log implementation may truncate all preceding data items, not including this one.
 //
-// data: the data to be appended to the log. Cannot bu nil or empty.
+// data: the data to be appended to the log. Cannot be nil or empty.
 // truncateTo: whether all records preceding this one, but not including it, can be truncated from the log.
 func (w *WriteAheadLogFile) Append(data []byte, truncateTo bool) error {
 	if len(data) == 0 {
