@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"sync/atomic"
+	"time"
 
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
@@ -131,6 +132,8 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
 		N:                4,
+		BatchSize:        1,
+		BatchTimeout:     10 * time.Millisecond,
 		Logger:           logger,
 		Comm:             node,
 		Signer:           node,

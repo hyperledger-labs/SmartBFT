@@ -38,9 +38,9 @@ func TestBatcherBasic(t *testing.T) {
 	assert.NoError(t, err)
 
 	batcher := bft.Bundler{
-		Pool:      &pool,
-		BatchSize: 1,
-		Timeout:   10 * time.Millisecond,
+		Pool:         &pool,
+		BatchSize:    1,
+		BatchTimeout: 10 * time.Millisecond,
 	}
 
 	res := batcher.NextBatch()
@@ -83,9 +83,9 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq3, res[0])
 
 	batcher = bft.Bundler{
-		Pool:      &pool,
-		BatchSize: 2,
-		Timeout:   10 * time.Millisecond,
+		Pool:         &pool,
+		BatchSize:    2,
+		BatchTimeout: 10 * time.Millisecond,
 	}
 
 	batcher.BatchRemainder([][]byte{byteReq1})
@@ -119,9 +119,9 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	pool.Start()
 
 	batcher := bft.Bundler{
-		Pool:      &pool,
-		BatchSize: 100,
-		Timeout:   100 * time.Second, // long time
+		Pool:         &pool,
+		BatchSize:    100,
+		BatchTimeout: 100 * time.Second, // long time
 	}
 
 	rem := make([][]byte, 0)
