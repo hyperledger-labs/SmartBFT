@@ -10,10 +10,10 @@ import (
 )
 
 type Bundler struct { // TODO change name
-	Pool      RequestPool
-	BatchSize int
-	Timeout   time.Duration
-	remainder [][]byte
+	Pool         RequestPool
+	BatchSize    int
+	BatchTimeout time.Duration
+	remainder    [][]byte
 }
 
 // NextBatch returns the next batch of requests to be proposed
@@ -24,7 +24,7 @@ func (b *Bundler) NextBatch() [][]byte {
 		currBatch = b.remainder
 	}
 	b.remainder = make([][]byte, 0)
-	timeout := time.After(b.Timeout)
+	timeout := time.After(b.BatchTimeout)
 	for {
 		select {
 		case <-timeout:
@@ -33,7 +33,7 @@ func (b *Bundler) NextBatch() [][]byte {
 			if b.Pool.SizeOfPool() >= b.BatchSize-remainderOccupied {
 				return b.buildBatch(remainderOccupied, currBatch)
 			}
-			time.Sleep(b.Timeout / 100)
+			time.Sleep(b.BatchTimeout / 100)
 		}
 	}
 }

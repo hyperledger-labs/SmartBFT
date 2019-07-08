@@ -21,6 +21,8 @@ import (
 type Consensus struct {
 	SelfID           uint64
 	N                uint64
+	BatchSize        int
+	BatchTimeout     time.Duration
 	Application      bft.Application
 	Comm             bft.Comm
 	Assembler        bft.Assembler
@@ -62,9 +64,9 @@ func (c *Consensus) Start() Future {
 	pool.Start()
 
 	batcher := &algorithm.Bundler{
-		Pool:      pool,
-		BatchSize: 1,
-		Timeout:   10 * time.Millisecond,
+		Pool:         pool,
+		BatchSize:    c.BatchSize,
+		BatchTimeout: c.BatchTimeout,
 	}
 
 	c.controller = &algorithm.Controller{
