@@ -82,8 +82,12 @@ func (r *LogRecordReader) Close() error {
 	if r.logFile != nil {
 		err = r.logFile.Close()
 	}
+
+	r.logger.Debugf("Closed reader: CRC: %08X, file: %s", r.crc, r.fileName)
+
 	r.logger = nil
 	r.logFile = nil
+
 	return err
 }
 
@@ -110,7 +114,7 @@ func (r *LogRecordReader) Read() (*protos.LogRecord, error) {
 	switch record.Type {
 	case protos.LogRecord_ENTRY, protos.LogRecord_CONTROL:
 		if !verifyCRC(r.crc, crc, payload) {
-			return nil, errors.New("crc verification failed")
+			return nil, ErrCRC
 		}
 		fallthrough
 	case protos.LogRecord_CRC_ANCHOR:
@@ -122,14 +126,14 @@ func (r *LogRecordReader) Read() (*protos.LogRecord, error) {
 	return record, nil
 }
 
+// readHeader attempts to read the 8 byte header.
+// If it fails, it fails like io.ReadFull().
 func (r *LogRecordReader) readHeader() (length, crc uint32, err error) {
-	buff := make([]byte, 8)
-	n, err := r.logFile.Read(buff)
+	buff := make([]byte, recordHeaderSize)
+	n, err := io.ReadFull(r.logFile, buff)
 	if err != nil {
+		r.logger.Debugf("Failed to read header in full: expected=%d, actual=%d; error: %s", recordHeaderSize, n, err)
 		return 0, 0, err
-	}
-	if n != 8 {
-		return 0, 0, fmt.Errorf("incomplete header: size: expected=%d, actual=%d", 8, n)
 	}
 
 	header := binary.LittleEndian.Uint64(buff)
@@ -139,15 +143,16 @@ func (r *LogRecordReader) readHeader() (length, crc uint32, err error) {
 	return length, crc, nil
 }
 
+// readPayload attempts to read a payload in full.
+// If it fails, it fails like io.ReadFull().
 func (r *LogRecordReader) readPayload(len int) (payload []byte, err error) {
 	buff := make([]byte, len)
-	n, err := r.logFile.Read(buff)
+	n, err := io.ReadFull(r.logFile, buff)
 	if err != nil {
+		r.logger.Debugf("Failed to read payload in full: expected=%d, actual=%d; error: %s", len, n, err)
 		return nil, err
 	}
-	if n != len {
-		return nil, fmt.Errorf("incomplete payload: size: expected=%d, actual=%d", len, n)
-	}
+
 	return buff, nil
 }
 

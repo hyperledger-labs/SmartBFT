@@ -6,6 +6,7 @@
 package wal
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -36,12 +37,17 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
-		var crc uint32
-		if wal != nil {
-			crc = wal.CRC()
-			err = wal.Close()
-			assert.NoError(t, err)
+		if wal == nil {
+			return
 		}
+
+		dataItems, err := wal.ReadAll()
+		assert.EqualError(t, err, ErrWriteOnly.Error())
+		assert.Nil(t, dataItems)
+
+		crc := wal.CRC()
+		err = wal.Close()
+		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
 		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
@@ -81,6 +87,82 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		assert.Error(t, err)
 		if err != nil {
 			assert.True(t, strings.HasPrefix(err.Error(), "wal: directory not empty:"))
+		}
+		assert.Nil(t, wal)
+	})
+}
+
+func TestWriteAheadLogFile_Open(t *testing.T) {
+	testDir, err := ioutil.TempDir("", "unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	t.Run("Good", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "good")
+		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
+		assert.NoError(t, err)
+
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		const NumBytes = 1024
+		const NumRec = 20
+		for m := 0; m < NumRec; m++ {
+			data1 := make([]byte, NumBytes)
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(n % (m + 1))
+			}
+			err = wal.Append(data1, false)
+			assert.NoError(t, err)
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		wal, err = Open(logger, dirPath, nil)
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		err = wal.Append([]byte{1, 2, 3, 4}, false)
+		assert.EqualError(t, err, "wal: in READ mode")
+		err = wal.TruncateTo()
+		assert.EqualError(t, err, "wal: in READ mode")
+
+		err = wal.Close()
+		assert.NoError(t, err)
+	})
+
+	t.Run("Bad - does not exist", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "bad-not-exist")
+
+		wal, err := Open(logger, dirPath, nil)
+		assert.Error(t, err)
+		if err != nil {
+			assert.Contains(t, err.Error(), "no such file or directory")
+		}
+		assert.Nil(t, wal)
+	})
+
+	t.Run("Bad - no files", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "bad-no-files")
+		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
+		assert.NoError(t, err)
+
+		wal, err := Open(logger, dirPath, nil)
+		assert.Error(t, err)
+		if err != nil {
+			assert.Contains(t, err.Error(), "file does not exist")
 		}
 		assert.Nil(t, wal)
 	})
@@ -198,15 +280,14 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 			return
 		}
 
-		N := 1024
-		M := 20
-
-		records := make([]*smartbftprotos.LogRecord, M)
+		const NumBytes = 1024
+		const NumRec = 20
+		records := make([]*smartbftprotos.LogRecord, NumRec)
 		var crc1, crc2 uint32
-		for m := 0; m < M; m++ {
+		for m := 0; m < NumRec; m++ {
 
-			data1 := make([]byte, N)
-			for n := 0; n < N; n++ {
+			data1 := make([]byte, NumBytes)
+			for n := 0; n < NumBytes; n++ {
 				data1[n] = byte(n % (m + 1))
 			}
 
@@ -284,6 +365,163 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
 		verifyAppend(t, logger, dirPath, expectedFileName, crc, rec1, rec2, rec3)
+	})
+
+}
+
+func TestWriteAheadLogFile_ReadAll(t *testing.T) {
+	testDir, err := ioutil.TempDir("", "unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	t.Run("Good - one empty file", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "good-1-empty")
+
+		wal, err := Create(logger, dirPath, nil)
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		wal, err = Open(logger, dirPath, nil)
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+
+		dataItems, err := wal.ReadAll()
+		assert.NoError(t, err)
+		assert.NotNil(t, dataItems)
+		assert.Equal(t, 0, len(dataItems))
+
+		dataItems, err = wal.ReadAll()
+		assert.EqualError(t, err, ErrWriteOnly.Error())
+		assert.Nil(t, dataItems)
+	})
+
+	t.Run("Good - 1 file", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "good-1-file")
+
+		wal, err := Create(logger, dirPath, nil)
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		data1 := []byte{1, 2, 3, 4}
+		data2 := []byte{5, 6, 7, 8}
+		err = wal.Append(data1, false)
+		assert.NoError(t, err)
+		err = wal.Append(data2, false)
+		assert.NoError(t, err)
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		wal, err = Open(logger, dirPath, nil)
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+
+		dataItems, err := wal.ReadAll()
+		assert.NoError(t, err)
+		assert.NotNil(t, dataItems)
+		assert.Equal(t, 2, len(dataItems))
+		assert.True(t, bytes.Equal(data1, dataItems[0]))
+		assert.True(t, bytes.Equal(data2, dataItems[1]))
+	})
+
+	t.Run("Good - many files", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "good-many")
+		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
+		assert.NoError(t, err)
+
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		const NumBytes = 1024
+		const NumRec = 100
+		data1 := make([]byte, NumBytes)
+		for m := 0; m < NumRec; m++ {
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(m)
+			}
+			err = wal.Append(data1, false)
+			assert.NoError(t, err)
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		logger.Infof(">>> Open #1")
+
+		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		logger.Infof(">>> ReadAll #1")
+
+		dataItems, err := wal.ReadAll()
+		assert.NoError(t, err)
+		assert.NotNil(t, dataItems)
+		assert.Equal(t, NumRec, len(dataItems))
+		for i, data := range dataItems {
+			assert.Equal(t, byte(i), data[0])
+		}
+
+		// continue to write
+		logger.Infof(">>> Continue to write")
+
+		for m := 0; m < NumRec; m++ {
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(m)
+			}
+
+			if m == NumRec/2 {
+				err = wal.Append(data1, true)
+			} else {
+				err = wal.Append(data1, false)
+			}
+			assert.NoError(t, err)
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		logger.Infof(">>> Open #2")
+
+		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		logger.Infof(">>> ReadAll #2")
+
+		dataItems, err = wal.ReadAll()
+		assert.NoError(t, err)
+		assert.NotNil(t, dataItems)
+		assert.Equal(t, NumRec/2, len(dataItems))
+		for i, data := range dataItems {
+			assert.Equal(t, byte(i+NumRec/2), data[0])
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
 	})
 
 }
