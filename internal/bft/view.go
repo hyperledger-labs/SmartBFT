@@ -252,7 +252,11 @@ func (v *View) prepared() Phase {
 		return ABORT
 	}
 
-	v.Logger.Infof("Processed commits for proposal with seq %d", v.seq())
+	v.lock.RLock()
+	seq := v.ProposalSequence
+	v.lock.RUnlock()
+
+	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
 
 	v.maybeDecide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED
@@ -307,14 +311,8 @@ func (v *View) processProposal() Phase {
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
-	v.Logger.Infof("Processed proposal with seq %d", v.seq())
+	v.Logger.Infof("Processed proposal with seq %d", seq)
 	return PROPOSED
-}
-
-func (v *View) seq() uint64 {
-	v.lock.RLock()
-	defer v.lock.RUnlock()
-	return v.ProposalSequence
 }
 
 func (v *View) processPrepares() Phase {
@@ -366,7 +364,7 @@ func (v *View) processPrepares() Phase {
 	v.State.Save(msg)
 	v.Comm.Broadcast(msg)
 
-	v.Logger.Infof("Processed prepares for proposal with seq %d", v.seq())
+	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
 	return PREPARED
 }
 
