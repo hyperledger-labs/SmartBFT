@@ -13,6 +13,8 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+const ()
+
 type State interface {
 	// Save saves the current message.
 	Save(message *protos.Message) error
@@ -234,15 +236,9 @@ func (v *View) doStep() {
 	}
 
 	v.processPrepares(proposal)
-	v.lock.RLock()
-	seq = v.ProposalSequence
-	v.lock.RUnlock()
 	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
 
 	signatures := v.processCommits(proposal)
-	v.lock.RLock()
-	seq = v.ProposalSequence
-	v.lock.RUnlock()
 	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
 	if len(signatures) == 0 {
 		v.Logger.Debugf("Signatures len is 0")
