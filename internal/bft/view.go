@@ -36,7 +36,7 @@ type View struct {
 	Signer           Signer
 	ProposalSequence uint64
 	PrevHeader       []byte
-	State State
+	State            State
 	// Runtime
 	incMsgs       chan *incMsg
 	myProposalSig *types.Signature

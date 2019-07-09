@@ -21,7 +21,6 @@ func (*StateRecorder) Restore() (*View, error) {
 }
 
 type PersistedState struct {
-
 }
 
 func (*PersistedState) Save(message *smartbftprotos.Message) error {
