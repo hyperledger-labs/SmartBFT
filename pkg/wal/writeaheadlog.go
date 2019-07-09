@@ -13,6 +13,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/golang/protobuf/proto"
@@ -28,6 +29,7 @@ const (
 	walFilePermPrivateRW os.FileMode = 0600
 	walDirPermPrivateRWX os.FileMode = 0700
 
+	recordHeaderSize int    = 8
 	recordLengthMask uint64 = 0x00000000FFFFFFFF
 	recordCRCMask    uint64 = recordLengthMask << 32
 
@@ -38,6 +40,10 @@ const (
 )
 
 var (
+	ErrCRC       = errors.New("wal: crc verification failed")
+	ErrWriteOnly = errors.New("wal: in WRITE mode")
+	ErrReadOnly  = errors.New("wal: in READ mode")
+
 	crcTable = crc32.MakeTable(crc32.Castagnoli)
 )
 
@@ -74,14 +80,16 @@ type WriteAheadLogFile struct {
 
 	logger api.Logger
 
-	mutex      sync.Mutex
-	dirFile    *os.File
-	index      uint64
-	logFile    *os.File
-	headerBuff []byte
-	dataBuff   *proto.Buffer
-	crc        uint32
-	readMode   bool
+	mutex         sync.Mutex
+	dirFile       *os.File
+	index         uint64
+	logFile       *os.File
+	headerBuff    []byte
+	dataBuff      *proto.Buffer
+	crc           uint32
+	readMode      bool
+	truncateIndex uint64
+	activeIndexes []uint64
 }
 
 type Options struct {
@@ -123,39 +131,45 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		return nil, fmt.Errorf("wal: could not create directory: %s; error: %s", dirPath, err)
 	}
 
-	dirFile, err := os.Open(cleanDirName)
+	wal := &WriteAheadLogFile{
+		dirName:       cleanDirName,
+		options:       opt,
+		logger:        logger,
+		index:         1,
+		headerBuff:    make([]byte, 8),
+		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		crc:           walCRCSeed,
+		truncateIndex: 1,
+		activeIndexes: []uint64{1},
+	}
+
+	wal.dirFile, err = os.Open(cleanDirName)
 	if err != nil {
+		wal.Close()
 		return nil, fmt.Errorf("wal: could not open directory: %s; error: %s", dirPath, err)
 	}
 
 	fileName := fmt.Sprintf(walFileTemplate, uint64(1))
-	firstLogFile, err := os.OpenFile(filepath.Join(cleanDirName, fileName), os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
+	wal.logFile, err = os.OpenFile(filepath.Join(cleanDirName, fileName), os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
 	if err != nil {
-		return nil, fmt.Errorf("wal: could not open file: %s; error: %s; %v", fileName, err, os.IsNotExist(err))
+		wal.Close()
+		return nil, fmt.Errorf("wal: could not open file: %s; error: %s", fileName, err)
 	}
 
-	wal := &WriteAheadLogFile{
-		dirName:    cleanDirName,
-		options:    opt,
-		dirFile:    dirFile,
-		logger:     logger,
-		index:      1,
-		logFile:    firstLogFile,
-		headerBuff: make([]byte, 8),
-		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
-		crc:        walCRCSeed,
-	}
-
-	err = wal.saveCRC()
+	err = wal.saveCRC(true)
 	if err != nil {
+		wal.Close()
 		return nil, err
 	}
 
-	wal.logger.Infof("Write-Ahead-Log created successfully, dir: %s", wal.dirName)
+	wal.logger.Infof("Write-Ahead-Log created successfully, mode: WRITE, dir: %s", wal.dirName)
 	return wal, nil
 }
 
 // Open will open an existing WAL, if it exists, or an error if it does not exist.
+//
+// After opening, the WAL is in read mode, and expects a call to ReadAll(). An attempt to write
+// (e.g. Append, TruncateTo) will result in an error.
 //
 // logger: reference to a Logger implementation.
 // dirPath: directory path of the WAL.
@@ -163,8 +177,59 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 //
 // return: pointer to a WAL, or an error
 func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
-	//TODO
-	return nil, errors.New("not implemented yet")
+	if logger == nil {
+		return nil, errors.New("wal: logger is nil")
+	}
+
+	walNames, err := dirReadWalNames(dirPath)
+	if err != nil {
+		return nil, err
+	}
+	if len(walNames) == 0 {
+		return nil, os.ErrNotExist
+	}
+
+	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
+
+	opt := DefaultOptions()
+	if options != nil {
+		opt = options
+	}
+
+	cleanDirName := filepath.Clean(dirPath)
+
+	wal := &WriteAheadLogFile{
+		dirName:    cleanDirName,
+		options:    opt,
+		logger:     logger,
+		headerBuff: make([]byte, 8),
+		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		readMode:   true,
+	}
+
+	wal.dirFile, err = os.Open(cleanDirName)
+	if err != nil {
+		_ = wal.Close()
+		return nil, fmt.Errorf("wal: could not open directory: %s; error: %s", dirPath, err)
+	}
+
+	// After the check we have an increasing, continuous sequence, with valid CRC-Anchors in each file.
+	wal.activeIndexes, err = checkWalFiles(logger, dirPath, walNames)
+	if err != nil {
+		_ = wal.Close()
+		return nil, err
+	}
+
+	fileName := walNames[0] //first valid file
+	wal.index, err = parseWalFileName(fileName)
+	if err != nil {
+		_ = wal.Close()
+		return nil, err
+	}
+
+	wal.logger.Infof("Write-Ahead-Log opened successfully, mode: READ, dir: %s", wal.dirName)
+
+	return wal, nil
 }
 
 // Repair tries to repair the last file of a WAL, in case the last item is corrupted due to a failure in the middle of
@@ -230,10 +295,6 @@ func (w *WriteAheadLogFile) TruncateTo() error {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
 
-	if w.logFile == nil {
-		return os.ErrClosed
-	}
-
 	return w.append(record)
 }
 
@@ -258,14 +319,17 @@ func (w *WriteAheadLogFile) Append(data []byte, truncateTo bool) error {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
 
-	if w.logFile == nil {
-		return os.ErrClosed
-	}
-
 	return w.append(record)
 }
 
 func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
+	if w.dirFile == nil {
+		return os.ErrClosed
+	}
+	if w.readMode {
+		return ErrReadOnly
+	}
+
 	w.dataBuff.Reset()
 	err := w.dataBuff.Marshal(record)
 	if err != nil {
@@ -319,34 +383,114 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 
 // ReadAll the data items from the latest truncation point to the end of the log.
 // This method can be called only at the beginning of the WAL lifecycle, right after Open().
+// After a successful invocation the WAL moves to write mode, and is ready to Append().
+//
+// In case of failure:
+//  - an error of type io.ErrUnexpectedEOF	is returned when the WAL can possibly be repaired by truncating the last
+//    log file after the last good record.
+//  - all other errors indicate that the WAL is corrupted beyond the simple repair measure described above.
 func (w *WriteAheadLogFile) ReadAll() ([][]byte, error) {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
 
-	if w.logFile == nil {
+	if w.dirFile == nil {
 		return nil, os.ErrClosed
 	}
 
-	//TODO
-	return nil, errors.New("not implemented yet")
+	if !w.readMode {
+		return nil, ErrWriteOnly
+	}
+
+	var items = make([][]byte, 0)
+	var lastIndex = w.activeIndexes[len(w.activeIndexes)-1]
+
+FileLoop:
+	for i, index := range w.activeIndexes {
+		w.index = index
+		//This should not fail, we check the files earlier, when we Open() the WAL.
+		r, err := NewLogRecordReader(w.logger, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
+		if err != nil {
+			return nil, err
+		}
+		if (i != 0) && (r.CRC() != w.crc) {
+			return nil, ErrCRC
+		}
+
+		var readErr error
+	ReadLoop:
+		for i := 1; ; i++ {
+			var rec *protos.LogRecord
+			rec, readErr = r.Read()
+			if readErr != nil {
+				w.logger.Debugf("Read error, file: %s; error: %s", r.fileName, readErr)
+				r.Close()
+				break ReadLoop
+			}
+
+			if rec.TruncateTo {
+				items = items[0:0]
+			}
+
+			if rec.Type == protos.LogRecord_ENTRY {
+				items = append(items, rec.Data)
+			}
+
+			w.logger.Debugf("Read record #%d, file: %s", i, r.fileName)
+		}
+
+		if readErr == io.EOF {
+			w.logger.Debugf("Reached EOF, finished reading file: %s; CRC: %08X", r.fileName, r.CRC())
+			w.crc = r.CRC()
+			continue FileLoop
+		}
+
+		if index == lastIndex && (readErr == io.ErrUnexpectedEOF || readErr == ErrCRC) {
+			w.logger.Warnf("Received an error in the last file, this can possibly be repaired; file: %s; error: %s", r.fileName, err)
+			// This error is returned when the WAL can possibly be repaired
+			return nil, io.ErrUnexpectedEOF
+		}
+
+		if readErr != nil {
+			w.logger.Warnf("Failed reading file: %s; error: %s", r.fileName, err)
+			return nil, fmt.Errorf("failed reading wal: %s", err)
+		}
+	}
+
+	w.logger.Debugf("Read %d items", len(items))
+
+	// move to write mode on a new file.
+	if err := w.switchFiles(); err != nil {
+		w.logger.Errorf("Failed to switch files: %s", err)
+		return nil, err
+	}
+	w.readMode = false
+
+	return items, nil
 }
 
+// truncateAndCloseLogFile when we orderly close a writable log file we truncate it. This way, reading it in ReadAll()
+// ends with a io.EOF error after the last record.
 func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 	var err error
-	offset, err := w.logFile.Seek(0, io.SeekCurrent)
-	if err != nil {
-		return err
-	}
 
-	if err = w.logFile.Truncate(offset); err != nil {
-		return err
-	}
+	if !w.readMode {
+		offset, err := w.logFile.Seek(0, io.SeekCurrent)
+		if err != nil {
+			return err
+		}
 
-	if err = w.logFile.Sync(); err != nil {
-		return err
+		if err = w.logFile.Truncate(offset); err != nil {
+			return err
+		}
+		if err = w.logFile.Sync(); err != nil {
+			return err
+		}
+
+		w.logger.Debugf("Truncated & Sync'ed log file: %s", w.logFile.Name())
 	}
 
 	if err = w.logFile.Close(); err != nil {
+		w.logger.Errorf("Failed to close log file: %s; error: %s", w.logFile.Name(), err)
 		return err
 	}
 
@@ -357,8 +501,12 @@ func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 
 func (w *WriteAheadLogFile) switchFiles() error {
 	var err error
-	if err = w.truncateAndCloseLogFile(); err != nil {
-		return err
+
+	if !w.readMode {
+		if err = w.truncateAndCloseLogFile(); err != nil {
+			w.logger.Errorf("Failed to truncateAndCloseLogFile: %s", err)
+			return err
+		}
 	}
 
 	w.index++
@@ -369,6 +517,7 @@ func (w *WriteAheadLogFile) switchFiles() error {
 	//TODO BACKLOG: prepare a pre-allocated file in advance, and get it here.
 	w.logFile, err = os.OpenFile(nextFilePath, os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
 	if err != nil {
+		w.logger.Errorf("Failed to OpenFile: %s", err)
 		return err
 	}
 	_, err = w.logFile.Seek(0, io.SeekStart)
@@ -376,19 +525,21 @@ func (w *WriteAheadLogFile) switchFiles() error {
 		return err
 	}
 
-	err = w.saveCRC()
+	err = w.saveCRC(false)
 	if err != nil {
 		return err
 	}
 
+	w.activeIndexes = append(w.activeIndexes, w.index)
 	w.logger.Debugf("Successfully switched to log file: %s", w.logFile.Name())
+	w.logger.Debugf("Number of files: %d, indexes: %v", len(w.activeIndexes), w.activeIndexes)
 
 	return nil
 }
 
 // saveCRC saves the current CRC followed by a CRC_ANCHOR record.
-func (w *WriteAheadLogFile) saveCRC() error {
-	anchorRecord := &protos.LogRecord{Type: protos.LogRecord_CRC_ANCHOR}
+func (w *WriteAheadLogFile) saveCRC(truncateTo bool) error {
+	anchorRecord := &protos.LogRecord{Type: protos.LogRecord_CRC_ANCHOR, TruncateTo: truncateTo}
 	b, err := proto.Marshal(anchorRecord)
 	recordLength := len(b)
 	padSize, padBytes := getPadBytes(recordLength)
