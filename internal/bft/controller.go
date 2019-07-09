@@ -156,6 +156,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 	view := View{
 		N:                c.N,
 		LeaderID:         c.leaderID(),
+		ID:               c.ID,
 		Quorum:           c.quorum,
 		Number:           atomic.LoadUint64(&c.currViewNumber),
 		Decider:          c,
