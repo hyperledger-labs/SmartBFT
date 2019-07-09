@@ -156,7 +156,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		return nil, fmt.Errorf("wal: could not open file: %s; error: %s", fileName, err)
 	}
 
-	err = wal.saveCRC(true)
+	err = wal.saveCRC()
 	if err != nil {
 		wal.Close()
 		return nil, err
@@ -361,13 +361,19 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 
 	err = w.logFile.Sync()
 	if err != nil {
-		fmt.Errorf("wal: failed to Sync log file: %s", err)
+		return fmt.Errorf("wal: failed to Sync log file: %s", err)
 	}
 	w.crc = dataCRC
 
 	offset, err := w.logFile.Seek(0, io.SeekCurrent)
+	if err != nil {
+		return fmt.Errorf("wal: failed to get offset from log file: %s", err)
+	}
 
-	w.logger.Debugf("LogRecord appended successfully: size=%d, recordLength=%d, dataCRC=%08X; file=%s, new-offset=%d",
+	if record.TruncateTo {
+		w.truncateIndex = w.index
+	}
+	w.logger.Debugf("LogRecord appended successfully: total size=%d, recordLength=%d, dataCRC=%08X; file=%s, new-offset=%d",
 		(nh + np), recordLength, dataCRC, w.logFile.Name(), offset)
 
 	//Switch files if this or the next record (minimal size is 16B) cause overflow
@@ -388,7 +394,10 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 // In case of failure:
 //  - an error of type io.ErrUnexpectedEOF	is returned when the WAL can possibly be repaired by truncating the last
 //    log file after the last good record.
-//  - all other errors indicate that the WAL is corrupted beyond the simple repair measure described above.
+//  - all other errors indicate that the WAL is either
+//  	- is closed, or
+//  	- is in write mode, or
+//  	- is corrupted beyond the simple repair measure described above.
 func (w *WriteAheadLogFile) ReadAll() ([][]byte, error) {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()
@@ -429,6 +438,7 @@ FileLoop:
 
 			if rec.TruncateTo {
 				items = items[0:0]
+				w.truncateIndex = w.index
 			}
 
 			if rec.Type == protos.LogRecord_ENTRY {
@@ -525,7 +535,7 @@ func (w *WriteAheadLogFile) switchFiles() error {
 		return err
 	}
 
-	err = w.saveCRC(false)
+	err = w.saveCRC()
 	if err != nil {
 		return err
 	}
@@ -538,8 +548,8 @@ func (w *WriteAheadLogFile) switchFiles() error {
 }
 
 // saveCRC saves the current CRC followed by a CRC_ANCHOR record.
-func (w *WriteAheadLogFile) saveCRC(truncateTo bool) error {
-	anchorRecord := &protos.LogRecord{Type: protos.LogRecord_CRC_ANCHOR, TruncateTo: truncateTo}
+func (w *WriteAheadLogFile) saveCRC() error {
+	anchorRecord := &protos.LogRecord{Type: protos.LogRecord_CRC_ANCHOR, TruncateTo: false}
 	b, err := proto.Marshal(anchorRecord)
 	recordLength := len(b)
 	padSize, padBytes := getPadBytes(recordLength)
