@@ -142,8 +142,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		Assembler:        node,
 		RequestInspector: node,
 		Synchronizer:     node,
-		WAL1:             &wal.EphemeralWAL{},
-		WAL2:             &wal.EphemeralWAL{},
+		WAL:              &wal.EphemeralWAL{},
 	}
 	node.consensus.Start()
 	node.Start()

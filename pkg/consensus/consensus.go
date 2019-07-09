@@ -26,8 +26,7 @@ type Consensus struct {
 	Application      bft.Application
 	Comm             bft.Comm
 	Assembler        bft.Assembler
-	WAL1             bft.WriteAheadLog
-	WAL2             bft.WriteAheadLog
+	WAL              bft.WriteAheadLog
 	Signer           bft.Signer
 	Verifier         bft.Verifier
 	RequestInspector bft.RequestInspector
@@ -70,6 +69,7 @@ func (c *Consensus) Start() Future {
 	}
 
 	c.controller = &algorithm.Controller{
+		WAL:             c.WAL,
 		ID:              c.SelfID,
 		N:               c.N,
 		Batcher:         batcher,

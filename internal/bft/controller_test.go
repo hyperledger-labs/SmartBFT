@@ -14,6 +14,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -138,6 +139,7 @@ func TestLeaderPropose(t *testing.T) {
 		appWG.Done()
 	})
 	controller := bft.Controller{
+		WAL:         &wal.EphemeralWAL{},
 		ID:          1, // the leader
 		N:           4,
 		Logger:      log,
@@ -200,6 +202,7 @@ func TestLeaderChange(t *testing.T) {
 		fdWG.Done()
 	})
 	controller := bft.Controller{
+		WAL:             &wal.EphemeralWAL{},
 		ID:              2, // the next leader
 		N:               4,
 		Logger:          log,
