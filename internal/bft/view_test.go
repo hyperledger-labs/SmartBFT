@@ -11,6 +11,8 @@ import (
 	"sync"
 	"testing"
 
+	"fmt"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -363,6 +365,7 @@ func TestNormalPath(t *testing.T) {
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
 	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+		fmt.Println("Sending", args.Get(0))
 		commWG.Done()
 	})
 	decider := &mocks.Decider{}
@@ -390,6 +393,7 @@ func TestNormalPath(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
+		ID:               1,
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
@@ -426,7 +430,7 @@ func TestNormalPath(t *testing.T) {
 	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
-	commWG.Add(1)
+	commWG.Add(2)
 	view.HandleMessage(1, prePrepareNext)
 	commWG.Wait()
 

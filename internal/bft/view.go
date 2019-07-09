@@ -33,6 +33,7 @@ type State interface {
 
 type View struct {
 	// Configuration
+	ID               uint64
 	N                uint64
 	LeaderID         uint64
 	Quorum           int
@@ -317,6 +318,10 @@ func (v *View) processProposal() Phase {
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
+	if v.ID == v.LeaderID {
+		v.Comm.Broadcast(receivedProposal)
+	}
+
 	v.Logger.Infof("Processed proposal with seq %d", seq)
 	return PROPOSED
 }
@@ -493,9 +498,10 @@ func (v *View) Propose(proposal types.Proposal) {
 			},
 		},
 	}
-	v.Comm.Broadcast(msg)
+	// Send the proposal to yourself in order to pre-prepare yourself and record
+	// it in the WAL before sending it to other nodes.
 	v.HandleMessage(v.LeaderID, msg)
-	v.Logger.Debugf("Proposal broadcast and sent back to leader with ID %d", v.LeaderID)
+	v.Logger.Debugf("Proposing proposal sequence %d", seq)
 }
 
 // Abort forces the view to end

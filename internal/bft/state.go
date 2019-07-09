@@ -71,7 +71,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	}
 
 	if lastPersistedMessage.GetPrePrepare() != nil {
-		return recoverProposed(lastPersistedMessage, v)
+		return recoverProposed(lastPersistedMessage, v, ps.Logger)
 	}
 
 	if commitMsg := lastPersistedMessage.GetCommit(); commitMsg != nil {
@@ -83,8 +83,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	return nil
 }
 
-func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View) error {
-	// Last entry is a pre-prepare
+func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logger Logger) error {
 	prop := lastPersistedMessage.GetPrePrepare().Proposal
 	v.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(prop.VerificationSequence),
@@ -104,6 +103,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View) erro
 		},
 	}
 	v.Phase = PROPOSED
+	logger.Infof("Restored proposal with sequence %d", lastPersistedMessage.GetPrePrepare().Seq)
 	return nil
 }
 
@@ -120,6 +120,18 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 
 	if prePrepareMsg.GetPrePrepare() != nil {
 		return fmt.Errorf("expected second last message to be a commit, but got %v instead", prePrepareMsg)
+	}
+
+	if prp := prePrepareMsg.GetPrePrepare(); v.ProposalSequence > prp.Seq {
+		err := fmt.Errorf("last proposal sequence persisted into WAL is %d but last committed sequence is %d", prp.Seq, v.ProposalSequence)
+		logger.Errorf("Failed recovery: %s", err)
+		return err
+	}
+
+	// Check if the WAL's last sequence has been persisted into the application layer.
+	if prp := prePrepareMsg.GetPrePrepare(); v.ProposalSequence == prp.Seq {
+		logger.Infof("Last proposal with sequence %d has been safely committed", v.ProposalSequence)
+		return nil
 	}
 
 	prop := prePrepareMsg.GetPrePrepare().Proposal
