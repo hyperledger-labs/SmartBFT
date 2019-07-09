@@ -108,7 +108,7 @@ func (r *LogRecordReader) Read() (*protos.LogRecord, error) {
 	var record = &protos.LogRecord{}
 	err = proto.Unmarshal(payload[:recLen], record)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("wal: failed to unmarshal payload: %s", err)
 	}
 
 	switch record.Type {
@@ -120,7 +120,7 @@ func (r *LogRecordReader) Read() (*protos.LogRecord, error) {
 	case protos.LogRecord_CRC_ANCHOR:
 		r.crc = crc
 	default:
-		return nil, fmt.Errorf("unexpected LogRecord_Type: %v", record.Type)
+		return nil, fmt.Errorf("wal: unexpected LogRecord_Type: %v", record.Type)
 	}
 
 	return record, nil
