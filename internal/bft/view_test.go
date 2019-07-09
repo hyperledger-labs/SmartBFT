@@ -7,11 +7,10 @@ package bft_test
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"sync"
 	"testing"
-
-	"fmt"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
@@ -226,7 +225,7 @@ func TestBadPrepare(t *testing.T) {
 	})
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
-	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	verifier := &mocks.Verifier{}
@@ -312,7 +311,7 @@ func TestBadCommit(t *testing.T) {
 		return nil
 	})).Sugar()
 	comm := &mocks.Comm{}
-	comm.On("Broadcast", mock.Anything)
+	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
@@ -364,7 +363,7 @@ func TestNormalPath(t *testing.T) {
 	log := basicLog.Sugar()
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
-	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		fmt.Println("Sending", args.Get(0))
 		commWG.Done()
 	})
@@ -477,7 +476,7 @@ func TestTwoSequences(t *testing.T) {
 	log := basicLog.Sugar()
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
-	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	decider := &mocks.Decider{}

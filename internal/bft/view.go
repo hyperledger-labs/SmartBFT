@@ -240,10 +240,10 @@ func (v *View) run() {
 func (v *View) doPhase() {
 	switch v.Phase {
 	case PROPOSED:
-		v.Comm.Broadcast(v.lastBroadcastSent)
+		v.Comm.BroadcastConsensus(v.lastBroadcastSent)
 		v.Phase = v.processPrepares()
 	case PREPARED:
-		v.Comm.Broadcast(v.lastBroadcastSent)
+		v.Comm.BroadcastConsensus(v.lastBroadcastSent)
 		v.Phase = v.prepared()
 	default:
 		v.Phase = v.processProposal()
@@ -319,7 +319,7 @@ func (v *View) processProposal() Phase {
 	v.inFlightRequests = requests
 
 	if v.ID == v.LeaderID {
-		v.Comm.Broadcast(receivedProposal)
+		v.Comm.BroadcastConsensus(receivedProposal)
 	}
 
 	v.Logger.Infof("Processed proposal with seq %d", seq)

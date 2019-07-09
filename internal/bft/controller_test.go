@@ -60,7 +60,7 @@ func TestQuorum(t *testing.T) {
 			verifier := &mocks.Verifier{}
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 			comm := &mocks.Comm{}
-			comm.On("Broadcast", mock.Anything)
+			comm.On("BroadcastConsensus", mock.Anything)
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			verifyLog := make(chan struct{}, 1)
@@ -125,7 +125,7 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
-	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	signer := &mocks.Signer{}
@@ -188,7 +188,7 @@ func TestLeaderChange(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
-	comm.On("Broadcast", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	synchronizer := &mocks.Synchronizer{}
@@ -230,7 +230,7 @@ func TestLeaderChange(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	verifier.AssertNumberOfCalls(t, "VerifyRequest", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "Broadcast", 2)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
 	end.Wait()
 }
