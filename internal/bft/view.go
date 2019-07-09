@@ -26,8 +26,9 @@ type State interface {
 	// Save saves the current message.
 	Save(message *protos.Message) error
 
-	// Restore restores a view from the state.
-	Restore() (*View, error)
+	// Restore restores the given view to its latest state
+	// before a crash, if applicable.
+	Restore(*View) error
 }
 
 type View struct {
@@ -48,10 +49,11 @@ type View struct {
 	State            State
 	Phase            Phase
 	// Runtime
-	incMsgs          chan *incMsg
-	myProposalSig    *types.Signature
-	inFlightProposal *types.Proposal
-	inFlightRequests []types.RequestInfo
+	incMsgs           chan *incMsg
+	myProposalSig     *types.Signature
+	inFlightProposal  *types.Proposal
+	inFlightRequests  []types.RequestInfo
+	lastBroadcastSent *protos.Message
 	// Current proposal
 	prePrepare chan *protos.Message
 	prepares   *voteSet
@@ -237,8 +239,10 @@ func (v *View) run() {
 func (v *View) doPhase() {
 	switch v.Phase {
 	case PROPOSED:
+		v.Comm.Broadcast(v.lastBroadcastSent)
 		v.Phase = v.processPrepares()
 	case PREPARED:
+		v.Comm.Broadcast(v.lastBroadcastSent)
 		v.Phase = v.prepared()
 	default:
 		v.Phase = v.processProposal()
@@ -265,6 +269,8 @@ func (v *View) prepared() Phase {
 func (v *View) processProposal() Phase {
 	v.inFlightProposal = nil
 	v.inFlightRequests = nil
+	v.lastBroadcastSent = nil
+
 	var proposal types.Proposal
 	var receivedProposal *protos.Message
 	select {
@@ -307,7 +313,7 @@ func (v *View) processProposal() Phase {
 	// We are about to send a prepare for a pre-prepare,
 	// so we record the pre-prepare.
 	v.State.Save(receivedProposal)
-	v.Comm.Broadcast(msg)
+	v.lastBroadcastSent = msg
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
@@ -362,7 +368,7 @@ func (v *View) processPrepares() Phase {
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
 	v.State.Save(msg)
-	v.Comm.Broadcast(msg)
+	v.lastBroadcastSent = msg
 
 	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
 	return PREPARED
