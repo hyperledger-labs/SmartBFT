@@ -3,9 +3,22 @@
 go get -u golang.org/x/tools/cmd/goimports
 go get -u github.com/golang/protobuf/protoc-gen-go
 
-wget https://github.com/protocolbuffers/protobuf/releases/download/v3.8.0/protoc-3.8.0-linux-x86_64.zip
-unzip protoc-3.8.0-linux-x86_64.zip
-export PATH=$PATH:bin/
+BUILDDIR=.build
+if [ ! -d "$BUILDDIR" ]; then
+    mkdir $BUILDDIR
+fi
+cd $BUILDDIR
+
+PROTOC_ZIP=protoc-3.8.0-linux-x86_64.zip
+if [ ! -f "$PROTOC_ZIP" ]; then
+    echo "$PROTOC_ZIP does not exist"
+    wget https://github.com/protocolbuffers/protobuf/releases/download/v3.8.0/protoc-3.8.0-linux-x86_64.zip
+    unzip protoc-3.8.0-linux-x86_64.zip
+fi
+
+export PATH=$PATH:$BUILDDIR/bin/
+
+cd ..
 
 unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xargs gofmt -l)
 
