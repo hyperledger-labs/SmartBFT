@@ -254,11 +254,13 @@ func (v *View) doStep() {
 
 func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 	var proposal types.Proposal
+	var receivedProposal *protos.Message
 	select {
 	case <-v.abortChan:
 		return nil, nil
-	case vote := <-v.prePrepare:
-		prop := vote.GetPrePrepare().Proposal
+	case msg := <-v.prePrepare:
+		receivedProposal = msg
+		prop := msg.GetPrePrepare().Proposal
 		proposal = types.Proposal{
 			VerificationSequence: int64(prop.VerificationSequence),
 			Metadata:             prop.Metadata,
@@ -290,6 +292,9 @@ func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 		},
 	}
 
+	// We are about to send a prepare for a pre-prepare,
+	// so we record the pre-prepare.
+	v.State.Save(receivedProposal)
 	v.Comm.Broadcast(msg)
 	return &proposal, requests
 }
@@ -337,6 +342,9 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 		},
 	}
 
+	// We received enough prepares to send a commit.
+	// Save the commit message we are about to send.
+	v.State.Save(msg)
 	v.Comm.Broadcast(msg)
 }
 

@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
@@ -98,6 +99,7 @@ type Controller struct {
 	Comm             Comm
 	Signer           Signer
 	RequestInspector RequestInspector
+	WAL              api.WriteAheadLog
 
 	quorum int
 
@@ -165,6 +167,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
 		PrevHeader:       []byte{0}, // TODO start with real prev header
+		State:            &PersistedState{WAL: c.WAL},
 	}
 
 	c.viewLock.Lock()

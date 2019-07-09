@@ -101,7 +101,9 @@ func TestViewBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
@@ -138,7 +140,9 @@ func TestBadPrePrepare(t *testing.T) {
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
 		fdWG.Done()
 	})
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
@@ -230,7 +234,9 @@ func TestBadPrepare(t *testing.T) {
 		Id:    4,
 		Value: []byte{4},
 	})
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
@@ -313,7 +319,9 @@ func TestBadCommit(t *testing.T) {
 		Id:    4,
 		Value: []byte{4},
 	})
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
@@ -376,7 +384,9 @@ func TestNormalPath(t *testing.T) {
 		Id:    4,
 		Value: []byte{4},
 	})
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
@@ -485,7 +495,9 @@ func TestTwoSequences(t *testing.T) {
 		Id:    4,
 		Value: []byte{4},
 	})
+	state := &bft.StateRecorder{}
 	view := &bft.View{
+		State:            state,
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
