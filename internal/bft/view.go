@@ -13,6 +13,15 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+type Phase uint8
+
+const (
+	COMMITTED = iota
+	PROPOSED
+	PREPARED
+	ABORT
+)
+
 type State interface {
 	// Save saves the current message.
 	Save(message *protos.Message) error
@@ -37,9 +46,12 @@ type View struct {
 	ProposalSequence uint64
 	PrevHeader       []byte
 	State            State
+	Phase            Phase
 	// Runtime
-	incMsgs       chan *incMsg
-	myProposalSig *types.Signature
+	incMsgs          chan *incMsg
+	myProposalSig    *types.Signature
+	inFlightProposal *types.Proposal
+	inFlightRequests []types.RequestInfo
 	// Current proposal
 	prePrepare chan *protos.Message
 	prepares   *voteSet
@@ -217,47 +229,47 @@ func (v *View) run() {
 		case <-v.abortChan:
 			return
 		default:
-			v.doStep()
+			v.doPhase()
 		}
 	}
 }
 
-func (v *View) doStep() {
-	proposal, requests := v.processProposal()
+func (v *View) doPhase() {
+	switch v.Phase {
+	case PROPOSED:
+		v.Phase = v.processPrepares()
+	case PREPARED:
+		v.Phase = v.prepared()
+	default:
+		v.Phase = v.processProposal()
+	}
+}
+
+func (v *View) prepared() Phase {
+	proposal := v.inFlightProposal
+	signatures, phase := v.processCommits(proposal)
+	if phase == ABORT {
+		return ABORT
+	}
+
 	v.lock.RLock()
 	seq := v.ProposalSequence
 	v.lock.RUnlock()
-	v.Logger.Infof("Processed proposal with seq %d", seq)
-	if proposal == nil {
-		// Aborted view
-		return
-	}
 
-	v.processPrepares(proposal)
-	v.lock.RLock()
-	seq = v.ProposalSequence
-	v.lock.RUnlock()
-	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
-
-	signatures := v.processCommits(proposal)
-	v.lock.RLock()
-	seq = v.ProposalSequence
-	v.lock.RUnlock()
 	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
-	if len(signatures) == 0 {
-		v.Logger.Debugf("Signatures len is 0")
-		return
-	}
 
-	v.maybeDecide(proposal, signatures, requests)
+	v.maybeDecide(proposal, signatures, v.inFlightRequests)
+	return COMMITTED
 }
 
-func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
+func (v *View) processProposal() Phase {
+	v.inFlightProposal = nil
+	v.inFlightRequests = nil
 	var proposal types.Proposal
 	var receivedProposal *protos.Message
 	select {
 	case <-v.abortChan:
-		return nil, nil
+		return ABORT
 	case msg := <-v.prePrepare:
 		receivedProposal = msg
 		prop := msg.GetPrePrepare().Proposal
@@ -275,7 +287,7 @@ func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 		v.FailureDetector.Complain()
 		v.Sync.Sync()
 		v.Abort()
-		return nil, nil
+		return ABORT
 	}
 
 	v.lock.RLock()
@@ -296,17 +308,22 @@ func (v *View) processProposal() (*types.Proposal, []types.RequestInfo) {
 	// so we record the pre-prepare.
 	v.State.Save(receivedProposal)
 	v.Comm.Broadcast(msg)
-	return &proposal, requests
+	v.inFlightProposal = &proposal
+	v.inFlightRequests = requests
+
+	v.Logger.Infof("Processed proposal with seq %d", seq)
+	return PROPOSED
 }
 
-func (v *View) processPrepares(proposal *types.Proposal) {
+func (v *View) processPrepares() Phase {
+	proposal := v.inFlightProposal
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 
 	for collectedDigests < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
-			return
+			return ABORT
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
@@ -346,16 +363,19 @@ func (v *View) processPrepares(proposal *types.Proposal) {
 	// Save the commit message we are about to send.
 	v.State.Save(msg)
 	v.Comm.Broadcast(msg)
+
+	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
+	return PREPARED
 }
 
-func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
+func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phase) {
 	expectedDigest := proposal.Digest()
 	signatures := make(map[uint64]types.Signature)
 
 	for len(signatures) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
-			return nil
+			return nil, ABORT
 		case vote := <-v.commits.votes:
 			commit := vote.GetCommit()
 			if commit.Digest != expectedDigest {
@@ -385,7 +405,7 @@ func (v *View) processCommits(proposal *types.Proposal) []types.Signature {
 	for _, sig := range signatures {
 		res = append(res, sig)
 	}
-	return res
+	return res, COMMITTED
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
