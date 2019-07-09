@@ -13,6 +13,14 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+type State interface {
+	// Save saves the current message.
+	Save(message *protos.Message) error
+
+	// Restore restores a view from the state.
+	Restore() (*View, error)
+}
+
 type View struct {
 	// Configuration
 	N                uint64
@@ -28,6 +36,7 @@ type View struct {
 	Signer           Signer
 	ProposalSequence uint64
 	PrevHeader       []byte
+	State State
 	// Runtime
 	incMsgs       chan *incMsg
 	myProposalSig *types.Signature
