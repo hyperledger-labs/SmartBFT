@@ -33,7 +33,10 @@ type PersistedState struct {
 }
 
 func (ps *PersistedState) Save(message *smartbftprotos.Message) error {
-	b, err := proto.Marshal(message)
+	msgToSave := &smartbftprotos.SavedMessage{
+		Msg: message,
+	}
+	b, err := proto.Marshal(msgToSave)
 	if err != nil {
 		ps.Logger.Panicf("Failed marshaling message: %v", err)
 	}
@@ -64,18 +67,18 @@ func (ps *PersistedState) Restore(v *View) error {
 	}
 
 	lastEntry := entries[len(entries)-1]
-	lastPersistedMessage := &smartbftprotos.Message{}
+	lastPersistedMessage := &smartbftprotos.SavedMessage{}
 	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
 		ps.Logger.Errorf("Failed unmarshaling last entry from WAL: %v", err)
 		return err
 	}
 
-	if lastPersistedMessage.GetPrePrepare() != nil {
-		return recoverProposed(lastPersistedMessage, v, ps.Logger)
+	if lastPersistedMessage.Msg.GetPrePrepare() != nil {
+		return recoverProposed(lastPersistedMessage.Msg, v, ps.Logger)
 	}
 
-	if commitMsg := lastPersistedMessage.GetCommit(); commitMsg != nil {
-		return recoverPrepared(lastPersistedMessage, v, entries, ps.Logger)
+	if commitMsg := lastPersistedMessage.Msg.GetCommit(); commitMsg != nil {
+		return recoverPrepared(lastPersistedMessage.Msg, v, entries, ps.Logger)
 	}
 
 	// TODO: handle signed view data persisted in the WAL
