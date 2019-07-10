@@ -17,7 +17,7 @@ type Application interface {
 type Comm interface {
 	BroadcastConsensus(m *protos.Message) // broadcast message to others (not including yourself)
 	SendConsensus(targetID uint64, m *protos.Message)
-	SendTransaction(targetID uint64, m *protos.Message)
+	SendTransaction(targetID uint64, request []byte)
 }
 
 type Assembler interface {
