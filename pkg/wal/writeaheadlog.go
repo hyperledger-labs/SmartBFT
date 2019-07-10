@@ -555,7 +555,8 @@ func (w *WriteAheadLogFile) recycleOrCreateFile() error {
 			return err
 		}
 
-		w.activeIndexes = w.activeIndexes[1:]
+		indexes := w.activeIndexes[1:]
+		w.activeIndexes = append(make([]uint64, 0, len(indexes)), indexes...)
 	} else {
 		w.logger.Debugf("Creating log file: %s", nextFileName)
 		w.logFile, err = os.OpenFile(nextFilePath, os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
