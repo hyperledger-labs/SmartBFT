@@ -58,7 +58,7 @@ type Synchronizer interface {
 
 //go:generate mockery -dir . -name Comm -case underscore -output ./mocks/
 type Comm interface {
-	Broadcast(m *protos.Message)
+	BroadcastConsensus(m *protos.Message)
 }
 
 //go:generate mockery -dir . -name Signer -case underscore -output ./mocks/

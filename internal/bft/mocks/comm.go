@@ -10,7 +10,7 @@ type Comm struct {
 	mock.Mock
 }
 
-// Broadcast provides a mock function with given fields: m
-func (_m *Comm) Broadcast(m *smartbftprotos.Message) {
+// BroadcastConsensus provides a mock function with given fields: m
+func (_m *Comm) BroadcastConsensus(m *smartbftprotos.Message) {
 	_m.Called(m)
 }

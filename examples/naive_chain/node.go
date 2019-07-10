@@ -89,7 +89,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 	}, nil
 }
 
-func (n *Node) Broadcast(m *protos.Message) {
+func (n *Node) BroadcastConsensus(m *protos.Message) {
 	for receiver, out := range n.out {
 		if n.id == uint64(receiver) {
 			continue
@@ -98,7 +98,11 @@ func (n *Node) Broadcast(m *protos.Message) {
 	}
 }
 
-func (n *Node) Send(targetID uint64, message *protos.Message) {
+func (n *Node) SendConsensus(targetID uint64, message *protos.Message) {
+	n.out[int(targetID)] <- message
+}
+
+func (n *Node) SendTransaction(targetID uint64, message *protos.Message) {
 	n.out[int(targetID)] <- message
 }
 
