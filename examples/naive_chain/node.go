@@ -102,8 +102,8 @@ func (n *Node) SendConsensus(targetID uint64, message *protos.Message) {
 	n.out[int(targetID)] <- message
 }
 
-func (n *Node) SendTransaction(targetID uint64, message *protos.Message) {
-	n.out[int(targetID)] <- message
+func (n *Node) SendTransaction(targetID uint64, request []byte) {
+	// TODO: Handle send transaction request
 }
 
 func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
