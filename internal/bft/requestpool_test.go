@@ -24,12 +24,8 @@ func TestReqPoolBasic(t *testing.T) {
 	insp := &mocks.RequestInspector{}
 	byteReq1 := []byte{1}
 	insp.On("RequestID", byteReq1).Return(types.RequestInfo{ID: "1", ClientID: "1"})
-	pool := bft.Pool{
-		Log:              log,
-		RequestInspector: insp,
-		QueueSize:        3,
-	}
-	pool.Start()
+	pool := bft.NewPool(log, insp, 3)
+
 	assert.Equal(t, 0, pool.SizeOfPool())
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
@@ -121,12 +117,8 @@ func TestEventuallySubmit(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &mocks.RequestInspector{}
-	pool := bft.Pool{
-		Log:              log,
-		RequestInspector: insp,
-		QueueSize:        50,
-	}
-	pool.Start()
+	pool := bft.NewPool(log, insp, 50)
+
 	wg := sync.WaitGroup{}
 	wg.Add(2 * n)
 	for i := 0; i < n; i++ {
