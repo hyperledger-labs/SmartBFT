@@ -388,27 +388,7 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		case <-v.abortChan:
 			return nil, ABORT
 		case vote := <-v.commits.votes:
-			commit := vote.GetCommit()
-			if commit.Digest != expectedDigest {
-				v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
-				continue
-			}
-
-			err := v.Verifier.VerifyConsenterSig(types.Signature{
-				Id:    commit.Signature.Signer,
-				Value: commit.Signature.Value,
-				Msg:   commit.Signature.Msg,
-			}, *proposal)
-			if err != nil {
-				v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
-				continue
-			}
-
-			signatures[commit.Signature.Signer] = types.Signature{
-				Id:    commit.Signature.Signer,
-				Value: commit.Signature.Value,
-				Msg:   commit.Signature.Msg,
-			}
+			v.collectCommitVote(signatures, vote, proposal, expectedDigest)
 		}
 	}
 
@@ -417,6 +397,30 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		res = append(res, sig)
 	}
 	return res, COMMITTED
+}
+
+func (v *View) collectCommitVote(totalVotes map[uint64]types.Signature, vote *protos.Message, proposal *types.Proposal, expectedDigest string) {
+	commit := vote.GetCommit()
+	if commit.Digest != expectedDigest {
+		v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
+		return
+	}
+
+	err := v.Verifier.VerifyConsenterSig(types.Signature{
+		Id:    commit.Signature.Signer,
+		Value: commit.Signature.Value,
+		Msg:   commit.Signature.Msg,
+	}, *proposal)
+	if err != nil {
+		v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
+		return
+	}
+
+	totalVotes[commit.Signature.Signer] = types.Signature{
+		Id:    commit.Signature.Signer,
+		Value: commit.Signature.Value,
+		Msg:   commit.Signature.Msg,
+	}
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
