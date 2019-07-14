@@ -28,17 +28,12 @@ func TestBatcherBasic(t *testing.T) {
 	insp.On("RequestID", byteReq2).Return(types.RequestInfo{ID: "2", ClientID: "2"})
 	byteReq3 := []byte{3}
 	insp.On("RequestID", byteReq3).Return(types.RequestInfo{ID: "3", ClientID: "3"})
-	pool := bft.Pool{
-		Log:              log,
-		RequestInspector: insp,
-		QueueSize:        3,
-	}
-	pool.Start()
+	pool := bft.NewPool(log, insp, 3)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
 	batcher := bft.Bundler{
-		Pool:         &pool,
+		Pool:         pool,
 		BatchSize:    1,
 		BatchTimeout: 10 * time.Millisecond,
 	}
@@ -83,7 +78,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq3, res[0])
 
 	batcher = bft.Bundler{
-		Pool:         &pool,
+		Pool:         pool,
 		BatchSize:    2,
 		BatchTimeout: 10 * time.Millisecond,
 	}
@@ -111,15 +106,10 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &mocks.RequestInspector{}
-	pool := bft.Pool{
-		Log:              log,
-		RequestInspector: insp,
-		QueueSize:        200,
-	}
-	pool.Start()
+	pool := bft.NewPool(log, insp, 200)
 
 	batcher := bft.Bundler{
-		Pool:         &pool,
+		Pool:         pool,
 		BatchSize:    100,
 		BatchTimeout: 100 * time.Second, // long time
 	}

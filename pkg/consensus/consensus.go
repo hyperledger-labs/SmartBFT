@@ -55,12 +55,7 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	pool := &algorithm.Pool{
-		Log:              c.Logger,
-		RequestInspector: c.RequestInspector,
-		QueueSize:        200,
-	}
-	pool.Start()
+	pool := algorithm.NewPool(c.Logger, c.RequestInspector, 200)
 
 	batcher := &algorithm.Bundler{
 		Pool:         pool,

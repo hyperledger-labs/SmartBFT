@@ -19,26 +19,38 @@ type RequestInspector interface {
 	RequestID(req []byte) types.RequestInfo
 }
 
+// Pool implements requests pool, maintains pool of given size provided during
+// construction. In case there are more incoming request than given size it will
+// block during submit until there will be place to submit new ones.
 type Pool struct {
 	Log              Logger
 	RequestInspector RequestInspector
 	queue            []Request
 	semaphore        *semaphore.Weighted
 	lock             sync.RWMutex
-	QueueSize        int64
 	existMap         map[string]bool
 }
 
+// Request captures request related information
 type Request struct {
 	ID       string
 	Request  []byte
 	ClientID string
 }
 
-func (rp *Pool) Start() {
-	rp.queue = make([]Request, 0)
-	rp.semaphore = semaphore.NewWeighted(rp.QueueSize)
-	rp.existMap = make(map[string]bool)
+// NewPool constructs new requests pool
+func NewPool(
+	log Logger,
+	inspector RequestInspector,
+	queueSize int64,
+) *Pool {
+	return &Pool{
+		Log:              log,
+		RequestInspector: inspector,
+		queue:            make([]Request, 0),
+		semaphore:        semaphore.NewWeighted(queueSize),
+		existMap:         make(map[string]bool),
+	}
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
