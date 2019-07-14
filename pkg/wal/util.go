@@ -8,6 +8,7 @@ package wal
 import (
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -46,6 +47,7 @@ func dirCreate(dirPath string) error {
 	return err
 }
 
+// dirReadWalNames finds file names that follow the wal file name template.
 func dirReadWalNames(dirPath string) ([]string, error) {
 	dirFile, err := os.Open(dirPath)
 	if err != nil {
@@ -89,16 +91,18 @@ func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint
 		indexes = append(indexes, index)
 
 		// verify we have CRC-Anchor.
-		// TODO BACKLOG check if it is the last file and return a special error that allows a repair.
 		r, err := NewLogRecordReader(logger, filepath.Join(dirName, walNames[i]))
 		if err != nil {
-			logger.Errorf("wal: failed to create reader for file: %s; error: %s", name, err)
-			return nil, err
+			// check if it is the last file and return a special error that allows a repair.
+			if i == len(walNames)-1 {
+				logger.Errorf("wal: failed to create reader for last file: %s; error: %s; this may possibly be repaired.", name, err)
+				return nil, io.ErrUnexpectedEOF
+			}
+			return nil, fmt.Errorf("wal: failed to create reader for file: %s; error: %s", name, err)
 		}
 		err = r.Close()
 		if err != nil {
-			logger.Errorf("wal: failed to close reader for file: %s; error: %s", name, err)
-			return nil, err
+			return nil, fmt.Errorf("wal: failed to close reader for file: %s; error: %s", name, err)
 		}
 
 		//verify no gaps
@@ -109,6 +113,12 @@ func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint
 			return nil, errors.New("wal: files not in sequence")
 		}
 	}
+
+	sort.Slice(indexes,
+		func(i, j int) bool {
+			return indexes[i] < indexes[j]
+		},
+	)
 
 	return indexes, nil
 }
@@ -128,4 +138,30 @@ func parseWalFileName(fileName string) (index uint64, err error) {
 		return 0, fmt.Errorf("failed to parse wal file name: %s; error: %s", fileName, err)
 	}
 	return index, nil
+}
+
+// renameResetWalFile reset anchor on a temporary file, and then rename to next file name.
+func renameResetWalFile(recycleFile, nextFile string) (err error) {
+	tmpFilePath := recycleFile + ".tmp"
+	if err = os.Rename(recycleFile, tmpFilePath); err != nil {
+		return err
+	}
+	tmpF, err := os.OpenFile(tmpFilePath, os.O_RDWR, walFilePermPrivateRW)
+	if err != nil {
+		return err
+	}
+	if _, err = tmpF.Seek(0, io.SeekStart); err != nil {
+		return err
+	}
+	if _, err = tmpF.Write(make([]byte, 1024)); err != nil { // overwrite the CRC-Anchor
+		return err
+	}
+	if err = tmpF.Close(); err != nil {
+		return err
+	}
+	if err = os.Rename(tmpFilePath, nextFile); err != nil {
+		return err
+	}
+
+	return nil
 }

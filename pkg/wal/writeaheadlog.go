@@ -57,7 +57,7 @@ type LogRecordHeader uint64
 //
 // The WAL is composed of a sequence of frames. Each frame contains:
 // - a header (uint64)
-// - data: a record of type LogRecord, marshaled to bytes, and padded with zeros to 8B boundary.
+// - payload: a record of type LogRecord, marshaled to bytes, and padded with zeros to 8B boundary.
 //
 // The 64 bit header is made of two parts:
 // - length of the marshaled LogRecord (not including pad bytes), in the lower 32 bits.
@@ -70,7 +70,7 @@ type LogRecordHeader uint64
 //
 // When a WAL is first created, it is in append mode.
 // When an existing WAL is opened, it is in read mode, and will change to append mode only after ReadAll() is invoked.
-
+//
 // In append mode the WAL can accept Append() and TruncateTo() calls.
 // The WAL must be closed after use to release all resources.
 //
@@ -156,8 +156,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		return nil, fmt.Errorf("wal: could not open file: %s; error: %s", fileName, err)
 	}
 
-	err = wal.saveCRC()
-	if err != nil {
+	if err = wal.saveCRC(); err != nil {
 		wal.Close()
 		return nil, err
 	}
@@ -512,6 +511,9 @@ func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 func (w *WriteAheadLogFile) switchFiles() error {
 	var err error
 
+	w.logger.Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
+		len(w.activeIndexes), w.activeIndexes, w.truncateIndex)
+
 	if !w.readMode {
 		if err = w.truncateAndCloseLogFile(); err != nil {
 			w.logger.Errorf("Failed to truncateAndCloseLogFile: %s", err)
@@ -519,30 +521,59 @@ func (w *WriteAheadLogFile) switchFiles() error {
 		}
 	}
 
+	err = w.recycleOrCreateFile()
+	if err != nil {
+		return err
+	}
+
+	w.logger.Debugf("Successfully switched to log file: %s", w.logFile.Name())
+	w.logger.Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
+		len(w.activeIndexes), w.activeIndexes, w.truncateIndex)
+
+	return nil
+}
+
+func (w *WriteAheadLogFile) recycleOrCreateFile() error {
+	var err error
+
 	w.index++
 	nextFileName := fmt.Sprintf(walFileTemplate, w.index)
 	nextFilePath := filepath.Join(w.dirFile.Name(), nextFileName)
 	w.logger.Debugf("Preparing next log file: %s", nextFilePath)
 
-	//TODO BACKLOG: prepare a pre-allocated file in advance, and get it here.
-	w.logFile, err = os.OpenFile(nextFilePath, os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
-	if err != nil {
-		w.logger.Errorf("Failed to OpenFile: %s", err)
-		return err
+	if w.activeIndexes[0] < w.truncateIndex {
+		recycleFileName := fmt.Sprintf(walFileTemplate, w.activeIndexes[0])
+		recycleFilePath := filepath.Join(w.dirFile.Name(), recycleFileName)
+		w.logger.Debugf("Recycling log file: %s to %s", recycleFileName, nextFileName)
+
+		if err = renameResetWalFile(recycleFilePath, nextFilePath); err != nil {
+			return err
+		}
+
+		w.logFile, err = os.OpenFile(nextFilePath, os.O_WRONLY, walFilePermPrivateRW)
+		if err != nil {
+			return err
+		}
+
+		indexes := w.activeIndexes[1:]
+		w.activeIndexes = append(make([]uint64, 0, len(indexes)), indexes...)
+	} else {
+		w.logger.Debugf("Creating log file: %s", nextFileName)
+		w.logFile, err = os.OpenFile(nextFilePath, os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
+		if err != nil {
+			return err
+		}
 	}
-	_, err = w.logFile.Seek(0, io.SeekStart)
-	if err != nil {
+
+	if _, err = w.logFile.Seek(0, io.SeekStart); err != nil {
 		return err
 	}
 
-	err = w.saveCRC()
-	if err != nil {
+	if err = w.saveCRC(); err != nil {
 		return err
 	}
 
 	w.activeIndexes = append(w.activeIndexes, w.index)
-	w.logger.Debugf("Successfully switched to log file: %s", w.logFile.Name())
-	w.logger.Debugf("Number of files: %d, indexes: %v", len(w.activeIndexes), w.activeIndexes)
 
 	return nil
 }

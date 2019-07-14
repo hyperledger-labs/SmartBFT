@@ -320,6 +320,59 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[10:]...)
 	})
 
+	t.Run("File recycle", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "recycle")
+
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		const NumBytes = 1024
+		const NumRec = 41
+		records := make([]*smartbftprotos.LogRecord, NumRec)
+		var crc1, crc2 uint32
+		for m := 0; m < NumRec; m++ {
+			data1 := make([]byte, NumBytes)
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(n % (m + 1))
+			}
+
+			rec := &smartbftprotos.LogRecord{
+				Type:       smartbftprotos.LogRecord_ENTRY,
+				TruncateTo: false,
+				Data:       data1,
+			}
+			if m%3 == 0 {
+				rec.TruncateTo = true
+			}
+
+			records[m] = rec
+
+			err = wal.Append(rec.Data, rec.TruncateTo)
+			assert.NoError(t, err)
+
+			names, err := dirReadWalNames(dirPath)
+			assert.NoError(t, err)
+			assert.True(t, len(names) <= 2)
+
+			if m == 39 {
+				crc1 = wal.CRC()
+			}
+		}
+		crc2 = wal.CRC()
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		expectedFileName := fmt.Sprintf(walFileTemplate, 4)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc1, records[30:40]...)
+		expectedFileName = fmt.Sprintf(walFileTemplate, 5)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[40:]...)
+	})
+
 	t.Run("TruncateTo", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "TruncateTo")
 
