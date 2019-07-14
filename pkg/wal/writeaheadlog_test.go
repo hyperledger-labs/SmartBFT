@@ -8,6 +8,7 @@ package wal
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -577,6 +578,147 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
+}
+
+func TestWriteAheadLogFile_Repair(t *testing.T) {
+	testDir, err := ioutil.TempDir("", "unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	t.Run("with a tail", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "tail")
+		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
+		assert.NoError(t, err)
+
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		const NumBytes = 1024
+		const NumRec = 102
+		data1 := make([]byte, NumBytes)
+		for m := 0; m < NumRec; m++ {
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(m)
+			}
+			err = wal.Append(data1, false)
+			assert.NoError(t, err)
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		//add tail to last file
+		names, err := dirReadWalNames(dirPath)
+		assert.NoError(t, err)
+		lastFile := filepath.Join(dirPath, names[len(names)-1])
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		_, err = f.Seek(0, io.SeekEnd)
+		assert.NoError(t, err)
+		_, err = f.Write(make([]byte, 64))
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+
+		assertTestRepair(t, logger, dirPath, NumRec)
+	})
+
+	t.Run("broken record", func(t *testing.T) {
+		dirPath := filepath.Join(testDir, "broken")
+		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
+		assert.NoError(t, err)
+
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		assert.NoError(t, err)
+		assert.NotNil(t, wal)
+		if wal == nil {
+			return
+		}
+
+		const NumBytes = 1024
+		const NumRec = 102
+		data1 := make([]byte, NumBytes)
+		for m := 0; m < NumRec; m++ {
+			for n := 0; n < NumBytes; n++ {
+				data1[n] = byte(m)
+			}
+			err = wal.Append(data1, false)
+			assert.NoError(t, err)
+		}
+
+		err = wal.Close()
+		assert.NoError(t, err)
+
+		//truncate last file
+		names, err := dirReadWalNames(dirPath)
+		assert.NoError(t, err)
+		lastFile := filepath.Join(dirPath, names[len(names)-1])
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		offset, err := f.Seek(-1, io.SeekEnd)
+		assert.NoError(t, err)
+		err = f.Truncate(offset)
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+
+		assertTestRepair(t, logger, dirPath, NumRec-1)
+	})
+}
+
+func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec int) {
+	logger.Infof(">>> Open #1")
+	wal, err := Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	if wal == nil {
+		return
+	}
+
+	logger.Infof(">>> ReadAll #1 - will fail")
+	dataItems, err := wal.ReadAll()
+	assert.Error(t, err)
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	names, err := dirReadWalNames(dirPath)
+	assert.NoError(t, err)
+
+	logger.Infof(">>> Repair")
+	err = Repair(logger, dirPath)
+	assert.NoError(t, err)
+
+	logger.Infof(">>> Open #2")
+	wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	if wal == nil {
+		return
+	}
+
+	logger.Infof(">>> ReadAll #2 OK")
+	dataItems, err = wal.ReadAll()
+	assert.NoError(t, err)
+	assert.NotNil(t, dataItems)
+	assert.Equal(t, numRec, len(dataItems))
+	for i, data := range dataItems {
+		assert.Equal(t, byte(i), data[0])
+	}
+
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	copy, err := os.Open(filepath.Join(dirPath, names[len(names)-1]) + ".copy")
+	assert.NoError(t, err)
+	_ = copy.Close()
 }
 
 func verifyFirstFileCreation(t *testing.T, logger api.Logger, dirPath string, expectedFileName string, expectedCRC uint32) {

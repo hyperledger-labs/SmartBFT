@@ -231,15 +231,56 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 	return wal, nil
 }
 
-// Repair tries to repair the last file of a WAL, in case the last item is corrupted due to a failure in the middle of
-// the last write. It does so by dropping the last corrupt item.
+// Repair tries to repair the last file of a WAL, in case an Open() comes back with a io.ErrUnexpectedEOF,
+// which indicates the possibility to fix the WAL.
+//
+// After a crash, the last log file in the WAL may be left in a state where an attempt tp reopen will result in
+// the last Read() returning an error. This is because of several reasons:
+// - we use pre-allocated / recycled files, the files have a "garbage" tail
+// - the last write may have been torn
+// - the failure might have occurred when the log file was being prepared (no anchor)
+//
+// The Repair() tries to repair the last file of the wal by truncating after the last good record.
+// Before doing so it copies the bad file to a side location for later analysis by operators.
 //
 // logger: reference to a Logger implementation.
 // dirPath: directory path of the WAL.
 // return: an error if repair was not successful.
 func Repair(logger api.Logger, dirPath string) error {
-	//TODO BACKLOG
-	return errors.New("not implemented yet")
+	cleanDirPath := filepath.Clean(dirPath)
+	walNames, err := dirReadWalNames(cleanDirPath)
+	if err != nil {
+		return err
+	}
+	if len(walNames) == 0 {
+		return os.ErrNotExist
+	}
+	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
+
+	// verify that all but the last are fine
+	if err = scanVerifyFiles(logger, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
+		logger.Errorf("Write-Ahead-Log failed to repair, additional files are faulty: %s", err)
+		return err
+	}
+
+	lastFile := filepath.Join(cleanDirPath, walNames[len(walNames)-1])
+	logger.Infof("Write-Ahead-Log is going to try and repair the last file: %s", lastFile)
+	lastFileCopy := lastFile + ".copy"
+	err = copyFile(lastFile, lastFileCopy)
+	if err != nil {
+		logger.Errorf("Write-Ahead-Log failed to repair, could not make a copy: %s", err)
+		return err
+	}
+	logger.Infof("Write-Ahead-Log made a copy of the last file: %s", lastFileCopy)
+
+	err = scanRepairFile(logger, lastFile)
+	if err != nil {
+		logger.Errorf("Write-Ahead-Log failed to scan and repair last file: %s", err)
+		return err
+	}
+
+	logger.Infof("Write-Ahead-Log successfully repaired the last file: %s", lastFile)
+	return nil
 }
 
 // Close the files and directory of the WAL, and release all resources.
@@ -468,8 +509,8 @@ FileLoop:
 	w.logger.Debugf("Read %d items", len(items))
 
 	// move to write mode on a new file.
-	if err := w.switchFiles(); err != nil {
-		w.logger.Errorf("Failed to switch files: %s", err)
+	if err := w.recycleOrCreateFile(); err != nil {
+		w.logger.Errorf("Failed to move to a new file: %s", err)
 		return nil, err
 	}
 	w.readMode = false
@@ -477,34 +518,28 @@ FileLoop:
 	return items, nil
 }
 
-// truncateAndCloseLogFile when we orderly close a writable log file we truncate it. This way, reading it in ReadAll()
-// ends with a io.EOF error after the last record.
+// truncateAndCloseLogFile when we orderly close a writable log file we truncate it.
+// This way, reading it in ReadAll() ends with a io.EOF error after the last record.
 func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
-	var err error
-
-	if !w.readMode {
-		offset, err := w.logFile.Seek(0, io.SeekCurrent)
-		if err != nil {
+	if w.readMode {
+		if err := w.logFile.Close(); err != nil {
+			w.logger.Errorf("Failed to close log file: %s; error: %s", w.logFile.Name(), err)
 			return err
 		}
-
-		if err = w.logFile.Truncate(offset); err != nil {
-			return err
-		}
-		if err = w.logFile.Sync(); err != nil {
-			return err
-		}
-
-		w.logger.Debugf("Truncated & Sync'ed log file: %s", w.logFile.Name())
+		w.logger.Debugf("Closed log file: %s", w.logFile.Name())
+		return nil
 	}
 
-	if err = w.logFile.Close(); err != nil {
-		w.logger.Errorf("Failed to close log file: %s; error: %s", w.logFile.Name(), err)
+	offset, err := w.logFile.Seek(0, io.SeekCurrent)
+	if err != nil {
 		return err
 	}
 
-	w.logger.Debugf("Closed log file: %s", w.logFile.Name())
+	if err = truncateCloseFile(w.logFile, offset); err != nil {
+		return err
+	}
 
+	w.logger.Debugf("Truncated, Sync'ed & Closed log file: %s", w.logFile.Name())
 	return nil
 }
 
@@ -514,11 +549,13 @@ func (w *WriteAheadLogFile) switchFiles() error {
 	w.logger.Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
 		len(w.activeIndexes), w.activeIndexes, w.truncateIndex)
 
-	if !w.readMode {
-		if err = w.truncateAndCloseLogFile(); err != nil {
-			w.logger.Errorf("Failed to truncateAndCloseLogFile: %s", err)
-			return err
-		}
+	if w.readMode {
+		return ErrReadOnly
+	}
+
+	if err = w.truncateAndCloseLogFile(); err != nil {
+		w.logger.Errorf("Failed to truncateAndCloseLogFile: %s", err)
+		return err
 	}
 
 	err = w.recycleOrCreateFile()

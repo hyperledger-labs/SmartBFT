@@ -263,15 +263,6 @@ func TestLogRecordReader(t *testing.T) {
 	})
 }
 
-func copyFile(source, target string) error {
-	input, err := ioutil.ReadFile(source)
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile(target, input, 0644)
-	return err
-}
-
 func assertReadRecord(t *testing.T, r *LogRecordReader, expRec *smartbftprotos.LogRecord, expCRC uint32) {
 	record, err := r.Read()
 	assert.NoError(t, err)
