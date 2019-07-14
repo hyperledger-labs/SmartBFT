@@ -380,43 +380,61 @@ func (v *View) processPrepares() Phase {
 }
 
 func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phase) {
-	expectedDigest := proposal.Digest()
-	signatures := make(map[uint64]types.Signature)
+	var signatures []types.Signature
+
+	signatureCollector := &voteVerifier{
+		validVotes:     make(chan types.Signature, cap(v.commits.votes)),
+		expectedDigest: proposal.Digest(),
+		proposal:       proposal,
+		v:              v,
+	}
 
 	for len(signatures) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
 			return nil, ABORT
 		case vote := <-v.commits.votes:
-			commit := vote.GetCommit()
-			if commit.Digest != expectedDigest {
-				v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
-				continue
-			}
-
-			err := v.Verifier.VerifyConsenterSig(types.Signature{
-				Id:    commit.Signature.Signer,
-				Value: commit.Signature.Value,
-				Msg:   commit.Signature.Msg,
-			}, *proposal)
-			if err != nil {
-				v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
-				continue
-			}
-
-			signatures[commit.Signature.Signer] = types.Signature{
-				Id:    commit.Signature.Signer,
-				Value: commit.Signature.Value,
-				Msg:   commit.Signature.Msg,
-			}
+			// Valid votes end up written into the 'validVotes' channel.
+			go func(vote *protos.Message) {
+				signatureCollector.verifyVote(vote)
+			}(vote)
+		case signature := <-signatureCollector.validVotes:
+			signatures = append(signatures, signature)
 		}
 	}
 
-	var res []types.Signature
-	for _, sig := range signatures {
-		res = append(res, sig)
+	return signatures, COMMITTED
+}
+
+type voteVerifier struct {
+	v              *View
+	proposal       *types.Proposal
+	expectedDigest string
+	validVotes     chan types.Signature
+}
+
+func (vv *voteVerifier) verifyVote(vote *protos.Message) {
+	commit := vote.GetCommit()
+	if commit.Digest != vv.expectedDigest {
+		vv.v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
+		return
 	}
-	return res, COMMITTED
+
+	err := vv.v.Verifier.VerifyConsenterSig(types.Signature{
+		Id:    commit.Signature.Signer,
+		Value: commit.Signature.Value,
+		Msg:   commit.Signature.Msg,
+	}, *vv.proposal)
+	if err != nil {
+		vv.v.Logger.Warnf("Couldn't verify %d's signature: %v", commit.Signature.Signer, err)
+		return
+	}
+
+	vv.validVotes <- types.Signature{
+		Id:    commit.Signature.Signer,
+		Value: commit.Signature.Value,
+		Msg:   commit.Signature.Msg,
+	}
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
