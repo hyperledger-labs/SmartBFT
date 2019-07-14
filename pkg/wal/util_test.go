@@ -160,6 +160,128 @@ func TestWALUtil(t *testing.T) {
 		indexes, err = checkWalFiles(logger, testDir, names)
 		assert.EqualError(t, err, io.ErrUnexpectedEOF.Error())
 	})
+
+	t.Run("scan-verify", func(t *testing.T) {
+		testDir, err := ioutil.TempDir("", "unittest")
+		assert.NoErrorf(t, err, "generate temporary test dir")
+		defer os.RemoveAll(testDir)
+
+		make8LogFiles(t, logger, testDir)
+		names, err := dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+
+	})
+
+	t.Run("scan-repair-short", func(t *testing.T) {
+		testDir, err := ioutil.TempDir("", "unittest")
+		assert.NoErrorf(t, err, "generate temporary test dir")
+		defer os.RemoveAll(testDir)
+
+		//first its fine
+		make8LogFiles(t, logger, testDir)
+		names, err := dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+
+		lastFile := filepath.Join(testDir, names[len(names)-1])
+		//repair a good file
+		err = scanRepairFile(logger, lastFile)
+		assert.NoError(t, err)
+
+		//truncate last record in the last file
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		offset, err := f.Seek(-1, io.SeekEnd)
+		assert.NoError(t, err)
+		err = f.Truncate(offset)
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+		logger.Debugf(">>> Truncated at: %d", offset)
+
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.EqualError(t, err, io.ErrUnexpectedEOF.Error())
+
+		//repair is good
+		err = scanRepairFile(logger, lastFile)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+	})
+
+	t.Run("scan-repair-tail", func(t *testing.T) {
+		testDir, err := ioutil.TempDir("", "unittest")
+		assert.NoErrorf(t, err, "generate temporary test dir")
+		defer os.RemoveAll(testDir)
+
+		//first its fine
+		make8LogFiles(t, logger, testDir)
+		names, err := dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+
+		//add tail to last file
+		lastFile := filepath.Join(testDir, names[len(names)-1])
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		offset, err := f.Seek(0, io.SeekEnd)
+		assert.NoError(t, err)
+		_, err = f.Write(make([]byte, 64))
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+		logger.Debugf(">>> add tail at: %d", offset)
+
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.EqualError(t, err, ErrCRC.Error())
+
+		//repair is good
+		err = scanRepairFile(logger, lastFile)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+	})
+
+	t.Run("scan-repair-bad-anchor", func(t *testing.T) {
+		testDir, err := ioutil.TempDir("", "unittest")
+		assert.NoErrorf(t, err, "generate temporary test dir")
+		defer os.RemoveAll(testDir)
+
+		//first its fine
+		make8LogFiles(t, logger, testDir)
+		names, err := dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+
+		//override crc anchor of last file
+		lastFile := filepath.Join(testDir, names[len(names)-1])
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		_, err = f.Seek(0, io.SeekStart)
+		assert.NoError(t, err)
+		_, err = f.Write(make([]byte, 64))
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+		logger.Debugf(">>> wrote over crc anchor")
+
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.Contains(t, err.Error(), "failed reading CRC-Anchor from log file:")
+
+		//repair is good
+		err = scanRepairFile(logger, lastFile)
+		assert.NoError(t, err)
+		names, err = dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		assert.Equal(t, len(names), 7)
+		err = scanVerifyFiles(logger, testDir, names)
+		assert.NoError(t, err)
+	})
 }
 
 func arrayToSet(array []string) map[string]bool {
