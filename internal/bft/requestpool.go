@@ -33,9 +33,9 @@ type Pool struct {
 
 // Request captures request related information
 type Request struct {
+	ClientID string
 	ID       string
 	Request  []byte
-	ClientID string
 }
 
 // NewPool constructs new requests pool
@@ -85,14 +85,17 @@ func (rp *Pool) SizeOfPool() int {
 	return len(rp.queue)
 }
 
-// NextRequests return the next requests to be batched
+// NextRequests returns the next requests to be batched.
+// It returns at most n request, in a newly allocated slice.
 func (rp *Pool) NextRequests(n int) []Request {
 	rp.lock.RLock()
 	defer rp.lock.RUnlock()
-	if len(rp.queue) <= n {
-		return rp.queue
-	}
-	return rp.queue[:n]
+
+	m := minInt(len(rp.queue), n)
+	buff := make([]Request, m)
+	copy(buff, rp.queue[:m])
+
+	return buff
 }
 
 // RemoveRequest removes the given request from the pool

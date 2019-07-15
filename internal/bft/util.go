@@ -46,3 +46,10 @@ func proposalSequence(m *protos.Message) uint64 {
 
 	return math.MaxUint64
 }
+
+func minInt(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
