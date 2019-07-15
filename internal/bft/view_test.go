@@ -15,6 +15,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -89,6 +90,20 @@ var (
 				Digest: digest,
 				Signature: &protos.Signature{
 					Signer: 2,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+
+	commit3 = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   1,
+				Seq:    0,
+				Digest: digest,
+				Signature: &protos.Signature{
+					Signer: 3,
 					Value:  []byte{4},
 				},
 			},
@@ -574,4 +589,173 @@ func TestTwoSequences(t *testing.T) {
 	view.Abort()
 	end.Wait()
 
+}
+
+func TestViewPersisted(t *testing.T) {
+	for _, testCase := range []struct {
+		description        string
+		crashAfterProposed bool
+		crashAfterPrepared bool
+	}{
+		{
+			description: "No crashes",
+		},
+		{
+			description:        "Crash after receiving proposal",
+			crashAfterProposed: true,
+		},
+		{
+			description:        "Crash after receiving prepares",
+			crashAfterPrepared: true,
+		},
+		{
+			description:        "Crash after both",
+			crashAfterPrepared: true,
+			crashAfterProposed: true,
+		},
+	} {
+		t.Run(testCase.description, func(t *testing.T) {
+			verifier := &mocks.Verifier{}
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+			var prepareSent sync.WaitGroup
+			var commitSent sync.WaitGroup
+
+			comm := &mocks.Comm{}
+			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+				msg := args.Get(0).(*protos.Message)
+				prepare := msg.GetPrepare() != nil
+				commit := msg.GetCommit() != nil
+
+				if prepare {
+					prepareSent.Done()
+					return
+				}
+
+				if commit {
+					commitSent.Done()
+					return
+				}
+
+				t.Fatalf("Sent a message that isn't a prepare nor a commit")
+			})
+
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			log := basicLog.Sugar()
+
+			signer := &mocks.Signer{}
+			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 2})
+
+			var deciderWG sync.WaitGroup
+			deciderWG.Add(1)
+			decider := &mocks.Decider{}
+			decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+				deciderWG.Done()
+			})
+
+			state := &mocks.State{}
+
+			view := &bft.View{
+				Signer:           signer,
+				Decider:          decider,
+				Comm:             comm,
+				Verifier:         verifier,
+				ID:               2,
+				State:            state,
+				Logger:           log,
+				N:                4,
+				LeaderID:         1,
+				Quorum:           3,
+				Number:           1,
+				ProposalSequence: 0,
+			}
+
+			persistedState := &bft.PersistedState{
+				Logger: log,
+				WAL:    &wal.EphemeralWAL{},
+			}
+			var persistedToLog sync.WaitGroup
+			persistedToLog.Add(1)
+			state.On("Save", mock.Anything).Return(nil).Run(func(args mock.Arguments) {
+				persistedToLog.Done()
+				persistedState.Save(args.Get(0).(*protos.Message))
+			})
+
+			end := view.Start()
+
+			prepareSent.Add(1)
+
+			view.HandleMessage(1, prePrepare)
+
+			// Wait until the node persists the proposal to WAL.
+			persistedToLog.Wait()
+
+			// After persistence, the node will broadcast a prepare.
+			prepareSent.Wait()
+
+			if testCase.crashAfterProposed {
+				// Simulate a crash.
+				view.Abort()
+				end.Wait()
+
+				// Recover the view from WAL.
+				persistedState.Restore(view)
+
+				// It should broadcast a prepare right after starting it.
+				prepareSent.Add(1)
+
+				// Restart the view.
+				end = view.Start()
+
+				// Wait for the prepare to be sent again.
+				prepareSent.Wait()
+			}
+
+			// It should persist to WAL the commit after receiving enough prepares.
+			persistedToLog.Add(1)
+
+			// Get the prepares from the rest of the nodes.
+			view.HandleMessage(1, prepare)
+			view.HandleMessage(3, prepare)
+
+			// It should broadcast a commit right after persisting the commit to WAL.
+			commitSent.Add(1)
+
+			// Wait until the node persists the proposal to WAL.
+			persistedToLog.Wait()
+
+			// Wait until the node broadcasts a commit.
+			commitSent.Wait()
+
+			if testCase.crashAfterPrepared {
+				// Simulate a crash.
+				view.Abort()
+				end.Wait()
+
+				// Recover the view from WAL.
+				persistedState.Restore(view)
+
+				// It should broadcast a commit again after it is restored.
+				commitSent.Add(1)
+
+				// Restart the view.
+				end = view.Start()
+
+				// Wait until the node broadcasts the commit again.
+				commitSent.Wait()
+			}
+
+			// Get the commits from nodes.
+			view.HandleMessage(1, commit1)
+			view.HandleMessage(3, commit3)
+
+			// Wait for the proposal to be committed.
+			deciderWG.Wait()
+
+			view.Abort()
+			end.Wait()
+		})
+	}
 }
