@@ -22,6 +22,8 @@ const (
 	ABORT
 )
 
+//go:generate mockery -dir . -name State -case underscore -output ./mocks/
+
 type State interface {
 	// Save saves the current message.
 	Save(message *protos.Message) error

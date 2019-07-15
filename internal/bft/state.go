@@ -66,6 +66,8 @@ func (ps *PersistedState) Restore(v *View) error {
 		return nil
 	}
 
+	ps.Logger.Infof("WAL contains %d entries", len(entries))
+
 	lastEntry := entries[len(entries)-1]
 	lastPersistedMessage := &smartbftprotos.SavedMessage{}
 	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
@@ -115,13 +117,13 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 	if len(entries) < 2 {
 		return fmt.Errorf("last message is a commit, but expected to also have a matching pre-prepare")
 	}
-	prePrepareMsg := &smartbftprotos.Message{}
+	prePrepareMsg := &smartbftprotos.SavedMessage{}
 	if err := proto.Unmarshal(entries[len(entries)-2], prePrepareMsg); err != nil {
 		logger.Errorf("Failed unmarshaling second last entry from WAL: %v", err)
 		return err
 	}
 
-	prePrepareFromWAL := prePrepareMsg.GetPrePrepare()
+	prePrepareFromWAL := prePrepareMsg.Msg.GetPrePrepare()
 
 	if prePrepareFromWAL == nil {
 		return fmt.Errorf("expected second last message to be a pre-prepare, but got %v instead", prePrepareMsg)
@@ -141,7 +143,7 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 
 	// Else, v.ProposalSequence == prePrepareFromWAL.Seq
 
-	prop := prePrepareMsg.GetPrePrepare().Proposal
+	prop := prePrepareFromWAL.Proposal
 	v.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(prop.VerificationSequence),
 		Metadata:             prop.Metadata,
