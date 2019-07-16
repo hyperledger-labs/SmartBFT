@@ -9,6 +9,7 @@ import (
 	"math"
 
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 func IsViewMessage(m *protos.Message) bool {
@@ -50,6 +51,14 @@ func proposalSequence(m *protos.Message) uint64 {
 func minInt(a, b int) int {
 	if a < b {
 		return a
+	}
+	return b
+}
+
+func MarshalOrPanic(msg proto.Message) []byte {
+	b, err := proto.Marshal(msg)
+	if err != nil {
+		panic(err)
 	}
 	return b
 }

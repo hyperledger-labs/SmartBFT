@@ -16,6 +16,7 @@ import (
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 type Ingress map[int]<-chan *protos.Message
@@ -86,7 +87,19 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 			Sequence: int64(atomic.LoadUint64(&n.nextSeq)),
 		}.ToBytes(),
 		Payload: BlockData{Transactions: requests}.ToBytes(),
+		Metadata: marshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: n.nextSeq,
+			ViewId:         0, // TODO: change this when implementing view change
+		}),
 	}, nil
+}
+
+func marshalOrPanic(msg proto.Message) []byte {
+	b, err := proto.Marshal(msg)
+	if err != nil {
+		panic(err)
+	}
+	return b
 }
 
 func (n *Node) BroadcastConsensus(m *protos.Message) {

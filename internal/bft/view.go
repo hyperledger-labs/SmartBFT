@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"errors"
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
@@ -36,7 +37,7 @@ type State interface {
 
 type View struct {
 	// Configuration
-	ID               uint64
+	SelfID           uint64
 	N                uint64
 	LeaderID         uint64
 	Quorum           int
@@ -290,8 +291,7 @@ func (v *View) processProposal() Phase {
 			Header:               prop.Header,
 		}
 	}
-	// TODO think if there is any other validation the node should run on a proposal
-	requests, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
+	requests, err := v.verifyProposal(proposal)
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
 		v.FailureDetector.Complain()
@@ -321,7 +321,7 @@ func (v *View) processProposal() Phase {
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
-	if v.ID == v.LeaderID {
+	if v.SelfID == v.LeaderID {
 		v.Comm.BroadcastConsensus(receivedProposal)
 	}
 
@@ -407,6 +407,39 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 	}
 
 	return signatures, COMMITTED
+}
+
+func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
+	// Verify proposal has correct structure and contains authorized requests.
+	requests, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
+	if err != nil {
+		v.Logger.Warnf("Received bad proposal: %v", err)
+		return nil, err
+	}
+
+	// Verify proposal's metadata is valid.
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+		return nil, err
+	}
+
+	if md.ViewId != v.Number {
+		v.Logger.Warnf("Expected view number %d but got %d", v.Number, md.ViewId)
+		return nil, errors.New("invalid view number")
+	}
+
+	if md.LatestSequence != v.ProposalSequence {
+		v.Logger.Warnf("Expected proposal sequence %d but got %d", v.ProposalSequence, md.LatestSequence)
+		return nil, errors.New("invalid proposal sequence")
+	}
+
+	expectedSeq := v.Verifier.VerificationSequence()
+	if uint64(proposal.VerificationSequence) != expectedSeq {
+		v.Logger.Warnf("Expected verification sequence %d but got %d", expectedSeq, proposal.VerificationSequence)
+		return nil, errors.New("verification sequence mismatch")
+	}
+
+	return requests, nil
 }
 
 type voteVerifier struct {
