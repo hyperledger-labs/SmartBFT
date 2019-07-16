@@ -481,6 +481,7 @@ func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signatur
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures, requests)
+	v.PrevHeader = proposal.Header
 }
 
 func (v *View) startNextSeq() {
