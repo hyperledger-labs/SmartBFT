@@ -143,82 +143,207 @@ func TestBadPrePrepare(t *testing.T) {
 	// and that if the same message is from a follower then it is simply ignored.
 	// Same goes to a proposal that doesn't pass the verifier.
 
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	verifyLog := make(chan struct{})
-	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Received bad proposal from 1:") {
-			verifyLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	synchronizer := &mocks.Synchronizer{}
-	syncWG := &sync.WaitGroup{}
-	synchronizer.On("Sync").Run(func(args mock.Arguments) {
-		syncWG.Done()
-	}).Return(protos.ViewMetadata{}, uint64(0))
-	fd := &mocks.FailureDetector{}
-	fdWG := &sync.WaitGroup{}
-	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
-		fdWG.Done()
-	})
-	state := &bft.StateRecorder{}
-	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
+	var synchronizer *mocks.Synchronizer
+	var fd *mocks.FailureDetector
+	var syncWG *sync.WaitGroup
+	var fdWG *sync.WaitGroup
+
+	for _, testCase := range []struct {
+		description           string
+		sender                uint64
+		expectedErr           string
+		setup                 func()
+		corruptProposal       func(*protos.PrePrepare)
+		assert                func()
+		verifyProposalReturns error
+	}{
+		{
+			description: "wrong view number",
+			expectedErr: "from 1 of view 2, expected view 1",
+			sender:      1,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.View++
+			},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+		{
+			description: "sent from wrong node",
+			expectedErr: "Got pre-prepare from 2 but the leader is 1",
+			sender:      2,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {},
+			assert:          func() {},
+		},
+		{
+			description:           "bad proposal",
+			expectedErr:           "Received bad proposal from 1: unauthorized client",
+			sender:                1,
+			verifyProposalReturns: errors.New("unauthorized client"),
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+		{
+			description: "bad verification sequence",
+			expectedErr: "Expected verification sequence 1 but got 2",
+			sender:      1,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.Proposal.VerificationSequence++
+			},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+		{
+			description: "nil proposal",
+			expectedErr: "Got pre-prepare with empty proposal",
+			sender:      1,
+			setup:       func() {},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.Proposal = nil
+			},
+			assert: func() {},
+		},
+		{
+			description: "wrong view number in metadata",
+			expectedErr: "Received bad proposal from 1: invalid view number",
+			sender:      1,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.Proposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 0,
+					ViewId:         2,
+				})
+			},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+		{
+			description: "wrong proposal sequence in metadata",
+			expectedErr: "Received bad proposal from 1: invalid proposal sequence",
+			sender:      1,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.Proposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 1,
+					ViewId:         1,
+				})
+			},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+		{
+			description: "corrupt metadata in proposal",
+			expectedErr: "Received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
+			sender:      1,
+			setup: func() {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			},
+			corruptProposal: func(proposal *protos.PrePrepare) {
+				proposal.Proposal.Metadata = []byte{1, 2, 3}
+			},
+			assert: func() {
+				syncWG.Wait()
+				synchronizer.AssertCalled(t, "Sync")
+				fdWG.Wait()
+				fd.AssertCalled(t, "Complain")
+			},
+		},
+	} {
+		t.Run(testCase.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			var errorLogged sync.WaitGroup
+			errorLogged.Add(1)
+
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, testCase.expectedErr) {
+					errorLogged.Done()
+				}
+				return nil
+			})).Sugar()
+			synchronizer = &mocks.Synchronizer{}
+			syncWG = &sync.WaitGroup{}
+			synchronizer.On("Sync").Run(func(args mock.Arguments) {
+				syncWG.Done()
+			}).Return(protos.ViewMetadata{}, uint64(0))
+			fd = &mocks.FailureDetector{}
+			fdWG = &sync.WaitGroup{}
+			fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+				fdWG.Done()
+			})
+			state := &bft.StateRecorder{}
+			verifier := &mocks.Verifier{}
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, testCase.verifyProposalReturns)
+			verifier.On("VerificationSequence").Return(uint64(1))
+			view := &bft.View{
+				Verifier:         verifier,
+				SelfID:           3,
+				State:            state,
+				Logger:           log,
+				N:                4,
+				LeaderID:         1,
+				Quorum:           3,
+				Number:           1,
+				ProposalSequence: 0,
+				Sync:             synchronizer,
+				FailureDetector:  fd,
+			}
+			end := view.Start()
+
+			proposalSentByLeader := proto.Clone(prePrepare).(*protos.Message)
+			testCase.corruptProposal(proposalSentByLeader.GetPrePrepare())
+
+			testCase.setup()
+			view.HandleMessage(testCase.sender, proposalSentByLeader)
+			errorLogged.Wait()
+			testCase.assert()
+			view.Abort()
+			end.Wait()
+		})
 	}
-	end := view.Start()
-
-	// TODO check with wrong sequence number
-	// prePrepare with wrong view number
-	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
-	prePrepareWrongViewGet := prePrepareWrongView.GetPrePrepare()
-	prePrepareWrongViewGet.View = 2
-
-	// sent from node who is not the leader, simply ignore
-	view.HandleMessage(2, prePrepareWrongView)
-	synchronizer.AssertNotCalled(t, "Sync")
-	fd.AssertNotCalled(t, "Complain")
-
-	// sent from the leader
-	syncWG.Add(1)
-	fdWG.Add(1)
-	view.HandleMessage(1, prePrepareWrongView)
-	syncWG.Wait()
-	synchronizer.AssertCalled(t, "Sync")
-	fdWG.Wait()
-	fd.AssertCalled(t, "Complain")
-
-	end.Wait()
-
-	view.ProposalSequence = 0
-
-	// check prePrepare with verifier returning error
-	verifier := &mocks.Verifier{}
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, errors.New(""))
-	view.Verifier = verifier
-	end = view.Start()
-
-	// sent from node who is not the leader, simply ignore
-	view.HandleMessage(2, prePrepare)
-
-	// sent from the leader
-	syncWG.Add(1)
-	fdWG.Add(1)
-	view.HandleMessage(1, prePrepare)
-	<-verifyLog
-	syncWG.Wait()
-	fdWG.Wait()
-
-	end.Wait()
-
 }
 
 func TestBadPrepare(t *testing.T) {
