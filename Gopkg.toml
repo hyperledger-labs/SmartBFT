@@ -47,3 +47,7 @@ required = [
 [[constraint]]
   branch = "master"
   name = "golang.org/x/sync"
+
+[[constraint]]
+  name = "github.com/pkg/errors"
+  version = "0.8.1"
