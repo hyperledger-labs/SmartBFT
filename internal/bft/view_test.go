@@ -26,9 +26,12 @@ import (
 
 var (
 	proposal = types.Proposal{
-		Header:               []byte{0},
-		Payload:              []byte{1},
-		Metadata:             []byte{2},
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 0,
+			ViewId:         1,
+		}),
 		VerificationSequence: 1,
 	}
 
@@ -49,9 +52,12 @@ var (
 				View: 1,
 				Seq:  0,
 				Proposal: &protos.Proposal{
-					Header:               []byte{0},
-					Payload:              []byte{1},
-					Metadata:             []byte{2},
+					Header:  []byte{0},
+					Payload: []byte{1},
+					Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+						LatestSequence: 0,
+						ViewId:         1,
+					}),
 					VerificationSequence: 1,
 				},
 			},
@@ -244,6 +250,7 @@ func TestBadPrepare(t *testing.T) {
 		commWG.Done()
 	})
 	verifier := &mocks.Verifier{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	signer := &mocks.Signer{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -328,6 +335,7 @@ func TestBadCommit(t *testing.T) {
 	comm := &mocks.Comm{}
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.Verifier{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
 	signer := &mocks.Signer{}
@@ -394,6 +402,7 @@ func TestNormalPath(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
@@ -407,7 +416,7 @@ func TestNormalPath(t *testing.T) {
 		Logger:           log,
 		N:                4,
 		LeaderID:         1,
-		ID:               1,
+		SelfID:           1,
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
@@ -444,6 +453,18 @@ func TestNormalPath(t *testing.T) {
 	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+
+	nextProp := types.Proposal{
+		Header:               prePrepareNextGet.Proposal.Header,
+		Payload:              prePrepareNextGet.Proposal.Payload,
+		Metadata:             prePrepareNextGet.Proposal.Metadata,
+		VerificationSequence: 1,
+	}
+
 	commWG.Add(2)
 	view.HandleMessage(1, prePrepareNext)
 	commWG.Wait()
@@ -451,6 +472,7 @@ func TestNormalPath(t *testing.T) {
 	prepareNext := proto.Clone(prepare).(*protos.Message)
 	prepareNextGet := prepareNext.GetPrepare()
 	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = nextProp.Digest()
 	commWG.Add(1)
 	view.HandleMessage(1, prepareNext)
 	view.HandleMessage(2, prepareNext)
@@ -459,17 +481,24 @@ func TestNormalPath(t *testing.T) {
 	commit1Next := proto.Clone(commit1).(*protos.Message)
 	commit1NextGet := commit1Next.GetCommit()
 	commit1NextGet.Seq = 1
+	commit1NextGet.Digest = nextProp.Digest()
 
 	commit2Next := proto.Clone(commit2).(*protos.Message)
 	commit2NextGet := commit2Next.GetCommit()
 	commit2NextGet.Seq = 1
+	commit2NextGet.Digest = nextProp.Digest()
 
 	deciderWG.Add(1)
 	view.HandleMessage(1, commit1Next)
 	view.HandleMessage(2, commit2Next)
 	deciderWG.Wait()
 	dProp = <-decidedProposal
-	assert.Equal(t, proposal, dProp)
+	secondProposal := proposal
+	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+	assert.Equal(t, secondProposal, dProp)
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
@@ -506,6 +535,7 @@ func TestTwoSequences(t *testing.T) {
 		decidedSigs <- sigs
 	})
 	verifier := &mocks.Verifier{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.Signer{}
@@ -533,9 +563,20 @@ func TestTwoSequences(t *testing.T) {
 	view.HandleMessage(1, prePrepare)
 	commWG.Wait()
 
+	secondProposal := types.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 1,
+			ViewId:         1,
+		}),
+		VerificationSequence: 1,
+	}
+
 	prepareNext := proto.Clone(prepare).(*protos.Message)
 	prepareNextGet := prepareNext.GetPrepare()
 	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = secondProposal.Digest()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prepare)
@@ -547,10 +588,12 @@ func TestTwoSequences(t *testing.T) {
 	commit1Next := proto.Clone(commit1).(*protos.Message)
 	commit1NextGet := commit1Next.GetCommit()
 	commit1NextGet.Seq = 1
+	commit1NextGet.Digest = secondProposal.Digest()
 
 	commit2Next := proto.Clone(commit2).(*protos.Message)
 	commit2NextGet := commit2Next.GetCommit()
 	commit2NextGet.Seq = 1
+	commit2NextGet.Digest = secondProposal.Digest()
 
 	deciderWG.Add(2)
 	view.HandleMessage(1, commit1)
@@ -561,6 +604,7 @@ func TestTwoSequences(t *testing.T) {
 	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.Proposal.Metadata = secondProposal.Metadata
 
 	commWG.Add(2)
 	view.HandleMessage(1, prePrepareNext)
@@ -576,8 +620,9 @@ func TestTwoSequences(t *testing.T) {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
+
 	dProp = <-decidedProposal
-	assert.Equal(t, proposal, dProp)
+	assert.Equal(t, secondProposal, dProp)
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
@@ -616,6 +661,7 @@ func TestViewPersisted(t *testing.T) {
 	} {
 		t.Run(testCase.description, func(t *testing.T) {
 			verifier := &mocks.Verifier{}
+			verifier.On("VerificationSequence").Return(uint64(1))
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
@@ -662,7 +708,7 @@ func TestViewPersisted(t *testing.T) {
 				Decider:          decider,
 				Comm:             comm,
 				Verifier:         verifier,
-				ID:               2,
+				SelfID:           2,
 				State:            state,
 				Logger:           log,
 				N:                4,

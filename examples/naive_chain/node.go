@@ -16,6 +16,7 @@ import (
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/hyperledger/fabric/protoutil"
 )
 
 type Ingress map[int]<-chan *protos.Message
@@ -86,6 +87,10 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 			Sequence: int64(atomic.LoadUint64(&n.nextSeq)),
 		}.ToBytes(),
 		Payload: BlockData{Transactions: requests}.ToBytes(),
+		Metadata: protoutil.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: n.nextSeq,
+			ViewId:         0, // TODO: change this when implementing view change
+		}),
 	}, nil
 }
 

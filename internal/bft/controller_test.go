@@ -116,13 +116,21 @@ func TestLeaderPropose(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch").Return([][]byte{req})
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	verifier := &mocks.Verifier{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	assembler := &mocks.Assembler{}
-	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
+	secondProposal := proposal
+	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -182,10 +190,18 @@ func TestLeaderChange(t *testing.T) {
 	batcher := &mocks.Batcher{}
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.Verifier{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
-	verifier.On("VerifyProposal", proposal, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+
+	secondProposal := proposal
+	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 0,
+		ViewId:         2,
+	})
+
 	assembler := &mocks.Assembler{}
-	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{})
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.Comm{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -218,6 +234,10 @@ func TestLeaderChange(t *testing.T) {
 	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
 	prePrepareWrongViewGet := prePrepareWrongView.GetPrePrepare()
 	prePrepareWrongViewGet.View = 2
+	prePrepareWrongViewGet.Proposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 0,
+		ViewId:         2,
+	})
 	fdWG.Add(1)
 	syncWG.Add(1)
 	controller.ProcessMessages(1, prePrepareWrongView)
