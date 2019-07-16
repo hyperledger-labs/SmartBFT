@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
@@ -21,13 +20,11 @@ func TestBatcherBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	insp := &mocks.RequestInspector{}
-	byteReq1 := []byte{1}
-	insp.On("RequestID", byteReq1).Return(types.RequestInfo{ID: "1", ClientID: "1"})
-	byteReq2 := []byte{2}
-	insp.On("RequestID", byteReq2).Return(types.RequestInfo{ID: "2", ClientID: "2"})
-	byteReq3 := []byte{3}
-	insp.On("RequestID", byteReq3).Return(types.RequestInfo{ID: "3", ClientID: "3"})
+	insp := &testRequestInspector{}
+
+	byteReq1 := makeTestRequest("1", "1", "foo")
+	byteReq2 := makeTestRequest("2", "2", "foo")
+	byteReq3 := makeTestRequest("3", "3", "foo")
 	pool := bft.NewPool(log, insp, 3)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
@@ -105,7 +102,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	insp := &mocks.RequestInspector{}
+	insp := &testRequestInspector{}
 	pool := bft.NewPool(log, insp, 200)
 
 	batcher := bft.Bundler{
@@ -116,16 +113,16 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 
 	rem := make([][]byte, 0)
 	for i := 0; i < 50; i++ {
-		rem = append(rem, []byte{byte(i + 100)})
+		iStr := fmt.Sprintf("%d", 100+i)
+		rem = append(rem, makeTestRequest(iStr, iStr, "bar"))
 	}
 
 	batcher.BatchRemainder(rem)
 
 	go func() {
 		for i := 0; i < 100; i++ {
-			byteReq := []byte{byte(i)}
-			str := fmt.Sprintf("%d", i)
-			insp.On("RequestID", byteReq).Return(types.RequestInfo{ID: str, ClientID: str})
+			iStr := fmt.Sprintf("%d", i)
+			byteReq := makeTestRequest(iStr, iStr, "foo")
 			err := pool.Submit(byteReq)
 			assert.NoError(t, err)
 		}
@@ -134,9 +131,12 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	res := batcher.NextBatch()
 	assert.Len(t, res, 100)
 	for i := 0; i < 50; i++ {
-		assert.Equal(t, []byte{byte(i + 100)}, res[i]) // first rem
+		iStr := fmt.Sprintf("%d", 100+i)
+		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // first rem
 	}
+
 	for i := 50; i < 100; i++ {
-		assert.Equal(t, []byte{byte(i - 50)}, res[i]) // then requests
+		iStr := fmt.Sprintf("%d", i-50)
+		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // then requests
 	}
 }
