@@ -14,3 +14,13 @@ type Comm struct {
 func (_m *Comm) BroadcastConsensus(m *smartbftprotos.Message) {
 	_m.Called(m)
 }
+
+// SendConsensus provides a mock function with given fields: targetID, m
+func (_m *Comm) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
+	_m.Called(targetID, m)
+}
+
+// SendTransaction provides a mock function with given fields: targetID, request
+func (_m *Comm) SendTransaction(targetID uint64, request []byte) {
+	_m.Called(targetID, request)
+}
