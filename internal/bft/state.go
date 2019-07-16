@@ -28,7 +28,7 @@ func (*StateRecorder) Restore(_ *View) error {
 }
 
 type PersistedState struct {
-	Logger Logger
+	Logger api.Logger
 	WAL    api.WriteAheadLog
 }
 
@@ -88,7 +88,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	return nil
 }
 
-func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logger Logger) error {
+func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logger api.Logger) error {
 	prop := lastPersistedMessage.GetPrePrepare().Proposal
 	v.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(prop.VerificationSequence),
@@ -112,7 +112,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logg
 	return nil
 }
 
-func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entries [][]byte, logger Logger) error {
+func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entries [][]byte, logger api.Logger) error {
 	// Last entry is a commit, so we should have not pruned the previous pre-prepare
 	if len(entries) < 2 {
 		return fmt.Errorf("last message is a commit, but expected to also have a matching pre-prepare")

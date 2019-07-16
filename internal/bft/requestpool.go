@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"golang.org/x/sync/semaphore"
 )
@@ -23,7 +24,7 @@ type RequestInspector interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	Log              Logger
+	Log              api.Logger
 	RequestInspector RequestInspector
 	queue            []Request
 	semaphore        *semaphore.Weighted
@@ -40,7 +41,7 @@ type Request struct {
 
 // NewPool constructs new requests pool
 func NewPool(
-	log Logger,
+	log api.Logger,
 	inspector RequestInspector,
 	queueSize int64,
 ) *Pool {

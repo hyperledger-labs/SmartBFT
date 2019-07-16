@@ -30,6 +30,10 @@ type RequestInfo struct {
 	ClientID string
 }
 
+func (r *RequestInfo) String() string {
+	return r.ClientID + ":" + r.ID
+}
+
 func (p Proposal) Digest() string {
 	rawBytes, err := asn1.Marshal(Proposal{
 		VerificationSequence: p.VerificationSequence,
