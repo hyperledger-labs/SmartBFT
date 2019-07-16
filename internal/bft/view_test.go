@@ -342,31 +342,6 @@ func TestBadPrePrepare(t *testing.T) {
 			testCase.assert()
 			view.Abort()
 			end.Wait()
-
-			/*
-
-				view.ProposalSequence = 0
-
-				// check prePrepare with verifier returning error
-				verifier := &mocks.Verifier{}
-				verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, errors.New(""))
-				view.Verifier = verifier
-				end = view.Start()
-
-				// sent from node who is not the leader, simply ignore
-				view.HandleMessage(2, prePrepare)
-
-				// sent from the leader
-				syncWG.Add(1)
-				fdWG.Add(1)
-				view.HandleMessage(1, prePrepare)
-				<-verifyLog
-				syncWG.Wait()
-				fdWG.Wait()
-
-				end.Wait()
-			*/
-
 		})
 	}
 }
