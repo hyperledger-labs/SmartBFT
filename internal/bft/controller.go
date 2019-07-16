@@ -48,6 +48,7 @@ type Controller struct {
 	ID               uint64
 	N                uint64
 	RequestPool      RequestPool
+	RequestTimeout   time.Duration
 	Batcher          Batcher
 	Verifier         Verifier
 	Logger           api.Logger
@@ -99,14 +100,14 @@ func (c *Controller) SubmitRequest(request []byte) error {
 		return err
 	}
 
-	//start a timer
-	t := time.AfterFunc(10*time.Millisecond, func() {
+	// start a timer
+	t := time.AfterFunc(c.RequestTimeout, func() {
 		c.onRequestTimeout(request)
 	})
 
 	c.Logger.Debugf("Request %s was submitted, timer %v started ", info, t)
 
-	//TODO put the info & timer pair in the timeout-collection
+	// TODO put the info & timer pair in the timeout-collection
 
 	return nil
 }
@@ -114,14 +115,14 @@ func (c *Controller) SubmitRequest(request []byte) error {
 func (c *Controller) onRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
 	c.Logger.Warnf("Request %s has timed out, forwarding request to leader", info)
-	//TODO forward request to leader, start another timeout, update the timeout-collection
+	// TODO forward request to leader, start another timeout, update the timeout-collection
 }
 
 func (c *Controller) onLeaderFwdRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
 	c.Logger.Warnf("Request %s has timed out, complaining about leader", info)
-	//TODO complain about the leader
-	//TODO Q: what to do with the request?
+	// TODO complain about the leader
+	// TODO Q: what to do with the request?
 }
 
 // ProcessMessages dispatches the incoming message to the required component
@@ -283,7 +284,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
 			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
-		//TODO stop and remove the associated timer from the timeout-collection
+		// TODO stop and remove the associated timer from the timeout-collection
 	}
 	if c.iAmTheLeader() {
 		c.deliverChan <- struct{}{}

@@ -69,6 +69,7 @@ func (c *Consensus) Start() Future {
 		N:                c.N,
 		Batcher:          batcher,
 		RequestPool:      pool,
+		RequestTimeout:   2 * c.BatchTimeout, // Request timeout should be at least as batch timeout
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
