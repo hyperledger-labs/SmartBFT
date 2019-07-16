@@ -9,19 +9,12 @@ import (
 	"math"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
-
-type Logger interface {
-	Debugf(template string, args ...interface{})
-	Infof(template string, args ...interface{})
-	Errorf(template string, args ...interface{})
-	Warnf(template string, args ...interface{})
-	Panicf(template string, args ...interface{})
-}
 
 //go:generate mockery -dir . -name Verifier -case underscore -output ./mocks/
 type Verifier interface {
@@ -91,7 +84,7 @@ type Controller struct {
 	RequestPool      RequestPool
 	Batcher          Batcher
 	Verifier         Verifier
-	Logger           Logger
+	Logger           api.Logger
 	Assembler        Assembler
 	Application      Application
 	FailureDetector  FailureDetector
@@ -132,12 +125,37 @@ func (c *Controller) computeQuorum() int {
 }
 
 // SubmitRequest submits a request to go through consensus
-func (c *Controller) SubmitRequest(request []byte) {
+func (c *Controller) SubmitRequest(request []byte) error {
+	info := c.RequestInspector.RequestID(request)
 	err := c.RequestPool.Submit(request)
 	if err != nil {
-		info := c.RequestInspector.RequestID(request)
-		c.Logger.Warnf("Request %v was not submitted, error: %v", info, err)
+		c.Logger.Warnf("Request %s was not submitted, error: %s", info, err)
+		return err
 	}
+
+	//start a timer
+	t := time.AfterFunc(10*time.Millisecond, func() {
+		c.onRequestTimeout(request)
+	})
+
+	c.Logger.Debugf("Request %s was submitted, timer %v started ", info, t)
+
+	//TODO put the info & timer pair in the timeout-collection
+
+	return nil
+}
+
+func (c *Controller) onRequestTimeout(request []byte) {
+	info := c.RequestInspector.RequestID(request)
+	c.Logger.Warnf("Request %s has timed out, forwarding request to leader", info)
+	//TODO forward request to leader, start another timeout, update the timeout-collection
+}
+
+func (c *Controller) onLeaderFwdRequestTimeout(request []byte) {
+	info := c.RequestInspector.RequestID(request)
+	c.Logger.Warnf("Request %s has timed out, complaining about leader", info)
+	//TODO complain about the leader
+	//TODO Q: what to do with the request?
 }
 
 // ProcessMessages dispatches the incoming message to the required component
@@ -294,11 +312,12 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	// TODO write to WAL?
 	c.Application.Deliver(proposal, signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
-	// TODO stop timeouts of included requests?
-	for _, req := range requests {
-		if err := c.RequestPool.RemoveRequest(req); err != nil {
-			c.Logger.Warnf("Error during remove of request %v from the pool : %v", req, err)
+
+	for _, reqInfo := range requests {
+		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
+			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
+		//TODO stop and remove the associated timer from the timeout-collection
 	}
 	if c.iAmTheLeader() {
 		c.deliverChan <- struct{}{}

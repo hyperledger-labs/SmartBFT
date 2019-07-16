@@ -8,6 +8,7 @@ package bft
 import (
 	"sync"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -43,7 +44,7 @@ type View struct {
 	Decider          Decider
 	FailureDetector  FailureDetector
 	Sync             Synchronizer
-	Logger           Logger
+	Logger           api.Logger
 	Comm             Comm
 	Verifier         Verifier
 	Signer           Signer

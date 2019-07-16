@@ -64,19 +64,20 @@ func (c *Consensus) Start() Future {
 	}
 
 	c.controller = &algorithm.Controller{
-		WAL:             c.WAL,
-		ID:              c.SelfID,
-		N:               c.N,
-		Batcher:         batcher,
-		RequestPool:     pool,
-		Verifier:        c.Verifier,
-		Logger:          c.Logger,
-		Assembler:       c.Assembler,
-		Application:     c,
-		FailureDetector: c,
-		Synchronizer:    c,
-		Comm:            c.Comm,
-		Signer:          c.Signer,
+		WAL:              c.WAL,
+		ID:               c.SelfID,
+		N:                c.N,
+		Batcher:          batcher,
+		RequestPool:      pool,
+		Verifier:         c.Verifier,
+		Logger:           c.Logger,
+		Assembler:        c.Assembler,
+		Application:      c,
+		FailureDetector:  c,
+		Synchronizer:     c,
+		Comm:             c.Comm,
+		Signer:           c.Signer,
+		RequestInspector: c.RequestInspector,
 	}
 	future := c.controller.Start(0, 0)
 	return future
@@ -89,6 +90,7 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 
 }
 
-func (c *Consensus) SubmitRequest(req []byte) {
-	c.controller.SubmitRequest(req)
+func (c *Consensus) SubmitRequest(req []byte) error {
+	c.Logger.Debugf("Submit Request")
+	return c.controller.SubmitRequest(req)
 }

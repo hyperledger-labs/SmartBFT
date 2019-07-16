@@ -65,16 +65,17 @@ func TestBlockHeader(t *testing.T) {
 }
 
 func TestChain(t *testing.T) {
-	blockCount := 100
+	blockCount := 10
 
 	chains := setupNetwork(t, 4)
 
 	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
-			chain.Order(Transaction{
+			err := chain.Order(Transaction{
 				ClientID: "alice",
 				Id:       fmt.Sprintf("tx%d", blockSeq),
 			})
+			assert.NoError(t, err)
 		}
 	}
 

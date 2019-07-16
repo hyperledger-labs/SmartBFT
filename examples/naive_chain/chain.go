@@ -93,6 +93,6 @@ func (chain *Chain) Listen() Block {
 	return *block
 }
 
-func (chain *Chain) Order(txn Transaction) {
-	chain.node.consensus.SubmitRequest(txn.ToBytes())
+func (chain *Chain) Order(txn Transaction) error {
+	return chain.node.consensus.SubmitRequest(txn.ToBytes())
 }
