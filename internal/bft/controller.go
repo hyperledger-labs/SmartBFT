@@ -106,13 +106,13 @@ func (c *Controller) SubmitRequest(request []byte) error {
 	return nil
 }
 
-func (c *Controller) onRequestTimeout(request []byte) {
+func (c *Controller) OnRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
 	c.Logger.Warnf("Request %s has timed out, forwarding request to leader", info)
 	// TODO forward request to leader, start another timeout, update the timeout-collection
 }
 
-func (c *Controller) onLeaderFwdRequestTimeout(request []byte) {
+func (c *Controller) OnLeaderFwdRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
 	c.Logger.Warnf("Request %s has timed out, complaining about leader", info)
 	// TODO complain about the leader

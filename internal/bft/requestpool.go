@@ -71,6 +71,10 @@ func NewPool(log api.Logger, inspector api.RequestInspector, queueSize int64, re
 	}
 }
 
+func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
+	rp.timeoutHandler = handler
+}
+
 // Submit a request into the pool, returns an error when request is already in the pool
 func (rp *Pool) Submit(request []byte) error {
 	reqInfo := rp.inspector.RequestID(request)

@@ -91,6 +91,9 @@ func (c *Consensus) Start() Future {
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 	}
+
+	pool.SetTimeoutHandler(c.controller)
+
 	future := c.controller.Start(0, 0)
 	return future
 }
