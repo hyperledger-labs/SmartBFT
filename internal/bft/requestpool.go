@@ -6,41 +6,48 @@
 package bft
 
 import (
+	"container/list"
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/pkg/errors"
 	"golang.org/x/sync/semaphore"
 )
 
-type requestTimeoutHandler interface {
+//go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
 
-	// called when a request timeout expires
-	onRequestTimeout(request []byte)
+// RequestTimeoutHandler defines the methods called by request timeout timers created by time.AfterFunc.
+// This interface is implemented by the bft.Controller.
+type RequestTimeoutHandler interface {
 
-	// called when a leader forwarding timeout expires
-	onLeaderFwdRequestTimeout(request []byte)
+	// OnRequestTimeout is called when a request timeout expires
+	OnRequestTimeout(request []byte)
+
+	// OnLeaderFwdRequestTimeout is called when a leader forwarding timeout expires
+	OnLeaderFwdRequestTimeout(request []byte)
 }
 
 // Pool implements requests pool, maintains pool of given size provided during
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger           api.Logger
-	RequestInspector api.RequestInspector
-	queue            []Request
-	semaphore        *semaphore.Weighted
-	lock             sync.RWMutex
-	existMap         map[string]bool
+	logger         api.Logger
+	inspector      api.RequestInspector
+	fifo           *list.List
+	semaphore      *semaphore.Weighted
+	lock           sync.Mutex
+	existMap       map[types.RequestInfo]*list.Element
+	timeoutHandler RequestTimeoutHandler
 }
 
-// Request captures request related information
-type Request struct {
-	ClientID string
-	ID       string
-	Request  []byte
+// requestItem captures request related information
+type requestItem struct {
+	request []byte
+	timeout *time.Timer
 }
 
 // NewPool constructs new requests pool
@@ -50,56 +57,66 @@ func NewPool(
 	queueSize int64,
 ) *Pool {
 	return &Pool{
-		logger:           log,
-		RequestInspector: inspector,
-		queue:            make([]Request, 0),
-		semaphore:        semaphore.NewWeighted(queueSize),
-		existMap:         make(map[string]bool),
+		logger:    log,
+		inspector: inspector,
+		fifo:      list.New(),
+		semaphore: semaphore.NewWeighted(queueSize),
+		existMap:  make(map[types.RequestInfo]*list.Element),
 	}
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
 func (rp *Pool) Submit(request []byte) error {
-	reqInfo := rp.RequestInspector.RequestID(request)
-	req := Request{
-		ID:       reqInfo.ID,
-		Request:  request,
-		ClientID: reqInfo.ClientID,
-	}
+	reqInfo := rp.inspector.RequestID(request)
+
 	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
-		return fmt.Errorf("error in acquiring semaphore: %v", err)
+		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
+
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	existStr := fmt.Sprintf("%v~%v", reqInfo.ClientID, reqInfo.ID)
-	if _, exist := rp.existMap[existStr]; exist {
+
+	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
-		err := fmt.Sprintf("a request with ID %v and client ID %v already exists in the pool", reqInfo.ID, reqInfo.ClientID)
-		rp.logger.Errorf(err)
-		return fmt.Errorf(err)
+		errStr := fmt.Sprintf("request %s already exists in the pool", reqInfo)
+		rp.logger.Errorf(errStr)
+		return fmt.Errorf(errStr)
 	}
-	rp.queue = append(rp.queue, req)
-	rp.existMap[existStr] = true
+
+	reqItem := &requestItem{
+		request: request,
+		timeout: nil, //TODO start a timer
+	}
+	element := rp.fifo.PushBack(reqItem)
+	rp.existMap[reqInfo] = element
+
+	if len(rp.existMap) != rp.fifo.Len() {
+		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
+	}
+
 	return nil
 }
 
 // SizeOfPool returns the number of requests currently residing the pool
 func (rp *Pool) SizeOfPool() int {
-	rp.lock.RLock()
-	defer rp.lock.RUnlock()
-	return len(rp.queue)
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	return len(rp.existMap)
 }
 
 // NextRequests returns the next requests to be batched.
 // It returns at most n request, in a newly allocated slice.
 func (rp *Pool) NextRequests(n int) [][]byte {
-	rp.lock.RLock()
-	defer rp.lock.RUnlock()
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
 
-	m := minInt(len(rp.queue), n)
+	m := minInt(rp.fifo.Len(), n)
 	buff := make([][]byte, m)
+	var element = rp.fifo.Front()
 	for i := 0; i < m; i++ {
-		buff[i] = append(make([]byte, 0), rp.queue[i].Request...)
+		buff[i] = append(make([]byte, 0), element.Value.(*requestItem).request...)
+		element = element.Next()
 	}
 
 	return buff
@@ -109,21 +126,22 @@ func (rp *Pool) NextRequests(n int) [][]byte {
 func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
-	existStr := fmt.Sprintf("%v~%v", requestInfo.ClientID, requestInfo.ID)
-	if _, exist := rp.existMap[existStr]; !exist {
-		err := fmt.Sprintf("Request %s is not in the pool at remove time", requestInfo)
-		rp.logger.Warnf(err)
-		return fmt.Errorf(err)
+
+	element, exist := rp.existMap[requestInfo]
+	if !exist {
+		errStr := fmt.Sprintf("request %s is not in the pool at remove time", requestInfo)
+		rp.logger.Warnf(errStr)
+		return fmt.Errorf(errStr)
 	}
-	for i, existingReq := range rp.queue {
-		if existingReq.ClientID != requestInfo.ClientID || existingReq.ID != requestInfo.ID {
-			continue
-		}
-		rp.logger.Infof("Removed request %v from request pool", requestInfo)
-		rp.queue = append(rp.queue[:i], rp.queue[i+1:]...)
-		delete(rp.existMap, existStr)
-		rp.semaphore.Release(1)
-		return nil
+
+	rp.fifo.Remove(element)
+	delete(rp.existMap, requestInfo)
+	rp.logger.Infof("Removed request %s from request pool", requestInfo)
+	rp.semaphore.Release(1)
+
+	if len(rp.existMap) != rp.fifo.Len() {
+		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
 	}
-	panic("RemoveRequest should have returned earlier")
+
+	return nil
 }
