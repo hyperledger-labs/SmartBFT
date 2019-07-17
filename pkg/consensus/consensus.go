@@ -15,6 +15,10 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
+const (
+	DefaultRequestPoolSize = 200
+)
+
 // Consensus submits requests to be total ordered,
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
@@ -55,7 +59,14 @@ type Future interface {
 }
 
 func (c *Consensus) Start() Future {
-	pool := algorithm.NewPool(c.Logger, c.RequestInspector, 200)
+	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
+
+	pool := algorithm.NewPool(
+		c.Logger,
+		c.RequestInspector,
+		DefaultRequestPoolSize, // TODO make it configurable
+		requestTimeout,
+	)
 
 	batcher := &algorithm.Bundler{
 		Pool:         pool,
@@ -69,7 +80,7 @@ func (c *Consensus) Start() Future {
 		N:                c.N,
 		Batcher:          batcher,
 		RequestPool:      pool,
-		RequestTimeout:   2 * c.BatchTimeout, // Request timeout should be at least as batch timeout
+		RequestTimeout:   requestTimeout,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
