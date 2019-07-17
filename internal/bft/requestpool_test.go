@@ -26,7 +26,7 @@ func TestReqPoolBasic(t *testing.T) {
 	insp := &testRequestInspector{}
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, 3)
+	pool := bft.NewPool(log, insp, 3, 0)
 
 	assert.Equal(t, 0, pool.Size())
 	err = pool.Submit(byteReq1)
@@ -117,7 +117,7 @@ func TestEventuallySubmit(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
-	pool := bft.NewPool(log, insp, 50)
+	pool := bft.NewPool(log, insp, 50, 0)
 
 	wg := sync.WaitGroup{}
 	wg.Add(2 * n)

@@ -18,6 +18,10 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
+const (
+	DefaultRequestTimeoutMillis = 10000
+)
+
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
 
 // RequestTimeoutHandler defines the methods called by request timeout timers created by time.AfterFunc.
@@ -42,6 +46,7 @@ type Pool struct {
 	lock           sync.Mutex
 	existMap       map[types.RequestInfo]*list.Element
 	timeoutHandler RequestTimeoutHandler
+	requestTimeout time.Duration
 }
 
 // requestItem captures request related information
@@ -51,18 +56,23 @@ type requestItem struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(
-	log api.Logger,
-	inspector api.RequestInspector,
-	queueSize int64,
-) *Pool {
-	return &Pool{
-		logger:    log,
-		inspector: inspector,
-		fifo:      list.New(),
-		semaphore: semaphore.NewWeighted(queueSize),
-		existMap:  make(map[types.RequestInfo]*list.Element),
+func NewPool(log api.Logger, inspector api.RequestInspector, queueSize int64, requestTimeout time.Duration) *Pool {
+	if requestTimeout == 0 {
+		requestTimeout = DefaultRequestTimeoutMillis * time.Millisecond
 	}
+
+	return &Pool{
+		logger:         log,
+		inspector:      inspector,
+		fifo:           list.New(),
+		semaphore:      semaphore.NewWeighted(queueSize),
+		existMap:       make(map[types.RequestInfo]*list.Element),
+		requestTimeout: requestTimeout,
+	}
+}
+
+func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
+	rp.timeoutHandler = handler
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool

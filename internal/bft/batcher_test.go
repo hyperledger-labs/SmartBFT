@@ -25,7 +25,7 @@ func TestBatcherBasic(t *testing.T) {
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")
 	byteReq3 := makeTestRequest("3", "3", "foo")
-	pool := bft.NewPool(log, insp, 3)
+	pool := bft.NewPool(log, insp, 3, 0)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
@@ -103,7 +103,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
-	pool := bft.NewPool(log, insp, 200)
+	pool := bft.NewPool(log, insp, 200, 0)
 
 	batcher := bft.Bundler{
 		Pool:         pool,
