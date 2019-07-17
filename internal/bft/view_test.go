@@ -143,7 +143,7 @@ func TestBadPrePrepare(t *testing.T) {
 	// and that if the same message is from a follower then it is simply ignored.
 	// Same goes to a proposal that doesn't pass the verifier.
 
-	var synchronizer *mocks.Synchronizer
+	var synchronizer *mocks.SynchronizerMock
 	var fd *mocks.FailureDetector
 	var syncWG *sync.WaitGroup
 	var fdWG *sync.WaitGroup
@@ -304,7 +304,7 @@ func TestBadPrePrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			synchronizer = &mocks.Synchronizer{}
+			synchronizer = &mocks.SynchronizerMock{}
 			syncWG = &sync.WaitGroup{}
 			synchronizer.On("Sync").Run(func(args mock.Arguments) {
 				syncWG.Done()
@@ -315,7 +315,7 @@ func TestBadPrePrepare(t *testing.T) {
 				fdWG.Done()
 			})
 			state := &bft.StateRecorder{}
-			verifier := &mocks.Verifier{}
+			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, testCase.verifyProposalReturns)
 			verifier.On("VerificationSequence").Return(uint64(1))
 			view := &bft.View{
@@ -359,7 +359,7 @@ func TestBadPrepare(t *testing.T) {
 		}
 		return nil
 	})).Sugar()
-	synchronizer := &mocks.Synchronizer{}
+	synchronizer := &mocks.SynchronizerMock{}
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 		syncWG.Done()
@@ -369,15 +369,15 @@ func TestBadPrepare(t *testing.T) {
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
 		fdWG.Done()
 	})
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-	signer := &mocks.Signer{}
+	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -457,13 +457,13 @@ func TestBadCommit(t *testing.T) {
 		}
 		return nil
 	})).Sugar()
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	comm.On("BroadcastConsensus", mock.Anything)
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
-	signer := &mocks.Signer{}
+	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -509,7 +509,7 @@ func TestNormalPath(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		fmt.Println("Sending", args.Get(0))
@@ -526,11 +526,11 @@ func TestNormalPath(t *testing.T) {
 		sigs, _ := args.Get(1).([]types.Signature)
 		decidedSigs <- sigs
 	})
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
-	signer := &mocks.Signer{}
+	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -643,7 +643,7 @@ func TestTwoSequences(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
@@ -659,11 +659,11 @@ func TestTwoSequences(t *testing.T) {
 		sigs, _ := args.Get(1).([]types.Signature)
 		decidedSigs <- sigs
 	})
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
-	signer := &mocks.Signer{}
+	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -785,7 +785,7 @@ func TestViewPersisted(t *testing.T) {
 		},
 	} {
 		t.Run(testCase.description, func(t *testing.T) {
-			verifier := &mocks.Verifier{}
+			verifier := &mocks.VerifierMock{}
 			verifier.On("VerificationSequence").Return(uint64(1))
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
@@ -793,7 +793,7 @@ func TestViewPersisted(t *testing.T) {
 			var prepareSent sync.WaitGroup
 			var commitSent sync.WaitGroup
 
-			comm := &mocks.Comm{}
+			comm := &mocks.CommMock{}
 			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 				msg := args.Get(0).(*protos.Message)
 				prepare := msg.GetPrepare() != nil
@@ -816,7 +816,7 @@ func TestViewPersisted(t *testing.T) {
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
 
-			signer := &mocks.Signer{}
+			signer := &mocks.SignerMock{}
 			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 2})
 
 			var deciderWG sync.WaitGroup

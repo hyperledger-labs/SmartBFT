@@ -50,14 +50,14 @@ type Controller struct {
 	RequestPool      RequestPool
 	RequestTimeout   time.Duration
 	Batcher          Batcher
-	Verifier         Verifier
+	Verifier         api.Verifier
 	Logger           api.Logger
-	Assembler        Assembler
-	Application      Application
+	Assembler        api.Assembler
+	Application      api.Application
 	FailureDetector  FailureDetector
-	Synchronizer     Synchronizer
-	Comm             Comm
-	Signer           Signer
+	Synchronizer     api.Synchronizer
+	Comm             api.Comm
+	Signer           api.Signer
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
 
