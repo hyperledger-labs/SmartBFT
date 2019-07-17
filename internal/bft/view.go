@@ -69,8 +69,6 @@ type View struct {
 	nextCommits    *voteSet
 
 	abortChan chan struct{}
-
-	lock sync.RWMutex // a lock on the sequence and all votes
 }
 
 func (v *View) Start() Future {
@@ -78,7 +76,7 @@ func (v *View) Start() Future {
 	v.abortChan = make(chan struct{})
 
 	var viewEnds sync.WaitGroup
-	viewEnds.Add(2)
+	viewEnds.Add(1)
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
@@ -87,25 +85,10 @@ func (v *View) Start() Future {
 
 	go func() {
 		defer viewEnds.Done()
-		v.processMessages()
-	}()
-	go func() {
-		defer viewEnds.Done()
 		v.run()
 	}()
 
 	return &viewEnds
-}
-
-func (v *View) processMessages() {
-	for {
-		select {
-		case <-v.abortChan:
-			return
-		case msg := <-v.incMsgs:
-			v.processMsg(msg.sender, msg.Message)
-		}
-	}
 }
 
 func (v *View) setupVotes() {
@@ -181,9 +164,6 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// when we're in sequence i+1 then we should still send a prepare/commit again.
 	// leaving this as a task for now.
 
-	v.lock.RLock()
-	defer v.lock.RUnlock()
-
 	msgProposalSeq := proposalSequence(m)
 	v.Logger.Debugf("Got message %v from %d with seq %d", m, sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
@@ -235,6 +215,8 @@ func (v *View) run() {
 		select {
 		case <-v.abortChan:
 			return
+		case msg := <-v.incMsgs:
+			v.processMsg(msg.sender, msg.Message)
 		default:
 			v.doPhase()
 		}
@@ -261,9 +243,7 @@ func (v *View) prepared() Phase {
 		return ABORT
 	}
 
-	v.lock.RLock()
 	seq := v.ProposalSequence
-	v.lock.RUnlock()
 
 	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
 
@@ -278,19 +258,27 @@ func (v *View) processProposal() Phase {
 
 	var proposal types.Proposal
 	var receivedProposal *protos.Message
-	select {
-	case <-v.abortChan:
-		return ABORT
-	case msg := <-v.prePrepare:
-		receivedProposal = msg
-		prop := msg.GetPrePrepare().Proposal
-		proposal = types.Proposal{
-			VerificationSequence: int64(prop.VerificationSequence),
-			Metadata:             prop.Metadata,
-			Payload:              prop.Payload,
-			Header:               prop.Header,
+
+	var gotPrePrepare bool
+	for !gotPrePrepare {
+		select {
+		case <-v.abortChan:
+			return ABORT
+		case msg := <-v.incMsgs:
+			v.processMsg(msg.sender, msg.Message)
+		case msg := <-v.prePrepare:
+			gotPrePrepare = true
+			receivedProposal = msg
+			prop := msg.GetPrePrepare().Proposal
+			proposal = types.Proposal{
+				VerificationSequence: int64(prop.VerificationSequence),
+				Metadata:             prop.Metadata,
+				Payload:              prop.Payload,
+				Header:               prop.Header,
+			}
 		}
 	}
+
 	requests, err := v.verifyProposal(proposal)
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
@@ -300,9 +288,7 @@ func (v *View) processProposal() Phase {
 		return ABORT
 	}
 
-	v.lock.RLock()
 	seq := v.ProposalSequence
-	v.lock.RUnlock()
 
 	msg := &protos.Message{
 		Content: &protos.Message_Prepare{
@@ -338,13 +324,13 @@ func (v *View) processPrepares() Phase {
 		select {
 		case <-v.abortChan:
 			return ABORT
+		case msg := <-v.incMsgs:
+			v.processMsg(msg.sender, msg.Message)
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
 				// TODO is it ok that the vote is already registered?
-				v.lock.RLock()
 				seq := v.ProposalSequence
-				v.lock.RUnlock()
 				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
 				continue
 			}
@@ -354,9 +340,7 @@ func (v *View) processPrepares() Phase {
 
 	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
-	v.lock.RLock()
 	seq := v.ProposalSequence
-	v.lock.RUnlock()
 
 	msg := &protos.Message{
 		Content: &protos.Message_Commit{
@@ -396,6 +380,8 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		select {
 		case <-v.abortChan:
 			return nil, ABORT
+		case msg := <-v.incMsgs:
+			v.processMsg(msg.sender, msg.Message)
 		case vote := <-v.commits.votes:
 			// Valid votes end up written into the 'validVotes' channel.
 			go func(vote *protos.Message) {
@@ -474,9 +460,7 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 }
 
 func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	v.lock.RLock()
 	seq := v.ProposalSequence
-	v.lock.RUnlock()
 	v.Logger.Infof("Deciding on seq %d", seq)
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
@@ -485,9 +469,6 @@ func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signatur
 }
 
 func (v *View) startNextSeq() {
-	v.lock.Lock()
-	defer v.lock.Unlock()
-
 	prevSeq := v.ProposalSequence
 
 	v.ProposalSequence++
@@ -520,9 +501,7 @@ func (v *View) startNextSeq() {
 }
 
 func (v *View) GetMetadata() []byte {
-	v.lock.RLock()
 	propSeq := v.ProposalSequence
-	v.lock.RUnlock()
 	md := &protos.ViewMetadata{
 		ViewId:         v.Number,
 		LatestSequence: propSeq,
@@ -536,9 +515,7 @@ func (v *View) GetMetadata() []byte {
 
 // Propose broadcasts a prePrepare message with the given proposal
 func (v *View) Propose(proposal types.Proposal) {
-	v.lock.RLock()
 	seq := v.ProposalSequence
-	v.lock.RUnlock()
 	msg := &protos.Message{
 		Content: &protos.Message_PrePrepare{
 			PrePrepare: &protos.PrePrepare{
