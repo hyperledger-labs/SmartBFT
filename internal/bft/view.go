@@ -44,11 +44,11 @@ type View struct {
 	Number           uint64
 	Decider          Decider
 	FailureDetector  FailureDetector
-	Sync             Synchronizer
+	Sync             api.Synchronizer
 	Logger           api.Logger
-	Comm             Comm
-	Verifier         Verifier
-	Signer           Signer
+	Comm             api.Comm
+	Verifier         api.Verifier
+	Signer           api.Signer
 	ProposalSequence uint64
 	PrevHeader       []byte
 	State            State

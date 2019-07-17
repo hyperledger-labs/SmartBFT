@@ -27,7 +27,7 @@ func TestControllerBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	app := &mocks.Application{}
+	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	controller := bft.Controller{
 		ID:          4, // not the leader
@@ -57,9 +57,9 @@ func TestQuorum(t *testing.T) {
 
 	for _, testCase := range quorums {
 		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
-			verifier := &mocks.Verifier{}
+			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-			comm := &mocks.Comm{}
+			comm := &mocks.CommMock{}
 			comm.On("BroadcastConsensus", mock.Anything)
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
@@ -118,12 +118,12 @@ func TestLeaderPropose(t *testing.T) {
 	batcher := &mocks.Batcher{}
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
-	assembler := &mocks.Assembler{}
+	assembler := &mocks.AssemblerMock{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
@@ -131,17 +131,17 @@ func TestLeaderPropose(t *testing.T) {
 		ViewId:         1,
 	})
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	signer := &mocks.Signer{}
+	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    1,
 		Value: []byte{4},
 	})
-	app := &mocks.Application{}
+	app := &mocks.ApplicationMock{}
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		appWG.Done()
@@ -189,7 +189,7 @@ func TestLeaderChange(t *testing.T) {
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("NextBatch").Return([][]byte{req})
-	verifier := &mocks.Verifier{}
+	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
@@ -200,14 +200,14 @@ func TestLeaderChange(t *testing.T) {
 		ViewId:         2,
 	})
 
-	assembler := &mocks.Assembler{}
+	assembler := &mocks.AssemblerMock{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
-	comm := &mocks.Comm{}
+	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	synchronizer := &mocks.Synchronizer{}
+	synchronizer := &mocks.SynchronizerMock{}
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 		syncWG.Done()
