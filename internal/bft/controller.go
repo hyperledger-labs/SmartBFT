@@ -35,7 +35,7 @@ type Batcher interface {
 type RequestPool interface {
 	Submit(request []byte) error
 	SizeOfPool() int
-	NextRequests(n int) []Request
+	NextRequests(n int) [][]byte
 	RemoveRequest(request types.RequestInfo) error
 }
 
@@ -58,7 +58,7 @@ type Controller struct {
 	Synchronizer     Synchronizer
 	Comm             Comm
 	Signer           Signer
-	RequestInspector RequestInspector
+	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
 
 	quorum int
@@ -91,23 +91,17 @@ func (c *Controller) computeQuorum() int {
 	return q
 }
 
-// SubmitRequest submits a request to go through consensus
+// SubmitRequest Submits a request to go through consensus.
 func (c *Controller) SubmitRequest(request []byte) error {
 	info := c.RequestInspector.RequestID(request)
+
 	err := c.RequestPool.Submit(request)
 	if err != nil {
 		c.Logger.Warnf("Request %s was not submitted, error: %s", info, err)
 		return err
 	}
 
-	// start a timer
-	t := time.AfterFunc(c.RequestTimeout, func() {
-		c.onRequestTimeout(request)
-	})
-
-	c.Logger.Debugf("Request %s was submitted, timer %v started ", info, t)
-
-	// TODO put the info & timer pair in the timeout-collection
+	c.Logger.Debugf("Request %s was submitted", info)
 
 	return nil
 }
@@ -270,6 +264,9 @@ func (c *Controller) Stop() {
 		c.currView.Abort()
 		c.viewLock.RUnlock()
 		<-c.viewAbortChan
+
+		// TODO stop the RequestPool
+
 		close(c.stopChan)
 	}
 }

@@ -6,24 +6,26 @@
 package bft_test
 
 import (
+	"encoding/binary"
 	"fmt"
 	"sync"
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"go.uber.org/zap"
+
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
 )
 
 func TestReqPoolBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	insp := &mocks.RequestInspector{}
-	byteReq1 := []byte{1}
-	insp.On("RequestID", byteReq1).Return(types.RequestInfo{ID: "1", ClientID: "1"})
+
+	insp := &testRequestInspector{}
+
+	byteReq1 := makeTestRequest("1", "1", "foo")
 	pool := bft.NewPool(log, insp, 3)
 
 	assert.Equal(t, 0, pool.SizeOfPool())
@@ -47,8 +49,7 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 0, pool.SizeOfPool())
 
-	byteReq2 := []byte{2}
-	insp.On("RequestID", byteReq2).Return(types.RequestInfo{ID: "2", ClientID: "2"})
+	byteReq2 := makeTestRequest("2", "2", "bar")
 	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
 	assert.Equal(t, 1, pool.SizeOfPool())
@@ -72,27 +73,26 @@ func TestReqPoolBasic(t *testing.T) {
 	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
 
-	byteReq3 := []byte{3}
-	insp.On("RequestID", byteReq3).Return(types.RequestInfo{ID: "3", ClientID: "3"})
+	byteReq3 := makeTestRequest("3", "3", "bog")
 	err = pool.Submit(byteReq3)
 	assert.NoError(t, err)
 
 	next := pool.NextRequests(4)
-	assert.Equal(t, "1", next[0].ID)
-	assert.Equal(t, "2", next[1].ID)
-	assert.Equal(t, "3", next[2].ID)
+	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+	assert.Equal(t, "2", insp.RequestID(next[1]).ID)
+	assert.Equal(t, "3", insp.RequestID(next[2]).ID)
 	assert.Len(t, next, 3)
 
 	err = pool.RemoveRequest(req2)
 	assert.NoError(t, err)
 
 	next = pool.NextRequests(4)
-	assert.Equal(t, "1", next[0].ID)
-	assert.Equal(t, "3", next[1].ID)
+	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+	assert.Equal(t, "3", insp.RequestID(next[1]).ID)
 	assert.Len(t, next, 2)
 
 	next = pool.NextRequests(1)
-	assert.Equal(t, "1", next[0].ID)
+	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 	assert.Len(t, next, 1)
 
 	err = pool.RemoveRequest(req1)
@@ -116,25 +116,25 @@ func TestEventuallySubmit(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	insp := &mocks.RequestInspector{}
+	insp := &testRequestInspector{}
 	pool := bft.NewPool(log, insp, 50)
 
 	wg := sync.WaitGroup{}
 	wg.Add(2 * n)
 	for i := 0; i < n; i++ {
 		go func(i int) {
-			byteReq := []byte{byte(i)}
-			str := fmt.Sprintf("%d", i)
-			insp.On("RequestID", byteReq).Return(types.RequestInfo{ID: str, ClientID: str})
+			iStr := fmt.Sprintf("%d", i)
+			byteReq := makeTestRequest(iStr, iStr, "foo")
 			err := pool.Submit(byteReq)
 			assert.NoError(t, err)
 			wg.Done()
 		}(i)
+
 		go func(i int) {
-			str := fmt.Sprintf("%d", i)
+			iStr := fmt.Sprintf("%d", i)
 			req := types.RequestInfo{
-				ID:       str,
-				ClientID: str,
+				ID:       iStr,
+				ClientID: iStr,
 			}
 			err := pool.RemoveRequest(req)
 			for err != nil {
@@ -144,4 +144,68 @@ func TestEventuallySubmit(t *testing.T) {
 		}(i)
 	}
 	wg.Wait()
+}
+
+func TestMakeRequest(t *testing.T) {
+	r := makeTestRequest("AB", "CDE", "FGHI")
+	assert.Equal(t, 21, len(r))
+
+	clientID, txID, data := parseTestRequest(r)
+	assert.Equal(t, "AB", clientID)
+	assert.Equal(t, "CDE", txID)
+	assert.Equal(t, "FGHI", data)
+
+	ins := &testRequestInspector{}
+	info := ins.RequestID(r)
+	assert.Equal(t, "AB", info.ClientID)
+	assert.Equal(t, "CDE", info.ID)
+}
+
+func makeTestRequest(clientID, txID, data string) []byte {
+	buffLen := make([]byte, 4)
+	buff := make([]byte, 12)
+
+	binary.LittleEndian.PutUint32(buffLen, uint32(len(clientID)))
+	buff = append(buff[0:0], buffLen...)
+	buff = append(buff, []byte(clientID)...)
+
+	binary.LittleEndian.PutUint32(buffLen, uint32(len(txID)))
+	buff = append(buff, buffLen...)
+	buff = append(buff, []byte(txID)...)
+
+	binary.LittleEndian.PutUint32(buffLen, uint32(len(data)))
+	buff = append(buff, buffLen...)
+	buff = append(buff, []byte(data)...)
+
+	return buff
+}
+
+func parseTestRequest(request []byte) (clientID, txID, data string) {
+	l := binary.LittleEndian.Uint32(request)
+	buff := request[4:]
+
+	clientID = string(buff[:l])
+	buff = buff[l:]
+
+	l = binary.LittleEndian.Uint32(buff)
+	buff = buff[4:]
+
+	txID = string(buff[:l])
+	buff = buff[l:]
+
+	l = binary.LittleEndian.Uint32(buff)
+	buff = buff[4:]
+
+	data = string(buff[:l])
+
+	return
+}
+
+type testRequestInspector struct {
+}
+
+func (ins *testRequestInspector) RequestID(req []byte) types.RequestInfo {
+	var info types.RequestInfo
+	info.ClientID, info.ID, _ = parseTestRequest(req)
+	return info
 }
