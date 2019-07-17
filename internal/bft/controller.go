@@ -34,7 +34,7 @@ type Batcher interface {
 
 type RequestPool interface {
 	Submit(request []byte) error
-	SizeOfPool() int
+	Size() int
 	NextRequests(n int) [][]byte
 	RemoveRequest(request types.RequestInfo) error
 }

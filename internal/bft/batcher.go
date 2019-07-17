@@ -30,7 +30,7 @@ func (b *Bundler) NextBatch() [][]byte {
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
 		default:
-			if b.Pool.SizeOfPool() >= b.BatchSize-remainderOccupied {
+			if b.Pool.Size() >= b.BatchSize-remainderOccupied {
 				return b.buildBatch(remainderOccupied, currBatch)
 			}
 			time.Sleep(b.BatchTimeout / 100)

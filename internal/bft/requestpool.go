@@ -97,8 +97,8 @@ func (rp *Pool) Submit(request []byte) error {
 	return nil
 }
 
-// SizeOfPool returns the number of requests currently residing the pool
-func (rp *Pool) SizeOfPool() int {
+// Size returns the number of requests currently residing the pool
+func (rp *Pool) Size() int {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
