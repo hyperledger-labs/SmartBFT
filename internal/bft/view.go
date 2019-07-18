@@ -148,11 +148,11 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		if sender != v.LeaderID {
 			return
 		}
+		v.FailureDetector.Complain()
 		// Else, we got a message with a wrong view from the leader.
 		if msgViewNum > v.Number {
 			v.Sync.Sync()
 		}
-		v.FailureDetector.Complain()
 		v.Abort()
 		return
 	}
