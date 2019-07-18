@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"context"
 	"time"
 )
 
@@ -14,11 +13,12 @@ type Bundler struct { // TODO change name
 	Pool         RequestPool
 	BatchSize    int
 	BatchTimeout time.Duration
+	CloseChan    chan struct{}
 	remainder    [][]byte
 }
 
 // NextBatch returns the next batch of requests to be proposed
-func (b *Bundler) NextBatch(ctx context.Context) [][]byte {
+func (b *Bundler) NextBatch() [][]byte {
 	currBatch := make([][]byte, 0)
 	remainderOccupied := len(b.remainder)
 	if remainderOccupied > 0 {
@@ -28,7 +28,7 @@ func (b *Bundler) NextBatch(ctx context.Context) [][]byte {
 	timeout := time.After(b.BatchTimeout)
 	for {
 		select {
-		case <-ctx.Done():
+		case <-b.CloseChan:
 			return nil
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
@@ -56,4 +56,8 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 		panic("batch remainder should always be empty when setting remainder")
 	}
 	b.remainder = remainder
+}
+
+func (b *Bundler) Close() {
+	close(b.CloseChan)
 }

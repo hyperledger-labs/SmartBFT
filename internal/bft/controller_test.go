@@ -11,8 +11,6 @@ import (
 	"sync"
 	"testing"
 
-	"context"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -94,7 +92,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	batcher := &mocks.Batcher{}
 	batcherChan := make(chan struct{})
 	var once sync.Once
-	batcher.On("NextBatch", mock.Anything).Run(func(args mock.Arguments) {
+	batcher.On("NextBatch").Run(func(args mock.Arguments) {
 		once.Do(func() {
 			batcherChan <- struct{}{}
 		})
@@ -109,7 +107,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	<-batcherChan
 	controller.Stop()
 	end.Wait()
-	batcher.AssertCalled(t, "NextBatch", context.Background())
+	batcher.AssertCalled(t, "NextBatch")
 }
 
 func TestLeaderPropose(t *testing.T) {
@@ -118,8 +116,8 @@ func TestLeaderPropose(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch", mock.Anything).Return([][]byte{req}).Once()
-	batcher.On("NextBatch", mock.Anything).Return([][]byte{req}).Once()
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
@@ -190,7 +188,7 @@ func TestLeaderChange(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch", mock.Anything).Return([][]byte{req})
+	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)

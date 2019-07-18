@@ -69,6 +69,7 @@ func (c *Consensus) Start() Future {
 	)
 
 	batcher := &algorithm.Bundler{
+		CloseChan:    make(chan struct{}),
 		Pool:         pool,
 		BatchSize:    c.BatchSize,
 		BatchTimeout: c.BatchTimeout,
