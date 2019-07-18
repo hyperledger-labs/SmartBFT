@@ -33,9 +33,9 @@ type Batcher interface {
 }
 
 type RequestPool interface {
-	Submit(request []byte) error
+	Submit(request []byte, verificationSequence uint64) error
 	Size() int
-	NextRequests(n int) [][]byte
+	NextRequests(n int) []NextRequest
 	RemoveRequest(request types.RequestInfo) error
 }
 
@@ -95,7 +95,7 @@ func (c *Controller) computeQuorum() int {
 func (c *Controller) SubmitRequest(request []byte) error {
 	info := c.RequestInspector.RequestID(request)
 
-	err := c.RequestPool.Submit(request)
+	err := c.RequestPool.Submit(request, 0)
 	if err != nil {
 		c.Logger.Warnf("Request %s was not submitted, error: %s", info, err)
 		return err

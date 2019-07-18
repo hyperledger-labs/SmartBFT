@@ -42,7 +42,7 @@ func (b *Bundler) NextBatch() [][]byte {
 func (b *Bundler) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
 	reqs := b.Pool.NextRequests(b.BatchSize - remainderOccupied)
 	for i := 0; i < len(reqs); i++ {
-		currBatch = append(currBatch, reqs[i])
+		currBatch = append(currBatch, reqs[i].Request)
 	}
 	return currBatch
 }
