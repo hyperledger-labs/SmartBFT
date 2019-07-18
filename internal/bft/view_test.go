@@ -12,6 +12,8 @@ import (
 	"sync"
 	"testing"
 
+	"sync/atomic"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -177,7 +179,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "sent from wrong node",
-			expectedErr: "Got pre-prepare from 2 but the leader is 1",
+			expectedErr: "got pre-prepare from 2 but the leader is 1",
 			sender:      2,
 			setup: func() {
 				syncWG.Add(1)
@@ -188,7 +190,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description:           "bad proposal",
-			expectedErr:           "Received bad proposal from 1: unauthorized client",
+			expectedErr:           "received bad proposal from 1: unauthorized client",
 			sender:                1,
 			verifyProposalReturns: errors.New("unauthorized client"),
 			setup: func() {
@@ -223,7 +225,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "nil proposal",
-			expectedErr: "Got pre-prepare with empty proposal",
+			expectedErr: "got pre-prepare from 1 with empty proposal",
 			sender:      1,
 			setup:       func() {},
 			corruptProposal: func(proposal *protos.PrePrepare) {
@@ -233,7 +235,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "wrong view number in metadata",
-			expectedErr: "Received bad proposal from 1: invalid view number",
+			expectedErr: "received bad proposal from 1: invalid view number",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -254,7 +256,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "wrong proposal sequence in metadata",
-			expectedErr: "Received bad proposal from 1: invalid proposal sequence",
+			expectedErr: "received bad proposal from 1: invalid proposal sequence",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -275,7 +277,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "corrupt metadata in proposal",
-			expectedErr: "Received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
+			expectedErr: "received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -557,20 +559,20 @@ func TestNormalPath(t *testing.T) {
 	commWG.Wait()
 
 	commWG.Add(1)
-	view.HandleMessage(1, prepare)
 	view.HandleMessage(2, prepare)
+	view.HandleMessage(3, prepare)
 	commWG.Wait()
 
 	deciderWG.Add(1)
-	view.HandleMessage(1, commit1)
 	view.HandleMessage(2, commit2)
+	view.HandleMessage(3, commit3)
 	deciderWG.Wait()
 	dProp := <-decidedProposal
 	assert.Equal(t, proposal, dProp)
 	dSigs := <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+		if sig.Id != 2 && sig.Id != 3 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
@@ -599,23 +601,23 @@ func TestNormalPath(t *testing.T) {
 	prepareNextGet.Seq = 1
 	prepareNextGet.Digest = nextProp.Digest()
 	commWG.Add(1)
-	view.HandleMessage(1, prepareNext)
 	view.HandleMessage(2, prepareNext)
+	view.HandleMessage(3, prepareNext)
 	commWG.Wait()
-
-	commit1Next := proto.Clone(commit1).(*protos.Message)
-	commit1NextGet := commit1Next.GetCommit()
-	commit1NextGet.Seq = 1
-	commit1NextGet.Digest = nextProp.Digest()
 
 	commit2Next := proto.Clone(commit2).(*protos.Message)
 	commit2NextGet := commit2Next.GetCommit()
 	commit2NextGet.Seq = 1
 	commit2NextGet.Digest = nextProp.Digest()
 
+	commit3Next := proto.Clone(commit3).(*protos.Message)
+	commit3NextGet := commit3Next.GetCommit()
+	commit3NextGet.Seq = 1
+	commit3NextGet.Digest = nextProp.Digest()
+
 	deciderWG.Add(1)
-	view.HandleMessage(1, commit1Next)
 	view.HandleMessage(2, commit2Next)
+	view.HandleMessage(3, commit3Next)
 	deciderWG.Wait()
 	dProp = <-decidedProposal
 	secondProposal := proposal
@@ -627,7 +629,7 @@ func TestNormalPath(t *testing.T) {
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
+		if sig.Id != 2 && sig.Id != 3 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
 	}
@@ -929,4 +931,222 @@ func TestViewPersisted(t *testing.T) {
 			end.Wait()
 		})
 	}
+}
+
+func TestViewLaggingCatchup(t *testing.T) {
+	// Scenario: 4 nodes total, while 1 node (node 4)
+	// is disconnected while proposal 0 is decided on.
+	// After it is committed and all 3 nodes move to sequence 1,
+	// node 4 receives the proposal late, and must catchup
+	// with the rest of the nodes.
+	// Then, a similar thing happens with node 3.
+
+	// Setup 3 online nodes and 1 offline nodes
+
+	network := newNetwork(t, 4)
+	network.start()
+
+	v1 := network[1]
+	v2 := network[2]
+	v3 := network[3]
+	v4 := network[4]
+
+	t.Run("Node 4 is behind", func(t *testing.T) {
+		network.disconnect(4)
+
+		// Have the leader send a proposal
+		v1.deciderWG.Add(1)
+		v2.deciderWG.Add(1)
+		v3.deciderWG.Add(1)
+		v1.Propose(proposal)
+
+		// Wait for all 3 nodes to commit sequence 0
+		v1.deciderWG.Wait()
+		v2.deciderWG.Wait()
+		v3.deciderWG.Wait()
+
+		// Make v4 online and start the second proposal
+		network.connect(4)
+		v4.deciderWG.Add(1)
+		// Send artificially a pre-prepare from the leader to v4.
+		latePrePrepare := &protos.Message{
+			Content: &protos.Message_PrePrepare{
+				PrePrepare: &protos.PrePrepare{
+					View: 1,
+					Seq:  0,
+					Proposal: &protos.Proposal{
+						Header:               proposal.Header,
+						Payload:              proposal.Payload,
+						Metadata:             proposal.Metadata,
+						VerificationSequence: uint64(proposal.VerificationSequence),
+					},
+				},
+			},
+		}
+
+		v4.HandleMessage(1, latePrePrepare)
+		// Wait for node 4 to commit sequence 0
+		v4.deciderWG.Wait()
+	})
+
+	t.Run("Node 3 is behind", func(t *testing.T) {
+		nextProposal := types.Proposal{
+			Header:  []byte{0},
+			Payload: []byte{1},
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence: 1,
+				ViewId:         1,
+			}),
+			VerificationSequence: 1,
+		}
+
+		latePrePrepare := &protos.Message{
+			Content: &protos.Message_PrePrepare{
+				PrePrepare: &protos.PrePrepare{
+					View: 1,
+					Seq:  1,
+					Proposal: &protos.Proposal{
+						Header:               nextProposal.Header,
+						Payload:              nextProposal.Payload,
+						Metadata:             nextProposal.Metadata,
+						VerificationSequence: uint64(proposal.VerificationSequence),
+					},
+				},
+			},
+		}
+
+		// Disconnect node 3 this time.
+		network.disconnect(3)
+
+		v1.deciderWG.Add(1)
+		v2.deciderWG.Add(1)
+		v3.deciderWG.Add(1)
+		v4.deciderWG.Add(1)
+
+		v1.Propose(nextProposal)
+		// Wait for all nodes but node 3 to commit.
+		v1.deciderWG.Wait()
+		v2.deciderWG.Wait()
+		v4.deciderWG.Wait()
+
+		// Reconnect back node 3
+		network.connect(3)
+
+		// Resend the proposal to node 3
+		v3.HandleMessage(1, latePrePrepare)
+
+		// Wait for node 3 to commit sequence 1
+		v3.deciderWG.Wait()
+	})
+
+	network.stop()
+}
+
+type testedNetwork map[uint64]*testedView
+
+func (tn testedNetwork) disconnect(id uint64) {
+	tn[id].setOffline()
+}
+
+func (tn testedNetwork) connect(id uint64) {
+	tn[id].setOnline()
+}
+
+func (tn testedNetwork) start() {
+	for id, view := range tn {
+		tn[id].end = view.Start()
+	}
+}
+
+func (tn testedNetwork) stop() {
+	for _, view := range tn {
+		view.Abort()
+		view.end.Wait()
+	}
+}
+
+func newNetwork(t *testing.T, size int) testedNetwork {
+	network := make(testedNetwork)
+	for id := 1; id <= size; id++ {
+		v := newView(t, uint64(id), network)
+		network[uint64(id)] = v
+	}
+	return network
+}
+
+type testedView struct {
+	offline   uint32
+	network   *testedNetwork
+	deciderWG sync.WaitGroup
+	*bft.View
+	end bft.Future
+}
+
+func (tv *testedView) setOffline() {
+	atomic.StoreUint32(&tv.offline, 1)
+}
+
+func (tv *testedView) setOnline() {
+	atomic.StoreUint32(&tv.offline, 0)
+}
+
+func (tv *testedView) HandleMessage(sender uint64, m *protos.Message) {
+	if atomic.LoadUint32(&tv.offline) == uint32(1) {
+		return
+	}
+	tv.View.HandleMessage(sender, m)
+}
+
+func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *testedView {
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+	tv := &testedView{}
+
+	comm := &mocks.CommMock{}
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(0).(*protos.Message)
+		for _, view := range network {
+			view.HandleMessage(selfID, m)
+		}
+	})
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		dst := args.Get(0).(uint64)
+		m := args.Get(1).(*protos.Message)
+		network[dst].HandleMessage(selfID, m)
+	})
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	signer := &mocks.SignerMock{}
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: selfID})
+
+	decider := &mocks.Decider{}
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+		tv.deciderWG.Done()
+	})
+
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	tv.View = &bft.View{
+		Signer:           signer,
+		Decider:          decider,
+		Comm:             comm,
+		Verifier:         verifier,
+		SelfID:           selfID,
+		State:            state,
+		Logger:           log,
+		N:                4,
+		LeaderID:         1,
+		Quorum:           3,
+		Number:           1,
+		ProposalSequence: 0,
+	}
+
+	return tv
 }
