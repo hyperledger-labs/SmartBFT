@@ -168,3 +168,14 @@ func TestBatcherClose(t *testing.T) {
 	assert.Nil(t, res)
 	assert.True(t, time.Since(t1) < time.Second*50)
 }
+
+func TestBatcherPopReminder(t *testing.T) {
+	batcher := bft.Bundler{}
+	batcher.BatchRemainder([][]byte{{1, 2, 3}})
+
+	rem := batcher.PopRemainder()
+	assert.Equal(t, [][]byte{{1, 2, 3}}, rem)
+
+	rem = batcher.PopRemainder()
+	assert.Nil(t, rem)
+}

@@ -127,6 +127,8 @@ func TestLeaderPropose(t *testing.T) {
 	batcher.On("Close")
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("PopRemainder").Return([][]byte{})
+	batcher.On("BatchRemainder", mock.Anything)
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
