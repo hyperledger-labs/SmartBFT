@@ -38,7 +38,7 @@ func TestBatcherBasic(t *testing.T) {
 	res := batcher.NextBatch()
 	assert.Len(t, res, 1)
 
-	batcher.BatchRemainder([][]byte{byteReq2})
+	batcher.BatchRemainder([]bft.Request{{Payload: byteReq2}})
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 
@@ -53,26 +53,26 @@ func TestBatcherBasic(t *testing.T) {
 	err = pool.Submit(byteReq3, 0)
 	assert.NoError(t, err)
 
-	batcher.BatchRemainder([][]byte{byteReq1})
+	batcher.BatchRemainder([]bft.Request{{Payload: byteReq1}})
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
-	assert.Equal(t, byteReq1, res[0])
+	assert.Equal(t, byteReq1, res[0].Payload)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
-	assert.Equal(t, byteReq2, res[0])
+	assert.Equal(t, byteReq2, res[0].Payload)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
-	assert.Equal(t, byteReq2, res[0])
+	assert.Equal(t, byteReq2, res[0].Payload)
 
 	err = pool.RemoveRequest(types.RequestInfo{ID: "2", ClientID: "2"})
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
-	assert.Equal(t, byteReq3, res[0])
+	assert.Equal(t, byteReq3, res[0].Payload)
 
 	batcher = bft.Bundler{
 		Pool:         pool,
@@ -80,22 +80,22 @@ func TestBatcherBasic(t *testing.T) {
 		BatchTimeout: 10 * time.Millisecond,
 	}
 
-	batcher.BatchRemainder([][]byte{byteReq1})
+	batcher.BatchRemainder([]bft.Request{{Payload: byteReq1}})
 
 	err = pool.Submit(byteReq2, 0)
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 2)
-	assert.Equal(t, byteReq1, res[0])
-	assert.Equal(t, byteReq3, res[1])
+	assert.Equal(t, byteReq1, res[0].Payload)
+	assert.Equal(t, byteReq3, res[1].Payload)
 
 	err = pool.RemoveRequest(types.RequestInfo{ID: "3", ClientID: "3"})
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1) // after timeout
-	assert.Equal(t, byteReq2, res[0])
+	assert.Equal(t, byteReq2, res[0].Payload)
 }
 
 func TestBatcherWhileSubmitting(t *testing.T) {
@@ -111,10 +111,10 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 		BatchTimeout: 100 * time.Second, // long time
 	}
 
-	rem := make([][]byte, 0)
+	rem := make([]bft.Request, 0)
 	for i := 0; i < 50; i++ {
 		iStr := fmt.Sprintf("%d", 100+i)
-		rem = append(rem, makeTestRequest(iStr, iStr, "bar"))
+		rem = append(rem, bft.Request{Payload: makeTestRequest(iStr, iStr, "bar")})
 	}
 
 	batcher.BatchRemainder(rem)
@@ -132,11 +132,11 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	assert.Len(t, res, 100)
 	for i := 0; i < 50; i++ {
 		iStr := fmt.Sprintf("%d", 100+i)
-		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // first rem
+		assert.Equal(t, iStr, insp.RequestID(res[i].Payload).ID) // first rem
 	}
 
 	for i := 50; i < 100; i++ {
 		iStr := fmt.Sprintf("%d", i-50)
-		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // then requests
+		assert.Equal(t, iStr, insp.RequestID(res[i].Payload).ID) // then requests
 	}
 }
