@@ -179,7 +179,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "sent from wrong node",
-			expectedErr: "Got pre-prepare from 2 but the leader is 1",
+			expectedErr: "got pre-prepare from 2 but the leader is 1",
 			sender:      2,
 			setup: func() {
 				syncWG.Add(1)
@@ -190,7 +190,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description:           "bad proposal",
-			expectedErr:           "Received bad proposal from 1: unauthorized client",
+			expectedErr:           "received bad proposal from 1: unauthorized client",
 			sender:                1,
 			verifyProposalReturns: errors.New("unauthorized client"),
 			setup: func() {
@@ -225,7 +225,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "nil proposal",
-			expectedErr: "Got pre-prepare with empty proposal",
+			expectedErr: "got pre-prepare from 1 with empty proposal",
 			sender:      1,
 			setup:       func() {},
 			corruptProposal: func(proposal *protos.PrePrepare) {
@@ -235,7 +235,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "wrong view number in metadata",
-			expectedErr: "Received bad proposal from 1: invalid view number",
+			expectedErr: "received bad proposal from 1: invalid view number",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -256,7 +256,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "wrong proposal sequence in metadata",
-			expectedErr: "Received bad proposal from 1: invalid proposal sequence",
+			expectedErr: "received bad proposal from 1: invalid proposal sequence",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -277,7 +277,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "corrupt metadata in proposal",
-			expectedErr: "Received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
+			expectedErr: "received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
