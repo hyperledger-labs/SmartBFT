@@ -113,13 +113,20 @@ func (c *Controller) OnRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
 	c.Logger.Warnf("Request %s has timed out, forwarding request to leader", info)
 	// TODO forward request to leader, start another timeout, update the timeout-collection
+	return
 }
 
 func (c *Controller) OnLeaderFwdRequestTimeout(request []byte) {
 	info := c.RequestInspector.RequestID(request)
-	c.Logger.Warnf("Request %s has timed out, complaining about leader", info)
+	c.Logger.Warnf("Request %s has timed out after forwarding to leader, complaining about leader", info)
 	// TODO complain about the leader
 	// TODO Q: what to do with the request?
+	return
+}
+
+func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
+	c.Logger.Warnf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
+	return
 }
 
 // ProcessMessages dispatches the incoming message to the required component
