@@ -29,20 +29,20 @@ func TestReqPoolBasic(t *testing.T) {
 	pool := bft.NewPool(log, insp, 3, 0)
 
 	assert.Equal(t, 0, pool.Size())
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.NoError(t, err)
 	assert.Equal(t, 1, pool.Size())
 	req1 := types.RequestInfo{
 		ID:       "1",
 		ClientID: "1",
 	}
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.Error(t, err)
 	assert.Equal(t, 1, pool.Size())
 	err = pool.RemoveRequest(req1)
 	assert.NoError(t, err)
 	assert.Equal(t, 0, pool.Size())
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.NoError(t, err)
 	assert.Equal(t, 1, pool.Size())
 	err = pool.RemoveRequest(req1)
@@ -50,19 +50,19 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.Equal(t, 0, pool.Size())
 
 	byteReq2 := makeTestRequest("2", "2", "bar")
-	err = pool.Submit(byteReq2)
+	err = pool.Submit(byteReq2, 2)
 	assert.NoError(t, err)
 	assert.Equal(t, 1, pool.Size())
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.NoError(t, err)
 	assert.Equal(t, 2, pool.Size())
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.Error(t, err)
-	err = pool.Submit(byteReq2)
+	err = pool.Submit(byteReq2, 2)
 	assert.Error(t, err)
 	err = pool.RemoveRequest(req1)
 	assert.NoError(t, err)
-	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq1, 1)
 	assert.NoError(t, err)
 	req2 := types.RequestInfo{
 		ID:       "2",
@@ -70,29 +70,35 @@ func TestReqPoolBasic(t *testing.T) {
 	}
 	err = pool.RemoveRequest(req2)
 	assert.NoError(t, err)
-	err = pool.Submit(byteReq2)
+	err = pool.Submit(byteReq2, 2)
 	assert.NoError(t, err)
 
 	byteReq3 := makeTestRequest("3", "3", "bog")
-	err = pool.Submit(byteReq3)
+	err = pool.Submit(byteReq3, 3)
 	assert.NoError(t, err)
 
 	next := pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-	assert.Equal(t, "2", insp.RequestID(next[1]).ID)
-	assert.Equal(t, "3", insp.RequestID(next[2]).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, uint64(1), next[0].VerificationSqn)
+	assert.Equal(t, "2", insp.RequestID(next[1].Request).ID)
+	assert.Equal(t, uint64(2), next[1].VerificationSqn)
+	assert.Equal(t, "3", insp.RequestID(next[2].Request).ID)
+	assert.Equal(t, uint64(3), next[2].VerificationSqn)
 	assert.Len(t, next, 3)
 
 	err = pool.RemoveRequest(req2)
 	assert.NoError(t, err)
 
 	next = pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-	assert.Equal(t, "3", insp.RequestID(next[1]).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, uint64(1), next[0].VerificationSqn)
+	assert.Equal(t, "3", insp.RequestID(next[1].Request).ID)
+	assert.Equal(t, uint64(3), next[1].VerificationSqn)
 	assert.Len(t, next, 2)
 
 	next = pool.NextRequests(1)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, uint64(1), next[0].VerificationSqn)
 	assert.Len(t, next, 1)
 
 	err = pool.RemoveRequest(req1)
@@ -125,7 +131,7 @@ func TestEventuallySubmit(t *testing.T) {
 		go func(i int) {
 			iStr := fmt.Sprintf("%d", i)
 			byteReq := makeTestRequest(iStr, iStr, "foo")
-			err := pool.Submit(byteReq)
+			err := pool.Submit(byteReq, 0)
 			assert.NoError(t, err)
 			wg.Done()
 		}(i)

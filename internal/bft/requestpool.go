@@ -51,8 +51,9 @@ type Pool struct {
 
 // requestItem captures request related information
 type requestItem struct {
-	request []byte
-	timeout *time.Timer
+	request         []byte
+	verificationSqn uint64
+	timeout         *time.Timer
 }
 
 // NewPool constructs new requests pool
@@ -76,7 +77,7 @@ func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
-func (rp *Pool) Submit(request []byte) error {
+func (rp *Pool) Submit(request []byte, verificationSequence uint64) error {
 	reqInfo := rp.inspector.RequestID(request)
 
 	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
@@ -94,9 +95,11 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	reqItem := &requestItem{
-		request: request,
-		timeout: nil, //TODO start a timer
+		request:         request,
+		verificationSqn: verificationSequence,
+		timeout:         nil, //TODO start timer
 	}
+
 	element := rp.fifo.PushBack(reqItem)
 	rp.existMap[reqInfo] = element
 
@@ -115,17 +118,26 @@ func (rp *Pool) Size() int {
 	return len(rp.existMap)
 }
 
+type NextRequest struct {
+	Request         []byte
+	VerificationSqn uint64
+}
+
 // NextRequests returns the next requests to be batched.
 // It returns at most n request, in a newly allocated slice.
-func (rp *Pool) NextRequests(n int) [][]byte {
+func (rp *Pool) NextRequests(n int) []NextRequest {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
 	m := minInt(rp.fifo.Len(), n)
-	buff := make([][]byte, m)
+	buff := make([]NextRequest, m)
 	var element = rp.fifo.Front()
 	for i := 0; i < m; i++ {
-		buff[i] = append(make([]byte, 0), element.Value.(*requestItem).request...)
+		item := element.Value.(*requestItem)
+		buff[i] = NextRequest{
+			Request:         append(make([]byte, 0), item.request...),
+			VerificationSqn: item.verificationSqn,
+		}
 		element = element.Next()
 	}
 
