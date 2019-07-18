@@ -8,6 +8,8 @@ package bft
 import (
 	"sync"
 
+	"fmt"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -58,6 +60,13 @@ type View struct {
 	inFlightProposal  *types.Proposal
 	inFlightRequests  []types.RequestInfo
 	lastBroadcastSent *protos.Message
+	// Current sequence sent prepare and commit
+	currPrepareSent *protos.Message
+	currCommitSent  *protos.Message
+	// Prev sequence sent prepare and commit
+	// to help lagging replicas catch up
+	prevPrepareSent *protos.Message
+	prevCommitSent  *protos.Message
 	// Current proposal
 	prePrepare chan *protos.Message
 	prepares   *voteSet
@@ -143,7 +152,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
-		v.Logger.Warnf("Got message %v from %d of view %d, expected view %d", m, sender, msgViewNum, v.Number)
+		v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
 		// TODO  when do we send the error message?
 		if sender != v.LeaderID {
 			return
@@ -157,17 +166,17 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		return
 	}
 
-	// TODO: what if proposal sequence is wrong?
-	// we should handle it...
-	// but if we got a prepare or commit for sequence i,
-	// when we're in sequence i+1 then we should still send a prepare/commit again.
-	// leaving this as a task for now.
-
 	msgProposalSeq := proposalSequence(m)
-	v.Logger.Debugf("Got message %v from %d with seq %d", m, sender, msgProposalSeq)
+
+	if msgProposalSeq == v.ProposalSequence-1 && v.ProposalSequence > 0 {
+		v.handlePrevSeqMessage(msgProposalSeq, sender, m)
+		return
+	}
+
+	v.Logger.Debugf("%d got message %v from %d with seq %d", v.SelfID, m, sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
-		v.Logger.Warnf("Got message from %d with sequence %d but our sequence is %d", sender, msgProposalSeq, v.ProposalSequence)
+		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
 		return
 	}
 
@@ -175,11 +184,11 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 
 	if pp := m.GetPrePrepare(); pp != nil {
 		if pp.Proposal == nil {
-			v.Logger.Warnf("Got pre-prepare with empty proposal")
+			v.Logger.Warnf("%d got pre-prepare from %d with empty proposal", v.SelfID, sender)
 			return
 		}
 		if sender != v.LeaderID {
-			v.Logger.Warnf("Got pre-prepare from %d but the leader is %d", sender, v.LeaderID)
+			v.Logger.Warnf("%d got pre-prepare from %d but the leader is %d", v.SelfID, sender, v.LeaderID)
 			return
 		}
 		if msgForNextProposal {
@@ -187,6 +196,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		} else {
 			v.prePrepare <- m
 		}
+		return
+	}
+
+	// Else, it's a prepare or a commit.
+	// Ignore votes from ourselves.
+	if sender == v.SelfID {
 		return
 	}
 
@@ -244,13 +259,17 @@ func (v *View) prepared() Phase {
 
 	seq := v.ProposalSequence
 
-	v.Logger.Infof("Processed commits for proposal with seq %d", seq)
+	v.Logger.Infof("%d processed commits for proposal with seq %d", v.SelfID, seq)
 
 	v.maybeDecide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED
 }
 
 func (v *View) processProposal() Phase {
+	v.prevPrepareSent = v.currPrepareSent
+	v.prevCommitSent = v.currCommitSent
+	v.currPrepareSent = nil
+	v.currCommitSent = nil
 	v.inFlightProposal = nil
 	v.inFlightRequests = nil
 	v.lastBroadcastSent = nil
@@ -280,7 +299,7 @@ func (v *View) processProposal() Phase {
 
 	requests, err := v.verifyProposal(proposal)
 	if err != nil {
-		v.Logger.Warnf("Received bad proposal from %d: %v", v.LeaderID, err)
+		v.Logger.Warnf("%d received bad proposal from %d: %v", v.SelfID, v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.Sync()
 		v.Abort()
@@ -303,6 +322,7 @@ func (v *View) processProposal() Phase {
 	// so we record the pre-prepare.
 	v.State.Save(receivedProposal)
 	v.lastBroadcastSent = msg
+	v.currPrepareSent = msg
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
@@ -319,6 +339,8 @@ func (v *View) processPrepares() Phase {
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 
+	var voterIDs []uint64
+
 	for collectedDigests < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
@@ -334,8 +356,11 @@ func (v *View) processPrepares() Phase {
 				continue
 			}
 			collectedDigests++
+			voterIDs = append(voterIDs, vote.sender)
 		}
 	}
+
+	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, collectedDigests, voterIDs)
 
 	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
@@ -359,6 +384,7 @@ func (v *View) processPrepares() Phase {
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
 	v.State.Save(msg)
+	v.currCommitSent = msg
 	v.lastBroadcastSent = msg
 
 	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
@@ -375,6 +401,8 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		v:              v,
 	}
 
+	var voterIDs []uint64
+
 	for len(signatures) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
@@ -385,11 +413,14 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 			// Valid votes end up written into the 'validVotes' channel.
 			go func(vote *protos.Message) {
 				signatureCollector.verifyVote(vote)
-			}(vote)
+			}(vote.Message)
 		case signature := <-signatureCollector.validVotes:
 			signatures = append(signatures, signature)
+			voterIDs = append(voterIDs, signature.Id)
 		}
 	}
+
+	v.Logger.Infof("%d collected %d commits from %v", v.SelfID, len(signatures), voterIDs)
 
 	return signatures, COMMITTED
 }
@@ -425,6 +456,38 @@ func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, err
 	}
 
 	return requests, nil
+}
+
+func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Message) {
+	if m.GetPrePrepare() != nil {
+		v.Logger.Warnf("Got pre-prepare for sequence %d but we're in sequence %d", msgProposalSeq, v.ProposalSequence)
+		return
+	}
+	msgType := "prepare"
+	if m.GetCommit() != nil {
+		msgType = "commit"
+	}
+
+	var found bool
+
+	switch msgType {
+	case "prepare":
+		if v.prevPrepareSent != nil {
+			v.Comm.SendConsensus(sender, v.prevPrepareSent)
+			found = true
+		}
+	case "commit":
+		if v.prevCommitSent != nil {
+			v.Comm.SendConsensus(sender, v.prevCommitSent)
+			found = true
+		}
+	}
+
+	prevMsgFound := fmt.Sprintf("but didn't have a previous %s to send back.", msgType)
+	if found {
+		prevMsgFound = fmt.Sprintf("sent back previous %s.", msgType)
+	}
+	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)
 }
 
 type voteVerifier struct {
@@ -545,10 +608,15 @@ func (v *View) Abort() {
 	}
 }
 
+type vote struct {
+	*protos.Message
+	sender uint64
+}
+
 type voteSet struct {
 	validVote func(voter uint64, message *protos.Message) bool
 	voted     map[uint64]struct{}
-	votes     chan *protos.Message
+	votes     chan *vote
 }
 
 func (vs *voteSet) clear(n uint64) {
@@ -558,7 +626,7 @@ func (vs *voteSet) clear(n uint64) {
 	}
 
 	vs.voted = make(map[uint64]struct{}, n)
-	vs.votes = make(chan *protos.Message, n)
+	vs.votes = make(chan *vote, n)
 }
 
 func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
@@ -573,7 +641,7 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 	}
 
 	vs.voted[voter] = struct{}{}
-	vs.votes <- message
+	vs.votes <- &vote{Message: message, sender: voter}
 }
 
 type incMsg struct {
