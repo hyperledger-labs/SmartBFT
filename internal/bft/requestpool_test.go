@@ -78,11 +78,11 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.NoError(t, err)
 
 	next := pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Payload).ID)
 	assert.Equal(t, uint64(1), next[0].VerificationSqn)
-	assert.Equal(t, "2", insp.RequestID(next[1].Request).ID)
+	assert.Equal(t, "2", insp.RequestID(next[1].Payload).ID)
 	assert.Equal(t, uint64(2), next[1].VerificationSqn)
-	assert.Equal(t, "3", insp.RequestID(next[2].Request).ID)
+	assert.Equal(t, "3", insp.RequestID(next[2].Payload).ID)
 	assert.Equal(t, uint64(3), next[2].VerificationSqn)
 	assert.Len(t, next, 3)
 
@@ -90,14 +90,14 @@ func TestReqPoolBasic(t *testing.T) {
 	assert.NoError(t, err)
 
 	next = pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Payload).ID)
 	assert.Equal(t, uint64(1), next[0].VerificationSqn)
-	assert.Equal(t, "3", insp.RequestID(next[1].Request).ID)
+	assert.Equal(t, "3", insp.RequestID(next[1].Payload).ID)
 	assert.Equal(t, uint64(3), next[1].VerificationSqn)
 	assert.Len(t, next, 2)
 
 	next = pool.NextRequests(1)
-	assert.Equal(t, "1", insp.RequestID(next[0].Request).ID)
+	assert.Equal(t, "1", insp.RequestID(next[0].Payload).ID)
 	assert.Equal(t, uint64(1), next[0].VerificationSqn)
 	assert.Len(t, next, 1)
 
