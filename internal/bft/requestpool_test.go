@@ -14,7 +14,10 @@ import (
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"go.uber.org/zap"
 
+	"bytes"
+
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -144,6 +147,36 @@ func TestEventuallySubmit(t *testing.T) {
 		}(i)
 	}
 	wg.Wait()
+}
+
+func TestReqPoolPrune(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	insp := &testRequestInspector{}
+
+	byteReq1 := makeTestRequest("1", "1", "foo")
+	byteReq2 := makeTestRequest("2", "2", "bar")
+	pool := bft.NewPool(log, insp, 3, 0)
+
+	assert.Equal(t, 0, pool.Size())
+	err = pool.Submit(byteReq1)
+	err = pool.Submit(byteReq2)
+	assert.NoError(t, err)
+	assert.Equal(t, 2, pool.Size())
+
+	pool.Prune(func(payload []byte) error {
+		if bytes.Equal(byteReq1, payload) {
+			return errors.New("revoked")
+		}
+		return nil
+	})
+
+	assert.Equal(t, 1, pool.Size())
+	client, tx, _ := parseTestRequest(pool.NextRequests(1)[0])
+	assert.Equal(t, "2", client)
+	assert.Equal(t, "2", tx)
 }
 
 func TestMakeRequest(t *testing.T) {
