@@ -8,7 +8,6 @@ package bft
 import (
 	"math"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
@@ -33,7 +32,9 @@ type Batcher interface {
 	Close()
 }
 
+//go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
 type RequestPool interface {
+	Prune(predicate func([]byte) error)
 	Submit(request []byte) error
 	Size() int
 	NextRequests(n int) [][]byte
@@ -67,13 +68,13 @@ type Controller struct {
 	currView       View
 	currViewNumber uint64 // should be accessed atomically
 
-	viewAbortChan chan struct{}
-	viewLock      sync.RWMutex
+	viewChange chan viewInfo
+	viewEnd    Future
 
-	stopChan chan struct{}
-	stopWG   sync.WaitGroup
-
-	deliverChan chan struct{}
+	stopChan             chan struct{}
+	decisionChan         chan decision
+	leaderToken          chan struct{}
+	verificationSequence uint64
 }
 
 func (c *Controller) iAmTheLeader() bool {
@@ -82,7 +83,7 @@ func (c *Controller) iAmTheLeader() bool {
 
 func (c *Controller) leaderID() uint64 {
 	// TODO use ids order (similar to BFT Smart)
-	return atomic.LoadUint64(&c.currViewNumber) % c.N
+	return c.currViewNumber % c.N
 }
 
 func (c *Controller) computeQuorum() int {
@@ -123,9 +124,7 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte) {
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	if IsViewMessage(m) {
-		c.viewLock.RLock()
 		c.currView.HandleMessage(sender, m)
-		c.viewLock.RUnlock()
 	}
 	c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
@@ -138,7 +137,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		LeaderID:         c.leaderID(),
 		SelfID:           c.ID,
 		Quorum:           c.quorum,
-		Number:           atomic.LoadUint64(&c.currViewNumber),
+		Number:           c.currViewNumber,
 		Decider:          c,
 		FailureDetector:  c.FailureDetector,
 		Sync:             c.Synchronizer,
@@ -150,59 +149,51 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		State:            &PersistedState{WAL: c.WAL},
 	}
 
-	c.viewLock.Lock()
 	c.currView = view
-	c.Logger.Debugf("Starting view with number %d", atomic.LoadUint64(&c.currViewNumber))
-	c.viewLock.Unlock()
+	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
 	return c.currView.Start()
 }
 
-func (c *Controller) viewAbort() {
-	c.Logger.Debugf("Aborting current view with number %d", atomic.LoadUint64(&c.currViewNumber))
-	c.viewLock.RLock()
-	c.currView.Abort()
-	c.viewLock.RUnlock()
-	<-c.viewAbortChan
-}
+func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
+	// Drain the leader token in case we held it,
+	// so we won't start proposing after view change.
+	c.relinquishLeaderToken()
 
-func (c *Controller) startNewView(newViewNumber uint64, newProposalSequence uint64) {
-	atomic.StoreUint64(&c.currViewNumber, newViewNumber)
-	end := c.startView(newProposalSequence)
-	c.stopWG.Add(1)
-	go func() {
-		defer c.stopWG.Done()
-		end.Wait()
-		c.viewAbortChan <- struct{}{}
-	}()
+	latestView := c.currViewNumber
+	if latestView > newViewNumber {
+		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
+		return
+	}
+	// Kill current view
+	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
+	c.currView.Abort()
+
+	// Wait for previous view to finish
+	c.viewEnd.Wait()
+	c.currViewNumber = newViewNumber
+	c.viewEnd = c.startView(newProposalSequence)
+
+	// If I'm the leader, I can claim the leader token.
 	if c.iAmTheLeader() {
-		c.Logger.Debugf("Starting leader thread in view %d", atomic.LoadUint64(&c.currViewNumber))
-		c.stopWG.Add(1)
-		go func() {
-			defer c.stopWG.Done()
-			c.leader()
-		}()
+		c.acquireLeaderToken()
 	}
 }
 
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
 func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
-	c.viewAbort()
-	c.startNewView(newViewNumber, newProposalSequence)
+	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
 }
 
 func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
-		select {
-		case <-c.viewAbortChan:
-			c.viewAbortChan <- struct{}{}
-			return nil
-		case <-c.stopChan:
-			return nil
-		default:
-		}
 		requests := c.Batcher.NextBatch()
+		if c.stopped() {
+			return nil
+		}
 		for _, req := range requests {
+			// TODO: We don't need to verify requests inside the req pool,
+			// but we need to prune the requests in the reminder of the batcher.
 			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
 			if err != nil {
 				c.Logger.Warnf("Ignoring bad request: %v, verifier error is: %v", req, err)
@@ -216,7 +207,10 @@ func (c *Controller) getNextBatch() [][]byte {
 
 func (c *Controller) propose() {
 	nextBatch := c.getNextBatch()
-	if nextBatch == nil {
+	if len(nextBatch) == 0 {
+		// If our next batch is empty,
+		// it can only be because
+		// the batcher is stopped and so are we.
 		return
 	}
 	metadata := c.currView.GetMetadata()
@@ -225,33 +219,85 @@ func (c *Controller) propose() {
 		c.Batcher.BatchRemainder(remainder)
 	}
 	c.Logger.Debugf("Leader proposing proposal: %v", proposal)
-	c.viewLock.RLock()
 	c.currView.Propose(proposal)
-	c.viewLock.RUnlock()
 }
 
-func (c *Controller) leader() {
+func (c *Controller) run() {
+	// At exit, always make sure to kill current view
+	// and wait for it to finish.
+	defer func() {
+		c.Logger.Infof("Exiting")
+		c.currView.Abort()
+		c.viewEnd.Wait()
+	}()
+
 	for {
-		c.propose()
 		select {
-		case <-c.viewAbortChan:
-			c.viewAbortChan <- struct{}{}
-			return
+		case d := <-c.decisionChan:
+			c.deliverToApplication(d)
+			c.maybePruneRevokedRequests()
+			if c.iAmTheLeader() {
+				c.acquireLeaderToken()
+			}
+		case newView := <-c.viewChange:
+			c.changeView(newView.viewNumber, newView.proposalSeq)
 		case <-c.stopChan:
 			return
-		case <-c.deliverChan:
+		case <-c.leaderToken:
+			c.propose()
 		}
+	}
+}
+
+func (c *Controller) maybePruneRevokedRequests() {
+	old := c.verificationSequence
+	new := c.Verifier.VerificationSequence()
+	if new == old {
+		return
+	}
+	c.Logger.Infof("Verification sequence changed: %d --> %d", old, new)
+	c.RequestPool.Prune(func(req []byte) error {
+		_, err := c.Verifier.VerifyRequest(req)
+		return err
+	})
+}
+
+func (c *Controller) acquireLeaderToken() {
+	select {
+	case c.leaderToken <- struct{}{}:
+	default:
+		// No room, seems we're already a leader.
+	}
+}
+
+func (c *Controller) relinquishLeaderToken() {
+	select {
+	case <-c.leaderToken:
+	default:
+
 	}
 }
 
 // Start the controller
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) Future {
-	c.viewAbortChan = make(chan struct{})
 	c.stopChan = make(chan struct{})
-	c.deliverChan = make(chan struct{})
+	c.leaderToken = make(chan struct{}, 1)
+	c.decisionChan = make(chan decision)
+	c.viewChange = make(chan viewInfo)
 	c.quorum = c.computeQuorum()
-	c.startNewView(startViewNumber, startProposalSequence)
-	return &c.stopWG
+	c.currViewNumber = startViewNumber
+	c.viewEnd = c.startView(startProposalSequence)
+	if c.iAmTheLeader() {
+		c.acquireLeaderToken()
+	}
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		c.run()
+	}()
+	return &wg
 }
 
 // Stop the controller
@@ -260,30 +306,56 @@ func (c *Controller) Stop() {
 	case <-c.stopChan:
 		return
 	default:
-		c.viewLock.RLock()
-		c.currView.Abort()
-		c.viewLock.RUnlock()
-		<-c.viewAbortChan
-
-		// TODO stop the RequestPool
-
 		close(c.stopChan)
+	}
+
+	c.Batcher.Close()
+
+	// Drain the leader token if we hold it.
+	select {
+	case <-c.leaderToken:
+	default:
+		// Do nothing
+	}
+}
+
+func (c *Controller) stopped() bool {
+	select {
+	case <-c.stopChan:
+		return true
+	default:
+		return false
 	}
 }
 
 // Decide delivers the decision to the application
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	// TODO write to WAL?
-	c.Application.Deliver(proposal, signatures)
+	c.decisionChan <- decision{
+		proposal:   proposal,
+		requests:   requests,
+		signatures: signatures,
+	}
+}
+
+func (c *Controller) deliverToApplication(d decision) {
+	c.Application.Deliver(d.proposal, d.signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 
-	for _, reqInfo := range requests {
+	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
 			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
 		// TODO stop and remove the associated timer from the timeout-collection
 	}
-	if c.iAmTheLeader() {
-		c.deliverChan <- struct{}{}
-	}
+}
+
+type viewInfo struct {
+	viewNumber  uint64
+	proposalSeq uint64
+}
+
+type decision struct {
+	proposal   types.Proposal
+	signatures []types.Signature
+	requests   []types.RequestInfo
 }

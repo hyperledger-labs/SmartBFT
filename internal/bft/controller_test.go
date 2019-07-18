@@ -29,7 +29,10 @@ func TestControllerBasic(t *testing.T) {
 	log := basicLog.Sugar()
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
 	controller := bft.Controller{
+		Batcher:     batcher,
 		ID:          4, // not the leader
 		N:           4,
 		Logger:      log,
@@ -71,10 +74,13 @@ func TestQuorum(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			batcher := &mocks.Batcher{}
+			batcher.On("Close")
 			controller := bft.Controller{
-				ID:     2, // not the leader
-				N:      testCase.N,
-				Logger: log,
+				Batcher: batcher,
+				ID:      2, // not the leader
+				N:       testCase.N,
+				Logger:  log,
 			}
 			end := controller.Start(1, 0)
 			<-verifyLog
@@ -90,6 +96,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	batcher := &mocks.Batcher{}
+	batcher.On("Close")
 	batcherChan := make(chan struct{})
 	var once sync.Once
 	batcher.On("NextBatch").Run(func(args mock.Arguments) {
@@ -97,6 +104,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 			batcherChan <- struct{}{}
 		})
 	}).Return([][]byte{})
+
 	controller := bft.Controller{
 		ID:      1, // the leader
 		N:       4,
@@ -116,6 +124,7 @@ func TestLeaderPropose(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
+	batcher.On("Close")
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	verifier := &mocks.VerifierMock{}
@@ -146,7 +155,10 @@ func TestLeaderPropose(t *testing.T) {
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		appWG.Done()
 	})
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Prune", mock.Anything)
 	controller := bft.Controller{
+		RequestPool: reqPool,
 		WAL:         &wal.EphemeralWAL{},
 		ID:          1, // the leader
 		N:           4,
@@ -188,6 +200,7 @@ func TestLeaderChange(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
+	batcher.On("Close")
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
