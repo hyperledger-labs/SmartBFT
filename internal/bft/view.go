@@ -50,7 +50,6 @@ type View struct {
 	Verifier         api.Verifier
 	Signer           api.Signer
 	ProposalSequence uint64
-	PrevHeader       []byte
 	State            State
 	Phase            Phase
 	// Runtime
@@ -397,7 +396,7 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 
 func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
 	// Verify proposal has correct structure and contains authorized requests.
-	requests, err := v.Verifier.VerifyProposal(proposal, v.PrevHeader)
+	requests, err := v.Verifier.VerifyProposal(proposal)
 	if err != nil {
 		v.Logger.Warnf("Received bad proposal: %v", err)
 		return nil, err
@@ -465,7 +464,6 @@ func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signatur
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures, requests)
-	v.PrevHeader = proposal.Header
 }
 
 func (v *View) startNextSeq() {

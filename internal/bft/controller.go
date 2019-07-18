@@ -146,7 +146,6 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
-		PrevHeader:       []byte{0}, // TODO start with real prev header
 		State:            &PersistedState{WAL: c.WAL},
 	}
 
