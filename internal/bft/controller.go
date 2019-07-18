@@ -7,10 +7,8 @@ package bft
 
 import (
 	"math"
-	"sync/atomic"
-	"time"
-
 	"sync"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -85,7 +83,7 @@ func (c *Controller) iAmTheLeader() bool {
 
 func (c *Controller) leaderID() uint64 {
 	// TODO use ids order (similar to BFT Smart)
-	return atomic.LoadUint64(&c.currViewNumber) % c.N
+	return c.currViewNumber % c.N
 }
 
 func (c *Controller) computeQuorum() int {
@@ -139,7 +137,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		LeaderID:         c.leaderID(),
 		SelfID:           c.ID,
 		Quorum:           c.quorum,
-		Number:           atomic.LoadUint64(&c.currViewNumber),
+		Number:           c.currViewNumber,
 		Decider:          c,
 		FailureDetector:  c.FailureDetector,
 		Sync:             c.Synchronizer,
@@ -152,7 +150,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 	}
 
 	c.currView = view
-	c.Logger.Debugf("Starting view with number %d", atomic.LoadUint64(&c.currViewNumber))
+	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
 	return c.currView.Start()
 }
 
@@ -161,18 +159,18 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	// so we won't start proposing after view change.
 	c.relinquishLeaderToken()
 
-	latestView := atomic.LoadUint64(&c.currViewNumber)
+	latestView := c.currViewNumber
 	if latestView > newViewNumber {
 		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
 		return
 	}
 	// Kill current view
-	c.Logger.Debugf("Aborting current view with number %d", atomic.LoadUint64(&c.currViewNumber))
+	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
 	c.currView.Abort()
 
 	// Wait for previous view to finish
 	c.viewEnd.Wait()
-	atomic.StoreUint64(&c.currViewNumber, newViewNumber)
+	c.currViewNumber = newViewNumber
 	c.viewEnd = c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
@@ -287,7 +285,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.decisionChan = make(chan decision)
 	c.viewChange = make(chan viewInfo)
 	c.quorum = c.computeQuorum()
-	atomic.StoreUint64(&c.currViewNumber, startViewNumber)
+	c.currViewNumber = startViewNumber
 	c.viewEnd = c.startView(startProposalSequence)
 	if c.iAmTheLeader() {
 		c.acquireLeaderToken()
