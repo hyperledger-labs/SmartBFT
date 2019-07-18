@@ -14,6 +14,11 @@ func (_m *Batcher) BatchRemainder(remainder [][]byte) {
 	_m.Called(remainder)
 }
 
+// Close provides a mock function with given fields:
+func (_m *Batcher) Close() {
+	_m.Called()
+}
+
 // NextBatch provides a mock function with given fields:
 func (_m *Batcher) NextBatch() [][]byte {
 	ret := _m.Called()

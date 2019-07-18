@@ -30,6 +30,7 @@ type FailureDetector interface {
 type Batcher interface {
 	NextBatch() [][]byte
 	BatchRemainder(remainder [][]byte)
+	Close()
 }
 
 type RequestPool interface {

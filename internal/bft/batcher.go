@@ -13,6 +13,7 @@ type Bundler struct { // TODO change name
 	Pool         RequestPool
 	BatchSize    int
 	BatchTimeout time.Duration
+	CloseChan    chan struct{}
 	remainder    [][]byte
 }
 
@@ -27,6 +28,8 @@ func (b *Bundler) NextBatch() [][]byte {
 	timeout := time.After(b.BatchTimeout)
 	for {
 		select {
+		case <-b.CloseChan:
+			return nil
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
 		default:
@@ -53,4 +56,8 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 		panic("batch remainder should always be empty when setting remainder")
 	}
 	b.remainder = remainder
+}
+
+func (b *Bundler) Close() {
+	close(b.CloseChan)
 }

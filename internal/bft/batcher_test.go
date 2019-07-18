@@ -140,3 +140,31 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // then requests
 	}
 }
+
+func TestBatcherClose(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	insp := &testRequestInspector{}
+
+	byteReq := makeTestRequest("1", "1", "foo")
+	pool := bft.NewPool(log, insp, 3, 0)
+	err = pool.Submit(byteReq)
+	assert.NoError(t, err)
+
+	batcher := bft.Bundler{
+		Pool:         pool,
+		BatchSize:    100,
+		BatchTimeout: time.Minute,
+		CloseChan:    make(chan struct{}),
+	}
+
+	go func() {
+		batcher.Close()
+	}()
+
+	t1 := time.Now()
+	res := batcher.NextBatch()
+	assert.Nil(t, res)
+	assert.True(t, time.Since(t1) < time.Second*50)
+}
