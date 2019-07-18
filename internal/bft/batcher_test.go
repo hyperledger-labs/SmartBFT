@@ -26,7 +26,7 @@ func TestBatcherBasic(t *testing.T) {
 	byteReq2 := makeTestRequest("2", "2", "foo")
 	byteReq3 := makeTestRequest("3", "3", "foo")
 	pool := bft.NewPool(log, insp, 3, 0)
-	err = pool.Submit(byteReq1, 0)
+	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
 	batcher := bft.Bundler{
@@ -48,9 +48,9 @@ func TestBatcherBasic(t *testing.T) {
 	res = batcher.NextBatch()
 	assert.Len(t, res, 0) // after timeout
 
-	err = pool.Submit(byteReq2, 0)
+	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
-	err = pool.Submit(byteReq3, 0)
+	err = pool.Submit(byteReq3)
 	assert.NoError(t, err)
 
 	batcher.BatchRemainder([][]byte{byteReq1})
@@ -82,7 +82,7 @@ func TestBatcherBasic(t *testing.T) {
 
 	batcher.BatchRemainder([][]byte{byteReq1})
 
-	err = pool.Submit(byteReq2, 0)
+	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
@@ -123,7 +123,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 		for i := 0; i < 100; i++ {
 			iStr := fmt.Sprintf("%d", i)
 			byteReq := makeTestRequest(iStr, iStr, "foo")
-			err := pool.Submit(byteReq, 0)
+			err := pool.Submit(byteReq)
 			assert.NoError(t, err)
 		}
 	}()
