@@ -10,16 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"context"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
-)
-
-var (
-	ctx = context.Background()
 )
 
 func TestBatcherBasic(t *testing.T) {
@@ -41,17 +35,17 @@ func TestBatcherBasic(t *testing.T) {
 		BatchTimeout: 10 * time.Millisecond,
 	}
 
-	res := batcher.NextBatch(ctx)
+	res := batcher.NextBatch()
 	assert.Len(t, res, 1)
 
 	batcher.BatchRemainder([][]byte{byteReq2})
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 
 	err = pool.RemoveRequest(types.RequestInfo{ID: "1", ClientID: "1"})
 	assert.NoError(t, err)
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 0) // after timeout
 
 	err = pool.Submit(byteReq2)
@@ -61,22 +55,22 @@ func TestBatcherBasic(t *testing.T) {
 
 	batcher.BatchRemainder([][]byte{byteReq1})
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq1, res[0])
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq2, res[0])
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq2, res[0])
 
 	err = pool.RemoveRequest(types.RequestInfo{ID: "2", ClientID: "2"})
 	assert.NoError(t, err)
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq3, res[0])
 
@@ -91,7 +85,7 @@ func TestBatcherBasic(t *testing.T) {
 	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 2)
 	assert.Equal(t, byteReq1, res[0])
 	assert.Equal(t, byteReq3, res[1])
@@ -99,7 +93,7 @@ func TestBatcherBasic(t *testing.T) {
 	err = pool.RemoveRequest(types.RequestInfo{ID: "3", ClientID: "3"})
 	assert.NoError(t, err)
 
-	res = batcher.NextBatch(ctx)
+	res = batcher.NextBatch()
 	assert.Len(t, res, 1) // after timeout
 	assert.Equal(t, byteReq2, res[0])
 }
@@ -134,7 +128,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 		}
 	}()
 
-	res := batcher.NextBatch(ctx)
+	res := batcher.NextBatch()
 	assert.Len(t, res, 100)
 	for i := 0; i < 50; i++ {
 		iStr := fmt.Sprintf("%d", 100+i)

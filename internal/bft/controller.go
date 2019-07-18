@@ -11,8 +11,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"context"
-
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -30,7 +28,7 @@ type FailureDetector interface {
 
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
-	NextBatch(ctx context.Context) [][]byte
+	NextBatch() [][]byte
 	BatchRemainder(remainder [][]byte)
 }
 
@@ -202,7 +200,7 @@ func (c *Controller) getNextBatch() [][]byte {
 			return nil
 		default:
 		}
-		requests := c.Batcher.NextBatch(context.Background())
+		requests := c.Batcher.NextBatch()
 		for _, req := range requests {
 			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
 			if err != nil {
