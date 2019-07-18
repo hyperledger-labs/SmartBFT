@@ -132,6 +132,21 @@ func (rp *Pool) NextRequests(n int) [][]byte {
 	return buff
 }
 
+// Prune removes requests for which the given predicate returns error
+func (rp *Pool) Prune(predicate func([]byte) error) {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	for reqInfo, element := range rp.existMap {
+		rawReq := element.Value.(*requestItem).request
+		err := predicate(rawReq)
+		if err == nil {
+			continue
+		}
+		rp.deleteRequest(element, reqInfo)
+	}
+}
+
 // RemoveRequest removes the given request from the pool
 func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	rp.lock.Lock()
@@ -144,6 +159,10 @@ func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 		return fmt.Errorf(errStr)
 	}
 
+	return rp.deleteRequest(element, requestInfo)
+}
+
+func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestInfo) error {
 	rp.fifo.Remove(element)
 	delete(rp.existMap, requestInfo)
 	rp.logger.Infof("Removed request %s from request pool", requestInfo)
