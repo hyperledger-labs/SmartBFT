@@ -29,6 +29,7 @@ type FailureDetector interface {
 type Batcher interface {
 	NextBatch() [][]byte
 	BatchRemainder(remainder [][]byte)
+	PopRemainder() [][]byte
 	Close()
 }
 
@@ -192,13 +193,6 @@ func (c *Controller) getNextBatch() [][]byte {
 			return nil
 		}
 		for _, req := range requests {
-			// TODO: We don't need to verify requests inside the req pool,
-			// but we need to prune the requests in the reminder of the batcher.
-			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
-			if err != nil {
-				c.Logger.Warnf("Ignoring bad request: %v, verifier error is: %v", req, err)
-				continue
-			}
 			validRequests = append(validRequests, req)
 		}
 	}
@@ -255,11 +249,24 @@ func (c *Controller) maybePruneRevokedRequests() {
 	if new == old {
 		return
 	}
+	c.verificationSequence = new
+
 	c.Logger.Infof("Verification sequence changed: %d --> %d", old, new)
 	c.RequestPool.Prune(func(req []byte) error {
 		_, err := c.Verifier.VerifyRequest(req)
 		return err
 	})
+
+	var newRemainder [][]byte
+	for _, req := range c.Batcher.PopRemainder() {
+		reqInf, err := c.Verifier.VerifyRequest(req)
+		if err != nil {
+			c.Logger.Warnf("Revoking request %v due to %v", reqInf, err)
+			continue
+		}
+		newRemainder = append(newRemainder, req)
+	}
+	c.Batcher.BatchRemainder(newRemainder)
 }
 
 func (c *Controller) acquireLeaderToken() {

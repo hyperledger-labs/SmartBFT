@@ -61,3 +61,10 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 func (b *Bundler) Close() {
 	close(b.CloseChan)
 }
+
+func (b *Bundler) PopRemainder() [][]byte {
+	defer func() {
+		b.remainder = nil
+	}()
+	return b.remainder
+}

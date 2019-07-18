@@ -127,6 +127,8 @@ func TestLeaderPropose(t *testing.T) {
 	batcher.On("Close")
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("PopRemainder").Return([][]byte{})
+	batcher.On("BatchRemainder", mock.Anything)
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
@@ -204,7 +206,6 @@ func TestLeaderChange(t *testing.T) {
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 
 	secondProposal := proposal
@@ -261,7 +262,6 @@ func TestLeaderChange(t *testing.T) {
 	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
-	verifier.AssertNumberOfCalls(t, "VerifyRequest", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
