@@ -6,9 +6,8 @@
 package bft
 
 import (
-	"sync"
-
 	"fmt"
+	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
