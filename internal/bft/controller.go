@@ -28,14 +28,14 @@ type FailureDetector interface {
 
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
-	NextBatch() []Request
-	BatchRemainder(remainder []Request)
+	NextBatch() [][]byte
+	BatchRemainder(remainder [][]byte)
 }
 
 type RequestPool interface {
 	Submit(request []byte, verificationSequence uint64) error
 	Size() int
-	NextRequests(n int) []Request
+	NextRequests(n int) []NextRequest
 	RemoveRequest(request types.RequestInfo) error
 }
 
@@ -189,8 +189,8 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 	c.startNewView(newViewNumber, newProposalSequence)
 }
 
-func (c *Controller) getNextBatch() Requests {
-	var validRequests Requests
+func (c *Controller) getNextBatch() [][]byte {
+	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
 		select {
 		case <-c.viewAbortChan:
@@ -202,7 +202,7 @@ func (c *Controller) getNextBatch() Requests {
 		}
 		requests := c.Batcher.NextBatch()
 		for _, req := range requests {
-			_, err := c.Verifier.VerifyRequest(req.Payload) // TODO use returned request info
+			_, err := c.Verifier.VerifyRequest(req) // TODO use returned request info
 			if err != nil {
 				c.Logger.Warnf("Ignoring bad request: %v, verifier error is: %v", req, err)
 				continue
@@ -218,15 +218,10 @@ func (c *Controller) propose() {
 	if nextBatch == nil {
 		return
 	}
-
-	// Build a map from request to verification sequence
-	index := nextBatch.Index()
-
 	metadata := c.currView.GetMetadata()
-	proposal, remainder := c.Assembler.AssembleProposal(metadata, nextBatch.Payloads())
+	proposal, remainder := c.Assembler.AssembleProposal(metadata, nextBatch)
 	if len(remainder) != 0 {
-		remainingRequests := index.FilterByPayloads(remainder)
-		c.Batcher.BatchRemainder(remainingRequests)
+		c.Batcher.BatchRemainder(remainder)
 	}
 	c.Logger.Debugf("Leader proposing proposal: %v", proposal)
 	c.viewLock.RLock()

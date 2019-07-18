@@ -13,17 +13,17 @@ type Bundler struct { // TODO change name
 	Pool         RequestPool
 	BatchSize    int
 	BatchTimeout time.Duration
-	remainder    []Request
+	remainder    [][]byte
 }
 
 // NextBatch returns the next batch of requests to be proposed
-func (b *Bundler) NextBatch() []Request {
-	currBatch := make([]Request, 0)
+func (b *Bundler) NextBatch() [][]byte {
+	currBatch := make([][]byte, 0)
 	remainderOccupied := len(b.remainder)
 	if remainderOccupied > 0 {
 		currBatch = b.remainder
 	}
-	b.remainder = make([]Request, 0)
+	b.remainder = make([][]byte, 0)
 	timeout := time.After(b.BatchTimeout)
 	for {
 		select {
@@ -39,16 +39,16 @@ func (b *Bundler) NextBatch() []Request {
 }
 
 // takes the current batch and appends to it requests from the pool
-func (b *Bundler) buildBatch(remainderOccupied int, currBatch []Request) []Request {
+func (b *Bundler) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
 	reqs := b.Pool.NextRequests(b.BatchSize - remainderOccupied)
 	for i := 0; i < len(reqs); i++ {
-		currBatch = append(currBatch, reqs[i])
+		currBatch = append(currBatch, reqs[i].Request)
 	}
 	return currBatch
 }
 
 // BatchRemainder sets the remainder of requests to be included in the next batch
-func (b *Bundler) BatchRemainder(remainder []Request) {
+func (b *Bundler) BatchRemainder(remainder [][]byte) {
 	if len(b.remainder) != 0 {
 		panic("batch remainder should always be empty when setting remainder")
 	}

@@ -96,7 +96,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 		once.Do(func() {
 			batcherChan <- struct{}{}
 		})
-	}).Return([]bft.Request{})
+	}).Return([][]byte{})
 	controller := bft.Controller{
 		ID:      1, // the leader
 		N:       4,
@@ -116,7 +116,8 @@ func TestLeaderPropose(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch").Return([]bft.Request{{Payload: req}}).Twice()
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
@@ -187,7 +188,7 @@ func TestLeaderChange(t *testing.T) {
 	log := basicLog.Sugar()
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
-	batcher.On("NextBatch").Return([]bft.Request{{Payload: req}})
+	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)

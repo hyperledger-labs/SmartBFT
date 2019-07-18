@@ -12,8 +12,6 @@ import (
 	"sync"
 	"time"
 
-	"encoding/hex"
-
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
@@ -120,56 +118,24 @@ func (rp *Pool) Size() int {
 	return len(rp.existMap)
 }
 
-type Requests []Request
-
-type RequestIndex map[string]Request
-
-func (index RequestIndex) FilterByPayloads(payloads [][]byte) Requests {
-	var res Requests
-	for _, payload := range payloads {
-		req, exists := index[hex.EncodeToString(payload)]
-		if exists {
-			res = append(res, req)
-		}
-	}
-	return res
-}
-
-func (requests Requests) Index() RequestIndex {
-	// Build a map from request hex to Request
-	req2Seq := make(map[string]Request, len(requests))
-	for _, req := range requests {
-		req2Seq[hex.EncodeToString(req.Payload)] = req
-	}
-	return req2Seq
-}
-
-func (requests Requests) Payloads() [][]byte {
-	res := make([][]byte, len(requests))
-	for i, req := range requests {
-		res[i] = req.Payload
-	}
-	return res
-}
-
-type Request struct {
-	Payload         []byte
+type NextRequest struct {
+	Request         []byte
 	VerificationSqn uint64
 }
 
 // NextRequests returns the next requests to be batched.
 // It returns at most n request, in a newly allocated slice.
-func (rp *Pool) NextRequests(n int) []Request {
+func (rp *Pool) NextRequests(n int) []NextRequest {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
 	m := minInt(rp.fifo.Len(), n)
-	buff := make([]Request, m)
+	buff := make([]NextRequest, m)
 	var element = rp.fifo.Front()
 	for i := 0; i < m; i++ {
 		item := element.Value.(*requestItem)
-		buff[i] = Request{
-			Payload:         append(make([]byte, 0), item.request...),
+		buff[i] = NextRequest{
+			Request:         append(make([]byte, 0), item.request...),
 			VerificationSqn: item.verificationSqn,
 		}
 		element = element.Next()
