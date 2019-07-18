@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"context"
 	"time"
 )
 
@@ -17,7 +18,7 @@ type Bundler struct { // TODO change name
 }
 
 // NextBatch returns the next batch of requests to be proposed
-func (b *Bundler) NextBatch() [][]byte {
+func (b *Bundler) NextBatch(ctx context.Context) [][]byte {
 	currBatch := make([][]byte, 0)
 	remainderOccupied := len(b.remainder)
 	if remainderOccupied > 0 {
@@ -27,6 +28,8 @@ func (b *Bundler) NextBatch() [][]byte {
 	timeout := time.After(b.BatchTimeout)
 	for {
 		select {
+		case <-ctx.Done():
+			return nil
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
 		default:
