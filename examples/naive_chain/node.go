@@ -45,7 +45,7 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 	}
 }
 
-func (*Node) VerifyProposal(proposal bft.Proposal, prevHeader []byte) ([]bft.RequestInfo, error) {
+func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	blockData := BlockDataFromBytes(proposal.Payload)
 	requests := make([]bft.RequestInfo, 0)
 	for _, t := range blockData.Transactions {

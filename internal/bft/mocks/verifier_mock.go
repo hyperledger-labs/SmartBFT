@@ -38,13 +38,13 @@ func (_m *VerifierMock) VerifyConsenterSig(signature types.Signature, prop types
 	return r0
 }
 
-// VerifyProposal provides a mock function with given fields: proposal, prevHeader
-func (_m *VerifierMock) VerifyProposal(proposal types.Proposal, prevHeader []byte) ([]types.RequestInfo, error) {
-	ret := _m.Called(proposal, prevHeader)
+// VerifyProposal provides a mock function with given fields: proposal
+func (_m *VerifierMock) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
+	ret := _m.Called(proposal)
 
 	var r0 []types.RequestInfo
-	if rf, ok := ret.Get(0).(func(types.Proposal, []byte) []types.RequestInfo); ok {
-		r0 = rf(proposal, prevHeader)
+	if rf, ok := ret.Get(0).(func(types.Proposal) []types.RequestInfo); ok {
+		r0 = rf(proposal)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]types.RequestInfo)
@@ -52,8 +52,8 @@ func (_m *VerifierMock) VerifyProposal(proposal types.Proposal, prevHeader []byt
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(types.Proposal, []byte) error); ok {
-		r1 = rf(proposal, prevHeader)
+	if rf, ok := ret.Get(1).(func(types.Proposal) error); ok {
+		r1 = rf(proposal)
 	} else {
 		r1 = ret.Error(1)
 	}

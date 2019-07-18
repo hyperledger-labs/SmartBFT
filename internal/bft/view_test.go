@@ -316,7 +316,7 @@ func TestBadPrePrepare(t *testing.T) {
 			})
 			state := &bft.StateRecorder{}
 			verifier := &mocks.VerifierMock{}
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, testCase.verifyProposalReturns)
+			verifier.On("VerifyProposal", mock.Anything).Return(nil, testCase.verifyProposalReturns)
 			verifier.On("VerificationSequence").Return(uint64(1))
 			view := &bft.View{
 				Verifier:         verifier,
@@ -376,7 +376,7 @@ func TestBadPrepare(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
@@ -461,7 +461,7 @@ func TestBadCommit(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -528,7 +528,7 @@ func TestNormalPath(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -661,7 +661,7 @@ func TestTwoSequences(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -787,7 +787,7 @@ func TestViewPersisted(t *testing.T) {
 		t.Run(testCase.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerificationSequence").Return(uint64(1))
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
 			var prepareSent sync.WaitGroup
