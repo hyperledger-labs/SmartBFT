@@ -6,7 +6,6 @@
 package consensus
 
 import (
-	"sync/atomic"
 	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
@@ -37,7 +36,6 @@ type Consensus struct {
 	Synchronizer     bft.Synchronizer
 	Logger           bft.Logger
 	controller       *algorithm.Controller
-	nextSeq          uint64
 }
 
 func (c *Consensus) Complain() {
@@ -49,7 +47,6 @@ func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
-	atomic.AddUint64(&c.nextSeq, 1)
 	c.Application.Deliver(proposal, signatures)
 }
 
