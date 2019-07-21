@@ -251,14 +251,14 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) maybePruneRevokedRequests() {
-	old := c.verificationSequence
-	new := c.Verifier.VerificationSequence()
-	if new == old {
+	oldVerSqn := c.verificationSequence
+	newVerSqn := c.Verifier.VerificationSequence()
+	if newVerSqn == oldVerSqn {
 		return
 	}
-	c.verificationSequence = new
+	c.verificationSequence = newVerSqn
 
-	c.Logger.Infof("Verification sequence changed: %d --> %d", old, new)
+	c.Logger.Infof("Verification sequence changed: %d --> %d", oldVerSqn, newVerSqn)
 	c.RequestPool.Prune(func(req []byte) error {
 		_, err := c.Verifier.VerifyRequest(req)
 		return err
