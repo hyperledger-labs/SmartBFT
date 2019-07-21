@@ -15,12 +15,12 @@ func (_m *RequestTimeoutHandler) OnAutoRemoveTimeout(requestInfo types.RequestIn
 	_m.Called(requestInfo)
 }
 
-// OnLeaderFwdRequestTimeout provides a mock function with given fields: request
-func (_m *RequestTimeoutHandler) OnLeaderFwdRequestTimeout(request []byte) {
-	_m.Called(request)
+// OnLeaderFwdRequestTimeout provides a mock function with given fields: request, requestInfo
+func (_m *RequestTimeoutHandler) OnLeaderFwdRequestTimeout(request []byte, requestInfo types.RequestInfo) {
+	_m.Called(request, requestInfo)
 }
 
-// OnRequestTimeout provides a mock function with given fields: request
-func (_m *RequestTimeoutHandler) OnRequestTimeout(request []byte) {
-	_m.Called(request)
+// OnRequestTimeout provides a mock function with given fields: request, requestInfo
+func (_m *RequestTimeoutHandler) OnRequestTimeout(request []byte, requestInfo types.RequestInfo) {
+	_m.Called(request, requestInfo)
 }
