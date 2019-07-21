@@ -204,7 +204,6 @@ func TestReqPoolTimeout(t *testing.T) {
 	log := basicLog.Sugar()
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
-
 	insp := &testRequestInspector{}
 
 	t.Run("request timeout", func(t *testing.T) {
@@ -212,11 +211,11 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		toWG := &sync.WaitGroup{}
 		toWG.Add(1)
-		timeoutHandler.On("OnRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			toWG.Done()
 		}).Return()
 
-		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			assert.Fail(t, "called OnLeaderFwdRequestTimeout")
 		}).Return()
 
@@ -254,13 +253,13 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		to1WG := &sync.WaitGroup{}
 		to1WG.Add(1)
-		timeoutHandler.On("OnRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			to1WG.Done()
 		}).Return()
 
 		to2WG := &sync.WaitGroup{}
 		to2WG.Add(1)
-		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			to2WG.Done()
 		}).Return()
 
@@ -298,13 +297,13 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		to1WG := &sync.WaitGroup{}
 		to1WG.Add(1)
-		timeoutHandler.On("OnRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			to1WG.Done()
 		}).Return()
 
 		to2WG := &sync.WaitGroup{}
 		to2WG.Add(1)
-		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			to2WG.Done()
 		}).Return()
 

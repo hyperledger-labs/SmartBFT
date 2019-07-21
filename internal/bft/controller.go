@@ -66,8 +66,10 @@ type Controller struct {
 
 	quorum int
 
-	currView       View
-	currViewNumber uint64 // should be accessed atomically
+	currView View
+
+	currViewNumberLock sync.Mutex
+	currViewNumber     uint64
 
 	viewChange chan viewInfo
 	viewEnd    Future
@@ -78,13 +80,30 @@ type Controller struct {
 	verificationSequence uint64
 }
 
-func (c *Controller) iAmTheLeader() bool {
-	return c.leaderID() == c.ID
+func (c *Controller) getCurrentViewNumber() uint64 {
+	c.currViewNumberLock.Lock()
+	defer c.currViewNumberLock.Unlock()
+
+	return c.currViewNumber
 }
 
+func (c *Controller) setCurrentViewNumber(viewNumber uint64) {
+	c.currViewNumberLock.Lock()
+	defer c.currViewNumberLock.Unlock()
+
+	c.currViewNumber = viewNumber
+}
+
+// thread safe
+func (c *Controller) iAmTheLeader() (bool, uint64) {
+	leader := c.leaderID()
+	return leader == c.ID, leader
+}
+
+// thread safe
 func (c *Controller) leaderID() uint64 {
 	// TODO use ids order (similar to BFT Smart)
-	return c.currViewNumber % c.N
+	return c.getCurrentViewNumber() % c.N
 }
 
 func (c *Controller) computeQuorum() int {
@@ -109,21 +128,38 @@ func (c *Controller) SubmitRequest(request []byte) error {
 	return nil
 }
 
-func (c *Controller) OnRequestTimeout(request []byte) {
-	info := c.RequestInspector.RequestID(request)
-	c.Logger.Warnf("Request %s has timed out, forwarding request to leader", info)
-	// TODO forward request to leader, start another timeout, update the timeout-collection
+// OnRequestTimeout is called when request-timeout expires and forwards the request to leader.
+// Called by the request-pool timeout goroutine. Upon return, the leader-forward timeout is started.
+func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
+	iAm, leaderID := c.iAmTheLeader()
+	if iAm {
+		c.Logger.Warnf("Request %s timeout expired, this node is the leader, nothing to do", info)
+		return
+	}
+
+	c.Logger.Warnf("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
+	c.Comm.SendTransaction(leaderID, request)
+
 	return
 }
 
-func (c *Controller) OnLeaderFwdRequestTimeout(request []byte) {
-	info := c.RequestInspector.RequestID(request)
-	c.Logger.Warnf("Request %s has timed out after forwarding to leader, complaining about leader", info)
-	// TODO complain about the leader
-	// TODO Q: what to do with the request?
+// OnLeaderFwdRequestTimeout is called when the leader-forward timeout expires, and complains about the leader.
+// Called by the request-pool timeout goroutine. Upon return, the auto-remove timeout is started.
+func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.RequestInfo) {
+	iAm, leaderID := c.iAmTheLeader()
+	if iAm {
+		c.Logger.Warnf("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
+		return
+	}
+
+	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
+	c.FailureDetector.Complain()
+
 	return
 }
 
+// OnAutoRemoveTimeout is called when the auto-remove timeout expires.
+// Called by the request-pool timeout goroutine.
 func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
 	c.Logger.Warnf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
 	return
@@ -145,7 +181,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		LeaderID:         c.leaderID(),
 		SelfID:           c.ID,
 		Quorum:           c.quorum,
-		Number:           c.currViewNumber,
+		Number:           c.getCurrentViewNumber(),
 		Decider:          c,
 		FailureDetector:  c.FailureDetector,
 		Sync:             c.Synchronizer,
@@ -158,7 +194,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 	}
 
 	c.currView = view
-	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
+	c.Logger.Debugf("Starting view with number %d", view.Number)
 	return c.currView.Start()
 }
 
@@ -167,22 +203,22 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	// so we won't start proposing after view change.
 	c.relinquishLeaderToken()
 
-	latestView := c.currViewNumber
+	latestView := c.getCurrentViewNumber()
 	if latestView > newViewNumber {
 		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
 		return
 	}
 	// Kill current view
-	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
+	c.Logger.Debugf("Aborting current view with number %d", latestView)
 	c.currView.Abort()
 
 	// Wait for previous view to finish
 	c.viewEnd.Wait()
-	c.currViewNumber = newViewNumber
+	c.setCurrentViewNumber(newViewNumber)
 	c.viewEnd = c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
-	if c.iAmTheLeader() {
+	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
 }
@@ -237,7 +273,7 @@ func (c *Controller) run() {
 		case d := <-c.decisionChan:
 			c.deliverToApplication(d)
 			c.maybePruneRevokedRequests()
-			if c.iAmTheLeader() {
+			if iAm, _ := c.iAmTheLeader(); iAm {
 				c.acquireLeaderToken()
 			}
 		case newView := <-c.viewChange:
@@ -301,7 +337,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.quorum = c.computeQuorum()
 	c.currViewNumber = startViewNumber
 	c.viewEnd = c.startView(startProposalSequence)
-	if c.iAmTheLeader() {
+	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
 

@@ -28,13 +28,13 @@ const (
 // This interface is implemented by the bft.Controller.
 type RequestTimeoutHandler interface {
 
-	// OnRequestTimeout is called when a request timeout expires
-	OnRequestTimeout(request []byte)
+	// OnRequestTimeout is called when a request timeout expires.
+	OnRequestTimeout(request []byte, requestInfo types.RequestInfo)
 
-	// OnLeaderFwdRequestTimeout is called when a leader forwarding timeout expires
-	OnLeaderFwdRequestTimeout(request []byte)
+	// OnLeaderFwdRequestTimeout is called when a leader forwarding timeout expires.
+	OnLeaderFwdRequestTimeout(request []byte, requestInfo types.RequestInfo)
 
-	// OnAutoRemoveTimeout is called when a auto-remove timeout expires
+	// OnAutoRemoveTimeout is called when a auto-remove timeout expires.
 	OnAutoRemoveTimeout(requestInfo types.RequestInfo)
 }
 
@@ -215,7 +215,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	}
 	// may take time, in case Comm channel to leader is full; hence w/o the lock.
 	rp.logger.Debugf("Request %s timeout expired, going to send to leader", reqInfo)
-	rp.timeoutHandler.OnRequestTimeout(request)
+	rp.timeoutHandler.OnRequestTimeout(request, reqInfo)
 
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
@@ -242,7 +242,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	}
 	// may take time, in case Comm channel is full; hence w/o the lock.
 	rp.logger.Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
-	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request)
+	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request, reqInfo)
 
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
