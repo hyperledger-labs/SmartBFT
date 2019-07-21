@@ -61,12 +61,7 @@ type Future interface {
 func (c *Consensus) Start() Future {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
 
-	pool := algorithm.NewPool(
-		c.Logger,
-		c.RequestInspector,
-		DefaultRequestPoolSize, // TODO make it configurable
-		requestTimeout,
-	)
+	pool := algorithm.NewPool(c.Logger, c.RequestInspector, algorithm.PoolOptions{QueueSize: DefaultRequestPoolSize, RequestTimeout: requestTimeout})
 
 	batcher := &algorithm.Bundler{
 		CloseChan:    make(chan struct{}),

@@ -150,7 +150,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		SelfID:           id,
 		N:                4,
 		BatchSize:        1,
-		BatchTimeout:     10 * time.Millisecond,
+		BatchTimeout:     10 * time.Second,
 		Logger:           logger,
 		Comm:             node,
 		Signer:           node,
