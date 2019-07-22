@@ -154,20 +154,43 @@ func (rp *Pool) NextRequests(n int) [][]byte {
 	return buff
 }
 
-// Prune removes requests for which the given predicate returns error
+// Prune removes requests for which the given predicate returns error.
 func (rp *Pool) Prune(predicate func([]byte) error) {
-	rp.lock.Lock()
-	defer rp.lock.Unlock()
+	reqVec, infoVec := rp.copyRequests()
 
-	for reqInfo, element := range rp.existMap {
-		rawReq := element.Value.(*requestItem).request
-		// TODO call predicate w/o internal lock
-		err := predicate(rawReq)
+	var numPruned int
+	for i, req := range reqVec {
+		err := predicate(req)
 		if err == nil {
 			continue
 		}
-		rp.deleteRequest(element, reqInfo)
+
+		if remErr := rp.RemoveRequest(infoVec[i]); remErr != nil {
+			rp.logger.Warnf("Failed to prune request: %s; predicate error: %s; remove error: %s", infoVec[i], err, remErr)
+		} else {
+			rp.logger.Debugf("Pruned request: %s; predicate error: %s", infoVec[i], err)
+			numPruned++
+		}
 	}
+
+	rp.logger.Debugf("Pruned %d requests", numPruned)
+}
+
+func (rp *Pool) copyRequests() (requestVec [][]byte, infoVec []types.RequestInfo) {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	requestVec = make([][]byte, len(rp.existMap))
+	infoVec = make([]types.RequestInfo, len(rp.existMap))
+
+	var i int
+	for info, item := range rp.existMap {
+		infoVec[i] = info
+		requestVec[i] = item.Value.(*requestItem).request
+		i++
+	}
+
+	return
 }
 
 // RemoveRequest removes the given request from the pool
