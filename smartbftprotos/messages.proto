@@ -31,6 +31,7 @@ message Prepare {
     uint64 view = 1;
     uint64 seq = 2;
     string digest = 3;
+    bool assist = 4;
 }
 
 message Commit {
@@ -38,6 +39,7 @@ message Commit {
     uint64 seq = 2;
     string digest = 3;
     Signature signature = 4;
+    bool assist = 5;
 }
 
 message Error {
