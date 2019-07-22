@@ -31,6 +31,7 @@ type Batcher interface {
 	BatchRemainder(remainder [][]byte)
 	PopRemainder() [][]byte
 	Close()
+	Reset()
 }
 
 //go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
@@ -219,6 +220,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 
 	// If I'm the leader, I can claim the leader token.
 	if iAm, _ := c.iAmTheLeader(); iAm {
+		c.Batcher.Reset()
 		c.acquireLeaderToken()
 	}
 }
@@ -226,6 +228,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
 func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
+	c.Batcher.Close()
 }
 
 func (c *Controller) getNextBatch() [][]byte {

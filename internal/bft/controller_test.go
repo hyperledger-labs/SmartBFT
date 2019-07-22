@@ -203,6 +203,7 @@ func TestLeaderChange(t *testing.T) {
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	batcher.On("Reset")
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))

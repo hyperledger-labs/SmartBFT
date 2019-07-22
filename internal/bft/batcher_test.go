@@ -179,3 +179,49 @@ func TestBatcherPopReminder(t *testing.T) {
 	rem = batcher.PopRemainder()
 	assert.Nil(t, rem)
 }
+
+func TestBatcherReset(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	insp := &testRequestInspector{}
+
+	byteReq1 := makeTestRequest("1", "1", "foo")
+	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3})
+	err = pool.Submit(byteReq1)
+	assert.NoError(t, err)
+
+	batcher := bft.Bundler{
+		Pool:         pool,
+		BatchSize:    1,
+		BatchTimeout: 10 * time.Millisecond,
+		CloseChan:    make(chan struct{}),
+	}
+
+	res := batcher.NextBatch()
+	assert.Len(t, res, 1)
+
+	byteReq2 := makeTestRequest("2", "2", "foo")
+	batcher.BatchRemainder([][]byte{byteReq2})
+	res = batcher.NextBatch()
+	assert.Len(t, res, 1)
+
+	batcher.BatchRemainder([][]byte{byteReq2})
+
+	batcher.Close()
+	batcher.Reset()
+
+	res = batcher.NextBatch()
+	assert.Len(t, res, 1)
+	assert.Equal(t, byteReq1, res[0])
+
+	err = pool.RemoveRequest(types.RequestInfo{ID: "1", ClientID: "1"})
+	assert.NoError(t, err)
+
+	batcher.Close()
+	batcher.Reset()
+
+	res = batcher.NextBatch()
+	assert.Len(t, res, 0)
+
+}
