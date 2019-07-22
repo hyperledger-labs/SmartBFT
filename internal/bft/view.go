@@ -321,7 +321,8 @@ func (v *View) processProposal() Phase {
 	// so we record the pre-prepare.
 	v.State.Save(receivedProposal)
 	v.lastBroadcastSent = msg
-	v.currPrepareSent = msg
+	v.currPrepareSent = proto.Clone(msg).(*protos.Message)
+	v.currPrepareSent.GetPrepare().Assist = true
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
 
@@ -383,7 +384,8 @@ func (v *View) processPrepares() Phase {
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
 	v.State.Save(msg)
-	v.currCommitSent = msg
+	v.currCommitSent = proto.Clone(msg).(*protos.Message)
+	v.currCommitSent.GetCommit().Assist = true
 	v.lastBroadcastSent = msg
 
 	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
@@ -471,11 +473,19 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 
 	switch msgType {
 	case "prepare":
+		// This is an assist message, we don't need to reply to it.
+		if m.GetPrepare().Assist {
+			return
+		}
 		if v.prevPrepareSent != nil {
 			v.Comm.SendConsensus(sender, v.prevPrepareSent)
 			found = true
 		}
 	case "commit":
+		// This is an assist message, we don't need to reply to it.
+		if m.GetCommit().Assist {
+			return
+		}
 		if v.prevCommitSent != nil {
 			v.Comm.SendConsensus(sender, v.prevCommitSent)
 			found = true
