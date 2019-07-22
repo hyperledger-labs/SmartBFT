@@ -50,3 +50,8 @@ func (_m *Batcher) PopRemainder() [][]byte {
 
 	return r0
 }
+
+// Reset provides a mock function with given fields:
+func (_m *Batcher) Reset() {
+	_m.Called()
+}

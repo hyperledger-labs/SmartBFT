@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"sync"
 	"time"
 )
 
@@ -15,6 +16,7 @@ type Bundler struct { // TODO change name
 	BatchTimeout time.Duration
 	CloseChan    chan struct{}
 	remainder    [][]byte
+	closeLock    sync.Mutex // Reset and Close may be called by different threads
 }
 
 // NextBatch returns the next batch of requests to be proposed
@@ -58,10 +60,22 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 	b.remainder = remainder
 }
 
+// Close closes the close channel to stop NextBatch
 func (b *Bundler) Close() {
+	b.closeLock.Lock()
+	defer b.closeLock.Unlock()
 	close(b.CloseChan)
 }
 
+// Reset resets the remainder and reopens the close channel to allow calling NextBatch
+func (b *Bundler) Reset() {
+	b.closeLock.Lock()
+	defer b.closeLock.Unlock()
+	b.remainder = nil
+	b.CloseChan = make(chan struct{})
+}
+
+// PopRemainder returns the remainder and resets it
 func (b *Bundler) PopRemainder() [][]byte {
 	defer func() {
 		b.remainder = nil
