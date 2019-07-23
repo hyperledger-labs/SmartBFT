@@ -79,9 +79,9 @@ type Chain struct {
 	node        *Node
 }
 
-func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger) *Chain {
+func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, opts NetworkOptions) *Chain {
 	deliverChan := make(chan *Block)
-	node := NewNode(id, in, out, deliverChan, logger)
+	node := NewNode(id, in, out, deliverChan, logger, opts)
 	return &Chain{
 		node:        node,
 		deliverChan: deliverChan,
