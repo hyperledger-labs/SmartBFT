@@ -398,7 +398,6 @@ func (c *Controller) deliverToApplication(d decision) {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
 			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
-		// TODO stop and remove the associated timer from the timeout-collection
 	}
 }
 

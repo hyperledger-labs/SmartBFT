@@ -99,6 +99,6 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (c *Consensus) SubmitRequest(req []byte) error {
-	c.Logger.Debugf("Submit Request")
+	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
 	return c.controller.SubmitRequest(req)
 }
