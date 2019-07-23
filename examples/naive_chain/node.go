@@ -15,12 +15,21 @@ import (
 	smartbft "github.com/SmartBFT-Go/consensus/pkg/consensus"
 	bft "github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 )
 
-type Ingress map[int]<-chan *protos.Message
-type Egress map[int]chan<- *protos.Message
+//type Ingress map[int]<-chan *smartbftprotos.Message
+//type Egress map[int]chan<- *smartbftprotos.Message
+
+type Ingress map[int]<-chan proto.Message
+type Egress map[int]chan<- proto.Message
+
+type NetworkOptions struct {
+	NumNodes     int
+	BatchSize    int
+	BatchTimeout time.Duration
+}
 
 type Node struct {
 	stopChan    chan struct{}
@@ -33,7 +42,7 @@ type Node struct {
 	consensus   *smartbft.Consensus
 }
 
-func (*Node) Sync() (protos.ViewMetadata, uint64) {
+func (*Node) Sync() (smartbftprotos.ViewMetadata, uint64) {
 	panic("implement me")
 }
 
@@ -87,7 +96,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 			Sequence: int64(atomic.LoadUint64(&n.nextSeq)),
 		}.ToBytes(),
 		Payload: BlockData{Transactions: requests}.ToBytes(),
-		Metadata: marshalOrPanic(&protos.ViewMetadata{
+		Metadata: marshalOrPanic(&smartbftprotos.ViewMetadata{
 			LatestSequence: n.nextSeq,
 			ViewId:         0, // TODO: change this when implementing view change
 		}),
@@ -102,7 +111,7 @@ func marshalOrPanic(msg proto.Message) []byte {
 	return b
 }
 
-func (n *Node) BroadcastConsensus(m *protos.Message) {
+func (n *Node) BroadcastConsensus(m *smartbftprotos.Message) {
 	for receiver, out := range n.out {
 		if n.id == uint64(receiver) {
 			continue
@@ -111,12 +120,16 @@ func (n *Node) BroadcastConsensus(m *protos.Message) {
 	}
 }
 
-func (n *Node) SendConsensus(targetID uint64, message *protos.Message) {
+func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 	n.out[int(targetID)] <- message
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
-	// TODO: Handle send transaction request
+	msg := &FwdMessage{
+		Payload: request,
+		Sender:  n.id,
+	}
+	n.out[int(targetID)] <- msg
 }
 
 func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
@@ -138,7 +151,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 	}
 }
 
-func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger) *Node {
+func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions) *Node {
 	node := &Node{
 		id:          id,
 		in:          in,
@@ -148,9 +161,9 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	}
 	node.consensus = &smartbft.Consensus{
 		SelfID:           id,
-		N:                4,
-		BatchSize:        1,
-		BatchTimeout:     10 * time.Second,
+		N:                uint64(opts.NumNodes),
+		BatchSize:        opts.BatchSize,
+		BatchTimeout:     opts.BatchTimeout,
 		Logger:           logger,
 		Comm:             node,
 		Signer:           node,
@@ -171,13 +184,18 @@ func (n *Node) Start() {
 		if uint64(id) == n.id {
 			continue
 		}
-		go func(id uint64, in <-chan *protos.Message) {
+		go func(id uint64, in <-chan proto.Message) {
 			for {
 				select {
 				case <-n.stopChan:
 					return
 				case msg := <-in:
-					n.consensus.HandleMessage(id, msg)
+					switch msg.(type) {
+					case *smartbftprotos.Message:
+						n.consensus.HandleMessage(id, msg.(*smartbftprotos.Message))
+					case *FwdMessage:
+						n.consensus.SubmitRequest(msg.(*FwdMessage).Payload)
+					}
 				}
 			}
 		}(uint64(id), in)

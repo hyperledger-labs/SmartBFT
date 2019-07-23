@@ -8,8 +8,10 @@ package naive
 import (
 	"fmt"
 	"testing"
+	"time"
 
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
+
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -67,7 +69,7 @@ func TestBlockHeader(t *testing.T) {
 func TestChain(t *testing.T) {
 	blockCount := 10
 
-	chains := setupNetwork(t, 4)
+	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second})
 
 	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
@@ -88,14 +90,73 @@ func TestChain(t *testing.T) {
 	}
 }
 
-func setupNode(t *testing.T, id int, n int, network map[int]map[int]chan *protos.Message) *Chain {
+func TestChainPartialSubmissions(t *testing.T) {
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	txCount := 20
+	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 2, BatchTimeout: 1 * time.Second})
+
+	txMap := make(map[Transaction]bool)
+	for txSqn := 0; txSqn < txCount; txSqn++ {
+		// Each tx to a different chain
+		chain := chains[txSqn%len(chains)]
+
+		tx := Transaction{
+			ClientID: "alice",
+			Id:       fmt.Sprintf("tx%d", txSqn),
+		}
+		err := chain.Order(tx)
+		txMap[tx] = true
+		assert.NoError(t, err)
+	}
+
+	txByChain := make(map[int][]Transaction)
+	var blockSqn uint64 = 0
+	for txNum := 0; txNum < txCount; {
+		numTxInBlock := 0
+		for i, chain := range chains {
+			block := chain.Listen()
+			numTxInBlock = len(block.Transactions)
+			for _, tx := range block.Transactions {
+				txByChain[i] = append(txByChain[i], tx)
+			}
+
+			assert.Equal(t, blockSqn, block.Sequence)
+		}
+		txNum += numTxInBlock
+		blockSqn++
+	}
+
+	// all the chains must have the same tx sequence
+	for i, chainTxs := range txByChain {
+		if i == 0 {
+			continue
+		}
+		assert.Equal(t, chainTxs, txByChain[0])
+	}
+
+	// all tx's arrived
+	assert.Equal(t, txCount, len(txByChain[0]))
+	txMapResult := make(map[Transaction]bool)
+	for _, tx := range txByChain[0] {
+		logger.Infof("Tx: %v", tx)
+		txMapResult[tx] = true
+	}
+
+	assert.Equal(t, txMap, txMapResult)
+}
+
+func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int]chan proto.Message) *Chain {
 	ingress := make(Ingress)
-	for from := 0; from < n; from++ {
+	for from := 0; from < opt.NumNodes; from++ {
 		ingress[from] = network[id][from]
 	}
 
 	egress := make(Egress)
-	for to := 0; to < n; to++ {
+	for to := 0; to < opt.NumNodes; to++ {
 		egress[to] = network[to][id]
 	}
 
@@ -103,25 +164,25 @@ func setupNode(t *testing.T, id int, n int, network map[int]map[int]chan *protos
 	assert.NoError(t, err)
 	logger := basicLog.Sugar()
 
-	chain := NewChain(uint64(id), ingress, egress, logger)
+	chain := NewChain(uint64(id), ingress, egress, logger, opt)
 
 	return chain
 }
 
-func setupNetwork(t *testing.T, n int) map[int]*Chain {
-	network := make(map[int]map[int]chan *protos.Message)
+func setupNetwork(t *testing.T, opt NetworkOptions) map[int]*Chain {
+	network := make(map[int]map[int]chan proto.Message)
 
 	chains := make(map[int]*Chain)
 
-	for id := 0; id < n; id++ {
-		network[id] = make(map[int]chan *protos.Message)
-		for i := 0; i < n; i++ {
-			network[id][i] = make(chan *protos.Message)
+	for id := 0; id < opt.NumNodes; id++ {
+		network[id] = make(map[int]chan proto.Message)
+		for i := 0; i < opt.NumNodes; i++ {
+			network[id][i] = make(chan proto.Message)
 		}
 	}
 
-	for id := 0; id < n; id++ {
-		chains[id] = setupNode(t, id, n, network)
+	for id := 0; id < opt.NumNodes; id++ {
+		chains[id] = setupNode(t, id, opt, network)
 	}
 	return chains
 }
