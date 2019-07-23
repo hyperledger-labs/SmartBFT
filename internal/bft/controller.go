@@ -275,6 +275,7 @@ func (c *Controller) run() {
 		select {
 		case d := <-c.decisionChan:
 			c.deliverToApplication(d)
+			c.decisionChan <- d
 			c.maybePruneRevokedRequests()
 			if iAm, _ := c.iAmTheLeader(); iAm {
 				c.acquireLeaderToken()
@@ -388,6 +389,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 		requests:   requests,
 		signatures: signatures,
 	}
+	<-c.decisionChan
 }
 
 func (c *Controller) deliverToApplication(d decision) {
