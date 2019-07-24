@@ -399,7 +399,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 		requests:   requests,
 		signatures: signatures,
 	}
-	<-c.decisionChan
+	<-c.decisionChan //TODO this a confusing pattern, replace with a "Future" or another channel.
 }
 
 func (c *Controller) deliverToApplication(d decision) {

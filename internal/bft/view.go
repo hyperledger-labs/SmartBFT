@@ -78,7 +78,7 @@ type View struct {
 	abortChan chan struct{}
 }
 
-func (v *View) Start() Future {
+func (v *View) Start() Future { //TODO the future should be return by Close() or implemented by View itself
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.abortChan = make(chan struct{})
 
@@ -245,7 +245,7 @@ func (v *View) doPhase() {
 		v.Comm.BroadcastConsensus(v.lastBroadcastSent)
 		v.Phase = v.prepared()
 	default:
-		v.Phase = v.processProposal()
+		v.Phase = v.processProposal() //TODO address all phases explicitly, and panic on default
 	}
 }
 
@@ -375,7 +375,7 @@ func (v *View) processPrepares() Phase {
 				Signature: &protos.Signature{
 					Signer: v.myProposalSig.Id,
 					Value:  v.myProposalSig.Value,
-					Msg:    v.myProposalSig.Msg,
+					Msg:    v.myProposalSig.Msg, // TODO this contains the proposal, check whether we need this, because it will be broadcast by all: O(N^2)
 				},
 			},
 		},
