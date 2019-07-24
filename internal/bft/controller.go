@@ -107,6 +107,16 @@ func (c *Controller) leaderID() uint64 {
 	return c.getCurrentViewNumber() % c.N
 }
 
+// computeQuorum calculates the quorums size Q, given a cluster size N.
+//
+// The calculation satisfies the following:
+// Given a cluster size of N nodes, which tolerates f failures according to:
+//    f = argmax ( N >= 3f+1 )
+// Q is the size of the quorum such that:
+//    any two subsets q1, q2 of size Q, intersect in at least f+1 nodes.
+//
+// Note that this is different from N-f (the number of correct nodes), when N=3f+3. That is, we have two extra nodes
+// above the minimum required to tolerate f failures.
 func (c *Controller) computeQuorum() int {
 	f := int((int(c.N) - 1) / 3)
 	q := int(math.Ceil((float64(c.N) + float64(f) + 1) / 2.0))
