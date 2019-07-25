@@ -12,15 +12,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkg/errors"
-
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/pkg/errors"
 	"golang.org/x/sync/semaphore"
 )
 
 const (
-	DefaultRequestTimeoutMillis = 60000
+	DefaultRequestTimeout = 60000 * time.Millisecond
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
@@ -71,13 +70,13 @@ type PoolOptions struct {
 // NewPool constructs new requests pool
 func NewPool(log api.Logger, inspector api.RequestInspector, options PoolOptions) *Pool {
 	if options.RequestTimeout == 0 {
-		options.RequestTimeout = DefaultRequestTimeoutMillis * time.Millisecond
+		options.RequestTimeout = DefaultRequestTimeout
 	}
 	if options.LeaderFwdTimeout == 0 {
-		options.LeaderFwdTimeout = DefaultRequestTimeoutMillis * time.Millisecond
+		options.LeaderFwdTimeout = DefaultRequestTimeout
 	}
 	if options.AutoRemoveTimeout == 0 {
-		options.AutoRemoveTimeout = DefaultRequestTimeoutMillis * time.Millisecond
+		options.AutoRemoveTimeout = DefaultRequestTimeout
 	}
 
 	return &Pool{
