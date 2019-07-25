@@ -12,9 +12,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/pkg/errors"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
-	"github.com/pkg/errors"
 	"golang.org/x/sync/semaphore"
 )
 
@@ -42,14 +43,16 @@ type RequestTimeoutHandler interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger         api.Logger
-	inspector      api.RequestInspector
+	logger    api.Logger
+	inspector api.RequestInspector
+	options   PoolOptions
+
+	lock           sync.Mutex
 	fifo           *list.List
 	semaphore      *semaphore.Weighted
-	lock           sync.Mutex
 	existMap       map[types.RequestInfo]*list.Element
 	timeoutHandler RequestTimeoutHandler
-	options        PoolOptions
+	stopped        bool
 }
 
 // requestItem captures request related information
@@ -95,12 +98,16 @@ func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
 func (rp *Pool) Submit(request []byte) error {
 	reqInfo := rp.inspector.RequestID(request)
 
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	if rp.stopped {
+		return fmt.Errorf("pool stopped, request rejected: %s", reqInfo)
+	}
+
 	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
-
-	rp.lock.Lock()
-	defer rp.lock.Unlock()
 
 	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
@@ -229,8 +236,44 @@ func (rp *Pool) Close() {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
+	rp.stopped = true
+
 	for requestInfo, element := range rp.existMap {
 		_ = rp.deleteRequest(element, requestInfo)
+	}
+}
+
+// StopTimers stops all the timeout timers attached to the pending requests, and marks the pool as "stopped".
+// This which prevents submission of new requests, and renewal of timeouts by timer go-routines that where running
+// at the time of the call to StopTimers().
+func (rp *Pool) StopTimers() {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	rp.stopped = true
+
+	for _, element := range rp.existMap {
+		item := element.Value.(*requestItem)
+		item.timeout.Stop()
+	}
+}
+
+// RestartTimers restarts all the timeout timers attached to the pending requests, as RequestTimeout, and re-allows
+// submission of new requests.
+func (rp *Pool) RestartTimers() {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	rp.stopped = false
+
+	for reqInfo, element := range rp.existMap {
+		item := element.Value.(*requestItem)
+		item.timeout.Stop()
+		to := time.AfterFunc(
+			rp.options.RequestTimeout,
+			func() { rp.onRequestTO(item.request, reqInfo) },
+		)
+		item.timeout = to
 	}
 }
 
@@ -259,6 +302,11 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 		return
 	}
 
+	if rp.stopped {
+		rp.logger.Debugf("Pool stopped, will NOT start a leader-forwarding timeout")
+		return
+	}
+
 	//start a second timeout
 	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
@@ -283,6 +331,11 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	element, contains := rp.existMap[reqInfo]
 	if !contains {
 		rp.logger.Debugf("Request %s no longer in pool", reqInfo)
+		return
+	}
+
+	if rp.stopped {
+		rp.logger.Debugf("Pool stopped, will NOT start auto-remove timeout")
 		return
 	}
 
