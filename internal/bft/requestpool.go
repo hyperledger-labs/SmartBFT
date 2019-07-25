@@ -224,6 +224,16 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 	return nil
 }
 
+// Close removes all the requests, stops all the timeout timers.
+func (rp *Pool) Close() {
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
+
+	for requestInfo, element := range rp.existMap {
+		_ = rp.deleteRequest(element, requestInfo)
+	}
+}
+
 func (rp *Pool) contains(reqInfo types.RequestInfo) bool {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
