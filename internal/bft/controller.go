@@ -41,6 +41,7 @@ type RequestPool interface {
 	Size() int
 	NextRequests(n int) [][]byte
 	RemoveRequest(request types.RequestInfo) error
+	Close()
 }
 
 type Future interface {
@@ -378,6 +379,7 @@ func (c *Controller) Stop() {
 	}
 
 	c.Batcher.Close()
+	c.RequestPool.Close()
 
 	// Drain the leader token if we hold it.
 	select {

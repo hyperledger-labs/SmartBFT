@@ -31,8 +31,11 @@ func TestControllerBasic(t *testing.T) {
 	app.On("Deliver", mock.Anything, mock.Anything)
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	pool := &mocks.RequestPool{}
+	pool.On("Close")
 	controller := bft.Controller{
 		Batcher:     batcher,
+		RequestPool: pool,
 		ID:          4, // not the leader
 		N:           4,
 		Logger:      log,
@@ -76,11 +79,14 @@ func TestQuorum(t *testing.T) {
 			})).Sugar()
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
+			pool := &mocks.RequestPool{}
+			pool.On("Close")
 			controller := bft.Controller{
-				Batcher: batcher,
-				ID:      2, // not the leader
-				N:       testCase.N,
-				Logger:  log,
+				Batcher:     batcher,
+				RequestPool: pool,
+				ID:          2, // not the leader
+				N:           testCase.N,
+				Logger:      log,
 			}
 			end := controller.Start(1, 0)
 			<-verifyLog
@@ -104,12 +110,14 @@ func TestControllerLeaderBasic(t *testing.T) {
 			batcherChan <- struct{}{}
 		})
 	}).Return([][]byte{})
-
+	pool := &mocks.RequestPool{}
+	pool.On("Close")
 	controller := bft.Controller{
-		ID:      1, // the leader
-		N:       4,
-		Logger:  log,
-		Batcher: batcher,
+		RequestPool: pool,
+		ID:          1, // the leader
+		N:           4,
+		Logger:      log,
+		Batcher:     batcher,
 	}
 	end := controller.Start(1, 0)
 	<-batcherChan
@@ -159,6 +167,7 @@ func TestLeaderPropose(t *testing.T) {
 	})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
+	reqPool.On("Close")
 	controller := bft.Controller{
 		RequestPool: reqPool,
 		WAL:         &wal.EphemeralWAL{},
@@ -232,6 +241,8 @@ func TestLeaderChange(t *testing.T) {
 	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
 		fdWG.Done()
 	})
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Close")
 	controller := bft.Controller{
 		WAL:             &wal.EphemeralWAL{},
 		ID:              2, // the next leader
@@ -243,6 +254,7 @@ func TestLeaderChange(t *testing.T) {
 		Comm:            comm,
 		Synchronizer:    synchronizer,
 		FailureDetector: fd,
+		RequestPool:     reqPool,
 	}
 	end := controller.Start(1, 0)
 

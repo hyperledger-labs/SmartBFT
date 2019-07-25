@@ -10,6 +10,11 @@ type RequestPool struct {
 	mock.Mock
 }
 
+// Close provides a mock function with given fields:
+func (_m *RequestPool) Close() {
+	_m.Called()
+}
+
 // NextRequests provides a mock function with given fields: n
 func (_m *RequestPool) NextRequests(n int) [][]byte {
 	ret := _m.Called(n)

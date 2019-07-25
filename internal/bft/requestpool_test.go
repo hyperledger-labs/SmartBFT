@@ -35,6 +35,7 @@ func TestReqPoolBasic(t *testing.T) {
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+	defer pool.Close()
 	pool.SetTimeoutHandler(timeoutHandler)
 
 	assert.Equal(t, 0, pool.Size())
@@ -130,6 +131,7 @@ func TestEventuallySubmit(t *testing.T) {
 	insp := &testRequestInspector{}
 	timeoutHandler := &mocks.RequestTimeoutHandler{}
 	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
+	defer pool.Close()
 	pool.SetTimeoutHandler(timeoutHandler)
 
 	wg := sync.WaitGroup{}
@@ -173,6 +175,7 @@ func TestReqPoolPrune(t *testing.T) {
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "bar")
 	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+	defer pool.Close()
 	pool.SetTimeoutHandler(timeoutHandler)
 
 	assert.Equal(t, 0, pool.Size())
@@ -231,6 +234,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				AutoRemoveTimeout: time.Hour,
 			},
 		)
+		defer pool.Close()
 		pool.SetTimeoutHandler(timeoutHandler)
 
 		assert.Equal(t, 0, pool.Size())
@@ -275,6 +279,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				AutoRemoveTimeout: time.Hour,
 			},
 		)
+		defer pool.Close()
 		pool.SetTimeoutHandler(timeoutHandler)
 
 		assert.Equal(t, 0, pool.Size())
@@ -321,6 +326,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				AutoRemoveTimeout: 10 * time.Millisecond,
 			},
 		)
+		defer pool.Close()
 		pool.SetTimeoutHandler(timeoutHandler)
 
 		assert.Equal(t, 0, pool.Size())
