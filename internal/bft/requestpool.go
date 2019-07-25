@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	DefaultRequestTimeoutMillis = 10000
+	DefaultRequestTimeoutMillis = 60000
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
