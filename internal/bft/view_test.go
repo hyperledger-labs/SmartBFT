@@ -420,7 +420,7 @@ func TestBadPrepare(t *testing.T) {
 	end.Wait()
 
 	view.ProposalSequence = 0
-
+	view.Phase = bft.COMMITTED
 	end = view.Start()
 
 	commWG.Add(1)

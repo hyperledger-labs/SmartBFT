@@ -239,13 +239,17 @@ func (v *View) run() {
 func (v *View) doPhase() {
 	switch v.Phase {
 	case PROPOSED:
-		v.Comm.BroadcastConsensus(v.lastBroadcastSent)
+		v.Comm.BroadcastConsensus(v.lastBroadcastSent) // broadcast here serves also recovery
 		v.Phase = v.processPrepares()
 	case PREPARED:
 		v.Comm.BroadcastConsensus(v.lastBroadcastSent)
 		v.Phase = v.prepared()
+	case COMMITTED:
+		v.Phase = v.processProposal()
+	case ABORT:
+		return
 	default:
-		v.Phase = v.processProposal() //TODO address all phases explicitly, and panic on default
+		v.Logger.Panicf("Unknown phase in view : %v", v)
 	}
 }
 
@@ -260,7 +264,7 @@ func (v *View) prepared() Phase {
 
 	v.Logger.Infof("%d processed commits for proposal with seq %d", v.SelfID, seq)
 
-	v.maybeDecide(proposal, signatures, v.inFlightRequests)
+	v.decide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED
 }
 
@@ -375,7 +379,7 @@ func (v *View) processPrepares() Phase {
 				Signature: &protos.Signature{
 					Signer: v.myProposalSig.Id,
 					Value:  v.myProposalSig.Value,
-					Msg:    v.myProposalSig.Msg, // TODO this contains the proposal, check whether we need this, because it will be broadcast by all: O(N^2)
+					Msg:    v.myProposalSig.Msg, // some information about the proposal that was signed (not the entire proposal)
 				},
 			},
 		},
@@ -530,10 +534,10 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 	}
 }
 
-func (v *View) maybeDecide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	seq := v.ProposalSequence
-	v.Logger.Infof("Deciding on seq %d", seq)
+func (v *View) decide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	// first make preparations for the next sequence so that the view will be ready to continue right after delivery
 	v.startNextSeq()
+	v.Logger.Infof("Deciding on seq %d", v.ProposalSequence)
 	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures, requests)
 }
@@ -578,7 +582,7 @@ func (v *View) GetMetadata() []byte {
 	}
 	metadata, err := proto.Marshal(md)
 	if err != nil {
-		v.Logger.Panicf("Faild marshaling metadata: %v")
+		v.Logger.Panicf("Failed marshaling metadata: %v", err)
 	}
 	return metadata
 }

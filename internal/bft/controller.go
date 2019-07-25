@@ -77,6 +77,7 @@ type Controller struct {
 
 	stopChan             chan struct{}
 	decisionChan         chan decision
+	deliverChan          chan struct{}
 	leaderToken          chan struct{}
 	verificationSequence uint64
 }
@@ -284,8 +285,10 @@ func (c *Controller) run() {
 	for {
 		select {
 		case d := <-c.decisionChan:
-			c.deliverToApplication(d)
-			c.decisionChan <- d
+			c.Application.Deliver(d.proposal, d.signatures)
+			c.Logger.Debugf("Node %d delivered proposal", c.ID)
+			c.removeDeliveredFromPool(d)
+			c.deliverChan <- struct{}{}
 			c.maybePruneRevokedRequests()
 			if iAm, _ := c.iAmTheLeader(); iAm {
 				c.acquireLeaderToken()
@@ -347,6 +350,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
+	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo)
 	c.quorum = c.computeQuorum()
 	c.currViewNumber = startViewNumber
@@ -399,13 +403,10 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 		requests:   requests,
 		signatures: signatures,
 	}
-	<-c.decisionChan //TODO this a confusing pattern, replace with a "Future" or another channel.
+	<-c.deliverChan // wait for the delivery of the decision to the application
 }
 
-func (c *Controller) deliverToApplication(d decision) {
-	c.Application.Deliver(d.proposal, d.signatures)
-	c.Logger.Debugf("Node %d delivered proposal", c.ID)
-
+func (c *Controller) removeDeliveredFromPool(d decision) {
 	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
 			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
