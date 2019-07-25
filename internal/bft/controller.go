@@ -41,6 +41,8 @@ type RequestPool interface {
 	Size() int
 	NextRequests(n int) [][]byte
 	RemoveRequest(request types.RequestInfo) error
+	StopTimers()
+	RestartTimers()
 	Close()
 }
 

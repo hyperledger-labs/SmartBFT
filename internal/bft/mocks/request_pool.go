@@ -50,6 +50,11 @@ func (_m *RequestPool) RemoveRequest(request types.RequestInfo) error {
 	return r0
 }
 
+// RestartTimers provides a mock function with given fields:
+func (_m *RequestPool) RestartTimers() {
+	_m.Called()
+}
+
 // Size provides a mock function with given fields:
 func (_m *RequestPool) Size() int {
 	ret := _m.Called()
@@ -62,6 +67,11 @@ func (_m *RequestPool) Size() int {
 	}
 
 	return r0
+}
+
+// StopTimers provides a mock function with given fields:
+func (_m *RequestPool) StopTimers() {
+	_m.Called()
 }
 
 // Submit provides a mock function with given fields: request
