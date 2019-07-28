@@ -31,96 +31,116 @@ func TestReqPoolBasic(t *testing.T) {
 	log := basicLog.Sugar()
 
 	insp := &testRequestInspector{}
-	timeoutHandler := &mocks.RequestTimeoutHandler{}
-
 	byteReq1 := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
-	defer pool.Close()
-	pool.SetTimeoutHandler(timeoutHandler)
 
-	assert.Equal(t, 0, pool.Size())
-	err = pool.Submit(byteReq1)
-	assert.NoError(t, err)
-	assert.Equal(t, 1, pool.Size())
-	req1 := types.RequestInfo{
-		ID:       "1",
-		ClientID: "1",
-	}
-	err = pool.Submit(byteReq1)
-	assert.Error(t, err)
-	assert.Equal(t, 1, pool.Size())
-	err = pool.RemoveRequest(req1)
-	assert.NoError(t, err)
-	assert.Equal(t, 0, pool.Size())
-	err = pool.Submit(byteReq1)
-	assert.NoError(t, err)
-	assert.Equal(t, 1, pool.Size())
-	err = pool.RemoveRequest(req1)
-	assert.NoError(t, err)
-	assert.Equal(t, 0, pool.Size())
+	t.Run("create close", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-	byteReq2 := makeTestRequest("2", "2", "bar")
-	err = pool.Submit(byteReq2)
-	assert.NoError(t, err)
-	assert.Equal(t, 1, pool.Size())
-	err = pool.Submit(byteReq1)
-	assert.NoError(t, err)
-	assert.Equal(t, 2, pool.Size())
-	err = pool.Submit(byteReq1)
-	assert.Error(t, err)
-	err = pool.Submit(byteReq2)
-	assert.Error(t, err)
-	err = pool.RemoveRequest(req1)
-	assert.NoError(t, err)
-	err = pool.Submit(byteReq1)
-	assert.NoError(t, err)
-	req2 := types.RequestInfo{
-		ID:       "2",
-		ClientID: "2",
-	}
-	err = pool.RemoveRequest(req2)
-	assert.NoError(t, err)
-	err = pool.Submit(byteReq2)
-	assert.NoError(t, err)
+		pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		pool.SetTimeoutHandler(timeoutHandler)
 
-	byteReq3 := makeTestRequest("3", "3", "bog")
-	err = pool.Submit(byteReq3)
-	assert.NoError(t, err)
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+		pool.Close()
+		assert.Equal(t, 0, pool.Size())
 
-	next := pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-	assert.Equal(t, "2", insp.RequestID(next[1]).ID)
-	assert.Equal(t, "3", insp.RequestID(next[2]).ID)
-	assert.Len(t, next, 3)
+		err = pool.Submit(byteReq1)
+		assert.EqualError(t, err, "pool stopped, request rejected: {1 1}")
+	})
 
-	err = pool.RemoveRequest(req2)
-	assert.NoError(t, err)
+	t.Run("submit remove next", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-	next = pool.NextRequests(4)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-	assert.Equal(t, "3", insp.RequestID(next[1]).ID)
-	assert.Len(t, next, 2)
+		pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		defer pool.Close()
+		pool.SetTimeoutHandler(timeoutHandler)
 
-	next = pool.NextRequests(1)
-	assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-	assert.Len(t, next, 1)
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+		req1 := types.RequestInfo{
+			ID:       "1",
+			ClientID: "1",
+		}
+		err = pool.Submit(byteReq1)
+		assert.Error(t, err)
+		assert.Equal(t, 1, pool.Size())
+		err = pool.RemoveRequest(req1)
+		assert.NoError(t, err)
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+		err = pool.RemoveRequest(req1)
+		assert.NoError(t, err)
+		assert.Equal(t, 0, pool.Size())
 
-	err = pool.RemoveRequest(req1)
-	assert.NoError(t, err)
+		byteReq2 := makeTestRequest("2", "2", "bar")
+		err = pool.Submit(byteReq2)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		assert.Equal(t, 2, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.Error(t, err)
+		err = pool.Submit(byteReq2)
+		assert.Error(t, err)
+		err = pool.RemoveRequest(req1)
+		assert.NoError(t, err)
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		req2 := types.RequestInfo{
+			ID:       "2",
+			ClientID: "2",
+		}
+		err = pool.RemoveRequest(req2)
+		assert.NoError(t, err)
+		err = pool.Submit(byteReq2)
+		assert.NoError(t, err)
 
-	req3 := types.RequestInfo{
-		ID:       "3",
-		ClientID: "3",
-	}
+		byteReq3 := makeTestRequest("3", "3", "bog")
+		err = pool.Submit(byteReq3)
+		assert.NoError(t, err)
 
-	err = pool.RemoveRequest(req3)
-	assert.NoError(t, err)
+		next := pool.NextRequests(4)
+		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+		assert.Equal(t, "2", insp.RequestID(next[1]).ID)
+		assert.Equal(t, "3", insp.RequestID(next[2]).ID)
+		assert.Len(t, next, 3)
 
-	next = pool.NextRequests(1)
-	assert.Len(t, next, 0)
+		err = pool.RemoveRequest(req2)
+		assert.NoError(t, err)
 
-	timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
-	timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+		next = pool.NextRequests(4)
+		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+		assert.Equal(t, "3", insp.RequestID(next[1]).ID)
+		assert.Len(t, next, 2)
+
+		next = pool.NextRequests(1)
+		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+		assert.Len(t, next, 1)
+
+		err = pool.RemoveRequest(req1)
+		assert.NoError(t, err)
+
+		req3 := types.RequestInfo{
+			ID:       "3",
+			ClientID: "3",
+		}
+
+		err = pool.RemoveRequest(req3)
+		assert.NoError(t, err)
+
+		next = pool.NextRequests(1)
+		assert.Len(t, next, 0)
+
+		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
+		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+	})
 }
 
 func TestReqPoolCapacity(t *testing.T) {
@@ -250,6 +270,8 @@ func TestReqPoolTimeout(t *testing.T) {
 	log := basicLog.Sugar()
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
+	byteReq2 := makeTestRequest("2", "2", "foo")
+
 	insp := &testRequestInspector{}
 
 	t.Run("request timeout", func(t *testing.T) {
@@ -385,6 +407,63 @@ func TestReqPoolTimeout(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 1)
 
 		assert.Equal(t, 0, pool.Size())
+	})
+
+	t.Run("stop restart", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
+
+		toWG := &sync.WaitGroup{}
+		toWG.Add(1)
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
+			assert.Fail(t, "called OnLeaderFwdRequestTimeout")
+		}).Return()
+		timeoutHandler.On("OnRequestTimeout", byteReq2, insp.RequestID(byteReq2)).Run(func(args mock.Arguments) {
+			toWG.Done()
+		}).Return()
+
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
+			assert.Fail(t, "called OnLeaderFwdRequestTimeout")
+		}).Return()
+
+		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
+			assert.Fail(t, "called OnAutoRemoveTimeout")
+		}).Return()
+
+		pool := bft.NewPool(log, insp,
+			bft.PoolOptions{
+				QueueSize:         3,
+				RequestTimeout:    100 * time.Millisecond,
+				LeaderFwdTimeout:  time.Hour,
+				AutoRemoveTimeout: time.Hour,
+			},
+		)
+		defer pool.Close()
+		pool.SetTimeoutHandler(timeoutHandler)
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(byteReq1)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+
+		pool.StopTimers()
+		time.Sleep(500 * time.Millisecond)
+
+		err = pool.RemoveRequest(insp.RequestID(byteReq1))
+		assert.NoError(t, err)
+		err = pool.Submit(byteReq2)
+		assert.EqualError(t, err, "pool stopped, request rejected: {2 2}")
+
+		pool.RestartTimers()
+		err = pool.Submit(byteReq2)
+		assert.NoError(t, err)
+
+		toWG.Wait()
+
+		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 1)
+		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 0)
+
+		err := pool.RemoveRequest(insp.RequestID(byteReq2))
+		assert.NoError(t, err)
 	})
 }
 
