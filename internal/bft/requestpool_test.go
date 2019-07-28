@@ -455,6 +455,8 @@ func TestReqPoolTimeout(t *testing.T) {
 		pool.RestartTimers()
 		err = pool.Submit(byteReq2)
 		assert.NoError(t, err)
+		pool.StopTimers()
+		pool.RestartTimers()
 
 		toWG.Wait()
 

@@ -262,6 +262,8 @@ func (rp *Pool) StopTimers() {
 		item := element.Value.(*requestItem)
 		item.timeout.Stop()
 	}
+
+	rp.logger.Debugf("Stopped all timers: size=%d", len(rp.existMap))
 }
 
 // RestartTimers restarts all the timeout timers attached to the pending requests, as RequestTimeout, and re-allows
@@ -281,6 +283,8 @@ func (rp *Pool) RestartTimers() {
 		)
 		item.timeout = to
 	}
+
+	rp.logger.Debugf("Restarted all timers: size=%d", len(rp.existMap))
 }
 
 func (rp *Pool) contains(reqInfo types.RequestInfo) bool {
