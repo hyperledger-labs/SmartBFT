@@ -33,6 +33,8 @@ func TestControllerBasic(t *testing.T) {
 	batcher.On("Close")
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	controller := bft.Controller{
 		Batcher:     batcher,
 		RequestPool: pool,
@@ -40,6 +42,7 @@ func TestControllerBasic(t *testing.T) {
 		N:           4,
 		Logger:      log,
 		Application: app,
+		Comm:        comm,
 	}
 	end := controller.Start(1, 0)
 	controller.ViewChanged(2, 1)
@@ -81,12 +84,19 @@ func TestQuorum(t *testing.T) {
 			batcher.On("Close")
 			pool := &mocks.RequestPool{}
 			pool.On("Close")
+			commMock := &mocks.CommMock{}
+			var nodes []uint64
+			for i := 0; i < int(testCase.N); i++ {
+				nodes = append(nodes, uint64(i))
+			}
+			commMock.On("Nodes").Return(nodes)
 			controller := bft.Controller{
 				Batcher:     batcher,
 				RequestPool: pool,
 				ID:          2, // not the leader
 				N:           testCase.N,
 				Logger:      log,
+				Comm:        commMock,
 			}
 			end := controller.Start(1, 0)
 			<-verifyLog
@@ -112,12 +122,16 @@ func TestControllerLeaderBasic(t *testing.T) {
 	}).Return([][]byte{})
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
+	commMock := &mocks.CommMock{}
+	commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
+
 	controller := bft.Controller{
 		RequestPool: pool,
 		ID:          1, // the leader
 		N:           4,
 		Logger:      log,
 		Batcher:     batcher,
+		Comm:        commMock,
 	}
 	end := controller.Start(1, 0)
 	<-batcherChan
@@ -155,9 +169,10 @@ func TestLeaderPropose(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
+	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    1,
+		Id:    17,
 		Value: []byte{4},
 	})
 	app := &mocks.ApplicationMock{}
@@ -168,10 +183,11 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
+
 	controller := bft.Controller{
 		RequestPool: reqPool,
 		WAL:         &wal.EphemeralWAL{},
-		ID:          1, // the leader
+		ID:          17, // the leader
 		N:           4,
 		Logger:      log,
 		Batcher:     batcher,
@@ -193,10 +209,10 @@ func TestLeaderPropose(t *testing.T) {
 	controller.ProcessMessages(2, commit2)
 	commit3 := proto.Clone(commit2).(*protos.Message)
 	commit3Get := commit3.GetCommit()
-	commit3Get.Signature.Signer = 3
+	commit3Get.Signature.Signer = 23
 	appWG.Add(1)  // deliver
 	commWG.Add(2) // next proposal
-	controller.ProcessMessages(3, commit3)
+	controller.ProcessMessages(23, commit3)
 	appWG.Wait()
 	commWG.Wait()
 
@@ -231,6 +247,7 @@ func TestLeaderChange(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	synchronizer := &mocks.SynchronizerMock{}
 	syncWG := &sync.WaitGroup{}
 	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
