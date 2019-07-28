@@ -42,10 +42,6 @@ func (c *Consensus) Complain() {
 	panic("implement me")
 }
 
-func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
-	panic("implement me")
-}
-
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
 	c.Application.Deliver(proposal, signatures)
 }
@@ -79,7 +75,7 @@ func (c *Consensus) Start() Future {
 		Assembler:        c.Assembler,
 		Application:      c,
 		FailureDetector:  c,
-		Synchronizer:     c,
+		Synchronizer:     c.Synchronizer,
 		Comm:             c.Comm,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
