@@ -93,26 +93,33 @@ func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
 	rp.timeoutHandler = handler
 }
 
-// Submit a request into the pool, returns an error when request is already in the pool
-func (rp *Pool) Submit(request []byte) error {
-	reqInfo := rp.inspector.RequestID(request)
-
+func (rp *Pool) isStopped() bool {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
-	if rp.stopped {
-		return fmt.Errorf("pool stopped, request rejected: %s", reqInfo)
+	return rp.stopped
+}
+
+// Submit a request into the pool, returns an error when request is already in the pool
+func (rp *Pool) Submit(request []byte) error {
+	reqInfo := rp.inspector.RequestID(request)
+	if rp.isStopped() {
+		return errors.Errorf("pool stopped, request rejected: %s", reqInfo)
 	}
 
+	// do not wait for a semaphore with a lock, as it will prevent draining the pool.
 	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
+
+	rp.lock.Lock()
+	defer rp.lock.Unlock()
 
 	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
 		errStr := fmt.Sprintf("request %s already exists in the pool", reqInfo)
 		rp.logger.Errorf(errStr)
-		return fmt.Errorf(errStr)
+		return errors.New(errStr)
 	}
 
 	to := time.AfterFunc(
