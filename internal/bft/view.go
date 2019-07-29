@@ -7,7 +7,6 @@ package bft
 
 import (
 	"fmt"
-	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -24,6 +23,8 @@ const (
 	PREPARED
 	ABORT
 )
+
+var ErrAbortView = errors.New("abort view")
 
 //go:generate mockery -dir . -name State -case underscore -output ./mocks/
 
@@ -80,27 +81,21 @@ type View struct {
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
 
-	abortChan chan struct{}
+	abortChan chan struct{} // read by run() go-routine, closed by external closer
+	doneChan  chan struct{} // closed by run() go-routine, read by external closer
 }
 
-func (v *View) Start() Future { //TODO the future should be return by Close() or implemented by View itself
+func (v *View) Start() {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.abortChan = make(chan struct{})
-
-	var viewEnds sync.WaitGroup
-	viewEnds.Add(1)
+	v.doneChan = make(chan struct{})
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
 
 	v.setupVotes()
 
-	go func() {
-		defer viewEnds.Done()
-		v.run()
-	}()
-
-	return &viewEnds
+	go v.run()
 }
 
 func (v *View) setupVotes() {
@@ -152,36 +147,37 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 	}
 }
 
-func (v *View) processMsg(sender uint64, m *protos.Message) {
+func (v *View) processMsg(sender uint64, m *protos.Message) error {
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
-		v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
+		senderIsLeader := sender == v.LeaderID
+		v.Logger.Warnf("%d got message %v from %d (leader=%v) of view %d, expected view %d", v.SelfID, m, sender, senderIsLeader, msgViewNum, v.Number)
 		// TODO  when do we send the error message?
-		if sender != v.LeaderID {
-			return
+		if !senderIsLeader {
+			return nil
 		}
 		v.FailureDetector.Complain()
 		// Else, we got a message with a wrong view from the leader.
 		if msgViewNum > v.Number {
 			v.Sync.Sync()
 		}
-		v.Abort()
-		return
+
+		return ErrAbortView
 	}
 
 	msgProposalSeq := proposalSequence(m)
 
 	if msgProposalSeq == v.ProposalSequence-1 && v.ProposalSequence > 0 {
 		v.handlePrevSeqMessage(msgProposalSeq, sender, m)
-		return
+		return nil
 	}
 
 	v.Logger.Debugf("%d got message %v from %d with seq %d", v.SelfID, m, sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
-		return
+		return nil
 	}
 
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
@@ -189,24 +185,24 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	if pp := m.GetPrePrepare(); pp != nil {
 		if pp.Proposal == nil {
 			v.Logger.Warnf("%d got pre-prepare from %d with empty proposal", v.SelfID, sender)
-			return
+			return nil
 		}
 		if sender != v.LeaderID {
 			v.Logger.Warnf("%d got pre-prepare from %d but the leader is %d", v.SelfID, sender, v.LeaderID)
-			return
+			return nil
 		}
 		if msgForNextProposal {
 			v.nextPrePrepare <- m
 		} else {
 			v.prePrepare <- m
 		}
-		return
+		return nil
 	}
 
 	// Else, it's a prepare or a commit.
 	// Ignore votes from ourselves.
 	if sender == v.SelfID {
-		return
+		return nil
 	}
 
 	if prp := m.GetPrepare(); prp != nil {
@@ -215,7 +211,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		} else {
 			v.prepares.registerVote(sender, m)
 		}
-		return
+		return nil
 	}
 
 	if cmt := m.GetCommit(); cmt != nil {
@@ -224,19 +220,36 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		} else {
 			v.commits.registerVote(sender, m)
 		}
-		return
+		return nil
 	}
+
+	return errors.Errorf("Unexpected message: %v; sender: %d", m, sender)
 }
 
 func (v *View) run() {
+	defer func() {
+		v.Logger.Infof("Exiting")
+		close(v.doneChan)
+	}()
+
 	for {
 		select {
 		case <-v.abortChan:
 			return
 		case msg := <-v.incMsgs:
-			v.processMsg(msg.sender, msg.Message)
+			err := v.processMsg(msg.sender, msg.Message)
+			if err == ErrAbortView {
+				return
+			}
+			if err != nil {
+				v.Logger.Warnf("error processing incoming message, ignoring; sender: %d, message: %v, error: %s",
+					msg.sender, msg.Message, err)
+			}
 		default:
 			v.doPhase()
+			if v.Phase == ABORT {
+				return
+			}
 		}
 	}
 }
@@ -291,7 +304,14 @@ func (v *View) processProposal() Phase {
 		case <-v.abortChan:
 			return ABORT
 		case msg := <-v.incMsgs:
-			v.processMsg(msg.sender, msg.Message)
+			err := v.processMsg(msg.sender, msg.Message)
+			if err == ErrAbortView {
+				return ABORT
+			}
+			if err != nil {
+				v.Logger.Warnf("error processing incoming message, ignoring; sender: %d, message: %v, error: %s",
+					msg.sender, msg.Message, err)
+			}
 		case msg := <-v.prePrepare:
 			gotPrePrepare = true
 			receivedProposal = msg
@@ -310,7 +330,6 @@ func (v *View) processProposal() Phase {
 		v.Logger.Warnf("%d received bad proposal from %d: %v", v.SelfID, v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.Sync()
-		v.Abort()
 		return ABORT
 	}
 
@@ -355,7 +374,16 @@ func (v *View) processPrepares() Phase {
 		case <-v.abortChan:
 			return ABORT
 		case msg := <-v.incMsgs:
-			v.processMsg(msg.sender, msg.Message)
+			err := v.processMsg(msg.sender, msg.Message)
+			if err == ErrAbortView {
+				v.Logger.Warnf("Error processing incoming message; sender: %d, message: %v, error: %s",
+					msg.sender, msg.Message, err)
+				return ABORT
+			}
+			if err != nil {
+				v.Logger.Warnf("Error processing incoming message, ignoring; sender: %d, message: %v, error: %s",
+					msg.sender, msg.Message, err)
+			}
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
@@ -418,7 +446,14 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		case <-v.abortChan:
 			return nil, ABORT
 		case msg := <-v.incMsgs:
-			v.processMsg(msg.sender, msg.Message)
+			err := v.processMsg(msg.sender, msg.Message)
+			if err == ErrAbortView {
+				return nil, ABORT
+			}
+			if err != nil {
+				v.Logger.Warnf("error processing incoming message, ignoring; sender: %d, message: %v, error: %s",
+					msg.sender, msg.Message, err)
+			}
 		case vote := <-v.commits.votes:
 			// Valid votes end up written into the 'validVotes' channel.
 			go func(vote *protos.Message) {
@@ -615,14 +650,31 @@ func (v *View) Propose(proposal types.Proposal) {
 	v.Logger.Debugf("Proposing proposal sequence %d", seq)
 }
 
-// Abort forces the view to end
+// Abort forces the view to end, signals the go routine to finish, and wait for it to finish.
 func (v *View) Abort() {
 	select {
 	case <-v.abortChan:
-		// already aborted
-		return
+		// already aborted, but lets wait for the go routine to finish
+		break
 	default:
 		close(v.abortChan)
+	}
+	// wait for the run() go routine to finish and close this channel.
+	<-v.doneChan
+}
+
+func (v *View) Done() {
+	select {
+	case <-v.doneChan:
+	}
+}
+
+func (v *View) IsDone() bool {
+	select {
+	case <-v.doneChan:
+		return true
+	default:
+		return false
 	}
 }
 

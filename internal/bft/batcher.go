@@ -64,7 +64,12 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 func (b *Bundler) Close() {
 	b.closeLock.Lock()
 	defer b.closeLock.Unlock()
-	close(b.CloseChan)
+	select {
+	case <-b.CloseChan:
+		return
+	default:
+		close(b.CloseChan)
+	}
 }
 
 // Reset resets the remainder and reopens the close channel to allow calling NextBatch

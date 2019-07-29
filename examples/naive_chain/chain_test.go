@@ -88,6 +88,10 @@ func TestChain(t *testing.T) {
 			assert.Equal(t, []Transaction{{Id: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
 		}
 	}
+
+	for _, chain := range chains {
+		chain.node.Stop()
+	}
 }
 
 func TestChainPartialSubmissions(t *testing.T) {

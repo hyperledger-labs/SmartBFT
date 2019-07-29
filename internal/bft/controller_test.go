@@ -46,13 +46,12 @@ func TestControllerBasic(t *testing.T) {
 		Comm:        comm,
 	}
 	configureProposerBuilder(controller)
-
-	end := controller.Start(1, 0)
+	err = controller.Start(1, 0)
+	assert.NoError(t, err)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
 	controller.Stop()
 	controller.Stop()
-	end.Wait()
 }
 
 func TestQuorum(t *testing.T) {
@@ -103,10 +102,10 @@ func TestQuorum(t *testing.T) {
 			}
 			configureProposerBuilder(controller)
 
-			end := controller.Start(1, 0)
+			err = controller.Start(1, 0)
+			assert.NoError(t, err)
 			<-verifyLog
 			controller.Stop()
-			end.Wait()
 		})
 	}
 
@@ -139,11 +138,10 @@ func TestControllerLeaderBasic(t *testing.T) {
 		Comm:        commMock,
 	}
 	configureProposerBuilder(controller)
-
-	end := controller.Start(1, 0)
+	err = controller.Start(1, 0)
+	assert.NoError(t, err)
 	<-batcherChan
 	controller.Stop()
-	end.Wait()
 	batcher.AssertCalled(t, "NextBatch")
 }
 
@@ -207,7 +205,8 @@ func TestLeaderPropose(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	commWG.Add(2)
-	end := controller.Start(1, 0)
+	err = controller.Start(1, 0)
+	assert.NoError(t, err)
 	commWG.Wait() // propose
 
 	commWG.Add(1)
@@ -226,7 +225,6 @@ func TestLeaderPropose(t *testing.T) {
 	commWG.Wait()
 
 	controller.Stop()
-	end.Wait()
 	app.AssertNumberOfCalls(t, "Deliver", 1)
 }
 
@@ -284,7 +282,8 @@ func TestLeaderChange(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	end := controller.Start(1, 0)
+	err = controller.Start(1, 0)
+	assert.NoError(t, err)
 
 	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
 	prePrepareWrongViewGet := prePrepareWrongView.GetPrePrepare()
@@ -306,7 +305,6 @@ func TestLeaderChange(t *testing.T) {
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
-	end.Wait()
 }
 
 func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int) *bft.View {

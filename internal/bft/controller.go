@@ -46,13 +46,9 @@ type RequestPool interface {
 	Close()
 }
 
-type Future interface {
-	Wait()
-}
-
 type Proposer interface {
 	Propose(proposal types.Proposal)
-	Start() Future
+	Start()
 	Abort()
 	GetMetadata() []byte
 	HandleMessage(sender uint64, m *protos.Message)
@@ -90,9 +86,10 @@ type Controller struct {
 	currViewNumber     uint64
 
 	viewChange chan viewInfo
-	viewEnd    Future
 
-	stopChan             chan struct{}
+	stopChan chan struct{}
+	doneChan chan struct{}
+
 	decisionChan         chan decision
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
@@ -203,11 +200,11 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
-func (c *Controller) startView(proposalSequence uint64) Future {
+func (c *Controller) startView(proposalSequence uint64) {
 	// TODO view builder according to metadata returned by sync
 	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
 	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
-	return c.currView.Start()
+	c.currView.Start()
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
@@ -223,11 +220,8 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	// Kill current view
 	c.Logger.Debugf("Aborting current view with number %d", latestView)
 	c.currView.Abort()
-
-	// Wait for previous view to finish
-	c.viewEnd.Wait()
 	c.setCurrentViewNumber(newViewNumber)
-	c.viewEnd = c.startView(newProposalSequence)
+	c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
 	if iAm, _ := c.iAmTheLeader(); iAm {
@@ -279,7 +273,7 @@ func (c *Controller) run() {
 	defer func() {
 		c.Logger.Infof("Exiting")
 		c.currView.Abort()
-		c.viewEnd.Wait()
+		close(c.doneChan)
 	}()
 
 	for {
@@ -346,33 +340,31 @@ func (c *Controller) relinquishLeaderToken() {
 }
 
 // Start the controller
-func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) Future {
+func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) error {
 	c.stopChan = make(chan struct{})
+	c.doneChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo)
 	c.quorum = c.computeQuorum()
 	c.currViewNumber = startViewNumber
-	c.viewEnd = c.startView(startProposalSequence)
+	c.startView(startProposalSequence)
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		c.run()
-	}()
-	return &wg
+	go c.run()
+
+	return nil
 }
 
-// Stop the controller
+// Stop the controller.
 func (c *Controller) Stop() {
 	select {
 	case <-c.stopChan:
-		return
+		// already closed, but lets make sure the rest is properly closed.
+		break //return
 	default:
 		close(c.stopChan)
 	}
@@ -386,6 +378,11 @@ func (c *Controller) Stop() {
 	default:
 		// Do nothing
 	}
+
+	//TODO close the WAL here?
+
+	//wait for run() goroutine to finish
+	<-c.doneChan
 }
 
 func (c *Controller) stopped() bool {

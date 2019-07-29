@@ -135,9 +135,8 @@ func TestViewBasic(t *testing.T) {
 		Number:           1,
 		ProposalSequence: 0,
 	}
-	end := view.Start()
+	view.Start()
 	view.Abort()
-	end.Wait()
 }
 
 func TestBadPrePrepare(t *testing.T) {
@@ -161,7 +160,7 @@ func TestBadPrePrepare(t *testing.T) {
 	}{
 		{
 			description: "wrong view number",
-			expectedErr: "from 1 of view 2, expected view 1",
+			expectedErr: "from 1 (leader=true) of view 2, expected view 1",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
@@ -333,7 +332,7 @@ func TestBadPrePrepare(t *testing.T) {
 				Sync:             synchronizer,
 				FailureDetector:  fd,
 			}
-			end := view.Start()
+			view.Start()
 
 			proposalSentByLeader := proto.Clone(prePrepare).(*protos.Message)
 			testCase.corruptProposal(proposalSentByLeader.GetPrePrepare())
@@ -343,7 +342,6 @@ func TestBadPrePrepare(t *testing.T) {
 			errorLogged.Wait()
 			testCase.assert()
 			view.Abort()
-			end.Wait()
 		})
 	}
 }
@@ -352,95 +350,144 @@ func TestBadPrepare(t *testing.T) {
 	// Ensure that a prepare with a wrong view number sent by the leader causes a view abort,
 	// and that a prepare with a wrong digest doesn't pass inspection.
 
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	digestLog := make(chan struct{})
-	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got wrong digest") {
-			digestLog <- struct{}{}
+	t.Run("bad view number", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		digestLog := make(chan struct{})
+		log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Got wrong digest") {
+				digestLog <- struct{}{}
+			}
+			return nil
+		})).Sugar()
+		synchronizer := &mocks.SynchronizerMock{}
+
+		syncWG := &sync.WaitGroup{}
+		synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
+			syncWG.Done()
+		}).Return(protos.ViewMetadata{}, uint64(0))
+		fd := &mocks.FailureDetector{}
+		fdWG := &sync.WaitGroup{}
+		fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+			fdWG.Done()
+		})
+		comm := &mocks.CommMock{}
+		commWG := sync.WaitGroup{}
+		comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+			commWG.Done()
+		})
+		verifier := &mocks.VerifierMock{}
+		verifier.On("VerificationSequence").Return(uint64(1))
+		verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+		signer := &mocks.SignerMock{}
+		signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+			Id:    4,
+			Value: []byte{4},
+		})
+		state := &bft.StateRecorder{}
+		view := &bft.View{
+			State:            state,
+			Logger:           log,
+			N:                4,
+			LeaderID:         1,
+			Quorum:           3,
+			Number:           1,
+			ProposalSequence: 0,
+			Sync:             synchronizer,
+			FailureDetector:  fd,
+			Comm:             comm,
+			Verifier:         verifier,
+			Signer:           signer,
 		}
-		return nil
-	})).Sugar()
-	synchronizer := &mocks.SynchronizerMock{}
-	syncWG := &sync.WaitGroup{}
-	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
-		syncWG.Done()
-	}).Return(protos.ViewMetadata{}, uint64(0))
-	fd := &mocks.FailureDetector{}
-	fdWG := &sync.WaitGroup{}
-	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
-		fdWG.Done()
+		view.Start()
+
+		commWG.Add(1)
+		view.HandleMessage(1, prePrepare)
+		commWG.Wait()
+
+		// prepare with wrong view
+		prepareWronngView := proto.Clone(prepare).(*protos.Message)
+		prepareWronngViewGet := prepareWronngView.GetPrepare()
+		prepareWronngViewGet.View = 2
+
+		// sent from the leader
+		syncWG.Add(1)
+		fdWG.Add(1)
+		view.HandleMessage(1, prepareWronngView)
+		syncWG.Wait()
+		fdWG.Wait()
+
+		view.Done()
+		assert.True(t, view.IsDone()) //self abort
 	})
-	comm := &mocks.CommMock{}
-	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
-		commWG.Done()
+
+	t.Run("bad digest", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		digestLog := make(chan struct{})
+		log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Got wrong digest") {
+				digestLog <- struct{}{}
+			}
+			return nil
+		})).Sugar()
+		synchronizer := &mocks.SynchronizerMock{}
+		syncWG := &sync.WaitGroup{}
+		synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
+			syncWG.Done()
+		}).Return(protos.ViewMetadata{}, uint64(0))
+		fd := &mocks.FailureDetector{}
+		fdWG := &sync.WaitGroup{}
+		fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+			fdWG.Done()
+		})
+		comm := &mocks.CommMock{}
+		commWG := sync.WaitGroup{}
+		comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+			commWG.Done()
+		})
+		verifier := &mocks.VerifierMock{}
+		verifier.On("VerificationSequence").Return(uint64(1))
+		verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+		signer := &mocks.SignerMock{}
+		signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+			Id:    4,
+			Value: []byte{4},
+		})
+		state := &bft.StateRecorder{}
+		view := &bft.View{
+			State:            state,
+			Logger:           log,
+			N:                4,
+			LeaderID:         1,
+			Quorum:           3,
+			Number:           1,
+			ProposalSequence: 0,
+			Sync:             synchronizer,
+			FailureDetector:  fd,
+			Comm:             comm,
+			Verifier:         verifier,
+			Signer:           signer,
+		}
+		view.Start()
+
+		commWG.Add(1)
+		view.HandleMessage(1, prePrepare)
+		commWG.Wait()
+
+		// prepare with wrong digest
+		prepareWronngDigest := proto.Clone(prepare).(*protos.Message)
+		prepareWronngDigestGet := prepareWronngDigest.GetPrepare()
+		prepareWronngDigestGet.Digest = wrongDigest
+
+		view.HandleMessage(1, prepareWronngDigest)
+		<-digestLog
+		view.HandleMessage(2, prepareWronngDigest)
+		<-digestLog
+		signer.AssertNotCalled(t, "SignProposal", mock.Anything)
+
+		view.Abort()
 	})
-	verifier := &mocks.VerifierMock{}
-	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	signer := &mocks.SignerMock{}
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    4,
-		Value: []byte{4},
-	})
-	state := &bft.StateRecorder{}
-	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
-		Comm:             comm,
-		Verifier:         verifier,
-		Signer:           signer,
-	}
-	end := view.Start()
-
-	commWG.Add(1)
-	view.HandleMessage(1, prePrepare)
-	commWG.Wait()
-
-	// prepare with wrong view
-	prepareWronngView := proto.Clone(prepare).(*protos.Message)
-	prepareWronngViewGet := prepareWronngView.GetPrepare()
-	prepareWronngViewGet.View = 2
-
-	// sent from the leader
-	syncWG.Add(1)
-	fdWG.Add(1)
-	view.HandleMessage(1, prepareWronngView)
-	syncWG.Wait()
-	fdWG.Wait()
-
-	end.Wait()
-
-	view.ProposalSequence = 0
-	view.Phase = bft.COMMITTED
-	end = view.Start()
-
-	commWG.Add(1)
-	view.HandleMessage(1, prePrepare)
-	commWG.Wait()
-
-	// prepare with wrong digest
-	prepareWronngDigest := proto.Clone(prepare).(*protos.Message)
-	prepareWronngDigestGet := prepareWronngDigest.GetPrepare()
-	prepareWronngDigestGet.Digest = wrongDigest
-
-	view.HandleMessage(1, prepareWronngDigest)
-	<-digestLog
-	view.HandleMessage(2, prepareWronngDigest)
-	<-digestLog
-	signer.AssertNotCalled(t, "SignProposal", mock.Anything)
-
-	view.Abort()
-	end.Wait()
-
 }
 
 func TestBadCommit(t *testing.T) {
@@ -483,7 +530,7 @@ func TestBadCommit(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	view.HandleMessage(1, prePrepare)
 
@@ -502,7 +549,6 @@ func TestBadCommit(t *testing.T) {
 	<-verifyLog
 
 	view.Abort()
-	end.Wait()
 }
 
 func TestNormalPath(t *testing.T) {
@@ -552,7 +598,7 @@ func TestNormalPath(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	commWG.Add(2)
 	view.Propose(proposal)
@@ -635,7 +681,6 @@ func TestNormalPath(t *testing.T) {
 	}
 
 	view.Abort()
-	end.Wait()
 }
 
 func TestTwoSequences(t *testing.T) {
@@ -684,7 +729,7 @@ func TestTwoSequences(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
@@ -759,8 +804,6 @@ func TestTwoSequences(t *testing.T) {
 	}
 
 	view.Abort()
-	end.Wait()
-
 }
 
 func TestViewPersisted(t *testing.T) {
@@ -857,7 +900,7 @@ func TestViewPersisted(t *testing.T) {
 				persistedState.Save(args.Get(0).(*protos.Message))
 			})
 
-			end := view.Start()
+			view.Start()
 
 			prepareSent.Add(1)
 
@@ -872,7 +915,6 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterProposed {
 				// Simulate a crash.
 				view.Abort()
-				end.Wait()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()
@@ -882,7 +924,7 @@ func TestViewPersisted(t *testing.T) {
 				prepareSent.Add(1)
 
 				// Restart the view.
-				end = view.Start()
+				view.Start()
 
 				// Wait for the prepare to be sent again.
 				prepareSent.Wait()
@@ -907,7 +949,6 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterPrepared {
 				// Simulate a crash.
 				view.Abort()
-				end.Wait()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()
@@ -917,7 +958,7 @@ func TestViewPersisted(t *testing.T) {
 				commitSent.Add(1)
 
 				// Restart the view.
-				end = view.Start()
+				view.Start()
 
 				// Wait until the node broadcasts the commit again.
 				commitSent.Wait()
@@ -931,7 +972,6 @@ func TestViewPersisted(t *testing.T) {
 			deciderWG.Wait()
 
 			view.Abort()
-			end.Wait()
 		})
 	}
 }
@@ -1056,15 +1096,14 @@ func (tn testedNetwork) connect(id uint64) {
 }
 
 func (tn testedNetwork) start() {
-	for id, view := range tn {
-		tn[id].end = view.Start()
+	for _, view := range tn {
+		view.Start()
 	}
 }
 
 func (tn testedNetwork) stop() {
 	for _, view := range tn {
 		view.Abort()
-		view.end.Wait()
 	}
 }
 
@@ -1082,7 +1121,6 @@ type testedView struct {
 	network   *testedNetwork
 	deciderWG sync.WaitGroup
 	*bft.View
-	end bft.Future
 }
 
 func (tv *testedView) setOffline() {

@@ -52,16 +52,11 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 	c.Application.Deliver(proposal, signatures)
 }
 
-// Future waits until an event occurs
-type Future interface {
-	Wait()
-}
+func (c *Consensus) Start() error {
+	//TODO verify consistent config values, return error otherwise
 
-func (c *Consensus) Start() Future {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
-
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, algorithm.PoolOptions{QueueSize: DefaultRequestPoolSize, RequestTimeout: requestTimeout})
-
 	batcher := &algorithm.Bundler{
 		CloseChan:    make(chan struct{}),
 		Pool:         pool,
@@ -90,8 +85,8 @@ func (c *Consensus) Start() Future {
 
 	pool.SetTimeoutHandler(c.controller)
 
-	future := c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
-	return future
+	err := c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
+	return err
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
@@ -120,6 +115,10 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 		}
 		c.Comm.SendConsensus(node, m)
 	}
+}
+
+func (c *Consensus) Stop() {
+	c.controller.Stop()
 }
 
 func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
