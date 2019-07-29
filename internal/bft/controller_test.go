@@ -332,7 +332,7 @@ func configureProposerBuilder(controller *bft.Controller) {
 	pb := &mocks.ProposerBuilder{}
 	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		Return(func(a uint64, b uint64, c uint64, d int) bft.Proposer {
-		return createView(controller, a, b, c, d)
-	})
+			return createView(controller, a, b, c, d)
+		})
 	controller.ProposerBuilder = pb
 }

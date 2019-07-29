@@ -64,7 +64,7 @@ func (c *Consensus) Start() Future {
 	}
 
 	c.controller = &algorithm.Controller{
-		ProposerBuilder: c,
+		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
