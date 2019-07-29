@@ -36,6 +36,11 @@ type State interface {
 	Restore(*View) error
 }
 
+type Comm interface {
+	api.Comm
+	BroadcastConsensus(m *protos.Message)
+}
+
 type View struct {
 	// Configuration
 	SelfID           uint64
@@ -47,7 +52,7 @@ type View struct {
 	FailureDetector  FailureDetector
 	Sync             api.Synchronizer
 	Logger           api.Logger
-	Comm             api.Comm
+	Comm             Comm
 	Verifier         api.Verifier
 	Signer           api.Signer
 	ProposalSequence uint64

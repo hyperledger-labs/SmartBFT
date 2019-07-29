@@ -22,12 +22,12 @@ const (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	SelfID           uint64
-	N                uint64
-	BatchSize        int
-	BatchTimeout     time.Duration
+	SelfID       uint64
+	N            uint64
+	BatchSize    int
+	BatchTimeout time.Duration
+	bft.Comm
 	Application      bft.Application
-	Comm             bft.Comm
 	Assembler        bft.Assembler
 	WAL              bft.WriteAheadLog
 	Signer           bft.Signer
@@ -76,7 +76,7 @@ func (c *Consensus) Start() Future {
 		Application:      c,
 		FailureDetector:  c,
 		Synchronizer:     c.Synchronizer,
-		Comm:             c.Comm,
+		Comm:             c,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 	}
@@ -97,4 +97,14 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 func (c *Consensus) SubmitRequest(req []byte) error {
 	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
 	return c.controller.SubmitRequest(req)
+}
+
+func (c *Consensus) BroadcastConsensus(m *protos.Message) {
+	for _, node := range c.Comm.Nodes() {
+		// Do not send to yourself
+		if c.SelfID == node {
+			continue
+		}
+		c.Comm.SendConsensus(node, m)
+	}
 }

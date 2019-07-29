@@ -64,7 +64,7 @@ type Controller struct {
 	Application      api.Application
 	FailureDetector  FailureDetector
 	Synchronizer     api.Synchronizer
-	Comm             api.Comm
+	Comm             Comm
 	Signer           api.Signer
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
