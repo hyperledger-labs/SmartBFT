@@ -98,16 +98,19 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logg
 	}
 	// Reconstruct the prepare message we shall next broadcast
 	// after the recovery.
+	prp := lastPersistedMessage.GetPrePrepare()
 	v.lastBroadcastSent = &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
 			Prepare: &smartbftprotos.Prepare{
-				Seq:    lastPersistedMessage.GetPrePrepare().Seq,
-				View:   lastPersistedMessage.GetPrePrepare().View,
+				Seq:    prp.Seq,
+				View:   prp.View,
 				Digest: v.inFlightProposal.Digest(),
 			},
 		},
 	}
 	v.Phase = PROPOSED
+	v.Number = prp.View
+	v.ProposalSequence = prp.Seq
 	logger.Infof("Restored proposal with sequence %d", lastPersistedMessage.GetPrePrepare().Seq)
 	return nil
 }
@@ -155,5 +158,7 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 	// after the recovery.
 	v.lastBroadcastSent = lastPersistedMessage
 	v.Phase = PREPARED
+	v.Number = prePrepareFromWAL.View
+	v.ProposalSequence = prePrepareFromWAL.Seq
 	return nil
 }
