@@ -7,6 +7,7 @@ package bft
 
 import (
 	"math"
+	"sort"
 
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -61,4 +62,11 @@ func MarshalOrPanic(msg proto.Message) []byte {
 		panic(err)
 	}
 	return b
+}
+
+func getLeaderID(view uint64, N uint64, nodes []uint64) uint64 {
+	sort.Slice(nodes, func(i, j int) bool {
+		return nodes[i] < nodes[j]
+	})
+	return nodes[view%N]
 }
