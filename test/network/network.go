@@ -7,6 +7,7 @@ package network
 
 import (
 	"os"
+	"sort"
 	"sync"
 	"time"
 
@@ -52,6 +53,7 @@ func (n *Mesh) NodeIDs() []uint64 {
 	for n, _ := range n.inQueue {
 		nodes = append(nodes, n)
 	}
+	sort.Slice(nodes, func(i, j int) bool { return nodes[i] < nodes[j] })
 	return nodes
 }
 
