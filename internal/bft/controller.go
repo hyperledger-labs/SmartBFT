@@ -196,7 +196,7 @@ func (c *Controller) startView(proposalSequence uint64) Future {
 		LeaderID:         c.leaderID(),
 		SelfID:           c.ID,
 		Quorum:           c.quorum,
-		Number:           c.getCurrentViewNumber(),
+		Number:           c.currViewNumber,
 		Decider:          c,
 		FailureDetector:  c.FailureDetector,
 		Sync:             c.Synchronizer,
