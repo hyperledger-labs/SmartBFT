@@ -50,6 +50,19 @@ type Future interface {
 	Wait()
 }
 
+type Proposer interface {
+	Propose(proposal types.Proposal)
+	Start() Future
+	Abort()
+	GetMetadata() []byte
+	HandleMessage(sender uint64, m *protos.Message)
+}
+
+//go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
+type ProposerBuilder interface {
+	NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) Proposer
+}
+
 type Controller struct {
 	// configuration
 	ID               uint64
@@ -67,10 +80,11 @@ type Controller struct {
 	Signer           api.Signer
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
+	ProposerBuilder  ProposerBuilder
 
 	quorum int
 
-	currView View
+	currView Proposer
 
 	currViewNumberLock sync.Mutex
 	currViewNumber     uint64
@@ -191,25 +205,8 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 
 func (c *Controller) startView(proposalSequence uint64) Future {
 	// TODO view builder according to metadata returned by sync
-	view := View{
-		N:                c.N,
-		LeaderID:         c.leaderID(),
-		SelfID:           c.ID,
-		Quorum:           c.quorum,
-		Number:           c.getCurrentViewNumber(),
-		Decider:          c,
-		FailureDetector:  c.FailureDetector,
-		Sync:             c.Synchronizer,
-		Logger:           c.Logger,
-		Comm:             c.Comm,
-		Verifier:         c.Verifier,
-		Signer:           c.Signer,
-		ProposalSequence: proposalSequence,
-		State:            &PersistedState{WAL: c.WAL},
-	}
-
-	c.currView = view
-	c.Logger.Debugf("Starting view with number %d", view.Number)
+	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
+	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
 	return c.currView.Start()
 }
 
