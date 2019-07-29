@@ -15,6 +15,22 @@ func (_m *CommMock) BroadcastConsensus(m *smartbftprotos.Message) {
 	_m.Called(m)
 }
 
+// Nodes provides a mock function with given fields:
+func (_m *CommMock) Nodes() []uint64 {
+	ret := _m.Called()
+
+	var r0 []uint64
+	if rf, ok := ret.Get(0).(func() []uint64); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]uint64)
+		}
+	}
+
+	return r0
+}
+
 // SendConsensus provides a mock function with given fields: targetID, m
 func (_m *CommMock) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
 	_m.Called(targetID, m)

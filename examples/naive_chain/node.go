@@ -19,9 +19,6 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
-//type Ingress map[int]<-chan *smartbftprotos.Message
-//type Egress map[int]chan<- *smartbftprotos.Message
-
 type Ingress map[int]<-chan proto.Message
 type Egress map[int]chan<- proto.Message
 
@@ -200,6 +197,15 @@ func (n *Node) Start() {
 			}
 		}(uint64(id), in)
 	}
+}
+
+func (n *Node) Nodes() []uint64 {
+	var nodes []uint64
+	for id := range n.in {
+		nodes = append(nodes, uint64(id))
+	}
+
+	return nodes
 }
 
 func computeDigest(rawBytes []byte) string {

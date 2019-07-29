@@ -7,6 +7,7 @@ package bft
 
 import (
 	"math"
+	"sort"
 	"sync"
 	"time"
 
@@ -108,7 +109,11 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 // thread safe
 func (c *Controller) leaderID() uint64 {
 	// TODO use ids order (similar to BFT Smart)
-	return c.getCurrentViewNumber() % c.N
+	nodes := c.Comm.Nodes()
+	sort.Slice(nodes, func(i, j int) bool {
+		return nodes[i] < nodes[j]
+	})
+	return nodes[c.getCurrentViewNumber()%c.N]
 }
 
 // computeQuorum calculates the quorums size Q, given a cluster size N.
