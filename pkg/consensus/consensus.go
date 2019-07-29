@@ -12,7 +12,6 @@ import (
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
-	"github.com/golang/protobuf/proto"
 )
 
 const (
@@ -36,7 +35,7 @@ type Consensus struct {
 	RequestInspector bft.RequestInspector
 	Synchronizer     bft.Synchronizer
 	Logger           bft.Logger
-	Metadata         []byte
+	Metadata         protos.ViewMetadata
 
 	controller *algorithm.Controller
 }
@@ -87,12 +86,7 @@ func (c *Consensus) Start() Future {
 
 	pool.SetTimeoutHandler(c.controller)
 
-	metadata := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(c.Metadata, metadata); err != nil {
-		c.Logger.Panicf("Failed unmarshaling metadata: %v", err)
-	}
-
-	future := c.controller.Start(metadata.ViewId, metadata.LatestSequence)
+	future := c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
 	return future
 }
 
