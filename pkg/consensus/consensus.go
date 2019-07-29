@@ -64,6 +64,7 @@ func (c *Consensus) Start() Future {
 	}
 
 	c.controller = &algorithm.Controller{
+		ProposerBuilder: c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
@@ -107,4 +108,25 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 		}
 		c.Comm.SendConsensus(node, m)
 	}
+}
+
+func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
+	view := &algorithm.View{
+		N:                c.N,
+		LeaderID:         leader,
+		SelfID:           c.SelfID,
+		Quorum:           quorumSize,
+		Number:           viewNum,
+		Decider:          c.controller,
+		FailureDetector:  c.controller.FailureDetector,
+		Sync:             c.Synchronizer,
+		Logger:           c.Logger,
+		Comm:             c,
+		Verifier:         c.Verifier,
+		Signer:           c.Signer,
+		ProposalSequence: proposalSequence,
+		State:            &algorithm.PersistedState{WAL: c.WAL},
+	}
+
+	return view
 }

@@ -35,7 +35,8 @@ func TestControllerBasic(t *testing.T) {
 	pool.On("Close")
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
-	controller := bft.Controller{
+
+	controller := &bft.Controller{
 		Batcher:     batcher,
 		RequestPool: pool,
 		ID:          4, // not the leader
@@ -44,6 +45,8 @@ func TestControllerBasic(t *testing.T) {
 		Application: app,
 		Comm:        comm,
 	}
+	configureProposerBuilder(controller)
+
 	end := controller.Start(1, 0)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
@@ -90,7 +93,7 @@ func TestQuorum(t *testing.T) {
 				nodes = append(nodes, uint64(i))
 			}
 			commMock.On("Nodes").Return(nodes)
-			controller := bft.Controller{
+			controller := &bft.Controller{
 				Batcher:     batcher,
 				RequestPool: pool,
 				ID:          2, // not the leader
@@ -98,6 +101,8 @@ func TestQuorum(t *testing.T) {
 				Logger:      log,
 				Comm:        commMock,
 			}
+			configureProposerBuilder(controller)
+
 			end := controller.Start(1, 0)
 			<-verifyLog
 			controller.Stop()
@@ -125,7 +130,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	commMock := &mocks.CommMock{}
 	commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
-	controller := bft.Controller{
+	controller := &bft.Controller{
 		RequestPool: pool,
 		ID:          1, // the leader
 		N:           4,
@@ -133,6 +138,8 @@ func TestControllerLeaderBasic(t *testing.T) {
 		Batcher:     batcher,
 		Comm:        commMock,
 	}
+	configureProposerBuilder(controller)
+
 	end := controller.Start(1, 0)
 	<-batcherChan
 	controller.Stop()
@@ -184,7 +191,7 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
 
-	controller := bft.Controller{
+	controller := &bft.Controller{
 		RequestPool: reqPool,
 		WAL:         &wal.EphemeralWAL{},
 		ID:          17, // the leader
@@ -197,6 +204,8 @@ func TestLeaderPropose(t *testing.T) {
 		Signer:      signer,
 		Application: app,
 	}
+	configureProposerBuilder(controller)
+
 	commWG.Add(2)
 	end := controller.Start(1, 0)
 	commWG.Wait() // propose
@@ -260,7 +269,7 @@ func TestLeaderChange(t *testing.T) {
 	})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
-	controller := bft.Controller{
+	controller := &bft.Controller{
 		WAL:             &wal.EphemeralWAL{},
 		ID:              2, // the next leader
 		N:               4,
@@ -273,6 +282,8 @@ func TestLeaderChange(t *testing.T) {
 		FailureDetector: fd,
 		RequestPool:     reqPool,
 	}
+	configureProposerBuilder(controller)
+
 	end := controller.Start(1, 0)
 
 	prePrepareWrongView := proto.Clone(prePrepare).(*protos.Message)
@@ -296,4 +307,32 @@ func TestLeaderChange(t *testing.T) {
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
 	end.Wait()
+}
+
+func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int) *bft.View {
+	return &bft.View{
+		N:                c.N,
+		LeaderID:         leader,
+		SelfID:           c.ID,
+		Quorum:           quorumSize,
+		Number:           viewNum,
+		Decider:          c,
+		FailureDetector:  c.FailureDetector,
+		Sync:             c.Synchronizer,
+		Logger:           c.Logger,
+		Comm:             c.Comm,
+		Verifier:         c.Verifier,
+		Signer:           c.Signer,
+		ProposalSequence: proposalSequence,
+		State:            &bft.PersistedState{WAL: c.WAL},
+	}
+}
+
+func configureProposerBuilder(controller *bft.Controller) {
+	pb := &mocks.ProposerBuilder{}
+	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(func(a uint64, b uint64, c uint64, d int) bft.Proposer {
+		return createView(controller, a, b, c, d)
+	})
+	controller.ProposerBuilder = pb
 }
