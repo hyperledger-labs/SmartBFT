@@ -111,6 +111,11 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 }
 
 func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
+	persistedState := &algorithm.PersistedState{
+		Logger: c.Logger,
+		WAL:    c.WAL,
+	}
+
 	view := &algorithm.View{
 		N:                c.N,
 		LeaderID:         leader,
@@ -126,6 +131,16 @@ func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorum
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
 		State:            &algorithm.PersistedState{WAL: c.WAL},
+	}
+
+	persistedState.Restore(view)
+
+	if proposalSequence > view.ProposalSequence {
+		view.ProposalSequence = proposalSequence
+	}
+
+	if viewNum > view.Number {
+		view.Number = viewNum
 	}
 
 	return view
