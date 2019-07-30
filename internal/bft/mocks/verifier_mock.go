@@ -81,3 +81,17 @@ func (_m *VerifierMock) VerifyRequest(val []byte) (types.RequestInfo, error) {
 
 	return r0, r1
 }
+
+// VerifySignature provides a mock function with given fields: signature
+func (_m *VerifierMock) VerifySignature(signature types.Signature) error {
+	ret := _m.Called(signature)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(types.Signature) error); ok {
+		r0 = rf(signature)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}

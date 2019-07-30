@@ -55,6 +55,10 @@ func (a *App) VerifyConsenterSig(signature types.Signature, prop types.Proposal)
 	return nil
 }
 
+func (a *App) VerifySignature(signature types.Signature) error {
+	return nil
+}
+
 func (a *App) VerificationSequence() uint64 {
 	return 0
 }
