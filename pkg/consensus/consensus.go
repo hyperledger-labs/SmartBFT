@@ -8,6 +8,8 @@ package consensus
 import (
 	"time"
 
+	"sync"
+
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -38,7 +40,8 @@ type Consensus struct {
 	Logger            bft.Logger
 	Metadata          protos.ViewMetadata
 
-	controller *algorithm.Controller
+	controller         *algorithm.Controller
+	restoreOnceFromWAL sync.Once
 }
 
 func (c *Consensus) Complain() {
@@ -140,10 +143,12 @@ func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorum
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
-		State:            &algorithm.PersistedState{WAL: c.WAL},
+		State:            persistedState,
 	}
 
-	persistedState.Restore(view)
+	c.restoreOnceFromWAL.Do(func() {
+		persistedState.Restore(view)
+	})
 
 	if proposalSequence > view.ProposalSequence {
 		view.ProposalSequence = proposalSequence
