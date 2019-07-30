@@ -96,6 +96,8 @@ type Controller struct {
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
 	verificationSequence uint64
+
+	controllerDone sync.WaitGroup
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
@@ -342,7 +344,8 @@ func (c *Controller) relinquishLeaderToken() {
 }
 
 // Start the controller
-func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) Future {
+func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
+	c.controllerDone.Add(1)
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
@@ -355,13 +358,10 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 		c.acquireLeaderToken()
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(1)
 	go func() {
-		defer wg.Done()
+		defer c.controllerDone.Done()
 		c.run()
 	}()
-	return &wg
 }
 
 // Stop the controller
@@ -382,6 +382,8 @@ func (c *Controller) Stop() {
 	default:
 		// Do nothing
 	}
+
+	c.controllerDone.Wait()
 }
 
 func (c *Controller) stopped() bool {
