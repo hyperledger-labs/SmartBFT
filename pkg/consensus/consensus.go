@@ -27,15 +27,16 @@ type Consensus struct {
 	BatchSize    int
 	BatchTimeout time.Duration
 	bft.Comm
-	Application      bft.Application
-	Assembler        bft.Assembler
-	WAL              bft.WriteAheadLog
-	Signer           bft.Signer
-	Verifier         bft.Verifier
-	RequestInspector bft.RequestInspector
-	Synchronizer     bft.Synchronizer
-	Logger           bft.Logger
-	Metadata         protos.ViewMetadata
+	Application       bft.Application
+	Assembler         bft.Assembler
+	WAL               bft.WriteAheadLog
+	WALInitialContent [][]byte
+	Signer            bft.Signer
+	Verifier          bft.Verifier
+	RequestInspector  bft.RequestInspector
+	Synchronizer      bft.Synchronizer
+	Logger            bft.Logger
+	Metadata          protos.ViewMetadata
 
 	controller *algorithm.Controller
 }
@@ -120,8 +121,9 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 
 func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
 	persistedState := &algorithm.PersistedState{
-		Logger: c.Logger,
-		WAL:    c.WAL,
+		Entries: c.WALInitialContent,
+		Logger:  c.Logger,
+		WAL:     c.WAL,
 	}
 
 	view := &algorithm.View{

@@ -28,8 +28,9 @@ func (*StateRecorder) Restore(_ *View) error {
 }
 
 type PersistedState struct {
-	Logger api.Logger
-	WAL    api.WriteAheadLog
+	Entries [][]byte
+	Logger  api.Logger
+	WAL     api.WriteAheadLog
 }
 
 func (ps *PersistedState) Save(message *smartbftprotos.Message) error {
@@ -55,12 +56,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	// Unless we conclude otherwise, we're in a COMMITTED state
 	v.Phase = COMMITTED
 
-	entries, err := ps.WAL.ReadAll()
-	if err != nil {
-		ps.Logger.Errorf("Failed reading WAL: %v", err)
-		return err
-	}
-
+	entries := ps.Entries
 	if len(entries) == 0 {
 		ps.Logger.Infof("Nothing to restore")
 		return nil

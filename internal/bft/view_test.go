@@ -845,9 +845,10 @@ func TestViewPersisted(t *testing.T) {
 				ProposalSequence: 0,
 			}
 
+			wal := &wal.EphemeralWAL{}
 			persistedState := &bft.PersistedState{
 				Logger: log,
-				WAL:    &wal.EphemeralWAL{},
+				WAL:    wal,
 			}
 			var persistedToLog sync.WaitGroup
 			persistedToLog.Add(1)
@@ -874,6 +875,7 @@ func TestViewPersisted(t *testing.T) {
 				end.Wait()
 
 				// Recover the view from WAL.
+				persistedState.Entries = wal.ReadAll()
 				persistedState.Restore(view)
 
 				// It should broadcast a prepare right after starting it.
@@ -908,6 +910,7 @@ func TestViewPersisted(t *testing.T) {
 				end.Wait()
 
 				// Recover the view from WAL.
+				persistedState.Entries = wal.ReadAll()
 				persistedState.Restore(view)
 
 				// It should broadcast a commit again after it is restored.
