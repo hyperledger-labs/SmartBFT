@@ -70,6 +70,10 @@ func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) error {
 	return nil
 }
 
+func (*Node) VerifySignature(signature bft.Signature) error {
+	return nil
+}
+
 func (*Node) VerificationSequence() uint64 {
 	return 0
 }
