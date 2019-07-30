@@ -135,9 +135,8 @@ func TestViewBasic(t *testing.T) {
 		Number:           1,
 		ProposalSequence: 0,
 	}
-	end := view.Start()
+	view.Start()
 	view.Abort()
-	end.Wait()
 }
 
 func TestBadPrePrepare(t *testing.T) {
@@ -333,7 +332,7 @@ func TestBadPrePrepare(t *testing.T) {
 				Sync:             synchronizer,
 				FailureDetector:  fd,
 			}
-			end := view.Start()
+			view.Start()
 
 			proposalSentByLeader := proto.Clone(prePrepare).(*protos.Message)
 			testCase.corruptProposal(proposalSentByLeader.GetPrePrepare())
@@ -343,7 +342,6 @@ func TestBadPrePrepare(t *testing.T) {
 			errorLogged.Wait()
 			testCase.assert()
 			view.Abort()
-			end.Wait()
 		})
 	}
 }
@@ -399,7 +397,7 @@ func TestBadPrepare(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
@@ -417,11 +415,11 @@ func TestBadPrepare(t *testing.T) {
 	syncWG.Wait()
 	fdWG.Wait()
 
-	end.Wait()
+	view.Abort()
 
 	view.ProposalSequence = 0
 	view.Phase = bft.COMMITTED
-	end = view.Start()
+	view.Start()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
@@ -439,8 +437,6 @@ func TestBadPrepare(t *testing.T) {
 	signer.AssertNotCalled(t, "SignProposal", mock.Anything)
 
 	view.Abort()
-	end.Wait()
-
 }
 
 func TestBadCommit(t *testing.T) {
@@ -483,7 +479,7 @@ func TestBadCommit(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	view.HandleMessage(1, prePrepare)
 
@@ -502,7 +498,6 @@ func TestBadCommit(t *testing.T) {
 	<-verifyLog
 
 	view.Abort()
-	end.Wait()
 }
 
 func TestNormalPath(t *testing.T) {
@@ -552,7 +547,7 @@ func TestNormalPath(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	commWG.Add(2)
 	view.Propose(proposal)
@@ -635,7 +630,6 @@ func TestNormalPath(t *testing.T) {
 	}
 
 	view.Abort()
-	end.Wait()
 }
 
 func TestTwoSequences(t *testing.T) {
@@ -684,7 +678,7 @@ func TestTwoSequences(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 	}
-	end := view.Start()
+	view.Start()
 
 	commWG.Add(1)
 	view.HandleMessage(1, prePrepare)
@@ -759,8 +753,6 @@ func TestTwoSequences(t *testing.T) {
 	}
 
 	view.Abort()
-	end.Wait()
-
 }
 
 func TestViewPersisted(t *testing.T) {
@@ -857,7 +849,7 @@ func TestViewPersisted(t *testing.T) {
 				persistedState.Save(args.Get(0).(*protos.Message))
 			})
 
-			end := view.Start()
+			view.Start()
 
 			prepareSent.Add(1)
 
@@ -872,7 +864,6 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterProposed {
 				// Simulate a crash.
 				view.Abort()
-				end.Wait()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()
@@ -882,7 +873,7 @@ func TestViewPersisted(t *testing.T) {
 				prepareSent.Add(1)
 
 				// Restart the view.
-				end = view.Start()
+				view.Start()
 
 				// Wait for the prepare to be sent again.
 				prepareSent.Wait()
@@ -907,7 +898,6 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterPrepared {
 				// Simulate a crash.
 				view.Abort()
-				end.Wait()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()
@@ -917,7 +907,7 @@ func TestViewPersisted(t *testing.T) {
 				commitSent.Add(1)
 
 				// Restart the view.
-				end = view.Start()
+				view.Start()
 
 				// Wait until the node broadcasts the commit again.
 				commitSent.Wait()
@@ -931,7 +921,6 @@ func TestViewPersisted(t *testing.T) {
 			deciderWG.Wait()
 
 			view.Abort()
-			end.Wait()
 		})
 	}
 }
@@ -1056,15 +1045,14 @@ func (tn testedNetwork) connect(id uint64) {
 }
 
 func (tn testedNetwork) start() {
-	for id, view := range tn {
-		tn[id].end = view.Start()
+	for _, view := range tn {
+		view.Start()
 	}
 }
 
 func (tn testedNetwork) stop() {
 	for _, view := range tn {
 		view.Abort()
-		view.end.Wait()
 	}
 }
 
@@ -1082,7 +1070,6 @@ type testedView struct {
 	network   *testedNetwork
 	deciderWG sync.WaitGroup
 	*bft.View
-	end bft.Future
 }
 
 func (tv *testedView) setOffline() {

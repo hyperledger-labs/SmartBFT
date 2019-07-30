@@ -57,7 +57,7 @@ type Future interface {
 	Wait()
 }
 
-func (c *Consensus) Start() Future {
+func (c *Consensus) Start() {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, algorithm.PoolOptions{QueueSize: DefaultRequestPoolSize, RequestTimeout: requestTimeout})
@@ -90,8 +90,7 @@ func (c *Consensus) Start() Future {
 
 	pool.SetTimeoutHandler(c.controller)
 
-	future := c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
-	return future
+	c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
