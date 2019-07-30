@@ -29,16 +29,16 @@ func (ew *EphemeralWAL) Append(data []byte, truncateTo bool) error {
 	return nil
 }
 
-func (ew *EphemeralWAL) ReadAll() ([][]byte, error) {
-	var clone = make([][]byte, 0)
+func (ew *EphemeralWAL) ReadAll() [][]byte {
+	var records = make([][]byte, 0)
 
 	for _, entry := range ew.records {
 		entryClone := make([]byte, len(entry.data))
 		copy(entryClone, entry.data)
-		clone = append(clone, entryClone)
+		records = append(records, entryClone)
 	}
 
-	return clone, nil
+	return records
 }
 
 func (ew *EphemeralWAL) TruncateTo() error {
