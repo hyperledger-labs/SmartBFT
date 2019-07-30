@@ -30,6 +30,7 @@ type Consensus struct {
 	Application      bft.Application
 	Assembler        bft.Assembler
 	WAL              bft.WriteAheadLog
+	WALContent       [][]byte
 	Signer           bft.Signer
 	Verifier         bft.Verifier
 	RequestInspector bft.RequestInspector
@@ -120,8 +121,9 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 
 func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
 	persistedState := &algorithm.PersistedState{
-		Logger: c.Logger,
-		WAL:    c.WAL,
+		Entries: c.WALContent,
+		Logger:  c.Logger,
+		WAL:     c.WAL,
 	}
 
 	view := &algorithm.View{
