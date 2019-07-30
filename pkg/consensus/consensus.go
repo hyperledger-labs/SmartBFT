@@ -97,6 +97,12 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 
 }
 
+func (c *Consensus) HandleRequest(sender uint64, req []byte) {
+	// TODO: check if we're the leader at some layer, and also verify the message,
+	// and discard it.
+	c.controller.SubmitRequest(req)
+}
+
 func (c *Consensus) SubmitRequest(req []byte) error {
 	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
 	return c.controller.SubmitRequest(req)
