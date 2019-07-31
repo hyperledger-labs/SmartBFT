@@ -81,14 +81,16 @@ type View struct {
 	nextCommits    *voteSet
 
 	abortChan chan struct{}
+	stopOnce  sync.Once
+	viewEnded sync.WaitGroup
 }
 
-func (v *View) Start() Future { //TODO the future should be return by Close() or implemented by View itself
+func (v *View) Start() {
+	v.stopOnce = sync.Once{}
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.abortChan = make(chan struct{})
 
-	var viewEnds sync.WaitGroup
-	viewEnds.Add(1)
+	v.viewEnded.Add(1)
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
@@ -96,11 +98,8 @@ func (v *View) Start() Future { //TODO the future should be return by Close() or
 	v.setupVotes()
 
 	go func() {
-		defer viewEnds.Done()
 		v.run()
 	}()
-
-	return &viewEnds
 }
 
 func (v *View) setupVotes() {
@@ -166,7 +165,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		if msgViewNum > v.Number {
 			v.Sync.Sync()
 		}
-		v.Abort()
+		v.stop()
 		return
 	}
 
@@ -229,6 +228,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 }
 
 func (v *View) run() {
+	defer v.viewEnded.Done()
 	for {
 		select {
 		case <-v.abortChan:
@@ -310,7 +310,7 @@ func (v *View) processProposal() Phase {
 		v.Logger.Warnf("%d received bad proposal from %d: %v", v.SelfID, v.LeaderID, err)
 		v.FailureDetector.Complain()
 		v.Sync.Sync()
-		v.Abort()
+		v.stop()
 		return ABORT
 	}
 
@@ -615,15 +615,19 @@ func (v *View) Propose(proposal types.Proposal) {
 	v.Logger.Debugf("Proposing proposal sequence %d", seq)
 }
 
+func (v *View) stop() {
+	v.stopOnce.Do(func() {
+		if v.abortChan == nil {
+			return
+		}
+		close(v.abortChan)
+	})
+}
+
 // Abort forces the view to end
 func (v *View) Abort() {
-	select {
-	case <-v.abortChan:
-		// already aborted
-		return
-	default:
-		close(v.abortChan)
-	}
+	v.stop()
+	v.viewEnded.Wait()
 }
 
 type vote struct {

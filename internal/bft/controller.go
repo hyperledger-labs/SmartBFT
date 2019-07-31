@@ -52,7 +52,7 @@ type Future interface {
 
 type Proposer interface {
 	Propose(proposal types.Proposal)
-	Start() Future
+	Start()
 	Abort()
 	GetMetadata() []byte
 	HandleMessage(sender uint64, m *protos.Message)
@@ -90,13 +90,14 @@ type Controller struct {
 	currViewNumber     uint64
 
 	viewChange chan viewInfo
-	viewEnd    Future
 
 	stopChan             chan struct{}
 	decisionChan         chan decision
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
 	verificationSequence uint64
+
+	controllerDone sync.WaitGroup
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
@@ -203,11 +204,11 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
-func (c *Controller) startView(proposalSequence uint64) Future {
+func (c *Controller) startView(proposalSequence uint64) {
 	// TODO view builder according to metadata returned by sync
 	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
+	c.currView.Start()
 	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
-	return c.currView.Start()
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
@@ -224,10 +225,8 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	c.Logger.Debugf("Aborting current view with number %d", latestView)
 	c.currView.Abort()
 
-	// Wait for previous view to finish
-	c.viewEnd.Wait()
 	c.setCurrentViewNumber(newViewNumber)
-	c.viewEnd = c.startView(newProposalSequence)
+	c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
 	if iAm, _ := c.iAmTheLeader(); iAm {
@@ -279,7 +278,6 @@ func (c *Controller) run() {
 	defer func() {
 		c.Logger.Infof("Exiting")
 		c.currView.Abort()
-		c.viewEnd.Wait()
 	}()
 
 	for {
@@ -346,7 +344,8 @@ func (c *Controller) relinquishLeaderToken() {
 }
 
 // Start the controller
-func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) Future {
+func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
+	c.controllerDone.Add(1)
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
@@ -354,18 +353,15 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.viewChange = make(chan viewInfo)
 	c.quorum = c.computeQuorum()
 	c.currViewNumber = startViewNumber
-	c.viewEnd = c.startView(startProposalSequence)
+	c.startView(startProposalSequence)
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(1)
 	go func() {
-		defer wg.Done()
+		defer c.controllerDone.Done()
 		c.run()
 	}()
-	return &wg
 }
 
 // Stop the controller
@@ -386,6 +382,8 @@ func (c *Controller) Stop() {
 	default:
 		// Do nothing
 	}
+
+	c.controllerDone.Wait()
 }
 
 func (c *Controller) stopped() bool {

@@ -8,6 +8,7 @@ package naive
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -30,6 +31,7 @@ type NetworkOptions struct {
 
 type Node struct {
 	stopChan    chan struct{}
+	doneWG      sync.WaitGroup
 	nextSeq     uint64
 	prevHash    string
 	id          uint64
@@ -185,7 +187,11 @@ func (n *Node) Start() {
 		if uint64(id) == n.id {
 			continue
 		}
+		n.doneWG.Add(1)
+
 		go func(id uint64, in <-chan proto.Message) {
+			defer n.doneWG.Done()
+
 			for {
 				select {
 				case <-n.stopChan:
@@ -201,6 +207,18 @@ func (n *Node) Start() {
 			}
 		}(uint64(id), in)
 	}
+}
+
+func (n *Node) Stop() {
+	select {
+	case <-n.stopChan:
+		break
+	default:
+		close(n.stopChan)
+	}
+
+	n.doneWG.Wait()
+	n.consensus.Stop()
 }
 
 func (n *Node) Nodes() []uint64 {
