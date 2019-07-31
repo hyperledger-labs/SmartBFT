@@ -93,6 +93,10 @@ func (c *Consensus) Start() {
 	c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence)
 }
 
+func (c *Consensus) Stop() {
+	c.controller.Stop()
+}
+
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 	if algorithm.IsViewMessage(m) {
 		c.controller.ProcessMessages(sender, m)
