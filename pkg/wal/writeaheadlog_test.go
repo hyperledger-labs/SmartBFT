@@ -12,7 +12,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
@@ -86,9 +85,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 
 		wal, err := Create(logger, dirPath, nil)
 		assert.Error(t, err)
-		if err != nil {
-			assert.True(t, strings.HasPrefix(err.Error(), "wal: directory not empty:"))
-		}
+		assert.Equal(t, err, ErrWALAlreadyExists)
 		assert.Nil(t, wal)
 	})
 }

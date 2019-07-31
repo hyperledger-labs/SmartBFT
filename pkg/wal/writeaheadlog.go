@@ -44,6 +44,8 @@ var (
 	ErrWriteOnly = errors.New("wal: in WRITE mode")
 	ErrReadOnly  = errors.New("wal: in READ mode")
 
+	ErrWALAlreadyExists = errors.New("wal: is already exists")
+
 	crcTable = crc32.MakeTable(crc32.Castagnoli)
 )
 
@@ -111,20 +113,21 @@ func DefaultOptions() *Options {
 // dirPath: directory path of the WAL.
 // options: a structure containing Options, or nil, for default options.
 //
-// return: pointer to a WAL, or an error
+// return: pointer to a WAL, ErrWALAlreadyExists if WAL already exists or other errors
 func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
+
 	if !dirEmpty(dirPath) {
-		return nil, fmt.Errorf("wal: directory not empty: %s", dirPath)
+		return nil, ErrWALAlreadyExists
 	}
 	opt := DefaultOptions()
 	if options != nil {
 		opt = options
 	}
 
-	//TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
+	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
 	cleanDirName := filepath.Clean(dirPath)
 	err := dirCreate(cleanDirName)
 	if err != nil {
@@ -219,7 +222,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		return nil, err
 	}
 
-	fileName := walNames[0] //first valid file
+	fileName := walNames[0] // first valid file
 	wal.index, err = parseWalFileName(fileName)
 	if err != nil {
 		_ = wal.Close()
@@ -307,7 +310,7 @@ func (w *WriteAheadLogFile) Close() error {
 		w.dirFile = nil
 	}
 
-	//return the first error
+	// return the first error
 	switch {
 	case errF != nil:
 		return errF
@@ -416,7 +419,7 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 	w.logger.Debugf("LogRecord appended successfully: total size=%d, recordLength=%d, dataCRC=%08X; file=%s, new-offset=%d",
 		(nh + np), recordLength, dataCRC, w.logFile.Name(), offset)
 
-	//Switch files if this or the next record (minimal size is 16B) cause overflow
+	// Switch files if this or the next record (minimal size is 16B) cause overflow
 	if offset > w.options.FileSizeBytes-16 {
 		err = w.switchFiles()
 		if err != nil {
@@ -456,7 +459,7 @@ func (w *WriteAheadLogFile) ReadAll() ([][]byte, error) {
 FileLoop:
 	for i, index := range w.activeIndexes {
 		w.index = index
-		//This should not fail, we check the files earlier, when we Open() the WAL.
+		// This should not fail, we check the files earlier, when we Open() the WAL.
 		r, err := NewLogRecordReader(w.logger, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
 		if err != nil {
 			return nil, err
