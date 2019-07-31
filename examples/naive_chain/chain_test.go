@@ -88,6 +88,10 @@ func TestChain(t *testing.T) {
 			assert.Equal(t, []Transaction{{Id: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
 		}
 	}
+
+	for _, chain := range chains {
+		chain.node.Stop()
+	}
 }
 
 func TestChainPartialSubmissions(t *testing.T) {
@@ -177,7 +181,7 @@ func setupNetwork(t *testing.T, opt NetworkOptions) map[int]*Chain {
 	for id := 0; id < opt.NumNodes; id++ {
 		network[id] = make(map[int]chan proto.Message)
 		for i := 0; i < opt.NumNodes; i++ {
-			network[id][i] = make(chan proto.Message)
+			network[id][i] = make(chan proto.Message, 128)
 		}
 	}
 
