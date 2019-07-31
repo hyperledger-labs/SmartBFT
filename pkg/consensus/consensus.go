@@ -61,20 +61,14 @@ func (c *Consensus) Start() {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, algorithm.PoolOptions{QueueSize: DefaultRequestPoolSize, RequestTimeout: requestTimeout})
-
-	batcher := &algorithm.Bundler{
-		CloseChan:    make(chan struct{}),
-		Pool:         pool,
-		BatchSize:    c.BatchSize,
-		BatchTimeout: c.BatchTimeout,
-	}
+	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
 
 	c.controller = &algorithm.Controller{
 		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
-		Batcher:          batcher,
+		Batcher:          batchBuilder,
 		RequestPool:      pool,
 		RequestTimeout:   requestTimeout,
 		Verifier:         c.Verifier,

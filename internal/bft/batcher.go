@@ -10,42 +10,52 @@ import (
 	"time"
 )
 
-type Bundler struct { // TODO change name
-	Pool         RequestPool
-	BatchSize    int
-	BatchTimeout time.Duration
-	CloseChan    chan struct{}
+type BatchBuilder struct {
+	pool         RequestPool
+	batchSize    int
+	batchTimeout time.Duration
+	closeChan    chan struct{}
 	remainder    [][]byte
 	closeLock    sync.Mutex // Reset and Close may be called by different threads
 }
 
+func NewBatchBuilder(pool RequestPool, batchSize int, batchTimeout time.Duration) *BatchBuilder {
+	b := &BatchBuilder{
+		pool:         pool,
+		batchSize:    batchSize,
+		batchTimeout: batchTimeout,
+		closeChan:    make(chan struct{}),
+	}
+	return b
+}
+
 // NextBatch returns the next batch of requests to be proposed
-func (b *Bundler) NextBatch() [][]byte {
+func (b *BatchBuilder) NextBatch() [][]byte {
 	currBatch := make([][]byte, 0)
 	remainderOccupied := len(b.remainder)
 	if remainderOccupied > 0 {
 		currBatch = b.remainder
 	}
 	b.remainder = make([][]byte, 0)
-	timeout := time.After(b.BatchTimeout)
+	timeout := time.After(b.batchTimeout)
 	for {
 		select {
-		case <-b.CloseChan:
+		case <-b.closeChan:
 			return nil
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
 		default:
-			if b.Pool.Size() >= b.BatchSize-remainderOccupied {
+			if b.pool.Size() >= b.batchSize-remainderOccupied {
 				return b.buildBatch(remainderOccupied, currBatch)
 			}
-			time.Sleep(b.BatchTimeout / 100)
+			time.Sleep(b.batchTimeout / 100)
 		}
 	}
 }
 
 // takes the current batch and appends to it requests from the pool
-func (b *Bundler) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
-	reqs := b.Pool.NextRequests(b.BatchSize - remainderOccupied)
+func (b *BatchBuilder) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
+	reqs := b.pool.NextRequests(b.batchSize - remainderOccupied)
 	for i := 0; i < len(reqs); i++ {
 		currBatch = append(currBatch, reqs[i])
 	}
@@ -53,7 +63,7 @@ func (b *Bundler) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte
 }
 
 // BatchRemainder sets the remainder of requests to be included in the next batch
-func (b *Bundler) BatchRemainder(remainder [][]byte) {
+func (b *BatchBuilder) BatchRemainder(remainder [][]byte) {
 	if len(b.remainder) != 0 {
 		panic("batch remainder should always be empty when setting remainder")
 	}
@@ -61,22 +71,22 @@ func (b *Bundler) BatchRemainder(remainder [][]byte) {
 }
 
 // Close closes the close channel to stop NextBatch
-func (b *Bundler) Close() {
+func (b *BatchBuilder) Close() {
 	b.closeLock.Lock()
 	defer b.closeLock.Unlock()
-	close(b.CloseChan)
+	close(b.closeChan)
 }
 
 // Reset resets the remainder and reopens the close channel to allow calling NextBatch
-func (b *Bundler) Reset() {
+func (b *BatchBuilder) Reset() {
 	b.closeLock.Lock()
 	defer b.closeLock.Unlock()
 	b.remainder = nil
-	b.CloseChan = make(chan struct{})
+	b.closeChan = make(chan struct{})
 }
 
 // PopRemainder returns the remainder and resets it
-func (b *Bundler) PopRemainder() [][]byte {
+func (b *BatchBuilder) PopRemainder() [][]byte {
 	defer func() {
 		b.remainder = nil
 	}()
