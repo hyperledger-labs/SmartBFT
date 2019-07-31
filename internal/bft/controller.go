@@ -46,10 +46,6 @@ type RequestPool interface {
 	Close()
 }
 
-type Future interface {
-	Wait()
-}
-
 type Proposer interface {
 	Propose(proposal types.Proposal)
 	Start()
@@ -91,7 +87,9 @@ type Controller struct {
 
 	viewChange chan viewInfo
 
-	stopChan             chan struct{}
+	stopOnce sync.Once
+	stopChan chan struct{}
+
 	decisionChan         chan decision
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
@@ -346,6 +344,7 @@ func (c *Controller) relinquishLeaderToken() {
 // Start the controller
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
 	c.controllerDone.Add(1)
+	c.stopOnce = sync.Once{}
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
@@ -364,15 +363,22 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	}()
 }
 
+func (c *Controller) close() {
+	c.stopOnce.Do(
+		func() {
+			select {
+			case <-c.stopChan:
+				return
+			default:
+				close(c.stopChan)
+			}
+		},
+	)
+}
+
 // Stop the controller
 func (c *Controller) Stop() {
-	select {
-	case <-c.stopChan:
-		return
-	default:
-		close(c.stopChan)
-	}
-
+	c.close()
 	c.Batcher.Close()
 	c.RequestPool.Close()
 

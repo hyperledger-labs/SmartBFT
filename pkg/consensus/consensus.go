@@ -52,11 +52,6 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 	c.Application.Deliver(proposal, signatures)
 }
 
-// Future waits until an event occurs
-type Future interface {
-	Wait()
-}
-
 func (c *Consensus) Start() {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
 
