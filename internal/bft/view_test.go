@@ -6,15 +6,13 @@
 package bft_test
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"strings"
 	"sync"
-	"testing"
-
 	"sync/atomic"
-
-	"bytes"
+	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"

@@ -6,10 +6,9 @@
 package bft
 
 import (
+	"encoding/asn1"
 	"fmt"
 	"sync"
-
-	"encoding/asn1"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
