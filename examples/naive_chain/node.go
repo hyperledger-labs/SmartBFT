@@ -156,6 +156,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 
 func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions) *Node {
 	node := &Node{
+		nextSeq:     1,
 		id:          id,
 		in:          in,
 		out:         out,

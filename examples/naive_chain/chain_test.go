@@ -71,7 +71,7 @@ func TestChain(t *testing.T) {
 
 	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second})
 
-	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
+	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
 			err := chain.Order(Transaction{
 				ClientID: "alice",
@@ -81,7 +81,7 @@ func TestChain(t *testing.T) {
 		}
 	}
 
-	for blockSeq := 0; blockSeq < blockCount; blockSeq++ {
+	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
 			block := chain.Listen()
 			assert.Equal(t, uint64(blockSeq), block.Sequence)
@@ -118,7 +118,7 @@ func TestChainPartialSubmissions(t *testing.T) {
 	}
 
 	txByChain := make(map[int][]Transaction)
-	var blockSqn uint64 = 0
+	var blockSqn uint64 = 1
 	for txNum := 0; txNum < txCount; {
 		numTxInBlock := 0
 		for i, chain := range chains {
