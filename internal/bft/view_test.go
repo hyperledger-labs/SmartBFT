@@ -822,20 +822,24 @@ func TestViewPersisted(t *testing.T) {
 
 			state := &mocks.State{}
 
-			view := &bft.View{
-				Signer:           signer,
-				Decider:          decider,
-				Comm:             comm,
-				Verifier:         verifier,
-				SelfID:           2,
-				State:            state,
-				Logger:           log,
-				N:                4,
-				LeaderID:         1,
-				Quorum:           3,
-				Number:           1,
-				ProposalSequence: 0,
+			constructView := func() *bft.View {
+				return &bft.View{
+					Signer:           signer,
+					Decider:          decider,
+					Comm:             comm,
+					Verifier:         verifier,
+					SelfID:           2,
+					State:            state,
+					Logger:           log,
+					N:                4,
+					LeaderID:         1,
+					Quorum:           3,
+					Number:           1,
+					ProposalSequence: 0,
+				}
 			}
+
+			view := constructView()
 
 			wal := &wal.EphemeralWAL{}
 			persistedState := &bft.PersistedState{
@@ -864,6 +868,7 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterProposed {
 				// Simulate a crash.
 				view.Abort()
+				view = constructView()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()
@@ -898,6 +903,7 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterPrepared {
 				// Simulate a crash.
 				view.Abort()
+				view = constructView()
 
 				// Recover the view from WAL.
 				persistedState.Entries = wal.ReadAll()

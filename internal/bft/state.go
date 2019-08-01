@@ -156,5 +156,13 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 	v.Phase = PREPARED
 	v.Number = prePrepareFromWAL.View
 	v.ProposalSequence = prePrepareFromWAL.Seq
+
+	// Restore signature
+	signatureInLastSentCommit := lastPersistedMessage.GetCommit().Signature
+	v.myProposalSig = &types.Signature{
+		Id:    signatureInLastSentCommit.Signer,
+		Msg:   signatureInLastSentCommit.Msg,
+		Value: signatureInLastSentCommit.Value,
+	}
 	return nil
 }
