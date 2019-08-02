@@ -156,6 +156,7 @@ func TestLeaderPropose(t *testing.T) {
 	batcher.On("PopRemainder").Return([][]byte{})
 	batcher.On("BatchRemainder", mock.Anything)
 	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
@@ -175,6 +176,7 @@ func TestLeaderPropose(t *testing.T) {
 	})
 	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
 	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    17,
 		Value: []byte{4},
@@ -236,6 +238,7 @@ func TestLeaderChange(t *testing.T) {
 	batcher.On("Reset")
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 
@@ -265,7 +268,11 @@ func TestLeaderChange(t *testing.T) {
 	})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
 	controller := &bft.Controller{
+		Signer:          signer,
 		WAL:             &wal.EphemeralWAL{},
 		ID:              2, // the next leader
 		N:               4,
