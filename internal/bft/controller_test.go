@@ -11,12 +11,15 @@ import (
 	"sync"
 	"testing"
 
+	"time"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
@@ -309,6 +312,93 @@ func TestLeaderChange(t *testing.T) {
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
+}
+
+func TestControllerLeaderRequestHandling(t *testing.T) {
+	for _, testCase := range []struct {
+		description      string
+		startViewNum     uint64
+		verifyReqReturns error
+		shouldEnqueue    bool
+		waitForLoggedMsg string
+	}{
+		{
+			description:      "not the leader",
+			startViewNum:     2,
+			waitForLoggedMsg: "Got request from 3 but the leader is 2, dropping request",
+		},
+		{
+			description:      "bad request",
+			startViewNum:     1,
+			verifyReqReturns: errors.New("unauthorized user"),
+			waitForLoggedMsg: "unauthorized user",
+		},
+		{
+			description:      "good request",
+			shouldEnqueue:    true,
+			startViewNum:     1,
+			waitForLoggedMsg: "Got request from 3",
+		},
+	} {
+		t.Run(testCase.description, func(t *testing.T) {
+			var submittedToPool sync.WaitGroup
+
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+
+			loggedEntries := make(chan string, 100)
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				loggedEntries <- entry.Message
+				return nil
+			})).Sugar()
+
+			batcher := &mocks.Batcher{}
+			batcher.On("Close")
+			batcher.On("Reset")
+			batcher.On("NextBatch").Run(func(arguments mock.Arguments) {
+				time.Sleep(time.Hour)
+			})
+
+			pool := &mocks.RequestPool{}
+			pool.On("Close")
+			if testCase.shouldEnqueue {
+				submittedToPool.Add(1)
+				pool.On("Submit", mock.Anything).Return(nil).Run(func(_ mock.Arguments) {
+					submittedToPool.Done()
+				})
+			}
+
+			commMock := &mocks.CommMock{}
+			commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
+
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifyRequest", mock.Anything).Return(types.RequestInfo{}, testCase.verifyReqReturns)
+
+			controller := &bft.Controller{
+				RequestPool: pool,
+				ID:          1,
+				N:           4,
+				Logger:      log,
+				Batcher:     batcher,
+				Comm:        commMock,
+				Verifier:    verifier,
+			}
+
+			configureProposerBuilder(controller)
+			controller.Start(testCase.startViewNum, 0)
+
+			// Handle request from a different goroutine to simulate asynchronous submission of requests.
+			go controller.HandleRequest(3, []byte{1, 2, 3})
+
+			for entry := range loggedEntries {
+				if strings.Contains(entry, testCase.waitForLoggedMsg) {
+					break
+				}
+			}
+
+			submittedToPool.Wait()
+		})
+	}
 }
 
 func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int) *bft.View {
