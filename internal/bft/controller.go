@@ -82,7 +82,7 @@ type Controller struct {
 
 	currView Proposer
 
-	currViewNumberLock sync.Mutex
+	currViewNumberLock sync.RWMutex
 	currViewNumber     uint64
 
 	viewChange chan viewInfo
@@ -99,8 +99,8 @@ type Controller struct {
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
-	c.currViewNumberLock.Lock()
-	defer c.currViewNumberLock.Unlock()
+	c.currViewNumberLock.RLock()
+	defer c.currViewNumberLock.RUnlock()
 
 	return c.currViewNumber
 }
@@ -141,10 +141,28 @@ func (c *Controller) computeQuorum() int {
 	return q
 }
 
+func (c *Controller) HandleRequest(sender uint64, req []byte) {
+	iAm, leaderID := c.iAmTheLeader()
+	if !iAm {
+		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
+		return
+	}
+	reqInfo, err := c.Verifier.VerifyRequest(req)
+	if err != nil {
+		c.Logger.Warnf("Got bad request from %d: %v", sender, err)
+		return
+	}
+	c.Logger.Debugf("Got request from %d", sender)
+	c.addRequest(reqInfo, req)
+}
+
 // SubmitRequest Submits a request to go through consensus.
 func (c *Controller) SubmitRequest(request []byte) error {
 	info := c.RequestInspector.RequestID(request)
+	return c.addRequest(info, request)
+}
 
+func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 	err := c.RequestPool.Submit(request)
 	if err != nil {
 		c.Logger.Warnf("Request %s was not submitted, error: %s", info, err)
