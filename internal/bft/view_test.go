@@ -6,13 +6,13 @@
 package bft_test
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"strings"
 	"sync"
-	"testing"
-
 	"sync/atomic"
+	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
@@ -69,9 +69,10 @@ var (
 	prepare = &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				View:   1,
-				Seq:    0,
-				Digest: digest,
+				View:      1,
+				Seq:       0,
+				Digest:    digest,
+				Signature: []byte{1, 2, 3},
 			},
 		},
 	}
@@ -319,7 +320,10 @@ func TestBadPrePrepare(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, testCase.verifyProposalReturns)
 			verifier.On("VerificationSequence").Return(uint64(1))
+			signer := &mocks.SignerMock{}
+			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 			view := &bft.View{
+				Signer:           signer,
 				Verifier:         verifier,
 				SelfID:           3,
 				State:            state,
@@ -347,96 +351,111 @@ func TestBadPrePrepare(t *testing.T) {
 }
 
 func TestBadPrepare(t *testing.T) {
-	// Ensure that a prepare with a wrong view number sent by the leader causes a view abort,
-	// and that a prepare with a wrong digest doesn't pass inspection.
+	for _, test := range []struct {
+		description            string
+		expectedMessageLogged  string
+		mutatePrepare          func(*protos.Prepare)
+		shouldComplainAndSync  bool
+		verifySignatureReturns error
+	}{
+		{
+			description:           "wrong view number",
+			expectedMessageLogged: " from 1 of view 2, expected view 1",
+			mutatePrepare: func(prepare *protos.Prepare) {
+				prepare.View = 2
+			},
+			shouldComplainAndSync: true,
+		},
+		{
+			description:           "wrong digest",
+			expectedMessageLogged: "Got wrong digest at processPrepares for prepare with seq 0",
+			mutatePrepare: func(prepare *protos.Prepare) {
+				prepare.Digest = wrongDigest
+			},
+		},
+		{
+			description:           "bad signature",
+			expectedMessageLogged: "bad signature",
+			mutatePrepare: func(prepare *protos.Prepare) {
+				prepare.Signature = []byte{6, 6, 6}
+			},
+			verifySignatureReturns: errors.New("bad signature"),
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			var warningMsgLogged sync.WaitGroup
+			warningMsgLogged.Add(1)
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, test.expectedMessageLogged) {
+					warningMsgLogged.Done()
+				}
+				return nil
+			})).Sugar()
+			synchronizer := &mocks.SynchronizerMock{}
+			syncWG := &sync.WaitGroup{}
+			synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
+				syncWG.Done()
+			}).Return(protos.ViewMetadata{}, uint64(0))
+			fd := &mocks.FailureDetector{}
+			fdWG := &sync.WaitGroup{}
+			fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+				fdWG.Done()
+			})
+			comm := &mocks.CommMock{}
+			commWG := sync.WaitGroup{}
+			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+				commWG.Done()
+			})
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifySignature", mock.Anything).Return(test.verifySignatureReturns)
+			verifier.On("VerificationSequence").Return(uint64(1))
+			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+			signer := &mocks.SignerMock{}
+			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+			signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+				Id:    4,
+				Value: []byte{4},
+			})
+			state := &bft.StateRecorder{}
+			view := &bft.View{
+				State:            state,
+				Logger:           log,
+				N:                4,
+				LeaderID:         1,
+				Quorum:           3,
+				Number:           1,
+				ProposalSequence: 0,
+				Sync:             synchronizer,
+				FailureDetector:  fd,
+				Comm:             comm,
+				Verifier:         verifier,
+				Signer:           signer,
+			}
+			view.Start()
 
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	digestLog := make(chan struct{})
-	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Got wrong digest") {
-			digestLog <- struct{}{}
-		}
-		return nil
-	})).Sugar()
-	synchronizer := &mocks.SynchronizerMock{}
-	syncWG := &sync.WaitGroup{}
-	synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
-		syncWG.Done()
-	}).Return(protos.ViewMetadata{}, uint64(0))
-	fd := &mocks.FailureDetector{}
-	fdWG := &sync.WaitGroup{}
-	fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
-		fdWG.Done()
-	})
-	comm := &mocks.CommMock{}
-	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
-		commWG.Done()
-	})
-	verifier := &mocks.VerifierMock{}
-	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	signer := &mocks.SignerMock{}
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    4,
-		Value: []byte{4},
-	})
-	state := &bft.StateRecorder{}
-	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Sync:             synchronizer,
-		FailureDetector:  fd,
-		Comm:             comm,
-		Verifier:         verifier,
-		Signer:           signer,
+			commWG.Add(1)
+			view.HandleMessage(1, prePrepare)
+			commWG.Wait()
+
+			badPrepare := proto.Clone(prepare).(*protos.Message)
+			test.mutatePrepare(badPrepare.GetPrepare())
+
+			if test.shouldComplainAndSync {
+				syncWG.Add(1)
+				fdWG.Add(1)
+			}
+
+			view.HandleMessage(1, badPrepare)
+			warningMsgLogged.Wait()
+
+			syncWG.Wait()
+			fdWG.Wait()
+			view.Abort()
+		})
 	}
-	view.Start()
 
-	commWG.Add(1)
-	view.HandleMessage(1, prePrepare)
-	commWG.Wait()
-
-	// prepare with wrong view
-	prepareWronngView := proto.Clone(prepare).(*protos.Message)
-	prepareWronngViewGet := prepareWronngView.GetPrepare()
-	prepareWronngViewGet.View = 2
-
-	// sent from the leader
-	syncWG.Add(1)
-	fdWG.Add(1)
-	view.HandleMessage(1, prepareWronngView)
-	syncWG.Wait()
-	fdWG.Wait()
-
-	view.Abort()
-
-	view.ProposalSequence = 0
-	view.Phase = bft.COMMITTED
-	view.Start()
-
-	commWG.Add(1)
-	view.HandleMessage(1, prePrepare)
-	commWG.Wait()
-
-	// prepare with wrong digest
-	prepareWronngDigest := proto.Clone(prepare).(*protos.Message)
-	prepareWronngDigestGet := prepareWronngDigest.GetPrepare()
-	prepareWronngDigestGet.Digest = wrongDigest
-
-	view.HandleMessage(1, prepareWronngDigest)
-	<-digestLog
-	view.HandleMessage(2, prepareWronngDigest)
-	<-digestLog
-	signer.AssertNotCalled(t, "SignProposal", mock.Anything)
-
-	view.Abort()
 }
 
 func TestBadCommit(t *testing.T) {
@@ -458,10 +477,18 @@ func TestBadCommit(t *testing.T) {
 	comm := &mocks.CommMock{}
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.VerifierMock{}
+	toBeSignedPrepare := bft.TBSPrepare{Digest: prepare.GetPrepare().Digest, View: 1, Seq: 0}.ToBytes()
+	verifier.On("VerifySignature", mock.Anything).Return(func(sig types.Signature) error {
+		if bytes.Equal(toBeSignedPrepare, sig.Msg) && bytes.Equal([]byte{1, 2, 3}, sig.Value) {
+			return nil
+		}
+		return errors.New("bad signature")
+	})
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
 	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -503,6 +530,21 @@ func TestBadCommit(t *testing.T) {
 func TestNormalPath(t *testing.T) {
 	// A test that takes a view through all 3 phases (prePrepare, prepare, and commit) until it reaches a decision.
 
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+
+	nextProp := types.Proposal{
+		Header:               prePrepareNextGet.Proposal.Header,
+		Payload:              prePrepareNextGet.Proposal.Payload,
+		Metadata:             prePrepareNextGet.Proposal.Metadata,
+		VerificationSequence: 1,
+	}
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -527,7 +569,12 @@ func TestNormalPath(t *testing.T) {
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
+	toBeSignedPrepare := bft.TBSPrepare{Digest: prepare.GetPrepare().Digest, View: 1, Seq: 0}.ToBytes()
+	signer.On("Sign", toBeSignedPrepare).Return([]byte{1, 2, 3}).Once()
+	toBeSignedPrepare = bft.TBSPrepare{Digest: nextProp.Digest(), View: 1, Seq: 1}.ToBytes()
+	signer.On("Sign", toBeSignedPrepare).Return([]byte{1, 2, 3}).Once()
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -570,21 +617,6 @@ func TestNormalPath(t *testing.T) {
 		if sig.Id != 2 && sig.Id != 3 && sig.Id != 4 {
 			assert.Fail(t, "signatures is from a different node with id", sig.Id)
 		}
-	}
-
-	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
-	prePrepareNextGet := prePrepareNext.GetPrePrepare()
-	prePrepareNextGet.Seq = 1
-	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
-	})
-
-	nextProp := types.Proposal{
-		Header:               prePrepareNextGet.Proposal.Header,
-		Payload:              prePrepareNextGet.Proposal.Payload,
-		Metadata:             prePrepareNextGet.Proposal.Metadata,
-		VerificationSequence: 1,
 	}
 
 	commWG.Add(2)
@@ -657,9 +689,11 @@ func TestTwoSequences(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},
@@ -780,6 +814,7 @@ func TestViewPersisted(t *testing.T) {
 	} {
 		t.Run(testCase.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			verifier.On("VerificationSequence").Return(uint64(1))
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
@@ -811,6 +846,7 @@ func TestViewPersisted(t *testing.T) {
 			log := basicLog.Sugar()
 
 			signer := &mocks.SignerMock{}
+			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 2})
 
 			var deciderWG sync.WaitGroup
@@ -1095,6 +1131,7 @@ func (tv *testedView) HandleMessage(sender uint64, m *protos.Message) {
 
 func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *testedView {
 	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
@@ -1119,6 +1156,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 	log := basicLog.Sugar()
 
 	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: selfID})
 
 	decider := &mocks.Decider{}

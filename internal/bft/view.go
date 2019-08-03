@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"encoding/asn1"
 	"fmt"
 	"sync"
 
@@ -316,21 +317,13 @@ func (v *View) processProposal() Phase {
 
 	seq := v.ProposalSequence
 
-	msg := &protos.Message{
-		Content: &protos.Message_Prepare{
-			Prepare: &protos.Prepare{
-				Seq:    seq,
-				View:   v.Number,
-				Digest: proposal.Digest(),
-			},
-		},
-	}
+	prepareMessage := v.createPrepare(seq, proposal)
 
 	// We are about to send a prepare for a pre-prepare,
 	// so we record the pre-prepare.
 	v.State.Save(receivedProposal)
-	v.lastBroadcastSent = msg
-	v.currPrepareSent = proto.Clone(msg).(*protos.Message)
+	v.lastBroadcastSent = prepareMessage
+	v.currPrepareSent = proto.Clone(prepareMessage).(*protos.Message)
 	v.currPrepareSent.GetPrepare().Assist = true
 	v.inFlightProposal = &proposal
 	v.inFlightRequests = requests
@@ -343,12 +336,60 @@ func (v *View) processProposal() Phase {
 	return PROPOSED
 }
 
+func (v *View) createPrepare(seq uint64, proposal types.Proposal) *protos.Message {
+	signature := v.Signer.Sign(TBSPrepare{
+		Seq:    int64(seq),
+		View:   int64(v.Number),
+		Digest: proposal.Digest(),
+	}.ToBytes())
+
+	return &protos.Message{
+		Content: &protos.Message_Prepare{
+			Prepare: &protos.Prepare{
+				Seq:       seq,
+				View:      v.Number,
+				Digest:    proposal.Digest(),
+				Signature: signature,
+			},
+		},
+	}
+}
+
+func (v *View) isPrepareValid(vote *vote, expectedMsg []byte) bool {
+	prepare := vote.GetPrepare()
+	err := v.Verifier.VerifySignature(types.Signature{
+		Value: prepare.Signature,
+		Msg:   expectedMsg,
+		Id:    vote.sender,
+	})
+
+	if err == nil {
+		return true
+	}
+	v.Logger.Warnf("Failed verifying vote %v from %v: %v", prepare, vote.sender, err)
+	return false
+}
+
 func (v *View) processPrepares() Phase {
 	proposal := v.inFlightProposal
 	expectedDigest := proposal.Digest()
 	collectedDigests := 0
 
 	var voterIDs []uint64
+	var collectedValidVotes []*protos.Prepare
+	validVotes := make(chan *vote, cap(v.prepares.votes))
+	expectedMsg := TBSPrepare{
+		Seq:    int64(v.ProposalSequence),
+		View:   int64(v.Number),
+		Digest: proposal.Digest(),
+	}.ToBytes()
+
+	verifyVote := func(vote *vote) {
+		if !v.isPrepareValid(vote, expectedMsg) {
+			return
+		}
+		validVotes <- vote
+	}
 
 	for collectedDigests < v.Quorum-1 {
 		select {
@@ -359,13 +400,15 @@ func (v *View) processPrepares() Phase {
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
 			if prepare.Digest != expectedDigest {
-				// TODO is it ok that the vote is already registered?
 				seq := v.ProposalSequence
 				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
 				continue
 			}
+			go verifyVote(vote)
+		case vote := <-validVotes:
 			collectedDigests++
 			voterIDs = append(voterIDs, vote.sender)
+			collectedValidVotes = append(collectedValidVotes, vote.GetPrepare())
 		}
 	}
 
@@ -669,4 +712,18 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 type incMsg struct {
 	*protos.Message
 	sender uint64
+}
+
+type TBSPrepare struct {
+	View   int64
+	Seq    int64
+	Digest string
+}
+
+func (tbsp TBSPrepare) ToBytes() []byte {
+	bytes, err := asn1.Marshal(tbsp)
+	if err != nil {
+		panic(errors.Errorf("failed marshaling prepare %v: %v", tbsp, err))
+	}
+	return bytes
 }
