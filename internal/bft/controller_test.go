@@ -320,6 +320,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 		startViewNum     uint64
 		verifyReqReturns error
 		shouldEnqueue    bool
+		shouldVerify     bool
 		waitForLoggedMsg string
 	}{
 		{
@@ -332,12 +333,14 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			startViewNum:     1,
 			verifyReqReturns: errors.New("unauthorized user"),
 			waitForLoggedMsg: "unauthorized user",
+			shouldVerify:     true,
 		},
 		{
 			description:      "good request",
 			shouldEnqueue:    true,
 			startViewNum:     1,
 			waitForLoggedMsg: "Got request from 3",
+			shouldVerify:     true,
 		},
 	} {
 		t.Run(testCase.description, func(t *testing.T) {
@@ -346,11 +349,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 
-			loggedEntries := make(chan string, 100)
-			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-				loggedEntries <- entry.Message
-				return nil
-			})).Sugar()
+			log := basicLog.Sugar()
 
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
@@ -387,16 +386,13 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			configureProposerBuilder(controller)
 			controller.Start(testCase.startViewNum, 0)
 
-			// Handle request from a different goroutine to simulate asynchronous submission of requests.
-			go controller.HandleRequest(3, []byte{1, 2, 3})
-
-			for entry := range loggedEntries {
-				if strings.Contains(entry, testCase.waitForLoggedMsg) {
-					break
-				}
-			}
+			controller.HandleRequest(3, []byte{1, 2, 3})
 
 			submittedToPool.Wait()
+
+			if !testCase.shouldVerify {
+				verifier.AssertNotCalled(t, "VerifyRequest", mock.Anything)
+			}
 		})
 	}
 }
