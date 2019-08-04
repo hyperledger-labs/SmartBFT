@@ -36,21 +36,29 @@ func TestControllerBasic(t *testing.T) {
 	batcher.On("Close")
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+	leaderMon.On("Close")
+
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	controller := &bft.Controller{
-		Batcher:     batcher,
-		RequestPool: pool,
-		ID:          4, // not the leader
-		N:           4,
-		Logger:      log,
-		Application: app,
-		Comm:        comm,
+		Batcher:       batcher,
+		RequestPool:   pool,
+		LeaderMonitor: leaderMon,
+		ID:            4, // not the leader
+		N:             4,
+		Logger:        log,
+		Application:   app,
+		Comm:          comm,
 	}
 	configureProposerBuilder(controller)
 
 	controller.Start(1, 0)
+
+	leaderMon.On("ProcessMsg", uint64(1), heartbeat.GetHeartBeat())
+	controller.ProcessMessages(1, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
 	controller.Stop()
@@ -89,6 +97,9 @@ func TestQuorum(t *testing.T) {
 			batcher.On("Close")
 			pool := &mocks.RequestPool{}
 			pool.On("Close")
+			leaderMon := &mocks.LeaderMonitor{}
+			leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+			leaderMon.On("Close")
 			commMock := &mocks.CommMock{}
 			var nodes []uint64
 			for i := 0; i < int(testCase.N); i++ {
@@ -96,12 +107,13 @@ func TestQuorum(t *testing.T) {
 			}
 			commMock.On("Nodes").Return(nodes)
 			controller := &bft.Controller{
-				Batcher:     batcher,
-				RequestPool: pool,
-				ID:          2, // not the leader
-				N:           testCase.N,
-				Logger:      log,
-				Comm:        commMock,
+				Batcher:       batcher,
+				RequestPool:   pool,
+				LeaderMonitor: leaderMon,
+				ID:            2, // not the leader
+				N:             testCase.N,
+				Logger:        log,
+				Comm:          commMock,
 			}
 			configureProposerBuilder(controller)
 
@@ -128,16 +140,20 @@ func TestControllerLeaderBasic(t *testing.T) {
 	}).Return([][]byte{})
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("Close")
 	commMock := &mocks.CommMock{}
 	commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	controller := &bft.Controller{
-		RequestPool: pool,
-		ID:          1, // the leader
-		N:           4,
-		Logger:      log,
-		Batcher:     batcher,
-		Comm:        commMock,
+		RequestPool:   pool,
+		LeaderMonitor: leaderMon,
+		ID:            1, // the leader
+		N:             4,
+		Logger:        log,
+		Batcher:       batcher,
+		Comm:          commMock,
 	}
 	configureProposerBuilder(controller)
 
@@ -192,19 +208,23 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("Close")
 
 	controller := &bft.Controller{
-		RequestPool: reqPool,
-		WAL:         &wal.EphemeralWAL{},
-		ID:          17, // the leader
-		N:           4,
-		Logger:      log,
-		Batcher:     batcher,
-		Verifier:    verifier,
-		Assembler:   assembler,
-		Comm:        comm,
-		Signer:      signer,
-		Application: app,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		WAL:           &wal.EphemeralWAL{},
+		ID:            17, // the leader
+		N:             4,
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		Signer:        signer,
+		Application:   app,
 	}
 	configureProposerBuilder(controller)
 
@@ -271,6 +291,10 @@ func TestLeaderChange(t *testing.T) {
 	})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("Close")
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
@@ -287,6 +311,7 @@ func TestLeaderChange(t *testing.T) {
 		Synchronizer:    synchronizer,
 		FailureDetector: fd,
 		RequestPool:     reqPool,
+		LeaderMonitor:   leaderMon,
 	}
 	configureProposerBuilder(controller)
 
@@ -360,6 +385,10 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 
 			pool := &mocks.RequestPool{}
 			pool.On("Close")
+			leaderMon := &mocks.LeaderMonitor{}
+			leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+			leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+			leaderMon.On("Close")
 			if testCase.shouldEnqueue {
 				submittedToPool.Add(1)
 				pool.On("Submit", mock.Anything).Return(nil).Run(func(_ mock.Arguments) {
@@ -374,13 +403,14 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			verifier.On("VerifyRequest", mock.Anything).Return(types.RequestInfo{}, testCase.verifyReqReturns)
 
 			controller := &bft.Controller{
-				RequestPool: pool,
-				ID:          1,
-				N:           4,
-				Logger:      log,
-				Batcher:     batcher,
-				Comm:        commMock,
-				Verifier:    verifier,
+				RequestPool:   pool,
+				LeaderMonitor: leaderMon,
+				ID:            1,
+				N:             4,
+				Logger:        log,
+				Batcher:       batcher,
+				Comm:          commMock,
+				Verifier:      verifier,
 			}
 
 			configureProposerBuilder(controller)
