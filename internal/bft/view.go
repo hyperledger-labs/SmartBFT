@@ -187,19 +187,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgForNextProposal := msgProposalSeq == v.ProposalSequence+1
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		if pp.Proposal == nil {
-			v.Logger.Warnf("%d got pre-prepare from %d with empty proposal", v.SelfID, sender)
-			return
-		}
-		if sender != v.LeaderID {
-			v.Logger.Warnf("%d got pre-prepare from %d but the leader is %d", v.SelfID, sender, v.LeaderID)
-			return
-		}
-		if msgForNextProposal {
-			v.nextPrePrepare <- m
-		} else {
-			v.prePrepare <- m
-		}
+		v.processPrePrepare(pp, m, msgForNextProposal, sender)
 		return
 	}
 
@@ -256,6 +244,31 @@ func (v *View) doPhase() {
 		return
 	default:
 		v.Logger.Panicf("Unknown phase in view : %v", v)
+	}
+}
+
+func (v *View) processPrePrepare(pp *protos.PrePrepare, m *protos.Message, msgForNextProposal bool, sender uint64) {
+	if pp.Proposal == nil {
+		v.Logger.Warnf("%d got pre-prepare from %d with empty proposal", v.SelfID, sender)
+		return
+	}
+	if sender != v.LeaderID {
+		v.Logger.Warnf("%d got pre-prepare from %d but the leader is %d", v.SelfID, sender, v.LeaderID)
+		return
+	}
+
+	prePrepareChan := v.prePrepare
+	currentOrNext := "current"
+
+	if msgForNextProposal {
+		prePrepareChan = v.nextPrePrepare
+		currentOrNext = "next"
+	}
+
+	select {
+	case prePrepareChan <- m:
+	default:
+		v.Logger.Warnf("Got a pre-prepare for %s sequence without processing previous one, dropping message", currentOrNext)
 	}
 }
 
