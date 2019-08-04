@@ -98,10 +98,7 @@ func (c *Consensus) Stop() {
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
-	if algorithm.IsViewMessage(m) {
-		c.controller.ProcessMessages(sender, m)
-	}
-
+	c.controller.ProcessMessages(sender, m)
 }
 
 func (c *Consensus) HandleRequest(sender uint64, req []byte) {

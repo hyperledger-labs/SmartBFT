@@ -213,11 +213,25 @@ func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
 
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
-	if IsViewMessage(m) {
+	switch m.GetContent().(type) {
+	case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
 		c.currView.HandleMessage(sender, m)
+		c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
+
+	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
+		// TODO view change
+		c.Logger.Debugf("View change not yet implemented, ignoring message: %v, from %d", m, sender)
+
+	case *protos.Message_HeartBeat:
+		//TODO heartbeat monitor
+		c.Logger.Debugf("Heartbeat monitor not yet implemented, ignoring message: %v, from %d", m, sender)
+
+	case *protos.Message_Error:
+		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
+
+	default:
+		c.Logger.Warnf("Unexpected message type, ignoring")
 	}
-	c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
-	// TODO the msg can be a view change message or a tx req coming from a node after a timeout
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
