@@ -256,10 +256,19 @@ func (v *View) processPrePrepare(pp *protos.PrePrepare, m *protos.Message, msgFo
 		v.Logger.Warnf("%d got pre-prepare from %d but the leader is %d", v.SelfID, sender, v.LeaderID)
 		return
 	}
+
+	prePrepareChan := v.prePrepare
+	currentOrNext := "current"
+
 	if msgForNextProposal {
-		v.nextPrePrepare <- m
-	} else {
-		v.prePrepare <- m
+		prePrepareChan = v.nextPrePrepare
+		currentOrNext = "next"
+	}
+
+	select {
+	case prePrepareChan <- m:
+	default:
+		v.Logger.Warnf("Got a pre-prepare for %s sequence without processing previous one, dropping message", currentOrNext)
 	}
 }
 

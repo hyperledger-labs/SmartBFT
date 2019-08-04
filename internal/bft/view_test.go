@@ -967,6 +967,101 @@ func TestViewPersisted(t *testing.T) {
 	}
 }
 
+func TestTwoPrePreparesInARow(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+
+	loggedEntries := make(chan string, 100)
+	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		loggedEntries <- entry.Message
+		return nil
+	})).Sugar()
+
+	state := &bft.StateRecorder{}
+
+	var deciderWG sync.WaitGroup
+	deciderWG.Add(1)
+	decider := &mocks.Decider{}
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+		deciderWG.Done()
+	})
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 3})
+
+	var broadcastSent sync.WaitGroup
+	comm := &mocks.CommMock{}
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		broadcastSent.Done()
+	})
+
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+
+	view := &bft.View{
+		Decider:          decider,
+		Comm:             comm,
+		Signer:           signer,
+		Verifier:         verifier,
+		State:            state,
+		Logger:           log,
+		N:                4,
+		LeaderID:         1,
+		Quorum:           3,
+		Number:           1,
+		ProposalSequence: 0,
+	}
+
+	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
+		view.HandleMessage(1, prePrepare)
+		view.HandleMessage(1, prePrepare)
+		view.HandleMessage(1, prePrepareNext)
+		view.HandleMessage(1, prePrepareNext)
+	}).Return(nil, nil)
+
+	view.Start()
+
+	broadcastSent.Add(1) // to send prepare for preprepare
+	view.HandleMessage(1, prePrepare)
+	// Wait until prepare is sent
+	broadcastSent.Wait()
+	broadcastSent.Add(1) // to send commit for prepares
+	// Feed prepares
+	view.HandleMessage(2, prepare)
+	view.HandleMessage(3, prepare)
+	// Wait until commit is sent
+	broadcastSent.Wait()
+	broadcastSent.Add(1) // to send prepare for next round
+	// Feed commits
+	view.HandleMessage(2, commit2)
+	view.HandleMessage(3, commit3)
+	// Wait until decided
+	deciderWG.Wait()
+	// Wait until sent a prepare for next round
+	broadcastSent.Wait()
+	view.Abort()
+
+	close(loggedEntries)
+	var loggedMessages []string
+	for logEntry := range loggedEntries {
+		loggedMessages = append(loggedMessages, logEntry)
+	}
+
+	assert.Contains(t, loggedMessages, "Got a pre-prepare for next sequence without processing previous one, dropping message")
+	assert.Contains(t, loggedMessages, "Got a pre-prepare for current sequence without processing previous one, dropping message")
+}
+
 func TestViewLaggingCatchup(t *testing.T) {
 	// Scenario: 4 nodes total, while 1 node (node 4)
 	// is disconnected while proposal 0 is decided on.
