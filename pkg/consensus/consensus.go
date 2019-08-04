@@ -58,8 +58,13 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 
 func (c *Consensus) Start() {
 	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
-
-	pool := algorithm.NewPool(c.Logger, c.RequestInspector, algorithm.PoolOptions{QueueSize: DefaultRequestPoolSize, RequestTimeout: requestTimeout})
+	opts := algorithm.PoolOptions{
+		QueueSize:         DefaultRequestPoolSize,
+		RequestTimeout:    requestTimeout,
+		LeaderFwdTimeout:  requestTimeout,
+		AutoRemoveTimeout: requestTimeout,
+	}
+	pool := algorithm.NewPool(c.Logger, c.RequestInspector, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
 
 	c.controller = &algorithm.Controller{
