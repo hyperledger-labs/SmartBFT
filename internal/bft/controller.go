@@ -35,6 +35,7 @@ type Batcher interface {
 }
 
 //go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
+
 type RequestPool interface {
 	Prune(predicate func([]byte) error)
 	Submit(request []byte) error
@@ -43,6 +44,15 @@ type RequestPool interface {
 	RemoveRequest(request types.RequestInfo) error
 	StopTimers()
 	RestartTimers()
+	Close()
+}
+
+//go:generate mockery -dir . -name LeaderMonitor -case underscore -output ./mocks/
+
+type LeaderMonitor interface {
+	StartFollower(view uint64, leaderID uint64)
+	StartLeader(view uint64, leaderID uint64)
+	ProcessMsg(sender uint64, msg *protos.HeartBeat)
 	Close()
 }
 
@@ -66,6 +76,7 @@ type Controller struct {
 	RequestPool      RequestPool
 	RequestTimeout   time.Duration
 	Batcher          Batcher
+	LeaderMonitor    LeaderMonitor
 	Verifier         api.Verifier
 	Logger           api.Logger
 	Assembler        api.Assembler
@@ -211,6 +222,27 @@ func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
 	return
 }
 
+// OnHeartbeatTimeout is called when the heartbeat timeout expires.
+// Called by the HeartbeatMonitor timer goroutine.
+func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
+	c.Logger.Debugf("Heartbeat timeout expired, reported-view: %d, reported-leader: %d", view, leaderID)
+
+	iAm, currentLeaderID := c.iAmTheLeader()
+	if iAm {
+		c.Logger.Debugf("Heartbeat timeout expired, this node is the leader, nothing to do; current-view: %d, current-leader: %d",
+			c.getCurrentViewNumber(), currentLeaderID)
+		return
+	}
+
+	if leaderID != currentLeaderID {
+		c.Logger.Warnf("Heartbeat timeout expired, but current leader: %d, differs from reported leader: %d; ignoring", currentLeaderID, leaderID)
+		return
+	}
+
+	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
+	c.FailureDetector.Complain()
+}
+
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	switch m.GetContent().(type) {
@@ -223,8 +255,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.Logger.Debugf("View change not yet implemented, ignoring message: %v, from %d", m, sender)
 
 	case *protos.Message_HeartBeat:
-		//TODO heartbeat monitor
-		c.Logger.Debugf("Heartbeat monitor not yet implemented, ignoring message: %v, from %d", m, sender)
+		c.LeaderMonitor.ProcessMsg(sender, m.GetHeartBeat())
 
 	case *protos.Message_Error:
 		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
@@ -238,6 +269,13 @@ func (c *Controller) startView(proposalSequence uint64) {
 	// TODO view builder according to metadata returned by sync
 	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
 	c.currView.Start()
+
+	if yes, _ := c.iAmTheLeader(); yes {
+		c.LeaderMonitor.StartLeader(c.currViewNumber, c.leaderID())
+	} else {
+		c.LeaderMonitor.StartFollower(c.currViewNumber, c.leaderID())
+	}
+
 	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
 }
 
@@ -413,6 +451,7 @@ func (c *Controller) Stop() {
 	c.close()
 	c.Batcher.Close()
 	c.RequestPool.Close()
+	c.LeaderMonitor.Close()
 
 	// Drain the leader token if we hold it.
 	select {
