@@ -15,10 +15,10 @@ import (
 )
 
 type StateRecorder struct {
-	SavedMessages []*smartbftprotos.Message
+	SavedMessages []*smartbftprotos.SavedMessage
 }
 
-func (sr *StateRecorder) Save(message *smartbftprotos.Message) error {
+func (sr *StateRecorder) Save(message *smartbftprotos.SavedMessage) error {
 	sr.SavedMessages = append(sr.SavedMessages, message)
 	return nil
 }
@@ -33,10 +33,7 @@ type PersistedState struct {
 	WAL     api.WriteAheadLog
 }
 
-func (ps *PersistedState) Save(message *smartbftprotos.Message) error {
-	msgToSave := &smartbftprotos.SavedMessage{
-		Msg: message,
-	}
+func (ps *PersistedState) Save(msgToSave *smartbftprotos.SavedMessage) error {
 	b, err := proto.Marshal(msgToSave)
 	if err != nil {
 		ps.Logger.Panicf("Failed marshaling message: %v", err)
@@ -47,9 +44,9 @@ func (ps *PersistedState) Save(message *smartbftprotos.Message) error {
 	// previous proposal and have a stable checkpoint.
 	// 2) Acquired a new view message which contains 2f+1 attestations
 	//    of the cluster agreeing to a new view configuration.
-	newProposal := message.GetPrePrepare() != nil
-	finalizedView := message.GetNewView() != nil
-	return ps.WAL.Append(b, newProposal || finalizedView)
+	newProposal := msgToSave.GetProposedRecord() != nil
+	// TODO: handle view message here as well, and add "|| finalizedView" to truncate flag
+	return ps.WAL.Append(b, newProposal)
 }
 
 func (ps *PersistedState) Restore(v *View) error {
@@ -71,12 +68,12 @@ func (ps *PersistedState) Restore(v *View) error {
 		return err
 	}
 
-	if lastPersistedMessage.Msg.GetPrePrepare() != nil {
-		return recoverProposed(lastPersistedMessage.Msg, v, ps.Logger)
+	if proposed := lastPersistedMessage.GetProposedRecord(); proposed != nil {
+		return recoverProposed(proposed, v, ps.Logger)
 	}
 
-	if commitMsg := lastPersistedMessage.Msg.GetCommit(); commitMsg != nil {
-		return recoverPrepared(lastPersistedMessage.Msg, v, entries, ps.Logger)
+	if preparedProof := lastPersistedMessage.GetPreparedProof(); preparedProof != nil {
+		return recoverPrepared(preparedProof, v, entries, ps.Logger)
 	}
 
 	// TODO: handle signed view data persisted in the WAL
@@ -84,7 +81,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	return nil
 }
 
-func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logger api.Logger) error {
+func recoverProposed(lastPersistedMessage *smartbftprotos.ProposedRecord, v *View, logger api.Logger) error {
 	prop := lastPersistedMessage.GetPrePrepare().Proposal
 	v.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(prop.VerificationSequence),
@@ -97,11 +94,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logg
 	prp := lastPersistedMessage.GetPrePrepare()
 	v.lastBroadcastSent = &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
-			Prepare: &smartbftprotos.Prepare{
-				Seq:    prp.Seq,
-				View:   prp.View,
-				Digest: v.inFlightProposal.Digest(),
-			},
+			Prepare: lastPersistedMessage.GetPrepare(),
 		},
 	}
 	v.Phase = PROPOSED
@@ -111,7 +104,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.Message, v *View, logg
 	return nil
 }
 
-func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entries [][]byte, logger api.Logger) error {
+func recoverPrepared(lastPersistedMessage *smartbftprotos.PreparedProof, v *View, entries [][]byte, logger api.Logger) error {
 	// Last entry is a commit, so we should have not pruned the previous pre-prepare
 	if len(entries) < 2 {
 		return fmt.Errorf("last message is a commit, but expected to also have a matching pre-prepare")
@@ -122,7 +115,7 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 		return err
 	}
 
-	prePrepareFromWAL := prePrepareMsg.Msg.GetPrePrepare()
+	prePrepareFromWAL := prePrepareMsg.GetProposedRecord().GetPrePrepare()
 
 	if prePrepareFromWAL == nil {
 		return fmt.Errorf("expected second last message to be a pre-prepare, but got %v instead", prePrepareMsg)
@@ -152,13 +145,13 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entr
 
 	// Reconstruct the commit message we shall next broadcast
 	// after the recovery.
-	v.lastBroadcastSent = lastPersistedMessage
+	v.lastBroadcastSent = lastPersistedMessage.GetCommit()
 	v.Phase = PREPARED
 	v.Number = prePrepareFromWAL.View
 	v.ProposalSequence = prePrepareFromWAL.Seq
 
 	// Restore signature
-	signatureInLastSentCommit := lastPersistedMessage.GetCommit().Signature
+	signatureInLastSentCommit := v.lastBroadcastSent.GetCommit().Signature
 	v.myProposalSig = &types.Signature{
 		Id:    signatureInLastSentCommit.Signer,
 		Msg:   signatureInLastSentCommit.Msg,
