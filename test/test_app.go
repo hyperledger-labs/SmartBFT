@@ -11,6 +11,8 @@ import (
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type App struct {
@@ -18,6 +20,15 @@ type App struct {
 	Delivered chan *Batch
 	Consensus *consensus.Consensus
 	Setup     func()
+	logLevel  zap.AtomicLevel
+}
+
+func (a *App) Mute() {
+	a.logLevel.SetLevel(zapcore.PanicLevel)
+}
+
+func (a *App) UnMute() {
+	a.logLevel.SetLevel(zapcore.DebugLevel)
 }
 
 func (a *App) Submit(req Request) {
