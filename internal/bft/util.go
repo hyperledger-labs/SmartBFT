@@ -13,10 +13,6 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
-func IsViewMessage(m *protos.Message) bool {
-	return m.GetCommit() != nil || m.GetPrepare() != nil || m.GetPrePrepare() != nil
-}
-
 func viewNumber(m *protos.Message) uint64 {
 	if pp := m.GetPrePrepare(); pp != nil {
 		return pp.GetView()
