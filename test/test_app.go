@@ -7,20 +7,25 @@ package test
 
 import (
 	"encoding/asn1"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
 type App struct {
 	ID        uint64
-	Delivered chan *Batch
+	Delivered chan *AppRecord
 	Consensus *consensus.Consensus
 	Setup     func()
+	Node      *Node
 	logLevel  zap.AtomicLevel
+	latestMD  *smartbftprotos.ViewMetadata
 }
 
 func (a *App) Mute() {
@@ -40,6 +45,8 @@ func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
 }
 
 func (a *App) Restart() {
+	a.Node.Lock()
+	defer a.Node.Unlock()
 	a.Consensus.Stop()
 	a.Setup()
 	a.Consensus.Start()
@@ -97,7 +104,12 @@ func (a *App) AssembleProposal(metadata []byte, requests [][]byte) (nextProp typ
 }
 
 func (a *App) Deliver(proposal types.Proposal, signature []types.Signature) {
-	a.Delivered <- BatchFromBytes(proposal.Payload)
+	a.Delivered <- &AppRecord{
+		Metadata: proposal.Metadata,
+		Batch:    BatchFromBytes(proposal.Payload),
+	}
+	a.latestMD = &smartbftprotos.ViewMetadata{}
+	proto.Unmarshal(proposal.Metadata, a.latestMD)
 }
 
 type Request struct {
@@ -135,4 +147,48 @@ func BatchFromBytes(rawBlock []byte) *Batch {
 	var block Batch
 	asn1.Unmarshal(rawBlock, &block)
 	return &block
+}
+
+type AppRecord struct {
+	Batch    *Batch
+	Metadata []byte
+}
+
+func newNode(id uint64, network Network) *App {
+	logConfig := zap.NewDevelopmentConfig()
+	logger, _ := logConfig.Build()
+
+	app := &App{
+		ID:        id,
+		Delivered: make(chan *AppRecord, 100),
+		logLevel:  logConfig.Level,
+		latestMD:  &smartbftprotos.ViewMetadata{},
+	}
+
+	wal := &wal.EphemeralWAL{}
+
+	app.Setup = func() {
+		c := &consensus.Consensus{
+			SelfID:            id,
+			Logger:            logger.Sugar(),
+			WAL:               wal,
+			N:                 4,
+			Metadata:          *app.latestMD,
+			Verifier:          app,
+			Signer:            app,
+			RequestInspector:  app,
+			Assembler:         app,
+			Synchronizer:      app,
+			Application:       app,
+			BatchSize:         10,
+			BatchTimeout:      time.Millisecond,
+			WALInitialContent: wal.ReadAll(),
+		}
+		network.AddOrUpdateNode(id, c)
+		c.Comm = network[id]
+		app.Consensus = c
+	}
+	app.Setup()
+	app.Node = network[id]
+	return app
 }

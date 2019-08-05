@@ -39,8 +39,6 @@ type Network map[uint64]*Node
 func (n Network) AddOrUpdateNode(id uint64, h handler) {
 	node, exists := n[id]
 	if exists {
-		node.lock.Lock()
-		defer node.lock.Unlock()
 		node.h = h
 		return
 	}
@@ -83,7 +81,7 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 }
 
 type Node struct {
-	lock            sync.RWMutex
+	sync.RWMutex
 	running         sync.WaitGroup
 	id              uint64
 	n               Network
@@ -116,14 +114,14 @@ func (node *Node) serve() {
 		case <-node.shutdownChan:
 			return
 		case m := <-node.in:
-			node.lock.RLock()
+			node.RLock()
 			switch msg := m.message.(type) {
 			case *smartbftprotos.Message:
 				node.h.HandleMessage(uint64(m.from), msg)
 			default:
 				node.h.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)
 			}
-			node.lock.RUnlock()
+			node.RUnlock()
 
 		}
 	}
