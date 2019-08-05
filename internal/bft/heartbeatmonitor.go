@@ -41,6 +41,7 @@ func NewHeartbeatMonitor(
 	logger api.Logger,
 	heartbeatTimeout time.Duration,
 	comm Comm,
+	handler HeartbeatTimeoutHandler,
 ) *HeartbeatMonitor {
 	if heartbeatTimeout/10 < time.Nanosecond {
 		return nil
@@ -51,6 +52,7 @@ func NewHeartbeatMonitor(
 		hbTimeout:  heartbeatTimeout,
 		hbInterval: heartbeatTimeout / 10,
 		comm:       comm,
+		handler:    handler,
 	}
 	return hm
 }

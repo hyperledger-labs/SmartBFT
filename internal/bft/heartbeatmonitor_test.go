@@ -37,10 +37,8 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatTimeoutHandler{}
 
-	hm := bft.NewHeartbeatMonitor(log, time.Hour, comm)
+	hm := bft.NewHeartbeatMonitor(log, time.Hour, comm, handler)
 	assert.NotNil(t, hm)
-
-	hm.SetTimeoutHandler(handler)
 	hm.Close()
 }
 
@@ -50,8 +48,7 @@ func TestHeartbeatMonitor_StartLeader(t *testing.T) {
 	log := basicLog.Sugar()
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatTimeoutHandler{}
-	hm := bft.NewHeartbeatMonitor(log, time.Millisecond, comm)
-	hm.SetTimeoutHandler(handler)
+	hm := bft.NewHeartbeatMonitor(log, time.Millisecond, comm, handler)
 
 	count1 := 10
 	count2 := 10

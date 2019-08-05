@@ -6,9 +6,8 @@
 package consensus
 
 import (
-	"time"
-
 	"sync"
+	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
@@ -65,15 +64,12 @@ func (c *Consensus) Start() {
 		AutoRemoveTimeout: requestTimeout,
 	}
 
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Logger, algorithm.DefaultHeartbeatTimeout, c)
-
 	c.controller = &algorithm.Controller{
 		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
 		RequestTimeout:   requestTimeout,
-		LeaderMonitor:    leaderMonitor,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
@@ -87,10 +83,10 @@ func (c *Consensus) Start() {
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
-
-	leaderMonitor.SetTimeoutHandler(c.controller)
+	c.controller.LeaderMonitor = leaderMonitor
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
