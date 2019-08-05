@@ -29,8 +29,8 @@ const (
 //go:generate mockery -dir . -name State -case underscore -output ./mocks/
 
 type State interface {
-	// Save saves the current message.
-	Save(message *protos.Message) error
+	// Save saves a message.
+	Save(message *protos.SavedMessage) error
 
 	// Restore restores the given view to its latest state
 	// before a crash, if applicable.
@@ -334,7 +334,15 @@ func (v *View) processProposal() Phase {
 
 	// We are about to send a prepare for a pre-prepare,
 	// so we record the pre-prepare.
-	v.State.Save(receivedProposal)
+	savedMsg := &protos.SavedMessage{
+		Content: &protos.SavedMessage_ProposedRecord{
+			ProposedRecord: &protos.ProposedRecord{
+				PrePrepare: receivedProposal.GetPrePrepare(),
+				Prepare:    prepareMessage.GetPrepare(),
+			},
+		},
+	}
+	v.State.Save(savedMsg)
 	v.lastBroadcastSent = prepareMessage
 	v.currPrepareSent = proto.Clone(prepareMessage).(*protos.Message)
 	v.currPrepareSent.GetPrepare().Assist = true
@@ -386,10 +394,10 @@ func (v *View) isPrepareValid(vote *vote, expectedMsg []byte) bool {
 func (v *View) processPrepares() Phase {
 	proposal := v.inFlightProposal
 	expectedDigest := proposal.Digest()
-	collectedDigests := 0
+	ourPrepareSignature := v.lastBroadcastSent.GetPrepare().Signature
 
+	signaturesByIDs := make(map[uint64][]byte)
 	var voterIDs []uint64
-	var collectedValidVotes []*protos.Prepare
 	validVotes := make(chan *vote, cap(v.prepares.votes))
 	expectedMsg := TBSPrepare{
 		Seq:    int64(v.ProposalSequence),
@@ -404,7 +412,7 @@ func (v *View) processPrepares() Phase {
 		validVotes <- vote
 	}
 
-	for collectedDigests < v.Quorum-1 {
+	for len(signaturesByIDs) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
 			return ABORT
@@ -419,19 +427,18 @@ func (v *View) processPrepares() Phase {
 			}
 			go verifyVote(vote)
 		case vote := <-validVotes:
-			collectedDigests++
 			voterIDs = append(voterIDs, vote.sender)
-			collectedValidVotes = append(collectedValidVotes, vote.GetPrepare())
+			signaturesByIDs[vote.sender] = vote.GetPrepare().Signature
 		}
 	}
 
-	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, collectedDigests, voterIDs)
+	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(signaturesByIDs), voterIDs)
 
 	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
 	seq := v.ProposalSequence
 
-	msg := &protos.Message{
+	commitMsg := &protos.Message{
 		Content: &protos.Message_Commit{
 			Commit: &protos.Commit{
 				View:   v.Number,
@@ -446,12 +453,23 @@ func (v *View) processPrepares() Phase {
 		},
 	}
 
+	signaturesByIDs[v.SelfID] = ourPrepareSignature
+
+	preparedProof := &protos.SavedMessage{
+		Content: &protos.SavedMessage_PreparedProof{
+			PreparedProof: &protos.PreparedProof{
+				Commit:          commitMsg,
+				SignaturesByIds: signaturesByIDs,
+			},
+		},
+	}
+
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
-	v.State.Save(msg)
-	v.currCommitSent = proto.Clone(msg).(*protos.Message)
+	v.State.Save(preparedProof)
+	v.currCommitSent = proto.Clone(commitMsg).(*protos.Message)
 	v.currCommitSent.GetCommit().Assist = true
-	v.lastBroadcastSent = msg
+	v.lastBroadcastSent = commitMsg
 
 	v.Logger.Infof("Processed prepares for proposal with seq %d", seq)
 	return PREPARED
