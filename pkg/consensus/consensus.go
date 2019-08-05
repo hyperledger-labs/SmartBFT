@@ -65,12 +65,15 @@ func (c *Consensus) Start() {
 		AutoRemoveTimeout: requestTimeout,
 	}
 
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Logger, algorithm.DefaultHeartbeatTimeout, c)
+
 	c.controller = &algorithm.Controller{
 		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
 		RequestTimeout:   requestTimeout,
+		LeaderMonitor:    leaderMonitor,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
@@ -86,6 +89,8 @@ func (c *Consensus) Start() {
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
+
+	leaderMonitor.SetTimeoutHandler(c.controller)
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.

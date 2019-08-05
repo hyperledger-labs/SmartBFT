@@ -56,17 +56,55 @@ func NewHeartbeatMonitor(
 }
 
 func (hm *HeartbeatMonitor) SetTimeoutHandler(handler HeartbeatTimeoutHandler) {
-	// TODO
+	hm.mutex.Lock()
+	defer hm.mutex.Unlock()
+	hm.handler = handler
 }
 
 // StartFollower will start following the heartbeats of the leader of the view.
 func (hm *HeartbeatMonitor) StartFollower(view uint64, leaderID uint64) {
-	// TODO
+	//TODO
+}
+
+func (hm *HeartbeatMonitor) onHeartbeatTimeout(view uint64, leaderID uint64) {
+	//TODO check for extension due to MsgFromLeader
+	hm.handler.OnHeartbeatTimeout(view, leaderID)
 }
 
 // StartLeader will start sending heartbeats to all followers.
 func (hm *HeartbeatMonitor) StartLeader(view uint64, leaderID uint64) {
-	// TODO
+	hm.logger.Debugf("Starting heartbeat transmission; leader: %d, view: %d", leaderID, view)
+
+	hm.mutex.Lock()
+	defer hm.mutex.Unlock()
+
+	if hm.timer != nil {
+		hm.timer.Stop()
+	}
+	hm.view = view
+	hm.leaderID = leaderID
+	hm.follower = false
+	hm.timer = time.AfterFunc(hm.hbInterval, hm.sendHeartbeat)
+}
+
+func (hm *HeartbeatMonitor) sendHeartbeat() {
+	//TODO check for extension due to MsgFromLeader
+	hm.mutex.Lock()
+	heartbeat := &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeat{
+			HeartBeat: &smartbftprotos.HeartBeat{
+				View: hm.view,
+				Seq:  0,
+			},
+		},
+	}
+	hm.mutex.Unlock()
+
+	hm.comm.BroadcastConsensus(heartbeat)
+
+	hm.mutex.Lock()
+	hm.timer.Reset(hm.hbInterval)
+	hm.mutex.Unlock()
 }
 
 // ProcessMsg handles an incoming heartbeat.
@@ -76,5 +114,9 @@ func (hm *HeartbeatMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.HeartB
 
 // Close stops following or sending heartbeats.
 func (hm *HeartbeatMonitor) Close() {
-	// TODO
+	hm.mutex.Lock()
+	defer hm.mutex.Unlock()
+	if hm.timer != nil {
+		hm.timer.Stop()
+	}
 }

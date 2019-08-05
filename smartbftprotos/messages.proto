@@ -74,7 +74,7 @@ message NewView {
 }
 
 message HeartBeat {
-    int64 view = 1;
+    uint64 view = 1;
     uint64 seq = 2;
 }
 
