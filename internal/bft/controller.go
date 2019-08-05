@@ -208,7 +208,6 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 // Called by the request-pool timeout goroutine.
 func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
 	c.Logger.Warnf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
-	return
 }
 
 // ProcessMessages dispatches the incoming message to the required component
