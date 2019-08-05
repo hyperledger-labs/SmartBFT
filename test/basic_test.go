@@ -7,16 +7,12 @@ package test
 
 import (
 	"testing"
-	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/consensus"
-	"github.com/SmartBFT-Go/consensus/pkg/wal"
-	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
 )
 
 func TestBasic(t *testing.T) {
+	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
 
@@ -35,13 +31,18 @@ func TestBasic(t *testing.T) {
 	n1.Submit(Request{ID: "3", ClientID: "alice"})
 	n1.Submit(Request{ID: "3", ClientID: "alice"})
 
-	<-n1.Delivered
-	<-n2.Delivered
-	<-n3.Delivered
-	<-n4.Delivered
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+	data4 := <-n4.Delivered
+
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data3, data4)
+	assert.Equal(t, data1, data4)
 }
 
 func TestRestartFollowers(t *testing.T) {
+	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
 
@@ -65,11 +66,14 @@ func TestRestartFollowers(t *testing.T) {
 	data2 := <-n2.Delivered
 	data3 := <-n3.Delivered
 	data4 := <-n4.Delivered
+
 	assert.Equal(t, data1, data2)
 	assert.Equal(t, data3, data4)
 	assert.Equal(t, data1, data4)
 
+	n3.Restart()
 	n1.Submit(Request{ID: "2", ClientID: "alice"})
+	n2.Restart()
 
 	data1 = <-n1.Delivered
 	data2 = <-n2.Delivered
@@ -78,45 +82,4 @@ func TestRestartFollowers(t *testing.T) {
 	assert.Equal(t, data1, data2)
 	assert.Equal(t, data3, data4)
 	assert.Equal(t, data1, data4)
-}
-
-func newNode(id uint64, network Network) *App {
-	logConfig := zap.NewDevelopmentConfig()
-	logger, _ := logConfig.Build()
-
-	app := &App{
-		ID:        id,
-		Delivered: make(chan *Batch, 100),
-		logLevel:  logConfig.Level,
-	}
-
-	wal := &wal.EphemeralWAL{}
-
-	app.Setup = func() {
-		c := &consensus.Consensus{
-			SelfID: id,
-			Logger: logger.Sugar(),
-			WAL:    wal,
-			N:      4,
-			Metadata: smartbftprotos.ViewMetadata{
-				ViewId:         1,
-				LatestSequence: 0,
-			},
-			Verifier:          app,
-			Signer:            app,
-			RequestInspector:  app,
-			Assembler:         app,
-			Synchronizer:      app,
-			Application:       app,
-			BatchSize:         10,
-			BatchTimeout:      time.Millisecond,
-			WALInitialContent: wal.ReadAll(),
-		}
-		network.AddOrUpdateNode(id, c)
-		c.Comm = network[id]
-		app.Consensus = c
-
-	}
-	app.Setup()
-	return app
 }
