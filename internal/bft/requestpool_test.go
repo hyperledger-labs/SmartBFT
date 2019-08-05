@@ -147,41 +147,6 @@ func TestReqPoolCapacity(t *testing.T) {
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
 
-	t.Run("eventually submit", func(t *testing.T) {
-		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
-		defer pool.Close()
-
-		wg := sync.WaitGroup{}
-		wg.Add(2 * numReq)
-		for i := 0; i < numReq; i++ {
-			go func(i int) {
-				iStr := fmt.Sprintf("%d", i)
-				byteReq := makeTestRequest(iStr, iStr, "foo")
-				err := pool.Submit(byteReq)
-				assert.NoError(t, err)
-				wg.Done()
-			}(i)
-
-			go func(i int) {
-				iStr := fmt.Sprintf("%d", i)
-				req := types.RequestInfo{
-					ID:       iStr,
-					ClientID: iStr,
-				}
-				err := pool.RemoveRequest(req)
-				for err != nil {
-					err = pool.RemoveRequest(req)
-				}
-				wg.Done()
-			}(i)
-		}
-		wg.Wait()
-
-		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
-		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
-	})
-
 	t.Run("submit storm", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
