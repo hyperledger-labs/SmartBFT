@@ -6,6 +6,7 @@
 package bft_test
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"sync"
@@ -17,8 +18,6 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"go.uber.org/zap"
-
-	"bytes"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
@@ -191,35 +190,34 @@ func TestReqPoolCapacity(t *testing.T) {
 		wg := sync.WaitGroup{}
 		wg.Add(2 * numReq)
 		for i := 0; i < numReq; i++ {
-			go func(i int) {
-				iStr := fmt.Sprintf("%d", i)
-				byteReq := makeTestRequest(iStr, iStr, "foo")
+			go func(i string) {
+				byteReq := makeTestRequest(i, i, "foo")
 				err := pool.Submit(byteReq)
 				assert.NoError(t, err)
 				wg.Done()
-			}(i)
+			}(fmt.Sprintf("%d", i))
 		}
 
 		time.Sleep(10 * time.Millisecond)
 
 		for i := 0; i < numReq; i++ {
-			go func(i int) {
-				iStr := fmt.Sprintf("%d", i)
+			go func(i string) {
 				req := types.RequestInfo{
-					ID:       iStr,
-					ClientID: iStr,
+					ID:       i,
+					ClientID: i,
 				}
 				err := pool.RemoveRequest(req)
 				for err != nil {
 					err = pool.RemoveRequest(req)
 				}
 				wg.Done()
-			}(i)
+			}(fmt.Sprintf("%d", i))
 		}
 		wg.Wait()
 
+		assert.Equal(t, 0, pool.Size())
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
-		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", .0)
 	})
 }
 
