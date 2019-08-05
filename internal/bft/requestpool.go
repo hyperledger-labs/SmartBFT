@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	DefaultRequestTimeout = 60000 * time.Millisecond
+	DefaultRequestTimeout = 10 * time.Second
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
@@ -68,7 +68,7 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, inspector api.RequestInspector, options PoolOptions) *Pool {
+func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions) *Pool {
 	if options.RequestTimeout == 0 {
 		options.RequestTimeout = DefaultRequestTimeout
 	}
@@ -80,17 +80,14 @@ func NewPool(log api.Logger, inspector api.RequestInspector, options PoolOptions
 	}
 
 	return &Pool{
-		logger:    log,
-		inspector: inspector,
-		fifo:      list.New(),
-		semaphore: semaphore.NewWeighted(options.QueueSize),
-		existMap:  make(map[types.RequestInfo]*list.Element),
-		options:   options,
+		timeoutHandler: th,
+		logger:         log,
+		inspector:      inspector,
+		fifo:           list.New(),
+		semaphore:      semaphore.NewWeighted(options.QueueSize),
+		existMap:       make(map[types.RequestInfo]*list.Element),
+		options:        options,
 	}
-}
-
-func (rp *Pool) SetTimeoutHandler(handler RequestTimeoutHandler) {
-	rp.timeoutHandler = handler
 }
 
 func (rp *Pool) isStopped() bool {

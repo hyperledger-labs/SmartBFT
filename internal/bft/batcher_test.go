@@ -11,10 +11,20 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
 )
+
+var (
+	noopTimeoutHandler = &mocks.RequestTimeoutHandler{}
+)
+
+func init() {
+	noopTimeoutHandler.On("OnRequestTimeout", mock.Anything, mock.Anything)
+}
 
 func TestBatcherBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
@@ -25,7 +35,7 @@ func TestBatcherBasic(t *testing.T) {
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")
 	byteReq3 := makeTestRequest("3", "3", "foo")
-	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
@@ -95,7 +105,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
-	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 200})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200})
 
 	batcher := bft.NewBatchBuilder(pool, 100, 100*time.Second) // long time
 
@@ -136,7 +146,7 @@ func TestBatcherClose(t *testing.T) {
 	insp := &testRequestInspector{}
 
 	byteReq := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
 	err = pool.Submit(byteReq)
 	assert.NoError(t, err)
 
@@ -170,7 +180,7 @@ func TestBatcherReset(t *testing.T) {
 	insp := &testRequestInspector{}
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 

@@ -64,16 +64,12 @@ func (c *Consensus) Start() {
 		LeaderFwdTimeout:  requestTimeout,
 		AutoRemoveTimeout: requestTimeout,
 	}
-	pool := algorithm.NewPool(c.Logger, c.RequestInspector, opts)
-	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
 
 	c.controller = &algorithm.Controller{
 		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
-		Batcher:          batchBuilder,
-		RequestPool:      pool,
 		RequestTimeout:   requestTimeout,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
@@ -86,7 +82,10 @@ func (c *Consensus) Start() {
 		RequestInspector: c.RequestInspector,
 	}
 
-	pool.SetTimeoutHandler(c.controller)
+	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
+	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
+	c.controller.RequestPool = pool
+	c.controller.Batcher = batchBuilder
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
