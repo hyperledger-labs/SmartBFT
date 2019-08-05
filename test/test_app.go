@@ -17,6 +17,7 @@ type App struct {
 	ID        uint64
 	Delivered chan *Batch
 	Consensus *consensus.Consensus
+	Setup     func()
 }
 
 func (a *App) Submit(req Request) {
@@ -25,6 +26,12 @@ func (a *App) Submit(req Request) {
 
 func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
 	panic("implement me")
+}
+
+func (a *App) Restart() {
+	a.Consensus.Stop()
+	a.Setup()
+	a.Consensus.Start()
 }
 
 func (a *App) RequestID(req []byte) types.RequestInfo {
