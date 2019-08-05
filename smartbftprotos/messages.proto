@@ -35,6 +35,25 @@ message Prepare {
     bytes signature = 5;
 }
 
+message PreparedProof {
+    // Message that wraps a Commit message.
+    Message commit = 1;
+    // The signatures are signatures originated
+    // from prepare messages, and they are all
+    // signatures on the same payload which is
+    // the ASN1 marshalling of:
+    // 	View   int64
+    //	Seq    int64
+    //	Digest string
+    // that should match the attached commit.
+    map<uint64, bytes> signatures_by_ids = 2;
+}
+
+message ProposedRecord {
+    PrePrepare pre_prepare = 1;
+    Prepare prepare = 2;
+}
+
 message Commit {
     uint64 view = 1;
     uint64 seq = 2;
@@ -97,5 +116,8 @@ message ViewMetadata {
 }
 
 message SavedMessage {
-    Message msg = 1;
+    oneof content {
+        ProposedRecord proposed_record = 1;
+        PreparedProof prepared_proof = 2;
+    }
 }

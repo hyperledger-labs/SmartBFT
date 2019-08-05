@@ -26,11 +26,11 @@ func (_m *State) Restore(_a0 *bft.View) error {
 }
 
 // Save provides a mock function with given fields: message
-func (_m *State) Save(message *smartbftprotos.Message) error {
+func (_m *State) Save(message *smartbftprotos.SavedMessage) error {
 	ret := _m.Called(message)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(*smartbftprotos.Message) error); ok {
+	if rf, ok := ret.Get(0).(func(*smartbftprotos.SavedMessage) error); ok {
 		r0 = rf(message)
 	} else {
 		r0 = ret.Error(0)

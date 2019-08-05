@@ -886,7 +886,7 @@ func TestViewPersisted(t *testing.T) {
 			persistedToLog.Add(1)
 			state.On("Save", mock.Anything).Return(nil).Run(func(args mock.Arguments) {
 				persistedToLog.Done()
-				persistedState.Save(args.Get(0).(*protos.Message))
+				persistedState.Save(args.Get(0).(*protos.SavedMessage))
 			})
 
 			view.Start()
