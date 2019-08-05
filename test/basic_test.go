@@ -16,15 +16,6 @@ import (
 	"go.uber.org/zap"
 )
 
-var (
-	logger *zap.SugaredLogger
-)
-
-func init() {
-	basicLog, _ := zap.NewDevelopment()
-	logger = basicLog.Sugar()
-}
-
 func TestBasic(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
@@ -90,29 +81,36 @@ func TestRestartFollowers(t *testing.T) {
 }
 
 func newNode(id uint64, network Network) *App {
+	logConfig := zap.NewDevelopmentConfig()
+	logger, _ := logConfig.Build()
+
 	app := &App{
 		ID:        id,
 		Delivered: make(chan *Batch, 100),
+		logLevel:  logConfig.Level,
 	}
+
+	wal := &wal.EphemeralWAL{}
 
 	app.Setup = func() {
 		c := &consensus.Consensus{
 			SelfID: id,
-			Logger: logger,
-			WAL:    &wal.EphemeralWAL{},
+			Logger: logger.Sugar(),
+			WAL:    wal,
 			N:      4,
 			Metadata: smartbftprotos.ViewMetadata{
 				ViewId:         1,
 				LatestSequence: 0,
 			},
-			Verifier:         app,
-			Signer:           app,
-			RequestInspector: app,
-			Assembler:        app,
-			Synchronizer:     app,
-			Application:      app,
-			BatchSize:        10,
-			BatchTimeout:     time.Millisecond,
+			Verifier:          app,
+			Signer:            app,
+			RequestInspector:  app,
+			Assembler:         app,
+			Synchronizer:      app,
+			Application:       app,
+			BatchSize:         10,
+			BatchTimeout:      time.Millisecond,
+			WALInitialContent: wal.ReadAll(),
 		}
 		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]
