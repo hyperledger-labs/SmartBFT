@@ -27,6 +27,8 @@ func init() {
 
 func TestBasic(t *testing.T) {
 	network := make(Network)
+	defer network.Shutdown()
+
 	n1 := newNode(1, network)
 	n2 := newNode(2, network)
 	n3 := newNode(3, network)
@@ -50,6 +52,8 @@ func TestBasic(t *testing.T) {
 
 func TestRestartFollowers(t *testing.T) {
 	network := make(Network)
+	defer network.Shutdown()
+
 	n1 := newNode(1, network)
 	n2 := newNode(2, network)
 	n3 := newNode(3, network)
@@ -110,7 +114,7 @@ func newNode(id uint64, network Network) *App {
 			BatchSize:        10,
 			BatchTimeout:     time.Millisecond,
 		}
-		network.AddNode(id, c)
+		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]
 		app.Consensus = c
 

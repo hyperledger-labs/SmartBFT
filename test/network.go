@@ -10,6 +10,8 @@ import (
 	"math/rand"
 	"time"
 
+	"sync"
+
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 )
@@ -34,15 +36,32 @@ type msgFrom struct {
 
 type Network map[uint64]*Node
 
-func (n Network) AddNode(id uint64, h handler) {
-	n[id] = &Node{
+func (n Network) AddOrUpdateNode(id uint64, h handler) {
+	node, exists := n[id]
+	if exists {
+		node.lock.Lock()
+		defer node.lock.Unlock()
+		node.h = h
+		return
+	}
+
+	node = &Node{
 		in:           make(chan msgFrom, incBuffSize),
 		h:            h,
 		shutdownChan: make(chan struct{}),
 		n:            n,
 		id:           uint64(id),
 	}
-	go n[id].serve()
+	n[id] = node
+	node.running.Add(1)
+	go node.serve()
+}
+
+func (n Network) Shutdown() {
+	for _, node := range n {
+		close(node.shutdownChan)
+		node.running.Wait()
+	}
 }
 
 func (n Network) send(source, target uint64, msg proto.Message) {
@@ -60,11 +79,12 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 	case node.in <- msgFrom{from: int(source), message: msg}:
 	default:
 		fmt.Println("Dropped msg from", source, "to", target, "due to overflow")
-		// drop
 	}
 }
 
 type Node struct {
+	lock            sync.RWMutex
+	running         sync.WaitGroup
 	id              uint64
 	n               Network
 	lossProbability float32
@@ -90,22 +110,21 @@ func (node *Node) Nodes() []uint64 {
 }
 
 func (node *Node) serve() {
+	defer node.running.Done()
 	for {
 		select {
 		case <-node.shutdownChan:
 			return
 		case m := <-node.in:
+			node.lock.RLock()
 			switch msg := m.message.(type) {
 			case *smartbftprotos.Message:
 				node.h.HandleMessage(uint64(m.from), msg)
 			default:
 				node.h.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)
 			}
+			node.lock.RUnlock()
 
 		}
 	}
-}
-
-func (node *Node) stop() {
-	close(node.shutdownChan)
 }
