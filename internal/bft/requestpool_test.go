@@ -137,6 +137,7 @@ func TestReqPoolBasic(t *testing.T) {
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+		pool.Close()
 	})
 }
 
@@ -183,6 +184,7 @@ func TestReqPoolCapacity(t *testing.T) {
 		assert.Equal(t, 0, pool.Size())
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", .0)
+		pool.Close()
 	})
 }
 
@@ -220,6 +222,7 @@ func TestReqPoolPrune(t *testing.T) {
 
 	timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
 	timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+	pool.Close()
 }
 
 func TestReqPoolTimeout(t *testing.T) {

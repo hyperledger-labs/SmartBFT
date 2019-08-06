@@ -49,6 +49,7 @@ func TestHeartbeatMonitor_StartLeader(t *testing.T) {
 	handler := &mocks.HeartbeatTimeoutHandler{}
 	hm := bft.NewHeartbeatMonitor(log, time.Millisecond, comm, handler)
 
+	var countMutex sync.Mutex
 	count1 := 10
 	count2 := 10
 	toWG1 := &sync.WaitGroup{}
@@ -58,6 +59,9 @@ func TestHeartbeatMonitor_StartLeader(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
 		view := msg.GetHeartBeat().View
+		countMutex.Lock()
+		defer countMutex.Unlock()
+
 		if uint64(10) == view {
 			count1--
 			if count1 == 0 {

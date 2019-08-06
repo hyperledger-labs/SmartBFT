@@ -24,6 +24,7 @@ var (
 
 func init() {
 	noopTimeoutHandler.On("OnRequestTimeout", mock.Anything, mock.Anything)
+	noopTimeoutHandler.On("OnLeaderFwdRequestTimeout", mock.Anything, mock.Anything)
 }
 
 func TestBatcherBasic(t *testing.T) {
@@ -98,6 +99,7 @@ func TestBatcherBasic(t *testing.T) {
 	res = batcher.NextBatch()
 	assert.Len(t, res, 1) // after timeout
 	assert.Equal(t, byteReq2, res[0])
+	pool.Close()
 }
 
 func TestBatcherWhileSubmitting(t *testing.T) {
@@ -137,6 +139,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 		iStr := fmt.Sprintf("%d", i-50)
 		assert.Equal(t, iStr, insp.RequestID(res[i]).ID) // then requests
 	}
+	pool.Close()
 }
 
 func TestBatcherClose(t *testing.T) {
@@ -160,6 +163,7 @@ func TestBatcherClose(t *testing.T) {
 	res := batcher.NextBatch()
 	assert.Nil(t, res)
 	assert.True(t, time.Since(t1) < time.Second*50)
+	pool.Close()
 }
 
 func TestBatcherPopReminder(t *testing.T) {
@@ -211,5 +215,5 @@ func TestBatcherReset(t *testing.T) {
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 0)
-
+	pool.Close()
 }
