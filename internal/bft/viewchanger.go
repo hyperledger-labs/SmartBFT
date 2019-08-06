@@ -34,10 +34,8 @@ type ViewChanger struct {
 
 	// Runtime
 	incMsgs        chan *incMsg
-	viewChangeMsgs *voteSet             // keep msg only if view number matches
-	viewDataMsgs   map[uint64]*voteSet  // keep msg if I am the leader of that view
-	newViewDataMsg chan struct{}        // inform a new viewData msg is available
-	newViewMsg     chan *protos.NewView // keep msg only if view number matches and from the leader
+	viewChangeMsgs *voteSet
+	viewDataMsgs   *voteSet
 	CurrView       uint64
 	NextView       uint64
 	Leader         uint64
@@ -57,6 +55,16 @@ func (v *ViewChanger) Start() {
 	v.stopOnce = sync.Once{}
 	v.vcDone.Add(1)
 
+	v.setupVotes()
+
+	go func() {
+		defer v.vcDone.Done()
+		v.run()
+	}()
+
+}
+
+func (v *ViewChanger) setupVotes() {
 	// view change
 	acceptViewChange := func(_ uint64, message *protos.Message) bool {
 		return message.GetViewChange() != nil
@@ -67,17 +75,13 @@ func (v *ViewChanger) Start() {
 	v.viewChangeMsgs.clear(v.N)
 
 	// view data
-	v.viewDataMsgs = make(map[uint64]*voteSet)
-	v.newViewDataMsg = make(chan struct{}, 1)
-
-	// new view
-	v.newViewMsg = make(chan *protos.NewView, 1)
-
-	go func() {
-		defer v.vcDone.Done()
-		v.run()
-	}()
-
+	acceptViewData := func(_ uint64, message *protos.Message) bool {
+		return message.GetViewData() != nil
+	}
+	v.viewDataMsgs = &voteSet{
+		validVote: acceptViewData,
+	}
+	v.viewDataMsgs.clear(v.N)
 }
 
 func (v *ViewChanger) close() {
@@ -116,13 +120,6 @@ func (v *ViewChanger) run() {
 			return
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
-		case vote := <-v.viewChangeMsgs.votes:
-			v.processViewChangeMsg(vote)
-		case <-v.newViewDataMsg:
-			v.processViewDataMsg()
-		case nv := <-v.newViewMsg:
-			v.processNewViewMsg(nv)
-
 		}
 	}
 }
@@ -136,39 +133,18 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 			return
 		}
 		v.viewChangeMsgs.registerVote(sender, m)
+		v.processViewChangeMsg()
 		return
 	}
 
 	//viewData message
 	if vd := m.GetViewData(); vd != nil {
-		if vd.Signer != sender {
-			v.Logger.Warnf("%d got viewData message %v from %d, but signer %d is not the sender %d", v.SelfID, m, sender, vd.Signer, sender)
-			return
-		}
-		if err := v.Verifier.VerifySignature(types.Signature{Id: vd.Signer, Value: vd.Signature, Msg: vd.RawViewData}); err != nil {
-			v.Logger.Warnf("%d got viewData message %v from %d, but signature is invalid, err: ", v.SelfID, m, sender, err)
-			return
-		}
-		rvd := &protos.ViewData{}
-		if err := proto.Unmarshal(vd.RawViewData, rvd); err != nil {
-			v.Logger.Errorf("%d was unable to unmarshal viewData message from %d, error: ", v.SelfID, sender, err)
-			return
-		}
-		if rvd.NextView < v.CurrView { // check if this data is not for an old view number
-			v.Logger.Warnf("%d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.CurrView)
-			return
-		}
-		if getLeaderID(rvd.NextView, v.N, v.nodes) != v.SelfID { // check if I am the next leader
-			v.Logger.Warnf("%d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
+		if !v.validateViewDataMsg(vd, sender) {
 			return
 		}
 		// TODO check data validity
-		v.registerViewDataVote(sender, m)
-		// notify a new view data is registered
-		select {
-		case v.newViewDataMsg <- struct{}{}:
-		default: // notification already pending
-		}
+		v.viewDataMsgs.registerVote(sender, m)
+		v.processViewDataMsg()
 		return
 	}
 
@@ -179,30 +155,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 			return
 		}
 		// TODO check view number here?
-		v.newViewMsg <- nv
+		v.processNewViewMsg(nv)
 	}
-}
-
-func (v *ViewChanger) registerViewDataVote(sender uint64, m *protos.Message) {
-	vd := m.GetViewData()
-	rvd := &protos.ViewData{}
-	if err := proto.Unmarshal(vd.RawViewData, rvd); err != nil {
-		v.Logger.Errorf("%d was unable to unmarshal viewData message from %d, error: ", v.SelfID, sender, err)
-		return
-	}
-	view := rvd.NextView
-	votes, hasView := v.viewDataMsgs[view]
-	if !hasView {
-		acceptViewData := func(sender uint64, message *protos.Message) bool {
-			return true
-		}
-		votes = &voteSet{
-			validVote: acceptViewData,
-		}
-		votes.clear(v.N)
-		v.viewDataMsgs[view] = votes
-	}
-	votes.registerVote(sender, m)
 }
 
 // StartViewChange stops current view and timeouts, and broadcasts a view change message to all
@@ -220,8 +174,8 @@ func (v *ViewChanger) StartViewChange() {
 	v.Comm.BroadcastConsensus(msg) // TODO periodically send msg
 }
 
-func (v *ViewChanger) processViewChangeMsg(vote *vote) {
-	if uint64(len(v.viewChangeMsgs.voted)) > v.F { // join view change
+func (v *ViewChanger) processViewChangeMsg() {
+	if uint64(len(v.viewChangeMsgs.voted)) == v.F+1 { // join view change
 		v.StartViewChange()
 	}
 	if len(v.viewChangeMsgs.voted) >= v.Quorum-1 && v.NextView > v.CurrView { // send view data
@@ -235,7 +189,8 @@ func (v *ViewChanger) processViewChangeMsg(vote *vote) {
 		} else {
 			v.Comm.SendConsensus(v.Leader, msg)
 		}
-		v.viewChangeMsgs.clear(v.N) // TODO make sure this is the right place to clean
+		v.viewChangeMsgs.clear(v.N) // TODO make sure clear is in the right place
+		v.viewDataMsgs.clear(v.N)   // clear because currView changed
 	}
 }
 
@@ -258,59 +213,74 @@ func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
 	return msg
 }
 
-func (v *ViewChanger) processViewDataMsg() {
-	for viewNum, votes := range v.viewDataMsgs {
-		if viewNum < v.CurrView { // clean old votes
-			delete(v.viewDataMsgs, viewNum)
-			continue
-		}
-		num := len(votes.voted)
-		if num >= v.Quorum { // need enough (quorum) data to continue
-			// TODO handle data
-			repeated := make([]*protos.SignedViewData, 0)
-			n := 0
-			for n < num {
-				v := <-votes.votes
-				repeated = append(repeated, v.GetViewData())
-				n++
-			}
-			msg := &protos.Message{
-				Content: &protos.Message_NewView{
-					NewView: &protos.NewView{
-						SignedViewData: repeated,
-					},
-				},
-			}
-			v.Comm.BroadcastConsensus(msg)
-			v.HandleMessage(v.SelfID, msg) // also send to myself
+func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint64) bool {
+	if vd.Signer != sender {
+		v.Logger.Warnf("%d got viewData message %v from %d, but signer %d is not the sender %d", v.SelfID, vd, sender, vd.Signer, sender)
+		return false
+	}
+	if err := v.Verifier.VerifySignature(types.Signature{Id: vd.Signer, Value: vd.Signature, Msg: vd.RawViewData}); err != nil {
+		v.Logger.Warnf("%d got viewData message %v from %d, but signature is invalid, error: %v", v.SelfID, vd, sender, err)
+		return false
+	}
+	rvd := &protos.ViewData{}
+	if err := proto.Unmarshal(vd.RawViewData, rvd); err != nil {
+		v.Logger.Errorf("%d was unable to unmarshal viewData message from %d, error: %v", v.SelfID, sender, err)
+		return false
+	}
+	if rvd.NextView != v.CurrView {
+		v.Logger.Warnf("%d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.CurrView)
+		return false
+	}
+	if getLeaderID(rvd.NextView, v.N, v.nodes) != v.SelfID { // check if I am the next leader
+		v.Logger.Warnf("%d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
+		return false
+	}
+	return true
+}
 
-			delete(v.viewDataMsgs, viewNum) // don't need them anymore
-			break
+func (v *ViewChanger) processViewDataMsg() {
+	if len(v.viewDataMsgs.voted) >= v.Quorum { // need enough (quorum) data to continue
+		signedMsgs := make([]*protos.SignedViewData, 0)
+		close(v.viewDataMsgs.votes)
+		for vote := range v.viewDataMsgs.votes {
+			signedMsgs = append(signedMsgs, vote.GetViewData())
 		}
+		msg := &protos.Message{
+			Content: &protos.Message_NewView{
+				NewView: &protos.NewView{
+					SignedViewData: signedMsgs,
+				},
+			},
+		}
+		v.Comm.BroadcastConsensus(msg)
+		v.HandleMessage(v.SelfID, msg) // also send to myself
+		v.viewDataMsgs.clear(v.N)
 	}
 }
 
 func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
-	repeated := msg.GetSignedViewData()
+	signed := msg.GetSignedViewData()
 	nodesMap := make(map[uint64]struct{}, v.N)
 	valid := 0
-	for _, svd := range repeated {
+	for _, svd := range signed {
 		if _, exist := nodesMap[svd.Signer]; exist {
 			continue // seen data from this node already
 		}
 		nodesMap[svd.Signer] = struct{}{}
 
 		if err := v.Verifier.VerifySignature(types.Signature{Id: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
-			continue // invalid signature
+			v.Logger.Warnf("%d is processing newView message %v, but signature of viewData %v is invalid, error: %v", v.SelfID, msg, svd, err)
+			continue
 		}
 
 		vd := &protos.ViewData{}
 		if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
-			v.Logger.Errorf("%d was unable to unmarshal a viewData from the newView message, error: ", v.SelfID, err)
+			v.Logger.Errorf("%d was unable to unmarshal a viewData from the newView message, error: %v", v.SelfID, err)
 			continue
 		}
 
 		if vd.NextView != v.CurrView {
+			v.Logger.Warnf("%d is processing newView message %v, but nextView of viewData %v is %d, while the currView is %d", v.SelfID, msg, svd, vd.NextView, v.CurrView)
 			continue
 		}
 

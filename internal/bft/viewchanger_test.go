@@ -183,15 +183,24 @@ func TestViewDataProcess(t *testing.T) {
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
 		verifierWG.Done()
 	}).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+	}).Return(nil).Once()
 
 	vc := &bft.ViewChanger{
-		SelfID:   1,
-		N:        4,
-		F:        1,
-		Quorum:   3,
-		Comm:     comm,
-		Logger:   log,
-		Verifier: verifier,
+		SelfID:     1,
+		N:          4,
+		F:          1,
+		Quorum:     3,
+		Comm:       comm,
+		Logger:     log,
+		Verifier:   verifier,
+		Controller: controller,
+		CurrView:   1,
+		Leader:     1,
 	}
 
 	vc.Start()
@@ -210,14 +219,13 @@ func TestViewDataProcess(t *testing.T) {
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
-	verifierWG.Add(1)
+	verifierWG.Add(4)
 	vc.HandleMessage(2, msg2)
-	verifierWG.Wait()
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
-	// newView message is broadcasts and also sent to self
-	// however it will not be accepted at this point
-	// because we didn't update the leader and view number (done in viewChange processing)
+	verifierWG.Wait()
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
 
 	vc.Stop()
 }
@@ -262,25 +270,23 @@ func TestNewViewProcess(t *testing.T) {
 		NextView: 2,
 	}
 	vdBytes := bft.MarshalOrPanic(vd)
-	repeated := make([]*protos.SignedViewData, 0)
-	var node uint64
-	for node < uint64(vc.Quorum) {
+	signed := make([]*protos.SignedViewData, 0)
+	for len(signed) < vc.Quorum {
 		msg := &protos.Message{
 			Content: &protos.Message_ViewData{
 				ViewData: &protos.SignedViewData{
 					RawViewData: vdBytes,
-					Signer:      node,
+					Signer:      uint64(len(signed)),
 					Signature:   nil,
 				},
 			},
 		}
-		repeated = append(repeated, msg.GetViewData())
-		node++
+		signed = append(signed, msg.GetViewData())
 	}
 	msg := &protos.Message{
 		Content: &protos.Message_NewView{
 			NewView: &protos.NewView{
-				SignedViewData: repeated,
+				SignedViewData: signed,
 			},
 		},
 	}
