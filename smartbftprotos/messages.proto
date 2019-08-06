@@ -85,7 +85,8 @@ message ViewData {
 
 message SignedViewData {
    bytes raw_view_data = 1;
-   Signature signature = 2;
+   uint64 signer = 2;
+   bytes signature = 3;
 }
 
 message NewView {
