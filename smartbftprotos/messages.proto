@@ -95,7 +95,6 @@ message NewView {
 
 message HeartBeat {
     uint64 view = 1;
-    uint64 seq = 2;
 }
 
 message Signature {

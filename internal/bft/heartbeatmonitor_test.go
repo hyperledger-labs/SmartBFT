@@ -23,7 +23,6 @@ var (
 		Content: &smartbftprotos.Message_HeartBeat{
 			HeartBeat: &smartbftprotos.HeartBeat{
 				View: 1,
-				Seq:  0,
 			},
 		},
 	}

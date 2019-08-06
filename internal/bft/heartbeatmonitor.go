@@ -176,7 +176,6 @@ func (hm *HeartbeatMonitor) prepareSend() (view uint64, follower bool, heartbeat
 		Content: &smartbftprotos.Message_HeartBeat{
 			HeartBeat: &smartbftprotos.HeartBeat{
 				View: view,
-				Seq:  0,
 			},
 		},
 	}
