@@ -81,6 +81,7 @@ func TestStartViewChange(t *testing.T) {
 
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 
 	assert.Equal(t, uint64(0), vc.CurrView)
 	assert.Equal(t, uint64(1), vc.NextView)
@@ -98,11 +99,8 @@ func TestViewChangeProcess(t *testing.T) {
 		m, _ := args.Get(0).(*protos.Message)
 		broadcastChan <- m
 	}).Twice()
-	leaderIDChan := make(chan uint64)
 	sendChan := make(chan *protos.Message)
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		id := args.Get(0).(uint64)
-		leaderIDChan <- id
 		m := args.Get(1).(*protos.Message)
 		sendChan <- m
 	}).Twice()
@@ -132,10 +130,9 @@ func TestViewChangeProcess(t *testing.T) {
 	vc.HandleMessage(2, viewChangeMsg)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetViewChange())
-	leader := <-leaderIDChan
-	assert.Equal(t, uint64(1), leader)
 	m = <-sendChan
 	assert.NotNil(t, m.GetViewData())
+	comm.AssertCalled(t, "SendConsensus", uint64(1), mock.Anything)
 
 	assert.Equal(t, uint64(1), vc.CurrView)
 	assert.Equal(t, uint64(1), vc.Leader)
@@ -161,13 +158,15 @@ func TestViewChangeProcess(t *testing.T) {
 	vc.HandleMessage(3, msg2)
 	m = <-broadcastChan
 	assert.NotNil(t, m.GetViewChange())
-	leader = <-leaderIDChan
-	assert.Equal(t, uint64(2), leader)
 	m = <-sendChan
 	assert.NotNil(t, m.GetViewData())
+	comm.AssertCalled(t, "SendConsensus", uint64(2), mock.Anything)
 
 	assert.Equal(t, uint64(2), vc.CurrView)
 	assert.Equal(t, uint64(2), vc.Leader)
+
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
+	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 2)
 
 	vc.Stop()
 }
