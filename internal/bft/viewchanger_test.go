@@ -69,9 +69,12 @@ func TestStartViewChange(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		msg = args.Get(0).(*protos.Message)
 	})
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers").Once()
 
 	vc := &bft.ViewChanger{
-		Comm: comm,
+		Comm:          comm,
+		RequestsTimer: reqTimer,
 	}
 
 	vc.Start()
@@ -108,15 +111,19 @@ func TestViewChangeProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
 
 	vc := &bft.ViewChanger{
-		SelfID: 0,
-		N:      4,
-		F:      1,
-		Quorum: 3,
-		Comm:   comm,
-		Signer: signer,
-		Logger: log,
+		SelfID:        0,
+		N:             4,
+		F:             1,
+		Quorum:        3,
+		Comm:          comm,
+		Signer:        signer,
+		Logger:        log,
+		RequestsTimer: reqTimer,
 	}
 
 	vc.Start()
@@ -323,16 +330,21 @@ func TestNormalProcess(t *testing.T) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
 	}).Return(nil).Once()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+
 	vc := &bft.ViewChanger{
-		SelfID:     1,
-		N:          4,
-		F:          1,
-		Quorum:     3,
-		Comm:       comm,
-		Logger:     log,
-		Verifier:   verifier,
-		Controller: controller,
-		Signer:     signer,
+		SelfID:        1,
+		N:             4,
+		F:             1,
+		Quorum:        3,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
 	}
 
 	vc.Start()
