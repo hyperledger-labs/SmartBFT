@@ -19,18 +19,27 @@ type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
 }
 
+//go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
+type RequestsTimer interface {
+	StopTimers()
+	RestartTimers()
+}
+
 type ViewChanger struct {
 	// Configuration
-	SelfID     uint64
-	nodes      []uint64
-	N          uint64
-	F          uint64
-	Quorum     int
-	Logger     api.Logger
-	Comm       Comm
-	Signer     api.Signer
-	Controller ViewController
-	Verifier   api.Verifier
+	SelfID uint64
+	nodes  []uint64
+	N      uint64
+	F      uint64
+	Quorum int
+
+	Logger   api.Logger
+	Comm     Comm
+	Signer   api.Signer
+	Verifier api.Verifier
+
+	Controller    ViewController
+	RequestsTimer RequestsTimer
 
 	// Runtime
 	incMsgs        chan *incMsg
@@ -162,7 +171,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 // StartViewChange stops current view and timeouts, and broadcasts a view change message to all
 func (v *ViewChanger) StartViewChange() {
 	v.NextView = v.CurrView + 1
-	// TODO stop timeouts and submission of new requests
+	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
 		Content: &protos.Message_ViewChange{
 			ViewChange: &protos.ViewChange{
@@ -180,7 +189,7 @@ func (v *ViewChanger) processViewChangeMsg() {
 	}
 	if len(v.viewChangeMsgs.voted) >= v.Quorum-1 && v.NextView > v.CurrView { // send view data
 		v.CurrView = v.NextView
-		// TODO restart timeouts
+		v.RequestsTimer.RestartTimers()
 		v.Leader = getLeaderID(v.CurrView, v.N, v.nodes)
 		msg := v.prepareViewDataMsg()
 		// TODO write to log
