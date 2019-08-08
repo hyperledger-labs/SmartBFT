@@ -6,8 +6,12 @@
 package bft_test
 
 import (
+	"strings"
 	"sync"
 	"testing"
+
+	"github.com/pkg/errors"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/golang/protobuf/proto"
 
@@ -364,4 +368,95 @@ func TestNormalProcess(t *testing.T) {
 	assert.Equal(t, uint64(1), num)
 
 	vc.Stop()
+}
+
+func TestBadViewDataMessage(t *testing.T) {
+	// Test that bad view data messages don't cause a view change
+
+	for _, test := range []struct {
+		description           string
+		mutateViewData        func(*protos.Message)
+		mutateVerifySig       func(*mocks.VerifierMock)
+		expectedMessageLogged string
+	}{
+		{
+			description:           "wrong signer",
+			expectedMessageLogged: "is not the sender",
+			mutateViewData: func(m *protos.Message) {
+				m.GetViewData().Signer = 10
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "invalid signature",
+			expectedMessageLogged: "but signature is invalid",
+			mutateViewData: func(m *protos.Message) {
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+				verifierMock.On("VerifySignature", mock.Anything).Return(errors.New(""))
+			},
+		},
+		{
+			description:           "wrong view",
+			expectedMessageLogged: "is in view",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 10,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "wrong leader",
+			expectedMessageLogged: "is not the next leader",
+			mutateViewData: func(m *protos.Message) {
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			var warningMsgLogged sync.WaitGroup
+			warningMsgLogged.Add(1)
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, test.expectedMessageLogged) {
+					warningMsgLogged.Done()
+				}
+				return nil
+			})).Sugar()
+			comm := &mocks.CommMock{}
+			comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+			verifier := &mocks.VerifierMock{}
+			test.mutateVerifySig(verifier)
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			vc := &bft.ViewChanger{
+				SelfID:   2,
+				N:        4,
+				F:        1,
+				Quorum:   3,
+				Comm:     comm,
+				Logger:   log,
+				Verifier: verifier,
+				CurrView: 1,
+				Leader:   1,
+			}
+
+			vc.Start()
+
+			msg := proto.Clone(viewDataMsg1).(*protos.Message)
+			test.mutateViewData(msg)
+
+			vc.HandleMessage(0, msg)
+			warningMsgLogged.Wait()
+
+			vc.Stop()
+		})
+
+	}
 }
