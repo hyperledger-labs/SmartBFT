@@ -7,6 +7,7 @@ package bft
 
 import (
 	"sync"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -41,6 +42,8 @@ type ViewChanger struct {
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
+	ResendTicker <-chan time.Time
+
 	// Runtime
 	incMsgs        chan *incMsg
 	viewChangeMsgs *voteSet
@@ -48,6 +51,7 @@ type ViewChanger struct {
 	CurrView       uint64
 	NextView       uint64
 	Leader         uint64
+	viewLock       sync.RWMutex // lock CurrView & NextView
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -129,7 +133,25 @@ func (v *ViewChanger) run() {
 			return
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
+		case <-v.ResendTicker:
+			v.resend()
 		}
+	}
+}
+
+func (v *ViewChanger) resend() {
+	v.viewLock.RLock()
+	defer v.viewLock.RUnlock()
+	if v.NextView == v.CurrView+1 { // started view change already but didn't get quorum yet
+		msg := &protos.Message{
+			Content: &protos.Message_ViewChange{
+				ViewChange: &protos.ViewChange{
+					NextView: v.NextView,
+					Reason:   "", // TODO add reason
+				},
+			},
+		}
+		v.Comm.BroadcastConsensus(msg)
 	}
 }
 
@@ -137,14 +159,20 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
 		// check view number
+		v.viewLock.RLock()
 		if vc.NextView != v.CurrView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("%d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.CurrView+1)
+			v.viewLock.RUnlock()
 			return
 		}
+		v.viewLock.RUnlock()
 		v.viewChangeMsgs.registerVote(sender, m)
 		v.processViewChangeMsg()
 		return
 	}
+
+	v.viewLock.RLock()
+	defer v.viewLock.RUnlock()
 
 	//viewData message
 	if vd := m.GetViewData(); vd != nil {
@@ -170,6 +198,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 // StartViewChange stops current view and timeouts, and broadcasts a view change message to all
 func (v *ViewChanger) StartViewChange() {
+	v.viewLock.Lock()
+	defer v.viewLock.Unlock()
 	v.NextView = v.CurrView + 1
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
@@ -180,13 +210,15 @@ func (v *ViewChanger) StartViewChange() {
 			},
 		},
 	}
-	v.Comm.BroadcastConsensus(msg) // TODO periodically send msg
+	v.Comm.BroadcastConsensus(msg)
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
 	if uint64(len(v.viewChangeMsgs.voted)) == v.F+1 { // join view change
 		v.StartViewChange()
 	}
+	v.viewLock.Lock()
+	defer v.viewLock.Unlock()
 	if len(v.viewChangeMsgs.voted) >= v.Quorum-1 && v.NextView > v.CurrView { // send view data
 		v.CurrView = v.NextView
 		v.RequestsTimer.RestartTimers()
