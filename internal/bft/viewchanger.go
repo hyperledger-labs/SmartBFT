@@ -26,10 +26,6 @@ type RequestsTimer interface {
 	RestartTimers()
 }
 
-const (
-	DefaultResendViewChange = 10 * time.Second
-)
-
 type ViewChanger struct {
 	// Configuration
 	SelfID uint64
@@ -46,7 +42,7 @@ type ViewChanger struct {
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
-	ResendViewChange time.Duration
+	ResendTicker <-chan time.Time
 
 	// Runtime
 	incMsgs        chan *incMsg
@@ -73,10 +69,6 @@ func (v *ViewChanger) Start() {
 	v.vcDone.Add(1)
 
 	v.setupVotes()
-
-	if v.ResendViewChange == 0 { // set to default
-		v.ResendViewChange = DefaultResendViewChange
-	}
 
 	go func() {
 		defer v.vcDone.Done()
@@ -135,16 +127,14 @@ func (v *ViewChanger) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (v *ViewChanger) run() {
-	timeout := time.After(v.ResendViewChange)
 	for {
 		select {
 		case <-v.stopChan:
 			return
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
-		case <-timeout:
+		case <-v.ResendTicker:
 			v.resend()
-			timeout = time.After(v.ResendViewChange) // restart timeout
 		}
 	}
 }

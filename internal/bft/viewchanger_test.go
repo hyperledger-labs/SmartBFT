@@ -56,7 +56,8 @@ func TestViewChangerBasic(t *testing.T) {
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	vc := &bft.ViewChanger{
-		Comm: comm,
+		Comm:         comm,
+		ResendTicker: make(chan time.Time),
 	}
 
 	vc.Start()
@@ -80,6 +81,7 @@ func TestStartViewChange(t *testing.T) {
 	vc := &bft.ViewChanger{
 		Comm:          comm,
 		RequestsTimer: reqTimer,
+		ResendTicker:  make(chan time.Time),
 	}
 
 	vc.Start()
@@ -127,6 +129,7 @@ func TestViewChangeProcess(t *testing.T) {
 		Signer:        signer,
 		Logger:        log,
 		RequestsTimer: reqTimer,
+		ResendTicker:  make(chan time.Time),
 	}
 
 	vc.Start()
@@ -202,16 +205,17 @@ func TestViewDataProcess(t *testing.T) {
 	}).Return(nil).Once()
 
 	vc := &bft.ViewChanger{
-		SelfID:     1,
-		N:          4,
-		F:          1,
-		Quorum:     3,
-		Comm:       comm,
-		Logger:     log,
-		Verifier:   verifier,
-		Controller: controller,
-		CurrView:   1,
-		Leader:     1,
+		SelfID:       1,
+		N:            4,
+		F:            1,
+		Quorum:       3,
+		Comm:         comm,
+		Logger:       log,
+		Verifier:     verifier,
+		Controller:   controller,
+		CurrView:     1,
+		Leader:       1,
+		ResendTicker: make(chan time.Time),
 	}
 
 	vc.Start()
@@ -262,16 +266,17 @@ func TestNewViewProcess(t *testing.T) {
 	}).Return(nil).Once()
 
 	vc := &bft.ViewChanger{
-		SelfID:     0,
-		N:          4,
-		F:          1,
-		Quorum:     3,
-		Comm:       comm,
-		Logger:     log,
-		Verifier:   verifier,
-		Controller: controller,
-		CurrView:   2,
-		Leader:     2,
+		SelfID:       0,
+		N:            4,
+		F:            1,
+		Quorum:       3,
+		Comm:         comm,
+		Logger:       log,
+		Verifier:     verifier,
+		Controller:   controller,
+		CurrView:     2,
+		Leader:       2,
+		ResendTicker: make(chan time.Time),
 	}
 
 	vc.Start()
@@ -349,6 +354,7 @@ func TestNormalProcess(t *testing.T) {
 		Controller:    controller,
 		Signer:        signer,
 		RequestsTimer: reqTimer,
+		ResendTicker:  make(chan time.Time),
 	}
 
 	vc.Start()
@@ -437,15 +443,16 @@ func TestBadViewDataMessage(t *testing.T) {
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			vc := &bft.ViewChanger{
-				SelfID:   2,
-				N:        4,
-				F:        1,
-				Quorum:   3,
-				Comm:     comm,
-				Logger:   log,
-				Verifier: verifier,
-				CurrView: 1,
-				Leader:   1,
+				SelfID:       2,
+				N:            4,
+				F:            1,
+				Quorum:       3,
+				Comm:         comm,
+				Logger:       log,
+				Verifier:     verifier,
+				CurrView:     1,
+				Leader:       1,
+				ResendTicker: make(chan time.Time),
 			}
 
 			vc.Start()
@@ -480,11 +487,12 @@ func TestResendViewChangeMessage(t *testing.T) {
 	})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
+	ticker := make(chan time.Time)
 
 	vc := &bft.ViewChanger{
-		Comm:             comm,
-		RequestsTimer:    reqTimer,
-		ResendViewChange: 1 * time.Second,
+		Comm:          comm,
+		RequestsTimer: reqTimer,
+		ResendTicker:  ticker,
 	}
 
 	vc.Start()
@@ -494,10 +502,12 @@ func TestResendViewChangeMessage(t *testing.T) {
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 
 	// resend
+	ticker <- time.Time{}
 	m := <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
 	// resend again
+	ticker <- time.Time{}
 	m = <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
