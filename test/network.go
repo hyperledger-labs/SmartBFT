@@ -69,7 +69,11 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 		panic("node doesn't exist")
 	}
 
-	if rand.Float32() < node.lossProbability {
+	node.RLock()
+	p := node.lossProbability
+	node.RUnlock()
+
+	if rand.Float32() < p {
 		return
 	}
 
