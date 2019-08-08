@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"math"
 	"sync"
 	"time"
 
@@ -133,23 +132,6 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 func (c *Controller) leaderID() uint64 {
 	nodes := c.Comm.Nodes()
 	return getLeaderID(c.getCurrentViewNumber(), c.N, nodes)
-}
-
-// computeQuorum calculates the quorums size Q, given a cluster size N.
-//
-// The calculation satisfies the following:
-// Given a cluster size of N nodes, which tolerates f failures according to:
-//    f = argmax ( N >= 3f+1 )
-// Q is the size of the quorum such that:
-//    any two subsets q1, q2 of size Q, intersect in at least f+1 nodes.
-//
-// Note that this is different from N-f (the number of correct nodes), when N=3f+3. That is, we have two extra nodes
-// above the minimum required to tolerate f failures.
-func (c *Controller) computeQuorum() int {
-	f := int((int(c.N) - 1) / 3)
-	q := int(math.Ceil((float64(c.N) + float64(f) + 1) / 2.0))
-	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, f, q)
-	return q
 }
 
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
@@ -419,7 +401,11 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo)
-	c.quorum = c.computeQuorum()
+
+	Q, F := computeQuorum(c.N)
+	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
+	c.quorum = Q
+
 	c.currViewNumber = startViewNumber
 	c.startView(startProposalSequence)
 	if iAm, _ := c.iAmTheLeader(); iAm {

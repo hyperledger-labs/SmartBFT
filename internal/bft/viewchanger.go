@@ -31,7 +31,7 @@ type ViewChanger struct {
 	SelfID uint64
 	nodes  []uint64
 	N      uint64
-	F      uint64
+	F      int
 	Quorum int
 
 	Logger   api.Logger
@@ -59,16 +59,23 @@ type ViewChanger struct {
 }
 
 // Start the view changer
-func (v *ViewChanger) Start() {
+func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 
 	v.nodes = v.Comm.Nodes()
+
+	v.Quorum, v.F = computeQuorum(v.N)
 
 	v.stopChan = make(chan struct{})
 	v.stopOnce = sync.Once{}
 	v.vcDone.Add(1)
 
 	v.setupVotes()
+
+	// set without locking
+	v.CurrView = startViewNumber
+	v.NextView = v.CurrView
+	v.Leader = getLeaderID(v.CurrView, v.N, v.nodes)
 
 	go func() {
 		defer v.vcDone.Done()
@@ -214,7 +221,7 @@ func (v *ViewChanger) StartViewChange() {
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
-	if uint64(len(v.viewChangeMsgs.voted)) == v.F+1 { // join view change
+	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.F+1) { // join view change
 		v.StartViewChange()
 	}
 	v.viewLock.Lock()

@@ -56,11 +56,12 @@ func TestViewChangerBasic(t *testing.T) {
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	vc := &bft.ViewChanger{
+		N:            4,
 		Comm:         comm,
 		ResendTicker: make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(0)
 
 	vc.Stop()
 	vc.Stop()
@@ -79,12 +80,13 @@ func TestStartViewChange(t *testing.T) {
 	reqTimer.On("StopTimers").Once()
 
 	vc := &bft.ViewChanger{
+		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(0)
 
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
@@ -103,7 +105,7 @@ func TestViewChangeProcess(t *testing.T) {
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	broadcastChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
-		m, _ := args.Get(0).(*protos.Message)
+		m := args.Get(0).(*protos.Message)
 		broadcastChan <- m
 	}).Twice()
 	sendChan := make(chan *protos.Message)
@@ -132,7 +134,7 @@ func TestViewChangeProcess(t *testing.T) {
 		ResendTicker:  make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(0)
 
 	vc.HandleMessage(1, viewChangeMsg)
 	vc.HandleMessage(2, viewChangeMsg)
@@ -213,12 +215,10 @@ func TestViewDataProcess(t *testing.T) {
 		Logger:       log,
 		Verifier:     verifier,
 		Controller:   controller,
-		CurrView:     1,
-		Leader:       1,
 		ResendTicker: make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(1)
 
 	verifierWG.Add(1)
 	vc.HandleMessage(0, viewDataMsg1)
@@ -274,12 +274,10 @@ func TestNewViewProcess(t *testing.T) {
 		Logger:       log,
 		Verifier:     verifier,
 		Controller:   controller,
-		CurrView:     2,
-		Leader:       2,
 		ResendTicker: make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(2)
 
 	// create a valid viewData message
 	vd := &protos.ViewData{
@@ -357,7 +355,7 @@ func TestNormalProcess(t *testing.T) {
 		ResendTicker:  make(chan time.Time),
 	}
 
-	vc.Start()
+	vc.Start(0)
 
 	vc.HandleMessage(2, viewChangeMsg)
 	vc.HandleMessage(3, viewChangeMsg)
@@ -450,12 +448,10 @@ func TestBadViewDataMessage(t *testing.T) {
 				Comm:         comm,
 				Logger:       log,
 				Verifier:     verifier,
-				CurrView:     1,
-				Leader:       1,
 				ResendTicker: make(chan time.Time),
 			}
 
-			vc.Start()
+			vc.Start(1)
 
 			msg := proto.Clone(viewDataMsg1).(*protos.Message)
 			test.mutateViewData(msg)
@@ -490,12 +486,13 @@ func TestResendViewChangeMessage(t *testing.T) {
 	ticker := make(chan time.Time)
 
 	vc := &bft.ViewChanger{
+		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		ResendTicker:  ticker,
 	}
 
-	vc.Start()
+	vc.Start(0)
 
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
