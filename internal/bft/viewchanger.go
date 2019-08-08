@@ -59,7 +59,7 @@ type ViewChanger struct {
 }
 
 // Start the view changer
-func (v *ViewChanger) Start() {
+func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 
 	v.nodes = v.Comm.Nodes()
@@ -69,6 +69,11 @@ func (v *ViewChanger) Start() {
 	v.vcDone.Add(1)
 
 	v.setupVotes()
+
+	// set without locking
+	v.CurrView = startViewNumber
+	v.NextView = v.CurrView
+	v.Leader = getLeaderID(v.CurrView, v.N, v.nodes)
 
 	go func() {
 		defer v.vcDone.Done()
