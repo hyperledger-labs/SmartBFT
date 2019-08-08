@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/pkg/errors"
 	"go.uber.org/zap/zapcore"
@@ -459,4 +460,47 @@ func TestBadViewDataMessage(t *testing.T) {
 		})
 
 	}
+}
+
+func TestResendViewChangeMessage(t *testing.T) {
+
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	var msg *protos.Message
+	var resend bool
+	msgChan := make(chan *protos.Message)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		if !resend {
+			msg = args.Get(0).(*protos.Message)
+			resend = true
+		} else {
+			m := args.Get(0).(*protos.Message)
+			msgChan <- m
+		}
+	})
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers").Once()
+
+	vc := &bft.ViewChanger{
+		Comm:             comm,
+		RequestsTimer:    reqTimer,
+		ResendViewChange: 1 * time.Second,
+	}
+
+	vc.Start()
+
+	vc.StartViewChange()
+	assert.NotNil(t, msg.GetViewChange())
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+
+	// resend
+	m := <-msgChan
+	assert.NotNil(t, m.GetViewChange())
+
+	// resend again
+	m = <-msgChan
+	assert.NotNil(t, m.GetViewChange())
+
+	vc.Stop()
+
 }
