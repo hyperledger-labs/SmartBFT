@@ -52,6 +52,18 @@ func (a *App) Restart() {
 	a.Consensus.Start()
 }
 
+func (a *App) Disconnect() {
+	a.Node.Lock()
+	defer a.Node.Unlock()
+	a.Node.lossProbability = 1
+}
+
+func (a *App) Connect() {
+	a.Node.Lock()
+	defer a.Node.Unlock()
+	a.Node.lossProbability = 1
+}
+
 func (a *App) RequestID(req []byte) types.RequestInfo {
 	txn := requestFromBytes(req)
 	return types.RequestInfo{
