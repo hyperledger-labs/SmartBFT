@@ -28,12 +28,17 @@ func (*StateRecorder) Restore(_ *View) error {
 }
 
 type PersistedState struct {
-	Entries [][]byte
-	Logger  api.Logger
-	WAL     api.WriteAheadLog
+	InFlightProposal *InFlightProposal
+	Entries          [][]byte
+	Logger           api.Logger
+	WAL              api.WriteAheadLog
 }
 
 func (ps *PersistedState) Save(msgToSave *smartbftprotos.SavedMessage) error {
+	if proposed := msgToSave.GetProposedRecord(); proposed != nil {
+		ps.storeProposal(proposed)
+	}
+
 	b, err := proto.Marshal(msgToSave)
 	if err != nil {
 		ps.Logger.Panicf("Failed marshaling message: %v", err)
@@ -47,6 +52,17 @@ func (ps *PersistedState) Save(msgToSave *smartbftprotos.SavedMessage) error {
 	newProposal := msgToSave.GetProposedRecord() != nil
 	// TODO: handle view message here as well, and add "|| finalizedView" to truncate flag
 	return ps.WAL.Append(b, newProposal)
+}
+
+func (ps *PersistedState) storeProposal(proposed *smartbftprotos.ProposedRecord) {
+	proposal := proposed.PrePrepare.Proposal
+	proposalToStore := types.Proposal{
+		VerificationSequence: int64(proposal.VerificationSequence),
+		Header:               proposal.Header,
+		Payload:              proposal.Payload,
+		Metadata:             proposal.Metadata,
+	}
+	ps.InFlightProposal.Store(proposalToStore)
 }
 
 func (ps *PersistedState) Restore(v *View) error {
@@ -69,11 +85,11 @@ func (ps *PersistedState) Restore(v *View) error {
 	}
 
 	if proposed := lastPersistedMessage.GetProposedRecord(); proposed != nil {
-		return recoverProposed(proposed, v, ps.Logger)
+		return recoverProposed(proposed, v, ps.InFlightProposal, ps.Logger)
 	}
 
 	if preparedProof := lastPersistedMessage.GetPreparedProof(); preparedProof != nil {
-		return recoverPrepared(preparedProof, v, entries, ps.Logger)
+		return recoverPrepared(preparedProof, v, entries, ps.InFlightProposal, ps.Logger)
 	}
 
 	// TODO: handle signed view data persisted in the WAL
@@ -81,7 +97,7 @@ func (ps *PersistedState) Restore(v *View) error {
 	return nil
 }
 
-func recoverProposed(lastPersistedMessage *smartbftprotos.ProposedRecord, v *View, logger api.Logger) error {
+func recoverProposed(lastPersistedMessage *smartbftprotos.ProposedRecord, v *View, ifp *InFlightProposal, logger api.Logger) error {
 	prop := lastPersistedMessage.GetPrePrepare().Proposal
 	v.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(prop.VerificationSequence),
@@ -89,6 +105,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.ProposedRecord, v *Vie
 		Payload:              prop.Payload,
 		Header:               prop.Header,
 	}
+	ifp.Store(*v.inFlightProposal)
 	// Reconstruct the prepare message we shall next broadcast
 	// after the recovery.
 	prp := lastPersistedMessage.GetPrePrepare()
@@ -104,7 +121,7 @@ func recoverProposed(lastPersistedMessage *smartbftprotos.ProposedRecord, v *Vie
 	return nil
 }
 
-func recoverPrepared(lastPersistedMessage *smartbftprotos.PreparedProof, v *View, entries [][]byte, logger api.Logger) error {
+func recoverPrepared(lastPersistedMessage *smartbftprotos.PreparedProof, v *View, entries [][]byte, ifp *InFlightProposal, logger api.Logger) error {
 	// Last entry is a commit, so we should have not pruned the previous pre-prepare
 	if len(entries) < 2 {
 		return fmt.Errorf("last message is a commit, but expected to also have a matching pre-prepare")
@@ -142,6 +159,7 @@ func recoverPrepared(lastPersistedMessage *smartbftprotos.PreparedProof, v *View
 		Payload:              prop.Payload,
 		Header:               prop.Header,
 	}
+	ifp.Store(*v.inFlightProposal)
 
 	// Reconstruct the commit message we shall next broadcast
 	// after the recovery.

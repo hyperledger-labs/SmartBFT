@@ -249,6 +249,25 @@ func TestLeaderPropose(t *testing.T) {
 
 	controller.Stop()
 	app.AssertNumberOfCalls(t, "Deliver", 1)
+
+	// Ensure checkpoint was updated
+	expected := protos.Proposal{
+		Header:               proposal.Header,
+		Payload:              proposal.Payload,
+		Metadata:             proposal.Metadata,
+		VerificationSequence: uint64(proposal.VerificationSequence),
+	}
+	proposal, signatures := controller.Checkpoint.Get()
+	assert.Equal(t, expected, proposal)
+	signaturesBySigners := make(map[uint64]protos.Signature)
+	for _, sig := range signatures {
+		signaturesBySigners[sig.Signer] = sig
+	}
+	assert.Equal(t, map[uint64]protos.Signature{
+		2:  {Signer: 2, Value: []byte{4}},
+		17: {Signer: 17, Value: []byte{4}},
+		23: {Signer: 23, Value: []byte{4}},
+	}, signaturesBySigners)
 }
 
 func TestLeaderChange(t *testing.T) {
@@ -442,7 +461,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
-		State:            &bft.PersistedState{WAL: c.WAL},
+		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightProposal{}},
 	}
 }
 

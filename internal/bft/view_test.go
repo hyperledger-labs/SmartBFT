@@ -879,8 +879,9 @@ func TestViewPersisted(t *testing.T) {
 
 			wal := &wal.EphemeralWAL{}
 			persistedState := &bft.PersistedState{
-				Logger: log,
-				WAL:    wal,
+				InFlightProposal: &bft.InFlightProposal{},
+				Logger:           log,
+				WAL:              wal,
 			}
 			var persistedToLog sync.WaitGroup
 			persistedToLog.Add(1)

@@ -38,9 +38,12 @@ type Consensus struct {
 	Synchronizer      bft.Synchronizer
 	Logger            bft.Logger
 	Metadata          protos.ViewMetadata
+	LastProposal      types.Proposal
+	LastSignatures    []types.Signature
 
 	controller         *algorithm.Controller
 	restoreOnceFromWAL sync.Once
+	state              *algorithm.PersistedState
 }
 
 func (c *Consensus) Complain() {
@@ -64,7 +67,18 @@ func (c *Consensus) Start() {
 		AutoRemoveTimeout: requestTimeout,
 	}
 
+	c.state = &algorithm.PersistedState{
+		InFlightProposal: &algorithm.InFlightProposal{},
+		Entries:          c.WALInitialContent,
+		Logger:           c.Logger,
+		WAL:              c.WAL,
+	}
+
+	cpt := types.Checkpoint{}
+	cpt.Set(c.LastProposal, c.LastSignatures)
+
 	c.controller = &algorithm.Controller{
+		Checkpoint:       cpt,
 		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
@@ -121,12 +135,6 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 }
 
 func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
-	persistedState := &algorithm.PersistedState{
-		Entries: c.WALInitialContent,
-		Logger:  c.Logger,
-		WAL:     c.WAL,
-	}
-
 	view := &algorithm.View{
 		N:                c.N,
 		LeaderID:         leader,
@@ -141,11 +149,11 @@ func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorum
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
-		State:            persistedState,
+		State:            c.state,
 	}
 
 	c.restoreOnceFromWAL.Do(func() {
-		persistedState.Restore(view)
+		c.state.Restore(view)
 	})
 
 	if proposalSequence > view.ProposalSequence {

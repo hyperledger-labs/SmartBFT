@@ -87,6 +87,7 @@ type Controller struct {
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
 	ProposerBuilder  ProposerBuilder
+	Checkpoint       types.Checkpoint
 
 	quorum int
 
@@ -333,6 +334,7 @@ func (c *Controller) run() {
 		select {
 		case d := <-c.decisionChan:
 			c.Application.Deliver(d.proposal, d.signatures)
+			c.Checkpoint.Set(d.proposal, d.signatures)
 			c.Logger.Debugf("Node %d delivered proposal", c.ID)
 			c.removeDeliveredFromPool(d)
 			c.deliverChan <- struct{}{}
