@@ -6,11 +6,12 @@
 package bft
 
 import (
+	"encoding/asn1"
 	"math"
 	"sort"
+	"sync/atomic"
 
-	"encoding/asn1"
-
+	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
@@ -139,4 +140,25 @@ func computeQuorum(N uint64) (Q int, F int) {
 	F = int((int(N) - 1) / 3)
 	Q = int(math.Ceil((float64(N) + float64(F) + 1) / 2.0))
 	return
+}
+
+// InFlightProposal records proposals that are in-flight.
+type InFlightProposal struct {
+	v atomic.Value
+}
+
+// InFlightProposal returns an in-flight proposal or nil if there is no such.
+func (ifp *InFlightProposal) InFlightProposal() *types.Proposal {
+	fetched := ifp.v.Load()
+	if fetched == nil {
+		return nil
+	}
+
+	p := fetched.(types.Proposal)
+	return &p
+}
+
+// Store stores an in-flight proposal.
+func (ifp *InFlightProposal) Store(prop types.Proposal) {
+	ifp.v.Store(prop)
 }
