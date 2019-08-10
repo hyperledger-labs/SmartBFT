@@ -29,7 +29,7 @@ func (*StateRecorder) Restore(_ *View) error {
 }
 
 type PersistedState struct {
-	InFlightProposal *InFlightProposal
+	InFlightProposal *InFlightData
 	Entries          [][]byte
 	Logger           api.Logger
 	WAL              api.WriteAheadLog
@@ -38,6 +38,9 @@ type PersistedState struct {
 func (ps *PersistedState) Save(msgToSave *smartbftprotos.SavedMessage) error {
 	if proposed := msgToSave.GetProposedRecord(); proposed != nil {
 		ps.storeProposal(proposed)
+	}
+	if prepared := msgToSave.GetPreparedProof(); prepared != nil {
+		ps.storePrepared(prepared)
 	}
 
 	b, err := proto.Marshal(msgToSave)
@@ -63,7 +66,12 @@ func (ps *PersistedState) storeProposal(proposed *smartbftprotos.ProposedRecord)
 		Payload:              proposal.Payload,
 		Metadata:             proposal.Metadata,
 	}
-	ps.InFlightProposal.Store(proposalToStore)
+	ps.InFlightProposal.StoreProposal(proposalToStore)
+}
+
+func (ps *PersistedState) storePrepared(prepared *smartbftprotos.PreparedProof) {
+	cmt := prepared.Commit.GetCommit()
+	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq, prepared.SignaturesByIds)
 }
 
 func (ps *PersistedState) Restore(v *View) error {
@@ -106,7 +114,6 @@ func (ps *PersistedState) recoverProposed(lastPersistedMessage *smartbftprotos.P
 		Header:               prop.Header,
 	}
 	ps.storeProposal(lastPersistedMessage)
-	ps.InFlightProposal.Store(*v.inFlightProposal)
 	// Reconstruct the prepare message we shall next broadcast
 	// after the recovery.
 	prp := lastPersistedMessage.GetPrePrepare()
@@ -161,6 +168,7 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.P
 		Header:               prop.Header,
 	}
 	ps.storeProposal(prePrepareMsg.GetProposedRecord())
+	ps.storePrepared(lastPersistedMessage)
 
 	// Reconstruct the commit message we shall next broadcast
 	// after the recovery.

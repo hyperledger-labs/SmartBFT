@@ -145,25 +145,62 @@ func computeQuorum(N uint64) (Q int, F int) {
 	return
 }
 
-// InFlightProposal records proposals that are in-flight.
-type InFlightProposal struct {
+// InFlightData records proposals that are in-flight,
+// as well as their corresponding prepares.
+type InFlightData struct {
 	v atomic.Value
 }
 
-// InFlightProposal returns an in-flight proposal or nil if there is no such.
-func (ifp *InFlightProposal) InFlightProposal() *types.Proposal {
+type inFlightProposalData struct {
+	proposal *types.Proposal
+	prepares map[uint64]*protos.Prepare
+}
+
+// InFlightData returns an in-flight proposal or nil if there is no such.
+func (ifp *InFlightData) InFlightProposal() *types.Proposal {
 	fetched := ifp.v.Load()
 	if fetched == nil {
 		return nil
 	}
 
-	p := fetched.(types.Proposal)
-	return &p
+	data := fetched.(inFlightProposalData)
+	return data.proposal
+}
+
+func (ifp *InFlightData) InFlightPrepares() map[uint64]*protos.Prepare {
+	fetched := ifp.v.Load()
+	if fetched == nil {
+		return nil
+	}
+	data := fetched.(inFlightProposalData)
+	return data.prepares
 }
 
 // Store stores an in-flight proposal.
-func (ifp *InFlightProposal) Store(prop types.Proposal) {
-	ifp.v.Store(prop)
+func (ifp *InFlightData) StoreProposal(prop types.Proposal) {
+	p := prop
+	ifp.v.Store(inFlightProposalData{proposal: &p})
+}
+
+func (ifp *InFlightData) StorePrepares(view, seq uint64, signatures map[uint64][]byte) {
+	prop := ifp.InFlightProposal()
+	if prop == nil {
+		panic("stored prepares but proposal is not initialized")
+	}
+
+	dig := prop.Digest()
+	prepares := make(map[uint64]*protos.Prepare)
+	for signer, sig := range signatures {
+		prepare := &protos.Prepare{
+			Seq:       seq,
+			View:      view,
+			Digest:    dig,
+			Signature: sig,
+		}
+		prepares[signer] = prepare
+	}
+	p := prop
+	ifp.v.Store(inFlightProposalData{proposal: p, prepares: prepares})
 }
 
 type ProposalMaker struct {

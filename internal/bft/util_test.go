@@ -20,9 +20,9 @@ func TestInFlightProposalLatest(t *testing.T) {
 		Header:               []byte{3},
 	}
 
-	ifp := &InFlightProposal{}
+	ifp := &InFlightData{}
 	assert.Nil(t, ifp.InFlightProposal())
 
-	ifp.Store(prop)
+	ifp.StoreProposal(prop)
 	assert.Equal(t, prop, *ifp.InFlightProposal())
 }
