@@ -78,6 +78,7 @@ func TestStateRestore(t *testing.T) {
 		expectedViewNumber             uint64
 		expectedProposalSeq            uint64
 		expectedInFlightProposal       *types.Proposal
+		expectedInFlightPrepares       map[uint64]*protos.Prepare
 	}{
 		{
 			description:        "empty",
@@ -122,6 +123,11 @@ func TestStateRestore(t *testing.T) {
 				bft.MarshalOrPanic(preparedProof),
 			},
 			expectedInFlightProposal: expectedInFlightProposal,
+			expectedInFlightPrepares: map[uint64]*protos.Prepare{
+				11: {Seq: 200, View: 300, Digest: expectedInFlightProposal.Digest(), Signature: []byte{121}},
+				12: {Seq: 200, View: 300, Digest: expectedInFlightProposal.Digest(), Signature: []byte{144}},
+				13: {Seq: 200, View: 300, Digest: expectedInFlightProposal.Digest(), Signature: []byte{169}},
+			},
 		},
 		{
 			description:         "prepared and committed",
@@ -175,7 +181,7 @@ func TestStateRestore(t *testing.T) {
 			state := &bft.PersistedState{
 				Entries:          testCase.WALContent,
 				Logger:           log,
-				InFlightProposal: &bft.InFlightProposal{},
+				InFlightProposal: &bft.InFlightData{},
 			}
 
 			view := &bft.View{
@@ -191,6 +197,7 @@ func TestStateRestore(t *testing.T) {
 				assert.Equal(t, testCase.expectedViewNumber, view.Number)
 				assert.Equal(t, testCase.expectedProposalSeq, view.ProposalSequence)
 				assert.Equal(t, testCase.expectedInFlightProposal, state.InFlightProposal.InFlightProposal())
+				assert.Equal(t, testCase.expectedInFlightPrepares, state.InFlightProposal.InFlightPrepares())
 			} else {
 				assert.EqualError(t, err, testCase.expectedError)
 			}

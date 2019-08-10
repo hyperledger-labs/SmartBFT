@@ -66,7 +66,7 @@ func (c *Consensus) Start() {
 	}
 
 	c.state = &algorithm.PersistedState{
-		InFlightProposal: &algorithm.InFlightProposal{},
+		InFlightProposal: &algorithm.InFlightData{},
 		Entries:          c.WALInitialContent,
 		Logger:           c.Logger,
 		WAL:              c.WAL,
