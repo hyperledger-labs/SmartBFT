@@ -49,9 +49,8 @@ type RequestPool interface {
 //go:generate mockery -dir . -name LeaderMonitor -case underscore -output ./mocks/
 
 type LeaderMonitor interface {
-	StartFollower(view uint64, leaderID uint64)
-	StartLeader(view uint64, leaderID uint64)
-	ProcessMsg(sender uint64, msg *protos.HeartBeat)
+	ChangeRole(role Role, view uint64, leaderID uint64)
+	ProcessMsg(sender uint64, msg *protos.Message)
 	Close()
 }
 
@@ -237,7 +236,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.Logger.Debugf("View change not yet implemented, ignoring message: %v, from %d", m, sender)
 
 	case *protos.Message_HeartBeat:
-		c.LeaderMonitor.ProcessMsg(sender, m.GetHeartBeat())
+		c.LeaderMonitor.ProcessMsg(sender, m)
 
 	case *protos.Message_Error:
 		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
@@ -252,12 +251,12 @@ func (c *Controller) startView(proposalSequence uint64) {
 	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
 	c.currView.Start()
 
-	if yes, _ := c.iAmTheLeader(); yes {
-		c.LeaderMonitor.StartLeader(c.currViewNumber, c.leaderID())
-	} else {
-		c.LeaderMonitor.StartFollower(c.currViewNumber, c.leaderID())
+	role := Follower
+	leader, _ := c.iAmTheLeader()
+	if leader {
+		role = Leader
 	}
-
+	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
 	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
 }
 
