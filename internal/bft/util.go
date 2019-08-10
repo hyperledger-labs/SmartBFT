@@ -11,6 +11,9 @@ import (
 	"sort"
 	"sync/atomic"
 
+	"sync"
+
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -161,4 +164,55 @@ func (ifp *InFlightProposal) InFlightProposal() *types.Proposal {
 // Store stores an in-flight proposal.
 func (ifp *InFlightProposal) Store(prop types.Proposal) {
 	ifp.v.Store(prop)
+}
+
+type ProposalMaker struct {
+	N               uint64
+	SelfID          uint64
+	Decider         Decider
+	FailureDetector FailureDetector
+	Sync            api.Synchronizer
+	Logger          api.Logger
+	Comm            Comm
+	Verifier        api.Verifier
+	Signer          api.Signer
+	State           State
+
+	restoreOnceFromWAL sync.Once
+}
+
+func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) Proposer {
+	view := &View{
+		N:                pm.N,
+		LeaderID:         leader,
+		SelfID:           pm.SelfID,
+		Quorum:           quorumSize,
+		Number:           viewNum,
+		Decider:          pm.Decider,
+		FailureDetector:  pm.FailureDetector,
+		Sync:             pm.Sync,
+		Logger:           pm.Logger,
+		Comm:             pm.Comm,
+		Verifier:         pm.Verifier,
+		Signer:           pm.Signer,
+		ProposalSequence: proposalSequence,
+		State:            pm.State,
+	}
+
+	pm.restoreOnceFromWAL.Do(func() {
+		err := pm.State.Restore(view)
+		if err != nil {
+			pm.Logger.Panicf("Failed restoring view from WAL: %v", err)
+		}
+	})
+
+	if proposalSequence > view.ProposalSequence {
+		view.ProposalSequence = proposalSequence
+	}
+
+	if viewNum > view.Number {
+		view.Number = viewNum
+	}
+
+	return view
 }

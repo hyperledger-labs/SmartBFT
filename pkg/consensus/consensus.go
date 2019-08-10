@@ -6,7 +6,6 @@
 package consensus
 
 import (
-	"sync"
 	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
@@ -41,9 +40,8 @@ type Consensus struct {
 	LastProposal      types.Proposal
 	LastSignatures    []types.Signature
 
-	controller         *algorithm.Controller
-	restoreOnceFromWAL sync.Once
-	state              *algorithm.PersistedState
+	controller *algorithm.Controller
+	state      *algorithm.PersistedState
 }
 
 func (c *Consensus) Complain() {
@@ -79,7 +77,6 @@ func (c *Consensus) Start() {
 
 	c.controller = &algorithm.Controller{
 		Checkpoint:       cpt,
-		ProposerBuilder:  c,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
@@ -94,6 +91,7 @@ func (c *Consensus) Start() {
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 	}
+	c.controller.ProposerBuilder = c.proposalMaker()
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
@@ -134,35 +132,17 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 	}
 }
 
-func (c *Consensus) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) algorithm.Proposer {
-	view := &algorithm.View{
-		N:                c.N,
-		LeaderID:         leader,
-		SelfID:           c.SelfID,
-		Quorum:           quorumSize,
-		Number:           viewNum,
-		Decider:          c.controller,
-		FailureDetector:  c.controller.FailureDetector,
-		Sync:             c.Synchronizer,
-		Logger:           c.Logger,
-		Comm:             c,
-		Verifier:         c.Verifier,
-		Signer:           c.Signer,
-		ProposalSequence: proposalSequence,
-		State:            c.state,
+func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
+	return &algorithm.ProposalMaker{
+		State:           c.state,
+		Comm:            c,
+		Decider:         c.controller,
+		Logger:          c.Logger,
+		Signer:          c.Signer,
+		SelfID:          c.SelfID,
+		Sync:            c.Synchronizer,
+		FailureDetector: c,
+		Verifier:        c.Verifier,
+		N:               c.N,
 	}
-
-	c.restoreOnceFromWAL.Do(func() {
-		c.state.Restore(view)
-	})
-
-	if proposalSequence > view.ProposalSequence {
-		view.ProposalSequence = proposalSequence
-	}
-
-	if viewNum > view.Number {
-		view.Number = viewNum
-	}
-
-	return view
 }
