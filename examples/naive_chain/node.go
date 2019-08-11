@@ -30,6 +30,7 @@ type NetworkOptions struct {
 }
 
 type Node struct {
+	clock       *time.Ticker
 	stopChan    chan struct{}
 	doneWG      sync.WaitGroup
 	nextSeq     uint64
@@ -156,6 +157,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 
 func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions) *Node {
 	node := &Node{
+		clock:       time.NewTicker(time.Second),
 		nextSeq:     1,
 		id:          id,
 		in:          in,
@@ -164,6 +166,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		stopChan:    make(chan struct{}),
 	}
 	node.consensus = &smartbft.Consensus{
+		Scheduler:        node.clock.C,
 		SelfID:           id,
 		N:                uint64(opts.NumNodes),
 		BatchSize:        opts.BatchSize,
@@ -217,7 +220,7 @@ func (n *Node) Stop() {
 	default:
 		close(n.stopChan)
 	}
-
+	n.clock.Stop()
 	n.doneWG.Wait()
 	n.consensus.Stop()
 }

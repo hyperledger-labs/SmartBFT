@@ -39,6 +39,7 @@ type Consensus struct {
 	Metadata          protos.ViewMetadata
 	LastProposal      types.Proposal
 	LastSignatures    []types.Signature
+	Scheduler         <-chan time.Time
 
 	controller *algorithm.Controller
 	state      *algorithm.PersistedState
@@ -95,7 +96,7 @@ func (c *Consensus) Start() {
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor

@@ -26,6 +26,7 @@ type App struct {
 	Node      *Node
 	logLevel  zap.AtomicLevel
 	latestMD  *smartbftprotos.ViewMetadata
+	clock     *time.Ticker
 }
 
 func (a *App) Mute() {
@@ -171,6 +172,7 @@ func newNode(id uint64, network Network) *App {
 	logger, _ := logConfig.Build()
 
 	app := &App{
+		clock:     time.NewTicker(time.Second),
 		ID:        id,
 		Delivered: make(chan *AppRecord, 100),
 		logLevel:  logConfig.Level,
@@ -181,6 +183,7 @@ func newNode(id uint64, network Network) *App {
 
 	app.Setup = func() {
 		c := &consensus.Consensus{
+			Scheduler:         app.clock.C,
 			SelfID:            id,
 			Logger:            logger.Sugar(),
 			WAL:               wal,

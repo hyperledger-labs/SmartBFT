@@ -10,7 +10,6 @@ import (
 	"strings"
 	"sync"
 	"testing"
-
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
@@ -37,7 +36,7 @@ func TestControllerBasic(t *testing.T) {
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
-	leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", mock.Anything, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
 
 	comm := &mocks.CommMock{}
@@ -57,7 +56,7 @@ func TestControllerBasic(t *testing.T) {
 
 	controller.Start(1, 0)
 
-	leaderMon.On("ProcessMsg", uint64(1), heartbeat.GetHeartBeat())
+	leaderMon.On("ProcessMsg", uint64(1), heartbeat)
 	controller.ProcessMessages(1, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
@@ -98,7 +97,7 @@ func TestQuorum(t *testing.T) {
 			pool := &mocks.RequestPool{}
 			pool.On("Close")
 			leaderMon := &mocks.LeaderMonitor{}
-			leaderMon.On("StartFollower", mock.Anything, mock.Anything)
+			leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
 			leaderMon.On("Close")
 			commMock := &mocks.CommMock{}
 			var nodes []uint64
@@ -141,7 +140,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	pool := &mocks.RequestPool{}
 	pool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
-	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
 	commMock := &mocks.CommMock{}
 	commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
@@ -209,7 +208,7 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
-	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
 
 	controller := &bft.Controller{
@@ -311,8 +310,8 @@ func TestLeaderChange(t *testing.T) {
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
-	leaderMon.On("StartFollower", mock.Anything, mock.Anything)
-	leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
 
 	signer := &mocks.SignerMock{}
@@ -405,8 +404,8 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			pool := &mocks.RequestPool{}
 			pool.On("Close")
 			leaderMon := &mocks.LeaderMonitor{}
-			leaderMon.On("StartFollower", mock.Anything, mock.Anything)
-			leaderMon.On("StartLeader", mock.Anything, mock.Anything)
+			leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
+			leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 			leaderMon.On("Close")
 			if testCase.shouldEnqueue {
 				submittedToPool.Add(1)
