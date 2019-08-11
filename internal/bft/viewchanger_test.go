@@ -78,12 +78,16 @@ func TestStartViewChange(t *testing.T) {
 	})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
 
 	vc := &bft.ViewChanger{
 		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
+		Logger:        log,
 	}
 
 	vc.Start(0)
@@ -461,12 +465,16 @@ func TestResendViewChangeMessage(t *testing.T) {
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
 	ticker := make(chan time.Time)
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
 
 	vc := &bft.ViewChanger{
 		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		ResendTicker:  ticker,
+		Logger:        log,
 	}
 
 	vc.Start(0)

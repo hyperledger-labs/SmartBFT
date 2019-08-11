@@ -106,7 +106,7 @@ func (c *Consensus) Start() {
 		Comm:             c,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
-		ViewChanger:      *c.viewChanger,
+		ViewChanger:      c.viewChanger,
 	}
 	c.controller.ProposerBuilder = c.proposalMaker()
 
