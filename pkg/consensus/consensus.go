@@ -39,11 +39,11 @@ type Consensus struct {
 	LastProposal      types.Proposal
 	LastSignatures    []types.Signature
 	Scheduler         <-chan time.Time
-	ResendViewChange  <-chan time.Time
 
 	viewChanger *algorithm.ViewChanger
 	controller  *algorithm.Controller
 	state       *algorithm.PersistedState
+	timeDemux   *algorithm.TickDemultiplexer
 	n           uint64
 }
 
@@ -83,6 +83,7 @@ func (c *Consensus) Start() {
 	cpt := types.Checkpoint{}
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
+	viewChangerClock := make(chan time.Time)
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:       c.SelfID,
 		N:            c.n,
@@ -96,7 +97,7 @@ func (c *Consensus) Start() {
 		InFlight:     &inFlight,
 		// Controller later
 		// RequestsTimer later
-		ResendTicker: c.ResendViewChange,
+		ResendTicker: viewChangerClock,
 	}
 
 	c.controller = &algorithm.Controller{
@@ -116,10 +117,11 @@ func (c *Consensus) Start() {
 		ViewChanger:      c.viewChanger,
 	}
 	c.controller.ProposerBuilder = c.proposalMaker()
-
-	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
+	poolClock := make(chan time.Time)
+	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, poolClock, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
+	leaderClock := make(chan time.Time)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(leaderClock, c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
@@ -131,9 +133,16 @@ func (c *Consensus) Start() {
 	// then we are expecting to be proposed a proposal with sequence i+1.
 	c.viewChanger.Start(c.Metadata.ViewId)
 	c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence+1)
+
+	c.timeDemux = &algorithm.TickDemultiplexer{
+		In:  c.Scheduler,
+		Out: []chan<- time.Time{poolClock, leaderClock, viewChangerClock},
+	}
+	c.timeDemux.Start()
 }
 
 func (c *Consensus) Stop() {
+	c.timeDemux.Stop()
 	c.viewChanger.Stop()
 	c.controller.Stop()
 }
