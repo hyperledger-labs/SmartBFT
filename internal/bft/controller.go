@@ -87,7 +87,7 @@ type Controller struct {
 	WAL              api.WriteAheadLog
 	ProposerBuilder  ProposerBuilder
 	Checkpoint       types.Checkpoint
-	ViewChanger      ViewChanger
+	ViewChanger      *ViewChanger
 
 	quorum int
 
@@ -234,7 +234,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
-		c.Logger.Debugf("View change not yet implemented, ignoring message: %v, from %d", m, sender)
+		c.Logger.Debugf("Node %d handled view changer message %v from %d", c.ID, m, sender)
 
 	case *protos.Message_HeartBeat:
 		c.LeaderMonitor.ProcessMsg(sender, m)
@@ -287,6 +287,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
 func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
+	c.Logger.Debugf("ViewChanged, the new view is %d", newViewNumber)
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
 	c.Batcher.Close()
 }

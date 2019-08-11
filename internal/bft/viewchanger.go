@@ -218,10 +218,12 @@ func (v *ViewChanger) StartViewChange() {
 		},
 	}
 	v.Comm.BroadcastConsensus(msg)
+	v.Logger.Debugf("%d started view change, last view is %d", v.SelfID, v.currView)
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
 	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1) { // join view change
+		v.Logger.Debugf("%d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.StartViewChange()
 	}
 	v.viewLock.Lock()
@@ -239,6 +241,7 @@ func (v *ViewChanger) processViewChangeMsg() {
 		}
 		v.viewChangeMsgs.clear(v.N) // TODO make sure clear is in the right place
 		v.viewDataMsgs.clear(v.N)   // clear because currView changed
+		v.Logger.Debugf("%d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, v.leader)
 	}
 }
 
