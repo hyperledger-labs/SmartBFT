@@ -63,7 +63,7 @@ func (a *App) Disconnect() {
 func (a *App) Connect() {
 	a.Node.Lock()
 	defer a.Node.Unlock()
-	a.Node.lossProbability = 1
+	a.Node.lossProbability = 0
 }
 
 func (a *App) RequestID(req []byte) types.RequestInfo {
