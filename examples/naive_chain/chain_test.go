@@ -69,7 +69,7 @@ func TestBlockHeader(t *testing.T) {
 func TestChain(t *testing.T) {
 	blockCount := 10
 
-	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second})
+	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 1 * time.Millisecond})
 
 	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
