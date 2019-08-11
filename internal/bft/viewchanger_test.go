@@ -68,7 +68,7 @@ func TestViewChangerBasic(t *testing.T) {
 }
 
 func TestStartViewChange(t *testing.T) {
-	// Test that when StartViewChange is called it broadcasts a message and view numbers are correct
+	// Test that when StartViewChange is called it broadcasts a message
 
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
@@ -91,9 +91,6 @@ func TestStartViewChange(t *testing.T) {
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-
-	assert.Equal(t, uint64(0), vc.CurrView)
-	assert.Equal(t, uint64(1), vc.NextView)
 
 	vc.Stop()
 }
@@ -125,8 +122,6 @@ func TestViewChangeProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        0,
 		N:             4,
-		F:             1,
-		Quorum:        3,
 		Comm:          comm,
 		Signer:        signer,
 		Logger:        log,
@@ -144,22 +139,15 @@ func TestViewChangeProcess(t *testing.T) {
 	assert.NotNil(t, m.GetViewData())
 	comm.AssertCalled(t, "SendConsensus", uint64(1), mock.Anything)
 
-	assert.Equal(t, uint64(1), vc.CurrView)
-	assert.Equal(t, uint64(1), vc.Leader)
-
 	// sending viewChange messages with same view doesn't make a difference
 	vc.HandleMessage(1, viewChangeMsg)
 	vc.HandleMessage(2, viewChangeMsg)
-	assert.Equal(t, uint64(1), vc.CurrView)
-	assert.Equal(t, uint64(1), vc.Leader)
 
 	// sending viewChange messages with bigger view doesn't make a difference
 	msg3 := proto.Clone(viewChangeMsg).(*protos.Message)
 	msg3.GetViewChange().NextView = 3
 	vc.HandleMessage(2, msg3)
 	vc.HandleMessage(1, msg3)
-	assert.Equal(t, uint64(1), vc.CurrView)
-	assert.Equal(t, uint64(1), vc.Leader)
 
 	// sending viewChange messages with the next view
 	msg2 := proto.Clone(viewChangeMsg).(*protos.Message)
@@ -171,9 +159,6 @@ func TestViewChangeProcess(t *testing.T) {
 	m = <-sendChan
 	assert.NotNil(t, m.GetViewData())
 	comm.AssertCalled(t, "SendConsensus", uint64(2), mock.Anything)
-
-	assert.Equal(t, uint64(2), vc.CurrView)
-	assert.Equal(t, uint64(2), vc.Leader)
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
 	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 2)
@@ -209,8 +194,6 @@ func TestViewDataProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:       1,
 		N:            4,
-		F:            1,
-		Quorum:       3,
 		Comm:         comm,
 		Logger:       log,
 		Verifier:     verifier,
@@ -268,8 +251,6 @@ func TestNewViewProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:       0,
 		N:            4,
-		F:            1,
-		Quorum:       3,
 		Comm:         comm,
 		Logger:       log,
 		Verifier:     verifier,
@@ -285,7 +266,7 @@ func TestNewViewProcess(t *testing.T) {
 	}
 	vdBytes := bft.MarshalOrPanic(vd)
 	signed := make([]*protos.SignedViewData, 0)
-	for len(signed) < vc.Quorum {
+	for len(signed) < 3 { // quorum = 3
 		msg := &protos.Message{
 			Content: &protos.Message_ViewData{
 				ViewData: &protos.SignedViewData{
@@ -344,8 +325,6 @@ func TestNormalProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
-		F:             1,
-		Quorum:        3,
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -443,8 +422,6 @@ func TestBadViewDataMessage(t *testing.T) {
 			vc := &bft.ViewChanger{
 				SelfID:       2,
 				N:            4,
-				F:            1,
-				Quorum:       3,
 				Comm:         comm,
 				Logger:       log,
 				Verifier:     verifier,

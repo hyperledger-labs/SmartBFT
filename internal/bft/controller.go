@@ -87,6 +87,7 @@ type Controller struct {
 	WAL              api.WriteAheadLog
 	ProposerBuilder  ProposerBuilder
 	Checkpoint       types.Checkpoint
+	ViewChanger      ViewChanger
 
 	quorum int
 
@@ -232,7 +233,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
-		// TODO view change
+		c.ViewChanger.HandleMessage(sender, m)
 		c.Logger.Debugf("View change not yet implemented, ignoring message: %v, from %d", m, sender)
 
 	case *protos.Message_HeartBeat:

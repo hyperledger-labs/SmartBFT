@@ -40,13 +40,16 @@ type Consensus struct {
 	LastProposal      types.Proposal
 	LastSignatures    []types.Signature
 	Scheduler         <-chan time.Time
+	ResendViewChange  <-chan time.Time
 
-	controller *algorithm.Controller
-	state      *algorithm.PersistedState
+	viewChanger *algorithm.ViewChanger
+	controller  *algorithm.Controller
+	state       *algorithm.PersistedState
 }
 
 func (c *Consensus) Complain() {
 	c.Logger.Warnf("Something bad happened!")
+	c.viewChanger.StartViewChange()
 }
 
 func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
@@ -76,6 +79,18 @@ func (c *Consensus) Start() {
 	cpt := types.Checkpoint{}
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
+	c.viewChanger = &algorithm.ViewChanger{
+		SelfID:   c.SelfID,
+		N:        c.N,
+		Logger:   c.Logger,
+		Comm:     c,
+		Signer:   c.Signer,
+		Verifier: c.Verifier,
+		// Controller later
+		// RequestsTimer later
+		ResendTicker: c.ResendViewChange,
+	}
+
 	c.controller = &algorithm.Controller{
 		Checkpoint:       cpt,
 		WAL:              c.WAL,
@@ -91,6 +106,7 @@ func (c *Consensus) Start() {
 		Comm:             c,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
+		ViewChanger:      *c.viewChanger,
 	}
 	c.controller.ProposerBuilder = c.proposalMaker()
 
@@ -101,12 +117,17 @@ func (c *Consensus) Start() {
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
 
+	c.viewChanger.Controller = c.controller
+	c.viewChanger.RequestsTimer = pool
+
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
+	c.viewChanger.Start(c.Metadata.ViewId)
 	c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence+1)
 }
 
 func (c *Consensus) Stop() {
+	c.viewChanger.Stop()
 	c.controller.Stop()
 }
 
