@@ -13,6 +13,8 @@ import (
 
 	"sync"
 
+	"time"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -252,4 +254,47 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 	}
 
 	return view
+}
+
+type TickDemultiplexer struct {
+	stopChan chan struct{}
+	stopOnce sync.Once
+	running  sync.WaitGroup
+	In       <-chan time.Time
+	Out      []chan<- time.Time
+}
+
+func (td *TickDemultiplexer) Start() {
+	td.stopChan = make(chan struct{})
+	td.running.Add(1)
+	go func() {
+		defer td.running.Done()
+		for {
+			select {
+			case <-td.stopChan:
+				return
+			case now := <-td.In:
+				td.tick(now)
+			}
+		}
+	}()
+}
+
+func (td *TickDemultiplexer) tick(now time.Time) {
+	var wg sync.WaitGroup
+	wg.Add(len(td.Out))
+	for _, out := range td.Out {
+		go func(out chan<- time.Time) {
+			defer wg.Done()
+			out <- now
+		}(out)
+	}
+	wg.Wait()
+}
+
+func (td *TickDemultiplexer) Stop() {
+	td.stopOnce.Do(func() {
+		close(td.stopChan)
+		td.running.Wait()
+	})
 }

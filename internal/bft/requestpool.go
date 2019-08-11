@@ -42,10 +42,10 @@ type RequestTimeoutHandler interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger    api.Logger
-	inspector api.RequestInspector
-	options   PoolOptions
-
+	logger         api.Logger
+	inspector      api.RequestInspector
+	options        PoolOptions
+	scheduler      *Scheduler
 	lock           sync.Mutex
 	fifo           *list.List
 	semaphore      *semaphore.Weighted
@@ -57,7 +57,7 @@ type Pool struct {
 // requestItem captures request related information
 type requestItem struct {
 	request []byte
-	timeout *time.Timer
+	timeout Stopper
 }
 
 type PoolOptions struct {
@@ -68,7 +68,7 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions) *Pool {
+func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, timeChan <-chan time.Time, options PoolOptions) *Pool {
 	if options.RequestTimeout == 0 {
 		options.RequestTimeout = DefaultRequestTimeout
 	}
@@ -79,15 +79,19 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 		options.AutoRemoveTimeout = DefaultRequestTimeout
 	}
 
-	return &Pool{
+	pool := &Pool{
 		timeoutHandler: th,
 		logger:         log,
 		inspector:      inspector,
 		fifo:           list.New(),
 		semaphore:      semaphore.NewWeighted(options.QueueSize),
 		existMap:       make(map[types.RequestInfo]*list.Element),
+		scheduler:      NewScheduler(timeChan),
 		options:        options,
 	}
+	pool.scheduler.Start()
+
+	return pool
 }
 
 func (rp *Pool) isStopped() bool {
@@ -119,7 +123,7 @@ func (rp *Pool) Submit(request []byte) error {
 		return errors.New(errStr)
 	}
 
-	to := time.AfterFunc(
+	to := rp.scheduler.Schedule(
 		rp.options.RequestTimeout,
 		func() { rp.onRequestTO(request, reqInfo) },
 	)
@@ -236,6 +240,7 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 
 // Close removes all the requests, stops all the timeout timers.
 func (rp *Pool) Close() {
+	rp.scheduler.Stop()
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
@@ -274,7 +279,7 @@ func (rp *Pool) RestartTimers() {
 	for reqInfo, element := range rp.existMap {
 		item := element.Value.(*requestItem)
 		item.timeout.Stop()
-		to := time.AfterFunc(
+		to := rp.scheduler.Schedule(
 			rp.options.RequestTimeout,
 			func() { rp.onRequestTO(item.request, reqInfo) },
 		)
@@ -316,7 +321,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 
 	//start a second timeout
 	item := element.Value.(*requestItem)
-	item.timeout = time.AfterFunc(
+	item.timeout = rp.scheduler.Schedule(
 		rp.options.LeaderFwdTimeout,
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
 	)
@@ -348,7 +353,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 
 	//start a third timeout
 	item := element.Value.(*requestItem)
-	item.timeout = time.AfterFunc(
+	item.timeout = rp.scheduler.Schedule(
 		rp.options.AutoRemoveTimeout,
 		func() { rp.onAutoRemoveTO(reqInfo) },
 	)

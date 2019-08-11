@@ -13,15 +13,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
-	"github.com/stretchr/testify/mock"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"go.uber.org/zap"
-
+	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"go.uber.org/zap"
 )
 
 func TestReqPoolBasic(t *testing.T) {
@@ -35,7 +33,9 @@ func TestReqPoolBasic(t *testing.T) {
 	t.Run("create close", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		timeChan := make(chan time.Time, 1)
+		timeChan <- time.Now()
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
 
 		assert.Equal(t, 0, pool.Size())
 		err = pool.Submit(byteReq1)
@@ -51,7 +51,9 @@ func TestReqPoolBasic(t *testing.T) {
 	t.Run("submit remove next", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		timeChan := make(chan time.Time, 1)
+		timeChan <- time.Now()
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
 		defer pool.Close()
 
 		assert.Equal(t, 0, pool.Size())
@@ -150,7 +152,9 @@ func TestReqPoolCapacity(t *testing.T) {
 
 	t.Run("submit storm", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
+		timeChan := make(chan time.Time, 1)
+		timeChan <- time.Now()
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
 		defer pool.Close()
 
 		wg := sync.WaitGroup{}
@@ -198,7 +202,11 @@ func TestReqPoolPrune(t *testing.T) {
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "bar")
-	pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+
+	timeChan := make(chan time.Time, 1)
+	timeChan <- time.Now()
+
+	pool := bft.NewPool(log, insp, timeoutHandler, timeChan, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
 	defer pool.Close()
 
 	assert.Equal(t, 0, pool.Size())
@@ -252,10 +260,17 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		timeChan := make(chan time.Time, 1)
+		start := time.Now()
+		timeChan <- start
+
+		pool := bft.NewPool(log,
+			insp,
+			timeoutHandler,
+			timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
-				RequestTimeout:    10 * time.Millisecond,
+				RequestTimeout:    10 * time.Second,
 				LeaderFwdTimeout:  time.Hour,
 				AutoRemoveTimeout: time.Hour,
 			},
@@ -266,6 +281,8 @@ func TestReqPoolTimeout(t *testing.T) {
 		err = pool.Submit(byteReq1)
 		assert.NoError(t, err)
 		assert.Equal(t, 1, pool.Size())
+
+		timeChan <- start.Add(11 * time.Second)
 
 		toWG.Wait()
 
@@ -296,11 +313,15 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		timeChan := make(chan time.Time, 1)
+		start := time.Now()
+		timeChan <- start
+
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
-				RequestTimeout:    10 * time.Millisecond,
-				LeaderFwdTimeout:  10 * time.Millisecond,
+				RequestTimeout:    10 * time.Second,
+				LeaderFwdTimeout:  10 * time.Second,
 				AutoRemoveTimeout: time.Hour,
 			},
 		)
@@ -311,8 +332,10 @@ func TestReqPoolTimeout(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, 1, pool.Size())
 
+		timeChan <- start.Add(time.Second * 11)
 		to1WG.Wait()
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 1)
+		timeChan <- start.Add(time.Second * 22)
 		to2WG.Wait()
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 1)
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 0)
@@ -342,12 +365,15 @@ func TestReqPoolTimeout(t *testing.T) {
 			to3WG.Done()
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		timeChan := make(chan time.Time, 1)
+		start := time.Now()
+		timeChan <- start
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
-				RequestTimeout:    10 * time.Millisecond,
-				LeaderFwdTimeout:  10 * time.Millisecond,
-				AutoRemoveTimeout: 10 * time.Millisecond,
+				RequestTimeout:    10 * time.Second,
+				LeaderFwdTimeout:  10 * time.Second,
+				AutoRemoveTimeout: 10 * time.Second,
 			},
 		)
 		defer pool.Close()
@@ -356,11 +382,13 @@ func TestReqPoolTimeout(t *testing.T) {
 		err = pool.Submit(byteReq1)
 		assert.NoError(t, err)
 		assert.Equal(t, 1, pool.Size())
-
+		timeChan <- start.Add(time.Second * 11)
 		to1WG.Wait()
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 1)
+		timeChan <- start.Add(time.Second * 22)
 		to2WG.Wait()
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 1)
+		timeChan <- start.Add(time.Second * 33)
 		to3WG.Wait()
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 1)
 
@@ -373,13 +401,13 @@ func TestReqPoolTimeout(t *testing.T) {
 		toWG := &sync.WaitGroup{}
 		toWG.Add(1)
 		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
-			assert.Fail(t, "called OnLeaderFwdRequestTimeout")
+			assert.Fail(t, "called OnRequestTimeout")
 		}).Return()
 		timeoutHandler.On("OnRequestTimeout", byteReq2, insp.RequestID(byteReq2)).Run(func(args mock.Arguments) {
 			toWG.Done()
 		}).Return()
 
-		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 			assert.Fail(t, "called OnLeaderFwdRequestTimeout")
 		}).Return()
 
@@ -387,7 +415,9 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		timeChan := make(chan time.Time, 1)
+		timeChan <- time.Now()
+		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
 				RequestTimeout:    100 * time.Millisecond,
@@ -402,19 +432,20 @@ func TestReqPoolTimeout(t *testing.T) {
 		assert.Equal(t, 1, pool.Size())
 
 		pool.StopTimers()
-		time.Sleep(500 * time.Millisecond)
-
+		timeChan <- time.Now().Add(time.Second)
 		err = pool.RemoveRequest(insp.RequestID(byteReq1))
 		assert.NoError(t, err)
 		err = pool.Submit(byteReq2)
 		assert.EqualError(t, err, "pool stopped, request rejected: {2 2}")
 
 		pool.RestartTimers()
+		timeChan <- time.Now().Add(time.Second)
 		err = pool.Submit(byteReq2)
 		assert.NoError(t, err)
 		pool.StopTimers()
 		pool.RestartTimers()
 
+		timeChan <- time.Now().Add(time.Second * 2)
 		toWG.Wait()
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 1)
