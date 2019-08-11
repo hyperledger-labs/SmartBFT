@@ -6,8 +6,6 @@
 package bft_test
 
 import (
-	"fmt"
-	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -22,7 +20,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 func TestControllerBasic(t *testing.T) {
@@ -62,66 +59,6 @@ func TestControllerBasic(t *testing.T) {
 	controller.ViewChanged(3, 2)
 	controller.Stop()
 	controller.Stop()
-}
-
-func TestQuorum(t *testing.T) {
-	// Ensure that quorum size is as expected.
-
-	type quorum struct {
-		N uint64
-		F int
-		Q int
-	}
-
-	quorums := []quorum{{4, 1, 3}, {5, 1, 4}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
-		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
-
-	for _, testCase := range quorums {
-		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
-			verifier := &mocks.VerifierMock{}
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-			comm := &mocks.CommMock{}
-			comm.On("BroadcastConsensus", mock.Anything)
-			basicLog, err := zap.NewDevelopment()
-			assert.NoError(t, err)
-			verifyLog := make(chan struct{}, 1)
-			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-				if strings.Contains(entry.Message, fmt.Sprintf("The number of nodes (N) is %d,"+
-					" F is %d, and the quorum size is %d", testCase.N, testCase.F, testCase.Q)) {
-					verifyLog <- struct{}{}
-				}
-				return nil
-			})).Sugar()
-			batcher := &mocks.Batcher{}
-			batcher.On("Close")
-			pool := &mocks.RequestPool{}
-			pool.On("Close")
-			leaderMon := &mocks.LeaderMonitor{}
-			leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
-			leaderMon.On("Close")
-			commMock := &mocks.CommMock{}
-			var nodes []uint64
-			for i := 0; i < int(testCase.N); i++ {
-				nodes = append(nodes, uint64(i))
-			}
-			commMock.On("Nodes").Return(nodes)
-			controller := &bft.Controller{
-				Batcher:       batcher,
-				RequestPool:   pool,
-				LeaderMonitor: leaderMon,
-				ID:            2, // not the leader
-				N:             testCase.N,
-				Logger:        log,
-				Comm:          commMock,
-			}
-			configureProposerBuilder(controller)
-
-			controller.Start(1, 0)
-			<-verifyLog
-			controller.Stop()
-		})
-	}
-
 }
 
 func TestControllerLeaderBasic(t *testing.T) {

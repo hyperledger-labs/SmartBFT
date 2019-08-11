@@ -19,14 +19,15 @@ import (
 )
 
 type App struct {
-	ID        uint64
-	Delivered chan *AppRecord
-	Consensus *consensus.Consensus
-	Setup     func()
-	Node      *Node
-	logLevel  zap.AtomicLevel
-	latestMD  *smartbftprotos.ViewMetadata
-	clock     *time.Ticker
+	ID          uint64
+	Delivered   chan *AppRecord
+	Consensus   *consensus.Consensus
+	Setup       func()
+	Node        *Node
+	logLevel    zap.AtomicLevel
+	latestMD    *smartbftprotos.ViewMetadata
+	clock       *time.Ticker
+	secondClock *time.Ticker
 }
 
 func (a *App) Mute() {
@@ -62,7 +63,7 @@ func (a *App) Disconnect() {
 func (a *App) Connect() {
 	a.Node.Lock()
 	defer a.Node.Unlock()
-	a.Node.lossProbability = 1
+	a.Node.lossProbability = 0
 }
 
 func (a *App) RequestID(req []byte) types.RequestInfo {
@@ -172,17 +173,19 @@ func newNode(id uint64, network Network) *App {
 	logger, _ := logConfig.Build()
 
 	app := &App{
-		clock:     time.NewTicker(time.Second),
-		ID:        id,
-		Delivered: make(chan *AppRecord, 100),
-		logLevel:  logConfig.Level,
-		latestMD:  &smartbftprotos.ViewMetadata{},
+		clock:       time.NewTicker(time.Second),
+		secondClock: time.NewTicker(time.Second),
+		ID:          id,
+		Delivered:   make(chan *AppRecord, 100),
+		logLevel:    logConfig.Level,
+		latestMD:    &smartbftprotos.ViewMetadata{},
 	}
 
 	wal := &wal.EphemeralWAL{}
 
 	app.Setup = func() {
 		c := &consensus.Consensus{
+			ResendViewChange:  app.secondClock.C,
 			Scheduler:         app.clock.C,
 			SelfID:            id,
 			Logger:            logger.Sugar(),

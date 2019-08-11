@@ -31,8 +31,8 @@ type ViewChanger struct {
 	SelfID uint64
 	nodes  []uint64
 	N      uint64
-	F      int
-	Quorum int
+	f      int
+	quorum int
 
 	Logger   api.Logger
 	Comm     Comm
@@ -48,10 +48,10 @@ type ViewChanger struct {
 	incMsgs        chan *incMsg
 	viewChangeMsgs *voteSet
 	viewDataMsgs   *voteSet
-	CurrView       uint64
-	NextView       uint64
-	Leader         uint64
-	viewLock       sync.RWMutex // lock CurrView & NextView
+	currView       uint64
+	nextView       uint64
+	leader         uint64
+	viewLock       sync.RWMutex // lock currView & nextView
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -64,7 +64,7 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 
 	v.nodes = v.Comm.Nodes()
 
-	v.Quorum, v.F = computeQuorum(v.N)
+	v.quorum, v.f = computeQuorum(v.N)
 
 	v.stopChan = make(chan struct{})
 	v.stopOnce = sync.Once{}
@@ -73,9 +73,9 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.setupVotes()
 
 	// set without locking
-	v.CurrView = startViewNumber
-	v.NextView = v.CurrView
-	v.Leader = getLeaderID(v.CurrView, v.N, v.nodes)
+	v.currView = startViewNumber
+	v.nextView = v.currView
+	v.leader = getLeaderID(v.currView, v.N, v.nodes)
 
 	go func() {
 		defer v.vcDone.Done()
@@ -149,11 +149,11 @@ func (v *ViewChanger) run() {
 func (v *ViewChanger) resend() {
 	v.viewLock.RLock()
 	defer v.viewLock.RUnlock()
-	if v.NextView == v.CurrView+1 { // started view change already but didn't get quorum yet
+	if v.nextView == v.currView+1 { // started view change already but didn't get quorum yet
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
-					NextView: v.NextView,
+					NextView: v.nextView,
 					Reason:   "", // TODO add reason
 				},
 			},
@@ -167,8 +167,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	if vc := m.GetViewChange(); vc != nil {
 		// check view number
 		v.viewLock.RLock()
-		if vc.NextView != v.CurrView+1 { // accept view change only to immediate next view number
-			v.Logger.Warnf("%d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.CurrView+1)
+		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
+			v.Logger.Warnf("%d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
 			v.viewLock.RUnlock()
 			return
 		}
@@ -194,8 +194,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 	// newView message
 	if nv := m.GetNewView(); nv != nil {
-		if sender != v.Leader {
-			v.Logger.Warnf("%d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, m, sender, v.Leader)
+		if sender != v.leader {
+			v.Logger.Warnf("%d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, m, sender, v.leader)
 			return
 		}
 		// TODO check view number here?
@@ -207,12 +207,12 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 func (v *ViewChanger) StartViewChange() {
 	v.viewLock.Lock()
 	defer v.viewLock.Unlock()
-	v.NextView = v.CurrView + 1
+	v.nextView = v.currView + 1
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
 		Content: &protos.Message_ViewChange{
 			ViewChange: &protos.ViewChange{
-				NextView: v.NextView,
+				NextView: v.nextView,
 				Reason:   "", // TODO add reason
 			},
 		},
@@ -221,21 +221,21 @@ func (v *ViewChanger) StartViewChange() {
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
-	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.F+1) { // join view change
+	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1) { // join view change
 		v.StartViewChange()
 	}
 	v.viewLock.Lock()
 	defer v.viewLock.Unlock()
-	if len(v.viewChangeMsgs.voted) >= v.Quorum-1 && v.NextView > v.CurrView { // send view data
-		v.CurrView = v.NextView
+	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
+		v.currView = v.nextView
 		v.RequestsTimer.RestartTimers()
-		v.Leader = getLeaderID(v.CurrView, v.N, v.nodes)
+		v.leader = getLeaderID(v.currView, v.N, v.nodes)
 		msg := v.prepareViewDataMsg()
 		// TODO write to log
-		if v.Leader == v.SelfID {
+		if v.leader == v.SelfID {
 			v.HandleMessage(v.SelfID, msg)
 		} else {
-			v.Comm.SendConsensus(v.Leader, msg)
+			v.Comm.SendConsensus(v.leader, msg)
 		}
 		v.viewChangeMsgs.clear(v.N) // TODO make sure clear is in the right place
 		v.viewDataMsgs.clear(v.N)   // clear because currView changed
@@ -244,7 +244,7 @@ func (v *ViewChanger) processViewChangeMsg() {
 
 func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
 	vd := &protos.ViewData{
-		NextView: v.CurrView,
+		NextView: v.currView,
 		// TODO fill data
 	}
 	vdBytes := MarshalOrPanic(vd)
@@ -275,8 +275,8 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Errorf("%d was unable to unmarshal viewData message from %d, error: %v", v.SelfID, sender, err)
 		return false
 	}
-	if rvd.NextView != v.CurrView {
-		v.Logger.Warnf("%d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.CurrView)
+	if rvd.NextView != v.currView {
+		v.Logger.Warnf("%d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.currView)
 		return false
 	}
 	if getLeaderID(rvd.NextView, v.N, v.nodes) != v.SelfID { // check if I am the next leader
@@ -287,7 +287,7 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 }
 
 func (v *ViewChanger) processViewDataMsg() {
-	if len(v.viewDataMsgs.voted) >= v.Quorum { // need enough (quorum) data to continue
+	if len(v.viewDataMsgs.voted) >= v.quorum { // need enough (quorum) data to continue
 		signedMsgs := make([]*protos.SignedViewData, 0)
 		close(v.viewDataMsgs.votes)
 		for vote := range v.viewDataMsgs.votes {
@@ -327,8 +327,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 			continue
 		}
 
-		if vd.NextView != v.CurrView {
-			v.Logger.Warnf("%d is processing newView message %v, but nextView of viewData %v is %d, while the currView is %d", v.SelfID, msg, svd, vd.NextView, v.CurrView)
+		if vd.NextView != v.currView {
+			v.Logger.Warnf("%d is processing newView message %v, but nextView of viewData %v is %d, while the currView is %d", v.SelfID, msg, svd, vd.NextView, v.currView)
 			continue
 		}
 
@@ -336,8 +336,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 
 		valid++
 	}
-	if valid >= v.Quorum {
+	if valid >= v.quorum {
 		// TODO handle data
-		v.Controller.ViewChanged(v.CurrView, 0) // TODO change seq 0
+		v.Controller.ViewChanged(v.currView, 0) // TODO change seq 0
 	}
 }
