@@ -91,7 +91,6 @@ func (c *Checkpoint) Set(proposal Proposal, signatures []Signature) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
-	fmt.Println(">>>", proposal.Metadata)
 	c.proposal = proposal
 	c.signatures = signatures
 }

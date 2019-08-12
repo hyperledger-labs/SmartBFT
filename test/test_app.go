@@ -168,9 +168,10 @@ type AppRecord struct {
 	Metadata []byte
 }
 
-func newNode(id uint64, network Network) *App {
+func newNode(id uint64, network Network, testName string) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
+	logger = logger.With(zap.String("test", testName))
 
 	app := &App{
 		clock:       time.NewTicker(time.Second),
