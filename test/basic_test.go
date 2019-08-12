@@ -16,10 +16,10 @@ func TestBasic(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n1 := newNode(1, network)
-	n2 := newNode(2, network)
-	n3 := newNode(3, network)
-	n4 := newNode(4, network)
+	n1 := newNode(1, network, t.Name())
+	n2 := newNode(2, network, t.Name())
+	n3 := newNode(3, network, t.Name())
+	n4 := newNode(4, network, t.Name())
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -46,10 +46,10 @@ func TestRestartFollowers(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n1 := newNode(1, network)
-	n2 := newNode(2, network)
-	n3 := newNode(3, network)
-	n4 := newNode(4, network)
+	n1 := newNode(1, network, t.Name())
+	n2 := newNode(2, network, t.Name())
+	n3 := newNode(3, network, t.Name())
+	n4 := newNode(4, network, t.Name())
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -87,10 +87,10 @@ func TestLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network)
-	n1 := newNode(1, network)
-	n2 := newNode(2, network)
-	n3 := newNode(3, network)
+	n0 := newNode(0, network, t.Name())
+	n1 := newNode(1, network, t.Name())
+	n2 := newNode(2, network, t.Name())
+	n3 := newNode(3, network, t.Name())
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
