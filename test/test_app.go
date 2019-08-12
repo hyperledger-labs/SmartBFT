@@ -171,7 +171,7 @@ type AppRecord struct {
 func newNode(id uint64, network Network, testName string) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
-	logger = logger.With(zap.String("test", testName))
+	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
 
 	app := &App{
 		clock:       time.NewTicker(time.Second),
