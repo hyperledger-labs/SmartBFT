@@ -162,6 +162,9 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 
 func (hm *HeartbeatMonitor) tick(now time.Time) {
 	hm.lastTick = now
+	if hm.lastHeartbeat.IsZero() {
+		hm.lastHeartbeat = now
+	}
 	if hm.follower {
 		hm.followerTick(now)
 	} else {
