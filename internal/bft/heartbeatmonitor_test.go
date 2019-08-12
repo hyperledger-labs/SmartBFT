@@ -70,7 +70,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 
 	clock := fakeTime{}
 	hm.ChangeRole(bft.Leader, 10, 12)
-	clock.advanceTime(10, scheduler)
+	clock.advanceTime(11, scheduler)
 	toWG1.Wait()
 
 	hm.ChangeRole(bft.Leader, 20, 12)
