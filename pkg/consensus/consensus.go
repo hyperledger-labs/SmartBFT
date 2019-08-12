@@ -61,12 +61,12 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() {
-	requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
+	// requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
 	opts := algorithm.PoolOptions{
 		QueueSize:         DefaultRequestPoolSize,
-		RequestTimeout:    requestTimeout,
-		LeaderFwdTimeout:  requestTimeout,
-		AutoRemoveTimeout: requestTimeout,
+		RequestTimeout:    algorithm.DefaultRequestTimeout / 100,
+		LeaderFwdTimeout:  algorithm.DefaultRequestTimeout / 10,
+		AutoRemoveTimeout: algorithm.DefaultRequestTimeout,
 	}
 
 	c.state = &algorithm.PersistedState{
@@ -96,7 +96,6 @@ func (c *Consensus) Start() {
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.N,
-		RequestTimeout:   requestTimeout,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
