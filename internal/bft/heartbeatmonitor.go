@@ -218,5 +218,5 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 		return
 	}
 
-	hm.logger.Debugf("Last heartbeat was %v ago", delta)
+	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
 }

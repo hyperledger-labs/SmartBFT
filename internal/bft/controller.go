@@ -7,7 +7,6 @@ package bft
 
 import (
 	"sync"
-	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -72,7 +71,6 @@ type Controller struct {
 	ID               uint64
 	N                uint64
 	RequestPool      RequestPool
-	RequestTimeout   time.Duration
 	Batcher          Batcher
 	LeaderMonitor    LeaderMonitor
 	Verifier         api.Verifier
