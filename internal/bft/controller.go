@@ -93,8 +93,8 @@ type Controller struct {
 
 	currView Proposer
 
-	currViewNumberLock sync.RWMutex
-	currViewNumber     uint64
+	currViewLock   sync.RWMutex
+	currViewNumber uint64
 
 	viewChange chan viewInfo
 
@@ -110,15 +110,15 @@ type Controller struct {
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
-	c.currViewNumberLock.RLock()
-	defer c.currViewNumberLock.RUnlock()
+	c.currViewLock.RLock()
+	defer c.currViewLock.RUnlock()
 
 	return c.currViewNumber
 }
 
 func (c *Controller) setCurrentViewNumber(viewNumber uint64) {
-	c.currViewNumberLock.Lock()
-	defer c.currViewNumberLock.Unlock()
+	c.currViewLock.Lock()
+	defer c.currViewLock.Unlock()
 
 	c.currViewNumber = viewNumber
 }
@@ -229,9 +229,11 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
-		c.currView.HandleMessage(sender, m)
+		c.currViewLock.RLock()
+		view := c.currView
+		c.currViewLock.RUnlock()
+		view.HandleMessage(sender, m)
 		c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
-
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
 		c.Logger.Debugf("Node %d handled view changer message %v from %d", c.ID, m, sender)
@@ -249,7 +251,12 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 
 func (c *Controller) startView(proposalSequence uint64) {
 	// TODO view builder according to metadata returned by sync
-	c.currView = c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
+	view := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
+
+	c.currViewLock.Lock()
+	c.currView = view
+	c.currViewLock.Unlock()
+
 	c.currView.Start()
 
 	role := Follower
