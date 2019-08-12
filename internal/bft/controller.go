@@ -90,6 +90,7 @@ type Controller struct {
 	ViewChanger      *ViewChanger
 
 	quorum int
+	nodes  []uint64
 
 	currView Proposer
 
@@ -131,8 +132,7 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 
 // thread safe
 func (c *Controller) leaderID() uint64 {
-	nodes := c.Comm.Nodes()
-	return getLeaderID(c.getCurrentViewNumber(), c.N, nodes)
+	return getLeaderID(c.getCurrentViewNumber(), c.N, c.nodes)
 }
 
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
@@ -415,6 +415,8 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
+
+	c.nodes = c.Comm.Nodes()
 
 	c.currViewNumber = startViewNumber
 	c.startView(startProposalSequence)
