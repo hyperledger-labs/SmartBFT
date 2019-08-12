@@ -255,9 +255,8 @@ func (c *Controller) startView(proposalSequence uint64) {
 
 	c.currViewLock.Lock()
 	c.currView = view
-	c.currViewLock.Unlock()
-
 	c.currView.Start()
+	c.currViewLock.Unlock()
 
 	role := Follower
 	leader, _ := c.iAmTheLeader()
