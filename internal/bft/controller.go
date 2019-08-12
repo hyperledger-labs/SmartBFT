@@ -295,8 +295,11 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
 func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
 	c.Logger.Debugf("ViewChanged, the new view is %d", newViewNumber)
+	amILeader, _ := c.iAmTheLeader()
+	if amILeader {
+		c.Batcher.Close()
+	}
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
-	c.Batcher.Close()
 }
 
 func (c *Controller) getNextBatch() [][]byte {
