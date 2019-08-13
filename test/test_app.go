@@ -191,7 +191,6 @@ func newNode(id uint64, network Network, testName string) *App {
 			SelfID:            id,
 			Logger:            logger.Sugar(),
 			WAL:               wal,
-			N:                 4,
 			Metadata:          *app.latestMD,
 			Verifier:          app,
 			Signer:            app,
