@@ -94,65 +94,6 @@ func TestChain(t *testing.T) {
 	}
 }
 
-func TestChainPartialSubmissions(t *testing.T) {
-
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	logger := basicLog.Sugar()
-
-	txCount := 20
-	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 2, BatchTimeout: 1 * time.Second})
-
-	txMap := make(map[Transaction]bool)
-	for txSqn := 0; txSqn < txCount; txSqn++ {
-		// Each tx to a different chain
-		chain := chains[txSqn%len(chains)]
-
-		tx := Transaction{
-			ClientID: "alice",
-			Id:       fmt.Sprintf("tx%d", txSqn),
-		}
-		err := chain.Order(tx)
-		txMap[tx] = true
-		assert.NoError(t, err)
-	}
-
-	txByChain := make(map[int][]Transaction)
-	var blockSqn uint64 = 1
-	for txNum := 0; txNum < txCount; {
-		numTxInBlock := 0
-		for i, chain := range chains {
-			block := chain.Listen()
-			numTxInBlock = len(block.Transactions)
-			for _, tx := range block.Transactions {
-				txByChain[i] = append(txByChain[i], tx)
-			}
-
-			assert.Equal(t, blockSqn, block.Sequence)
-		}
-		txNum += numTxInBlock
-		blockSqn++
-	}
-
-	// all the chains must have the same tx sequence
-	for i, chainTxs := range txByChain {
-		if i == 0 {
-			continue
-		}
-		assert.Equal(t, chainTxs, txByChain[0])
-	}
-
-	// all tx's arrived
-	assert.Equal(t, txCount, len(txByChain[0]))
-	txMapResult := make(map[Transaction]bool)
-	for _, tx := range txByChain[0] {
-		logger.Infof("Tx: %v", tx)
-		txMapResult[tx] = true
-	}
-
-	assert.Equal(t, txMap, txMapResult)
-}
-
 func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int]chan proto.Message) *Chain {
 	ingress := make(Ingress)
 	for from := 0; from < opt.NumNodes; from++ {
