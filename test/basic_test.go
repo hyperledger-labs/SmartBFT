@@ -7,7 +7,6 @@ package test
 
 import (
 	"testing"
-
 	"time"
 
 	"github.com/stretchr/testify/assert"
