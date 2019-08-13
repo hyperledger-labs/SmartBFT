@@ -171,7 +171,6 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		ResendViewChange: node.secondClock.C,
 		Scheduler:        node.clock.C,
 		SelfID:           id,
-		N:                uint64(opts.NumNodes),
 		BatchSize:        opts.BatchSize,
 		BatchTimeout:     opts.BatchTimeout,
 		Logger:           logger,

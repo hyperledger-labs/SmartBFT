@@ -23,7 +23,6 @@ const (
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
 	SelfID       uint64
-	N            uint64
 	BatchSize    int
 	BatchTimeout time.Duration
 	bft.Comm
@@ -45,6 +44,7 @@ type Consensus struct {
 	viewChanger *algorithm.ViewChanger
 	controller  *algorithm.Controller
 	state       *algorithm.PersistedState
+	n           uint64
 }
 
 func (c *Consensus) Complain() {
@@ -69,6 +69,8 @@ func (c *Consensus) Start() {
 		AutoRemoveTimeout: algorithm.DefaultRequestTimeout,
 	}
 
+	c.n = uint64(len(c.Nodes()))
+
 	c.state = &algorithm.PersistedState{
 		InFlightProposal: &algorithm.InFlightData{},
 		Entries:          c.WALInitialContent,
@@ -81,7 +83,7 @@ func (c *Consensus) Start() {
 
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:   c.SelfID,
-		N:        c.N,
+		N:        c.n,
 		Logger:   c.Logger,
 		Comm:     c,
 		Signer:   c.Signer,
@@ -95,7 +97,7 @@ func (c *Consensus) Start() {
 		Checkpoint:       cpt,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
-		N:                c.N,
+		N:                c.n,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
@@ -164,6 +166,6 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Sync:            c.Synchronizer,
 		FailureDetector: c,
 		Verifier:        c.Verifier,
-		N:               c.N,
+		N:               c.n,
 	}
 }
