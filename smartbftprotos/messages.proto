@@ -78,9 +78,8 @@ message ViewData {
     uint64 next_view = 1;
     Proposal last_decision = 2;
     repeated Signature last_decision_signatures = 3;
-    PrePrepare last_pre_prepare = 4;
-    Prepare last_prepare = 5;
-    Commit last_commit = 6;
+    Proposal in_flight_proposal = 4;
+    bool in_flight_prepared = 5;
 }
 
 message SignedViewData {

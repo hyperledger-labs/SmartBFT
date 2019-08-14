@@ -39,6 +39,8 @@ type ViewChanger struct {
 	Signer   api.Signer
 	Verifier api.Verifier
 
+	Checkpoint    *types.Checkpoint
+	InFlight      *InFlightData
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
@@ -246,9 +248,27 @@ func (v *ViewChanger) processViewChangeMsg() {
 }
 
 func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
+	lastDecision, lastDecisionSignatures := v.Checkpoint.Get()
+	inFlight := v.InFlight.InFlightProposal()
+	var inFlightProposal *protos.Proposal
+	if inFlight != nil {
+		inFlightProposal = &protos.Proposal{
+			Header:               inFlight.Header,
+			Metadata:             inFlight.Metadata,
+			Payload:              inFlight.Payload,
+			VerificationSequence: uint64(inFlight.VerificationSequence),
+		}
+	}
+	prepared := false
+	if v.InFlight.InFlightPrepares() != nil {
+		prepared = true
+	}
 	vd := &protos.ViewData{
-		NextView: v.currView,
-		// TODO fill data
+		NextView:               v.currView,
+		LastDecision:           &lastDecision,
+		LastDecisionSignatures: lastDecisionSignatures,
+		InFlightProposal:       inFlightProposal,
+		InFlightPrepared:       prepared,
 	}
 	vdBytes := MarshalOrPanic(vd)
 	sig := v.Signer.Sign(vdBytes)

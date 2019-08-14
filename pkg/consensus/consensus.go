@@ -71,8 +71,10 @@ func (c *Consensus) Start() {
 
 	c.n = uint64(len(c.Nodes()))
 
+	inFlight := algorithm.InFlightData{}
+
 	c.state = &algorithm.PersistedState{
-		InFlightProposal: &algorithm.InFlightData{},
+		InFlightProposal: &inFlight,
 		Entries:          c.WALInitialContent,
 		Logger:           c.Logger,
 		WAL:              c.WAL,
@@ -82,19 +84,21 @@ func (c *Consensus) Start() {
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:   c.SelfID,
-		N:        c.n,
-		Logger:   c.Logger,
-		Comm:     c,
-		Signer:   c.Signer,
-		Verifier: c.Verifier,
+		SelfID:     c.SelfID,
+		N:          c.n,
+		Logger:     c.Logger,
+		Comm:       c,
+		Signer:     c.Signer,
+		Verifier:   c.Verifier,
+		Checkpoint: &cpt,
+		InFlight:   &inFlight,
 		// Controller later
 		// RequestsTimer later
 		ResendTicker: c.ResendViewChange,
 	}
 
 	c.controller = &algorithm.Controller{
-		Checkpoint:       cpt,
+		Checkpoint:       &cpt,
 		WAL:              c.WAL,
 		ID:               c.SelfID,
 		N:                c.n,

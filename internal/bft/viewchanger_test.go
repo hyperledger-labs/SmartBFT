@@ -11,6 +11,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/types"
+
 	"github.com/pkg/errors"
 	"go.uber.org/zap/zapcore"
 
@@ -131,6 +133,8 @@ func TestViewChangeProcess(t *testing.T) {
 		Logger:        log,
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &types.Checkpoint{},
 	}
 
 	vc.Start(0)
@@ -336,6 +340,8 @@ func TestNormalProcess(t *testing.T) {
 		Signer:        signer,
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &types.Checkpoint{},
 	}
 
 	vc.Start(0)

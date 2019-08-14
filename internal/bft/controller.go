@@ -84,7 +84,7 @@ type Controller struct {
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
 	ProposerBuilder  ProposerBuilder
-	Checkpoint       types.Checkpoint
+	Checkpoint       *types.Checkpoint
 	ViewChanger      *ViewChanger
 
 	quorum int

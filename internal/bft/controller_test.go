@@ -161,6 +161,7 @@ func TestLeaderPropose(t *testing.T) {
 		Comm:          comm,
 		Signer:        signer,
 		Application:   app,
+		Checkpoint:    &types.Checkpoint{},
 	}
 	configureProposerBuilder(controller)
 
@@ -197,7 +198,7 @@ func TestLeaderPropose(t *testing.T) {
 	assert.Equal(t, expected, proposal)
 	signaturesBySigners := make(map[uint64]protos.Signature)
 	for _, sig := range signatures {
-		signaturesBySigners[sig.Signer] = sig
+		signaturesBySigners[sig.Signer] = *sig
 	}
 	assert.Equal(t, map[uint64]protos.Signature{
 		2:  {Signer: 2, Value: []byte{4}},
