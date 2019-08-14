@@ -19,7 +19,7 @@ type Proposal struct {
 	Payload              []byte
 	Header               []byte
 	Metadata             []byte
-	VerificationSequence int64 // TODO change to uint64
+	VerificationSequence int64 // int64 for ans1 marshaling
 }
 
 type Signature struct {
