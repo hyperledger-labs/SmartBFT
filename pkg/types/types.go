@@ -19,7 +19,7 @@ type Proposal struct {
 	Payload              []byte
 	Header               []byte
 	Metadata             []byte
-	VerificationSequence int64
+	VerificationSequence int64 // int64 for ans1 marshaling
 }
 
 type Signature struct {
@@ -65,7 +65,7 @@ type Checkpoint struct {
 	signatures []Signature
 }
 
-func (c *Checkpoint) Get() (smartbftprotos.Proposal, []smartbftprotos.Signature) {
+func (c *Checkpoint) Get() (smartbftprotos.Proposal, []*smartbftprotos.Signature) {
 	c.lock.RLock()
 	defer c.lock.RUnlock()
 
@@ -76,9 +76,9 @@ func (c *Checkpoint) Get() (smartbftprotos.Proposal, []smartbftprotos.Signature)
 		VerificationSequence: uint64(c.proposal.VerificationSequence),
 	}
 
-	var signatures []smartbftprotos.Signature
+	var signatures []*smartbftprotos.Signature
 	for _, sig := range c.signatures {
-		signatures = append(signatures, smartbftprotos.Signature{
+		signatures = append(signatures, &smartbftprotos.Signature{
 			Msg:    sig.Msg,
 			Value:  sig.Value,
 			Signer: sig.Id,
