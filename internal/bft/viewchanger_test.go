@@ -36,8 +36,23 @@ var (
 			},
 		},
 	}
-	vd = &protos.ViewData{
+	lastDecision = types.Proposal{
+		Header:               []byte{0},
+		Payload:              []byte{1},
+		Metadata:             []byte{2},
+		VerificationSequence: 1,
+	}
+	lastDecisionSignatures       = []types.Signature{{Id: 0, Value: []byte{4}, Msg: []byte{5}}, {Id: 1, Value: []byte{4}, Msg: []byte{5}}, {Id: 2, Value: []byte{4}, Msg: []byte{5}}}
+	lastDecisionSignaturesProtos = []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}, {Signer: 2, Value: []byte{4}, Msg: []byte{5}}}
+	vd                           = &protos.ViewData{
 		NextView: 1,
+		LastDecision: &protos.Proposal{
+			Header:               lastDecision.Header,
+			Payload:              lastDecision.Payload,
+			Metadata:             lastDecision.Metadata,
+			VerificationSequence: uint64(lastDecision.VerificationSequence),
+		},
+		LastDecisionSignatures: lastDecisionSignaturesProtos,
 	}
 	vdBytes      = bft.MarshalOrPanic(vd)
 	viewDataMsg1 = &protos.Message{
@@ -192,12 +207,17 @@ func TestViewDataProcess(t *testing.T) {
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
 		verifierWG.Done()
 	}).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		verifierWG.Done()
+	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
 	}).Return(nil).Once()
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
 		SelfID:       1,
@@ -207,25 +227,26 @@ func TestViewDataProcess(t *testing.T) {
 		Verifier:     verifier,
 		Controller:   controller,
 		ResendTicker: make(chan time.Time),
+		Checkpoint:   &checkpoint,
 	}
 
 	vc.Start(1)
 
-	verifierWG.Add(1)
+	verifierWG.Add(4)
 	vc.HandleMessage(0, viewDataMsg1)
 	verifierWG.Wait()
 
 	msg1 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg1.GetViewData().Signer = 1
 
-	verifierWG.Add(1)
+	verifierWG.Add(4)
 	vc.HandleMessage(1, msg1)
 	verifierWG.Wait()
 
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
-	verifierWG.Add(4)
+	verifierWG.Add(7)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
@@ -320,6 +341,7 @@ func TestNormalProcess(t *testing.T) {
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -329,6 +351,8 @@ func TestNormalProcess(t *testing.T) {
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -341,7 +365,7 @@ func TestNormalProcess(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &types.Checkpoint{},
+		Checkpoint:    &checkpoint,
 	}
 
 	vc.Start(0)

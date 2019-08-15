@@ -201,6 +201,8 @@ func newNode(id uint64, network Network, testName string) *App {
 			BatchSize:         10,
 			BatchTimeout:      time.Millisecond,
 			WALInitialContent: wal.ReadAll(),
+			LastProposal:      types.Proposal{},
+			LastSignatures:    []types.Signature{},
 		}
 		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]

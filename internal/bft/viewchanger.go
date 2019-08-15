@@ -39,8 +39,9 @@ type ViewChanger struct {
 	Signer   api.Signer
 	Verifier api.Verifier
 
-	Checkpoint    *types.Checkpoint
-	InFlight      *InFlightData
+	Checkpoint *types.Checkpoint
+	InFlight   *InFlightData
+
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
@@ -305,6 +306,45 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 	if getLeaderID(rvd.NextView, v.N, v.nodes) != v.SelfID { // check if I am the next leader
 		v.Logger.Warnf("%d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
 		return false
+	}
+	return v.validateLastDecision(rvd, sender)
+}
+
+func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) bool {
+	if vd.LastDecision == nil {
+		v.Logger.Warnf("%d got viewData message %v from %d, but the last decision is not set", v.SelfID, vd, sender)
+		return false
+	}
+	if vd.LastDecision.Metadata == nil { // this is a genesis block, no signatures
+		v.Logger.Debugf("%d got viewData message %v from %d, last decision metadata is nil", v.SelfID, vd, sender)
+		// TODO handle genesis block
+		return true
+	}
+	if vd.LastDecisionSignatures == nil {
+		v.Logger.Warnf("%d got viewData message %v from %d, but the last decision signatures is not set", v.SelfID, vd, sender)
+		return false
+	}
+	numSigs := len(vd.LastDecisionSignatures)
+	if numSigs < v.quorum {
+		v.Logger.Warnf("%d got viewData message %v from %d, but there are only %d last decision signatures", v.SelfID, vd, sender, numSigs)
+		return false
+	}
+	for _, sig := range vd.LastDecisionSignatures {
+		signature := types.Signature{
+			Id:    sig.Signer,
+			Value: sig.Value,
+			Msg:   sig.Msg,
+		}
+		proposal := types.Proposal{
+			Header:               vd.LastDecision.Header,
+			Payload:              vd.LastDecision.Payload,
+			Metadata:             vd.LastDecision.Metadata,
+			VerificationSequence: int64(vd.LastDecision.VerificationSequence),
+		}
+		if err := v.Verifier.VerifyConsenterSig(signature, proposal); err != nil {
+			v.Logger.Warnf("%d got viewData message %v from %d, but last decision signature is invalid, error: %v", v.SelfID, vd, sender, err)
+			return false
+		}
 	}
 	return true
 }
