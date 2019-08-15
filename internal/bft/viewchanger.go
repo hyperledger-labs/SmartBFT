@@ -320,6 +320,15 @@ func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) b
 		// TODO handle genesis block
 		return true
 	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
+		v.Logger.Warnf("%d got viewData message %v from %d, but was unable to unmarshal last decision metadata, err: %v", v.SelfID, vd, sender, err)
+		return false
+	}
+	if md.ViewId >= vd.NextView {
+		v.Logger.Warnf("%d got viewData message %v from %d, but last decision view %d is greater or equal to requested next view %d", v.SelfID, vd, sender, md.ViewId, vd.NextView)
+		return false
+	}
 	if vd.LastDecisionSignatures == nil {
 		v.Logger.Warnf("%d got viewData message %v from %d, but the last decision signatures is not set", v.SelfID, vd, sender)
 		return false
@@ -404,7 +413,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		// TODO validate data
 
 		if vd.LastDecision.Metadata == nil {
-			v.Logger.Warnf("%d is processing newView message %v, but the last decision metadata in viewData %v is nil", v.SelfID, msg, vd)
+			// TODO handle genesis block
+			v.Logger.Debugf("%d is processing newView message %v, but the last decision metadata in viewData %v is nil", v.SelfID, msg, vd)
 		} else {
 			md := &protos.ViewMetadata{}
 			if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
