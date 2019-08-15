@@ -373,6 +373,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	signed := msg.GetSignedViewData()
 	nodesMap := make(map[uint64]struct{}, v.N)
 	valid := 0
+	var maxLastDecisionSequence uint64
 	for _, svd := range signed {
 		if _, exist := nodesMap[svd.Signer]; exist {
 			continue // seen data from this node already
@@ -402,10 +403,23 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 
 		// TODO validate data
 
+		if vd.LastDecision.Metadata == nil {
+			v.Logger.Warnf("%d is processing newView message %v, but the last decision metadata in viewData %v is nil", v.SelfID, msg, vd)
+		} else {
+			md := &protos.ViewMetadata{}
+			if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
+				v.Logger.Warnf("%d is processing newView message %v, but was unable to unmarshal last decision metadata in viewData %v, err: %v", v.SelfID, msg, vd, err)
+				continue
+			}
+			if md.LatestSequence > maxLastDecisionSequence {
+				maxLastDecisionSequence = md.LatestSequence
+			}
+		}
+
 		valid++
 	}
 	if valid >= v.quorum {
 		// TODO handle data
-		v.Controller.ViewChanged(v.currView, 0) // TODO change seq 0
+		v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 	}
 }

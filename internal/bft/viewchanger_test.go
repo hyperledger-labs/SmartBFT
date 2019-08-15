@@ -36,10 +36,14 @@ var (
 			},
 		},
 	}
+	metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         0,
+	})
 	lastDecision = types.Proposal{
 		Header:               []byte{0},
 		Payload:              []byte{1},
-		Metadata:             []byte{2},
+		Metadata:             metadata,
 		VerificationSequence: 1,
 	}
 	lastDecisionSignatures       = []types.Signature{{Id: 0, Value: []byte{4}, Msg: []byte{5}}, {Id: 1, Value: []byte{4}, Msg: []byte{5}}, {Id: 2, Value: []byte{4}, Msg: []byte{5}}}
@@ -213,9 +217,12 @@ func TestViewDataProcess(t *testing.T) {
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
@@ -260,6 +267,8 @@ func TestViewDataProcess(t *testing.T) {
 	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
 
 	vc.Stop()
 }
@@ -283,9 +292,12 @@ func TestNewViewProcess(t *testing.T) {
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
 
 	vc := &bft.ViewChanger{
@@ -333,6 +345,8 @@ func TestNewViewProcess(t *testing.T) {
 	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(2), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
 
 	vc.Stop()
 }
@@ -357,9 +371,12 @@ func TestNormalProcess(t *testing.T) {
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
@@ -397,6 +414,8 @@ func TestNormalProcess(t *testing.T) {
 
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
 
 	vc.Stop()
 }

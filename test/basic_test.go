@@ -110,6 +110,62 @@ func TestLeaderInPartition(t *testing.T) {
 	assert.Equal(t, data2, data3)
 }
 
+func TestLeaderInPartitionAfterDecision(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	n0 := newNode(0, network, t.Name())
+	n1 := newNode(1, network, t.Name())
+	n2 := newNode(2, network, t.Name())
+	n3 := newNode(3, network, t.Name())
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+
+	data0 := <-n0.Delivered
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+	assert.Equal(t, data0, data1)
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+	n0.Submit(Request{ID: "2", ClientID: "alice"})
+
+	data0 = <-n0.Delivered
+	data1 = <-n1.Delivered
+	data2 = <-n2.Delivered
+	data3 = <-n3.Delivered
+	assert.Equal(t, data0, data1)
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+	n0.Disconnect() // leader in partition
+
+	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
+	n2.Submit(Request{ID: "3", ClientID: "alice"})
+
+	data1 = <-n1.Delivered
+	data2 = <-n2.Delivered
+	data3 = <-n3.Delivered
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+	n1.Submit(Request{ID: "4", ClientID: "alice"})
+	n2.Submit(Request{ID: "4", ClientID: "alice"})
+
+	data1 = <-n1.Delivered
+	data2 = <-n2.Delivered
+	data3 = <-n3.Delivered
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+}
+
 func TestMultiLeadersPartition(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
