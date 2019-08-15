@@ -65,7 +65,7 @@ func (c *Consensus) Start() {
 	opts := algorithm.PoolOptions{
 		QueueSize:         DefaultRequestPoolSize,
 		RequestTimeout:    algorithm.DefaultRequestTimeout / 100,
-		LeaderFwdTimeout:  algorithm.DefaultRequestTimeout / 10,
+		LeaderFwdTimeout:  algorithm.DefaultRequestTimeout / 5,
 		AutoRemoveTimeout: algorithm.DefaultRequestTimeout,
 	}
 

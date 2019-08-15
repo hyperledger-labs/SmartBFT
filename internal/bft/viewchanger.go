@@ -222,6 +222,7 @@ func (v *ViewChanger) StartViewChange() {
 	}
 	v.Comm.BroadcastConsensus(msg)
 	v.Logger.Debugf("%d started view change, last view is %d", v.SelfID, v.currView)
+	// TODO abort current view
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
