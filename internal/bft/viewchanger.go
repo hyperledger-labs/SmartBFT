@@ -395,6 +395,11 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 			continue
 		}
 
+		if !v.validateLastDecision(vd, svd.Signer) {
+			v.Logger.Warnf("%d is processing newView message %v, but the last decision in viewData %v is invalid", v.SelfID, msg, vd)
+			continue
+		}
+
 		// TODO validate data
 
 		valid++

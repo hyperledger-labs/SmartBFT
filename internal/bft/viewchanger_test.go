@@ -203,12 +203,13 @@ func TestViewDataProcess(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	verifier := &mocks.VerifierMock{}
-	verifierWG := sync.WaitGroup{}
+	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
-		verifierWG.Done()
+		verifierSigWG.Done()
 	}).Return(nil)
+	verifierConsenterSigWG := sync.WaitGroup{}
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		verifierWG.Done()
+		verifierConsenterSigWG.Done()
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
@@ -232,25 +233,31 @@ func TestViewDataProcess(t *testing.T) {
 
 	vc.Start(1)
 
-	verifierWG.Add(4)
+	verifierSigWG.Add(1)
+	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(0, viewDataMsg1)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 
 	msg1 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg1.GetViewData().Signer = 1
 
-	verifierWG.Add(4)
+	verifierSigWG.Add(1)
+	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(1, msg1)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
-	verifierWG.Add(7)
+	verifierSigWG.Add(4)
+	verifierConsenterSigWG.Add(12)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
 
@@ -266,9 +273,13 @@ func TestNewViewProcess(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	verifier := &mocks.VerifierMock{}
-	verifierWG := sync.WaitGroup{}
+	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
-		verifierWG.Done()
+		verifierSigWG.Done()
+	}).Return(nil)
+	verifierConsenterSigWG := sync.WaitGroup{}
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		verifierConsenterSigWG.Done()
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
@@ -290,10 +301,10 @@ func TestNewViewProcess(t *testing.T) {
 	vc.Start(2)
 
 	// create a valid viewData message
-	vd := &protos.ViewData{
-		NextView: 2,
-	}
-	vdBytes := bft.MarshalOrPanic(vd)
+	vd2 := proto.Clone(vd).(*protos.ViewData)
+	vd2.NextView = 2
+
+	vdBytes := bft.MarshalOrPanic(vd2)
 	signed := make([]*protos.SignedViewData, 0)
 	for len(signed) < 3 { // quorum = 3
 		msg := &protos.Message{
@@ -315,9 +326,11 @@ func TestNewViewProcess(t *testing.T) {
 		},
 	}
 
-	verifierWG.Add(3)
+	verifierSigWG.Add(3)
+	verifierConsenterSigWG.Add(9)
 	vc.HandleMessage(2, msg)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(2), num)
 
