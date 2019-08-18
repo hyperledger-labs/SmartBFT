@@ -18,6 +18,7 @@ import (
 //go:generate mockery -dir . -name ViewController -case underscore -output ./mocks/
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
+	AbortView()
 }
 
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
@@ -222,7 +223,7 @@ func (v *ViewChanger) StartViewChange() {
 	}
 	v.Comm.BroadcastConsensus(msg)
 	v.Logger.Debugf("%d started view change, last view is %d", v.SelfID, v.currView)
-	// TODO abort current view
+	v.Controller.AbortView() // abort the current view when joining view change
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
@@ -230,6 +231,7 @@ func (v *ViewChanger) processViewChangeMsg() {
 		v.Logger.Debugf("%d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.StartViewChange()
 	}
+	// TODO add view change try timeout
 	v.viewLock.Lock()
 	defer v.viewLock.Unlock()
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data

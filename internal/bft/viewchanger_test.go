@@ -102,6 +102,8 @@ func TestStartViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -109,6 +111,7 @@ func TestStartViewChange(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
 		Logger:        log,
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -116,6 +119,7 @@ func TestStartViewChange(t *testing.T) {
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	vc.Stop()
 }
@@ -143,6 +147,8 @@ func TestViewChangeProcess(t *testing.T) {
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		SelfID:        0,
@@ -154,6 +160,7 @@ func TestViewChangeProcess(t *testing.T) {
 		ResendTicker:  make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -189,6 +196,7 @@ func TestViewChangeProcess(t *testing.T) {
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
 	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 2)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 
 	vc.Stop()
 }
@@ -378,6 +386,7 @@ func TestNormalProcess(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
+	controller.On("AbortView")
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
@@ -416,6 +425,8 @@ func TestNormalProcess(t *testing.T) {
 	assert.Equal(t, uint64(1), num)
 	num = <-seqNumChan
 	assert.Equal(t, uint64(2), num)
+
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	vc.Stop()
 }
@@ -530,6 +541,8 @@ func TestResendViewChangeMessage(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -537,6 +550,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  ticker,
 		Logger:        log,
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -544,6 +558,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	// resend
 	ticker <- time.Time{}
