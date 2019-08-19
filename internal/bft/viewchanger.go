@@ -49,13 +49,13 @@ type ViewChanger struct {
 	ResendTicker <-chan time.Time
 
 	// Runtime
-	incMsgs        chan *incMsg
-	viewChangeMsgs *voteSet
-	viewDataMsgs   *voteSet
-	currView       uint64
-	nextView       uint64
-	leader         uint64
-	viewLock       sync.RWMutex // lock currView & nextView
+	incMsgs         chan *incMsg
+	viewChangeMsgs  *voteSet
+	viewDataMsgs    *voteSet
+	currView        uint64
+	nextView        uint64
+	leader          uint64
+	startChangeChan chan struct{}
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -65,6 +65,7 @@ type ViewChanger struct {
 // Start the view changer
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
+	v.startChangeChan = make(chan struct{}, 1)
 
 	v.nodes = v.Comm.Nodes()
 
@@ -142,6 +143,8 @@ func (v *ViewChanger) run() {
 		select {
 		case <-v.stopChan:
 			return
+		case <-v.startChangeChan:
+			v.startViewChange()
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
 		case <-v.ResendTicker:
@@ -151,8 +154,6 @@ func (v *ViewChanger) run() {
 }
 
 func (v *ViewChanger) resend() {
-	v.viewLock.RLock()
-	defer v.viewLock.RUnlock()
 	if v.nextView == v.currView+1 { // started view change already but didn't get quorum yet
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
@@ -169,24 +170,20 @@ func (v *ViewChanger) resend() {
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
+		v.Logger.Debugf("%d is processing a view change message from %d", v.SelfID, sender)
 		// check view number
-		v.viewLock.RLock()
 		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("%d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
-			v.viewLock.RUnlock()
 			return
 		}
-		v.viewLock.RUnlock()
 		v.viewChangeMsgs.registerVote(sender, m)
 		v.processViewChangeMsg()
 		return
 	}
 
-	v.viewLock.RLock()
-	defer v.viewLock.RUnlock()
-
 	//viewData message
 	if vd := m.GetViewData(); vd != nil {
+		v.Logger.Debugf("%d is processing a view data message from %d", v.SelfID, sender)
 		if !v.validateViewDataMsg(vd, sender) {
 			return
 		}
@@ -197,6 +194,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 	// newView message
 	if nv := m.GetNewView(); nv != nil {
+		v.Logger.Debugf("%d is processing a new view message from %d", v.SelfID, sender)
 		if sender != v.leader {
 			v.Logger.Warnf("%d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, m, sender, v.leader)
 			return
@@ -205,11 +203,16 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	}
 }
 
-// StartViewChange stops current view and timeouts, and broadcasts a view change message to all
+// StartViewChange initiates a view change
 func (v *ViewChanger) StartViewChange() {
-	// TODO tell the view changer to start a view change instead of another thread running this
-	v.viewLock.Lock()
-	defer v.viewLock.Unlock()
+	select {
+	case v.startChangeChan <- struct{}{}:
+	default:
+	}
+}
+
+// StartViewChange stops current view and timeouts, and broadcasts a view change message to all
+func (v *ViewChanger) startViewChange() {
 	v.nextView = v.currView + 1
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
@@ -228,24 +231,23 @@ func (v *ViewChanger) StartViewChange() {
 func (v *ViewChanger) processViewChangeMsg() {
 	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1) { // join view change
 		v.Logger.Debugf("%d is joining view change, last view is %d", v.SelfID, v.currView)
-		v.StartViewChange()
+		v.startViewChange()
 	}
 	// TODO add view change try timeout
-	v.viewLock.Lock()
-	defer v.viewLock.Unlock()
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
 		v.currView = v.nextView
-		v.RequestsTimer.RestartTimers()
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
+		v.RequestsTimer.RestartTimers()
+		v.viewChangeMsgs.clear(v.N) // TODO make sure clear is in the right place
+		v.viewDataMsgs.clear(v.N)   // clear because currView changed
+
 		msg := v.prepareViewDataMsg()
 		// TODO write to log
 		if v.leader == v.SelfID {
-			v.HandleMessage(v.SelfID, msg)
+			v.processMsg(v.SelfID, msg)
 		} else {
 			v.Comm.SendConsensus(v.leader, msg)
 		}
-		v.viewChangeMsgs.clear(v.N) // TODO make sure clear is in the right place
-		v.viewDataMsgs.clear(v.N)   // clear because currView changed
 		v.Logger.Debugf("%d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, v.leader)
 	}
 }
@@ -337,16 +339,18 @@ func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) (
 		v.Logger.Warnf("%d is processing viewData message %v from %d, but last decision view %d is greater or equal to requested next view %d", v.SelfID, vd, sender, md.ViewId, vd.NextView)
 		return false, 0, 0
 	}
-	if vd.LastDecisionSignatures == nil {
-		v.Logger.Warnf("%d is processing viewData message %v from %d, but the last decision signatures is not set", v.SelfID, vd, sender)
-		return false, 0, 0
-	}
 	numSigs := len(vd.LastDecisionSignatures)
 	if numSigs < v.quorum {
 		v.Logger.Warnf("%d is processing viewData message %v from %d, but there are only %d last decision signatures", v.SelfID, vd, sender, numSigs)
 		return false, 0, 0
 	}
+	nodesMap := make(map[uint64]struct{}, v.N)
+	validSig := 0
 	for _, sig := range vd.LastDecisionSignatures {
+		if _, exist := nodesMap[sig.Signer]; exist {
+			continue // seen signature from this node already
+		}
+		nodesMap[sig.Signer] = struct{}{}
 		signature := types.Signature{
 			Id:    sig.Signer,
 			Value: sig.Value,
@@ -362,6 +366,11 @@ func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) (
 			v.Logger.Warnf("%d is processing viewData message %v from %d, but last decision signature is invalid, error: %v", v.SelfID, vd, sender, err)
 			return false, 0, 0
 		}
+		validSig++
+	}
+	if validSig < v.quorum {
+		v.Logger.Warnf("%d is processing viewData message %v from %d, but there are only %d valid last decision signatures", v.SelfID, vd, sender, validSig)
+		return false, 0, 0
 	}
 	return true, md.ViewId, md.LatestSequence
 }
@@ -386,8 +395,9 @@ func (v *ViewChanger) processViewDataMsg() {
 			},
 		}
 		v.Comm.BroadcastConsensus(msg)
-		v.HandleMessage(v.SelfID, msg) // also send to myself
+		v.processMsg(v.SelfID, msg) // also send to myself
 		v.viewDataMsgs.clear(v.N)
+		v.Logger.Debugf("%d sent a new view msg", v.SelfID)
 	}
 }
 

@@ -93,9 +93,9 @@ func TestStartViewChange(t *testing.T) {
 
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
-	var msg *protos.Message
+	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
-		msg = args.Get(0).(*protos.Message)
+		msgChan <- args.Get(0).(*protos.Message)
 	})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
@@ -117,11 +117,13 @@ func TestStartViewChange(t *testing.T) {
 	vc.Start(0)
 
 	vc.StartViewChange()
+	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
-	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	vc.Stop()
+
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 }
 
 func TestViewChangeProcess(t *testing.T) {
@@ -523,17 +525,9 @@ func TestResendViewChangeMessage(t *testing.T) {
 
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
-	var msg *protos.Message
-	var resend bool
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
-		if !resend {
-			msg = args.Get(0).(*protos.Message)
-			resend = true
-		} else {
-			m := args.Get(0).(*protos.Message)
-			msgChan <- m
-		}
+		msgChan <- args.Get(0).(*protos.Message)
 	})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
@@ -556,13 +550,12 @@ func TestResendViewChangeMessage(t *testing.T) {
 	vc.Start(0)
 
 	vc.StartViewChange()
-	assert.NotNil(t, msg.GetViewChange())
-	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	m := <-msgChan
+	assert.NotNil(t, m.GetViewChange())
 
 	// resend
 	ticker <- time.Time{}
-	m := <-msgChan
+	m = <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
 	// resend again
@@ -571,5 +564,8 @@ func TestResendViewChangeMessage(t *testing.T) {
 	assert.NotNil(t, m.GetViewChange())
 
 	vc.Stop()
+
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 }
