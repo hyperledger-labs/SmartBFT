@@ -43,10 +43,6 @@ func (a *App) Submit(req Request) {
 	a.Consensus.SubmitRequest(req.ToBytes())
 }
 
-func (a *App) setTimeChannel(timeChannel chan time.Time) {
-	a.timeChannel = timeChannel
-}
-
 func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
 	panic("implement me")
 }
