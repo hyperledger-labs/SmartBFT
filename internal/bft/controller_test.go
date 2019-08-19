@@ -57,6 +57,8 @@ func TestControllerBasic(t *testing.T) {
 	controller.ProcessMessages(1, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
+	controller.AbortView()
+	controller.AbortView()
 	controller.Stop()
 	controller.Stop()
 }

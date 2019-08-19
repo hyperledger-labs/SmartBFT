@@ -36,8 +36,27 @@ var (
 			},
 		},
 	}
-	vd = &protos.ViewData{
+	metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         0,
+	})
+	lastDecision = types.Proposal{
+		Header:               []byte{0},
+		Payload:              []byte{1},
+		Metadata:             metadata,
+		VerificationSequence: 1,
+	}
+	lastDecisionSignatures       = []types.Signature{{Id: 0, Value: []byte{4}, Msg: []byte{5}}, {Id: 1, Value: []byte{4}, Msg: []byte{5}}, {Id: 2, Value: []byte{4}, Msg: []byte{5}}}
+	lastDecisionSignaturesProtos = []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}, {Signer: 2, Value: []byte{4}, Msg: []byte{5}}}
+	vd                           = &protos.ViewData{
 		NextView: 1,
+		LastDecision: &protos.Proposal{
+			Header:               lastDecision.Header,
+			Payload:              lastDecision.Payload,
+			Metadata:             lastDecision.Metadata,
+			VerificationSequence: uint64(lastDecision.VerificationSequence),
+		},
+		LastDecisionSignatures: lastDecisionSignaturesProtos,
 	}
 	vdBytes      = bft.MarshalOrPanic(vd)
 	viewDataMsg1 = &protos.Message{
@@ -83,6 +102,8 @@ func TestStartViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -90,6 +111,7 @@ func TestStartViewChange(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
 		Logger:        log,
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -97,6 +119,7 @@ func TestStartViewChange(t *testing.T) {
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	vc.Stop()
 }
@@ -124,6 +147,8 @@ func TestViewChangeProcess(t *testing.T) {
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		SelfID:        0,
@@ -135,6 +160,7 @@ func TestViewChangeProcess(t *testing.T) {
 		ResendTicker:  make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -170,6 +196,7 @@ func TestViewChangeProcess(t *testing.T) {
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
 	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 2)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 
 	vc.Stop()
 }
@@ -188,16 +215,25 @@ func TestViewDataProcess(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	verifier := &mocks.VerifierMock{}
-	verifierWG := sync.WaitGroup{}
+	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
-		verifierWG.Done()
+		verifierSigWG.Done()
+	}).Return(nil)
+	verifierConsenterSigWG := sync.WaitGroup{}
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		verifierConsenterSigWG.Done()
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
 		SelfID:       1,
@@ -207,31 +243,40 @@ func TestViewDataProcess(t *testing.T) {
 		Verifier:     verifier,
 		Controller:   controller,
 		ResendTicker: make(chan time.Time),
+		Checkpoint:   &checkpoint,
 	}
 
 	vc.Start(1)
 
-	verifierWG.Add(1)
+	verifierSigWG.Add(1)
+	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(0, viewDataMsg1)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 
 	msg1 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg1.GetViewData().Signer = 1
 
-	verifierWG.Add(1)
+	verifierSigWG.Add(1)
+	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(1, msg1)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
-	verifierWG.Add(4)
+	verifierSigWG.Add(4)
+	verifierConsenterSigWG.Add(12)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
 
 	vc.Stop()
 }
@@ -245,15 +290,22 @@ func TestNewViewProcess(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	verifier := &mocks.VerifierMock{}
-	verifierWG := sync.WaitGroup{}
+	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
-		verifierWG.Done()
+		verifierSigWG.Done()
+	}).Return(nil)
+	verifierConsenterSigWG := sync.WaitGroup{}
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		verifierConsenterSigWG.Done()
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
 
 	vc := &bft.ViewChanger{
@@ -269,10 +321,10 @@ func TestNewViewProcess(t *testing.T) {
 	vc.Start(2)
 
 	// create a valid viewData message
-	vd := &protos.ViewData{
-		NextView: 2,
-	}
-	vdBytes := bft.MarshalOrPanic(vd)
+	vd2 := proto.Clone(vd).(*protos.ViewData)
+	vd2.NextView = 2
+
+	vdBytes := bft.MarshalOrPanic(vd2)
 	signed := make([]*protos.SignedViewData, 0)
 	for len(signed) < 3 { // quorum = 3
 		msg := &protos.Message{
@@ -294,10 +346,14 @@ func TestNewViewProcess(t *testing.T) {
 		},
 	}
 
-	verifierWG.Add(3)
+	verifierSigWG.Add(3)
+	verifierConsenterSigWG.Add(9)
 	vc.HandleMessage(2, msg)
-	verifierWG.Wait()
+	verifierSigWG.Wait()
+	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
+	assert.Equal(t, uint64(2), num)
+	num = <-seqNumChan
 	assert.Equal(t, uint64(2), num)
 
 	vc.Stop()
@@ -320,15 +376,22 @@ func TestNormalProcess(t *testing.T) {
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
 	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		num := args.Get(0).(uint64)
 		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
 	}).Return(nil).Once()
+	controller.On("AbortView")
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -341,7 +404,7 @@ func TestNormalProcess(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &types.Checkpoint{},
+		Checkpoint:    &checkpoint,
 	}
 
 	vc.Start(0)
@@ -360,6 +423,10 @@ func TestNormalProcess(t *testing.T) {
 
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
+
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	vc.Stop()
 }
@@ -474,6 +541,8 @@ func TestResendViewChangeMessage(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -481,6 +550,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		RequestsTimer: reqTimer,
 		ResendTicker:  ticker,
 		Logger:        log,
+		Controller:    controller,
 	}
 
 	vc.Start(0)
@@ -488,6 +558,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	vc.StartViewChange()
 	assert.NotNil(t, msg.GetViewChange())
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
 	// resend
 	ticker <- time.Time{}
