@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -473,7 +472,6 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 }
 
 func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) {
-	// TODO commit checkpoints if I am behind
 	myLastDecision, _ := v.Checkpoint.Get()
 	if lastDecisionSequence == 0 {
 		return
@@ -503,7 +501,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(myLastDecision.Metadata, md); err != nil {
-		panic(fmt.Sprintf("%d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err))
+		v.Logger.Panicf("%d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err)
 	}
 	if md.LatestSequence == lastDecisionSequence-1 { // I am one decision behind
 		v.deliverDecision(proposal, signatures)
@@ -514,7 +512,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 		return
 	}
 	if md.LatestSequence > lastDecisionSequence+1 {
-		panic(fmt.Sprintf("%d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence))
+		v.Logger.Panicf("%d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence)
 	}
 }
 
@@ -524,7 +522,7 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 	v.Checkpoint.Set(proposal, signatures)
 	requests, err := v.Verifier.VerifyProposal(proposal)
 	if err != nil {
-		panic(fmt.Sprintf("%d is unable to verify the last decision proposal, err: %v", v.SelfID, err))
+		v.Logger.Panicf("%d is unable to verify the last decision proposal, err: %v", v.SelfID, err)
 	}
 	for _, reqInfo := range requests {
 		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {

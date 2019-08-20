@@ -149,6 +149,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 
 	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
 	n2.Submit(Request{ID: "3", ClientID: "alice"})
+	n3.Submit(Request{ID: "3", ClientID: "alice"})
 
 	data1 = <-n1.Delivered
 	data2 = <-n2.Delivered
@@ -158,6 +159,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 
 	n1.Submit(Request{ID: "4", ClientID: "alice"})
 	n2.Submit(Request{ID: "4", ClientID: "alice"})
+	n3.Submit(Request{ID: "4", ClientID: "alice"})
 
 	data1 = <-n1.Delivered
 	data2 = <-n2.Delivered
@@ -242,6 +244,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 
 	n1.Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
 	n2.Submit(Request{ID: "2", ClientID: "alice"})
+	n3.Submit(Request{ID: "2", ClientID: "alice"})
 
 	data3 := <-n3.Delivered // from catch up
 	assert.Equal(t, data2, data3)
