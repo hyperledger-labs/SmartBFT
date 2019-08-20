@@ -415,6 +415,8 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
+		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq2))
+
 		timeChan := make(chan time.Time, 1)
 		timeChan <- time.Now()
 		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
