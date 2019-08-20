@@ -235,7 +235,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
-		c.Logger.Debugf("Node %d handled view changer message %v from %d", c.ID, m, sender)
+		c.Logger.Debugf("Node %d handled view changer message from %d", c.ID, sender)
 
 	case *protos.Message_HeartBeat:
 		c.LeaderMonitor.ProcessMsg(sender, m)
