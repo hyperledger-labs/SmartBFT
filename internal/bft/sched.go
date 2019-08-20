@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"container/heap"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -41,11 +42,12 @@ func (h TaskQueue) Swap(i, j int) {
 	h[i], h[j] = h[j], h[i]
 }
 
-func (h *TaskQueue) Push(t *task) {
+func (h *TaskQueue) Push(o interface{}) {
+	t := o.(*task)
 	*h = append(*h, t)
 }
 
-func (h *TaskQueue) Pop() *task {
+func (h *TaskQueue) Pop() interface{} {
 	old := *h
 	n := len(old)
 	x := old[n-1]
@@ -58,7 +60,6 @@ func (h *TaskQueue) Top() *task {
 }
 
 type cmd struct {
-	f       func()
 	timeout time.Duration
 	t       *task
 }
@@ -66,7 +67,7 @@ type cmd struct {
 type Scheduler struct {
 	exec        *executor
 	currentTime time.Time
-	queue       TaskQueue
+	queue       *TaskQueue
 	signalChan  chan struct{}
 	cmdChan     chan cmd
 	timeChan    <-chan time.Time
@@ -76,6 +77,7 @@ type Scheduler struct {
 
 func NewScheduler(timeChan <-chan time.Time) *Scheduler {
 	s := &Scheduler{
+		queue:      &TaskQueue{},
 		timeChan:   timeChan,
 		signalChan: make(chan struct{}),
 		cmdChan:    make(chan cmd),
@@ -114,7 +116,6 @@ func (s *Scheduler) Schedule(timeout time.Duration, f func()) Stopper {
 	s.cmdChan <- cmd{
 		t:       task,
 		timeout: timeout,
-		f:       f,
 	}
 	return task
 }
@@ -172,7 +173,7 @@ func (s *Scheduler) checkAndExecute() bool {
 		return false
 	}
 
-	task := s.queue.Pop()
+	task := heap.Pop(s.queue).(*task)
 
 	f := func() {
 		if task.isStopped() {
@@ -194,7 +195,7 @@ func (s *Scheduler) checkAndExecute() bool {
 		return true
 	default:
 		// We couldn't enqueue to the executor, so re-add the task.
-		s.queue.Push(task)
+		heap.Push(s.queue, task)
 		return false
 	}
 }

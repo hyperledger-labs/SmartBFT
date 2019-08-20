@@ -456,6 +456,8 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		err := pool.RemoveRequest(insp.RequestID(byteReq2))
 		assert.NoError(t, err)
+
+		time.Sleep(time.Second * 10)
 	})
 }
 
