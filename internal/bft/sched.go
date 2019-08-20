@@ -7,6 +7,7 @@ package bft
 
 import (
 	"container/heap"
+	"fmt"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -130,6 +131,9 @@ func (s *Scheduler) run() {
 		case <-s.stopChan:
 			return
 		case now := <-s.timeChan:
+			if s.currentTime.After(now) {
+				continue
+			}
 			s.currentTime = now
 			s.tick()
 		case <-s.signalChan:
@@ -137,6 +141,7 @@ func (s *Scheduler) run() {
 		case cmd := <-s.cmdChan:
 			task := cmd.t
 			task.deadline = s.currentTime.Add(cmd.timeout)
+			fmt.Println("scheduled for deadline:", task.deadline)
 			s.queue.Push(task)
 		}
 	}
@@ -150,6 +155,7 @@ func (s *Scheduler) waitForFirstTick() {
 }
 
 func (s *Scheduler) tick() {
+	fmt.Println(">>> TICK", s.currentTime)
 	for {
 		executedSomeTask := s.checkAndExecute()
 		// If we executed some task, we can try to execute the next task if
