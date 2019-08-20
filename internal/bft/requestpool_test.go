@@ -25,7 +25,7 @@ import (
 func TestReqPoolBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	log := basicLog.Sugar().With(zap.String("t", t.Name()))
 
 	insp := &testRequestInspector{}
 	byteReq1 := makeTestRequest("1", "1", "foo")
@@ -147,7 +147,7 @@ func TestReqPoolCapacity(t *testing.T) {
 	numReq := 100
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	log := basicLog.Sugar().With(zap.String("t", t.Name()))
 	insp := &testRequestInspector{}
 
 	t.Run("submit storm", func(t *testing.T) {
@@ -195,7 +195,7 @@ func TestReqPoolCapacity(t *testing.T) {
 func TestReqPoolPrune(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	log := basicLog.Sugar().With(zap.String("t", t.Name()))
 
 	insp := &testRequestInspector{}
 	timeoutHandler := &mocks.RequestTimeoutHandler{}
@@ -236,7 +236,7 @@ func TestReqPoolPrune(t *testing.T) {
 func TestReqPoolTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	log := basicLog.Sugar().With(zap.String("t", t.Name()))
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")
