@@ -259,9 +259,11 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		timeChan := make(chan time.Time, 1)
+		timeChan := make(chan time.Time)
 		start := time.Now()
-		timeChan <- start
+		go func() {
+			timeChan <- start
+		}()
 
 		pool := bft.NewPool(log,
 			insp,
@@ -315,9 +317,11 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		timeChan := make(chan time.Time, 1)
+		timeChan := make(chan time.Time)
 		start := time.Now()
-		timeChan <- start
+		go func() {
+			timeChan <- start
+		}()
 
 		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
@@ -370,9 +374,11 @@ func TestReqPoolTimeout(t *testing.T) {
 			to3WG.Done()
 		}).Return()
 
-		timeChan := make(chan time.Time, 1)
+		timeChan := make(chan time.Time)
 		start := time.Now()
-		timeChan <- start
+		go func() {
+			timeChan <- start
+		}()
 		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
@@ -432,8 +438,10 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq2))
 
-		timeChan := make(chan time.Time, 1)
-		timeChan <- time.Now()
+		timeChan := make(chan time.Time)
+		go func() {
+			timeChan <- time.Now()
+		}()
 		pool := bft.NewPool(log, insp, timeoutHandler, timeChan,
 			bft.PoolOptions{
 				QueueSize:         3,
