@@ -31,7 +31,6 @@ type NetworkOptions struct {
 
 type Node struct {
 	clock       *time.Ticker
-	secondClock *time.Ticker
 	stopChan    chan struct{}
 	doneWG      sync.WaitGroup
 	nextSeq     uint64

@@ -27,7 +27,6 @@ type App struct {
 	logLevel    zap.AtomicLevel
 	latestMD    *smartbftprotos.ViewMetadata
 	clock       *time.Ticker
-	secondClock *time.Ticker
 	timeChannel chan time.Time
 }
 
