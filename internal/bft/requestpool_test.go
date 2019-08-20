@@ -396,15 +396,21 @@ func TestReqPoolTimeout(t *testing.T) {
 	})
 
 	t.Run("stop restart", func(t *testing.T) {
+		start := time.Now()
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		toWG := &sync.WaitGroup{}
-		toWG.Add(1)
 		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Run(func(args mock.Arguments) {
 			assert.Fail(t, "called OnRequestTimeout")
 		}).Return()
+
+		requestTimeoutFired := make(chan struct{})
 		timeoutHandler.On("OnRequestTimeout", byteReq2, insp.RequestID(byteReq2)).Run(func(args mock.Arguments) {
-			toWG.Done()
+			select {
+			case <-requestTimeoutFired:
+			default:
+				close(requestTimeoutFired)
+			}
+
 		}).Return()
 
 		timeoutHandler.On("OnLeaderFwdRequestTimeout", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -434,21 +440,21 @@ func TestReqPoolTimeout(t *testing.T) {
 		assert.Equal(t, 1, pool.Size())
 
 		pool.StopTimers()
-		timeChan <- time.Now().Add(time.Second)
+		timeChan <- start.Add(time.Second)
 		err = pool.RemoveRequest(insp.RequestID(byteReq1))
 		assert.NoError(t, err)
 		err = pool.Submit(byteReq2)
 		assert.EqualError(t, err, "pool stopped, request rejected: {2 2}")
 
 		pool.RestartTimers()
-		timeChan <- time.Now().Add(time.Second)
+		timeChan <- start.Add(time.Second * 2)
 		err = pool.Submit(byteReq2)
 		assert.NoError(t, err)
 		pool.StopTimers()
 		pool.RestartTimers()
 
-		timeChan <- time.Now().Add(time.Second * 2)
-		toWG.Wait()
+		go forwardTime(timeChan, start.Add(time.Second*3), requestTimeoutFired)
+		<-requestTimeoutFired
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 1)
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
@@ -456,8 +462,6 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		err := pool.RemoveRequest(insp.RequestID(byteReq2))
 		assert.NoError(t, err)
-
-		time.Sleep(time.Second * 10)
 	})
 }
 
@@ -523,4 +527,15 @@ func (ins *testRequestInspector) RequestID(req []byte) types.RequestInfo {
 	var info types.RequestInfo
 	info.ClientID, info.ID, _ = parseTestRequest(req)
 	return info
+}
+
+func forwardTime(timeChan chan<- time.Time, start time.Time, stopChan <-chan struct{}) {
+	for i := 1; i < 1000; i++ {
+		select {
+		case <-stopChan:
+			return
+		case timeChan <- start.Add(time.Second * time.Duration(i)):
+		}
+		time.Sleep(time.Millisecond * 10)
+	}
 }
