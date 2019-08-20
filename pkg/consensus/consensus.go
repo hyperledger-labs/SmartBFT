@@ -84,14 +84,16 @@ func (c *Consensus) Start() {
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:     c.SelfID,
-		N:          c.n,
-		Logger:     c.Logger,
-		Comm:       c,
-		Signer:     c.Signer,
-		Verifier:   c.Verifier,
-		Checkpoint: &cpt,
-		InFlight:   &inFlight,
+		SelfID:       c.SelfID,
+		N:            c.n,
+		Logger:       c.Logger,
+		Comm:         c,
+		Signer:       c.Signer,
+		Verifier:     c.Verifier,
+		Application:  c,
+		Synchronizer: c,
+		Checkpoint:   &cpt,
+		InFlight:     &inFlight,
 		// Controller later
 		// RequestsTimer later
 		ResendTicker: c.ResendViewChange,

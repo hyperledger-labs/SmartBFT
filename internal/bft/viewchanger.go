@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
@@ -25,6 +26,7 @@ type ViewController interface {
 type RequestsTimer interface {
 	StopTimers()
 	RestartTimers()
+	RemoveRequest(request types.RequestInfo) error
 }
 
 type ViewChanger struct {
@@ -35,10 +37,12 @@ type ViewChanger struct {
 	f      int
 	quorum int
 
-	Logger   api.Logger
-	Comm     Comm
-	Signer   api.Signer
-	Verifier api.Verifier
+	Logger       api.Logger
+	Comm         Comm
+	Signer       api.Signer
+	Verifier     api.Verifier
+	Application  api.Application
+	Synchronizer api.Synchronizer
 
 	Checkpoint *types.Checkpoint
 	InFlight   *InFlightData
@@ -406,6 +410,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	nodesMap := make(map[uint64]struct{}, v.N)
 	valid := 0
 	var maxLastDecisionSequence uint64
+	var maxLastDecision *protos.Proposal
+	var maxLastDecisionSigs []*protos.Signature
 	for _, svd := range signed {
 		if _, exist := nodesMap[svd.Signer]; exist {
 			continue // seen data from this node already
@@ -441,15 +447,18 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 
 		if vd.LastDecision.Metadata == nil {
 			// TODO handle genesis block
-			v.Logger.Debugf("%d is processing newView message %v, but the last decision metadata in viewData %v is nil", v.SelfID, msg, vd)
+			v.Logger.Debugf("%d is processing newView message, but the last decision metadata in viewData %v is nil", v.SelfID, vd)
 		} else {
 			md := &protos.ViewMetadata{}
 			if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
-				v.Logger.Warnf("%d is processing newView message %v, but was unable to unmarshal last decision metadata in viewData %v, err: %v", v.SelfID, msg, vd, err)
+				v.Logger.Warnf("%d is processing newView message, but was unable to unmarshal last decision metadata in viewData %v, err: %v", v.SelfID, vd, err)
 				continue
 			}
+			v.Logger.Debugf("Current max sequence is %d and this viewData %v last decision sequence is %d", maxLastDecisionSequence, vd, md.LatestSequence)
 			if md.LatestSequence > maxLastDecisionSequence {
 				maxLastDecisionSequence = md.LatestSequence
+				maxLastDecision = vd.LastDecision
+				maxLastDecisionSigs = vd.LastDecisionSignatures
 			}
 		}
 
@@ -457,7 +466,69 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 	if valid >= v.quorum {
 		// TODO handle in flight
-		// TODO commit checkpoints if I am behind
+		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
+		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 		v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
+	}
+}
+
+func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) {
+	// TODO commit checkpoints if I am behind
+	myLastDecision, _ := v.Checkpoint.Get()
+	if lastDecisionSequence == 0 {
+		return
+	}
+	proposal := types.Proposal{
+		Header:               lastDecision.Header,
+		Metadata:             lastDecision.Metadata,
+		Payload:              lastDecision.Payload,
+		VerificationSequence: int64(lastDecision.VerificationSequence),
+	}
+	signatures := make([]types.Signature, 0)
+	for _, sig := range lastDecisionSigs {
+		signature := types.Signature{
+			Id:    sig.Signer,
+			Value: sig.Value,
+			Msg:   sig.Msg,
+		}
+		signatures = append(signatures, signature)
+	}
+	if myLastDecision.Metadata == nil { // I am at genesis block
+		if lastDecisionSequence == 1 { // and one decision behind
+			v.deliverDecision(proposal, signatures)
+			return
+		}
+		v.Synchronizer.Sync() // TODO make sure sync succeeds
+		return
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(myLastDecision.Metadata, md); err != nil {
+		panic(fmt.Sprintf("%d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err))
+	}
+	if md.LatestSequence == lastDecisionSequence-1 { // I am one decision behind
+		v.deliverDecision(proposal, signatures)
+		return
+	}
+	if md.LatestSequence < lastDecisionSequence { // I am far behind
+		v.Synchronizer.Sync() // TODO make sure sync succeeds
+		return
+	}
+	if md.LatestSequence > lastDecisionSequence+1 {
+		panic(fmt.Sprintf("%d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence))
+	}
+}
+
+func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
+	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Application.Deliver(proposal, signatures)
+	v.Checkpoint.Set(proposal, signatures)
+	requests, err := v.Verifier.VerifyProposal(proposal)
+	if err != nil {
+		panic(fmt.Sprintf("%d is unable to verify the last decision proposal, err: %v", v.SelfID, err))
+	}
+	for _, reqInfo := range requests {
+		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {
+			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
+		}
 	}
 }
