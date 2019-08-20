@@ -376,6 +376,6 @@ func speedupTime(stopFlag *uint32, nodes ...*App) {
 		}
 		wg.Wait()
 		i++
-		time.Sleep(time.Millisecond * 10)
+		time.Sleep(time.Millisecond * 50)
 	}
 }

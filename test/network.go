@@ -6,11 +6,12 @@
 package test
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 
 	"sync"
+
+	"fmt"
 
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -80,7 +81,7 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 	select {
 	case node.in <- msgFrom{from: int(source), message: msg}:
 	default:
-		fmt.Println("Dropped msg from", source, "to", target, "due to overflow")
+		panic(fmt.Sprint("Dropped msg from", source, "to", target, "due to overflow"))
 	}
 }
 

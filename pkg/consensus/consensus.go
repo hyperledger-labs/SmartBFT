@@ -136,7 +136,7 @@ func (c *Consensus) Start() {
 
 	c.timeDemux = &algorithm.TickDemultiplexer{
 		In:  c.Scheduler,
-		Out: []chan<- time.Time{poolClock, leaderClock, viewChangerClock},
+		Out: []chan<- time.Time{poolClock, leaderClock},
 	}
 	c.timeDemux.Start()
 }
