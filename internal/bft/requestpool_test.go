@@ -234,16 +234,15 @@ func TestReqPoolPrune(t *testing.T) {
 }
 
 func TestReqPoolTimeout(t *testing.T) {
-	basicLog, err := zap.NewDevelopment()
-	assert.NoError(t, err)
-	log := basicLog.Sugar().With(zap.String("t", t.Name()))
-
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")
 
 	insp := &testRequestInspector{}
 
 	t.Run("request timeout", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		log := basicLog.Sugar().With(zap.String("t", t.Name()))
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
 		toWG := &sync.WaitGroup{}
@@ -290,11 +289,14 @@ func TestReqPoolTimeout(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 0)
 
-		err := pool.RemoveRequest(insp.RequestID(byteReq1))
+		err = pool.RemoveRequest(insp.RequestID(byteReq1))
 		assert.NoError(t, err)
 	})
 
 	t.Run("leader fwd timeout", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		log := basicLog.Sugar().With(zap.String("t", t.Name()))
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
 		to1WG := &sync.WaitGroup{}
@@ -340,11 +342,14 @@ func TestReqPoolTimeout(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 1)
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 0)
 
-		err := pool.RemoveRequest(insp.RequestID(byteReq1))
+		err = pool.RemoveRequest(insp.RequestID(byteReq1))
 		assert.NoError(t, err)
 	})
 
 	t.Run("auto remove", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		log := basicLog.Sugar().With(zap.String("t", t.Name()))
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
 		to1WG := &sync.WaitGroup{}
@@ -396,6 +401,10 @@ func TestReqPoolTimeout(t *testing.T) {
 	})
 
 	t.Run("stop restart", func(t *testing.T) {
+		basicLog, err := zap.NewDevelopment()
+		assert.NoError(t, err)
+		log := basicLog.Sugar().With(zap.String("t", t.Name()))
+
 		start := time.Now()
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
@@ -460,7 +469,7 @@ func TestReqPoolTimeout(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
 		timeoutHandler.AssertNumberOfCalls(t, "OnAutoRemoveTimeout", 0)
 
-		err := pool.RemoveRequest(insp.RequestID(byteReq2))
+		err = pool.RemoveRequest(insp.RequestID(byteReq2))
 		assert.NoError(t, err)
 	})
 }
