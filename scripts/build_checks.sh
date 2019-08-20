@@ -48,7 +48,9 @@ if [ $? -eq 0 ];then
 	exit 1
 fi
 
-go test -count 1 -race ./...
+( sleep 60; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
+
+go test -count 1 -race ./... 
 if [[ $? -ne 0 ]];then
     echo "unit tests failed"
     exit 1
