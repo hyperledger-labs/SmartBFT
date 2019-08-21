@@ -1,6 +1,10 @@
 #!/usr/bin/env bash -e
 
-echo -e "Testing commit: ------\e[96m" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "\e[39m------"
+ANSI_GREEN="\033[32;1m"
+ANSI_RESET="\033[0m"
+ANSI_CLEAR="\033[0K"
+
+echo -e "\n (=^･ｪ･^=) Testing commit: ------${ANSI_GREEN}" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "${ANSI_RESET}------\n"
 
 go get -u golang.org/x/tools/cmd/goimports
 go get -u github.com/golang/protobuf/protoc-gen-go
