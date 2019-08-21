@@ -102,6 +102,7 @@ func TestLeaderInPartition(t *testing.T) {
 
 	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
 	n2.Submit(Request{ID: "1", ClientID: "alice"})
+	n3.Submit(Request{ID: "1", ClientID: "alice"})
 
 	data1 := <-n1.Delivered
 	data2 := <-n2.Delivered
