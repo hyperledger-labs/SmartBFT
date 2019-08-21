@@ -658,3 +658,107 @@ func TestCommitLastDecision(t *testing.T) {
 	vc.Stop()
 
 }
+
+func TestInFlightProposalInViewData(t *testing.T) {
+
+	for _, test := range []struct {
+		description    string
+		getInFlight    func() *bft.InFlightData
+		expectInflight bool
+	}{
+		{
+			description: "in flight is nil",
+			getInFlight: func() *bft.InFlightData {
+				return &bft.InFlightData{}
+			},
+			expectInflight: false,
+		},
+		{
+			description: "in flight same as last decision",
+			getInFlight: func() *bft.InFlightData {
+				inFlight := &bft.InFlightData{}
+				inFlight.StoreProposal(lastDecision)
+				return inFlight
+			},
+			expectInflight: false,
+		},
+		{
+			description: "in flight is after last decision",
+			getInFlight: func() *bft.InFlightData {
+				inFlight := &bft.InFlightData{}
+				proposal := lastDecision
+				proposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 2,
+					ViewId:         0,
+				})
+				inFlight.StoreProposal(proposal)
+				return inFlight
+			},
+			expectInflight: true,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			comm := &mocks.CommMock{}
+			comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+			broadcastChan := make(chan *protos.Message)
+			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+				m := args.Get(0).(*protos.Message)
+				broadcastChan <- m
+			}).Twice()
+			sendChan := make(chan *protos.Message)
+			comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				m := args.Get(1).(*protos.Message)
+				sendChan <- m
+			}).Twice()
+			signer := &mocks.SignerMock{}
+			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			log := basicLog.Sugar()
+			reqTimer := &mocks.RequestsTimer{}
+			reqTimer.On("StopTimers")
+			reqTimer.On("RestartTimers")
+			controller := &mocks.ViewController{}
+			controller.On("AbortView")
+			checkpoint := types.Checkpoint{}
+			checkpoint.Set(lastDecision, lastDecisionSignatures)
+
+			vc := &bft.ViewChanger{
+				SelfID:        0,
+				N:             4,
+				Comm:          comm,
+				Signer:        signer,
+				Logger:        log,
+				RequestsTimer: reqTimer,
+				ResendTicker:  make(chan time.Time),
+				InFlight:      test.getInFlight(),
+				Checkpoint:    &checkpoint,
+				Controller:    controller,
+			}
+
+			vc.Start(0)
+			vc.HandleMessage(1, viewChangeMsg)
+			vc.HandleMessage(2, viewChangeMsg)
+			m := <-broadcastChan
+			assert.NotNil(t, m.GetViewChange())
+			m = <-sendChan
+			assert.NotNil(t, m.GetViewData())
+			viewData := &protos.ViewData{}
+			assert.NoError(t, proto.Unmarshal(m.GetViewData().RawViewData, viewData))
+			if test.expectInflight {
+				assert.NotNil(t, viewData.InFlightProposal)
+			} else {
+				assert.Nil(t, viewData.InFlightProposal)
+			}
+			assert.NotNil(t, viewData.LastDecision)
+			comm.AssertCalled(t, "SendConsensus", uint64(1), mock.Anything)
+
+			vc.Stop()
+
+			reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+			reqTimer.AssertNumberOfCalls(t, "RestartTimers", 1)
+			controller.AssertNumberOfCalls(t, "AbortView", 1)
+		})
+	}
+
+}
