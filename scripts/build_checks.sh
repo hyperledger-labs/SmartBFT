@@ -1,4 +1,14 @@
-#!/usr/bin/env bash -xe
+#!/usr/bin/env bash -e
+
+ANSI_GREEN="\033[32;1m"
+ANSI_RED="\033[31;1m"
+ANSI_RESET="\033[0m"
+
+err() {
+	echo -e "${ANSI_RED}(☉__☉”) ${1} ${ANSI_RESET}"
+}
+
+echo -e "\nTesting commit: ------${ANSI_GREEN}" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "${ANSI_RESET}------\n"
 
 go get -u golang.org/x/tools/cmd/goimports
 go get -u github.com/golang/protobuf/protoc-gen-go
@@ -35,7 +45,7 @@ unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xarg
 if [[ $unformatted == "" ]];then
     echo "goimports checks passed"
 else
-    echo "The following files needs goimports:"
+    err "The following files needs goimports:"
     echo "$unformatted"
     exit 1
 fi
@@ -44,7 +54,7 @@ make protos
 git status | grep "pb.go" | grep -q "modified"
 if [ $? -eq 0 ];then
 	git status
-	echo "protobuf not up to date"
+	err "protobuf not up to date"
 	exit 1
 fi
 
@@ -52,9 +62,10 @@ fi
 
 go test -count 1 -race ./... 
 if [[ $? -ne 0 ]];then
-    echo "unit tests failed"
+    err "unit tests failed"
     exit 1
 fi
 
 
+echo -e "${ANSI_GREEN} ＼(＾O＾)／ Tests passed! ${ANSI_RESET}"
 exit 0
