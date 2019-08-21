@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -e
 
-git log -1
-echo "Testing commit: ------" $(git log -1 | head -$(( $(git log -1 | wc -l) - 2 )) | tail -1) "------"
+git log -1 --no-merges
+echo "Testing commit: ------" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "------"
 
 
 go get -u golang.org/x/tools/cmd/goimports
