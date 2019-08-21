@@ -298,7 +298,6 @@ func TestLeaderChange(t *testing.T) {
 }
 
 func TestControllerLeaderRequestHandling(t *testing.T) {
-	t.Fail()
 	for _, testCase := range []struct {
 		description      string
 		startViewNum     uint64
