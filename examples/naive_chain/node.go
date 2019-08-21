@@ -8,8 +8,8 @@ package naive
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
@@ -34,7 +34,6 @@ type Node struct {
 	secondClock *time.Ticker
 	stopChan    chan struct{}
 	doneWG      sync.WaitGroup
-	nextSeq     uint64
 	prevHash    string
 	id          uint64
 	in          Ingress
@@ -94,17 +93,18 @@ func (n *Node) SignProposal(bft.Proposal) *bft.Signature {
 
 func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bft.Proposal, remainder [][]byte) {
 	blockData := BlockData{Transactions: requests}.ToBytes()
+	md := &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(metadata, md); err != nil {
+		panic(fmt.Sprintf("Unable to unmarshal metadata, error: %v", err))
+	}
 	return bft.Proposal{
 		Header: BlockHeader{
 			PrevHash: n.prevHash,
 			DataHash: computeDigest(blockData),
-			Sequence: int64(atomic.LoadUint64(&n.nextSeq)),
+			Sequence: int64(md.LatestSequence),
 		}.ToBytes(),
-		Payload: BlockData{Transactions: requests}.ToBytes(),
-		Metadata: marshalOrPanic(&smartbftprotos.ViewMetadata{
-			LatestSequence: n.nextSeq,
-			ViewId:         0, // TODO: change this when implementing view change
-		}),
+		Payload:  BlockData{Transactions: requests}.ToBytes(),
+		Metadata: metadata,
 	}, nil
 }
 
@@ -148,7 +148,6 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)
-	atomic.AddUint64(&n.nextSeq, 1)
 	n.deliverChan <- &Block{
 		Sequence:     uint64(header.Sequence),
 		PrevHash:     header.PrevHash,
@@ -160,7 +159,6 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	node := &Node{
 		clock:       time.NewTicker(time.Second),
 		secondClock: time.NewTicker(time.Second),
-		nextSeq:     1,
 		id:          id,
 		in:          in,
 		out:         out,
@@ -182,6 +180,10 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		RequestInspector: node,
 		Synchronizer:     node,
 		WAL:              &wal.EphemeralWAL{},
+		Metadata: smartbftprotos.ViewMetadata{
+			LatestSequence: 0,
+			ViewId:         0,
+		},
 	}
 	node.consensus.Start()
 	node.Start()
