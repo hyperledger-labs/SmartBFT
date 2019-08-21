@@ -1,4 +1,7 @@
-#!/usr/bin/env bash -xe
+#!/usr/bin/env bash -e
+
+echo "Testing commit: ------" $(git log -1 | head -$(( $(git log -1 | wc -l) - 2 )) | tail -1) "------"
+
 
 go get -u golang.org/x/tools/cmd/goimports
 go get -u github.com/golang/protobuf/protoc-gen-go
