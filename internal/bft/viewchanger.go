@@ -305,8 +305,8 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 	if lastDecision == nil {
 		v.Logger.Panicf("Node %d's checkpoint is not set with the last decision", v.SelfID)
 	}
-	if lastDecision.Metadata == nil { // this is the genesis proposal
-		return proposal
+	if lastDecision.Metadata == nil {
+		return proposal // this is the first proposal after genesis
 	}
 	lastDecisionMetadata := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(lastDecision.Metadata, lastDecisionMetadata); err != nil {
@@ -344,37 +344,37 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
 		return false
 	}
-	validLastDecision, lastView, lastSequence := v.validateLastDecision(rvd, sender)
+	validLastDecision, lastSequence := v.validateLastDecision(rvd, sender)
 	if !validLastDecision {
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but the last decision is invalid", v.SelfID, rvd, sender)
 		return false
 	}
-	return v.validateInFlight(rvd, sender, lastView, lastSequence)
+	return v.validateInFlight(rvd, sender, lastSequence)
 }
 
-func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) (valid bool, lastView uint64, lastSequence uint64) {
+func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) (valid bool, lastSequence uint64) {
 	if vd.LastDecision == nil {
 		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but the last decision is not set", v.SelfID, vd, sender)
-		return false, 0, 0
+		return false, 0
 	}
 	if vd.LastDecision.Metadata == nil { // this is a genesis proposal, no signatures
 		v.Logger.Debugf("Node %d is processing viewData message %v from %d, last decision metadata is nil", v.SelfID, vd, sender)
-		// TODO handle genesis proposal
-		return true, 0, 0
+		// This is a genesis proposal, there are no signatures to validate, so we return at this point
+		return true, 0
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
 		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but was unable to unmarshal last decision metadata, err: %v", v.SelfID, vd, sender, err)
-		return false, 0, 0
+		return false, 0
 	}
 	if md.ViewId >= vd.NextView {
 		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but last decision view %d is greater or equal to requested next view %d", v.SelfID, vd, sender, md.ViewId, vd.NextView)
-		return false, 0, 0
+		return false, 0
 	}
 	numSigs := len(vd.LastDecisionSignatures)
 	if numSigs < v.quorum {
 		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but there are only %d last decision signatures", v.SelfID, vd, sender, numSigs)
-		return false, 0, 0
+		return false, 0
 	}
 	nodesMap := make(map[uint64]struct{}, v.N)
 	validSig := 0
@@ -396,19 +396,35 @@ func (v *ViewChanger) validateLastDecision(vd *protos.ViewData, sender uint64) (
 		}
 		if err := v.Verifier.VerifyConsenterSig(signature, proposal); err != nil {
 			v.Logger.Warnf("Node %d is processing viewData message %v from %d, but last decision signature is invalid, error: %v", v.SelfID, vd, sender, err)
-			return false, 0, 0
+			return false, 0
 		}
 		validSig++
 	}
 	if validSig < v.quorum {
 		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but there are only %d valid last decision signatures", v.SelfID, vd, sender, validSig)
-		return false, 0, 0
+		return false, 0
 	}
-	return true, md.ViewId, md.LatestSequence
+	return true, md.LatestSequence
 }
 
-func (v *ViewChanger) validateInFlight(vd *protos.ViewData, sender uint64, lastView uint64, lastSequence uint64) bool {
-	// TODO validate in flight
+func (v *ViewChanger) validateInFlight(vd *protos.ViewData, sender uint64, lastSequence uint64) bool {
+	if vd.InFlightProposal == nil {
+		v.Logger.Debugf("Node %d is processing viewData message %v from %d, in flight proposal is not set", v.SelfID, vd, sender)
+		return true
+	}
+	if vd.InFlightProposal.Metadata == nil {
+		v.Logger.Warnf("Node %d is processing viewData message %v from %d, in flight proposal metadata is nil", v.SelfID, vd, sender)
+		return false
+	}
+	inFlightMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(vd.InFlightProposal.Metadata, inFlightMetadata); err != nil {
+		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but was unable to unmarshal the in flight proposal metadata, err: %v", v.SelfID, vd, sender, err)
+		return false
+	}
+	if inFlightMetadata.LatestSequence != lastSequence+1 {
+		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but the in flight proposal sequence is %d while the last decision sequence is %d", v.SelfID, vd, sender, inFlightMetadata.LatestSequence, lastSequence)
+		return false
+	}
 	return true
 }
 
@@ -462,32 +478,22 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 			continue
 		}
 
-		validLastDecision, lastView, lastSequence := v.validateLastDecision(vd, svd.Signer)
+		validLastDecision, lastSequence := v.validateLastDecision(vd, svd.Signer)
 		if !validLastDecision {
 			v.Logger.Warnf("Node %d is processing newView message, but the last decision in viewData %v is invalid", v.SelfID, vd)
 			continue
 		}
 
-		if !v.validateInFlight(vd, svd.Signer, lastView, lastSequence) {
+		if !v.validateInFlight(vd, svd.Signer, lastSequence) {
 			v.Logger.Warnf("Node %d is processing newView message, but the in flight in viewData %v is invalid", v.SelfID, vd)
 			continue
 		}
 
-		if vd.LastDecision.Metadata == nil {
-			// TODO handle genesis proposal
-			v.Logger.Debugf("Node %d is processing newView message, but the last decision metadata in viewData %v is nil", v.SelfID, vd)
-		} else {
-			md := &protos.ViewMetadata{}
-			if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
-				v.Logger.Warnf("Node %d is processing newView message, but was unable to unmarshal last decision metadata in viewData %v, err: %v", v.SelfID, vd, err)
-				continue
-			}
-			v.Logger.Debugf("Current max sequence is %d and this viewData %v last decision sequence is %d", maxLastDecisionSequence, vd, md.LatestSequence)
-			if md.LatestSequence > maxLastDecisionSequence {
-				maxLastDecisionSequence = md.LatestSequence
-				maxLastDecision = vd.LastDecision
-				maxLastDecisionSigs = vd.LastDecisionSignatures
-			}
+		v.Logger.Debugf("Current max sequence is %d and this viewData %v last decision sequence is %d", maxLastDecisionSequence, vd, lastSequence)
+		if lastSequence > maxLastDecisionSequence {
+			maxLastDecisionSequence = lastSequence
+			maxLastDecision = vd.LastDecision
+			maxLastDecisionSigs = vd.LastDecisionSignatures
 		}
 
 		valid++
