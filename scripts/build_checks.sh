@@ -1,5 +1,6 @@
 #!/usr/bin/env bash -e
 
+git log -1
 echo "Testing commit: ------" $(git log -1 | head -$(( $(git log -1 | wc -l) - 2 )) | tail -1) "------"
 
 
