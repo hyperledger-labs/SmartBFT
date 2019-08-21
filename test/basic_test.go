@@ -9,6 +9,10 @@ import (
 	"testing"
 	"time"
 
+	"sync"
+
+	"sync/atomic"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -93,6 +97,13 @@ func TestLeaderInPartition(t *testing.T) {
 	n2 := newNode(2, network, t.Name())
 	n3 := newNode(3, network, t.Name())
 
+	// Setup artificial time channel instead of regular ticker
+	for _, n := range []*App{n1, n2, n3} {
+		n.timeChannel = make(chan time.Time, 1)
+		n.timeChannel <- time.Now()
+		n.Setup()
+	}
+
 	n0.Consensus.Start()
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -104,9 +115,22 @@ func TestLeaderInPartition(t *testing.T) {
 	n2.Submit(Request{ID: "1", ClientID: "alice"})
 	n3.Submit(Request{ID: "1", ClientID: "alice"})
 
+	var speedupStopped sync.WaitGroup
+	speedupStopped.Add(1)
+	var stop uint32
+	// Speedup time artificially in the background
+	go func() {
+		defer speedupStopped.Done()
+		speedupTime(&stop, n1, n2, n3)
+	}()
+
 	data1 := <-n1.Delivered
 	data2 := <-n2.Delivered
 	data3 := <-n3.Delivered
+
+	atomic.StoreUint32(&stop, 1)
+	speedupStopped.Wait()
+
 	assert.Equal(t, data1, data2)
 	assert.Equal(t, data2, data3)
 }
@@ -120,6 +144,13 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	n1 := newNode(1, network, t.Name())
 	n2 := newNode(2, network, t.Name())
 	n3 := newNode(3, network, t.Name())
+
+	// Setup artificial time channel instead of regular ticker
+	for _, n := range []*App{n1, n2, n3} {
+		n.timeChannel = make(chan time.Time, 1)
+		n.timeChannel <- time.Now()
+		n.Setup()
+	}
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -147,6 +178,15 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	assert.Equal(t, data2, data3)
 
 	n0.Disconnect() // leader in partition
+
+	var speedupStopped sync.WaitGroup
+	speedupStopped.Add(1)
+	var stop uint32
+	// Speedup time artificially in the background
+	go func() {
+		defer speedupStopped.Done()
+		speedupTime(&stop, n1, n2, n3)
+	}()
 
 	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
 	n2.Submit(Request{ID: "3", ClientID: "alice"})
@@ -182,6 +222,13 @@ func TestMultiLeadersPartition(t *testing.T) {
 	n5 := newNode(5, network, t.Name())
 	n6 := newNode(6, network, t.Name())
 
+	// Setup artificial time channel instead of regular ticker
+	for _, n := range []*App{n0, n1, n2, n3, n4, n5, n6} {
+		n.timeChannel = make(chan time.Time, 1)
+		n.timeChannel <- time.Now()
+		n.Setup()
+	}
+
 	n0.Consensus.Start()
 	n1.Consensus.Start()
 
@@ -200,11 +247,23 @@ func TestMultiLeadersPartition(t *testing.T) {
 	n5.Submit(Request{ID: "1", ClientID: "alice"})
 	n6.Submit(Request{ID: "1", ClientID: "alice"})
 
+	var speedupStopped sync.WaitGroup
+	speedupStopped.Add(1)
+	var stop uint32
+	// Speedup time artificially in the background
+	go func() {
+		defer speedupStopped.Done()
+		speedupTime(&stop, n2, n3, n4, n5, n6)
+	}()
+
 	data2 := <-n2.Delivered
 	data3 := <-n3.Delivered
 	data4 := <-n4.Delivered
 	data5 := <-n5.Delivered
 	data6 := <-n6.Delivered
+
+	atomic.StoreUint32(&stop, 1)
+	speedupStopped.Wait()
 
 	assert.Equal(t, data2, data3)
 	assert.Equal(t, data3, data4)
@@ -301,5 +360,22 @@ func countCommittedBatches(n *App) int {
 		case <-time.After(time.Millisecond * 500):
 			return numBatchesCreated
 		}
+	}
+}
+
+func speedupTime(stopFlag *uint32, nodes ...*App) {
+	var i int
+	for atomic.LoadUint32(stopFlag) == 0 {
+		var wg sync.WaitGroup
+		wg.Add(len(nodes))
+		for _, n := range nodes {
+			go func(c chan time.Time) {
+				defer wg.Done()
+				c <- time.Now().Add(time.Second * time.Duration(i))
+			}(n.timeChannel)
+		}
+		wg.Wait()
+		i++
+		time.Sleep(time.Millisecond * 50)
 	}
 }

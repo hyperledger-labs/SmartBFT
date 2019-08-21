@@ -27,7 +27,7 @@ type App struct {
 	logLevel    zap.AtomicLevel
 	latestMD    *smartbftprotos.ViewMetadata
 	clock       *time.Ticker
-	secondClock *time.Ticker
+	timeChannel chan time.Time
 }
 
 func (a *App) Mute() {
@@ -174,19 +174,17 @@ func newNode(id uint64, network Network, testName string) *App {
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
 
 	app := &App{
-		clock:       time.NewTicker(time.Second),
-		secondClock: time.NewTicker(time.Second),
-		ID:          id,
-		Delivered:   make(chan *AppRecord, 100),
-		logLevel:    logConfig.Level,
-		latestMD:    &smartbftprotos.ViewMetadata{},
+		clock:     time.NewTicker(time.Second),
+		ID:        id,
+		Delivered: make(chan *AppRecord, 100),
+		logLevel:  logConfig.Level,
+		latestMD:  &smartbftprotos.ViewMetadata{},
 	}
 
 	wal := &wal.EphemeralWAL{}
 
 	app.Setup = func() {
 		c := &consensus.Consensus{
-			ResendViewChange:  app.secondClock.C,
 			Scheduler:         app.clock.C,
 			SelfID:            id,
 			Logger:            logger.Sugar(),
@@ -203,6 +201,9 @@ func newNode(id uint64, network Network, testName string) *App {
 			WALInitialContent: wal.ReadAll(),
 			LastProposal:      types.Proposal{},
 			LastSignatures:    []types.Signature{},
+		}
+		if app.timeChannel != nil {
+			c.Scheduler = app.timeChannel
 		}
 		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]
