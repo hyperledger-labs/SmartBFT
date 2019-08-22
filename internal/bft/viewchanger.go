@@ -259,10 +259,7 @@ func (v *ViewChanger) processViewChangeMsg() {
 func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
 	lastDecision, lastDecisionSignatures := v.Checkpoint.Get()
 	inFlight := v.getInFlight(&lastDecision)
-	prepared := false
-	if v.InFlight.InFlightPrepares() != nil {
-		prepared = true
-	}
+	prepared := v.InFlight.IsInFlightPrepared()
 	vd := &protos.ViewData{
 		NextView:               v.currView,
 		LastDecision:           &lastDecision,

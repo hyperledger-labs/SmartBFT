@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"encoding/asn1"
 	"math"
 	"sort"
 	"sync/atomic"
@@ -17,7 +16,6 @@ import (
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
-	"github.com/pkg/errors"
 )
 
 func viewNumber(m *protos.Message) uint64 {
@@ -115,20 +113,6 @@ type incMsg struct {
 	sender uint64
 }
 
-type TBSPrepare struct {
-	View   int64
-	Seq    int64
-	Digest string
-}
-
-func (tbsp TBSPrepare) ToBytes() []byte {
-	bytes, err := asn1.Marshal(tbsp)
-	if err != nil {
-		panic(errors.Errorf("failed marshaling prepare %v: %v", tbsp, err))
-	}
-	return bytes
-}
-
 // computeQuorum calculates the quorums size Q, given a cluster size N.
 //
 // The calculation satisfies the following:
@@ -153,7 +137,7 @@ type InFlightData struct {
 
 type inFlightProposalData struct {
 	proposal *types.Proposal
-	prepares map[uint64]*protos.Prepare
+	prepared bool
 }
 
 // InFlightData returns an in-flight proposal or nil if there is no such.
@@ -167,13 +151,13 @@ func (ifp *InFlightData) InFlightProposal() *types.Proposal {
 	return data.proposal
 }
 
-func (ifp *InFlightData) InFlightPrepares() map[uint64]*protos.Prepare {
+func (ifp *InFlightData) IsInFlightPrepared() bool {
 	fetched := ifp.v.Load()
 	if fetched == nil {
-		return nil
+		return false
 	}
 	data := fetched.(inFlightProposalData)
-	return data.prepares
+	return data.prepared
 }
 
 // Store stores an in-flight proposal.
@@ -182,25 +166,13 @@ func (ifp *InFlightData) StoreProposal(prop types.Proposal) {
 	ifp.v.Store(inFlightProposalData{proposal: &p})
 }
 
-func (ifp *InFlightData) StorePrepares(view, seq uint64, signatures map[uint64][]byte) {
+func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 	prop := ifp.InFlightProposal()
 	if prop == nil {
 		panic("stored prepares but proposal is not initialized")
 	}
-
-	dig := prop.Digest()
-	prepares := make(map[uint64]*protos.Prepare)
-	for signer, sig := range signatures {
-		prepare := &protos.Prepare{
-			Seq:       seq,
-			View:      view,
-			Digest:    dig,
-			Signature: sig,
-		}
-		prepares[signer] = prepare
-	}
 	p := prop
-	ifp.v.Store(inFlightProposalData{proposal: p, prepares: prepares})
+	ifp.v.Store(inFlightProposalData{proposal: p, prepared: true})
 }
 
 type ProposalMaker struct {

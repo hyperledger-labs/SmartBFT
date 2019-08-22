@@ -6,7 +6,6 @@
 package bft_test
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"strings"
@@ -373,14 +372,6 @@ func TestBadPrepare(t *testing.T) {
 				prepare.Digest = wrongDigest
 			},
 		},
-		{
-			description:           "bad signature",
-			expectedMessageLogged: "bad signature",
-			mutatePrepare: func(prepare *protos.Prepare) {
-				prepare.Signature = []byte{6, 6, 6}
-			},
-			verifySignatureReturns: errors.New("bad signature"),
-		},
 	} {
 		t.Run(test.description, func(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
@@ -477,13 +468,6 @@ func TestBadCommit(t *testing.T) {
 	comm := &mocks.CommMock{}
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.VerifierMock{}
-	toBeSignedPrepare := bft.TBSPrepare{Digest: prepare.GetPrepare().Digest, View: 1, Seq: 0}.ToBytes()
-	verifier.On("VerifySignature", mock.Anything).Return(func(sig types.Signature) error {
-		if bytes.Equal(toBeSignedPrepare, sig.Msg) && bytes.Equal([]byte{1, 2, 3}, sig.Value) {
-			return nil
-		}
-		return errors.New("bad signature")
-	})
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
@@ -571,10 +555,6 @@ func TestNormalPath(t *testing.T) {
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
-	toBeSignedPrepare := bft.TBSPrepare{Digest: prepare.GetPrepare().Digest, View: 1, Seq: 0}.ToBytes()
-	signer.On("Sign", toBeSignedPrepare).Return([]byte{1, 2, 3}).Once()
-	toBeSignedPrepare = bft.TBSPrepare{Digest: nextProp.Digest(), View: 1, Seq: 1}.ToBytes()
-	signer.On("Sign", toBeSignedPrepare).Return([]byte{1, 2, 3}).Once()
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
 		Id:    4,
 		Value: []byte{4},

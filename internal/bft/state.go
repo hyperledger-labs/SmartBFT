@@ -39,7 +39,7 @@ func (ps *PersistedState) Save(msgToSave *smartbftprotos.SavedMessage) error {
 	if proposed := msgToSave.GetProposedRecord(); proposed != nil {
 		ps.storeProposal(proposed)
 	}
-	if prepared := msgToSave.GetPreparedProof(); prepared != nil {
+	if prepared := msgToSave.GetCommit(); prepared != nil {
 		ps.storePrepared(prepared)
 	}
 
@@ -69,9 +69,9 @@ func (ps *PersistedState) storeProposal(proposed *smartbftprotos.ProposedRecord)
 	ps.InFlightProposal.StoreProposal(proposalToStore)
 }
 
-func (ps *PersistedState) storePrepared(prepared *smartbftprotos.PreparedProof) {
-	cmt := prepared.Commit.GetCommit()
-	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq, prepared.SignaturesByIds)
+func (ps *PersistedState) storePrepared(commitMsg *smartbftprotos.Message) {
+	cmt := commitMsg.GetCommit()
+	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq)
 }
 
 func (ps *PersistedState) Restore(v *View) error {
@@ -97,8 +97,8 @@ func (ps *PersistedState) Restore(v *View) error {
 		return ps.recoverProposed(proposed, v)
 	}
 
-	if preparedProof := lastPersistedMessage.GetPreparedProof(); preparedProof != nil {
-		return ps.recoverPrepared(preparedProof, v, entries)
+	if commitMsg := lastPersistedMessage.GetCommit(); commitMsg != nil {
+		return ps.recoverPrepared(commitMsg, v, entries)
 	}
 
 	// TODO: handle signed view data persisted in the WAL
@@ -129,7 +129,7 @@ func (ps *PersistedState) recoverProposed(lastPersistedMessage *smartbftprotos.P
 	return nil
 }
 
-func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.PreparedProof, v *View, entries [][]byte) error {
+func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.Message, v *View, entries [][]byte) error {
 	// Last entry is a commit, so we should have not pruned the previous pre-prepare
 	if len(entries) < 2 {
 		return fmt.Errorf("last message is a commit, but expected to also have a matching pre-prepare")
@@ -172,7 +172,7 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.P
 
 	// Reconstruct the commit message we shall next broadcast
 	// after the recovery.
-	v.lastBroadcastSent = lastPersistedMessage.GetCommit()
+	v.lastBroadcastSent = lastPersistedMessage
 	v.Phase = PREPARED
 	v.Number = prePrepareFromWAL.View
 	v.ProposalSequence = prePrepareFromWAL.Seq
@@ -185,7 +185,6 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.P
 		Value: signatureInLastSentCommit.Value,
 	}
 
-	ps.Logger.Infof("Restored proposal with sequence %d along with its %d prepares",
-		prePrepareFromWAL.Seq, len(lastPersistedMessage.SignaturesByIds))
+	ps.Logger.Infof("Restored proposal with sequence %d", prePrepareFromWAL.Seq)
 	return nil
 }

@@ -357,61 +357,23 @@ func (v *View) processProposal() Phase {
 }
 
 func (v *View) createPrepare(seq uint64, proposal types.Proposal) *protos.Message {
-	signature := v.Signer.Sign(TBSPrepare{
-		Seq:    int64(seq),
-		View:   int64(v.Number),
-		Digest: proposal.Digest(),
-	}.ToBytes())
-
 	return &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				Seq:       seq,
-				View:      v.Number,
-				Digest:    proposal.Digest(),
-				Signature: signature,
+				Seq:    seq,
+				View:   v.Number,
+				Digest: proposal.Digest(),
 			},
 		},
 	}
 }
 
-func (v *View) isPrepareValid(vote *vote, expectedMsg []byte) bool {
-	prepare := vote.GetPrepare()
-	err := v.Verifier.VerifySignature(types.Signature{
-		Value: prepare.Signature,
-		Msg:   expectedMsg,
-		Id:    vote.sender,
-	})
-
-	if err == nil {
-		return true
-	}
-	v.Logger.Warnf("Failed verifying vote %v from %v: %v", prepare, vote.sender, err)
-	return false
-}
-
 func (v *View) processPrepares() Phase {
 	proposal := v.inFlightProposal
 	expectedDigest := proposal.Digest()
-	ourPrepareSignature := v.lastBroadcastSent.GetPrepare().Signature
 
-	signaturesByIDs := make(map[uint64][]byte)
 	var voterIDs []uint64
-	validVotes := make(chan *vote, cap(v.prepares.votes))
-	expectedMsg := TBSPrepare{
-		Seq:    int64(v.ProposalSequence),
-		View:   int64(v.Number),
-		Digest: proposal.Digest(),
-	}.ToBytes()
-
-	verifyVote := func(vote *vote) {
-		if !v.isPrepareValid(vote, expectedMsg) {
-			return
-		}
-		validVotes <- vote
-	}
-
-	for len(signaturesByIDs) < v.Quorum-1 {
+	for len(voterIDs) < v.Quorum-1 {
 		select {
 		case <-v.abortChan:
 			return ABORT
@@ -424,14 +386,11 @@ func (v *View) processPrepares() Phase {
 				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
 				continue
 			}
-			go verifyVote(vote)
-		case vote := <-validVotes:
 			voterIDs = append(voterIDs, vote.sender)
-			signaturesByIDs[vote.sender] = vote.GetPrepare().Signature
 		}
 	}
 
-	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(signaturesByIDs), voterIDs)
+	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(voterIDs), voterIDs)
 
 	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
@@ -452,14 +411,9 @@ func (v *View) processPrepares() Phase {
 		},
 	}
 
-	signaturesByIDs[v.SelfID] = ourPrepareSignature
-
 	preparedProof := &protos.SavedMessage{
-		Content: &protos.SavedMessage_PreparedProof{
-			PreparedProof: &protos.PreparedProof{
-				Commit:          commitMsg,
-				SignaturesByIds: signaturesByIDs,
-			},
+		Content: &protos.SavedMessage_Commit{
+			Commit: commitMsg,
 		},
 	}
 
