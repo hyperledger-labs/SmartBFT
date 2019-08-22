@@ -9,7 +9,7 @@ type FailureDetector struct {
 	mock.Mock
 }
 
-// Complain provides a mock function with given fields:
-func (_m *FailureDetector) Complain() {
-	_m.Called()
+// Complain provides a mock function with given fields: stopView
+func (_m *FailureDetector) Complain(stopView bool) {
+	_m.Called(stopView)
 }

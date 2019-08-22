@@ -20,7 +20,7 @@ type Decider interface {
 
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
 type FailureDetector interface {
-	Complain()
+	Complain(stopView bool)
 }
 
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
@@ -192,7 +192,7 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 	}
 
 	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
-	c.FailureDetector.Complain()
+	c.FailureDetector.Complain(true)
 
 	return
 }
@@ -221,7 +221,7 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	}
 
 	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
-	c.FailureDetector.Complain()
+	c.FailureDetector.Complain(true)
 }
 
 // ProcessMessages dispatches the incoming message to the required component
@@ -232,7 +232,6 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		view := c.currView
 		c.currViewLock.RUnlock()
 		view.HandleMessage(sender, m)
-		c.Logger.Debugf("Node %d handled message %v from %d with seq %d", c.ID, m, sender, proposalSequence(m))
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
 		c.Logger.Debugf("Node %d handled view changer message from %d", c.ID, sender)
@@ -263,7 +262,7 @@ func (c *Controller) startView(proposalSequence uint64) {
 		role = Leader
 	}
 	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
-	c.Logger.Debugf("Starting view with number %d", c.currViewNumber)
+	c.Logger.Infof("Starting view with number %d and sequence %d", c.currViewNumber, proposalSequence)
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
@@ -298,6 +297,13 @@ func (c *Controller) abortView() {
 	// Kill current view
 	c.Logger.Debugf("Aborting current view with number %d", c.getCurrentViewNumber())
 	c.currView.Abort()
+}
+
+func (c *Controller) Sync() (protos.ViewMetadata, uint64) {
+	md, vSeq := c.Synchronizer.Sync()
+	c.Logger.Infof("Synchronized to view %d with sequence %d", md.ViewId, md.LatestSequence)
+	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence}
+	return md, vSeq
 }
 
 // AbortView makes the controller abort the current view
@@ -432,7 +438,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
-	c.viewChange = make(chan viewInfo)
+	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan struct{})
 
 	Q, F := computeQuorum(c.N)
@@ -494,11 +500,18 @@ func (c *Controller) stopped() bool {
 
 // Decide delivers the decision to the application
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	c.decisionChan <- decision{
+	select {
+	case c.decisionChan <- decision{
 		proposal:   proposal,
 		requests:   requests,
 		signatures: signatures,
+	}:
+	case <-c.stopChan:
+		// In case we are in the middle of shutting down,
+		// abort deciding.
+		return
 	}
+
 	<-c.deliverChan // wait for the delivery of the decision to the application
 }
 

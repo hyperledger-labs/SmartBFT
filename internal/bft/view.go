@@ -152,6 +152,9 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (v *View) processMsg(sender uint64, m *protos.Message) {
+	if v.stopped() {
+		return
+	}
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	if msgViewNum != v.Number {
@@ -160,7 +163,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		if sender != v.LeaderID {
 			return
 		}
-		v.FailureDetector.Complain()
+		v.FailureDetector.Complain(false)
 		// Else, we got a message with a wrong view from the leader.
 		if msgViewNum > v.Number {
 			v.Sync.Sync()
@@ -180,6 +183,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
+		// If message is from leader, we complain and start a sync
+		if sender == v.LeaderID && msgProposalSeq > v.ProposalSequence {
+			v.stop()
+			v.FailureDetector.Complain(false)
+			v.Sync.Sync()
+		}
 		return
 	}
 
@@ -321,7 +330,7 @@ func (v *View) processProposal() Phase {
 	requests, err := v.verifyProposal(proposal)
 	if err != nil {
 		v.Logger.Warnf("%d received bad proposal from %d: %v", v.SelfID, v.LeaderID, err)
-		v.FailureDetector.Complain()
+		v.FailureDetector.Complain(false)
 		v.Sync.Sync()
 		v.stop()
 		return ABORT
@@ -655,4 +664,13 @@ func (v *View) stop() {
 func (v *View) Abort() {
 	v.stop()
 	v.viewEnded.Wait()
+}
+
+func (v *View) stopped() bool {
+	select {
+	case <-v.abortChan:
+		return true
+	default:
+		return false
+	}
 }
