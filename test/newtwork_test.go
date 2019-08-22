@@ -46,3 +46,6 @@ func (mh mockHandler) HandleMessage(sender uint64, m *smartbftprotos.Message) {
 func (mh mockHandler) HandleRequest(sender uint64, req []byte) {
 	mh <- msgFrom{from: int(sender), message: &FwdMessage{Payload: req}}
 }
+func (mh mockHandler) Stop() {
+
+}
