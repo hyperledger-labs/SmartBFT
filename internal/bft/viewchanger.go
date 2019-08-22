@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"errors"
 	"fmt"
 	"sync"
 	"time"
@@ -351,12 +350,16 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but the last decision is invalid, reason: %v", v.SelfID, rvd, sender, err)
 		return false
 	}
-	return v.validateInFlight(rvd, sender, lastSequence)
+	if err := ValidateInFlight(rvd.InFlightProposal, lastSequence); err != nil {
+		v.Logger.Warnf("Node %d got viewData message %v from %d, but the in flight proposal is invalid, reason: %v", v.SelfID, rvd, sender, err)
+		return false
+	}
+	return true
 }
 
 func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier api.Verifier) (err error, lastSequence uint64) {
 	if vd.LastDecision == nil {
-		return errors.New(fmt.Sprintf("the last decision is not set")), 0
+		return fmt.Errorf("the last decision is not set"), 0
 	}
 	if vd.LastDecision.Metadata == nil {
 		// This is a genesis proposal, there are no signatures to validate, so we return at this point
@@ -364,14 +367,14 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
-		return errors.New(fmt.Sprintf("unable to unmarshal last decision metadata, err: %v", err)), 0
+		return fmt.Errorf("unable to unmarshal last decision metadata, err: %v", err), 0
 	}
 	if md.ViewId >= vd.NextView {
-		return errors.New(fmt.Sprintf("last decision view %d is greater or equal to requested next view %d", md.ViewId, vd.NextView)), 0
+		return fmt.Errorf("last decision view %d is greater or equal to requested next view %d", md.ViewId, vd.NextView), 0
 	}
 	numSigs := len(vd.LastDecisionSignatures)
 	if numSigs < quorum {
-		return errors.New(fmt.Sprintf("there are only %d last decision signatures", numSigs)), 0
+		return fmt.Errorf("there are only %d last decision signatures", numSigs), 0
 	}
 	nodesMap := make(map[uint64]struct{}, N)
 	validSig := 0
@@ -392,35 +395,31 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 			VerificationSequence: int64(vd.LastDecision.VerificationSequence),
 		}
 		if err := verifier.VerifyConsenterSig(signature, proposal); err != nil {
-			return errors.New(fmt.Sprintf("last decision signature is invalid, error: %v", err)), 0
+			return fmt.Errorf("last decision signature is invalid, error: %v", err), 0
 		}
 		validSig++
 	}
 	if validSig < quorum {
-		return errors.New(fmt.Sprintf("there are only %d valid last decision signatures", validSig)), 0
+		return fmt.Errorf("there are only %d valid last decision signatures", validSig), 0
 	}
 	return nil, md.LatestSequence
 }
 
-func (v *ViewChanger) validateInFlight(vd *protos.ViewData, sender uint64, lastSequence uint64) bool {
-	if vd.InFlightProposal == nil {
-		v.Logger.Debugf("Node %d is processing viewData message %v from %d, in flight proposal is not set", v.SelfID, vd, sender)
-		return true
+func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) error {
+	if inFlightProposal == nil {
+		return nil
 	}
-	if vd.InFlightProposal.Metadata == nil {
-		v.Logger.Warnf("Node %d is processing viewData message %v from %d, in flight proposal metadata is nil", v.SelfID, vd, sender)
-		return false
+	if inFlightProposal.Metadata == nil {
+		return fmt.Errorf("in flight proposal metadata is nil")
 	}
 	inFlightMetadata := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(vd.InFlightProposal.Metadata, inFlightMetadata); err != nil {
-		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but was unable to unmarshal the in flight proposal metadata, err: %v", v.SelfID, vd, sender, err)
-		return false
+	if err := proto.Unmarshal(inFlightProposal.Metadata, inFlightMetadata); err != nil {
+		return fmt.Errorf("unable to unmarshal the in flight proposal metadata, err: %v", err)
 	}
 	if inFlightMetadata.LatestSequence != lastSequence+1 {
-		v.Logger.Warnf("Node %d is processing viewData message %v from %d, but the in flight proposal sequence is %d while the last decision sequence is %d", v.SelfID, vd, sender, inFlightMetadata.LatestSequence, lastSequence)
-		return false
+		return fmt.Errorf("the in flight proposal sequence is %d while the last decision sequence is %d", inFlightMetadata.LatestSequence, lastSequence)
 	}
-	return true
+	return nil
 }
 
 func (v *ViewChanger) processViewDataMsg() {
@@ -479,8 +478,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 			continue
 		}
 
-		if !v.validateInFlight(vd, svd.Signer, lastSequence) {
-			v.Logger.Warnf("Node %d is processing newView message, but the in flight in viewData %v is invalid", v.SelfID, vd)
+		if err := ValidateInFlight(vd.InFlightProposal, lastSequence); err != nil {
+			v.Logger.Warnf("Node %d is processing newView message, but the in flight in viewData %v is invalid, reason: %v", v.SelfID, vd, err)
 			continue
 		}
 

@@ -767,82 +767,64 @@ func TestValidateLastDecision(t *testing.T) {
 
 	for _, test := range []struct {
 		description  string
-		getViewData  func() *protos.ViewData
+		viewData     *protos.ViewData
 		mutateVerify func(*mocks.VerifierMock)
 		valid        bool
 		sequence     uint64
 	}{
 		{
-			description: "last decision is not set",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{}
-			},
+			description:  "last decision is not set",
+			viewData:     &protos.ViewData{},
 			mutateVerify: func(*mocks.VerifierMock) {},
 		},
 		{
 			description: "last decision metadata is nil",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					LastDecision: &protos.Proposal{},
-				}
+			viewData: &protos.ViewData{
+				LastDecision: &protos.Proposal{},
 			},
 			mutateVerify: func(*mocks.VerifierMock) {},
 			valid:        true,
 		},
 		{
 			description: "unable to unmarshal last decision metadata",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					LastDecision: &protos.Proposal{
-						Metadata: []byte{0},
-					},
-				}
+			viewData: &protos.ViewData{
+				LastDecision: &protos.Proposal{
+					Metadata: []byte{0},
+				},
 			},
 			mutateVerify: func(*mocks.VerifierMock) {},
 		},
 		{
 			description: "last decision view is greater or equal to requested next view",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					NextView: 1,
-					LastDecision: &protos.Proposal{
-						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-							LatestSequence: 1,
-							ViewId:         1,
-						}),
-					},
-				}
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+						LatestSequence: 1,
+						ViewId:         1,
+					}),
+				},
 			},
 			mutateVerify: func(*mocks.VerifierMock) {},
 		},
 		{
 			description: "not enough signatures",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					NextView: 1,
-					LastDecision: &protos.Proposal{
-						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-							LatestSequence: 1,
-							ViewId:         0,
-						}),
-					},
-				}
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
 			},
 			mutateVerify: func(*mocks.VerifierMock) {},
 		},
 		{
 			description: "invalid signatures",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					NextView: 1,
-					LastDecision: &protos.Proposal{
-						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-							LatestSequence: 1,
-							ViewId:         0,
-						}),
-					},
-					LastDecisionSignatures: lastDecisionSignaturesProtos,
-				}
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: lastDecisionSignaturesProtos,
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
 				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(errors.New(""))
@@ -850,17 +832,12 @@ func TestValidateLastDecision(t *testing.T) {
 		},
 		{
 			description: "not enough valid signatures",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					NextView: 1,
-					LastDecision: &protos.Proposal{
-						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-							LatestSequence: 1,
-							ViewId:         0,
-						}),
-					},
-					LastDecisionSignatures: []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}},
-				}
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}},
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
 				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
@@ -868,17 +845,12 @@ func TestValidateLastDecision(t *testing.T) {
 		},
 		{
 			description: "valid last decision",
-			getViewData: func() *protos.ViewData {
-				return &protos.ViewData{
-					NextView: 1,
-					LastDecision: &protos.Proposal{
-						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-							LatestSequence: 1,
-							ViewId:         0,
-						}),
-					},
-					LastDecisionSignatures: lastDecisionSignaturesProtos,
-				}
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: lastDecisionSignaturesProtos,
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
 				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
@@ -890,7 +862,7 @@ func TestValidateLastDecision(t *testing.T) {
 		t.Run(test.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerify(verifier)
-			err, seq := bft.ValidateLastDecision(test.getViewData(), 3, 4, verifier)
+			err, seq := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
 			if test.valid {
 				assert.NoError(t, err)
 			} else {
@@ -900,4 +872,51 @@ func TestValidateLastDecision(t *testing.T) {
 		})
 	}
 
+}
+
+func TestValidateInFlight(t *testing.T) {
+	for _, test := range []struct {
+		description      string
+		inFlightProposal *protos.Proposal
+		sequence         uint64
+		valid            bool
+	}{
+		{
+			description: "in flight proposal is not set",
+			valid:       true,
+		},
+		{
+			description:      "in flight proposal metadata is nil",
+			inFlightProposal: &protos.Proposal{},
+		},
+		{
+			description: "unable to unmarshal in flight proposal metadata",
+			inFlightProposal: &protos.Proposal{
+				Metadata: []byte{1},
+			},
+		},
+		{
+			description: "wrong in flight proposal sequence",
+			inFlightProposal: &protos.Proposal{
+				Metadata: metadata,
+			},
+			sequence: 1,
+		},
+		{
+			description: "valid in flight proposal",
+			inFlightProposal: &protos.Proposal{
+				Metadata: metadata,
+			},
+			valid: true,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			err := bft.ValidateInFlight(test.inFlightProposal, test.sequence)
+			if test.valid {
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+		})
+	}
 }
