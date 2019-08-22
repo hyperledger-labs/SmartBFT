@@ -762,3 +762,161 @@ func TestInFlightProposalInViewData(t *testing.T) {
 	}
 
 }
+
+func TestValidateLastDecision(t *testing.T) {
+
+	for _, test := range []struct {
+		description  string
+		viewData     *protos.ViewData
+		mutateVerify func(*mocks.VerifierMock)
+		valid        bool
+		sequence     uint64
+	}{
+		{
+			description:  "last decision is not set",
+			viewData:     &protos.ViewData{},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "last decision metadata is nil",
+			viewData: &protos.ViewData{
+				LastDecision: &protos.Proposal{},
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+			valid:        true,
+		},
+		{
+			description: "unable to unmarshal last decision metadata",
+			viewData: &protos.ViewData{
+				LastDecision: &protos.Proposal{
+					Metadata: []byte{0},
+				},
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "last decision view is greater or equal to requested next view",
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+						LatestSequence: 1,
+						ViewId:         1,
+					}),
+				},
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "not enough signatures",
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "invalid signatures",
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: lastDecisionSignaturesProtos,
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(errors.New(""))
+			},
+		},
+		{
+			description: "not enough valid signatures",
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}},
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			},
+		},
+		{
+			description: "valid last decision",
+			viewData: &protos.ViewData{
+				NextView: 1,
+				LastDecision: &protos.Proposal{
+					Metadata: metadata,
+				},
+				LastDecisionSignatures: lastDecisionSignaturesProtos,
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			},
+			valid:    true,
+			sequence: 1,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			test.mutateVerify(verifier)
+			err, seq := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
+			if test.valid {
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+			assert.Equal(t, test.sequence, seq)
+		})
+	}
+
+}
+
+func TestValidateInFlight(t *testing.T) {
+	for _, test := range []struct {
+		description      string
+		inFlightProposal *protos.Proposal
+		sequence         uint64
+		valid            bool
+	}{
+		{
+			description: "in flight proposal is not set",
+			valid:       true,
+		},
+		{
+			description:      "in flight proposal metadata is nil",
+			inFlightProposal: &protos.Proposal{},
+		},
+		{
+			description: "unable to unmarshal in flight proposal metadata",
+			inFlightProposal: &protos.Proposal{
+				Metadata: []byte{1},
+			},
+		},
+		{
+			description: "wrong in flight proposal sequence",
+			inFlightProposal: &protos.Proposal{
+				Metadata: metadata,
+			},
+			sequence: 1,
+		},
+		{
+			description: "valid in flight proposal",
+			inFlightProposal: &protos.Proposal{
+				Metadata: metadata,
+			},
+			valid: true,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			err := bft.ValidateInFlight(test.inFlightProposal, test.sequence)
+			if test.valid {
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+		})
+	}
+}
