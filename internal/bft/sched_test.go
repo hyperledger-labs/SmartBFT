@@ -69,8 +69,9 @@ func TestSchedule(t *testing.T) {
 	s.Schedule(time.Second, func() {
 		// Wait for the 2 minutes tick below to be consumed by injecting an empty time.
 		// This ensures the clock processed both the 7 second increment and the 2 min increment.
-		timeChan <- time.Time{}
 		out <- 4
+		timeChan <- time.Time{}
+		timeChan <- time.Time{}
 	})
 
 	s.Schedule(time.Minute, func() {
@@ -84,7 +85,6 @@ func TestSchedule(t *testing.T) {
 	// De-queue from the output channel
 	n := <-out
 	assert.Equal(t, 4, n)
-	wg.Wait()
 
 	// Ensure the time increased by 2 minutes despite it passed while being blocked
 	// on the previous function invocation.
