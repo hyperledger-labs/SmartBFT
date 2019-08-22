@@ -150,7 +150,9 @@ func (cb *committedBatches) add(record *AppRecord) {
 	defer cb.lock.Unlock()
 
 	md := &smartbftprotos.ViewMetadata{}
-	proto.Unmarshal(record.Metadata, md)
+	if err := proto.Unmarshal(record.Metadata, md); err != nil {
+		panic(err)
+	}
 
 	if cb.latestMD.ViewId > md.ViewId {
 		return
