@@ -63,22 +63,32 @@ func (n Network) Shutdown() {
 }
 
 func (n Network) send(source, target uint64, msg proto.Message) {
-	node, found := n[target]
+	dstNode, found := n[target]
 
 	if !found {
 		panic("node doesn't exist")
 	}
 
-	node.RLock()
-	p := node.lossProbability
-	node.RUnlock()
+	srcNode, found := n[source]
+	if !found {
+		panic("node doesn't exist")
+	}
 
-	if rand.Float32() < p {
+	dstNode.RLock()
+	p := dstNode.lossProbability
+	dstNode.RUnlock()
+
+	srcNode.RLock()
+	q := srcNode.lossProbability
+	srcNode.RUnlock()
+
+	r := rand.Float32()
+	if r < p || r < q {
 		return
 	}
 
 	select {
-	case node.in <- msgFrom{from: int(source), message: msg}:
+	case dstNode.in <- msgFrom{from: int(source), message: msg}:
 	default:
 		fmt.Println("Dropped msg from", source, "to", target, "due to overflow")
 	}
