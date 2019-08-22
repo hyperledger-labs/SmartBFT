@@ -360,9 +360,9 @@ func (v *View) createPrepare(seq uint64, proposal types.Proposal) *protos.Messag
 	return &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				Seq:       seq,
-				View:      v.Number,
-				Digest:    proposal.Digest(),
+				Seq:    seq,
+				View:   v.Number,
+				Digest: proposal.Digest(),
 			},
 		},
 	}
@@ -414,7 +414,7 @@ func (v *View) processPrepares() Phase {
 	preparedProof := &protos.SavedMessage{
 		Content: &protos.SavedMessage_PreparedProof{
 			PreparedProof: &protos.PreparedProof{
-				Commit:          commitMsg,
+				Commit: commitMsg,
 			},
 		},
 	}
