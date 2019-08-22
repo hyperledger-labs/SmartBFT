@@ -6,9 +6,10 @@
 package bft
 
 import (
-	"fmt"
 	"sync"
 	"time"
+
+	"github.com/pkg/errors"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -359,7 +360,7 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 
 func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier api.Verifier) (err error, lastSequence uint64) {
 	if vd.LastDecision == nil {
-		return fmt.Errorf("the last decision is not set"), 0
+		return errors.Errorf("the last decision is not set"), 0
 	}
 	if vd.LastDecision.Metadata == nil {
 		// This is a genesis proposal, there are no signatures to validate, so we return at this point
@@ -367,14 +368,14 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(vd.LastDecision.Metadata, md); err != nil {
-		return fmt.Errorf("unable to unmarshal last decision metadata, err: %v", err), 0
+		return errors.Errorf("unable to unmarshal last decision metadata, err: %v", err), 0
 	}
 	if md.ViewId >= vd.NextView {
-		return fmt.Errorf("last decision view %d is greater or equal to requested next view %d", md.ViewId, vd.NextView), 0
+		return errors.Errorf("last decision view %d is greater or equal to requested next view %d", md.ViewId, vd.NextView), 0
 	}
 	numSigs := len(vd.LastDecisionSignatures)
 	if numSigs < quorum {
-		return fmt.Errorf("there are only %d last decision signatures", numSigs), 0
+		return errors.Errorf("there are only %d last decision signatures", numSigs), 0
 	}
 	nodesMap := make(map[uint64]struct{}, N)
 	validSig := 0
@@ -395,12 +396,12 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 			VerificationSequence: int64(vd.LastDecision.VerificationSequence),
 		}
 		if err := verifier.VerifyConsenterSig(signature, proposal); err != nil {
-			return fmt.Errorf("last decision signature is invalid, error: %v", err), 0
+			return errors.Errorf("last decision signature is invalid, error: %v", err), 0
 		}
 		validSig++
 	}
 	if validSig < quorum {
-		return fmt.Errorf("there are only %d valid last decision signatures", validSig), 0
+		return errors.Errorf("there are only %d valid last decision signatures", validSig), 0
 	}
 	return nil, md.LatestSequence
 }
@@ -410,14 +411,14 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 		return nil
 	}
 	if inFlightProposal.Metadata == nil {
-		return fmt.Errorf("in flight proposal metadata is nil")
+		return errors.Errorf("in flight proposal metadata is nil")
 	}
 	inFlightMetadata := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(inFlightProposal.Metadata, inFlightMetadata); err != nil {
-		return fmt.Errorf("unable to unmarshal the in flight proposal metadata, err: %v", err)
+		return errors.Errorf("unable to unmarshal the in flight proposal metadata, err: %v", err)
 	}
 	if inFlightMetadata.LatestSequence != lastSequence+1 {
-		return fmt.Errorf("the in flight proposal sequence is %d while the last decision sequence is %d", inFlightMetadata.LatestSequence, lastSequence)
+		return errors.Errorf("the in flight proposal sequence is %d while the last decision sequence is %d", inFlightMetadata.LatestSequence, lastSequence)
 	}
 	return nil
 }
