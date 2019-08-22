@@ -47,16 +47,14 @@ func TestStateRestore(t *testing.T) {
 	}
 
 	preparedProof := &protos.SavedMessage{
-		Content: &protos.SavedMessage_PreparedProof{
-			PreparedProof: &protos.PreparedProof{
-				Commit: &protos.Message{
-					Content: &protos.Message_Commit{
-						Commit: &protos.Commit{
-							Seq:  200,
-							View: 300,
-							Signature: &protos.Signature{
-								Signer: 11,
-							},
+		Content: &protos.SavedMessage_Commit{
+			Commit: &protos.Message{
+				Content: &protos.Message_Commit{
+					Commit: &protos.Commit{
+						Seq:  200,
+						View: 300,
+						Signature: &protos.Signature{
+							Signer: 11,
 						},
 					},
 				},

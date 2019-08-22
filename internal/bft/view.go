@@ -412,10 +412,8 @@ func (v *View) processPrepares() Phase {
 	}
 
 	preparedProof := &protos.SavedMessage{
-		Content: &protos.SavedMessage_PreparedProof{
-			PreparedProof: &protos.PreparedProof{
-				Commit: commitMsg,
-			},
+		Content: &protos.SavedMessage_Commit{
+			Commit: commitMsg,
 		},
 	}
 
