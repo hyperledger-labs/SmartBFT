@@ -613,9 +613,9 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 }
 
 func (v *View) decide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	v.Logger.Infof("Deciding on seq %d", v.ProposalSequence)
 	// first make preparations for the next sequence so that the view will be ready to continue right after delivery
 	v.startNextSeq()
-	v.Logger.Infof("Deciding on seq %d", v.ProposalSequence)
 	signatures = append(signatures, *v.myProposalSig)
 	v.Decider.Decide(*proposal, signatures, requests)
 }
