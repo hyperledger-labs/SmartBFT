@@ -762,3 +762,142 @@ func TestInFlightProposalInViewData(t *testing.T) {
 	}
 
 }
+
+func TestValidateLastDecision(t *testing.T) {
+
+	for _, test := range []struct {
+		description  string
+		getViewData  func() *protos.ViewData
+		mutateVerify func(*mocks.VerifierMock)
+		valid        bool
+		sequence     uint64
+	}{
+		{
+			description: "last decision is not set",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{}
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "last decision metadata is nil",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					LastDecision: &protos.Proposal{},
+				}
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+			valid:        true,
+		},
+		{
+			description: "unable to unmarshal last decision metadata",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					LastDecision: &protos.Proposal{
+						Metadata: []byte{0},
+					},
+				}
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "last decision view is greater or equal to requested next view",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         1,
+						}),
+					},
+				}
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "not enough signatures",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
+				}
+			},
+			mutateVerify: func(*mocks.VerifierMock) {},
+		},
+		{
+			description: "invalid signatures",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
+					LastDecisionSignatures: lastDecisionSignaturesProtos,
+				}
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(errors.New(""))
+			},
+		},
+		{
+			description: "not enough valid signatures",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
+					LastDecisionSignatures: []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}},
+				}
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			},
+		},
+		{
+			description: "valid last decision",
+			getViewData: func() *protos.ViewData {
+				return &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
+					LastDecisionSignatures: lastDecisionSignaturesProtos,
+				}
+			},
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			},
+			valid:    true,
+			sequence: 1,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			test.mutateVerify(verifier)
+			err, seq := bft.ValidateLastDecision(test.getViewData(), 3, 4, verifier)
+			if test.valid {
+				assert.NoError(t, err)
+			} else {
+				assert.Error(t, err)
+			}
+			assert.Equal(t, test.sequence, seq)
+		})
+	}
+
+}
