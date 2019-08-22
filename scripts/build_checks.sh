@@ -67,5 +67,5 @@ if [[ $? -ne 0 ]];then
 fi
 
 
-echo -e "${ANSI_GREEN} ＼(＾O＾)／ Tests passed! ${ANSI_RESET}"
+echo -e "${ANSI_GREEN} \(^o^)/ Tests passed! ${ANSI_RESET}"
 exit 0
