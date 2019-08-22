@@ -71,7 +71,7 @@ func (ps *PersistedState) storeProposal(proposed *smartbftprotos.ProposedRecord)
 
 func (ps *PersistedState) storePrepared(prepared *smartbftprotos.PreparedProof) {
 	cmt := prepared.Commit.GetCommit()
-	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq, prepared.SignaturesByIds)
+	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq)
 }
 
 func (ps *PersistedState) Restore(v *View) error {
@@ -185,7 +185,6 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *smartbftprotos.P
 		Value: signatureInLastSentCommit.Value,
 	}
 
-	ps.Logger.Infof("Restored proposal with sequence %d along with its %d prepares",
-		prePrepareFromWAL.Seq, len(lastPersistedMessage.SignaturesByIds))
+	ps.Logger.Infof("Restored proposal with sequence %d", prePrepareFromWAL.Seq)
 	return nil
 }

@@ -38,15 +38,6 @@ message Prepare {
 message PreparedProof {
     // Message that wraps a Commit message.
     Message commit = 1;
-    // The signatures are signatures originated
-    // from prepare messages, and they are all
-    // signatures on the same payload which is
-    // the ASN1 marshalling of:
-    // 	View   int64
-    //	Seq    int64
-    //	Digest string
-    // that should match the attached commit.
-    map<uint64, bytes> signatures_by_ids = 2;
 }
 
 message ProposedRecord {
