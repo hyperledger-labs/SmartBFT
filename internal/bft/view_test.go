@@ -8,6 +8,8 @@ package bft_test
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -857,11 +859,16 @@ func TestViewPersisted(t *testing.T) {
 
 			view := constructView()
 
-			wal := &wal.EphemeralWAL{}
+			testDir, err := ioutil.TempDir("", "view-unittest")
+			assert.NoErrorf(t, err, "generate temporary test dir")
+			defer os.RemoveAll(testDir)
+			writeAheadLog, err := wal.Create(log, testDir, nil)
+			assert.NoError(t, err)
+
 			persistedState := &bft.PersistedState{
 				InFlightProposal: &bft.InFlightData{},
 				Logger:           log,
-				WAL:              wal,
+				WAL:              writeAheadLog,
 			}
 			var persistedToLog sync.WaitGroup
 			persistedToLog.Add(1)
@@ -885,10 +892,17 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterProposed {
 				// Simulate a crash.
 				view.Abort()
+
+				writeAheadLog.Close()
+				writeAheadLog, err = wal.Open(log, testDir, nil)
+				assert.NoError(t, err)
+				persistedState.WAL = writeAheadLog
+
 				view = constructView()
 
 				// Recover the view from WAL.
-				persistedState.Entries = wal.ReadAll()
+				persistedState.Entries, err = writeAheadLog.ReadAll()
+				assert.NoError(t, err)
 				persistedState.Restore(view)
 
 				// It should broadcast a prepare right after starting it.
@@ -920,10 +934,18 @@ func TestViewPersisted(t *testing.T) {
 			if testCase.crashAfterPrepared {
 				// Simulate a crash.
 				view.Abort()
+
+				writeAheadLog.Close()
+				writeAheadLog, err = wal.Open(log, testDir, nil)
+				assert.NoError(t, err)
+				persistedState.WAL = writeAheadLog
+
 				view = constructView()
 
 				// Recover the view from WAL.
-				persistedState.Entries = wal.ReadAll()
+				persistedState.Entries, err = writeAheadLog.ReadAll()
+				assert.NoError(t, err)
+				assert.Equal(t, 2, len(persistedState.Entries))
 				persistedState.Restore(view)
 
 				// It should broadcast a commit again after it is restored.
@@ -944,6 +966,8 @@ func TestViewPersisted(t *testing.T) {
 			deciderWG.Wait()
 
 			view.Abort()
+
+			writeAheadLog.Close()
 		})
 	}
 }
