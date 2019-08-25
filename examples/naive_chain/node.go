@@ -108,14 +108,6 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 	}, nil
 }
 
-func marshalOrPanic(msg proto.Message) []byte {
-	b, err := proto.Marshal(msg)
-	if err != nil {
-		panic(err)
-	}
-	return b
-}
-
 func (n *Node) BroadcastConsensus(m *smartbftprotos.Message) {
 	for receiver, out := range n.out {
 		if n.id == uint64(receiver) {
