@@ -6,6 +6,8 @@
 package bft_test
 
 import (
+	"io/ioutil"
+	"os"
 	"sync"
 	"testing"
 	"time"
@@ -150,10 +152,16 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
 
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+
 	controller := &bft.Controller{
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
-		WAL:           &wal.EphemeralWAL{},
+		WAL:           wal,
 		ID:            17, // the leader
 		N:             4,
 		Logger:        log,
@@ -207,6 +215,8 @@ func TestLeaderPropose(t *testing.T) {
 		17: {Signer: 17, Value: []byte{4}},
 		23: {Signer: 23, Value: []byte{4}},
 	}, signaturesBySigners)
+
+	wal.Close()
 }
 
 func TestLeaderChange(t *testing.T) {
@@ -256,9 +266,16 @@ func TestLeaderChange(t *testing.T) {
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+
 	controller := &bft.Controller{
 		Signer:          signer,
-		WAL:             &wal.EphemeralWAL{},
+		WAL:             wal,
 		ID:              2, // the next leader
 		N:               4,
 		Logger:          log,
@@ -295,6 +312,7 @@ func TestLeaderChange(t *testing.T) {
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 	controller.Stop()
+	wal.Close()
 }
 
 func TestControllerLeaderRequestHandling(t *testing.T) {
