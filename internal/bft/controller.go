@@ -512,7 +512,11 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 		return
 	}
 
-	<-c.deliverChan // wait for the delivery of the decision to the application
+	select {
+	case <-c.deliverChan: // wait for the delivery of the decision to the application
+	case <-c.stopChan: // If we stopped the controller, abort delivery
+	}
+
 }
 
 func (c *Controller) removeDeliveredFromPool(d decision) {
