@@ -7,6 +7,8 @@ package test
 
 import (
 	"encoding/asn1"
+	"fmt"
+	"sync"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
@@ -43,7 +45,15 @@ func (a *App) Submit(req Request) {
 }
 
 func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
-	panic("implement me")
+	records := a.Node.cb.readAll(*a.latestMD)
+	for _, record := range records {
+		proposal := types.Proposal{
+			Payload:  record.Batch.ToBytes(),
+			Metadata: record.Metadata,
+		}
+		a.Deliver(proposal, nil)
+	}
+	return *a.latestMD, 0
 }
 
 func (a *App) Restart() {
@@ -117,13 +127,63 @@ func (a *App) AssembleProposal(metadata []byte, requests [][]byte) (nextProp typ
 	}, nil
 }
 
-func (a *App) Deliver(proposal types.Proposal, signature []types.Signature) {
-	a.Delivered <- &AppRecord{
+func (a *App) Deliver(proposal types.Proposal, _ []types.Signature) {
+	record := &AppRecord{
 		Metadata: proposal.Metadata,
 		Batch:    BatchFromBytes(proposal.Payload),
 	}
+	a.Node.cb.add(record)
 	a.latestMD = &smartbftprotos.ViewMetadata{}
 	proto.Unmarshal(proposal.Metadata, a.latestMD)
+	fmt.Println(a.ID, "Deliver(", a.latestMD.LatestSequence, ")")
+	a.Delivered <- record
+}
+
+type committedBatches struct {
+	lock     sync.RWMutex
+	latestMD smartbftprotos.ViewMetadata
+	records  []*AppRecord
+}
+
+func (cb *committedBatches) add(record *AppRecord) {
+	cb.lock.Lock()
+	defer cb.lock.Unlock()
+
+	md := &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(record.Metadata, md); err != nil {
+		panic(err)
+	}
+
+	if cb.latestMD.ViewId > md.ViewId {
+		return
+	}
+	if cb.latestMD.LatestSequence >= md.LatestSequence {
+		return
+	}
+	cb.latestMD = *md
+	cb.records = append(cb.records, record)
+}
+
+func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppRecord {
+	cb.lock.RLock()
+	defer cb.lock.RUnlock()
+
+	var res []*AppRecord
+
+	for _, entry := range cb.records {
+		md := &smartbftprotos.ViewMetadata{}
+		if err := proto.Unmarshal(entry.Metadata, md); err != nil {
+			panic(err)
+		}
+		if md.ViewId < from.ViewId || md.LatestSequence <= from.LatestSequence {
+			continue
+		}
+		res = append(res, &AppRecord{
+			Metadata: entry.Metadata,
+			Batch:    entry.Batch,
+		})
+	}
+	return res
 }
 
 type Request struct {

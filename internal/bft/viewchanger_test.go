@@ -11,20 +11,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
-
-	"github.com/pkg/errors"
-	"go.uber.org/zap/zapcore"
-
-	"github.com/golang/protobuf/proto"
-
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
-
-	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"go.uber.org/zap/zapcore"
 )
 
 var (
@@ -116,7 +112,7 @@ func TestStartViewChange(t *testing.T) {
 
 	vc.Start(0)
 
-	vc.StartViewChange()
+	vc.StartViewChange(true)
 	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 
@@ -552,7 +548,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 
 	vc.Start(0)
 
-	vc.StartViewChange()
+	vc.StartViewChange(true)
 	m := <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 

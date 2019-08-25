@@ -6,6 +6,8 @@
 package test
 
 import (
+	"fmt"
+	"strconv"
 	"testing"
 	"time"
 
@@ -292,6 +294,60 @@ func TestLeaderForwarding(t *testing.T) {
 	assert.Equal(t, committedBatches[0], committedBatches[2])
 }
 
+func TestCatchingUpWithSync(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	n0 := newNode(0, network, t.Name())
+	n1 := newNode(1, network, t.Name())
+	n2 := newNode(2, network, t.Name())
+	n3 := newNode(3, network, t.Name())
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n3.Disconnect() // will need to catch up
+
+	for i := 1; i <= 10; i++ {
+		n0.Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		<-n0.Delivered // Wait for leader to commit
+		<-n1.Delivered // Wait for follower to commit
+		<-n2.Delivered // Wait for follower to commit
+	}
+
+	n3.Connect()
+	// Submit a request to the follower which will trigger a timeout and then
+	// will trigger the leader to make a new proposal.
+	n0.Submit(Request{ID: fmt.Sprintf("%d", 11), ClientID: "alice"})
+	<-n0.Delivered // Wait for leader to commit
+	<-n1.Delivered // Wait for follower to commit
+	<-n2.Delivered // Wait for follower to commit
+
+	// Wait for the node to catch up with the blocks it missed before that.
+	for i := 1; i <= 10; i++ {
+		record := <-n3.Delivered
+		req := requestFromBytes(record.Batch.Requests[0])
+		assert.Equal(t, fmt.Sprintf("%d", i), req.ID)
+	}
+
+	// At this point our node may or may not catch up to the rest.
+	// We create new batches until it catches up with sequence 19.
+	// A node might be 1 sequence behind the rest, but it should
+	// continuously try to keep up with the rest.
+	for reqID := 12; reqID < 20; reqID++ {
+		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-n1.Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(19, n3.Delivered)
+		if caughtUp {
+			return
+		}
+	}
+	t.Log("Didn't catch up")
+}
+
 func countCommittedBatches(n *App) int {
 	var numBatchesCreated int
 	for {
@@ -300,6 +356,24 @@ func countCommittedBatches(n *App) int {
 			numBatchesCreated++
 		case <-time.After(time.Millisecond * 500):
 			return numBatchesCreated
+		}
+	}
+}
+
+func requestIDFromBatch(record *AppRecord) int {
+	n, _ := strconv.ParseInt(requestFromBytes(record.Batch.Requests[0]).ID, 10, 32)
+	return int(n)
+}
+
+func waitForCatchup(targetReqID int, out chan *AppRecord) bool {
+	for {
+		select {
+		case record := <-out:
+			if requestIDFromBatch(record) == targetReqID {
+				return true
+			}
+		case <-time.After(time.Millisecond * 100):
+			return false
 		}
 	}
 }

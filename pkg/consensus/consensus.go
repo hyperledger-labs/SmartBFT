@@ -47,13 +47,8 @@ type Consensus struct {
 	n           uint64
 }
 
-func (c *Consensus) Complain() {
-	c.Logger.Warnf("Something bad happened!")
-	c.viewChanger.StartViewChange()
-}
-
-func (c *Consensus) Sync() (protos.ViewMetadata, uint64) {
-	return protos.ViewMetadata{}, 0
+func (c *Consensus) Complain(stopView bool) {
+	c.viewChanger.StartViewChange(stopView)
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
@@ -84,16 +79,15 @@ func (c *Consensus) Start() {
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:       c.SelfID,
-		N:            c.n,
-		Logger:       c.Logger,
-		Comm:         c,
-		Signer:       c.Signer,
-		Verifier:     c.Verifier,
-		Application:  c,
-		Synchronizer: c,
-		Checkpoint:   &cpt,
-		InFlight:     &inFlight,
+		SelfID:      c.SelfID,
+		N:           c.n,
+		Logger:      c.Logger,
+		Comm:        c,
+		Signer:      c.Signer,
+		Verifier:    c.Verifier,
+		Application: c,
+		Checkpoint:  &cpt,
+		InFlight:    &inFlight,
 		// Controller later
 		// RequestsTimer later
 		ResendTicker: c.ResendViewChange,
@@ -109,12 +103,15 @@ func (c *Consensus) Start() {
 		Assembler:        c.Assembler,
 		Application:      c,
 		FailureDetector:  c,
-		Synchronizer:     c,
+		Synchronizer:     c.Synchronizer,
 		Comm:             c,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 		ViewChanger:      c.viewChanger,
 	}
+
+	c.viewChanger.Synchronizer = c.controller
+
 	c.controller.ProposerBuilder = c.proposalMaker()
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
@@ -169,7 +166,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Logger:          c.Logger,
 		Signer:          c.Signer,
 		SelfID:          c.SelfID,
-		Sync:            c.Synchronizer,
+		Sync:            c.controller,
 		FailureDetector: c,
 		Verifier:        c.Verifier,
 		N:               c.n,

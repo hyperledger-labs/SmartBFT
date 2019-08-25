@@ -173,7 +173,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 		{
@@ -201,7 +201,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 		{
@@ -219,7 +219,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 		{
@@ -250,7 +250,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 		{
@@ -271,7 +271,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 		{
@@ -289,7 +289,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain")
+				fd.AssertCalled(t, "Complain", false)
 			},
 		},
 	} {

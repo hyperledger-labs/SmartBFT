@@ -8,9 +8,8 @@ package test
 import (
 	"fmt"
 	"math/rand"
-	"time"
-
 	"sync"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -53,6 +52,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler) {
 	}
 	n[id] = node
 	node.running.Add(1)
+	node.createCommittedBatches(n)
 	go node.serve()
 }
 
@@ -107,6 +107,7 @@ type Node struct {
 	shutdownChan    chan struct{}
 	in              chan msgFrom
 	h               handler
+	cb              *committedBatches
 }
 
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
@@ -143,4 +144,14 @@ func (node *Node) serve() {
 
 		}
 	}
+}
+
+func (node *Node) createCommittedBatches(network Network) {
+	for _, n := range network {
+		if n.cb != nil {
+			node.cb = n.cb
+			return
+		}
+	}
+	node.cb = &committedBatches{}
 }

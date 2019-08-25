@@ -59,7 +59,7 @@ type ViewChanger struct {
 	currView        uint64
 	nextView        uint64
 	leader          uint64
-	startChangeChan chan struct{}
+	startChangeChan chan bool
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -69,7 +69,7 @@ type ViewChanger struct {
 // Start the view changer
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
-	v.startChangeChan = make(chan struct{}, 1)
+	v.startChangeChan = make(chan bool, 1)
 
 	v.nodes = v.Comm.Nodes()
 
@@ -147,8 +147,8 @@ func (v *ViewChanger) run() {
 		select {
 		case <-v.stopChan:
 			return
-		case <-v.startChangeChan:
-			v.startViewChange()
+		case stopView := <-v.startChangeChan:
+			v.startViewChange(stopView)
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
 		case <-v.ResendTicker:
@@ -208,15 +208,15 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 }
 
 // StartViewChange initiates a view change
-func (v *ViewChanger) StartViewChange() {
+func (v *ViewChanger) StartViewChange(stopView bool) {
 	select {
-	case v.startChangeChan <- struct{}{}:
+	case v.startChangeChan <- stopView:
 	default:
 	}
 }
 
 // StartViewChange stops current view and timeouts, and broadcasts a view change message to all
-func (v *ViewChanger) startViewChange() {
+func (v *ViewChanger) startViewChange(stopView bool) {
 	v.nextView = v.currView + 1
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
@@ -229,13 +229,15 @@ func (v *ViewChanger) startViewChange() {
 	}
 	v.Comm.BroadcastConsensus(msg)
 	v.Logger.Debugf("Node %d started view change, last view is %d", v.SelfID, v.currView)
-	v.Controller.AbortView() // abort the current view when joining view change
+	if stopView {
+		v.Controller.AbortView() // abort the current view when joining view change
+	}
 }
 
 func (v *ViewChanger) processViewChangeMsg() {
 	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1) { // join view change
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
-		v.startViewChange()
+		v.startViewChange(true)
 	}
 	// TODO add view change try timeout
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
