@@ -7,6 +7,8 @@ package naive
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"testing"
 	"time"
 
@@ -69,7 +71,11 @@ func TestBlockHeader(t *testing.T) {
 func TestChain(t *testing.T) {
 	blockCount := 10
 
-	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second})
+	testDir, err := ioutil.TempDir("", "naive_chain")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second}, testDir)
 
 	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
 		for _, chain := range chains {
@@ -94,7 +100,7 @@ func TestChain(t *testing.T) {
 	}
 }
 
-func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int]chan proto.Message) *Chain {
+func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int]chan proto.Message, testDir string) *Chain {
 	ingress := make(Ingress)
 	for from := 0; from < opt.NumNodes; from++ {
 		ingress[from] = network[id][from]
@@ -109,12 +115,12 @@ func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int
 	assert.NoError(t, err)
 	logger := basicLog.Sugar()
 
-	chain := NewChain(uint64(id), ingress, egress, logger, opt)
+	chain := NewChain(uint64(id), ingress, egress, logger, opt, testDir)
 
 	return chain
 }
 
-func setupNetwork(t *testing.T, opt NetworkOptions) map[int]*Chain {
+func setupNetwork(t *testing.T, opt NetworkOptions, testDir string) map[int]*Chain {
 	network := make(map[int]map[int]chan proto.Message)
 
 	chains := make(map[int]*Chain)
@@ -127,7 +133,7 @@ func setupNetwork(t *testing.T, opt NetworkOptions) map[int]*Chain {
 	}
 
 	for id := 0; id < opt.NumNodes; id++ {
-		chains[id] = setupNode(t, id, opt, network)
+		chains[id] = setupNode(t, id, opt, network, testDir)
 	}
 	return chains
 }

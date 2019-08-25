@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"path/filepath"
 	"sync"
 	"time"
 
@@ -147,7 +148,13 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 	}
 }
 
-func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions) *Node {
+func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions, testDir string) *Node {
+	nodeDir := filepath.Join(testDir, fmt.Sprintf("node%d", id))
+	writeAheadLog, err := wal.Create(logger, nodeDir, nil)
+	if err != nil {
+		logger.Panicf("Cannot create WAL at %s", nodeDir)
+	}
+
 	node := &Node{
 		clock:       time.NewTicker(time.Second),
 		secondClock: time.NewTicker(time.Second),
@@ -171,7 +178,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		Assembler:        node,
 		RequestInspector: node,
 		Synchronizer:     node,
-		WAL:              &wal.EphemeralWAL{},
+		WAL:              writeAheadLog,
 		Metadata: smartbftprotos.ViewMetadata{
 			LatestSequence: 0,
 			ViewId:         0,
