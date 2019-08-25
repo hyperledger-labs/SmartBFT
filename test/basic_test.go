@@ -21,7 +21,7 @@ func TestBasic(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-basic")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -55,7 +55,7 @@ func TestRestartFollowers(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-restart-followers")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -100,7 +100,7 @@ func TestLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-leader-in-partition")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -132,7 +132,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-after-decision-leader-in-partition")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -194,7 +194,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-multi-leaders-in-partition")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -243,7 +243,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-catching-up-with-view-change")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -291,7 +291,7 @@ func TestLeaderForwarding(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", "test-leader-forwarding")
+	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
