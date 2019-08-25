@@ -7,6 +7,8 @@ package test
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strconv"
 	"testing"
 	"time"
@@ -19,10 +21,14 @@ func TestBasic(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
-	n4 := newNode(4, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-basic")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+	n4 := newNode(4, network, t.Name(), testDir)
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -49,10 +55,14 @@ func TestRestartFollowers(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
-	n4 := newNode(4, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-restart-followers")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+	n4 := newNode(4, network, t.Name(), testDir)
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -90,10 +100,14 @@ func TestLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-leader-in-partition")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -118,10 +132,14 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-after-decision-leader-in-partition")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -176,13 +194,17 @@ func TestMultiLeadersPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
-	n4 := newNode(4, network, t.Name())
-	n5 := newNode(5, network, t.Name())
-	n6 := newNode(6, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-multi-leaders-in-partition")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+	n4 := newNode(4, network, t.Name(), testDir)
+	n5 := newNode(5, network, t.Name(), testDir)
+	n6 := newNode(6, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -221,10 +243,14 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-catching-up-with-view-change")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -265,10 +291,14 @@ func TestLeaderForwarding(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-leader-forwarding")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -299,10 +329,14 @@ func TestCatchingUpWithSync(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	n0 := newNode(0, network, t.Name())
-	n1 := newNode(1, network, t.Name())
-	n2 := newNode(2, network, t.Name())
-	n3 := newNode(3, network, t.Name())
+	testDir, err := ioutil.TempDir("", "test-leader-forwarding")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
