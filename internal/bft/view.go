@@ -50,7 +50,7 @@ type View struct {
 	Number           uint64
 	Decider          Decider
 	FailureDetector  FailureDetector
-	Sync             api.Synchronizer
+	Sync             Synchronizer
 	Logger           api.Logger
 	Comm             Comm
 	Verifier         api.Verifier

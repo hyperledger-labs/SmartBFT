@@ -146,7 +146,7 @@ func TestBadPrePrepare(t *testing.T) {
 	// and that if the same message is from a follower then it is simply ignored.
 	// Same goes to a proposal that doesn't pass the verifier.
 
-	var synchronizer *mocks.SynchronizerMock
+	var synchronizer *mocks.Synchronizer
 	var fd *mocks.FailureDetector
 	var syncWG *sync.WaitGroup
 	var fdWG *sync.WaitGroup
@@ -307,11 +307,11 @@ func TestBadPrePrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			synchronizer = &mocks.SynchronizerMock{}
+			synchronizer = &mocks.Synchronizer{}
 			syncWG = &sync.WaitGroup{}
 			synchronizer.On("Sync").Run(func(args mock.Arguments) {
 				syncWG.Done()
-			}).Return(protos.ViewMetadata{}, uint64(0))
+			})
 			fd = &mocks.FailureDetector{}
 			fdWG = &sync.WaitGroup{}
 			fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
@@ -386,7 +386,7 @@ func TestBadPrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			synchronizer := &mocks.SynchronizerMock{}
+			synchronizer := &mocks.Synchronizer{}
 			syncWG := &sync.WaitGroup{}
 			synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
 				syncWG.Done()

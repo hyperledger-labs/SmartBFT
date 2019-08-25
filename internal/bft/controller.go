@@ -101,6 +101,7 @@ type Controller struct {
 	stopOnce sync.Once
 	stopChan chan struct{}
 
+	syncChan             chan struct{}
 	decisionChan         chan decision
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
@@ -299,11 +300,8 @@ func (c *Controller) abortView() {
 	c.currView.Abort()
 }
 
-func (c *Controller) Sync() (protos.ViewMetadata, uint64) {
-	md, vSeq := c.Synchronizer.Sync()
-	c.Logger.Infof("Synchronized to view %d with sequence %d", md.ViewId, md.LatestSequence)
-	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence}
-	return md, vSeq
+func (c *Controller) Sync() {
+	c.grabSyncToken()
 }
 
 // AbortView makes the controller abort the current view
@@ -384,7 +382,37 @@ func (c *Controller) run() {
 			return
 		case <-c.leaderToken:
 			c.propose()
+		case <-c.syncChan:
+			c.sync()
 		}
+	}
+}
+
+func (c *Controller) sync() {
+	// Block any concurrent sync attempt.
+	c.grabSyncToken()
+	// At exit, enable sync once more, but ignore
+	// all synchronization attempts done while
+	// we were syncing.
+	defer c.relinquishSyncToken()
+
+	md, vSeq := c.Synchronizer.Sync()
+	c.verificationSequence = vSeq
+	c.Logger.Infof("Synchronized to view %d with sequence %d", md.ViewId, md.LatestSequence)
+	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence}
+}
+
+func (c *Controller) grabSyncToken() {
+	select {
+	case c.syncChan <- struct{}{}:
+	default:
+	}
+}
+
+func (c *Controller) relinquishSyncToken() {
+	select {
+	case <-c.syncChan:
+	default:
 	}
 }
 
@@ -434,6 +462,7 @@ func (c *Controller) relinquishLeaderToken() {
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
 	c.controllerDone.Add(1)
 	c.stopOnce = sync.Once{}
+	c.syncChan = make(chan struct{})
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)
