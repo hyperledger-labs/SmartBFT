@@ -59,11 +59,12 @@ type View struct {
 	State            State
 	Phase            Phase
 	// Runtime
-	incMsgs           chan *incMsg
-	myProposalSig     *types.Signature
-	inFlightProposal  *types.Proposal
-	inFlightRequests  []types.RequestInfo
-	lastBroadcastSent *protos.Message
+	lastVotedProposalByID map[uint64]protos.Commit
+	incMsgs               chan *incMsg
+	myProposalSig         *types.Signature
+	inFlightProposal      *types.Proposal
+	inFlightRequests      []types.RequestInfo
+	lastBroadcastSent     *protos.Message
 	// Current sequence sent prepare and commit
 	currPrepareSent *protos.Message
 	currCommitSent  *protos.Message
@@ -89,7 +90,7 @@ func (v *View) Start() {
 	v.stopOnce = sync.Once{}
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.abortChan = make(chan struct{})
-
+	v.lastVotedProposalByID = make(map[uint64]protos.Commit)
 	v.viewEnded.Add(1)
 
 	v.prePrepare = make(chan *protos.Message, 1)
@@ -157,10 +158,13 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
+	msgProposalSeq := proposalSequence(m)
+
 	if msgViewNum != v.Number {
 		v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
 		// TODO  when do we send the error message?
 		if sender != v.LeaderID {
+			v.discoverIfSyncNeeded(sender, m)
 			return
 		}
 		v.FailureDetector.Complain(false)
@@ -172,8 +176,6 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 		return
 	}
 
-	msgProposalSeq := proposalSequence(m)
-
 	if msgProposalSeq == v.ProposalSequence-1 && v.ProposalSequence > 0 {
 		v.handlePrevSeqMessage(msgProposalSeq, sender, m)
 		return
@@ -183,12 +185,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
-		// If message is from leader, we complain and start a sync
-		if sender == v.LeaderID && msgProposalSeq > v.ProposalSequence {
-			v.stop()
-			v.FailureDetector.Complain(false)
-			v.Sync.Sync()
-		}
+		v.discoverIfSyncNeeded(sender, m)
 		return
 	}
 
@@ -542,6 +539,69 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		prevMsgFound = fmt.Sprintf("sent back previous %s.", msgType)
 	}
 	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)
+}
+
+func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
+	// We're only interested in commit messages.
+	commit := m.GetCommit()
+	if commit == nil {
+		return
+	}
+
+	// To commit a block we need 2f + 1 votes.
+	// at least f+1 of them are honest and will broadcast
+	// their commits to votes to everyone including us.
+	// In each such a threshold of f+1 votes there is at least
+	// a single honest node that prepared for a proposal
+	// which we apparently missed.
+	_, f := computeQuorum(v.N)
+	threshold := f + 1
+
+	v.lastVotedProposalByID[sender] = *commit
+
+	v.Logger.Debugf("Got commit of seq %d in view %d from %d while being in seq %d in view %d",
+		commit.Seq, commit.View, sender, v.ProposalSequence, v.Number)
+
+	// If we haven't reached a threshold of proposals yet, abort.
+	if len(v.lastVotedProposalByID) < threshold {
+		return
+	}
+
+	// Make a histogram out of all current seen votes.
+	countsByVotes := make(map[proposalInfo]int)
+	for _, vote := range v.lastVotedProposalByID {
+		info := proposalInfo{
+			digest: vote.Digest,
+			view:   vote.View,
+			seq:    vote.Seq,
+		}
+		countsByVotes[info]++
+	}
+
+	// Check if there is a <digest, view, seq> that collected a threshold of votes,
+	// and that sequence is lower than out current sequence, or our view is different.
+	for vote, count := range countsByVotes {
+		if count < threshold {
+			continue
+		}
+
+		// Disregard votes for past views.
+		if vote.view < v.Number {
+			continue
+		}
+
+		// Disregard votes for past sequences for this view.
+		if vote.seq <= v.ProposalSequence && vote.view == v.Number {
+			continue
+		}
+
+		v.Logger.Warnf("Seen %d votes for digest %s in view %d, sequence %d but I am in view %d and seq %d",
+			count, vote.digest, vote.view, vote.seq, v.Number, v.ProposalSequence)
+		v.stop()
+		v.FailureDetector.Complain(false)
+		v.Sync.Sync()
+		return
+	}
 }
 
 type voteVerifier struct {

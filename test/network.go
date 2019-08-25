@@ -44,11 +44,12 @@ func (n Network) AddOrUpdateNode(id uint64, h handler) {
 	}
 
 	node = &Node{
-		in:           make(chan msgFrom, incBuffSize),
-		h:            h,
-		shutdownChan: make(chan struct{}),
-		n:            n,
-		id:           uint64(id),
+		in:                  make(chan msgFrom, incBuffSize),
+		h:                   h,
+		shutdownChan:        make(chan struct{}),
+		n:                   n,
+		id:                  uint64(id),
+		peerLossProbability: make(map[uint64]float32),
 	}
 	n[id] = node
 	node.running.Add(1)
@@ -80,6 +81,7 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 
 	dstNode.RLock()
 	p := dstNode.lossProbability
+	w := srcNode.peerLossProbability[target]
 	dstNode.RUnlock()
 
 	srcNode.RLock()
@@ -87,7 +89,7 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 	srcNode.RUnlock()
 
 	r := rand.Float32()
-	if r < p || r < q {
+	if r < p || r < q || r < w {
 		return
 	}
 
@@ -100,14 +102,15 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 
 type Node struct {
 	sync.RWMutex
-	running         sync.WaitGroup
-	id              uint64
-	n               Network
-	lossProbability float32
-	shutdownChan    chan struct{}
-	in              chan msgFrom
-	h               handler
-	cb              *committedBatches
+	running             sync.WaitGroup
+	id                  uint64
+	n                   Network
+	lossProbability     float32
+	peerLossProbability map[uint64]float32
+	shutdownChan        chan struct{}
+	in                  chan msgFrom
+	h                   handler
+	cb                  *committedBatches
 }
 
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {

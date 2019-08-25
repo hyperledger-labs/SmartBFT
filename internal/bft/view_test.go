@@ -972,6 +972,132 @@ func TestViewPersisted(t *testing.T) {
 	}
 }
 
+func TestDiscoverDeliberateCensorship(t *testing.T) {
+	// Scenario: We test a use case in which the leader
+	// sends proposals to everyone but a single follower in order
+	// to censor it from the network.
+	// The node will eventually figure this out, and:
+	// 1) Try to lobby for a view change
+	// 2) Will synchronize itself
+
+	for _, testCase := range []struct {
+		description   string
+		shouldSync    bool
+		firstMsgView  uint64
+		secondMsgView uint64
+		firstMsgSeq   uint64
+		secondMsgSeq  uint64
+	}{
+		{
+			description:   "same view, node is behind",
+			shouldSync:    true,
+			firstMsgView:  5,
+			secondMsgView: 5,
+			firstMsgSeq:   12,
+			secondMsgSeq:  12,
+		},
+		{
+			description:   "same view, node is behind but not enough votes",
+			firstMsgView:  5,
+			secondMsgView: 5,
+			firstMsgSeq:   11,
+			secondMsgSeq:  12,
+		},
+		{
+			description:   "later view, node is behind",
+			shouldSync:    true,
+			firstMsgView:  6,
+			secondMsgView: 6,
+			firstMsgSeq:   1,
+			secondMsgSeq:  1,
+		},
+		{
+			description:   "later view, node is behind but not enough votes",
+			firstMsgView:  6,
+			secondMsgView: 5,
+			firstMsgSeq:   1,
+			secondMsgSeq:  1,
+		},
+		{
+			description:   "same view, node is behind only 1 proposal",
+			firstMsgView:  5,
+			secondMsgView: 5,
+			firstMsgSeq:   11,
+			secondMsgSeq:  11,
+		},
+		{
+			description:   "node is ahead in view number",
+			firstMsgView:  4,
+			secondMsgView: 4,
+			firstMsgSeq:   1,
+			secondMsgSeq:  1,
+		},
+		{
+			description:   "node is ahead in proposal sequence",
+			firstMsgView:  5,
+			secondMsgView: 5,
+			firstMsgSeq:   8,
+			secondMsgSeq:  8,
+		},
+	} {
+		t.Run(testCase.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+
+			makeCommit := func(view, seq uint64, digest string) *protos.Message {
+				return &protos.Message{
+					Content: &protos.Message_Commit{
+						Commit: &protos.Commit{
+							View:   view,
+							Seq:    seq,
+							Digest: digest,
+						},
+					},
+				}
+			}
+
+			fd := &mocks.FailureDetector{}
+			synchronizer := &mocks.Synchronizer{}
+
+			view := &bft.View{
+				Logger:           basicLog.Sugar(),
+				N:                4,
+				LeaderID:         1,
+				Quorum:           3,
+				Number:           5,
+				ProposalSequence: 10,
+				FailureDetector:  fd,
+				Sync:             synchronizer,
+			}
+
+			var syncCalled sync.WaitGroup
+			if testCase.shouldSync {
+				syncCalled.Add(1)
+				fd.On("Complain", false)
+				synchronizer.On("Sync").Run(func(_ mock.Arguments) {
+					syncCalled.Done()
+				})
+			}
+
+			view.Start()
+			defer view.Abort()
+
+			view.HandleMessage(2, makeCommit(testCase.firstMsgView, testCase.firstMsgSeq, "foo"))
+			view.HandleMessage(3, makeCommit(testCase.secondMsgView, testCase.secondMsgSeq, "foo"))
+			// Send some un-related messages, to ensure we processed the messages before this one.
+			for i := 0; i < 10*int(view.N)+2; i++ {
+				view.HandleMessage(2, prepare)
+			}
+
+			syncCalled.Wait()
+			if testCase.shouldSync {
+				fd.AssertCalled(t, "Complain", false)
+			}
+
+		})
+	}
+}
+
 func TestTwoPrePreparesInARow(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
