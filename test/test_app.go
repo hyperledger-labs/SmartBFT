@@ -7,7 +7,6 @@ package test
 
 import (
 	"encoding/asn1"
-	"fmt"
 	"sync"
 	"time"
 
@@ -134,8 +133,9 @@ func (a *App) Deliver(proposal types.Proposal, _ []types.Signature) {
 	}
 	a.Node.cb.add(record)
 	a.latestMD = &smartbftprotos.ViewMetadata{}
-	proto.Unmarshal(proposal.Metadata, a.latestMD)
-	fmt.Println(a.ID, "Deliver(", a.latestMD.LatestSequence, ")")
+	if err := proto.Unmarshal(proposal.Metadata, a.latestMD); err != nil {
+		panic(err)
+	}
 	a.Delivered <- record
 }
 
