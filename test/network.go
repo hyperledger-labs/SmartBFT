@@ -27,6 +27,7 @@ const (
 type handler interface {
 	HandleMessage(sender uint64, m *smartbftprotos.Message)
 	HandleRequest(sender uint64, req []byte)
+	Stop()
 }
 
 type msgFrom struct {
@@ -59,6 +60,9 @@ func (n Network) Shutdown() {
 	for _, node := range n {
 		close(node.shutdownChan)
 		node.running.Wait()
+	}
+	for _, node := range n {
+		node.h.Stop()
 	}
 }
 

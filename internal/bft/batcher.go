@@ -74,6 +74,12 @@ func (b *BatchBuilder) BatchRemainder(remainder [][]byte) {
 func (b *BatchBuilder) Close() {
 	b.closeLock.Lock()
 	defer b.closeLock.Unlock()
+	select {
+	case <-b.closeChan:
+		return
+	default:
+
+	}
 	close(b.closeChan)
 }
 
