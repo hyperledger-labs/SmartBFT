@@ -319,8 +319,6 @@ func TestCatchingUpWithSync(t *testing.T) {
 	}
 
 	n3.Connect()
-	// Submit a request to the follower which will trigger a timeout and then
-	// will trigger the leader to make a new proposal.
 	n0.Submit(Request{ID: fmt.Sprintf("%d", 11), ClientID: "alice"})
 	<-n0.Delivered // Wait for leader to commit
 	<-n1.Delivered // Wait for follower to commit
