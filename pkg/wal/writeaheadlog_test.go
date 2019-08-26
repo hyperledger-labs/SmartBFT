@@ -671,6 +671,101 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 	})
 }
 
+func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	basicLog, err := zap.NewProduction()
+	assert.NoError(t, err)
+	logger := basicLog.Sugar()
+
+	// Create
+	wal, entries, err := InitializeAndReadAll(logger, testDir, DefaultOptions())
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	assert.Equal(t, 0, len(entries))
+
+	crc := wal.CRC()
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	expectedFileName := fmt.Sprintf(walFileTemplate, 1)
+	verifyFirstFileCreation(t, logger, testDir, expectedFileName, crc)
+
+	// Open
+	options := &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048}
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	assert.Equal(t, 0, len(entries))
+
+	const NumBytes = 1024
+	const NumRec = 20
+	for m := 0; m < NumRec; m++ {
+		data1 := make([]byte, NumBytes)
+		for n := 0; n < NumBytes; n++ {
+			data1[n] = byte(n % (m + 1))
+		}
+		err = wal.Append(data1, false)
+		assert.NoError(t, err)
+	}
+
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	assert.NotNil(t, entries)
+	assert.Equal(t, NumRec, len(entries))
+
+	rec1 := []byte{1, 2, 3, 4}
+	err = wal.Append(rec1, true)
+	assert.NoError(t, err)
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	// Corrupt, add tail to last file
+	names, err := dirReadWalNames(testDir)
+	assert.NoError(t, err)
+	lastFile := filepath.Join(testDir, names[len(names)-1])
+	f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+	assert.NoError(t, err)
+	_, err = f.Seek(0, io.SeekEnd)
+	assert.NoError(t, err)
+	_, err = f.Write(make([]byte, 64))
+	assert.NoError(t, err)
+	err = f.Close()
+	assert.NoError(t, err)
+
+	// Repair
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	assert.NotNil(t, entries)
+	assert.Equal(t, 1, len(entries))
+	assert.Equal(t, rec1, entries[0])
+
+	rec2 := []byte{5, 6, 7, 8}
+	err = wal.Append(rec2, false)
+	assert.NoError(t, err)
+	err = wal.Close()
+	assert.NoError(t, err)
+
+	// One last time
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	assert.NoError(t, err)
+	assert.NotNil(t, wal)
+	assert.NotNil(t, entries)
+	assert.Equal(t, 2, len(entries))
+	assert.Equal(t, rec1, entries[0])
+	assert.Equal(t, rec2, entries[1])
+
+	err = wal.Close()
+	assert.NoError(t, err)
+}
+
 func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec int) {
 	logger.Infof(">>> Open #1")
 	wal, err := Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
