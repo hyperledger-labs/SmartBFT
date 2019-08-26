@@ -369,7 +369,11 @@ func (c *Controller) run() {
 			c.Checkpoint.Set(d.proposal, d.signatures)
 			c.Logger.Debugf("Node %d delivered proposal", c.ID)
 			c.removeDeliveredFromPool(d)
-			c.deliverChan <- struct{}{}
+			select {
+			case c.deliverChan <- struct{}{}:
+			case <-c.stopChan:
+				return
+			}
 			c.maybePruneRevokedRequests()
 			if iAm, _ := c.iAmTheLeader(); iAm {
 				c.acquireLeaderToken()
