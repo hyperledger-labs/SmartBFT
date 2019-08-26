@@ -976,9 +976,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 	// Scenario: We test a use case in which the leader
 	// sends proposals to everyone but a single follower in order
 	// to censor it from the network.
-	// The node will eventually figure this out, and:
-	// 1) Try to lobby for a view change
-	// 2) Will synchronize itself
+	// The node will eventually figure this out, and will synchronize itself.
 
 	for _, testCase := range []struct {
 		description   string
@@ -1056,7 +1054,6 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				}
 			}
 
-			fd := &mocks.FailureDetector{}
 			synchronizer := &mocks.Synchronizer{}
 
 			view := &bft.View{
@@ -1066,14 +1063,12 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				Quorum:           3,
 				Number:           5,
 				ProposalSequence: 10,
-				FailureDetector:  fd,
 				Sync:             synchronizer,
 			}
 
 			var syncCalled sync.WaitGroup
 			if testCase.shouldSync {
 				syncCalled.Add(1)
-				fd.On("Complain", false)
 				synchronizer.On("Sync").Run(func(_ mock.Arguments) {
 					syncCalled.Done()
 				})
@@ -1085,15 +1080,15 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 			view.HandleMessage(2, makeCommit(testCase.firstMsgView, testCase.firstMsgSeq, "foo"))
 			view.HandleMessage(3, makeCommit(testCase.secondMsgView, testCase.secondMsgSeq, "foo"))
 			// Send some un-related messages, to ensure we processed the messages before this one.
+			// We send exactly 10 * int(view.N) + 2 (the incoming messages buffer size) so that we
+			// are sure that the above 2 messages were processed.
+			// Otherwise we might finish the test too early and get a false negative (Sync would have been
+			// called wrongly had the test been run for longer).
 			for i := 0; i < 10*int(view.N)+2; i++ {
 				view.HandleMessage(2, prepare)
 			}
 
 			syncCalled.Wait()
-			if testCase.shouldSync {
-				fd.AssertCalled(t, "Complain", false)
-			}
-
 		})
 	}
 }

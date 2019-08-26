@@ -579,7 +579,7 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 	}
 
 	// Check if there is a <digest, view, seq> that collected a threshold of votes,
-	// and that sequence is lower than out current sequence, or our view is different.
+	// and that sequence is higher than out current sequence, or our view is different.
 	for vote, count := range countsByVotes {
 		if count < threshold {
 			continue
@@ -598,7 +598,6 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 		v.Logger.Warnf("Seen %d votes for digest %s in view %d, sequence %d but I am in view %d and seq %d",
 			count, vote.digest, vote.view, vote.seq, v.Number, v.ProposalSequence)
 		v.stop()
-		v.FailureDetector.Complain(false)
 		v.Sync.Sync()
 		return
 	}
