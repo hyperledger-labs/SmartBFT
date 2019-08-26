@@ -354,17 +354,17 @@ func TestViewChanged(t *testing.T) {
 	assert.NoError(t, err)
 
 	controller := &bft.Controller{
-		Signer:          signer,
-		WAL:             wal,
-		ID:              2, // the next leader
-		N:               4,
-		Logger:          log,
-		Batcher:         batcher,
-		Verifier:        verifier,
-		Assembler:       assembler,
-		Comm:            comm,
-		RequestPool:     reqPool,
-		LeaderMonitor:   leaderMon,
+		Signer:        signer,
+		WAL:           wal,
+		ID:            2, // the next leader
+		N:             4,
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
 	}
 	configureProposerBuilder(controller)
 
