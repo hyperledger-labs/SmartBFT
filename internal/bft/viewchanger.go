@@ -42,7 +42,7 @@ type ViewChanger struct {
 	Signer       api.Signer
 	Verifier     api.Verifier
 	Application  api.Application
-	Synchronizer api.Synchronizer
+	Synchronizer Synchronizer
 
 	Checkpoint *types.Checkpoint
 	InFlight   *InFlightData
@@ -524,7 +524,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 			v.deliverDecision(proposal, signatures)
 			return
 		}
-		v.Synchronizer.Sync() // TODO make sure sync succeeds
+		v.Synchronizer.Sync()
 		return
 	}
 	md := &protos.ViewMetadata{}
@@ -536,7 +536,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 		return
 	}
 	if md.LatestSequence < lastDecisionSequence { // I am far behind
-		v.Synchronizer.Sync() // TODO make sure sync succeeds
+		v.Synchronizer.Sync()
 		return
 	}
 	if md.LatestSequence > lastDecisionSequence+1 {

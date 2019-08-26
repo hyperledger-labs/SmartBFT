@@ -18,6 +18,12 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+type proposalInfo struct {
+	digest string
+	view   uint64
+	seq    uint64
+}
+
 func viewNumber(m *protos.Message) uint64 {
 	if pp := m.GetPrePrepare(); pp != nil {
 		return pp.GetView()
@@ -180,7 +186,7 @@ type ProposalMaker struct {
 	SelfID          uint64
 	Decider         Decider
 	FailureDetector FailureDetector
-	Sync            api.Synchronizer
+	Sync            Synchronizer
 	Logger          api.Logger
 	Comm            Comm
 	Verifier        api.Verifier

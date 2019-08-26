@@ -324,6 +324,41 @@ func TestLeaderForwarding(t *testing.T) {
 	assert.Equal(t, committedBatches[0], committedBatches[2])
 }
 
+func TestLeaderExclusion(t *testing.T) {
+	// Scenario: The leader doesn't send messages to n3,
+	// but it should detect this and sync.
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	n0.DisconnectFrom(3)
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	// We create new batches until the disconnected node catches up the quorum.
+	for reqID := 1; reqID < 100; reqID++ {
+		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-n1.Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, n3.Delivered)
+		if caughtUp {
+			return
+		}
+	}
+	t.Log("Didn't catch up")
+}
+
 func TestCatchingUpWithSync(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
@@ -353,26 +388,12 @@ func TestCatchingUpWithSync(t *testing.T) {
 	}
 
 	n3.Connect()
-	n0.Submit(Request{ID: fmt.Sprintf("%d", 11), ClientID: "alice"})
-	<-n0.Delivered // Wait for leader to commit
-	<-n1.Delivered // Wait for follower to commit
-	<-n2.Delivered // Wait for follower to commit
 
-	// Wait for the node to catch up with the blocks it missed before that.
-	for i := 1; i <= 10; i++ {
-		record := <-n3.Delivered
-		req := requestFromBytes(record.Batch.Requests[0])
-		assert.Equal(t, fmt.Sprintf("%d", i), req.ID)
-	}
-
-	// At this point our node may or may not catch up to the rest.
-	// We create new batches until it catches up with sequence 19.
-	// A node might be 1 sequence behind the rest, but it should
-	// continuously try to keep up with the rest.
-	for reqID := 12; reqID < 20; reqID++ {
+	// We create new batches until it catches up the quorum.
+	for reqID := 11; reqID < 100; reqID++ {
 		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
 		<-n1.Delivered // Wait for follower to commit
-		caughtUp := waitForCatchup(19, n3.Delivered)
+		caughtUp := waitForCatchup(reqID, n3.Delivered)
 		if caughtUp {
 			return
 		}

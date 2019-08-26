@@ -73,6 +73,18 @@ func (a *App) Disconnect() {
 	a.Node.lossProbability = 1
 }
 
+func (a *App) DisconnectFrom(target uint64) {
+	a.Node.Lock()
+	defer a.Node.Unlock()
+	a.Node.peerLossProbability[target] = 1.0
+}
+
+func (a *App) ConnectTo(target uint64) {
+	a.Node.Lock()
+	defer a.Node.Unlock()
+	delete(a.Node.peerLossProbability, target)
+}
+
 func (a *App) Connect() {
 	a.Node.Lock()
 	defer a.Node.Unlock()

@@ -42,3 +42,9 @@ type SynchronizerMock interface {
 type SignerMock interface {
 	api.Signer
 }
+
+//go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
+
+type Synchronizer interface {
+	Sync()
+}
