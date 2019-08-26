@@ -8,12 +8,10 @@ package test
 import (
 	"encoding/asn1"
 	"fmt"
-	"io"
 	"path/filepath"
 	"sync"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -248,6 +246,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
+	sugaredLogger := logger.Sugar()
 
 	app := &App{
 		clock:       time.NewTicker(time.Second),
@@ -258,7 +257,10 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		latestMD:    &smartbftprotos.ViewMetadata{},
 	}
 
-	writeAheadLog, walInitialEntries := initWAL(logger.Sugar(), filepath.Join(testDir, fmt.Sprintf("node%d", id)))
+	writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(sugaredLogger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+	if err != nil {
+		sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
+	}
 
 	app.Setup = func() {
 		c := &consensus.Consensus{
@@ -266,7 +268,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 			ViewChangeResendTimeout: time.Second,
 			Scheduler:               app.clock.C,
 			SelfID:                  id,
-			Logger:                  logger.Sugar(),
+			Logger:                  sugaredLogger,
 			WAL:                     writeAheadLog,
 			Metadata:                *app.latestMD,
 			Verifier:                app,
@@ -288,46 +290,4 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 	app.Setup()
 	app.Node = network[id]
 	return app
-}
-
-func initWAL(logger api.Logger, walDir string) (consensusWAL *wal.WriteAheadLogFile, walInitState [][]byte) {
-
-	logger.Infof("Creating a wal %s", walDir)
-	consensusWAL, err := wal.Create(logger, walDir, wal.DefaultOptions())
-	if err != nil {
-		if err != wal.ErrWALAlreadyExists {
-			logger.Panicf("failed to create WAL on dir %s, err %s", walDir, err)
-		}
-
-		logger.Infof("WAL %s already exists", walDir)
-		// if wal already exists we need to open it
-		consensusWAL, err = wal.Open(logger, walDir, wal.DefaultOptions())
-		if err != nil {
-			logger.Panicf("failed to open WAL on dir %s, err %s", walDir, err)
-		}
-
-		// since wall existed we also need to read recent entries
-
-		logger.Infof("Reading WAL entries")
-		walInitState, err = consensusWAL.ReadAll()
-		if err != nil {
-			logger.Infof("got error while reading WAL entries, err %s", err)
-			if err != io.ErrUnexpectedEOF {
-				logger.Panicf("Cannot read entries from WAL on dir %s, err %s", walDir, err)
-			}
-			// got ErrUnexpectedEOF, let's try to repair
-			logger.Infof("trying to repair WAL %s", walDir)
-			err = wal.Repair(logger, walDir)
-			if err != nil {
-				logger.Panicf("WAL on dir %s cannot be repaired, err %s", walDir, err)
-			}
-			logger.Infof("Reading WAL entries after repair")
-			walInitState, err = consensusWAL.ReadAll()
-			if err != nil {
-				logger.Panicf("Cannot read entries from WAL on dir %s, err %s", walDir, err)
-			}
-		}
-	}
-
-	return
 }
