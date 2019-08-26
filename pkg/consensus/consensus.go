@@ -26,20 +26,21 @@ type Consensus struct {
 	BatchSize    int
 	BatchTimeout time.Duration
 	bft.Comm
-	Application       bft.Application
-	Assembler         bft.Assembler
-	WAL               bft.WriteAheadLog
-	WALInitialContent [][]byte
-	Signer            bft.Signer
-	Verifier          bft.Verifier
-	RequestInspector  bft.RequestInspector
-	Synchronizer      bft.Synchronizer
-	Logger            bft.Logger
-	Metadata          protos.ViewMetadata
-	LastProposal      types.Proposal
-	LastSignatures    []types.Signature
-	Scheduler         <-chan time.Time
-	ResendViewChange  <-chan time.Time
+	Application             bft.Application
+	Assembler               bft.Assembler
+	WAL                     bft.WriteAheadLog
+	WALInitialContent       [][]byte
+	Signer                  bft.Signer
+	Verifier                bft.Verifier
+	RequestInspector        bft.RequestInspector
+	Synchronizer            bft.Synchronizer
+	Logger                  bft.Logger
+	Metadata                protos.ViewMetadata
+	LastProposal            types.Proposal
+	LastSignatures          []types.Signature
+	Scheduler               <-chan time.Time
+	ViewChangerTicker       <-chan time.Time
+	ViewChangeResendTimeout time.Duration
 
 	viewChanger *algorithm.ViewChanger
 	controller  *algorithm.Controller
@@ -90,7 +91,8 @@ func (c *Consensus) Start() {
 		InFlight:    &inFlight,
 		// Controller later
 		// RequestsTimer later
-		ResendTicker: c.ResendViewChange,
+		Ticker:        c.ViewChangerTicker,
+		ResendTimeout: c.ViewChangeResendTimeout,
 	}
 
 	c.controller = &algorithm.Controller{
