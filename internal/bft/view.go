@@ -579,7 +579,7 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 	}
 
 	// Check if there is a <digest, view, seq> that collected a threshold of votes,
-	// and that sequence is higher than out current sequence, or our view is different.
+	// and that sequence is higher than our current sequence, or our view is different.
 	for vote, count := range countsByVotes {
 		if count < threshold {
 			continue
