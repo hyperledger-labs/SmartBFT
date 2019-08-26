@@ -7,7 +7,6 @@ package wal
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"hash/crc32"
 	"io"
@@ -16,10 +15,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/golang/protobuf/proto"
-
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -105,6 +104,10 @@ func DefaultOptions() *Options {
 		FileSizeBytes:   FileSizeBytesDefault,
 		BufferSizeBytes: BufferSizeBytesDefault,
 	}
+}
+
+func (o *Options) String() string {
+	return fmt.Sprintf("{FileSizeBytes: %d, BufferSizeBytes: %d}", o.FileSizeBytes, o.BufferSizeBytes)
 }
 
 // Create will create a new WAL, if it does not exist, or an error if it already exists.
@@ -518,6 +521,7 @@ FileLoop:
 	}
 	w.readMode = false
 
+	w.logger.Infof("Write-Ahead-Log read %d entries, mode: WRITE", len(items))
 	return items, nil
 }
 
@@ -651,4 +655,49 @@ func (w *WriteAheadLogFile) saveCRC() error {
 	w.logger.Debugf("CRC-Anchor %08X written to file: %s, at offset %d, size=%d", w.crc, w.logFile.Name(), offset, nh+nb)
 
 	return nil
+}
+
+func InitializeAndReadAll(logger api.Logger, walDir string, options *Options) (writeAheadLog *WriteAheadLogFile, initialState [][]byte, err error) {
+	logger.Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
+	logger.Debugf("Write-Ahead-Log options: %s", options)
+
+	writeAheadLog, err = Create(logger, walDir, options)
+	if err != nil {
+		if err != ErrWALAlreadyExists {
+			err = errors.Wrap(err, "Cannot create Write-Ahead-Log")
+			return nil, nil, err
+		}
+
+		logger.Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
+		writeAheadLog, err = Open(logger, walDir, options)
+		if err != nil {
+			err = errors.Wrap(err, "Cannot open Write-Ahead-Log")
+			return nil, nil, err
+		}
+
+		initialState, err = writeAheadLog.ReadAll()
+		if err != nil {
+			if err != io.ErrUnexpectedEOF {
+				err = errors.Wrap(err, "Cannot read initial state from Write-Ahead-Log")
+				return nil, nil, err
+			}
+
+			logger.Infof("Received io.ErrUnexpectedEOF, trying to repair Write-Ahead-Log at dir: %s", walDir)
+			err = Repair(logger, walDir)
+			if err != nil {
+				err = errors.Wrap(err, "Cannot repair Write-Ahead-Log")
+				return nil, nil, err
+			}
+
+			logger.Infof("Reading Write-Ahead-Log initial state after repair")
+			initialState, err = writeAheadLog.ReadAll()
+			if err != nil {
+				err = errors.Wrap(err, "Cannot initial state from Write-Ahead-Log, after repair")
+				return nil, nil, err
+			}
+		}
+	}
+	logger.Infof("Write-Ahead-Log initialized successfully, initial state contains %d entries", len(initialState))
+
+	return writeAheadLog, initialState, err
 }
