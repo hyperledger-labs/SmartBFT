@@ -50,7 +50,9 @@ type ViewChanger struct {
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
-	ResendTicker <-chan time.Time
+	Ticker        <-chan time.Time
+	ResendTimeout time.Duration
+	lastResend    time.Time
 
 	// Runtime
 	incMsgs         chan *incMsg
@@ -85,6 +87,8 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.currView = startViewNumber
 	v.nextView = v.currView
 	v.leader = getLeaderID(v.currView, v.N, v.nodes)
+
+	v.lastResend = time.Now()
 
 	go func() {
 		defer v.vcDone.Done()
@@ -151,13 +155,17 @@ func (v *ViewChanger) run() {
 			v.startViewChange(stopView)
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
-		case <-v.ResendTicker:
-			v.resend()
+		case now := <-v.Ticker:
+			v.checkIfResendViewChange(now)
 		}
 	}
 }
 
-func (v *ViewChanger) resend() {
+func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
+	nextTimeout := v.lastResend.Add(v.ResendTimeout)
+	if nextTimeout.After(now) { // check if it is time to resend
+		return
+	}
 	if v.nextView == v.currView+1 { // started view change already but didn't get quorum yet
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
@@ -169,6 +177,8 @@ func (v *ViewChanger) resend() {
 		}
 		v.Comm.BroadcastConsensus(msg)
 	}
+	v.lastResend = now // update last resend time
+	v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
 }
 
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {

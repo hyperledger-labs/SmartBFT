@@ -73,9 +73,9 @@ func TestViewChangerBasic(t *testing.T) {
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	vc := &bft.ViewChanger{
-		N:            4,
-		Comm:         comm,
-		ResendTicker: make(chan time.Time),
+		N:      4,
+		Comm:   comm,
+		Ticker: make(chan time.Time),
 	}
 
 	vc.Start(0)
@@ -105,7 +105,7 @@ func TestStartViewChange(t *testing.T) {
 		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
-		ResendTicker:  make(chan time.Time),
+		Ticker:        make(chan time.Time),
 		Logger:        log,
 		Controller:    controller,
 	}
@@ -155,7 +155,7 @@ func TestViewChangeProcess(t *testing.T) {
 		Signer:        signer,
 		Logger:        log,
 		RequestsTimer: reqTimer,
-		ResendTicker:  make(chan time.Time),
+		Ticker:        make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
 		Controller:    controller,
@@ -234,14 +234,14 @@ func TestViewDataProcess(t *testing.T) {
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
-		SelfID:       1,
-		N:            4,
-		Comm:         comm,
-		Logger:       log,
-		Verifier:     verifier,
-		Controller:   controller,
-		ResendTicker: make(chan time.Time),
-		Checkpoint:   &checkpoint,
+		SelfID:     1,
+		N:          4,
+		Comm:       comm,
+		Logger:     log,
+		Verifier:   verifier,
+		Controller: controller,
+		Ticker:     make(chan time.Time),
+		Checkpoint: &checkpoint,
 	}
 
 	vc.Start(1)
@@ -309,14 +309,14 @@ func TestNewViewProcess(t *testing.T) {
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 
 	vc := &bft.ViewChanger{
-		SelfID:       0,
-		N:            4,
-		Comm:         comm,
-		Logger:       log,
-		Verifier:     verifier,
-		Controller:   controller,
-		ResendTicker: make(chan time.Time),
-		Checkpoint:   &checkpoint,
+		SelfID:     0,
+		N:          4,
+		Comm:       comm,
+		Logger:     log,
+		Verifier:   verifier,
+		Controller: controller,
+		Ticker:     make(chan time.Time),
+		Checkpoint: &checkpoint,
 	}
 
 	vc.Start(2)
@@ -403,7 +403,7 @@ func TestNormalProcess(t *testing.T) {
 		Controller:    controller,
 		Signer:        signer,
 		RequestsTimer: reqTimer,
-		ResendTicker:  make(chan time.Time),
+		Ticker:        make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
 	}
@@ -498,12 +498,12 @@ func TestBadViewDataMessage(t *testing.T) {
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			vc := &bft.ViewChanger{
-				SelfID:       2,
-				N:            4,
-				Comm:         comm,
-				Logger:       log,
-				Verifier:     verifier,
-				ResendTicker: make(chan time.Time),
+				SelfID:   2,
+				N:        4,
+				Comm:     comm,
+				Logger:   log,
+				Verifier: verifier,
+				Ticker:   make(chan time.Time),
 			}
 
 			vc.Start(1)
@@ -541,29 +541,35 @@ func TestResendViewChangeMessage(t *testing.T) {
 		N:             4,
 		Comm:          comm,
 		RequestsTimer: reqTimer,
-		ResendTicker:  ticker,
+		Ticker:        ticker,
 		Logger:        log,
 		Controller:    controller,
+		ResendTimeout: time.Second,
 	}
 
 	vc.Start(0)
+	startTime := time.Now()
 
 	vc.StartViewChange(true)
 	m := <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
+	// no resend
+	ticker <- startTime.Add(time.Millisecond)
+
 	// resend
-	ticker <- time.Time{}
+	ticker <- startTime.Add(2 * time.Second)
 	m = <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
 	// resend again
-	ticker <- time.Time{}
+	ticker <- startTime.Add(4 * time.Second)
 	m = <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
 	vc.Stop()
 
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3) // start view change and two resends
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
@@ -614,7 +620,7 @@ func TestCommitLastDecision(t *testing.T) {
 		Controller:    controller,
 		Signer:        signer,
 		RequestsTimer: reqTimer,
-		ResendTicker:  make(chan time.Time),
+		Ticker:        make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
 		Application:   app,
@@ -726,7 +732,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 				Signer:        signer,
 				Logger:        log,
 				RequestsTimer: reqTimer,
-				ResendTicker:  make(chan time.Time),
+				Ticker:        make(chan time.Time),
 				InFlight:      test.getInFlight(),
 				Checkpoint:    &checkpoint,
 				Controller:    controller,
