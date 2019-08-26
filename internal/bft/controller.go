@@ -8,6 +8,8 @@ package bft
 import (
 	"sync"
 
+	"sync/atomic"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -108,6 +110,8 @@ type Controller struct {
 	verificationSequence uint64
 
 	controllerDone sync.WaitGroup
+
+	ViewSequences *atomic.Value
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {

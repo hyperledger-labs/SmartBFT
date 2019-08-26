@@ -22,15 +22,17 @@ import (
 )
 
 type App struct {
-	ID          uint64
-	Delivered   chan *AppRecord
-	Consensus   *consensus.Consensus
-	Setup       func()
-	Node        *Node
-	logLevel    zap.AtomicLevel
-	latestMD    *smartbftprotos.ViewMetadata
-	clock       *time.Ticker
-	secondClock *time.Ticker
+	ID             uint64
+	Delivered      chan *AppRecord
+	Consensus      *consensus.Consensus
+	Setup          func()
+	Node           *Node
+	logLevel       zap.AtomicLevel
+	latestMD       *smartbftprotos.ViewMetadata
+	clock          *time.Ticker
+	heartbeatTime  chan time.Time
+	viewChangeTime chan time.Time
+	secondClock    *time.Ticker
 }
 
 func (a *App) Mute() {
@@ -283,6 +285,14 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 			WALInitialContent:       walInitialEntries,
 			LastProposal:            types.Proposal{},
 			LastSignatures:          []types.Signature{},
+		}
+		if app.heartbeatTime != nil {
+			app.clock.Stop()
+			c.Scheduler = app.heartbeatTime
+		}
+		if app.viewChangeTime != nil {
+			app.secondClock.Stop()
+			c.ViewChangerTicker = app.viewChangeTime
 		}
 		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]

@@ -182,17 +182,17 @@ func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 }
 
 type ProposalMaker struct {
-	N               uint64
-	SelfID          uint64
-	Decider         Decider
-	FailureDetector FailureDetector
-	Sync            Synchronizer
-	Logger          api.Logger
-	Comm            Comm
-	Verifier        api.Verifier
-	Signer          api.Signer
-	State           State
-
+	N                  uint64
+	SelfID             uint64
+	Decider            Decider
+	FailureDetector    FailureDetector
+	Sync               Synchronizer
+	Logger             api.Logger
+	Comm               Comm
+	Verifier           api.Verifier
+	Signer             api.Signer
+	State              State
+	ViewSequences      *atomic.Value
 	restoreOnceFromWAL sync.Once
 }
 
@@ -212,7 +212,13 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 		Signer:           pm.Signer,
 		ProposalSequence: proposalSequence,
 		State:            pm.State,
+		ViewSequences:    pm.ViewSequences,
 	}
+
+	view.ViewSequences.Store(ViewSequence{
+		ViewActive:  true,
+		ProposalSeq: proposalSequence,
+	})
 
 	pm.restoreOnceFromWAL.Do(func() {
 		err := pm.State.Restore(view)
@@ -230,4 +236,9 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 	}
 
 	return view
+}
+
+type ViewSequence struct {
+	ViewActive  bool
+	ProposalSeq uint64
 }

@@ -12,6 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"sync/atomic"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -393,6 +395,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
+		ViewSequences:    &atomic.Value{},
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 	}
 }

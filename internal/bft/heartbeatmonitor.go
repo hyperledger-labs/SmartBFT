@@ -7,6 +7,7 @@ package bft
 
 import (
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
@@ -52,6 +53,7 @@ type HeartbeatMonitor struct {
 	running       sync.WaitGroup
 	runOnce       sync.Once
 	timedOut      bool
+	viewSequences *atomic.Value
 }
 
 func NewHeartbeatMonitor(
@@ -60,16 +62,18 @@ func NewHeartbeatMonitor(
 	heartbeatTimeout time.Duration,
 	comm Comm,
 	handler HeartbeatTimeoutHandler,
+	viewSequences *atomic.Value,
 ) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
-		stopChan:    make(chan struct{}),
-		inc:         make(chan incMsg),
-		commandChan: make(chan roleChange),
-		scheduler:   scheduler,
-		logger:      logger,
-		hbTimeout:   heartbeatTimeout,
-		comm:        comm,
-		handler:     handler,
+		stopChan:      make(chan struct{}),
+		inc:           make(chan incMsg),
+		commandChan:   make(chan roleChange),
+		scheduler:     scheduler,
+		logger:        logger,
+		hbTimeout:     heartbeatTimeout,
+		comm:          comm,
+		handler:       handler,
+		viewSequences: viewSequences,
 	}
 	return hm
 }
@@ -161,8 +165,35 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 		return
 	}
 
+	if hm.viewActiveButBehindLeader(hbMsg) {
+		return
+	}
+
 	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
 	hm.lastHeartbeat = hm.lastTick
+}
+
+func (hm *HeartbeatMonitor) viewActiveButBehindLeader(hbMsg *smartbftprotos.HeartBeat) bool {
+	vs := hm.viewSequences.Load()
+	// View isn't initialized
+	if vs == nil {
+		return false
+	}
+
+	viewSeq := vs.(ViewSequence)
+	if !viewSeq.ViewActive {
+		return false
+	}
+
+	ourSeq := viewSeq.ProposalSeq
+
+	areWeBehind := ourSeq+1 < hbMsg.Seq
+
+	if areWeBehind {
+		hm.logger.Infof("Leader's sequence is %d and ours is %d", hbMsg.Seq, ourSeq)
+	}
+
+	return areWeBehind
 }
 
 func (hm *HeartbeatMonitor) tick(now time.Time) {
@@ -199,11 +230,19 @@ func (hm *HeartbeatMonitor) leaderTick(now time.Time) {
 		return
 	}
 
-	hm.logger.Debugf("Sending heartbeat with view %d", hm.view)
+	var sequence uint64
+	vs := hm.viewSequences.Load()
+	if vs != nil && vs.(ViewSequence).ViewActive {
+		sequence = vs.(ViewSequence).ProposalSeq
+	} else {
+		hm.logger.Debugf("ViewSequence uninitialized")
+	}
+	hm.logger.Debugf("Sending heartbeat with view %d, sequence %d", hm.view, sequence)
 	heartbeat := &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_HeartBeat{
 			HeartBeat: &smartbftprotos.HeartBeat{
 				View: hm.view,
+				Seq:  sequence,
 			},
 		},
 	}

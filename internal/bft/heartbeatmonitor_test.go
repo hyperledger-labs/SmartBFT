@@ -7,6 +7,7 @@ package bft_test
 
 import (
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -26,6 +27,15 @@ var (
 			},
 		},
 	}
+
+	heartbeatFromFarAheadLeader = &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeat{
+			HeartBeat: &smartbftprotos.HeartBeat{
+				View: 10,
+				Seq:  15,
+			},
+		},
+	}
 )
 
 func TestHeartbeatMonitor_New(t *testing.T) {
@@ -37,7 +47,7 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 	handler := &mocks.HeartbeatTimeoutHandler{}
 
 	scheduler := make(chan time.Time)
-	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler)
+	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, &atomic.Value{})
 	assert.NotNil(t, hm)
 	hm.Close()
 }
@@ -51,7 +61,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	handler := &mocks.HeartbeatTimeoutHandler{}
 	scheduler := make(chan time.Time)
 
-	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler)
+	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, &atomic.Value{})
 
 	var toWG1 sync.WaitGroup
 	toWG1.Add(10)
@@ -89,6 +99,8 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 		heartbeatMessage            *smartbftprotos.Message
 		event                       func(*bft.HeartbeatMonitor)
 		sender                      uint64
+		viewActive                  bool
+		proposalSeqInView           uint64
 	}{
 		{
 			description:                 "timeout expires",
@@ -118,6 +130,31 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			event:                       noop,
 		},
 		{
+			description:                 "heartbeats from a leader too far ahead lead to timeout",
+			sender:                      12,
+			heartbeatMessage:            heartbeatFromFarAheadLeader,
+			onHeartbeatTimeoutCallCount: 1,
+			event:                       noop,
+			proposalSeqInView:           10,
+			viewActive:                  true,
+		},
+		{
+			description:       "heartbeats from a leader only 1 seq ahead do not lead to timeout",
+			sender:            12,
+			heartbeatMessage:  heartbeatFromFarAheadLeader,
+			event:             noop,
+			proposalSeqInView: 14,
+			viewActive:        true,
+		},
+		{
+			description:                 "heartbeats from a leader too far ahead when view is disabled do not cause timeouts",
+			sender:                      12,
+			heartbeatMessage:            heartbeatFromFarAheadLeader,
+			onHeartbeatTimeoutCallCount: 0,
+			event:                       noop,
+			proposalSeqInView:           10,
+		},
+		{
 			description:                 "view change to dead leader",
 			sender:                      12,
 			onHeartbeatTimeoutCallCount: 1,
@@ -139,7 +176,12 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			handler.On("OnHeartbeatTimeout", uint64(10), uint64(12))
 			handler.On("OnHeartbeatTimeout", uint64(11), uint64(12))
 
-			hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler)
+			viewSequence := &atomic.Value{}
+			viewSequence.Store(bft.ViewSequence{
+				ViewActive:  testCase.viewActive,
+				ProposalSeq: testCase.proposalSeqInView,
+			})
+			hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, viewSequence)
 
 			hm.ChangeRole(bft.Follower, 10, 12)
 
@@ -172,11 +214,11 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 
 	comm1 := &mocks.CommMock{}
 	handler1 := &mocks.HeartbeatTimeoutHandler{}
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, bft.DefaultHeartbeatTimeout, comm1, handler1)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, bft.DefaultHeartbeatTimeout, comm1, handler1, &atomic.Value{})
 
 	comm2 := &mocks.CommMock{}
 	handler2 := &mocks.HeartbeatTimeoutHandler{}
-	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, bft.DefaultHeartbeatTimeout, comm2, handler2)
+	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, bft.DefaultHeartbeatTimeout, comm2, handler2, &atomic.Value{})
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)

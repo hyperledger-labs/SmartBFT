@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"sync"
 
+	"sync/atomic"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -84,6 +86,8 @@ type View struct {
 	abortChan chan struct{}
 	stopOnce  sync.Once
 	viewEnded sync.WaitGroup
+
+	ViewSequences *atomic.Value
 }
 
 func (v *View) Start() {
@@ -223,6 +227,12 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 
 func (v *View) run() {
 	defer v.viewEnded.Done()
+	defer func() {
+		v.ViewSequences.Store(ViewSequence{
+			ProposalSeq: v.ProposalSequence,
+			ViewActive:  false,
+		})
+	}()
 	for {
 		select {
 		case <-v.abortChan:
@@ -642,6 +652,7 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 
 func (v *View) decide(proposal *types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.Logger.Infof("Deciding on seq %d", v.ProposalSequence)
+	v.ViewSequences.Store(ViewSequence{ProposalSeq: v.ProposalSequence, ViewActive: true})
 	// first make preparations for the next sequence so that the view will be ready to continue right after delivery
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
