@@ -398,6 +398,12 @@ func (v *View) processPrepares() Phase {
 
 	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(voterIDs), voterIDs)
 
+	// SignProposal returns a types.Signature with the following 3 fields:
+	// Id: The integer that represents this node.
+	// Value: The signature, encoded according to the specific signature specification.
+	// Msg: A succinct representation of the proposal that binds this proposal unequivocally.
+
+	// The block proof consists of the aggregation of all these signatures from 2f+1 commits of different nodes.
 	v.myProposalSig = v.Signer.SignProposal(*proposal)
 
 	seq := v.ProposalSequence
@@ -411,7 +417,7 @@ func (v *View) processPrepares() Phase {
 				Signature: &protos.Signature{
 					Signer: v.myProposalSig.Id,
 					Value:  v.myProposalSig.Value,
-					Msg:    v.myProposalSig.Msg, // some information about the proposal that was signed (not the entire proposal)
+					Msg:    v.myProposalSig.Msg,
 				},
 			},
 		},
