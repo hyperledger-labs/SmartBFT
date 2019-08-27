@@ -167,6 +167,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	node.consensus = &smartbft.Consensus{
 		ViewChangerTicker:       node.secondClock.C,
 		ViewChangeResendTimeout: time.Second,
+		ViewChangerTimeout:      time.Minute,
 		Scheduler:               node.clock.C,
 		SelfID:                  id,
 		BatchSize:               opts.BatchSize,
