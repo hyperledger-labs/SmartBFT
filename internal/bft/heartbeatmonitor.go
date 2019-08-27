@@ -127,11 +127,16 @@ func (hm *HeartbeatMonitor) ChangeRole(follower Role, view uint64, leaderID uint
 	}
 
 	hm.logger.Infof("Changing to %s role, current view: %d, current leader: %d", role, view, leaderID)
-	hm.commandChan <- roleChange{
+	select {
+	case hm.commandChan <- roleChange{
 		leaderID: leaderID,
 		view:     view,
 		follower: follower,
+	}:
+	case <-hm.stopChan:
+		return
 	}
+
 }
 
 func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message) {
