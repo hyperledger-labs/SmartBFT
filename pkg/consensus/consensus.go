@@ -41,6 +41,7 @@ type Consensus struct {
 	Scheduler               <-chan time.Time
 	ViewChangerTicker       <-chan time.Time
 	ViewChangeResendTimeout time.Duration
+	ViewChangerTimeout      time.Duration
 
 	viewChanger *algorithm.ViewChanger
 	controller  *algorithm.Controller
@@ -91,8 +92,9 @@ func (c *Consensus) Start() {
 		InFlight:    &inFlight,
 		// Controller later
 		// RequestsTimer later
-		Ticker:        c.ViewChangerTicker,
-		ResendTimeout: c.ViewChangeResendTimeout,
+		Ticker:            c.ViewChangerTicker,
+		ResendTimeout:     c.ViewChangeResendTimeout,
+		TimeoutViewChange: c.ViewChangerTimeout,
 	}
 
 	c.controller = &algorithm.Controller{

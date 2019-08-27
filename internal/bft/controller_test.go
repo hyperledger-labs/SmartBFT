@@ -405,3 +405,122 @@ func configureProposerBuilder(controller *bft.Controller) {
 		})
 	controller.ProposerBuilder = pb
 }
+
+func TestSyncInform(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	req := []byte{1}
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+	batcher.On("Reset")
+	batcher.On("NextBatch").Return([][]byte{req})
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+
+	secondProposal := proposal
+	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 2,
+		ViewId:         2,
+	})
+
+	assembler := &mocks.AssemblerMock{}
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
+
+	comm := &mocks.CommMock{}
+	commWG := sync.WaitGroup{}
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		commWG.Done()
+	})
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+
+	commWithChan := &mocks.CommMock{}
+	msgChan := make(chan *protos.Message)
+	commWithChan.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		msgChan <- args.Get(0).(*protos.Message)
+	})
+	commWithChan.On("Nodes").Return([]uint64{0, 1, 2, 3})
+
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMon.On("Close")
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizerWG := sync.WaitGroup{}
+	syncToView := uint64(2)
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	}).Return(protos.ViewMetadata{ViewId: syncToView, LatestSequence: 1}, uint64(0))
+
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	controllerMock := &mocks.ViewController{}
+	controllerMock.On("AbortView")
+
+	vc := &bft.ViewChanger{
+		SelfID:        2,
+		N:             4,
+		Logger:        log,
+		Comm:          commWithChan,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		Controller:    controllerMock,
+	}
+
+	controller := &bft.Controller{
+		Signer:        signer,
+		WAL:           wal,
+		ID:            2,
+		N:             4,
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		Synchronizer:  synchronizer,
+		ViewChanger:   vc,
+	}
+	configureProposerBuilder(controller)
+
+	controller.Start(1, 0)
+	vc.Start(1)
+
+	vc.StartViewChange(true)
+	msg := <-msgChan
+	assert.NotNil(t, msg.GetViewChange())
+	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
+
+	commWG.Add(2)
+	synchronizerWG.Add(1)
+	controller.Sync()
+	commWG.Wait()
+	synchronizerWG.Wait()
+	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
+	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
+
+	vc.StartViewChange(true)
+	msg = <-msgChan
+	assert.NotNil(t, msg.GetViewChange())
+	assert.Equal(t, syncToView+1, msg.GetViewChange().NextView) // view number did change according to info
+
+	controller.Stop()
+	vc.Stop()
+	wal.Close()
+}

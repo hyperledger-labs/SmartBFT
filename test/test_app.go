@@ -266,6 +266,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		c := &consensus.Consensus{
 			ViewChangerTicker:       app.secondClock.C,
 			ViewChangeResendTimeout: time.Second,
+			ViewChangerTimeout:      time.Minute,
 			Scheduler:               app.clock.C,
 			SelfID:                  id,
 			Logger:                  sugaredLogger,
