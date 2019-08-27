@@ -51,6 +51,7 @@ type ViewChanger struct {
 	RequestsTimer RequestsTimer
 
 	Ticker              <-chan time.Time
+	lastTick            time.Time
 	ResendTimeout       time.Duration
 	lastResend          time.Time
 	TimeoutViewChange   time.Duration
@@ -93,7 +94,8 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.nextView = v.currView
 	v.leader = getLeaderID(v.currView, v.N, v.nodes)
 
-	v.lastResend = time.Now()
+	v.lastTick = time.Now()
+	v.lastResend = v.lastTick
 
 	go func() {
 		defer v.vcDone.Done()
@@ -161,6 +163,7 @@ func (v *ViewChanger) run() {
 		case msg := <-v.incMsgs:
 			v.processMsg(msg.sender, msg.Message)
 		case now := <-v.Ticker:
+			v.lastTick = now
 			v.checkIfResendViewChange(now)
 			v.checkIfTimeout(now)
 		case view := <-v.informChan:
@@ -243,7 +246,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 // InformNewView tells the view changer to advance to a new view number
 func (v *ViewChanger) InformNewView(view uint64) {
 	select {
-	case v.informChan <- view: // blocking, can't loss this view
+	case v.informChan <- view: // blocking, can't lose this view
 	case <-v.stopChan:
 		return
 	}
@@ -284,7 +287,7 @@ func (v *ViewChanger) startViewChange(stopView bool) {
 	if stopView {
 		v.Controller.AbortView() // abort the current view when joining view change
 	}
-	v.startViewChangeTime = time.Now()
+	v.startViewChangeTime = v.lastTick
 	v.checkTimeout = true
 }
 
