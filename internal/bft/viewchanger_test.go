@@ -538,13 +538,14 @@ func TestResendViewChangeMessage(t *testing.T) {
 	controller.On("AbortView")
 
 	vc := &bft.ViewChanger{
-		N:             4,
-		Comm:          comm,
-		RequestsTimer: reqTimer,
-		Ticker:        ticker,
-		Logger:        log,
-		Controller:    controller,
-		ResendTimeout: time.Second,
+		N:                 4,
+		Comm:              comm,
+		RequestsTimer:     reqTimer,
+		Ticker:            ticker,
+		Logger:            log,
+		Controller:        controller,
+		ResendTimeout:     time.Second,
+		TimeoutViewChange: 10 * time.Second,
 	}
 
 	vc.Start(0)
@@ -573,6 +574,65 @@ func TestResendViewChangeMessage(t *testing.T) {
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 
+}
+
+func TestViewChangerTimeout(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	comm.On("BroadcastConsensus", mock.Anything)
+	reqTimerWG := sync.WaitGroup{}
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers").Run(func(args mock.Arguments) {
+		reqTimerWG.Done()
+	})
+	ticker := make(chan time.Time)
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	synchronizer := &mocks.Synchronizer{}
+	synchronizerWG := sync.WaitGroup{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	})
+	controller := &mocks.ViewController{}
+	controllerWG := sync.WaitGroup{}
+	controller.On("AbortView").Run(func(args mock.Arguments) {
+		controllerWG.Done()
+	})
+
+	vc := &bft.ViewChanger{
+		N:                 4,
+		Comm:              comm,
+		RequestsTimer:     reqTimer,
+		Ticker:            ticker,
+		Logger:            log,
+		TimeoutViewChange: 10 * time.Second,
+		ResendTimeout:     20 * time.Second,
+		Synchronizer:      synchronizer,
+		Controller:        controller,
+	}
+
+	vc.Start(0)
+	startTime := time.Now()
+
+	controllerWG.Add(1)
+	reqTimerWG.Add(1)
+	vc.StartViewChange(true) // start timer
+	controllerWG.Wait()
+	reqTimerWG.Wait()
+
+	reqTimerWG.Add(1)
+	synchronizerWG.Add(1)
+	ticker <- startTime.Add(12 * time.Second) // timeout
+	synchronizerWG.Wait()
+	reqTimerWG.Wait()
+
+	vc.Stop()
+
+	synchronizer.AssertNumberOfCalls(t, "Sync", 1)
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 }
 
 func TestCommitLastDecision(t *testing.T) {
@@ -921,4 +981,44 @@ func TestValidateInFlight(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestInformViewChanger(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	msgChan := make(chan *protos.Message)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		msgChan <- args.Get(0).(*protos.Message)
+	})
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers").Once()
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	controller := &mocks.ViewController{}
+	controller.On("AbortView")
+
+	vc := &bft.ViewChanger{
+		N:             4,
+		Comm:          comm,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		Logger:        log,
+		Controller:    controller,
+	}
+
+	vc.Start(0)
+
+	info := uint64(2)
+	vc.InformNewView(info) // increase the view number
+
+	vc.StartViewChange(true)
+	msg := <-msgChan
+	assert.NotNil(t, msg.GetViewChange())
+	assert.Equal(t, info+1, msg.GetViewChange().NextView) // view number did change according to info
+
+	vc.Stop()
+
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
 }
