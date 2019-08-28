@@ -7,7 +7,6 @@ package bft
 
 import (
 	"sync"
-
 	"sync/atomic"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"

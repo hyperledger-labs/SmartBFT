@@ -6,9 +6,8 @@
 package consensus
 
 import (
-	"time"
-
 	"sync/atomic"
+	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
