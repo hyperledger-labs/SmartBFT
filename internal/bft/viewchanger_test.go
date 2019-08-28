@@ -1022,3 +1022,86 @@ func TestInformViewChanger(t *testing.T) {
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 }
+
+func TestCheckInFlightNoProposal(t *testing.T) {
+	expectedProposal := &protos.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			ViewId:         0,
+			LatestSequence: 2, // last decision sequence + 1
+		}),
+		VerificationSequence: uint64(1),
+	}
+	for _, test := range []struct {
+		description    string
+		mutateMessages func([]*protos.ViewData)
+		ok             bool
+	}{
+		{
+			description: "all without in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				// in flight is already unset
+			},
+			ok: true,
+		},
+		{
+			description: "all with old in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = msg.LastDecision
+				}
+			},
+			ok: true,
+		},
+		{
+			description: "quorum without in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				// in flight is already unset in all
+				messages[0].InFlightProposal = expectedProposal
+			},
+			ok: true,
+		},
+		{
+			description: "quorum with an old in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = msg.LastDecision // set all with an old proposal (same as last decision)
+				}
+				messages[0].InFlightProposal = expectedProposal
+			},
+			ok: true,
+		},
+		{
+			description: "some with no in flight proposal and some with an old one",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[0].InFlightProposal = messages[0].LastDecision
+				messages[1].InFlightProposal = messages[1].LastDecision
+				messages[2].InFlightProposal = expectedProposal
+				messages[3].InFlightProposal = nil
+			},
+			ok: true,
+		},
+		{
+			description: "some (not enough) with no in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[0].InFlightProposal = messages[0].LastDecision
+				messages[1].InFlightProposal = nil
+				messages[2].InFlightProposal = expectedProposal
+				messages[3].InFlightProposal = expectedProposal
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			messages := make([]*protos.ViewData, 0)
+			for i := 0; i < 4; i++ {
+				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
+			}
+			test.mutateMessages(messages)
+			ok, _, _, _, _ := bft.CheckInFlight(messages, 3, 4, verifier)
+			assert.Equal(t, test.ok, ok)
+		})
+	}
+}

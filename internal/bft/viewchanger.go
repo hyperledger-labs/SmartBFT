@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
@@ -480,6 +481,12 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 
 func (v *ViewChanger) processViewDataMsg() {
 	if len(v.viewDataMsgs.voted) >= v.quorum { // need enough (quorum) data to continue
+
+		//if ok,_, _, _, _ := CheckInFlight(v.getViewDataMessages(), v.quorum, v.N, v.Verifier); !ok {
+		//	return
+		//}
+
+		// create the new view message
 		signedMsgs := make([]*protos.SignedViewData, 0)
 		close(v.viewDataMsgs.votes)
 		for vote := range v.viewDataMsgs.votes {
@@ -497,6 +504,67 @@ func (v *ViewChanger) processViewDataMsg() {
 		v.viewDataMsgs.clear(v.N)
 		v.Logger.Debugf("Node %d sent a new view msg", v.SelfID)
 	}
+}
+
+func (v *ViewChanger) getViewDataMessages() []*protos.ViewData {
+	num := len(v.viewDataMsgs.votes)
+	messages := make([]*protos.ViewData, 0)
+	for i := 0; i < num; i++ {
+		vote := <-v.viewDataMsgs.votes
+		vd := &protos.ViewData{}
+		if err := proto.Unmarshal(vote.GetViewData().RawViewData, vd); err != nil {
+			v.Logger.Panicf("Node %d was unable to unmarshal viewData message, error: %v", v.SelfID, err)
+		}
+		messages = append(messages, vd)
+		v.viewDataMsgs.votes <- vote
+	}
+	return messages
+}
+
+func CheckInFlight(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightView, inFlightSeq uint64, inFlightProposal *protos.Proposal) {
+	expectedSequence := MaxLastDecisionSequence(messages, quorum, N, verifier) + 1
+	noInFlightConut := 0
+	for _, vd := range messages {
+
+		if vd.InFlightProposal == nil { // there is no in flight proposal here
+			noInFlightConut++
+			continue
+		}
+
+		if vd.InFlightProposal.Metadata == nil { // should have been validated earlier
+			panic(fmt.Sprintf("Node has a view data message where the in flight proposal metadata is nil"))
+		}
+
+		inFlightMetadata := &protos.ViewMetadata{}
+		if err := proto.Unmarshal(vd.InFlightProposal.Metadata, inFlightMetadata); err != nil { // should have been validated earlier
+			panic(fmt.Sprintf("Node was unable to unmarshal the in flight proposal metadata, error: %v", err))
+		}
+
+		if inFlightMetadata.LatestSequence != expectedSequence { // the in flight proposal sequence is not as expected
+			noInFlightConut++
+		}
+	}
+
+	if noInFlightConut >= quorum {
+		return true, true, 0, 0, &protos.Proposal{}
+	}
+
+	return false, false, 0, 0, &protos.Proposal{}
+}
+
+func MaxLastDecisionSequence(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) uint64 {
+	max := uint64(0)
+	for _, vd := range messages {
+		err, seq := ValidateLastDecision(vd, quorum, N, verifier)
+		if err != nil {
+			panic(fmt.Sprintf("Node was unable to validate last decision in viewData message, error: %v", err))
+		}
+
+		if seq > max {
+			max = seq
+		}
+	}
+	return max
 }
 
 func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
