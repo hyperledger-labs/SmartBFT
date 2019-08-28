@@ -502,7 +502,7 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 func (v *ViewChanger) processViewDataMsg() {
 	if len(v.viewDataMsgs.voted) >= v.quorum { // need enough (quorum) data to continue
 
-		//if ok,_, _, _, _ := CheckInFlight(v.getViewDataMessages(), v.quorum, v.N, v.Verifier); !ok {
+		//if ok,_ ,_ := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier); !ok {
 		//	return
 		//}
 
@@ -541,8 +541,15 @@ func (v *ViewChanger) getViewDataMessages() []*protos.ViewData {
 	return messages
 }
 
-func CheckInFlight(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightView, inFlightSeq uint64, inFlightProposal *protos.Proposal) {
+type possibleProposal struct {
+	proposal    *protos.Proposal
+	preprepared int
+	noArgument  int
+}
+
+func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal) {
 	expectedSequence := MaxLastDecisionSequence(messages, quorum, N, verifier) + 1
+	possibleProposals := make([]possibleProposal, 0)
 	noInFlightConut := 0
 	for _, vd := range messages {
 
@@ -562,14 +569,113 @@ func CheckInFlight(messages []*protos.ViewData, quorum int, N uint64, verifier a
 
 		if inFlightMetadata.LatestSequence != expectedSequence { // the in flight proposal sequence is not as expected
 			noInFlightConut++
+			continue
+		}
+
+		// find possible proposals
+		if inFlightMetadata.LatestSequence == expectedSequence { // this is the expected in flight proposal sequence
+			if vd.InFlightPrepared { // this proposal is prepared and so it is possible
+				alreadyExists := false
+				for _, p := range possibleProposals {
+					if isSameProposals(p.proposal, vd.InFlightProposal) {
+						alreadyExists = true
+						break
+					}
+				}
+				if !alreadyExists {
+					// this is not a proposal we have seen before
+					possibleProposals = append(possibleProposals, possibleProposal{proposal: vd.InFlightProposal})
+				}
+			}
 		}
 	}
 
-	if noInFlightConut >= quorum {
-		return true, true, 0, 0, &protos.Proposal{}
+	// condition B holds
+	if noInFlightConut >= quorum { // there is a quorum of messages that support that there is no in flight proposal
+		return true, true, nil
 	}
 
-	return false, false, 0, 0, &protos.Proposal{}
+	// fill out info on all possible proposals
+	for _, vd := range messages {
+		for _, possible := range possibleProposals {
+
+			if vd.InFlightProposal == nil {
+				possible.noArgument++
+				continue
+			}
+
+			// get the sequence
+			if vd.InFlightProposal.Metadata == nil {
+				panic(fmt.Sprintf("Node has a view data message where the in flight proposal metadata is nil"))
+			}
+			inFlightMetadata := &protos.ViewMetadata{}
+			if err := proto.Unmarshal(vd.InFlightProposal.Metadata, inFlightMetadata); err != nil {
+				panic(fmt.Sprintf("Node was unable to unmarshal the in flight proposal metadata, error: %v", err))
+			}
+
+			if inFlightMetadata.LatestSequence != expectedSequence {
+				possible.noArgument++
+				continue
+			}
+
+			if isSameProposals(vd.InFlightProposal, possible.proposal) {
+				possible.noArgument++
+				possible.preprepared++
+			}
+
+		}
+	}
+
+	// see if there is an in flight proposal that is agreed on
+	agreed := -1
+	for i, possible := range possibleProposals {
+		if possible.preprepared < f+1 { // condition A2 doesn't hold
+			continue
+		}
+		if possible.noArgument < quorum { // condition A1 doesn't hold
+			continue
+		}
+		agreed = i
+		break
+	}
+
+	// condition A holds
+	if agreed != -1 {
+		return true, false, possibleProposals[agreed].proposal
+	}
+
+	return false, false, nil
+}
+
+func isSameProposals(p1, p2 *protos.Proposal) bool {
+	if p1.VerificationSequence != p2.VerificationSequence {
+		return false
+	}
+	if !isEqualBytes(p1.Header, p2.Header) {
+		return false
+	}
+	if !isEqualBytes(p1.Metadata, p2.Metadata) {
+		return false
+	}
+	if !isEqualBytes(p1.Payload, p2.Payload) {
+		return false
+	}
+	return true
+}
+
+func isEqualBytes(a, b []byte) bool {
+	if (a == nil) != (b == nil) { // If one is nil, the other must also be nil.
+		return false
+	}
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func MaxLastDecisionSequence(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) uint64 {

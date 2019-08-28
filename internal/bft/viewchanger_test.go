@@ -1240,7 +1240,7 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
-			ok, _, _, _, _ := bft.CheckInFlight(messages, 3, 4, verifier)
+			ok, _, _ := bft.CheckInFlight(messages, 1, 3, 4, verifier)
 			assert.Equal(t, test.ok, ok)
 		})
 	}
