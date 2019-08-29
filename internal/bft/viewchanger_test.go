@@ -112,7 +112,7 @@ func TestStartViewChange(t *testing.T) {
 
 	vc.Start(0)
 
-	vc.StartViewChange(true)
+	vc.StartViewChange(0, true)
 	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 
@@ -551,7 +551,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	vc.Start(0)
 	startTime := time.Now()
 
-	vc.StartViewChange(true)
+	vc.StartViewChange(0, true)
 	m := <-msgChan
 	assert.NotNil(t, m.GetViewChange())
 
@@ -617,7 +617,7 @@ func TestViewChangerTimeout(t *testing.T) {
 
 	controllerWG.Add(1)
 	reqTimerWG.Add(1)
-	vc.StartViewChange(true) // start timer
+	vc.StartViewChange(0, true) // start timer
 	controllerWG.Wait()
 	reqTimerWG.Wait()
 
@@ -1012,7 +1012,7 @@ func TestInformViewChanger(t *testing.T) {
 	info := uint64(2)
 	vc.InformNewView(info) // increase the view number
 
-	vc.StartViewChange(true)
+	vc.StartViewChange(2, true)
 	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, info+1, msg.GetViewChange().NextView) // view number did change according to info
