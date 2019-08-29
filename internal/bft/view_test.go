@@ -129,6 +129,7 @@ func TestViewBasic(t *testing.T) {
 	log := basicLog.Sugar()
 	state := &bft.StateRecorder{}
 	view := &bft.View{
+		ViewSequences:    &atomic.Value{},
 		State:            state,
 		Logger:           log,
 		N:                4,
@@ -336,6 +337,7 @@ func TestBadPrePrepare(t *testing.T) {
 				ProposalSequence: 0,
 				Sync:             synchronizer,
 				FailureDetector:  fd,
+				ViewSequences:    &atomic.Value{},
 			}
 			view.Start()
 
@@ -425,6 +427,7 @@ func TestBadPrepare(t *testing.T) {
 				Comm:             comm,
 				Verifier:         verifier,
 				Signer:           signer,
+				ViewSequences:    &atomic.Value{},
 			}
 			view.Start()
 
@@ -491,6 +494,7 @@ func TestBadCommit(t *testing.T) {
 		Comm:             comm,
 		Verifier:         verifier,
 		Signer:           signer,
+		ViewSequences:    &atomic.Value{},
 	}
 	view.Start()
 
@@ -561,6 +565,7 @@ func TestNormalPath(t *testing.T) {
 		Id:    4,
 		Value: []byte{4},
 	})
+	viewSeq := &atomic.Value{}
 	state := &bft.StateRecorder{}
 	view := &bft.View{
 		State:            state,
@@ -575,6 +580,7 @@ func TestNormalPath(t *testing.T) {
 		Decider:          decider,
 		Verifier:         verifier,
 		Signer:           signer,
+		ViewSequences:    viewSeq,
 	}
 	view.Start()
 
@@ -628,6 +634,7 @@ func TestNormalPath(t *testing.T) {
 	view.HandleMessage(2, commit2Next)
 	view.HandleMessage(3, commit3Next)
 	deciderWG.Wait()
+	assert.Equal(t, bft.ViewSequence{ViewActive: true, ProposalSeq: 1}, viewSeq.Load().(bft.ViewSequence))
 	dProp = <-decidedProposal
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
@@ -693,6 +700,7 @@ func TestTwoSequences(t *testing.T) {
 		Decider:          decider,
 		Verifier:         verifier,
 		Signer:           signer,
+		ViewSequences:    &atomic.Value{},
 	}
 	view.Start()
 
@@ -854,6 +862,7 @@ func TestViewPersisted(t *testing.T) {
 					Quorum:           3,
 					Number:           1,
 					ProposalSequence: 0,
+					ViewSequences:    &atomic.Value{},
 				}
 			}
 
@@ -1064,6 +1073,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				Number:           5,
 				ProposalSequence: 10,
 				Sync:             synchronizer,
+				ViewSequences:    &atomic.Value{},
 			}
 
 			var syncCalled sync.WaitGroup
@@ -1147,6 +1157,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		ViewSequences:    &atomic.Value{},
 	}
 
 	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
@@ -1401,6 +1412,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		ViewSequences:    &atomic.Value{},
 	}
 
 	return tv

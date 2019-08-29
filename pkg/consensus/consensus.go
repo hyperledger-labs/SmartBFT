@@ -6,6 +6,7 @@
 package consensus
 
 import (
+	"sync/atomic"
 	"time"
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
@@ -112,6 +113,7 @@ func (c *Consensus) Start() {
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 		ViewChanger:      c.viewChanger,
+		ViewSequences:    &atomic.Value{},
 	}
 
 	c.viewChanger.Synchronizer = c.controller
@@ -120,7 +122,12 @@ func (c *Consensus) Start() {
 
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler,
+		c.Logger,
+		algorithm.DefaultHeartbeatTimeout,
+		c,
+		c.controller,
+		c.controller.ViewSequences)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
@@ -174,5 +181,6 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		FailureDetector: c,
 		Verifier:        c.Verifier,
 		N:               c.n,
+		ViewSequences:   c.controller.ViewSequences,
 	}
 }
