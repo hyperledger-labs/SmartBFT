@@ -141,10 +141,15 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)
-	n.deliverChan <- &Block{
+
+	select {
+	case <-n.stopChan:
+		return
+	case n.deliverChan <- &Block{
 		Sequence:     uint64(header.Sequence),
 		PrevHash:     header.PrevHash,
 		Transactions: txns,
+	}:
 	}
 }
 
