@@ -540,7 +540,7 @@ type possibleProposal struct {
 
 func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal) {
 	expectedSequence := MaxLastDecisionSequence(messages, quorum, N, verifier) + 1
-	possibleProposals := make([]possibleProposal, 0)
+	possibleProposals := make([]*possibleProposal, 0)
 	noInFlightConut := 0
 	for _, vd := range messages {
 
@@ -575,7 +575,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 				}
 				if !alreadyExists {
 					// this is not a proposal we have seen before
-					possibleProposals = append(possibleProposals, possibleProposal{proposal: vd.InFlightProposal})
+					possibleProposals = append(possibleProposals, &possibleProposal{proposal: vd.InFlightProposal})
 				}
 			}
 		}
