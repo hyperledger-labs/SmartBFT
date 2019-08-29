@@ -1264,3 +1264,164 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckInFlightWithProposal(t *testing.T) {
+	expectedProposal := &protos.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			ViewId:         0,
+			LatestSequence: 2, // last decision sequence + 1
+		}),
+		VerificationSequence: uint64(1),
+	}
+	for _, test := range []struct {
+		description    string
+		mutateMessages func([]*protos.ViewData)
+		ok             bool
+		no             bool
+		proposal       *protos.Proposal
+	}{
+		{
+			description: "all with expected in flight proposal and prepared",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with no in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				messages[0].InFlightProposal = nil
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with old in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				messages[0].InFlightProposal = messages[0].LastDecision
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with different in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Payload = []byte{5}
+				messages[0].InFlightProposal = different
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "all with expected in flight proposal, only one is prepared, other with different in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Header = []byte{5}
+				messages[0].InFlightProposal = different
+				messages[3].InFlightPrepared = true
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "all with expected in flight proposal, no one is prepared",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = false
+				}
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+		{
+			description: "all with in flight proposal and prepared, but no quorum on any proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.VerificationSequence = 10
+				messages[2].InFlightProposal = different
+				messages[3].InFlightProposal = different
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+		{
+			description: "not enough preprepared for quorum on in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[2].InFlightProposal = expectedProposal
+				messages[2].InFlightPrepared = true
+			},
+			ok:       true,
+			no:       true,
+			proposal: nil,
+		},
+		{
+			description: "not enough for any in flight proposal, and also not enough for no proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[2].InFlightProposal = expectedProposal
+				messages[2].InFlightPrepared = true
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					ViewId:         1,
+					LatestSequence: 2, // last decision sequence + 1
+				})
+				messages[3].InFlightProposal = different
+				messages[3].InFlightPrepared = true
+				different2 := proto.Clone(expectedProposal).(*protos.Proposal)
+				different2.VerificationSequence = 5
+				messages[1].InFlightProposal = different2
+				messages[1].InFlightPrepared = true
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			messages := make([]*protos.ViewData, 0)
+			for i := 0; i < 4; i++ {
+				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
+			}
+			test.mutateMessages(messages)
+			ok, no, proposal := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			assert.Equal(t, test.ok, ok)
+			assert.Equal(t, test.no, no)
+			assert.Equal(t, test.proposal, proposal)
+		})
+	}
+}
