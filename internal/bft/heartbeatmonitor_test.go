@@ -66,6 +66,9 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	vs.Store(bft.ViewSequence{ViewActive: true})
 	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, vs)
 
+	var heartBeatsSent uint32
+	var heartBeatsSentUntilViewBecomesInactive uint32
+
 	var toWG1 sync.WaitGroup
 	toWG1.Add(10)
 	var toWG2 sync.WaitGroup
@@ -73,11 +76,18 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	comm.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
 		view := msg.GetHeartBeat().View
-
+		atomic.AddUint32(&heartBeatsSent, 1)
 		if uint64(10) == view {
 			toWG1.Done()
 		} else if uint64(20) == view {
 			toWG2.Done()
+			totalHBsSent := atomic.LoadUint32(&heartBeatsSent)
+			if totalHBsSent == 20 {
+				// View is stopped
+				vs.Store(bft.ViewSequence{ViewActive: false, ProposalSeq: msg.GetHeartBeat().Seq})
+				// Record HB number we sent so far
+				atomic.StoreUint32(&heartBeatsSentUntilViewBecomesInactive, totalHBsSent)
+			}
 		}
 	}).Return()
 
@@ -89,6 +99,10 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	hm.ChangeRole(bft.Leader, 20, 12)
 	clock.advanceTime(10, scheduler)
 	toWG2.Wait()
+
+	clock.advanceTime(10, scheduler)
+	// Ensure we don't advance heartbeats any longer when view is inactive
+	assert.Equal(t, atomic.LoadUint32(&heartBeatsSentUntilViewBecomesInactive), atomic.LoadUint32(&heartBeatsSent))
 
 	hm.Close()
 }
