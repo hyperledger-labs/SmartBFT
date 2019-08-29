@@ -503,7 +503,7 @@ func TestSyncInform(t *testing.T) {
 	controller.Start(1, 0)
 	vc.Start(1)
 
-	vc.StartViewChange(true)
+	vc.StartViewChange(1, true)
 	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
@@ -517,7 +517,7 @@ func TestSyncInform(t *testing.T) {
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
 
-	vc.StartViewChange(true)
+	vc.StartViewChange(2, true)
 	msg = <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, syncToView+1, msg.GetViewChange().NextView) // view number did change according to info

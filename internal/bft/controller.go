@@ -21,7 +21,7 @@ type Decider interface {
 
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
 type FailureDetector interface {
-	Complain(stopView bool)
+	Complain(viewNum uint64, stopView bool)
 }
 
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
@@ -196,7 +196,7 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 	}
 
 	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
-	c.FailureDetector.Complain(true)
+	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
 
 	return
 }
@@ -225,7 +225,7 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	}
 
 	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
-	c.FailureDetector.Complain(true)
+	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
 }
 
 // ProcessMessages dispatches the incoming message to the required component
