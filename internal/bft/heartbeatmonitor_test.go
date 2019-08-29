@@ -24,6 +24,7 @@ var (
 		Content: &smartbftprotos.Message_HeartBeat{
 			HeartBeat: &smartbftprotos.HeartBeat{
 				View: 10,
+				Seq:  10,
 			},
 		},
 	}
@@ -61,7 +62,9 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	handler := &mocks.HeartbeatTimeoutHandler{}
 	scheduler := make(chan time.Time)
 
-	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, &atomic.Value{})
+	vs := &atomic.Value{}
+	vs.Store(bft.ViewSequence{ViewActive: true})
+	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, vs)
 
 	var toWG1 sync.WaitGroup
 	toWG1.Add(10)
@@ -111,6 +114,12 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 		},
 		{
 			description:      "heartbeats prevent timeout",
+			sender:           12,
+			heartbeatMessage: heartbeat,
+			event:            noop,
+		},
+		{
+			description:      "heartbeats from leader with inactive view don't prevent timeout",
 			sender:           12,
 			heartbeatMessage: heartbeat,
 			event:            noop,
@@ -214,11 +223,15 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 
 	comm1 := &mocks.CommMock{}
 	handler1 := &mocks.HeartbeatTimeoutHandler{}
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, bft.DefaultHeartbeatTimeout, comm1, handler1, &atomic.Value{})
+	vs1 := &atomic.Value{}
+	vs1.Store(bft.ViewSequence{ViewActive: true})
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, bft.DefaultHeartbeatTimeout, comm1, handler1, vs1)
 
 	comm2 := &mocks.CommMock{}
 	handler2 := &mocks.HeartbeatTimeoutHandler{}
-	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, bft.DefaultHeartbeatTimeout, comm2, handler2, &atomic.Value{})
+	vs2 := &atomic.Value{}
+	vs2.Store(bft.ViewSequence{ViewActive: true})
+	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, bft.DefaultHeartbeatTimeout, comm2, handler2, vs2)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)

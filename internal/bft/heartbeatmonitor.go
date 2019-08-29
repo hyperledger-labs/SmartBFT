@@ -235,7 +235,8 @@ func (hm *HeartbeatMonitor) leaderTick(now time.Time) {
 	if vs != nil && vs.(ViewSequence).ViewActive {
 		sequence = vs.(ViewSequence).ProposalSeq
 	} else {
-		hm.logger.Debugf("ViewSequence uninitialized or view inactive")
+		hm.logger.Infof("ViewSequence uninitialized or view inactive")
+		return
 	}
 	hm.logger.Debugf("Sending heartbeat with view %d, sequence %d", hm.view, sequence)
 	heartbeat := &smartbftprotos.Message{
