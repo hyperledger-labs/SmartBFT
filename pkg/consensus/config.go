@@ -12,11 +12,11 @@ type Configuration struct {
 	// SelfID is the identifier of the node.
 	SelfID uint64
 	// NumberOfNodes is the expected number of nodes in the cluster.
-	NumberOfNodes uint64
+	NumberOfNodes int
 
 	// RequestBatchMaxSize is the maximal number of a requests in a batch.
 	// A request batch that reaches this size is proposed immediately.
-	RequestBatchMaxSize uint64
+	RequestBatchMaxSize int
 	// RequestBatchMaxInterval is the maximal time interval a request batch is waiting before it is proposed.
 	// A request batch is accumulating requests until RequestBatchMaxInterval had elapsed from the time the batch was
 	// first created (i.e. the time the first request was added to it), or until it is of size RequestBatchMaxSize,
@@ -24,10 +24,10 @@ type Configuration struct {
 	RequestBatchMaxInterval time.Duration
 
 	// IncomingMessageBufferSize is the size of the buffer holding incoming messages before they are processed.
-	IncomingMessageBufferSize uint64
+	IncomingMessageBufferSize int
 	// RequestPoolSize is the number of pending requests retained by the node.
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxSize.
-	RequestPoolSize uint64
+	RequestPoolSize int
 
 	// RequestTimeout is started from the moment a request is submitted, and defines the interval after which a request
 	// is forwarded to the leader.
@@ -51,7 +51,7 @@ type Configuration struct {
 	LeaderHeartbeatTimeout time.Duration
 	// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
-	LeaderHeartbeatCount uint64
+	LeaderHeartbeatCount int
 }
 
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
