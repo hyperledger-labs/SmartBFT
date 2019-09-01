@@ -177,7 +177,7 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 	if nextTimeout.After(now) { // check if it is time to resend
 		return
 	}
-	if v.nextView == v.currView+1 { // started view change already but didn't get quorum yet
+	if v.checkTimeout { // during view change process
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
@@ -188,9 +188,8 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 		}
 		v.Comm.BroadcastConsensus(msg)
 		v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
+		v.lastResend = now // update last resend time, or at least last time we checked if we should resend
 	}
-	v.lastResend = now // update last resend time, or at least last time we checked if we should resend
-	v.Logger.Debugf("Node %d finished the check if it should resend the view change", v.SelfID)
 }
 
 func (v *ViewChanger) checkIfTimeout(now time.Time) {
@@ -211,7 +210,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
-		v.Logger.Debugf("Node %d is processing a view change message from %d with view next view %d", v.SelfID, sender, vc.NextView)
+		v.Logger.Debugf("Node %d is processing a view change message from %d with next view %d", v.SelfID, sender, vc.NextView)
 		// check view number
 		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("Node %d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
