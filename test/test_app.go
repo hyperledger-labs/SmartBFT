@@ -21,6 +21,20 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+var FastConfig = consensus.Configuration{
+	RequestBatchMaxSize:       10,
+	RequestBatchMaxInterval:   time.Millisecond,
+	IncomingMessageBufferSize: 200,
+	RequestPoolSize:           40,
+	RequestTimeout:            500 * time.Millisecond,
+	RequestLeaderFwdTimeout:   2 * time.Second,
+	RequestAutoRemoveTimeout:  3 * time.Minute,
+	ViewChangeResendInterval:  time.Second,
+	ViewChangeTimeout:         1 * time.Minute,
+	LeaderHeartbeatTimeout:    4 * time.Second,
+	LeaderHeartbeatCount:      10,
+}
+
 type App struct {
 	ID          uint64
 	Delivered   chan *AppRecord
@@ -242,7 +256,7 @@ type AppRecord struct {
 	Metadata []byte
 }
 
-func newNode(id uint64, network Network, testName string, testDir string) *App {
+func newNode(id uint64, numNodes int, network Network, testName string, testDir string) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
@@ -262,27 +276,27 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 	}
 
+	config := FastConfig
+	config.SelfID = id
+	config.NumberOfNodes = numNodes
+
 	app.Setup = func() {
 		c := &consensus.Consensus{
-			ViewChangerTicker:       app.secondClock.C,
-			ViewChangeResendTimeout: time.Second,
-			ViewChangerTimeout:      time.Minute,
-			Scheduler:               app.clock.C,
-			SelfID:                  id,
-			Logger:                  sugaredLogger,
-			WAL:                     writeAheadLog,
-			Metadata:                *app.latestMD,
-			Verifier:                app,
-			Signer:                  app,
-			RequestInspector:        app,
-			Assembler:               app,
-			Synchronizer:            app,
-			Application:             app,
-			BatchSize:               10,
-			BatchTimeout:            time.Millisecond,
-			WALInitialContent:       walInitialEntries,
-			LastProposal:            types.Proposal{},
-			LastSignatures:          []types.Signature{},
+			Config:            config,
+			ViewChangerTicker: app.secondClock.C,
+			Scheduler:         app.clock.C,
+			Logger:            sugaredLogger,
+			WAL:               writeAheadLog,
+			Metadata:          *app.latestMD,
+			Verifier:          app,
+			Signer:            app,
+			RequestInspector:  app,
+			Assembler:         app,
+			Synchronizer:      app,
+			Application:       app,
+			WALInitialContent: walInitialEntries,
+			LastProposal:      types.Proposal{},
+			LastSignatures:    []types.Signature{},
 		}
 		network.AddOrUpdateNode(id, c)
 		c.Comm = network[id]

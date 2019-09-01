@@ -14,39 +14,31 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
-const (
-	DefaultRequestPoolSize = 200
-)
-
 // Consensus submits requests to be total ordered,
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	SelfID       uint64
-	BatchSize    int
-	BatchTimeout time.Duration
 	bft.Comm
-	Application             bft.Application
-	Assembler               bft.Assembler
-	WAL                     bft.WriteAheadLog
-	WALInitialContent       [][]byte
-	Signer                  bft.Signer
-	Verifier                bft.Verifier
-	RequestInspector        bft.RequestInspector
-	Synchronizer            bft.Synchronizer
-	Logger                  bft.Logger
-	Metadata                protos.ViewMetadata
-	LastProposal            types.Proposal
-	LastSignatures          []types.Signature
-	Scheduler               <-chan time.Time
-	ViewChangerTicker       <-chan time.Time
-	ViewChangeResendTimeout time.Duration
-	ViewChangerTimeout      time.Duration
+
+	Config            Configuration
+	Application       bft.Application
+	Assembler         bft.Assembler
+	WAL               bft.WriteAheadLog
+	WALInitialContent [][]byte
+	Signer            bft.Signer
+	Verifier          bft.Verifier
+	RequestInspector  bft.RequestInspector
+	Synchronizer      bft.Synchronizer
+	Logger            bft.Logger
+	Metadata          protos.ViewMetadata
+	LastProposal      types.Proposal
+	LastSignatures    []types.Signature
+	Scheduler         <-chan time.Time
+	ViewChangerTicker <-chan time.Time
 
 	viewChanger *algorithm.ViewChanger
 	controller  *algorithm.Controller
 	state       *algorithm.PersistedState
-	n           uint64
 }
 
 func (c *Consensus) Complain(stopView bool) {
@@ -58,15 +50,11 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() {
-	// requestTimeout := 2 * c.BatchTimeout // Request timeout should be at least as batch timeout
-	opts := algorithm.PoolOptions{
-		QueueSize:         DefaultRequestPoolSize,
-		RequestTimeout:    algorithm.DefaultRequestTimeout / 100,
-		LeaderFwdTimeout:  algorithm.DefaultRequestTimeout / 5,
-		AutoRemoveTimeout: algorithm.DefaultRequestTimeout,
+	if c.Config.NumberOfNodes != len(c.Nodes()) {
+		// TODO return error
+		c.Logger.Panicf("Configuration Error: Config.NumberOfNodes=%d is not equal to len(Comm.Nodes())=%d",
+			c.Config.NumberOfNodes, len(c.Nodes()))
 	}
-
-	c.n = uint64(len(c.Nodes()))
 
 	inFlight := algorithm.InFlightData{}
 
@@ -81,8 +69,8 @@ func (c *Consensus) Start() {
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:      c.SelfID,
-		N:           c.n,
+		SelfID:      c.Config.SelfID,
+		N:           uint64(c.Config.NumberOfNodes),
 		Logger:      c.Logger,
 		Comm:        c,
 		Signer:      c.Signer,
@@ -93,15 +81,15 @@ func (c *Consensus) Start() {
 		// Controller later
 		// RequestsTimer later
 		Ticker:            c.ViewChangerTicker,
-		ResendTimeout:     c.ViewChangeResendTimeout,
-		TimeoutViewChange: c.ViewChangerTimeout,
+		ResendTimeout:     c.Config.ViewChangeResendInterval,
+		TimeoutViewChange: c.Config.ViewChangeTimeout,
 	}
 
 	c.controller = &algorithm.Controller{
 		Checkpoint:       &cpt,
 		WAL:              c.WAL,
-		ID:               c.SelfID,
-		N:                c.n,
+		ID:               c.Config.SelfID,
+		N:                uint64(c.Config.NumberOfNodes),
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
@@ -118,9 +106,15 @@ func (c *Consensus) Start() {
 
 	c.controller.ProposerBuilder = c.proposalMaker()
 
+	opts := algorithm.PoolOptions{
+		QueueSize:         int64(c.Config.RequestPoolSize),
+		RequestTimeout:    c.Config.RequestTimeout,
+		LeaderFwdTimeout:  c.Config.RequestLeaderFwdTimeout,
+		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
+	}
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
-	batchBuilder := algorithm.NewBatchBuilder(pool, c.BatchSize, c.BatchTimeout)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, algorithm.DefaultHeartbeatTimeout, c, c.controller)
+	batchBuilder := algorithm.NewBatchBuilder(pool, c.Config.RequestBatchMaxSize, c.Config.RequestBatchMaxInterval)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c, c.controller)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
@@ -155,7 +149,7 @@ func (c *Consensus) SubmitRequest(req []byte) error {
 func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 	for _, node := range c.Comm.Nodes() {
 		// Do not send to yourself
-		if c.SelfID == node {
+		if c.Config.SelfID == node {
 			continue
 		}
 		c.Comm.SendConsensus(node, m)
@@ -169,10 +163,11 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Decider:         c.controller,
 		Logger:          c.Logger,
 		Signer:          c.Signer,
-		SelfID:          c.SelfID,
+		SelfID:          c.Config.SelfID,
 		Sync:            c.controller,
 		FailureDetector: c,
 		Verifier:        c.Verifier,
-		N:               c.n,
+		N:               uint64(c.Config.NumberOfNodes),
+		InMsqQSize:      c.Config.IncomingMessageBufferSize,
 	}
 }

@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	DefaultRequestTimeout = 10 * time.Second
+	defaultRequestTimeout = 10 * time.Second // for unit tests only
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
@@ -70,13 +70,13 @@ type PoolOptions struct {
 // NewPool constructs new requests pool
 func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions) *Pool {
 	if options.RequestTimeout == 0 {
-		options.RequestTimeout = DefaultRequestTimeout
+		options.RequestTimeout = defaultRequestTimeout
 	}
 	if options.LeaderFwdTimeout == 0 {
-		options.LeaderFwdTimeout = DefaultRequestTimeout
+		options.LeaderFwdTimeout = defaultRequestTimeout
 	}
 	if options.AutoRemoveTimeout == 0 {
-		options.AutoRemoveTimeout = DefaultRequestTimeout
+		options.AutoRemoveTimeout = defaultRequestTimeout
 	}
 
 	return &Pool{

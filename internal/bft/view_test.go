@@ -136,6 +136,7 @@ func TestViewBasic(t *testing.T) {
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		InMsgQSize:       40,
 	}
 	view.Start()
 	view.Abort()
@@ -336,6 +337,7 @@ func TestBadPrePrepare(t *testing.T) {
 				ProposalSequence: 0,
 				Sync:             synchronizer,
 				FailureDetector:  fd,
+				InMsgQSize:       40,
 			}
 			view.Start()
 
@@ -425,6 +427,7 @@ func TestBadPrepare(t *testing.T) {
 				Comm:             comm,
 				Verifier:         verifier,
 				Signer:           signer,
+				InMsgQSize:       40,
 			}
 			view.Start()
 
@@ -491,6 +494,7 @@ func TestBadCommit(t *testing.T) {
 		Comm:             comm,
 		Verifier:         verifier,
 		Signer:           signer,
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -575,6 +579,7 @@ func TestNormalPath(t *testing.T) {
 		Decider:          decider,
 		Verifier:         verifier,
 		Signer:           signer,
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -693,6 +698,7 @@ func TestTwoSequences(t *testing.T) {
 		Decider:          decider,
 		Verifier:         verifier,
 		Signer:           signer,
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -854,6 +860,7 @@ func TestViewPersisted(t *testing.T) {
 					Quorum:           3,
 					Number:           1,
 					ProposalSequence: 0,
+					InMsgQSize:       40,
 				}
 			}
 
@@ -1064,6 +1071,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				Number:           5,
 				ProposalSequence: 10,
 				Sync:             synchronizer,
+				InMsgQSize:       40,
 			}
 
 			var syncCalled sync.WaitGroup
@@ -1147,6 +1155,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		InMsgQSize:       40,
 	}
 
 	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
@@ -1401,6 +1410,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		InMsgQSize:       40,
 	}
 
 	return tv

@@ -169,23 +169,26 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		deliverChan: deliverChan,
 		stopChan:    make(chan struct{}),
 	}
+
+	config := smartbft.DefaultConfig
+	config.SelfID = id
+	config.NumberOfNodes = opts.NumNodes
+	config.RequestBatchMaxInterval = opts.BatchTimeout
+	config.RequestBatchMaxSize = opts.BatchSize
+
 	node.consensus = &smartbft.Consensus{
-		ViewChangerTicker:       node.secondClock.C,
-		ViewChangeResendTimeout: time.Second,
-		ViewChangerTimeout:      time.Minute,
-		Scheduler:               node.clock.C,
-		SelfID:                  id,
-		BatchSize:               opts.BatchSize,
-		BatchTimeout:            opts.BatchTimeout,
-		Logger:                  logger,
-		Comm:                    node,
-		Signer:                  node,
-		Verifier:                node,
-		Application:             node,
-		Assembler:               node,
-		RequestInspector:        node,
-		Synchronizer:            node,
-		WAL:                     writeAheadLog,
+		Config:            config,
+		ViewChangerTicker: node.secondClock.C,
+		Scheduler:         node.clock.C,
+		Logger:            logger,
+		Comm:              node,
+		Signer:            node,
+		Verifier:          node,
+		Application:       node,
+		Assembler:         node,
+		RequestInspector:  node,
+		Synchronizer:      node,
+		WAL:               writeAheadLog,
 		Metadata: smartbftprotos.ViewMetadata{
 			LatestSequence: 0,
 			ViewId:         0,

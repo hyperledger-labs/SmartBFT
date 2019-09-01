@@ -14,10 +14,8 @@ import (
 )
 
 const (
-	DefaultHeartbeatTimeout      = 60 * time.Second
-	HeartbeatFrequency           = 10 // How much heart beats per timeout
-	Leader                  Role = false
-	Follower                Role = true
+	Leader   Role = false
+	Follower Role = true
 )
 
 //go:generate mockery -dir . -name HeartbeatTimeoutHandler -case underscore -output ./mocks/
@@ -42,6 +40,7 @@ type HeartbeatMonitor struct {
 	commandChan   chan roleChange
 	logger        api.Logger
 	hbTimeout     time.Duration
+	hbCount       int
 	comm          Comm
 	handler       HeartbeatTimeoutHandler
 	view          uint64
@@ -54,13 +53,7 @@ type HeartbeatMonitor struct {
 	timedOut      bool
 }
 
-func NewHeartbeatMonitor(
-	scheduler <-chan time.Time,
-	logger api.Logger,
-	heartbeatTimeout time.Duration,
-	comm Comm,
-	handler HeartbeatTimeoutHandler,
-) *HeartbeatMonitor {
+func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount int, comm Comm, handler HeartbeatTimeoutHandler) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
 		stopChan:    make(chan struct{}),
 		inc:         make(chan incMsg),
@@ -68,6 +61,7 @@ func NewHeartbeatMonitor(
 		scheduler:   scheduler,
 		logger:      logger,
 		hbTimeout:   heartbeatTimeout,
+		hbCount:     heartbeatCount,
 		comm:        comm,
 		handler:     handler,
 	}
@@ -195,9 +189,13 @@ func (hm *HeartbeatMonitor) handleCommand(cmd roleChange) {
 }
 
 func (hm *HeartbeatMonitor) leaderTick(now time.Time) {
-	if now.Sub(hm.lastHeartbeat)*HeartbeatFrequency < hm.hbTimeout {
+	if now.Sub(hm.lastHeartbeat)*time.Duration(hm.hbCount) < hm.hbTimeout {
 		return
 	}
+
+	//if now.Sub(hm.lastHeartbeat)*HeartbeatFrequency < hm.hbTimeout {
+	//	return
+	//}
 
 	hm.logger.Debugf("Sending heartbeat with view %d", hm.view)
 	heartbeat := &smartbftprotos.Message{

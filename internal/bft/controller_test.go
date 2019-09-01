@@ -394,6 +394,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
+		InMsgQSize:       int(c.N * 10),
 	}
 }
 

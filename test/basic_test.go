@@ -25,10 +25,10 @@ func TestBasic(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
+	n4 := newNode(4, 4, network, t.Name(), testDir)
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -59,10 +59,10 @@ func TestRestartFollowers(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
+	n4 := newNode(4, 4, network, t.Name(), testDir)
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -104,10 +104,10 @@ func TestLeaderInPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -136,10 +136,10 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -198,13 +198,13 @@ func TestMultiLeadersPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
-	n5 := newNode(5, network, t.Name(), testDir)
-	n6 := newNode(6, network, t.Name(), testDir)
+	n0 := newNode(0, 7, network, t.Name(), testDir)
+	n1 := newNode(1, 7, network, t.Name(), testDir)
+	n2 := newNode(2, 7, network, t.Name(), testDir)
+	n3 := newNode(3, 7, network, t.Name(), testDir)
+	n4 := newNode(4, 7, network, t.Name(), testDir)
+	n5 := newNode(5, 7, network, t.Name(), testDir)
+	n6 := newNode(6, 7, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -247,10 +247,10 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -295,10 +295,10 @@ func TestLeaderForwarding(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
@@ -335,10 +335,10 @@ func TestLeaderExclusion(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.DisconnectFrom(3)
 
@@ -368,10 +368,10 @@ func TestCatchingUpWithSync(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	n0 := newNode(0, 4, network, t.Name(), testDir)
+	n1 := newNode(1, 4, network, t.Name(), testDir)
+	n2 := newNode(2, 4, network, t.Name(), testDir)
+	n3 := newNode(3, 4, network, t.Name(), testDir)
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()

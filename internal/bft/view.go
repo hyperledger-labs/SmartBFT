@@ -58,6 +58,7 @@ type View struct {
 	ProposalSequence uint64
 	State            State
 	Phase            Phase
+	InMsgQSize       int
 	// Runtime
 	lastVotedProposalByID map[uint64]protos.Commit
 	incMsgs               chan *incMsg
@@ -88,7 +89,7 @@ type View struct {
 
 func (v *View) Start() {
 	v.stopOnce = sync.Once{}
-	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
+	v.incMsgs = make(chan *incMsg, v.InMsgQSize)
 	v.abortChan = make(chan struct{})
 	v.lastVotedProposalByID = make(map[uint64]protos.Commit)
 	v.viewEnded.Add(1)
