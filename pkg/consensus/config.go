@@ -42,7 +42,7 @@ type Configuration struct {
 	// ViewChangeResendInterval defined the interval in which the ViewChange message is resent.
 	ViewChangeResendInterval time.Duration
 	// ViewChangeTimeout is started when a node first receives a quorum of ViewChange messages, and defines the
-	// interval after which the node will try to initial a view change with a higher view number.
+	// interval after which the node will try to initiate a view change with a higher view number.
 	ViewChangeTimeout time.Duration
 
 	// LeaderHeartbeatTimeout is the interval after which, if nodes do not receive a "sign of life" from the leader,
@@ -52,4 +52,22 @@ type Configuration struct {
 	// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
 	LeaderHeartbeatCount uint64
+}
+
+// DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
+// possibly on different availability zones within the geography. It is assumed that the typical latency between nodes,
+// and between clients to nodes, is approximately 10ms.
+// Set the SelfID and NumberOfNodes.
+var DefaultConfig = Configuration{
+	RequestBatchMaxSize:       100,
+	RequestBatchMaxInterval:   50 * time.Millisecond,
+	IncomingMessageBufferSize: 200,
+	RequestPoolSize:           400,
+	RequestTimeout:            2 * time.Second,
+	RequestLeaderFwdTimeout:   20 * time.Second,
+	RequestAutoRemoveTimeout:  3 * time.Minute,
+	ViewChangeResendInterval:  time.Second,
+	ViewChangeTimeout:         40 * time.Second,
+	LeaderHeartbeatTimeout:    time.Minute,
+	LeaderHeartbeatCount:      10,
 }
