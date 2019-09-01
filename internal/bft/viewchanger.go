@@ -187,9 +187,10 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 			},
 		}
 		v.Comm.BroadcastConsensus(msg)
+		v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
 	}
-	v.lastResend = now // update last resend time
-	v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
+	v.lastResend = now // update last resend time, or at least last time we checked if we should resend
+	v.Logger.Debugf("Node %d finished the check if it should resend the view change", v.SelfID)
 }
 
 func (v *ViewChanger) checkIfTimeout(now time.Time) {
@@ -200,7 +201,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 	if nextTimeout.After(now) { // check if timeout has passed
 		return
 	}
-	v.Logger.Debugf("Node %d got a view change timeout", v.SelfID)
+	v.Logger.Debugf("Node %d got a view change timeout, the current view is %d", v.SelfID, v.currView)
 	v.checkTimeout = false // stop timeout for now, a new one will start when a new view change begins
 	// the timeout has passed, something went wrong, try sync and complain
 	v.Synchronizer.Sync()
@@ -210,7 +211,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
-		v.Logger.Debugf("Node %d is processing a view change message from %d", v.SelfID, sender)
+		v.Logger.Debugf("Node %d is processing a view change message from %d with view next view %d", v.SelfID, sender, vc.NextView)
 		// check view number
 		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("Node %d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
@@ -253,6 +254,10 @@ func (v *ViewChanger) InformNewView(view uint64) {
 }
 
 func (v *ViewChanger) informNewView(view uint64) {
+	if view <= v.currView {
+		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
+		return
+	}
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
 	v.nextView = v.currView
@@ -296,11 +301,9 @@ func (v *ViewChanger) processViewChangeMsg() {
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(true)
 	}
-	// TODO add view change try timeout
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
-		v.RequestsTimer.RestartTimers()
 		v.viewChangeMsgs.clear(v.N)
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
@@ -552,6 +555,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		// TODO handle in flight
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+		v.RequestsTimer.RestartTimers()
 		v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		v.checkTimeout = false
 	}
