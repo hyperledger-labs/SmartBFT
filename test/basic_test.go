@@ -11,6 +11,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -240,6 +241,83 @@ func TestMultiLeadersPartition(t *testing.T) {
 	assert.Equal(t, data5, data6)
 	assert.Equal(t, data6, data2)
 
+}
+
+func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	start := time.Now()
+	n1.heartbeatTime = make(chan time.Time, 1)
+	n2.heartbeatTime = make(chan time.Time, 1)
+	n3.heartbeatTime = make(chan time.Time, 1)
+	n1.heartbeatTime <- start
+	n2.heartbeatTime <- start
+	n3.heartbeatTime <- start
+	n1.Setup()
+	n2.Setup()
+	n3.Setup()
+
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+	viewChangeWG := sync.WaitGroup{}
+	baseLogger := n1.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	n1.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+			close(done)
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	n0.Consensus.Start()
+
+	n0.Disconnect() // leader in partition
+
+	viewChangeWG.Add(1)
+
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	// Accelerate the time until a view change because of heartbeat timeout
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 10):
+				n1.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n2.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
+			}
+		}
+	}()
+
+	viewChangeWG.Wait()
+
+	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
+	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
+	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
+
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
 }
 
 func TestCatchingUpWithViewChange(t *testing.T) {
