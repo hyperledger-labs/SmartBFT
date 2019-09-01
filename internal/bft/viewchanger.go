@@ -177,7 +177,7 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 	if nextTimeout.After(now) { // check if it is time to resend
 		return
 	}
-	if v.nextView == v.currView+1 { // started view change already but didn't get quorum yet
+	if v.checkTimeout { // during view change process
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
@@ -187,9 +187,9 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 			},
 		}
 		v.Comm.BroadcastConsensus(msg)
+		v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
+		v.lastResend = now // update last resend time, or at least last time we checked if we should resend
 	}
-	v.lastResend = now // update last resend time
-	v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
 }
 
 func (v *ViewChanger) checkIfTimeout(now time.Time) {
@@ -200,7 +200,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 	if nextTimeout.After(now) { // check if timeout has passed
 		return
 	}
-	v.Logger.Debugf("Node %d got a view change timeout", v.SelfID)
+	v.Logger.Debugf("Node %d got a view change timeout, the current view is %d", v.SelfID, v.currView)
 	v.checkTimeout = false // stop timeout for now, a new one will start when a new view change begins
 	// the timeout has passed, something went wrong, try sync and complain
 	v.Synchronizer.Sync()
@@ -210,7 +210,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
-		v.Logger.Debugf("Node %d is processing a view change message from %d", v.SelfID, sender)
+		v.Logger.Debugf("Node %d is processing a view change message from %d with next view %d", v.SelfID, sender, vc.NextView)
 		// check view number
 		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("Node %d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
@@ -245,6 +245,10 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 // InformNewView tells the view changer to advance to a new view number
 func (v *ViewChanger) InformNewView(view uint64) {
+	if view <= v.currView {
+		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
+		return
+	}
 	select {
 	case v.informChan <- view: // blocking, can't lose this view
 	case <-v.stopChan:
