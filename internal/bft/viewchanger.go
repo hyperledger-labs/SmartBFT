@@ -282,7 +282,7 @@ func (v *ViewChanger) StartViewChange(view uint64, stopView bool) {
 // StartViewChange stops current view and timeouts, and broadcasts a view change message to all
 func (v *ViewChanger) startViewChange(change *change) {
 	if change.view < v.currView { // this is about an old view
-		v.Logger.Warnf("Node %d has a view change request with an old view %d, while the current view is %d", v.SelfID, change.view, v.currView)
+		v.Logger.Debugf("Node %d has a view change request with an old view %d, while the current view is %d", v.SelfID, change.view, v.currView)
 		return
 	}
 	v.nextView = v.currView + 1
