@@ -498,9 +498,9 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 func (v *ViewChanger) processViewDataMsg() {
 	if len(v.viewDataMsgs.voted) >= v.quorum { // need enough (quorum) data to continue
 
-		//if ok,_ ,_ := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier); !ok {
-		//	return
-		//}
+		if ok, _, _ := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier); !ok {
+			return
+		}
 
 		// create the new view message
 		signedMsgs := make([]*protos.SignedViewData, 0)
@@ -696,6 +696,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	var maxLastDecisionSequence uint64
 	var maxLastDecision *protos.Proposal
 	var maxLastDecisionSigs []*protos.Signature
+	var viewDataMessages []*protos.ViewData
 	for _, svd := range signed {
 		if _, exist := nodesMap[svd.Signer]; exist {
 			continue // seen data from this node already
@@ -737,10 +738,18 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		}
 
 		valid++
+		viewDataMessages = append(viewDataMessages, vd)
 	}
 	if valid >= v.quorum {
+
+		ok, _, _ := CheckInFlight(viewDataMessages, v.f, v.quorum, v.N, v.Verifier)
+		if !ok {
+			v.Logger.Debugf("The check of the in flight proposal by node %d did not pass", v.SelfID)
+			return
+		}
+
 		viewToChange := v.currView
-		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
+		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
 			newViewToSave := &protos.SavedMessage{
