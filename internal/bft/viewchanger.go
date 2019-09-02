@@ -77,7 +77,7 @@ type ViewChanger struct {
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.startChangeChan = make(chan bool, 1)
-	v.informChan = make(chan uint64)
+	v.informChan = make(chan uint64, 1)
 
 	v.nodes = v.Comm.Nodes()
 
@@ -250,7 +250,7 @@ func (v *ViewChanger) InformNewView(view uint64) {
 		return
 	}
 	select {
-	case v.informChan <- view: // blocking, can't lose this view
+	case v.informChan <- view:
 	case <-v.stopChan:
 		return
 	}
