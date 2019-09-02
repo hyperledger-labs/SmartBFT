@@ -21,7 +21,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var FastConfig = consensus.Configuration{
+var fastConfig = consensus.Configuration{
 	RequestBatchMaxSize:       10,
 	RequestBatchMaxInterval:   time.Millisecond,
 	IncomingMessageBufferSize: 200,
@@ -278,7 +278,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 	}
 
-	config := FastConfig
+	config := fastConfig
 	config.SelfID = id
 
 	app.Setup = func() {
