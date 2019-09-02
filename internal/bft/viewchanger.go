@@ -250,10 +250,6 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 // InformNewView tells the view changer to advance to a new view number
 func (v *ViewChanger) InformNewView(view uint64) {
-	if view <= v.currView {
-		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
-		return
-	}
 	select {
 	case v.informChan <- view:
 	case <-v.stopChan:
@@ -262,6 +258,10 @@ func (v *ViewChanger) InformNewView(view uint64) {
 }
 
 func (v *ViewChanger) informNewView(view uint64) {
+	if view <= v.currView {
+		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
+		return
+	}
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
 	v.nextView = v.currView
