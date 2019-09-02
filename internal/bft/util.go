@@ -192,6 +192,7 @@ type ProposalMaker struct {
 	Verifier           api.Verifier
 	Signer             api.Signer
 	State              State
+	InMsqQSize         int
 	ViewSequences      *atomic.Value
 	restoreOnceFromWAL sync.Once
 }
@@ -212,6 +213,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 		Signer:           pm.Signer,
 		ProposalSequence: proposalSequence,
 		State:            pm.State,
+		InMsgQSize:       pm.InMsqQSize,
 		ViewSequences:    pm.ViewSequences,
 	}
 

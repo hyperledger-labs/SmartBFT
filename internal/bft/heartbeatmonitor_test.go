@@ -13,10 +13,16 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
+)
+
+const (
+	heartbeatTimeout = 60 * time.Second
+	heartbeatCount   = 10
 )
 
 var (
@@ -48,7 +54,7 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 	handler := &mocks.HeartbeatTimeoutHandler{}
 
 	scheduler := make(chan time.Time)
-	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, &atomic.Value{})
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, handler, &atomic.Value{})
 	assert.NotNil(t, hm)
 	hm.Close()
 }
@@ -64,7 +70,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 
 	vs := &atomic.Value{}
 	vs.Store(bft.ViewSequence{ViewActive: true})
-	hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, vs)
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, handler, vs)
 
 	var heartBeatsSent uint32
 	var heartBeatsSentUntilViewBecomesInactive uint32
@@ -192,7 +198,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			log := basicLog.Sugar()
 
 			scheduler := make(chan time.Time)
-			incrementUnit := bft.DefaultHeartbeatTimeout / bft.HeartbeatFrequency
+			incrementUnit := heartbeatTimeout / heartbeatCount
 
 			comm := &mocks.CommMock{}
 			handler := &mocks.HeartbeatTimeoutHandler{}
@@ -204,7 +210,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 				ViewActive:  testCase.viewActive,
 				ProposalSeq: testCase.proposalSeqInView,
 			})
-			hm := bft.NewHeartbeatMonitor(scheduler, log, bft.DefaultHeartbeatTimeout, comm, handler, viewSequence)
+			hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, handler, viewSequence)
 
 			hm.ChangeRole(bft.Follower, 10, 12)
 
@@ -215,7 +221,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 
 			start = start.Add(incrementUnit).Add(time.Second)
 
-			for i := time.Duration(1); i <= bft.HeartbeatFrequency*2; i++ {
+			for i := time.Duration(1); i <= heartbeatCount*2; i++ {
 				elapsed := start.Add(incrementUnit*i + time.Millisecond)
 				scheduler <- elapsed
 				hm.ProcessMsg(testCase.sender, testCase.heartbeatMessage)
@@ -239,13 +245,13 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	handler1 := &mocks.HeartbeatTimeoutHandler{}
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, bft.DefaultHeartbeatTimeout, comm1, handler1, vs1)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, handler1, vs1)
 
 	comm2 := &mocks.CommMock{}
 	handler2 := &mocks.HeartbeatTimeoutHandler{}
 	vs2 := &atomic.Value{}
 	vs2.Store(bft.ViewSequence{ViewActive: true})
-	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, bft.DefaultHeartbeatTimeout, comm2, handler2, vs2)
+	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm2, handler2, vs2)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
@@ -272,16 +278,16 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 
 	hm1.ChangeRole(bft.Leader, 10, 1)
 	hm2.ChangeRole(bft.Follower, 10, 1)
-	clock.advanceTime(bft.HeartbeatFrequency*2, scheduler1, scheduler2)
+	clock.advanceTime(heartbeatCount*2, scheduler1, scheduler2)
 
 	hm1.ChangeRole(bft.Follower, 11, 2)
 	hm2.ChangeRole(bft.Leader, 11, 2)
-	clock.advanceTime(bft.HeartbeatFrequency*2, scheduler1, scheduler2)
+	clock.advanceTime(heartbeatCount*2, scheduler1, scheduler2)
 
 	hm1.ChangeRole(bft.Follower, 12, 2)
 	hm2.ChangeRole(bft.Leader, 12, 2)
 	hm2.Close()
-	clock.advanceTime(bft.HeartbeatFrequency*2, scheduler1)
+	clock.advanceTime(heartbeatCount*2, scheduler1)
 	hm1.Close()
 
 	handler1.AssertCalled(t, "OnHeartbeatTimeout", uint64(12), uint64(2))
@@ -294,7 +300,7 @@ type fakeTime struct {
 
 func (t *fakeTime) advanceTime(ticks time.Duration, schedulers ...chan time.Time) {
 	for i := time.Duration(1); i <= ticks; i++ {
-		incrementUnit := bft.DefaultHeartbeatTimeout / bft.HeartbeatFrequency
+		incrementUnit := heartbeatTimeout / heartbeatCount
 		newTime := t.time.Add(incrementUnit)
 		for _, scheduler := range schedulers {
 			scheduler <- newTime

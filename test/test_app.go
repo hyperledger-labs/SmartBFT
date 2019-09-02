@@ -21,6 +21,20 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+var fastConfig = consensus.Configuration{
+	RequestBatchMaxSize:       10,
+	RequestBatchMaxInterval:   time.Millisecond,
+	IncomingMessageBufferSize: 200,
+	RequestPoolSize:           40,
+	RequestTimeout:            500 * time.Millisecond,
+	RequestLeaderFwdTimeout:   2 * time.Second,
+	RequestAutoRemoveTimeout:  3 * time.Minute,
+	ViewChangeResendInterval:  time.Second,
+	ViewChangeTimeout:         1 * time.Minute,
+	LeaderHeartbeatTimeout:    1 * time.Minute,
+	LeaderHeartbeatCount:      10,
+}
+
 type App struct {
 	ID             uint64
 	Delivered      chan *AppRecord
@@ -264,27 +278,26 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 	}
 
+	config := fastConfig
+	config.SelfID = id
+
 	app.Setup = func() {
 		c := &consensus.Consensus{
-			ViewChangerTicker:       app.secondClock.C,
-			ViewChangeResendTimeout: time.Second,
-			ViewChangerTimeout:      time.Minute,
-			Scheduler:               app.clock.C,
-			SelfID:                  id,
-			Logger:                  sugaredLogger,
-			WAL:                     writeAheadLog,
-			Metadata:                *app.latestMD,
-			Verifier:                app,
-			Signer:                  app,
-			RequestInspector:        app,
-			Assembler:               app,
-			Synchronizer:            app,
-			Application:             app,
-			BatchSize:               10,
-			BatchTimeout:            time.Millisecond,
-			WALInitialContent:       walInitialEntries,
-			LastProposal:            types.Proposal{},
-			LastSignatures:          []types.Signature{},
+			Config:            config,
+			ViewChangerTicker: app.secondClock.C,
+			Scheduler:         app.clock.C,
+			Logger:            sugaredLogger,
+			WAL:               writeAheadLog,
+			Metadata:          *app.latestMD,
+			Verifier:          app,
+			Signer:            app,
+			RequestInspector:  app,
+			Assembler:         app,
+			Synchronizer:      app,
+			Application:       app,
+			WALInitialContent: walInitialEntries,
+			LastProposal:      types.Proposal{},
+			LastSignatures:    []types.Signature{},
 		}
 		if app.heartbeatTime != nil {
 			app.clock.Stop()

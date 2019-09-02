@@ -396,6 +396,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		ProposalSequence: proposalSequence,
 		ViewSequences:    &atomic.Value{},
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
+		InMsgQSize:       int(c.N * 10),
 	}
 }
 

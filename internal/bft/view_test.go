@@ -137,6 +137,7 @@ func TestViewBasic(t *testing.T) {
 		Quorum:           3,
 		Number:           1,
 		ProposalSequence: 0,
+		InMsgQSize:       40,
 	}
 	view.Start()
 	view.Abort()
@@ -338,6 +339,7 @@ func TestBadPrePrepare(t *testing.T) {
 				Sync:             synchronizer,
 				FailureDetector:  fd,
 				ViewSequences:    &atomic.Value{},
+				InMsgQSize:       40,
 			}
 			view.Start()
 
@@ -428,6 +430,7 @@ func TestBadPrepare(t *testing.T) {
 				Verifier:         verifier,
 				Signer:           signer,
 				ViewSequences:    &atomic.Value{},
+				InMsgQSize:       40,
 			}
 			view.Start()
 
@@ -495,6 +498,7 @@ func TestBadCommit(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 		ViewSequences:    &atomic.Value{},
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -581,6 +585,7 @@ func TestNormalPath(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 		ViewSequences:    viewSeq,
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -701,6 +706,7 @@ func TestTwoSequences(t *testing.T) {
 		Verifier:         verifier,
 		Signer:           signer,
 		ViewSequences:    &atomic.Value{},
+		InMsgQSize:       40,
 	}
 	view.Start()
 
@@ -863,6 +869,7 @@ func TestViewPersisted(t *testing.T) {
 					Number:           1,
 					ProposalSequence: 0,
 					ViewSequences:    &atomic.Value{},
+					InMsgQSize:       40,
 				}
 			}
 
@@ -1074,6 +1081,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				ProposalSequence: 10,
 				Sync:             synchronizer,
 				ViewSequences:    &atomic.Value{},
+				InMsgQSize:       40,
 			}
 
 			var syncCalled sync.WaitGroup
@@ -1158,6 +1166,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		Number:           1,
 		ProposalSequence: 0,
 		ViewSequences:    &atomic.Value{},
+		InMsgQSize:       40,
 	}
 
 	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
@@ -1413,6 +1422,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 		Number:           1,
 		ProposalSequence: 0,
 		ViewSequences:    &atomic.Value{},
+		InMsgQSize:       40,
 	}
 
 	return tv
