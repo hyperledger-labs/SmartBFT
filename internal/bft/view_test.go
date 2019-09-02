@@ -177,7 +177,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 		{
@@ -205,7 +205,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 		{
@@ -223,7 +223,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 		{
@@ -254,7 +254,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 		{
@@ -275,7 +275,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 		{
@@ -293,7 +293,7 @@ func TestBadPrePrepare(t *testing.T) {
 				syncWG.Wait()
 				synchronizer.AssertCalled(t, "Sync")
 				fdWG.Wait()
-				fd.AssertCalled(t, "Complain", false)
+				fd.AssertCalled(t, "Complain", uint64(1), false)
 			},
 		},
 	} {
@@ -316,7 +316,7 @@ func TestBadPrePrepare(t *testing.T) {
 			})
 			fd = &mocks.FailureDetector{}
 			fdWG = &sync.WaitGroup{}
-			fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+			fd.On("Complain", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 				fdWG.Done()
 			})
 			state := &bft.StateRecorder{}
@@ -397,7 +397,7 @@ func TestBadPrepare(t *testing.T) {
 			}).Return(protos.ViewMetadata{}, uint64(0))
 			fd := &mocks.FailureDetector{}
 			fdWG := &sync.WaitGroup{}
-			fd.On("Complain", mock.Anything).Run(func(args mock.Arguments) {
+			fd.On("Complain", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 				fdWG.Done()
 			})
 			comm := &mocks.CommMock{}

@@ -308,15 +308,16 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
-	viewChangeWG.Add(1)
-	baseLogger := n1.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n1.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
-			close(done)
-			viewChangeWG.Done()
-		}
-		return nil
-	})).Sugar()
+	viewChangeWG.Add(3)
+	for _, n := range network {
+		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+				viewChangeWG.Done()
+			}
+			return nil
+		})).Sugar()
+	}
 
 	n0.Consensus.Start()
 
@@ -343,6 +344,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	}()
 
 	viewChangeWG.Wait()
+	close(done)
 
 	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
 	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
@@ -385,22 +387,22 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
-	baseLogger := n2.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n2.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
-			close(done)
-			viewChangeWG.Done()
-		}
-		return nil
-	})).Sugar()
+	viewChangeWG.Add(5)
+	for _, n := range network {
+		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+				viewChangeWG.Done()
+			}
+			return nil
+		})).Sugar()
+	}
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
 
 	n0.Disconnect() // leader in partition
 	n1.Disconnect() // next leader in partition
-
-	viewChangeWG.Add(1)
 
 	n2.Consensus.Start()
 	n3.Consensus.Start()
@@ -426,6 +428,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	}()
 
 	viewChangeWG.Wait()
+	close(done)
 
 	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
 	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower

@@ -43,8 +43,8 @@ type Consensus struct {
 	numberOfNodes uint64
 }
 
-func (c *Consensus) Complain(stopView bool) {
-	c.viewChanger.StartViewChange(stopView)
+func (c *Consensus) Complain(viewNum uint64, stopView bool) {
+	c.viewChanger.StartViewChange(viewNum, stopView)
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
