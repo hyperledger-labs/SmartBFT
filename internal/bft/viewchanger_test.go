@@ -144,7 +144,6 @@ func TestViewChangeProcess(t *testing.T) {
 	log := basicLog.Sugar()
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
-	reqTimer.On("RestartTimers")
 	controller := &mocks.ViewController{}
 	controller.On("AbortView")
 
@@ -193,7 +192,6 @@ func TestViewChangeProcess(t *testing.T) {
 	comm.AssertCalled(t, "SendConsensus", uint64(2), mock.Anything)
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
-	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 2)
 	controller.AssertNumberOfCalls(t, "AbortView", 2)
 
 	vc.Stop()
@@ -232,16 +230,19 @@ func TestViewDataProcess(t *testing.T) {
 	}).Return(nil).Once()
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("RestartTimers")
 
 	vc := &bft.ViewChanger{
-		SelfID:     1,
-		N:          4,
-		Comm:       comm,
-		Logger:     log,
-		Verifier:   verifier,
-		Controller: controller,
-		Ticker:     make(chan time.Time),
-		Checkpoint: &checkpoint,
+		SelfID:        1,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		Checkpoint:    &checkpoint,
+		RequestsTimer: reqTimer,
 	}
 
 	vc.Start(1)
@@ -275,6 +276,7 @@ func TestViewDataProcess(t *testing.T) {
 	assert.Equal(t, uint64(1), num)
 	num = <-seqNumChan
 	assert.Equal(t, uint64(2), num)
+	reqTimer.AssertCalled(t, "RestartTimers")
 
 	vc.Stop()
 }
@@ -307,16 +309,19 @@ func TestNewViewProcess(t *testing.T) {
 	}).Return(nil).Once()
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("RestartTimers")
 
 	vc := &bft.ViewChanger{
-		SelfID:     0,
-		N:          4,
-		Comm:       comm,
-		Logger:     log,
-		Verifier:   verifier,
-		Controller: controller,
-		Ticker:     make(chan time.Time),
-		Checkpoint: &checkpoint,
+		SelfID:        0,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		Checkpoint:    &checkpoint,
+		RequestsTimer: reqTimer,
 	}
 
 	vc.Start(2)
@@ -356,6 +361,7 @@ func TestNewViewProcess(t *testing.T) {
 	assert.Equal(t, uint64(2), num)
 	num = <-seqNumChan
 	assert.Equal(t, uint64(2), num)
+	reqTimer.AssertCalled(t, "RestartTimers")
 
 	vc.Stop()
 }
@@ -779,7 +785,6 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			log := basicLog.Sugar()
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
-			reqTimer.On("RestartTimers")
 			controller := &mocks.ViewController{}
 			controller.On("AbortView")
 			checkpoint := types.Checkpoint{}
@@ -818,7 +823,6 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			vc.Stop()
 
 			reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-			reqTimer.AssertNumberOfCalls(t, "RestartTimers", 1)
 			controller.AssertNumberOfCalls(t, "AbortView", 1)
 		})
 	}

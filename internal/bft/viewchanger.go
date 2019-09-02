@@ -304,7 +304,6 @@ func (v *ViewChanger) processViewChangeMsg() {
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
-		v.RequestsTimer.RestartTimers()
 		v.viewChangeMsgs.clear(v.N)
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
@@ -556,6 +555,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		// TODO handle in flight
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+		v.RequestsTimer.RestartTimers()
 		v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		v.checkTimeout = false
 	}

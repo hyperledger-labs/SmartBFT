@@ -211,6 +211,23 @@ func TestMultiLeadersPartition(t *testing.T) {
 	n5 := newNode(5, network, t.Name(), testDir)
 	n6 := newNode(6, network, t.Name(), testDir)
 
+	start := time.Now()
+	n2.viewChangeTime = make(chan time.Time, 1)
+	n3.viewChangeTime = make(chan time.Time, 1)
+	n4.viewChangeTime = make(chan time.Time, 1)
+	n5.viewChangeTime = make(chan time.Time, 1)
+	n6.viewChangeTime = make(chan time.Time, 1)
+	n2.viewChangeTime <- start
+	n3.viewChangeTime <- start
+	n4.viewChangeTime <- start
+	n5.viewChangeTime <- start
+	n6.viewChangeTime <- start
+	n2.Setup()
+	n3.Setup()
+	n4.Setup()
+	n5.Setup()
+	n6.Setup()
+
 	n0.Consensus.Start()
 	n1.Consensus.Start()
 
@@ -228,6 +245,26 @@ func TestMultiLeadersPartition(t *testing.T) {
 	n4.Submit(Request{ID: "1", ClientID: "alice"})
 	n5.Submit(Request{ID: "1", ClientID: "alice"})
 	n6.Submit(Request{ID: "1", ClientID: "alice"})
+
+	done := make(chan struct{})
+	defer close(done)
+	// Accelerate the time for a view change timeout
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 10):
+				n2.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n3.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n4.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n5.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				n6.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+			}
+		}
+	}()
 
 	data2 := <-n2.Delivered
 	data3 := <-n3.Delivered
