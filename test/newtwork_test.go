@@ -17,8 +17,8 @@ func TestNetwork(t *testing.T) {
 	node1 := make(mockHandler)
 	node2 := make(mockHandler)
 
-	network.AddOrUpdateNode(1, node1)
-	network.AddOrUpdateNode(2, node2)
+	network.AddOrUpdateNode(1, node1, nil)
+	network.AddOrUpdateNode(2, node2, nil)
 	prepare := &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
 			Prepare: &smartbftprotos.Prepare{Seq: 1},

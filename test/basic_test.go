@@ -308,6 +308,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(1)
 	baseLogger := n1.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 	n1.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
@@ -320,8 +321,6 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	n0.Consensus.Start()
 
 	n0.Disconnect() // leader in partition
-
-	viewChangeWG.Add(1)
 
 	n1.Consensus.Start()
 	n2.Consensus.Start()
@@ -375,36 +374,13 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	n6 := newNode(6, network, t.Name(), testDir)
 
 	start := time.Now()
-	n1.heartbeatTime = make(chan time.Time, 1)
-	n2.heartbeatTime = make(chan time.Time, 1)
-	n3.heartbeatTime = make(chan time.Time, 1)
-	n4.heartbeatTime = make(chan time.Time, 1)
-	n5.heartbeatTime = make(chan time.Time, 1)
-	n6.heartbeatTime = make(chan time.Time, 1)
-	n1.heartbeatTime <- start
-	n2.heartbeatTime <- start
-	n3.heartbeatTime <- start
-	n4.heartbeatTime <- start
-	n5.heartbeatTime <- start
-	n6.heartbeatTime <- start
-	n1.viewChangeTime = make(chan time.Time, 1)
-	n2.viewChangeTime = make(chan time.Time, 1)
-	n3.viewChangeTime = make(chan time.Time, 1)
-	n4.viewChangeTime = make(chan time.Time, 1)
-	n5.viewChangeTime = make(chan time.Time, 1)
-	n6.viewChangeTime = make(chan time.Time, 1)
-	n1.viewChangeTime <- start
-	n2.viewChangeTime <- start
-	n3.viewChangeTime <- start
-	n4.viewChangeTime <- start
-	n5.viewChangeTime <- start
-	n6.viewChangeTime <- start
-	n1.Setup()
-	n2.Setup()
-	n3.Setup()
-	n4.Setup()
-	n5.Setup()
-	n6.Setup()
+	for _, n := range network {
+		n.app.heartbeatTime = make(chan time.Time, 1)
+		n.app.heartbeatTime <- start
+		n.app.viewChangeTime = make(chan time.Time, 1)
+		n.app.viewChangeTime <- start
+		n.app.Setup()
+	}
 
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
@@ -441,18 +417,10 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 			case <-done:
 				return
 			case <-time.After(time.Millisecond * 10):
-				n1.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n2.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n4.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n5.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n6.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				n1.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n2.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n3.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n4.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n5.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n6.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				for _, n := range network {
+					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				}
 			}
 		}
 	}()
