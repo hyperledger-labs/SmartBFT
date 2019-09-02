@@ -31,7 +31,7 @@ var FastConfig = consensus.Configuration{
 	RequestAutoRemoveTimeout:  3 * time.Minute,
 	ViewChangeResendInterval:  time.Second,
 	ViewChangeTimeout:         1 * time.Minute,
-	LeaderHeartbeatTimeout:    4 * time.Second,
+	LeaderHeartbeatTimeout:    1 * time.Minute,
 	LeaderHeartbeatCount:      10,
 }
 
