@@ -258,7 +258,7 @@ type AppRecord struct {
 	Metadata []byte
 }
 
-func newNode(id uint64, numNodes int, network Network, testName string, testDir string) *App {
+func newNode(id uint64, network Network, testName string, testDir string) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
@@ -280,7 +280,6 @@ func newNode(id uint64, numNodes int, network Network, testName string, testDir 
 
 	config := FastConfig
 	config.SelfID = id
-	config.NumberOfNodes = numNodes
 
 	app.Setup = func() {
 		c := &consensus.Consensus{

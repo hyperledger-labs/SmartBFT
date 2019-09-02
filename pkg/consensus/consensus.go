@@ -37,9 +37,10 @@ type Consensus struct {
 	Scheduler         <-chan time.Time
 	ViewChangerTicker <-chan time.Time
 
-	viewChanger *algorithm.ViewChanger
-	controller  *algorithm.Controller
-	state       *algorithm.PersistedState
+	viewChanger   *algorithm.ViewChanger
+	controller    *algorithm.Controller
+	state         *algorithm.PersistedState
+	numberOfNodes uint64
 }
 
 func (c *Consensus) Complain(stopView bool) {
@@ -51,12 +52,7 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() {
-	if c.Config.NumberOfNodes != len(c.Nodes()) {
-		// TODO return error
-		c.Logger.Panicf("Configuration Error: Config.NumberOfNodes=%d is not equal to len(Comm.Nodes())=%d",
-			c.Config.NumberOfNodes, len(c.Nodes()))
-	}
-
+	c.numberOfNodes = uint64(len(c.Nodes()))
 	inFlight := algorithm.InFlightData{}
 
 	c.state = &algorithm.PersistedState{
@@ -71,7 +67,7 @@ func (c *Consensus) Start() {
 
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:      c.Config.SelfID,
-		N:           uint64(c.Config.NumberOfNodes),
+		N:           c.numberOfNodes,
 		Logger:      c.Logger,
 		Comm:        c,
 		Signer:      c.Signer,
@@ -90,7 +86,7 @@ func (c *Consensus) Start() {
 		Checkpoint:       &cpt,
 		WAL:              c.WAL,
 		ID:               c.Config.SelfID,
-		N:                uint64(c.Config.NumberOfNodes),
+		N:                c.numberOfNodes,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,
@@ -176,7 +172,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Sync:            c.controller,
 		FailureDetector: c,
 		Verifier:        c.Verifier,
-		N:               uint64(c.Config.NumberOfNodes),
+		N:               c.numberOfNodes,
 		InMsqQSize:      c.Config.IncomingMessageBufferSize,
 		ViewSequences:   c.controller.ViewSequences,
 	}

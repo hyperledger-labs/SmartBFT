@@ -11,8 +11,6 @@ import "time"
 type Configuration struct {
 	// SelfID is the identifier of the node.
 	SelfID uint64
-	// NumberOfNodes is the expected number of nodes in the cluster.
-	NumberOfNodes int
 
 	// RequestBatchMaxSize is the maximal number of a requests in a batch.
 	// A request batch that reaches this size is proposed immediately.
@@ -57,7 +55,7 @@ type Configuration struct {
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
 // possibly on different availability zones within the geography. It is assumed that the typical latency between nodes,
 // and between clients to nodes, is approximately 10ms.
-// Set the SelfID and NumberOfNodes.
+// Set the SelfID.
 var DefaultConfig = Configuration{
 	RequestBatchMaxSize:       100,
 	RequestBatchMaxInterval:   50 * time.Millisecond,

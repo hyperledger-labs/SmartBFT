@@ -172,7 +172,6 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 
 	config := smartbft.DefaultConfig
 	config.SelfID = id
-	config.NumberOfNodes = opts.NumNodes
 	config.RequestBatchMaxInterval = opts.BatchTimeout
 	config.RequestBatchMaxSize = opts.BatchSize
 
