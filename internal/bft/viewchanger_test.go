@@ -270,7 +270,11 @@ func TestViewDataProcess(t *testing.T) {
 	msg2.GetViewData().Signer = 2
 
 	verifierSigWG.Add(4)
-	verifierConsenterSigWG.Add(12)
+	// VerifyConsenterSig is called 3 times (3 signatures) during validation of the view data message
+	// 9 times after getting 3 view data messages and checking the in flight
+	// 9 times during validation of the new view message
+	// and 9 times when checking the in flight after validating the new view message
+	verifierConsenterSigWG.Add(30)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
@@ -358,7 +362,10 @@ func TestNewViewProcess(t *testing.T) {
 	}
 
 	verifierSigWG.Add(3)
-	verifierConsenterSigWG.Add(9)
+	// VerifyConsenterSig is called 9 times during validation of the new view message, there are 3 view date messages
+	// inside the new view message, each with 3 signatures on the last decision
+	// and 9 times when checking the in flight after validating the new view message
+	verifierConsenterSigWG.Add(18)
 	vc.HandleMessage(2, msg)
 	verifierSigWG.Wait()
 	verifierConsenterSigWG.Wait()
