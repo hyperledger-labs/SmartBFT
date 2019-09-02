@@ -476,7 +476,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
-	c.abortViewChan = make(chan struct{})
+	c.abortViewChan = make(chan struct{}, 1)
 
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)

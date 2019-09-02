@@ -36,7 +36,7 @@ type msgFrom struct {
 
 type Network map[uint64]*Node
 
-func (n Network) AddOrUpdateNode(id uint64, h handler) {
+func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 	node, exists := n[id]
 	if exists {
 		node.h = h
@@ -50,6 +50,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler) {
 		n:                   n,
 		id:                  uint64(id),
 		peerLossProbability: make(map[uint64]float32),
+		app:                 app,
 	}
 	n[id] = node
 	node.running.Add(1)
@@ -111,6 +112,7 @@ type Node struct {
 	in                  chan msgFrom
 	h                   handler
 	cb                  *committedBatches
+	app                 *App
 }
 
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {

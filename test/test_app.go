@@ -294,7 +294,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 			app.secondClock.Stop()
 			c.ViewChangerTicker = app.viewChangeTime
 		}
-		network.AddOrUpdateNode(id, c)
+		network.AddOrUpdateNode(id, c, app)
 		c.Comm = network[id]
 		app.Consensus = c
 	}
