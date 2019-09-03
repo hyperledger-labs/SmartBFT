@@ -8,6 +8,7 @@ package bft
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
@@ -57,6 +58,12 @@ type ViewChanger struct {
 	Controller    ViewController
 	RequestsTimer RequestsTimer
 
+	// for the in flight proposal view
+	State              State
+	ViewSequences      *atomic.Value
+	inFlightDecideChan chan struct{}
+	inFlightSyncChan   chan struct{}
+
 	Ticker              <-chan time.Time
 	lastTick            time.Time
 	ResendTimeout       time.Duration
@@ -104,6 +111,9 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 
 	v.lastTick = time.Now()
 	v.lastResend = v.lastTick
+
+	v.inFlightDecideChan = make(chan struct{})
+	v.inFlightSyncChan = make(chan struct{})
 
 	go func() {
 		defer v.vcDone.Done()
@@ -742,7 +752,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 	if valid >= v.quorum {
 
-		ok, _, _ := CheckInFlight(viewDataMessages, v.f, v.quorum, v.N, v.Verifier)
+		ok, noInFlight, inFlightProposal := CheckInFlight(viewDataMessages, v.f, v.quorum, v.N, v.Verifier)
 		if !ok {
 			v.Logger.Debugf("The check of the in flight proposal by node %d did not pass", v.SelfID)
 			return
@@ -750,7 +760,12 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 
 		viewToChange := v.currView
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
-		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+		calledSync := v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+
+		if !noInFlight && !calledSync {
+			v.commitInFlightProposal(inFlightProposal)
+		}
+
 		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
@@ -770,10 +785,10 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 }
 
-func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) {
+func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) (calledSync bool) {
 	myLastDecision, _ := v.Checkpoint.Get()
 	if lastDecisionSequence == 0 {
-		return
+		return false
 	}
 	proposal := types.Proposal{
 		Header:               lastDecision.Header,
@@ -793,10 +808,10 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	if myLastDecision.Metadata == nil { // I am at genesis proposal
 		if lastDecisionSequence == 1 { // and one decision behind
 			v.deliverDecision(proposal, signatures)
-			return
+			return false
 		}
 		v.sync(lastDecisionSequence)
-		return
+		return true
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(myLastDecision.Metadata, md); err != nil {
@@ -804,15 +819,16 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	}
 	if md.LatestSequence == lastDecisionSequence-1 { // I am one decision behind
 		v.deliverDecision(proposal, signatures)
-		return
+		return false
 	}
 	if md.LatestSequence < lastDecisionSequence { // I am far behind
 		v.sync(lastDecisionSequence)
-		return
+		return true
 	}
 	if md.LatestSequence > lastDecisionSequence+1 {
 		v.Logger.Panicf("Node %d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence)
 	}
+	return false
 }
 
 func (v *ViewChanger) sync(targetSeq uint64) {
@@ -847,4 +863,106 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
 		}
 	}
+	// TODO maybePruneRevokedRequests
+}
+
+func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
+	myLastDecision, _ := v.Checkpoint.Get()
+	if proposal == nil {
+		v.Logger.Panicf("The in flight proposal is nil")
+	}
+	proposalMD := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, proposalMD); err != nil {
+		v.Logger.Panicf("Node %d is unable to unmarshal the in flight proposal metadata, err: %v", v.SelfID, err)
+	}
+
+	if myLastDecision.Metadata != nil { // if metadata is nil then I am at genesis proposal and I should commit the in flight proposal anyway
+		lastDecisionMD := &protos.ViewMetadata{}
+		if err := proto.Unmarshal(myLastDecision.Metadata, lastDecisionMD); err != nil {
+			v.Logger.Panicf("Node %d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err)
+		}
+		if lastDecisionMD.LatestSequence == proposalMD.LatestSequence {
+			v.Logger.Debugf("Node %d already decided on sequence %d and so it will not commit the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
+			return // I already decided on the in flight proposal
+		}
+		if lastDecisionMD.LatestSequence != proposalMD.LatestSequence-1 {
+			v.Logger.Panicf("Node %d got an in flight proposal with sequence %d while its last decision was on sequence %d", v.SelfID, proposalMD.LatestSequence, lastDecisionMD.LatestSequence)
+		}
+	}
+
+	view := View{
+		SelfID:           v.SelfID,
+		N:                v.N,
+		Number:           proposalMD.ViewId,
+		LeaderID:         v.SelfID, // so that no byzantine leader will cause a complain
+		Quorum:           v.quorum,
+		Decider:          v,
+		FailureDetector:  v,
+		Sync:             v,
+		Logger:           v.Logger,
+		Comm:             v.Comm,
+		Verifier:         v.Verifier,
+		Signer:           v.Signer,
+		ProposalSequence: proposalMD.LatestSequence,
+		State:            v.State,
+		InMsgQSize:       v.InMsqQSize,
+		ViewSequences:    v.ViewSequences,
+		Phase:            PREPARED,
+	}
+
+	view.inFlightProposal = &types.Proposal{
+		VerificationSequence: int64(proposal.VerificationSequence),
+		Metadata:             proposal.Metadata,
+		Payload:              proposal.Payload,
+		Header:               proposal.Header,
+	}
+	view.myProposalSig = v.Signer.SignProposal(*view.inFlightProposal)
+	view.lastBroadcastSent = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   view.Number,
+				Digest: view.inFlightProposal.Digest(),
+				Seq:    view.ProposalSequence,
+				Signature: &protos.Signature{
+					Signer: view.myProposalSig.Id,
+					Value:  view.myProposalSig.Value,
+					Msg:    view.myProposalSig.Msg,
+				},
+			},
+		},
+	}
+
+	view.Start()
+
+	select { // wait for view to finish
+	case <-v.inFlightDecideChan:
+	case <-v.inFlightSyncChan:
+	case <-v.stopChan:
+	}
+
+	view.Abort()
+	return
+}
+
+func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Application.Deliver(proposal, signatures)
+	v.Checkpoint.Set(proposal, signatures)
+	for _, reqInfo := range requests {
+		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {
+			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
+		}
+	}
+	// TODO maybePruneRevokedRequests
+	v.inFlightDecideChan <- struct{}{}
+}
+
+func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
+	v.Logger.Panicf("Node %d has complained while in the view for the in flight proposal", v.SelfID)
+}
+
+func (v *ViewChanger) Sync() {
+	// the in flight proposal view asked to sync
+	v.Synchronizer.Sync()
+	v.inFlightSyncChan <- struct{}{}
 }

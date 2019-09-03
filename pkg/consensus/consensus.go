@@ -81,6 +81,7 @@ func (c *Consensus) Start() {
 		Ticker:            c.ViewChangerTicker,
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		TimeoutViewChange: c.Config.ViewChangeTimeout,
+		State:             c.state,
 		InMsqQSize:        c.Config.IncomingMessageBufferSize,
 	}
 
@@ -128,6 +129,7 @@ func (c *Consensus) Start() {
 
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.RequestsTimer = pool
+	c.viewChanger.ViewSequences = c.controller.ViewSequences
 
 	viewSeq, err := c.state.RestoreNewViewIfApplicable()
 	if err != nil {
