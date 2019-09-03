@@ -80,6 +80,8 @@ func (c *Consensus) Start() {
 		Ticker:            c.ViewChangerTicker,
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		TimeoutViewChange: c.Config.ViewChangeTimeout,
+		State:             c.state,
+		InMsqQSize:        c.Config.IncomingMessageBufferSize,
 	}
 
 	c.controller = &algorithm.Controller{
@@ -126,6 +128,7 @@ func (c *Consensus) Start() {
 
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.RequestsTimer = pool
+	c.viewChanger.ViewSequences = c.controller.ViewSequences
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
