@@ -175,6 +175,7 @@ func TestLeaderPropose(t *testing.T) {
 		Signer:        signer,
 		Application:   app,
 		Checkpoint:    &types.Checkpoint{},
+		ViewChanger:   &bft.ViewChanger{},
 	}
 	configureProposerBuilder(controller)
 
