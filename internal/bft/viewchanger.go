@@ -63,6 +63,8 @@ type ViewChanger struct {
 	ViewSequences      *atomic.Value
 	inFlightDecideChan chan struct{}
 	inFlightSyncChan   chan struct{}
+	inFlightView       *View
+	inFlightViewLock   sync.RWMutex
 
 	Ticker              <-chan time.Time
 	lastTick            time.Time
@@ -220,6 +222,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 	v.Logger.Debugf("Node %d got a view change timeout, the current view is %d", v.SelfID, v.currView)
 	v.checkTimeout = false // stop timeout for now, a new one will start when a new view change begins
 	// the timeout has passed, something went wrong, try sync and complain
+	v.Logger.Debugf("Node %d is calling sync because it got a view change timeout", v.SelfID)
 	v.Synchronizer.Sync()
 	v.StartViewChange(v.currView, false) // don't stop the view, the sync maybe created a good view
 }
@@ -793,6 +796,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 			v.deliverDecision(proposal, signatures)
 			return false
 		}
+		v.Logger.Debugf("Node %d is calling sync because it is far behind, the last decision sequence is %d while the the node only has the genesis proposal ", v.SelfID, lastDecisionSequence)
 		v.Synchronizer.Sync()
 		return true
 	}
@@ -805,6 +809,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 		return false
 	}
 	if md.LatestSequence < lastDecisionSequence { // I am far behind
+		v.Logger.Debugf("Node %d is calling sync because it is far behind, the last decision sequence is %d while the the node's sequence is %d ", v.SelfID, lastDecisionSequence, md.LatestSequence)
 		v.Synchronizer.Sync()
 		return true
 	}
@@ -854,7 +859,8 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 		}
 	}
 
-	view := View{
+	v.inFlightViewLock.Lock()
+	v.inFlightView = &View{
 		SelfID:           v.SelfID,
 		N:                v.N,
 		Number:           proposalMD.ViewId,
@@ -874,29 +880,30 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 		Phase:            PREPARED,
 	}
 
-	view.inFlightProposal = &types.Proposal{
+	v.inFlightView.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(proposal.VerificationSequence),
 		Metadata:             proposal.Metadata,
 		Payload:              proposal.Payload,
 		Header:               proposal.Header,
 	}
-	view.myProposalSig = v.Signer.SignProposal(*view.inFlightProposal)
-	view.lastBroadcastSent = &protos.Message{
+	v.inFlightView.myProposalSig = v.Signer.SignProposal(*v.inFlightView.inFlightProposal)
+	v.inFlightView.lastBroadcastSent = &protos.Message{
 		Content: &protos.Message_Commit{
 			Commit: &protos.Commit{
-				View:   view.Number,
-				Digest: view.inFlightProposal.Digest(),
-				Seq:    view.ProposalSequence,
+				View:   v.inFlightView.Number,
+				Digest: v.inFlightView.inFlightProposal.Digest(),
+				Seq:    v.inFlightView.ProposalSequence,
 				Signature: &protos.Signature{
-					Signer: view.myProposalSig.Id,
-					Value:  view.myProposalSig.Value,
-					Msg:    view.myProposalSig.Msg,
+					Signer: v.inFlightView.myProposalSig.Id,
+					Value:  v.inFlightView.myProposalSig.Value,
+					Msg:    v.inFlightView.myProposalSig.Msg,
 				},
 			},
 		},
 	}
 
-	view.Start()
+	v.inFlightView.Start()
+	v.inFlightViewLock.Unlock()
 
 	select { // wait for view to finish
 	case <-v.inFlightDecideChan:
@@ -904,7 +911,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 	case <-v.stopChan:
 	}
 
-	view.Abort()
+	v.inFlightView.Abort()
 }
 
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
@@ -926,6 +933,16 @@ func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
 
 func (v *ViewChanger) Sync() {
 	// the in flight proposal view asked to sync
+	v.Logger.Debugf("Node %d is calling sync because the in flight proposal view has asked to sync", v.SelfID)
 	v.Synchronizer.Sync()
 	v.inFlightSyncChan <- struct{}{}
+}
+
+// HandleViewMessage passes a message to the in flight proposal view if applicable
+func (v *ViewChanger) HandleViewMessage(sender uint64, m *protos.Message) {
+	v.inFlightViewLock.RLock()
+	defer v.inFlightViewLock.RUnlock()
+	if view := v.inFlightView; view != nil {
+		view.HandleMessage(sender, m)
+	}
 }
