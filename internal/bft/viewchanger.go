@@ -941,7 +941,6 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 	}
 
 	view.Abort()
-	return
 }
 
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
