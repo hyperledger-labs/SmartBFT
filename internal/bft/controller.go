@@ -239,6 +239,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		view := c.currView
 		c.currViewLock.RUnlock()
 		view.HandleMessage(sender, m)
+		c.ViewChanger.HandleViewMessage(sender, m)
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
 	case *protos.Message_HeartBeat:
