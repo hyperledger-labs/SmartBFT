@@ -215,7 +215,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// viewChange message
 	if vc := m.GetViewChange(); vc != nil {
-		v.Logger.Debugf("Node %d is processing a view change message from %d with next view %d", v.SelfID, sender, vc.NextView)
+		v.Logger.Debugf("Node %d is processing a view change message %v from %d with next view %d", v.SelfID, m, sender, vc.NextView)
 		// check view number
 		if vc.NextView != v.currView+1 { // accept view change only to immediate next view number
 			v.Logger.Warnf("Node %d got viewChange message %v from %d with view %d, expected view %d", v.SelfID, m, sender, vc.NextView, v.currView+1)
@@ -228,7 +228,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 	//viewData message
 	if vd := m.GetViewData(); vd != nil {
-		v.Logger.Debugf("Node %d is processing a view data message from %d", v.SelfID, sender)
+		v.Logger.Debugf("Node %d is processing a view data message %s from %d", v.SelfID, MsgToString(m), sender)
 		if !v.validateViewDataMsg(vd, sender) {
 			return
 		}
@@ -239,9 +239,9 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 
 	// newView message
 	if nv := m.GetNewView(); nv != nil {
-		v.Logger.Debugf("Node %d is processing a new view message from %d", v.SelfID, sender)
+		v.Logger.Debugf("Node %d is processing a new view message %s from %d", v.SelfID, MsgToString(m), sender)
 		if sender != v.leader {
-			v.Logger.Warnf("Node %d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, m, sender, v.leader)
+			v.Logger.Warnf("Node %d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, MsgToString(m), sender, v.leader)
 			return
 		}
 		v.processNewViewMsg(nv)

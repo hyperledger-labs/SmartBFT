@@ -12,6 +12,10 @@ import (
 
 	"sync"
 
+	"bytes"
+	"encoding/base64"
+	"fmt"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -243,4 +247,55 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 type ViewSequence struct {
 	ViewActive  bool
 	ProposalSeq uint64
+}
+
+func MsgToString(m *protos.Message) string {
+	if m == nil {
+		return "empty message"
+	}
+	switch m.GetContent().(type) {
+	case *protos.Message_PrePrepare:
+		prp := m.GetPrePrepare()
+		if prp.Proposal == nil {
+			return "<PrePrepare with view: %d, seq: %d, empty proposal>"
+		}
+		return fmt.Sprintf("<PrePrepare with view: %d, seq: %d, payload of %d bytes, header: %s>",
+			prp.View, prp.Seq, len(prp.Proposal.Payload), base64.StdEncoding.EncodeToString(prp.Proposal.Header))
+	case *protos.Message_NewView:
+		return NewViewToString(m.GetNewView())
+	case *protos.Message_ViewData:
+		return ViewDataToString(m.GetViewData())
+	default:
+		return m.String()
+	}
+}
+
+func NewViewToString(nv *protos.NewView) string {
+	if nv == nil || nv.SignedViewData == nil {
+		return "<empty NewView>"
+	}
+	buff := bytes.Buffer{}
+	buff.WriteString("< NewView with ")
+	for i, svd := range nv.SignedViewData {
+		buff.WriteString(ViewDataToString(svd))
+		if i == len(nv.SignedViewData)-1 {
+			break
+		}
+		buff.WriteString(", ")
+	}
+	buff.WriteString(">")
+	return buff.String()
+}
+
+func ViewDataToString(svd *protos.SignedViewData) string {
+	if svd == nil {
+		return "empty ViewData"
+	}
+	vd := &protos.ViewData{}
+	if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
+		return fmt.Sprintf("malformed viewdata from %d", svd.Signer)
+	}
+
+	return fmt.Sprintf("<ViewData from %d with NextView: %d, InFlightPrepared: %v>",
+		svd.Signer, vd.NextView, vd.InFlightPrepared)
 }
