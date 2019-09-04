@@ -329,7 +329,33 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
-		requests := c.Batcher.NextBatch()
+
+		nextBatchChan := make(chan [][]byte)
+
+		go func() {
+			select {
+			case nextBatchChan <- c.Batcher.NextBatch():
+			case <-c.stopChan:
+			}
+		}()
+
+		var requests [][]byte
+
+		select {
+		case requests = <-nextBatchChan:
+		case newView := <-c.viewChange:
+			c.changeView(newView.viewNumber, newView.proposalSeq)
+			return nil
+		case <-c.abortViewChan:
+			c.abortView()
+			return nil
+		case <-c.syncChan:
+			c.sync()
+			return nil
+		case <-c.stopChan:
+			return nil
+		}
+
 		if c.stopped() {
 			return nil
 		}
