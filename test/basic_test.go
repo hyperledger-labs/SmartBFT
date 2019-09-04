@@ -497,6 +497,63 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	assert.Equal(t, data2, data3)
 }
 
+func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+
+	data0Seq1 := <-n0.Delivered
+	data1Seq1 := <-n1.Delivered
+	data2Seq1 := <-n2.Delivered
+	data3Seq1 := <-n3.Delivered
+	assert.Equal(t, data0Seq1, data1Seq1)
+	assert.Equal(t, data1Seq1, data2Seq1)
+	assert.Equal(t, data2Seq1, data3Seq1)
+
+	n0.Disconnect() // leader in partition
+
+	n1.Submit(Request{ID: "2", ClientID: "alice"}) // submit to new leader
+	n2.Submit(Request{ID: "2", ClientID: "alice"})
+	n3.Submit(Request{ID: "2", ClientID: "alice"})
+
+	data1Seq2 := <-n1.Delivered
+	data2Seq2 := <-n2.Delivered
+	data3Seq2 := <-n3.Delivered
+	assert.Equal(t, data1Seq2, data2Seq2)
+	assert.Equal(t, data2Seq2, data3Seq2)
+
+	n0.Connect() // old leader woke up
+
+	// We create new batches until it catches up
+	for reqID := 3; reqID < 100; reqID++ {
+		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		n2.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-n1.Delivered // Wait for new leader to commit
+		<-n2.Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, n0.Delivered)
+		if caughtUp {
+			return
+		}
+	}
+	t.Fatalf("Didn't catch up")
+}
+
 func TestLeaderForwarding(t *testing.T) {
 	t.Parallel()
 	network := make(Network)

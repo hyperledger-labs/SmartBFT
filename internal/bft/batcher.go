@@ -83,6 +83,15 @@ func (b *BatchBuilder) Close() {
 	close(b.closeChan)
 }
 
+func (b *BatchBuilder) Closed() bool {
+	select {
+	case <-b.closeChan:
+		return true
+	default:
+		return false
+	}
+}
+
 // Reset resets the remainder and reopens the close channel to allow calling NextBatch
 func (b *BatchBuilder) Reset() {
 	b.closeLock.Lock()

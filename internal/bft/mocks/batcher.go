@@ -19,6 +19,20 @@ func (_m *Batcher) Close() {
 	_m.Called()
 }
 
+// Closed provides a mock function with given fields:
+func (_m *Batcher) Closed() bool {
+	ret := _m.Called()
+
+	var r0 bool
+	if rf, ok := ret.Get(0).(func() bool); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	return r0
+}
+
 // NextBatch provides a mock function with given fields:
 func (_m *Batcher) NextBatch() [][]byte {
 	ret := _m.Called()
