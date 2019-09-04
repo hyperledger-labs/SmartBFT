@@ -540,44 +540,18 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 
 	n0.Connect() // old leader woke up
 
-	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "3", ClientID: "alice"})
-	n3.Submit(Request{ID: "3", ClientID: "alice"})
-
-	data1Seq3 := <-n1.Delivered
-	data2Seq3 := <-n2.Delivered
-	data3Seq3 := <-n3.Delivered
-	assert.Equal(t, data1Seq3, data2Seq3)
-	assert.Equal(t, data2Seq3, data3Seq3)
-
-	n1.Submit(Request{ID: "4", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "4", ClientID: "alice"})
-	n3.Submit(Request{ID: "4", ClientID: "alice"})
-
-	data1Seq4 := <-n1.Delivered
-	data2Seq4 := <-n2.Delivered
-	data3Seq4 := <-n3.Delivered
-	assert.Equal(t, data1Seq4, data2Seq4)
-	assert.Equal(t, data2Seq4, data3Seq4)
-
-	n1.Submit(Request{ID: "5", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "5", ClientID: "alice"})
-	n3.Submit(Request{ID: "5", ClientID: "alice"})
-
-	data0Seq2 := <-n0.Delivered // from catch up
-	assert.Equal(t, data0Seq2, data1Seq2)
-	data0Seq3 := <-n0.Delivered // from catch up
-	assert.Equal(t, data0Seq3, data1Seq3)
-	data0Seq4 := <-n0.Delivered // from catch up
-	assert.Equal(t, data0Seq4, data1Seq4)
-
-	data0Seq5 := <-n0.Delivered
-	data1Seq5 := <-n1.Delivered
-	data2Seq5 := <-n2.Delivered
-	data3Seq5 := <-n3.Delivered
-	assert.Equal(t, data0Seq5, data1Seq5)
-	assert.Equal(t, data1Seq5, data2Seq5)
-	assert.Equal(t, data2Seq5, data3Seq5)
+	// We create new batches until it catches up
+	for reqID := 3; reqID < 100; reqID++ {
+		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		n2.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-n1.Delivered // Wait for new leader to commit
+		<-n2.Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, n0.Delivered)
+		if caughtUp {
+			return
+		}
+	}
+	t.Log("Didn't catch up")
 }
 
 func TestLeaderForwarding(t *testing.T) {
