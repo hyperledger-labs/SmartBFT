@@ -6,15 +6,13 @@
 package bft
 
 import (
-	"math"
-	"sort"
-	"sync/atomic"
-
-	"sync"
-
 	"bytes"
 	"encoding/base64"
 	"fmt"
+	"math"
+	"sort"
+	"sync"
+	"sync/atomic"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
