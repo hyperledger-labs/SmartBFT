@@ -436,10 +436,12 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but the last decision is invalid, reason: %v", v.SelfID, rvd, sender, err)
 		return false
 	}
+	v.Logger.Debugf("Node %d got viewData message %v from %d, the last decision with sequence %d is valid", v.SelfID, rvd, sender, lastSequence)
 	if err := ValidateInFlight(rvd.InFlightProposal, lastSequence); err != nil {
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but the in flight proposal is invalid, reason: %v", v.SelfID, rvd, sender, err)
 		return false
 	}
+	v.Logger.Debugf("Node %d got viewData message %v from %d, the in flight proposal is valid", v.SelfID, rvd, sender)
 	return true
 }
 
@@ -510,11 +512,12 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 
 func (v *ViewChanger) processViewDataMsg() {
 	if len(v.viewDataMsgs.voted) >= v.quorum { // need enough (quorum) data to continue
-
+		v.Logger.Debugf("Node %d got a quorum of viewData messages", v.SelfID)
 		if ok, _, _ := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier); !ok {
+			v.Logger.Debugf("Node %d checked the in flight and it was invalid", v.SelfID)
 			return
 		}
-
+		v.Logger.Debugf("Node %d checked the in flight and it was valid", v.SelfID)
 		// create the new view message
 		signedMsgs := make([]*protos.SignedViewData, 0)
 		close(v.viewDataMsgs.votes)
@@ -528,7 +531,9 @@ func (v *ViewChanger) processViewDataMsg() {
 				},
 			},
 		}
+		v.Logger.Debugf("Node %d is broadcasting a new view msg", v.SelfID)
 		v.Comm.BroadcastConsensus(msg)
+		v.Logger.Debugf("Node %d sent a new view msg to self", v.SelfID)
 		v.processMsg(v.SelfID, msg) // also send to myself
 		v.viewDataMsgs.clear(v.N)
 		v.Logger.Debugf("Node %d sent a new view msg", v.SelfID)
@@ -755,6 +760,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 	if valid >= v.quorum {
 
+		v.Logger.Debugf("Node %d found a quorum of valid view data messages within the new view message", v.SelfID)
+
 		ok, noInFlight, inFlightProposal := CheckInFlight(viewDataMessages, v.f, v.quorum, v.N, v.Verifier)
 		if !ok {
 			v.Logger.Debugf("The check of the in flight proposal by node %d did not pass", v.SelfID)
@@ -895,6 +902,8 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 		}
 	}
 
+	v.Logger.Debugf("Node %d is creating a view for the in flight proposal", v.SelfID)
+
 	v.inFlightViewLock.Lock()
 	v.inFlightView = &View{
 		SelfID:           v.SelfID,
@@ -941,10 +950,15 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 	v.inFlightView.Start()
 	v.inFlightViewLock.Unlock()
 
+	v.Logger.Debugf("Node %d started a view for the in flight proposal", v.SelfID)
+
 	select { // wait for view to finish
 	case <-v.inFlightDecideChan:
 	case <-v.inFlightSyncChan:
 	case <-v.stopChan:
+	case now := <-v.Ticker:
+		v.lastTick = now
+		v.checkIfTimeout(now)
 	}
 
 	v.inFlightView.Abort()
@@ -979,6 +993,7 @@ func (v *ViewChanger) HandleViewMessage(sender uint64, m *protos.Message) {
 	v.inFlightViewLock.RLock()
 	defer v.inFlightViewLock.RUnlock()
 	if view := v.inFlightView; view != nil {
+		v.Logger.Debugf("Node %d is passing a message to the in flight view", v.SelfID)
 		view.HandleMessage(sender, m)
 	}
 }

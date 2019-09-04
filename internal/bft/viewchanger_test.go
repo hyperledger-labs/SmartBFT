@@ -8,11 +8,13 @@ package bft_test
 import (
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -1431,4 +1433,141 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 			assert.Equal(t, test.proposal, proposal)
 		})
 	}
+}
+
+func TestCommitInFlight(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	msgChan := make(chan *protos.Message)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(0).(*protos.Message)
+		msgChan <- m
+	})
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	signWG := sync.WaitGroup{}
+	signer.On("SignProposal", mock.Anything).Run(func(args mock.Arguments) {
+		signWG.Done()
+	}).Return(&types.Signature{
+		Id:    1,
+		Value: []byte{4},
+	})
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	controller.On("AbortView")
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	app := &mocks.ApplicationMock{}
+	appChan := make(chan types.Proposal)
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		prop := args.Get(0).(types.Proposal)
+		appChan <- prop
+	})
+
+	vc := &bft.ViewChanger{
+		SelfID:        1,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &checkpoint,
+		ViewSequences: &atomic.Value{},
+		State:         &bft.StateRecorder{},
+		InMsqQSize:    consensus.DefaultConfig.IncomingMessageBufferSize,
+		Application:   app,
+	}
+
+	vc.Start(0)
+
+	vc.HandleMessage(2, viewChangeMsg)
+	vc.HandleMessage(3, viewChangeMsg)
+	m := <-msgChan
+	assert.NotNil(t, m.GetViewChange())
+
+	inFlightProposal := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 2,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.InFlightProposal = &protos.Proposal{
+		Payload:              inFlightProposal.Payload,
+		Header:               inFlightProposal.Header,
+		Metadata:             inFlightProposal.Metadata,
+		VerificationSequence: uint64(inFlightProposal.VerificationSequence),
+	}
+	viewData.InFlightPrepared = true
+
+	msg := proto.Clone(viewDataMsg1).(*protos.Message)
+	msg.GetViewData().RawViewData = bft.MarshalOrPanic(viewData)
+
+	signWG.Add(1)
+
+	vc.HandleMessage(0, msg)
+	msg2 := proto.Clone(msg).(*protos.Message)
+	msg2.GetViewData().Signer = 2
+	vc.HandleMessage(2, msg2)
+	m = <-msgChan
+	assert.NotNil(t, m.GetNewView())
+
+	signWG.Wait()
+
+	commitMsg := &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   0,
+				Seq:    2,
+				Digest: inFlightProposal.Digest(),
+				Signature: &protos.Signature{
+					Signer: 0,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+	vc.HandleViewMessage(0, commitMsg)
+	commitMsg2 := proto.Clone(commitMsg).(*protos.Message)
+	commitMsg2.GetCommit().Signature.Signer = 2
+	vc.HandleViewMessage(2, commitMsg2)
+
+	m = <-msgChan
+	assert.NotNil(t, m.GetCommit())
+
+	delivered := <-appChan
+	assert.Equal(t, inFlightProposal, delivered)
+
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
+
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
+
+	vc.Stop()
 }
