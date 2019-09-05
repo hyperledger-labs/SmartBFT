@@ -551,7 +551,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 			return
 		}
 	}
-	t.Log("Didn't catch up")
+	t.Fatalf("Didn't catch up")
 }
 
 func TestLeaderForwarding(t *testing.T) {
@@ -624,7 +624,7 @@ func TestLeaderExclusion(t *testing.T) {
 			return
 		}
 	}
-	t.Log("Didn't catch up")
+	t.Fatalf("Didn't catch up")
 }
 
 func TestCatchingUpWithSyncAssisted(t *testing.T) {
@@ -666,7 +666,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 			return
 		}
 	}
-	t.Log("Didn't catch up")
+	t.Fatalf("Didn't catch up")
 }
 
 func TestCatchingUpWithSyncAutonomous(t *testing.T) {
