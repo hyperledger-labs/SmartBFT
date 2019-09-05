@@ -636,6 +636,8 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 		case now := <-v.Ticker:
 			v.lastTick = now
 			v.checkIfTimeout(now)
+		case change := <-v.startChangeChan:
+			v.startViewChange(change)
 		}
 	}
 }
