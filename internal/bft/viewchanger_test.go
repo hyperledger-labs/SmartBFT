@@ -1571,3 +1571,99 @@ func TestCommitInFlight(t *testing.T) {
 
 	vc.Stop()
 }
+
+func TestDontCommitInFlight(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("RestartTimers")
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything)
+
+	vc := &bft.ViewChanger{
+		SelfID:        3,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		RequestsTimer: reqTimer,
+		Application:   app,
+	}
+
+	inFlightProposal := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 2,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.InFlightProposal = &protos.Proposal{
+		Payload:              inFlightProposal.Payload,
+		Header:               inFlightProposal.Header,
+		Metadata:             inFlightProposal.Metadata,
+		VerificationSequence: uint64(inFlightProposal.VerificationSequence),
+	}
+	viewData.InFlightPrepared = true
+
+	vdBytes := bft.MarshalOrPanic(viewData)
+
+	signed := make([]*protos.SignedViewData, 0)
+	for len(signed) < 3 { // quorum = 3
+		msg := &protos.Message{
+			Content: &protos.Message_ViewData{
+				ViewData: &protos.SignedViewData{
+					RawViewData: vdBytes,
+					Signer:      uint64(len(signed)),
+					Signature:   nil,
+				},
+			},
+		}
+		signed = append(signed, msg.GetViewData())
+	}
+
+	msg := &protos.Message{
+		Content: &protos.Message_NewView{
+			NewView: &protos.NewView{
+				SignedViewData: signed,
+			},
+		},
+	}
+
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(inFlightProposal, lastDecisionSignatures)
+	vc.Checkpoint = &checkpoint
+
+	vc.Start(1)
+
+	vc.HandleMessage(1, msg)
+
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
+
+	vc.Stop()
+
+	app.AssertNotCalled(t, "Deliver")
+}
