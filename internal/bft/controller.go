@@ -30,6 +30,7 @@ type Batcher interface {
 	BatchRemainder(remainder [][]byte)
 	PopRemainder() [][]byte
 	Close()
+	Closed() bool
 	Reset()
 }
 
@@ -304,6 +305,9 @@ func (c *Controller) abortView() {
 }
 
 func (c *Controller) Sync() {
+	if iAmLeader, _ := c.iAmTheLeader(); iAmLeader {
+		c.Batcher.Close()
+	}
 	c.grabSyncToken()
 }
 
@@ -330,7 +334,7 @@ func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
 		requests := c.Batcher.NextBatch()
-		if c.stopped() {
+		if c.stopped() || c.Batcher.Closed() {
 			return nil
 		}
 		for _, req := range requests {
@@ -470,7 +474,7 @@ func (c *Controller) relinquishLeaderToken() {
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
 	c.controllerDone.Add(1)
 	c.stopOnce = sync.Once{}
-	c.syncChan = make(chan struct{})
+	c.syncChan = make(chan struct{}, 1)
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision)

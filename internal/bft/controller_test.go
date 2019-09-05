@@ -72,6 +72,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	log := basicLog.Sugar()
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	batcher.On("Closed").Return(false)
 	batcherChan := make(chan struct{})
 	var once sync.Once
 	batcher.On("NextBatch").Run(func(args mock.Arguments) {
@@ -111,6 +112,7 @@ func TestLeaderPropose(t *testing.T) {
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	batcher.On("Closed").Return(false)
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("NextBatch").Return([][]byte{req}).Once()
 	batcher.On("PopRemainder").Return([][]byte{})
@@ -227,6 +229,7 @@ func TestViewChanged(t *testing.T) {
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	batcher.On("Closed").Return(false)
 	batcher.On("Reset")
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
@@ -416,6 +419,7 @@ func TestSyncInform(t *testing.T) {
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
+	batcher.On("Closed").Return(false)
 	batcher.On("Reset")
 	batcher.On("NextBatch").Return([][]byte{req})
 	verifier := &mocks.VerifierMock{}
