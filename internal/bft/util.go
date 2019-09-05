@@ -253,12 +253,7 @@ func MsgToString(m *protos.Message) string {
 	}
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare:
-		prp := m.GetPrePrepare()
-		if prp.Proposal == nil {
-			return "<PrePrepare with view: %d, seq: %d, empty proposal>"
-		}
-		return fmt.Sprintf("<PrePrepare with view: %d, seq: %d, payload of %d bytes, header: %s>",
-			prp.View, prp.Seq, len(prp.Proposal.Payload), base64.StdEncoding.EncodeToString(prp.Proposal.Header))
+		return PrePrepareToString(m.GetPrePrepare())
 	case *protos.Message_NewView:
 		return NewViewToString(m.GetNewView())
 	case *protos.Message_ViewData:
@@ -266,6 +261,17 @@ func MsgToString(m *protos.Message) string {
 	default:
 		return m.String()
 	}
+}
+
+func PrePrepareToString(prp *protos.PrePrepare) string {
+	if prp == nil {
+		return "<empty PrePrepare>"
+	}
+	if prp.Proposal == nil {
+		return fmt.Sprintf("<PrePrepare with view: %d, seq: %d, empty proposal>", prp.View, prp.Seq)
+	}
+	return fmt.Sprintf("<PrePrepare with view: %d, seq: %d, payload of %d bytes, header: %s>",
+		prp.View, prp.Seq, len(prp.Proposal.Payload), base64.StdEncoding.EncodeToString(prp.Proposal.Header))
 }
 
 func NewViewToString(nv *protos.NewView) string {
@@ -291,9 +297,9 @@ func ViewDataToString(svd *protos.SignedViewData) string {
 	}
 	vd := &protos.ViewData{}
 	if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
-		return fmt.Sprintf("malformed viewdata from %d", svd.Signer)
+		return fmt.Sprintf("<malformed viewdata from %d>", svd.Signer)
 	}
 
-	return fmt.Sprintf("<ViewData from %d with NextView: %d, InFlightPrepared: %v>",
-		svd.Signer, vd.NextView, vd.InFlightPrepared)
+	return fmt.Sprintf("<ViewData from %d with NextView: %d",
+		svd.Signer, vd.NextView)
 }
