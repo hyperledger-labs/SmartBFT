@@ -34,6 +34,11 @@ type change struct {
 	stopView bool
 }
 
+type viewAndSeq struct {
+	view uint64
+	seq  uint64
+}
+
 type ViewChanger struct {
 	// Configuration
 	SelfID uint64
@@ -71,7 +76,7 @@ type ViewChanger struct {
 	nextView        uint64
 	leader          uint64
 	startChangeChan chan *change
-	informChan      chan uint64
+	informChan      chan *viewAndSeq
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -82,7 +87,7 @@ type ViewChanger struct {
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
 	v.startChangeChan = make(chan *change, 1)
-	v.informChan = make(chan uint64, 1)
+	v.informChan = make(chan *viewAndSeq, 1)
 
 	v.nodes = v.Comm.Nodes()
 
@@ -171,8 +176,8 @@ func (v *ViewChanger) run() {
 			v.lastTick = now
 			v.checkIfResendViewChange(now)
 			v.checkIfTimeout(now)
-		case view := <-v.informChan:
-			v.informNewView(view)
+		case info := <-v.informChan:
+			v.informNewView(info)
 		}
 	}
 }
@@ -249,15 +254,19 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 }
 
 // InformNewView tells the view changer to advance to a new view number
-func (v *ViewChanger) InformNewView(view uint64) {
+func (v *ViewChanger) InformNewView(view uint64, seq uint64) {
 	select {
-	case v.informChan <- view:
+	case v.informChan <- &viewAndSeq{
+		view: view,
+		seq:  seq,
+	}:
 	case <-v.stopChan:
 		return
 	}
 }
 
-func (v *ViewChanger) informNewView(view uint64) {
+func (v *ViewChanger) informNewView(info *viewAndSeq) {
+	view := info.view
 	if view <= v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
 		return
@@ -595,7 +604,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 			v.deliverDecision(proposal, signatures)
 			return
 		}
-		v.Synchronizer.Sync()
+		v.sync(lastDecisionSequence)
 		return
 	}
 	md := &protos.ViewMetadata{}
@@ -607,11 +616,27 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 		return
 	}
 	if md.LatestSequence < lastDecisionSequence { // I am far behind
-		v.Synchronizer.Sync()
+		v.sync(lastDecisionSequence)
 		return
 	}
 	if md.LatestSequence > lastDecisionSequence+1 {
 		v.Logger.Panicf("Node %d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence)
+	}
+}
+
+func (v *ViewChanger) sync(targetSeq uint64) {
+	for {
+		v.Synchronizer.Sync()
+		select { // wait for sync to return with expected info
+		case info := <-v.informChan:
+			if info.seq >= targetSeq {
+				return
+			}
+		case <-v.stopChan:
+		case now := <-v.Ticker:
+			v.lastTick = now
+			v.checkIfTimeout(now)
+		}
 	}
 }
 
