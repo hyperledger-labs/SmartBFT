@@ -486,6 +486,7 @@ func TestSyncInform(t *testing.T) {
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
 		Controller:    controllerMock,
+		InMsqQSize:    100,
 	}
 
 	controller := &bft.Controller{

@@ -64,6 +64,7 @@ type ViewChanger struct {
 	checkTimeout        bool
 
 	// Runtime
+	InMsqQSize      int
 	incMsgs         chan *incMsg
 	viewChangeMsgs  *voteSet
 	viewDataMsgs    *voteSet
@@ -80,7 +81,7 @@ type ViewChanger struct {
 
 // Start the view changer
 func (v *ViewChanger) Start(startViewNumber uint64) {
-	v.incMsgs = make(chan *incMsg, 10*v.N) // TODO channel size should be configured
+	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
 	v.startChangeChan = make(chan *change, 1)
 	v.informChan = make(chan uint64, 1)
 
