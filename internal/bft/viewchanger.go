@@ -629,6 +629,7 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 		v.Synchronizer.Sync()
 		select { // wait for sync to return with expected info
 		case info := <-v.informChan:
+			// TODO what if view is bigger than expected?
 			if info.seq >= targetSeq {
 				return
 			}

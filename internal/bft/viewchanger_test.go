@@ -727,6 +727,121 @@ func TestCommitLastDecision(t *testing.T) {
 
 }
 
+func TestFarBehindLastDecisionAndSync(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	comm.On("BroadcastConsensus", mock.Anything)
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	controller.On("AbortView")
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything)
+	synchronizer := &mocks.Synchronizer{}
+	synchronizerWG := sync.WaitGroup{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	})
+
+	vc := &bft.ViewChanger{
+		SelfID:        3,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Application:   app,
+		Checkpoint:    &checkpoint,
+		Synchronizer:  synchronizer,
+	}
+
+	decisionAhead := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 3,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.LastDecision = &protos.Proposal{
+		Payload:              decisionAhead.Payload,
+		Header:               decisionAhead.Header,
+		Metadata:             decisionAhead.Metadata,
+		VerificationSequence: uint64(decisionAhead.VerificationSequence),
+	}
+	viewData.InFlightPrepared = true
+
+	vdBytes := bft.MarshalOrPanic(viewData)
+
+	signed := make([]*protos.SignedViewData, 0)
+	for len(signed) < 3 { // quorum = 3
+		msg := &protos.Message{
+			Content: &protos.Message_ViewData{
+				ViewData: &protos.SignedViewData{
+					RawViewData: vdBytes,
+					Signer:      uint64(len(signed)),
+					Signature:   nil,
+				},
+			},
+		}
+		signed = append(signed, msg.GetViewData())
+	}
+
+	msg := &protos.Message{
+		Content: &protos.Message_NewView{
+			NewView: &protos.NewView{
+				SignedViewData: signed,
+			},
+		},
+	}
+
+	vc.Start(1)
+
+	synchronizerWG.Add(2)
+
+	vc.HandleMessage(1, msg)
+
+	vc.InformNewView(0, 2) // lower sequence, will cause another sync
+
+	synchronizerWG.Wait()
+
+	vc.InformNewView(0, 3)
+
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(4), num)
+
+	vc.Stop()
+}
+
 func TestInFlightProposalInViewData(t *testing.T) {
 
 	for _, test := range []struct {
