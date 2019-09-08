@@ -73,9 +73,10 @@ func TestViewChangerBasic(t *testing.T) {
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	vc := &bft.ViewChanger{
-		N:      4,
-		Comm:   comm,
-		Ticker: make(chan time.Time),
+		N:          4,
+		Comm:       comm,
+		Ticker:     make(chan time.Time),
+		InMsqQSize: 100,
 	}
 
 	vc.Start(0)
@@ -108,6 +109,7 @@ func TestStartViewChange(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		Logger:        log,
 		Controller:    controller,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)
@@ -158,6 +160,7 @@ func TestViewChangeProcess(t *testing.T) {
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
 		Controller:    controller,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)
@@ -243,6 +246,7 @@ func TestViewDataProcess(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		Checkpoint:    &checkpoint,
 		RequestsTimer: reqTimer,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(1)
@@ -322,6 +326,7 @@ func TestNewViewProcess(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		Checkpoint:    &checkpoint,
 		RequestsTimer: reqTimer,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(2)
@@ -412,6 +417,7 @@ func TestNormalProcess(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)
@@ -504,12 +510,13 @@ func TestBadViewDataMessage(t *testing.T) {
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			vc := &bft.ViewChanger{
-				SelfID:   2,
-				N:        4,
-				Comm:     comm,
-				Logger:   log,
-				Verifier: verifier,
-				Ticker:   make(chan time.Time),
+				SelfID:     2,
+				N:          4,
+				Comm:       comm,
+				Logger:     log,
+				Verifier:   verifier,
+				Ticker:     make(chan time.Time),
+				InMsqQSize: 100,
 			}
 
 			vc.Start(1)
@@ -552,6 +559,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		Controller:        controller,
 		ResendTimeout:     time.Second,
 		TimeoutViewChange: 10 * time.Second,
+		InMsqQSize:        100,
 	}
 
 	vc.Start(0)
@@ -616,6 +624,7 @@ func TestViewChangerTimeout(t *testing.T) {
 		ResendTimeout:     20 * time.Second,
 		Synchronizer:      synchronizer,
 		Controller:        controller,
+		InMsqQSize:        100,
 	}
 
 	vc.Start(0)
@@ -690,6 +699,7 @@ func TestCommitLastDecision(t *testing.T) {
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
 		Application:   app,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)
@@ -801,6 +811,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 				InFlight:      test.getInFlight(),
 				Checkpoint:    &checkpoint,
 				Controller:    controller,
+				InMsqQSize:    100,
 			}
 
 			vc.Start(0)
@@ -1009,6 +1020,7 @@ func TestInformViewChanger(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		Logger:        log,
 		Controller:    controller,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)

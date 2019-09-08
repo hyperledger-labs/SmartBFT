@@ -80,6 +80,7 @@ func (c *Consensus) Start() {
 		Ticker:            c.ViewChangerTicker,
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		TimeoutViewChange: c.Config.ViewChangeTimeout,
+		InMsqQSize:        c.Config.IncomingMessageBufferSize,
 	}
 
 	c.controller = &algorithm.Controller{
