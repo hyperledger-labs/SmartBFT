@@ -728,6 +728,12 @@ func TestCommitLastDecision(t *testing.T) {
 }
 
 func TestFarBehindLastDecisionAndSync(t *testing.T) {
+	// Scenario: a node gets a newView message with last decision with seq 3,
+	// while its checkpoint shows that its last decision is only at seq 1,
+	// the node calls sync to catch up and waits for it to come back (via inform),
+	// the first sync informs on seq 2 and so sync is called again,
+	// which informs on seq 3 as expected.
+
 	comm := &mocks.CommMock{}
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	comm.On("BroadcastConsensus", mock.Anything)
@@ -822,9 +828,9 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		},
 	}
 
-	vc.Start(1)
-
 	synchronizerWG.Add(2)
+
+	vc.Start(1)
 
 	vc.HandleMessage(1, msg)
 
