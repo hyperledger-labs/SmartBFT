@@ -569,7 +569,6 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		valid++
 	}
 	if valid >= v.quorum {
-		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		viewToChange := v.currView
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
