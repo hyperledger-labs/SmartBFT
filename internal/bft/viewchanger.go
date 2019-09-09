@@ -575,8 +575,10 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 	if valid >= v.quorum {
 		// TODO handle in flight
-		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
-		if v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs) {
+		viewToChange := v.currView
+		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
+		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
 			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		}
 		v.RequestsTimer.RestartTimers()
@@ -584,11 +586,10 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 }
 
-// returns true if we should call v.Controller.ViewChanged after it returns
-func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) bool {
+func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) {
 	myLastDecision, _ := v.Checkpoint.Get()
 	if lastDecisionSequence == 0 {
-		return true
+		return
 	}
 	proposal := types.Proposal{
 		Header:               lastDecision.Header,
@@ -608,9 +609,10 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	if myLastDecision.Metadata == nil { // I am at genesis proposal
 		if lastDecisionSequence == 1 { // and one decision behind
 			v.deliverDecision(proposal, signatures)
-			return true
+			return
 		}
-		return v.sync(lastDecisionSequence)
+		v.sync(lastDecisionSequence)
+		return
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(myLastDecision.Metadata, md); err != nil {
@@ -618,25 +620,25 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	}
 	if md.LatestSequence == lastDecisionSequence-1 { // I am one decision behind
 		v.deliverDecision(proposal, signatures)
-		return true
+		return
 	}
 	if md.LatestSequence < lastDecisionSequence { // I am far behind
-		return v.sync(lastDecisionSequence)
+		v.sync(lastDecisionSequence)
+		return
 	}
 	if md.LatestSequence > lastDecisionSequence+1 {
 		v.Logger.Panicf("Node %d has a checkpoint for sequence %d which is much greater than the last decision sequence %d", v.SelfID, md.LatestSequence, lastDecisionSequence)
 	}
-	return true // already committed the last decision
 }
 
-// returns true if sync did not cause an inform (a view increase)
-func (v *ViewChanger) sync(targetSeq uint64) bool {
+func (v *ViewChanger) sync(targetSeq uint64) {
 	for {
 		v.Synchronizer.Sync()
 		select { // wait for sync to return with expected info
 		case info := <-v.informChan:
 			if info.seq >= targetSeq {
-				return !v.informNewView(info)
+				v.informNewView(info)
+				return
 			}
 		case <-v.stopChan:
 		case now := <-v.Ticker:
