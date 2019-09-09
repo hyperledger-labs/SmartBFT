@@ -75,9 +75,9 @@ func (a *App) Sync() types.Decision {
 }
 
 func (a *App) Restart() {
+	a.Consensus.Stop()
 	a.Node.Lock()
 	defer a.Node.Unlock()
-	a.Consensus.Stop()
 	a.Setup()
 	a.Consensus.Start()
 }
