@@ -409,7 +409,7 @@ func (c *Controller) sync() {
 	md, vSeq := c.Synchronizer.Sync()
 	c.verificationSequence = vSeq
 	c.Logger.Infof("Synchronized to view %d with sequence %d", md.ViewId, md.LatestSequence)
-	c.ViewChanger.InformNewView(md.ViewId)
+	c.ViewChanger.InformNewView(md.ViewId, md.LatestSequence)
 	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence + 1}
 }
 
