@@ -193,7 +193,6 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
 					NextView: v.nextView,
-					Reason:   "", // TODO add reason
 				},
 			},
 		}
@@ -301,7 +300,6 @@ func (v *ViewChanger) startViewChange(change *change) {
 		Content: &protos.Message_ViewChange{
 			ViewChange: &protos.ViewChange{
 				NextView: v.nextView,
-				Reason:   "", // TODO add reason
 			},
 		},
 	}
@@ -319,7 +317,6 @@ func (v *ViewChanger) processViewChangeMsg() {
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
-	// TODO add view change try timeout
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
@@ -571,7 +568,6 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		valid++
 	}
 	if valid >= v.quorum {
-		// TODO handle in flight
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 		v.RequestsTimer.RestartTimers()
