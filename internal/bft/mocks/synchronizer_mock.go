@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	smartbftprotos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	types "github.com/SmartBFT-Go/consensus/pkg/types"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -13,22 +13,15 @@ type SynchronizerMock struct {
 }
 
 // Sync provides a mock function with given fields:
-func (_m *SynchronizerMock) Sync() (smartbftprotos.ViewMetadata, uint64) {
+func (_m *SynchronizerMock) Sync() types.Decision {
 	ret := _m.Called()
 
-	var r0 smartbftprotos.ViewMetadata
-	if rf, ok := ret.Get(0).(func() smartbftprotos.ViewMetadata); ok {
+	var r0 types.Decision
+	if rf, ok := ret.Get(0).(func() types.Decision); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(smartbftprotos.ViewMetadata)
+		r0 = ret.Get(0).(types.Decision)
 	}
 
-	var r1 uint64
-	if rf, ok := ret.Get(1).(func() uint64); ok {
-		r1 = rf()
-	} else {
-		r1 = ret.Get(1).(uint64)
-	}
-
-	return r0, r1
+	return r0
 }

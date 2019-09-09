@@ -12,6 +12,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
@@ -406,9 +407,22 @@ func (c *Controller) sync() {
 	// we were syncing.
 	defer c.relinquishSyncToken()
 
-	md, vSeq := c.Synchronizer.Sync()
-	c.verificationSequence = vSeq
-	c.Logger.Infof("Synchronized to view %d with sequence %d", md.ViewId, md.LatestSequence)
+	decision := c.Synchronizer.Sync()
+	if decision.Proposal.Metadata == nil {
+		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
+		return
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(decision.Proposal.Metadata, md); err != nil {
+		c.Logger.Panicf("Controller was unable to unmarshal the proposal metadata returned by the Synchronizer")
+	}
+	if md.ViewId < c.currViewNumber {
+		c.Logger.Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
+		return
+	}
+	c.Logger.Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
+	c.Checkpoint.Set(decision.Proposal, decision.Signatures)
+	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
 	c.ViewChanger.InformNewView(md.ViewId, md.LatestSequence)
 	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence + 1}
 }
