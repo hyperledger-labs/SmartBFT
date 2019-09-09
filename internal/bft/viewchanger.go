@@ -193,7 +193,6 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
 					NextView: v.nextView,
-					Reason:   "", // TODO add reason
 				},
 			},
 		}
@@ -266,12 +265,11 @@ func (v *ViewChanger) InformNewView(view uint64, seq uint64) {
 	}
 }
 
-// returns true if the view increased
-func (v *ViewChanger) informNewView(info *viewAndSeq) bool {
+func (v *ViewChanger) informNewView(info *viewAndSeq) {
 	view := info.view
 	if view <= v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
-		return false
+		return
 	}
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
@@ -281,7 +279,6 @@ func (v *ViewChanger) informNewView(info *viewAndSeq) bool {
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
 	v.RequestsTimer.RestartTimers()
-	return true
 }
 
 // StartViewChange initiates a view change
@@ -304,7 +301,6 @@ func (v *ViewChanger) startViewChange(change *change) {
 		Content: &protos.Message_ViewChange{
 			ViewChange: &protos.ViewChange{
 				NextView: v.nextView,
-				Reason:   "", // TODO add reason
 			},
 		},
 	}
@@ -322,7 +318,6 @@ func (v *ViewChanger) processViewChangeMsg() {
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
-	// TODO add view change try timeout
 	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
@@ -574,7 +569,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		valid++
 	}
 	if valid >= v.quorum {
-		// TODO handle in flight
+		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		viewToChange := v.currView
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)

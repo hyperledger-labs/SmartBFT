@@ -253,7 +253,6 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
-	// TODO view builder according to metadata returned by sync
 	view := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
 
 	c.currViewLock.Lock()
