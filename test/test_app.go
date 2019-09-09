@@ -43,6 +43,7 @@ type App struct {
 	Node           *Node
 	logLevel       zap.AtomicLevel
 	latestMD       *smartbftprotos.ViewMetadata
+	lastDecision   *types.Decision
 	clock          *time.Ticker
 	heartbeatTime  chan time.Time
 	viewChangeTime chan time.Time
@@ -61,7 +62,7 @@ func (a *App) Submit(req Request) {
 	a.Consensus.SubmitRequest(req.ToBytes())
 }
 
-func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
+func (a *App) Sync() types.Decision {
 	records := a.Node.cb.readAll(*a.latestMD)
 	for _, record := range records {
 		proposal := types.Proposal{
@@ -70,7 +71,7 @@ func (a *App) Sync() (smartbftprotos.ViewMetadata, uint64) {
 		}
 		a.Deliver(proposal, nil)
 	}
-	return *a.latestMD, 0
+	return *a.lastDecision
 }
 
 func (a *App) Restart() {
@@ -156,12 +157,16 @@ func (a *App) AssembleProposal(metadata []byte, requests [][]byte) (nextProp typ
 	}, nil
 }
 
-func (a *App) Deliver(proposal types.Proposal, _ []types.Signature) {
+func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) {
 	record := &AppRecord{
 		Metadata: proposal.Metadata,
 		Batch:    BatchFromBytes(proposal.Payload),
 	}
 	a.Node.cb.add(record)
+	a.lastDecision = &types.Decision{
+		Proposal:   proposal,
+		Signatures: signatures,
+	}
 	a.latestMD = &smartbftprotos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, a.latestMD); err != nil {
 		panic(err)
@@ -265,12 +270,13 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 	sugaredLogger := logger.Sugar()
 
 	app := &App{
-		clock:       time.NewTicker(time.Second),
-		secondClock: time.NewTicker(time.Second),
-		ID:          id,
-		Delivered:   make(chan *AppRecord, 100),
-		logLevel:    logConfig.Level,
-		latestMD:    &smartbftprotos.ViewMetadata{},
+		clock:        time.NewTicker(time.Second),
+		secondClock:  time.NewTicker(time.Second),
+		ID:           id,
+		Delivered:    make(chan *AppRecord, 100),
+		logLevel:     logConfig.Level,
+		latestMD:     &smartbftprotos.ViewMetadata{},
+		lastDecision: &types.Decision{},
 	}
 
 	writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(sugaredLogger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)

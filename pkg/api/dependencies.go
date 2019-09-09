@@ -46,7 +46,7 @@ type RequestInspector interface {
 }
 
 type Synchronizer interface {
-	Sync() (protos.ViewMetadata, uint64)
+	Sync() bft.Decision
 }
 
 type Logger interface {

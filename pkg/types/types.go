@@ -28,6 +28,11 @@ type Signature struct {
 	Msg   []byte
 }
 
+type Decision struct {
+	Proposal   Proposal
+	Signatures []Signature
+}
+
 type RequestInfo struct {
 	ClientID string
 	ID       string

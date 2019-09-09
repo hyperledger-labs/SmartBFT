@@ -471,7 +471,15 @@ func TestSyncInform(t *testing.T) {
 	syncToView := uint64(2)
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
 		synchronizerWG.Done()
-	}).Return(protos.ViewMetadata{ViewId: syncToView, LatestSequence: 1}, uint64(0))
+	}).Return(types.Decision{
+		Proposal: types.Proposal{
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence: 1,
+				ViewId:         syncToView,
+			}),
+			VerificationSequence: 0},
+		Signatures: nil,
+	})
 
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
@@ -503,6 +511,7 @@ func TestSyncInform(t *testing.T) {
 		LeaderMonitor: leaderMon,
 		Synchronizer:  synchronizer,
 		ViewChanger:   vc,
+		Checkpoint:    &types.Checkpoint{},
 	}
 	configureProposerBuilder(controller)
 
