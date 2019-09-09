@@ -483,6 +483,7 @@ func TestSyncInform(t *testing.T) {
 
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
 	controllerMock := &mocks.ViewController{}
 	controllerMock.On("AbortView")
 
