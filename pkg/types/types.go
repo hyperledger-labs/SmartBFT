@@ -29,7 +29,7 @@ type Signature struct {
 }
 
 type Decision struct {
-	Proposal Proposal
+	Proposal   Proposal
 	Signatures []Signature
 }
 
