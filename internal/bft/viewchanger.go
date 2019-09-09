@@ -266,11 +266,12 @@ func (v *ViewChanger) InformNewView(view uint64, seq uint64) {
 	}
 }
 
-func (v *ViewChanger) informNewView(info *viewAndSeq) {
+// returns true if the view increased
+func (v *ViewChanger) informNewView(info *viewAndSeq) bool {
 	view := info.view
 	if view <= v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
-		return
+		return false
 	}
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
@@ -279,6 +280,8 @@ func (v *ViewChanger) informNewView(info *viewAndSeq) {
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
+	v.RequestsTimer.RestartTimers()
+	return true
 }
 
 // StartViewChange initiates a view change
@@ -572,10 +575,13 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 	if valid >= v.quorum {
 		// TODO handle in flight
-		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
+		viewToChange := v.currView
+		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
+		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
+			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
+		}
 		v.RequestsTimer.RestartTimers()
-		v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		v.checkTimeout = false
 	}
 }
@@ -630,8 +636,8 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 		v.Synchronizer.Sync()
 		select { // wait for sync to return with expected info
 		case info := <-v.informChan:
-			// TODO what if view is bigger than expected?
 			if info.seq >= targetSeq {
+				v.informNewView(info)
 				return
 			}
 		case <-v.stopChan:
