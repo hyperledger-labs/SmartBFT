@@ -579,7 +579,9 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 					NewView: msg,
 				},
 			}
-			v.State.Save(newViewToSave)
+			if err := v.State.Save(newViewToSave); err != nil {
+				v.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
 			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		}
 		v.RequestsTimer.RestartTimers()
