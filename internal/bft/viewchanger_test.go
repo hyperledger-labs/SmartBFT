@@ -235,6 +235,8 @@ func TestViewDataProcess(t *testing.T) {
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("RestartTimers").Once()
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -247,6 +249,7 @@ func TestViewDataProcess(t *testing.T) {
 		Checkpoint:    &checkpoint,
 		RequestsTimer: reqTimer,
 		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(1)
@@ -283,6 +286,7 @@ func TestViewDataProcess(t *testing.T) {
 
 	vc.Stop()
 	reqTimer.AssertCalled(t, "RestartTimers")
+	state.AssertCalled(t, "Save", mock.Anything)
 }
 
 func TestNewViewProcess(t *testing.T) {
@@ -315,6 +319,8 @@ func TestNewViewProcess(t *testing.T) {
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("RestartTimers").Once()
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        0,
@@ -327,6 +333,7 @@ func TestNewViewProcess(t *testing.T) {
 		Checkpoint:    &checkpoint,
 		RequestsTimer: reqTimer,
 		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(2)
@@ -369,6 +376,7 @@ func TestNewViewProcess(t *testing.T) {
 
 	vc.Stop()
 	reqTimer.AssertCalled(t, "RestartTimers")
+	state.AssertCalled(t, "Save", mock.Anything)
 }
 
 func TestNormalProcess(t *testing.T) {
@@ -404,6 +412,8 @@ func TestNormalProcess(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -418,6 +428,7 @@ func TestNormalProcess(t *testing.T) {
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
 		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(0)
@@ -440,6 +451,7 @@ func TestNormalProcess(t *testing.T) {
 	assert.Equal(t, uint64(2), num)
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	state.AssertNumberOfCalls(t, "Save", 1)
 
 	vc.Stop()
 }
@@ -685,6 +697,8 @@ func TestCommitLastDecision(t *testing.T) {
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -700,6 +714,7 @@ func TestCommitLastDecision(t *testing.T) {
 		Checkpoint:    &checkpoint,
 		Application:   app,
 		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(0)
@@ -732,6 +747,7 @@ func TestCommitLastDecision(t *testing.T) {
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	app.AssertNumberOfCalls(t, "Deliver", 1)
+	state.AssertNumberOfCalls(t, "Save", 1)
 
 	vc.Stop()
 
@@ -778,6 +794,8 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
 		synchronizerWG.Done()
 	})
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        3,
@@ -793,6 +811,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		Application:   app,
 		Checkpoint:    &checkpoint,
 		Synchronizer:  synchronizer,
+		State:         state,
 	}
 
 	decisionAhead := types.Proposal{
