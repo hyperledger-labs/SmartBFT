@@ -56,6 +56,7 @@ type ViewChanger struct {
 
 	Checkpoint *types.Checkpoint
 	InFlight   *InFlightData
+	State      State
 
 	Controller    ViewController
 	RequestsTimer RequestsTimer
@@ -573,6 +574,12 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
+			newViewToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_NewView{
+					NewView: msg,
+				},
+			}
+			v.State.Save(newViewToSave)
 			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		}
 		v.RequestsTimer.RestartTimers()

@@ -75,6 +75,7 @@ func (c *Consensus) Start() {
 		Application: c,
 		Checkpoint:  &cpt,
 		InFlight:    &inFlight,
+		State:       c.state,
 		// Controller later
 		// RequestsTimer later
 		Ticker:            c.ViewChangerTicker,
