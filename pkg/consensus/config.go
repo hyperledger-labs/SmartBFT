@@ -12,19 +12,22 @@ type Configuration struct {
 	// SelfID is the identifier of the node.
 	SelfID uint64
 
-	// RequestBatchMaxSize is the maximal number of a requests in a batch.
-	// A request batch that reaches this size is proposed immediately.
-	RequestBatchMaxSize int
+	// RequestBatchMaxCount is the maximal number of requests in a batch.
+	// A request batch that reaches this count is proposed immediately.
+	RequestBatchMaxCount int
+	// RequestBatchMaxBytes is the maximal total size of requests in a batch, in bytes.
+	// This is also the maximal size of a request. A request batch that reaches this size is proposed immediately.
+	RequestBatchMaxBytes uint64
 	// RequestBatchMaxInterval is the maximal time interval a request batch is waiting before it is proposed.
 	// A request batch is accumulating requests until RequestBatchMaxInterval had elapsed from the time the batch was
-	// first created (i.e. the time the first request was added to it), or until it is of size RequestBatchMaxSize,
-	// which ever happens first.
+	// first created (i.e. the time the first request was added to it), or until it is of count RequestBatchMaxCount,
+	// or total size RequestBatchMaxBytes, which ever happens first.
 	RequestBatchMaxInterval time.Duration
 
 	// IncomingMessageBufferSize is the size of the buffer holding incoming messages before they are processed.
 	IncomingMessageBufferSize int
 	// RequestPoolSize is the number of pending requests retained by the node.
-	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxSize.
+	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
 	RequestPoolSize int
 
 	// RequestTimeout is started from the moment a request is submitted, and defines the interval after which a request
@@ -57,7 +60,8 @@ type Configuration struct {
 // and between clients to nodes, is approximately 10ms.
 // Set the SelfID.
 var DefaultConfig = Configuration{
-	RequestBatchMaxSize:       100,
+	RequestBatchMaxCount:      100,
+	RequestBatchMaxBytes:      10 * 1024 * 1024,
 	RequestBatchMaxInterval:   50 * time.Millisecond,
 	IncomingMessageBufferSize: 200,
 	RequestPoolSize:           400,
