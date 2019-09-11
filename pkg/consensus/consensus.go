@@ -129,6 +129,20 @@ func (c *Consensus) Start() {
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.RequestsTimer = pool
 
+	viewSeq, err := c.state.RestoreNewViewIfApplicable()
+	if err != nil {
+		c.Logger.Warnf("Failed restoring new view, error: %v", err)
+	}
+	if viewSeq == nil {
+		c.Logger.Debugf("No new view to restore")
+	} else {
+		// Check if metadata should be taken from the restored new view or from the application
+		if viewSeq.Seq >= c.Metadata.LatestSequence {
+			c.viewChanger.Start(viewSeq.View)
+			c.controller.Start(viewSeq.View, viewSeq.Seq+1)
+			return
+		}
+	}
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
 	c.viewChanger.Start(c.Metadata.ViewId)
