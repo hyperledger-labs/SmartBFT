@@ -279,15 +279,14 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		lastDecision: &types.Decision{},
 	}
 
-	writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(sugaredLogger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
-	if err != nil {
-		sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
-	}
-
 	config := fastConfig
 	config.SelfID = id
 
 	app.Setup = func() {
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(sugaredLogger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		if err != nil {
+			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
+		}
 		c := &consensus.Consensus{
 			Config:            config,
 			ViewChangerTicker: app.secondClock.C,
