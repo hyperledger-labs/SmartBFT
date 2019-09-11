@@ -554,6 +554,80 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	t.Fatalf("Didn't catch up")
 }
 
+func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	start := time.Now()
+	for _, n := range network {
+		n.app.heartbeatTime = make(chan time.Time, 1)
+		n.app.heartbeatTime <- start
+		n.app.Setup()
+	}
+
+	// wait for a view change to occur
+	done := make(chan struct{})
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(1)
+	baseLogger := n3.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	n3.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n0.Disconnect()
+
+	// Accelerate the time until a view change
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 10):
+				for _, n := range network {
+					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+				}
+			}
+		}
+	}()
+
+	viewChangeWG.Wait()
+	close(done)
+
+	n3.Restart()
+
+	n1.Submit(Request{ID: "1", ClientID: "alice"})
+	n2.Submit(Request{ID: "1", ClientID: "alice"})
+	n3.Submit(Request{ID: "1", ClientID: "alice"})
+
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+}
+
 func TestLeaderForwarding(t *testing.T) {
 	t.Parallel()
 	network := make(Network)

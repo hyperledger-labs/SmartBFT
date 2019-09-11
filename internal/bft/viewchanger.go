@@ -573,7 +573,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 				Content: &protos.SavedMessage_NewView{
 					NewView: &protos.ViewMetadata{
 						ViewId:         v.currView,
-						LatestSequence: maxLastDecisionSequence + 1,
+						LatestSequence: maxLastDecisionSequence,
 					},
 				},
 			}
