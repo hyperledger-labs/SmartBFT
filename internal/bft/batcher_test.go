@@ -40,7 +40,7 @@ func TestBatcherBasic(t *testing.T) {
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 1, 10*time.Millisecond)
+	batcher := bft.NewBatchBuilder(pool, 1, 2048, 10*time.Millisecond)
 
 	res := batcher.NextBatch()
 	assert.Len(t, res, 1)
@@ -81,7 +81,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Len(t, res, 1)
 	assert.Equal(t, byteReq3, res[0])
 
-	batcher = bft.NewBatchBuilder(pool, 2, 10*time.Millisecond)
+	batcher = bft.NewBatchBuilder(pool, 2, 2048, 10*time.Millisecond)
 
 	batcher.BatchRemainder([][]byte{byteReq1})
 
@@ -109,7 +109,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	insp := &testRequestInspector{}
 	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200})
 
-	batcher := bft.NewBatchBuilder(pool, 100, 100*time.Second) // long time
+	batcher := bft.NewBatchBuilder(pool, 100, 2048, 100*time.Second) // long time
 
 	rem := make([][]byte, 0)
 	for i := 0; i < 50; i++ {
@@ -153,7 +153,7 @@ func TestBatcherClose(t *testing.T) {
 	err = pool.Submit(byteReq)
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 100, time.Minute)
+	batcher := bft.NewBatchBuilder(pool, 100, 2048, time.Minute)
 
 	go func() {
 		batcher.Close()
@@ -188,7 +188,7 @@ func TestBatcherReset(t *testing.T) {
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 1, 10*time.Millisecond)
+	batcher := bft.NewBatchBuilder(pool, 1, 2048, 10*time.Millisecond)
 
 	res := batcher.NextBatch()
 	assert.Len(t, res, 1)

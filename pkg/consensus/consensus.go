@@ -113,7 +113,7 @@ func (c *Consensus) Start() {
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
-	batchBuilder := algorithm.NewBatchBuilder(pool, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxInterval)
+	batchBuilder := algorithm.NewBatchBuilder(pool, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
 	leaderMonitor := algorithm.NewHeartbeatMonitor(
 		c.Scheduler,
 		c.Logger,

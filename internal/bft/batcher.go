@@ -12,17 +12,19 @@ import (
 
 type BatchBuilder struct {
 	pool         RequestPool
-	batchSize    int
+	maxMsgCount  int
+	maxSizeBytes uint64
 	batchTimeout time.Duration
 	closeChan    chan struct{}
 	remainder    [][]byte
 	closeLock    sync.Mutex // Reset and Close may be called by different threads
 }
 
-func NewBatchBuilder(pool RequestPool, batchSize int, batchTimeout time.Duration) *BatchBuilder {
+func NewBatchBuilder(pool RequestPool, maxMsgCount int, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
 	b := &BatchBuilder{
 		pool:         pool,
-		batchSize:    batchSize,
+		maxMsgCount:  maxMsgCount,
+		maxSizeBytes: maxSizeBytes,
 		batchTimeout: batchTimeout,
 		closeChan:    make(chan struct{}),
 	}
@@ -45,7 +47,7 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 		case <-timeout:
 			return b.buildBatch(remainderOccupied, currBatch)
 		default:
-			if b.pool.Size() >= b.batchSize-remainderOccupied {
+			if b.pool.Size() >= b.maxMsgCount-remainderOccupied {
 				return b.buildBatch(remainderOccupied, currBatch)
 			}
 			time.Sleep(b.batchTimeout / 100)
@@ -55,7 +57,7 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 
 // takes the current batch and appends to it requests from the pool
 func (b *BatchBuilder) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
-	reqs := b.pool.NextRequests(b.batchSize - remainderOccupied)
+	reqs := b.pool.NextRequests(b.maxMsgCount - remainderOccupied)
 	for i := 0; i < len(reqs); i++ {
 		currBatch = append(currBatch, reqs[i])
 	}
