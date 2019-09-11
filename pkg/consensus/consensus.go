@@ -138,6 +138,7 @@ func (c *Consensus) Start() {
 	} else {
 		// Check if metadata should be taken from the restored new view or from the application
 		if viewSeq.Seq >= c.Metadata.LatestSequence {
+			c.Logger.Debugf("Restoring from new view with view %d and seq %d, while application has view %d and seq %d", viewSeq.View, viewSeq.Seq, c.Metadata.ViewId, c.Metadata.LatestSequence)
 			c.viewChanger.Start(viewSeq.View)
 			c.controller.Start(viewSeq.View, viewSeq.Seq+1)
 			return
