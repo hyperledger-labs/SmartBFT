@@ -28,8 +28,6 @@ type FailureDetector interface {
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
 	NextBatch() [][]byte
-	BatchRemainder(remainder [][]byte)
-	PopRemainder() [][]byte
 	Close()
 	Closed() bool
 	Reset()
@@ -354,7 +352,8 @@ func (c *Controller) propose() {
 	metadata := c.currView.GetMetadata()
 	proposal, remainder := c.Assembler.AssembleProposal(metadata, nextBatch)
 	if len(remainder) != 0 {
-		c.Batcher.BatchRemainder(remainder)
+		c.Logger.Debugf("Assembler packed only some of the batch TX's into the proposal, length of: batch=%d, remainder=%d, in-proposal=%d",
+			len(nextBatch), len(remainder), len(nextBatch)-len(remainder))
 	}
 	c.Logger.Debugf("Leader proposing proposal: %v", proposal)
 	c.currView.Propose(proposal)
@@ -453,17 +452,6 @@ func (c *Controller) maybePruneRevokedRequests() {
 		_, err := c.Verifier.VerifyRequest(req)
 		return err
 	})
-
-	var newRemainder [][]byte
-	for _, req := range c.Batcher.PopRemainder() {
-		reqInf, err := c.Verifier.VerifyRequest(req)
-		if err != nil {
-			c.Logger.Warnf("Revoking request %v due to %v", reqInf, err)
-			continue
-		}
-		newRemainder = append(newRemainder, req)
-	}
-	c.Batcher.BatchRemainder(newRemainder)
 }
 
 func (c *Controller) acquireLeaderToken() {

@@ -60,11 +60,6 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 	}
 }
 
-// BatchRemainder sets the remainder of requests to be included in the next batch
-func (b *BatchBuilder) BatchRemainder(remainder [][]byte) {
-	// TODO remove method
-}
-
 // Close closes the close channel to stop NextBatch
 func (b *BatchBuilder) Close() {
 	b.closeLock.Lock()
@@ -92,10 +87,4 @@ func (b *BatchBuilder) Reset() {
 	b.closeLock.Lock()
 	defer b.closeLock.Unlock()
 	b.closeChan = make(chan struct{})
-}
-
-// PopRemainder returns the remainder and resets it
-func (b *BatchBuilder) PopRemainder() [][]byte {
-	// TODO remove method
-	return nil
 }
