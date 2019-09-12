@@ -1128,7 +1128,7 @@ func TestInformViewChanger(t *testing.T) {
 	})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers").Once()
-	reqTimer.On("RestartTimers").Once()
+	reqTimer.On("RestartTimers")
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -1159,6 +1159,6 @@ func TestInformViewChanger(t *testing.T) {
 	vc.Stop()
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-	reqTimer.AssertNumberOfCalls(t, "RestartTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	reqTimer.AssertCalled(t, "RestartTimers")
 }

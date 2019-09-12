@@ -267,7 +267,7 @@ func (v *ViewChanger) InformNewView(view uint64, seq uint64) {
 
 func (v *ViewChanger) informNewView(info *viewAndSeq) {
 	view := info.view
-	if view <= v.currView {
+	if view < v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
 		return
 	}
