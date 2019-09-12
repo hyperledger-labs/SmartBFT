@@ -125,7 +125,6 @@ func (ps *PersistedState) Restore(v *View) error {
 		return nil
 	}
 
-	// TODO: handle signed view data persisted in the WAL
 	return errors.Errorf("unrecognized record: %v", lastPersistedMessage)
 }
 
