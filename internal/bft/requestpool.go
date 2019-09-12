@@ -109,6 +109,8 @@ func (rp *Pool) Submit(request []byte) error {
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
 
+	reqCopy := append(make([]byte, 0), request...)
+
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
@@ -121,10 +123,10 @@ func (rp *Pool) Submit(request []byte) error {
 
 	to := time.AfterFunc(
 		rp.options.RequestTimeout,
-		func() { rp.onRequestTO(request, reqInfo) },
+		func() { rp.onRequestTO(reqCopy, reqInfo) },
 	)
 	reqItem := &requestItem{
-		request: request,
+		request: reqCopy,
 		timeout: to,
 	}
 
@@ -148,20 +150,29 @@ func (rp *Pool) Size() int {
 }
 
 // NextRequests returns the next requests to be batched.
-// It returns at most n request, in a newly allocated slice.
-func (rp *Pool) NextRequests(n int) [][]byte {
+// It returns at most maxCount requests, and at most maxSizeBytes, in a newly allocated slice.
+// Return variable full indicates that the batch cannot be increased further by calling again with the same arguments.
+func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte, full bool) {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
-	m := minInt(rp.fifo.Len(), n)
-	buff := make([][]byte, m)
+	count := minInt(rp.fifo.Len(), maxCount)
+	var totalSize uint64
+	batch = make([][]byte, 0, count)
 	var element = rp.fifo.Front()
-	for i := 0; i < m; i++ {
-		buff[i] = append(make([]byte, 0), element.Value.(*requestItem).request...)
+	for i := 0; i < count; i++ {
+		req := element.Value.(*requestItem).request
+		reqLen := uint64(len(req))
+		rp.logger.Debugf("i=%d, len(r)=%d, total=%d", i, len(req), totalSize)
+		if totalSize+reqLen > maxSizeBytes {
+			return batch, true
+		}
+		batch = append(batch, req)
+		totalSize = totalSize + reqLen
 		element = element.Next()
 	}
 
-	return buff
+	return batch, len(batch) == maxCount || totalSize >= maxSizeBytes
 }
 
 // Prune removes requests for which the given predicate returns error.

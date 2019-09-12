@@ -13,15 +13,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
-	"github.com/stretchr/testify/mock"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
-	"go.uber.org/zap"
-
+	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+	"go.uber.org/zap"
 )
 
 func TestReqPoolBasic(t *testing.T) {
@@ -103,23 +101,26 @@ func TestReqPoolBasic(t *testing.T) {
 		err = pool.Submit(byteReq3)
 		assert.NoError(t, err)
 
-		next := pool.NextRequests(4)
+		next, full := pool.NextRequests(4, 10000000)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Equal(t, "2", insp.RequestID(next[1]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[2]).ID)
 		assert.Len(t, next, 3)
+		assert.False(t, full)
 
 		err = pool.RemoveRequest(req2)
 		assert.NoError(t, err)
 
-		next = pool.NextRequests(4)
+		next, _ = pool.NextRequests(4, 10000000)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[1]).ID)
 		assert.Len(t, next, 2)
+		assert.False(t, full)
 
-		next = pool.NextRequests(1)
+		next, full = pool.NextRequests(1, 10000000)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Len(t, next, 1)
+		assert.True(t, full)
 
 		err = pool.RemoveRequest(req1)
 		assert.NoError(t, err)
@@ -132,13 +133,14 @@ func TestReqPoolBasic(t *testing.T) {
 		err = pool.RemoveRequest(req3)
 		assert.NoError(t, err)
 
-		next = pool.NextRequests(1)
+		next, _ = pool.NextRequests(1, 10000000)
 		assert.Len(t, next, 0)
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
 		pool.Close()
 	})
+
 }
 
 func TestReqPoolCapacity(t *testing.T) {
@@ -186,6 +188,41 @@ func TestReqPoolCapacity(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", .0)
 		pool.Close()
 	})
+
+	t.Run("respect max count and size", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
+		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
+		defer pool.Close()
+
+		var lengths []int
+		for i := 0; i < 10; i++ {
+			r := makeTestRequest("1", fmt.Sprintf("%d", i), "aaaaaa")
+			lengths = append(lengths, len(r))
+			err := pool.Submit(r)
+			assert.NoError(t, err)
+			fmt.Println(lengths)
+		}
+
+		next, full := pool.NextRequests(5, 10000000)
+		assert.Equal(t, 5, len(next))
+		assert.True(t, full)
+
+		next, full = pool.NextRequests(20, 10000000)
+		assert.Equal(t, 10, len(next))
+		assert.False(t, full)
+
+		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]))
+		assert.Equal(t, 2, len(next))
+		assert.True(t, full)
+
+		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]/2))
+		assert.Equal(t, 3, len(next))
+		assert.True(t, full)
+
+		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
+		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
+		pool.Close()
+	})
 }
 
 func TestReqPoolPrune(t *testing.T) {
@@ -216,7 +253,8 @@ func TestReqPoolPrune(t *testing.T) {
 	})
 
 	assert.Equal(t, 1, pool.Size())
-	client, tx, _ := parseTestRequest(pool.NextRequests(1)[0])
+	req, _ := pool.NextRequests(1, 10000000)
+	client, tx, _ := parseTestRequest(req[0])
 	assert.Equal(t, "2", client)
 	assert.Equal(t, "2", tx)
 

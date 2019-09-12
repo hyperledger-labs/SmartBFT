@@ -23,7 +23,7 @@ import (
 
 var fastConfig = consensus.Configuration{
 	RequestBatchMaxCount:      10,
-	RequestBatchMaxBytes:      1024 * 1024,
+	RequestBatchMaxBytes:      10 * 1024 * 1024,
 	RequestBatchMaxInterval:   time.Millisecond,
 	IncomingMessageBufferSize: 200,
 	RequestPoolSize:           40,

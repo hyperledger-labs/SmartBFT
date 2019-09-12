@@ -34,8 +34,8 @@ func NewBatchBuilder(pool RequestPool, maxMsgCount int, maxSizeBytes uint64, bat
 // NextBatch returns the next batch of requests to be proposed
 func (b *BatchBuilder) NextBatch() [][]byte {
 	currBatch := make([][]byte, 0)
-	remainderOccupied := len(b.remainder)
-	if remainderOccupied > 0 {
+	remainderCount := len(b.remainder)
+	if remainderCount > 0 {
 		currBatch = b.remainder
 	}
 	b.remainder = make([][]byte, 0)
@@ -45,10 +45,10 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 		case <-b.closeChan:
 			return nil
 		case <-timeout:
-			return b.buildBatch(remainderOccupied, currBatch)
+			return b.buildBatch(remainderCount, currBatch)
 		default:
-			if b.pool.Size() >= b.maxMsgCount-remainderOccupied {
-				return b.buildBatch(remainderOccupied, currBatch)
+			if b.pool.Size() >= b.maxMsgCount-remainderCount {
+				return b.buildBatch(remainderCount, currBatch)
 			}
 			time.Sleep(b.batchTimeout / 100)
 		}
@@ -56,8 +56,8 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 }
 
 // takes the current batch and appends to it requests from the pool
-func (b *BatchBuilder) buildBatch(remainderOccupied int, currBatch [][]byte) [][]byte {
-	reqs := b.pool.NextRequests(b.maxMsgCount - remainderOccupied)
+func (b *BatchBuilder) buildBatch(remainderCount int, currBatch [][]byte) [][]byte {
+	reqs, _ := b.pool.NextRequests(b.maxMsgCount-remainderCount, 100*1024*1024)
 	for i := 0; i < len(reqs); i++ {
 		currBatch = append(currBatch, reqs[i])
 	}
