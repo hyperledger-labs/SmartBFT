@@ -34,11 +34,6 @@ type change struct {
 	stopView bool
 }
 
-type viewAndSeq struct {
-	view uint64
-	seq  uint64
-}
-
 type ViewChanger struct {
 	// Configuration
 	SelfID uint64
@@ -56,6 +51,7 @@ type ViewChanger struct {
 
 	Checkpoint *types.Checkpoint
 	InFlight   *InFlightData
+	State      State
 
 	Controller    ViewController
 	RequestsTimer RequestsTimer
@@ -77,7 +73,7 @@ type ViewChanger struct {
 	nextView        uint64
 	leader          uint64
 	startChangeChan chan *change
-	informChan      chan *viewAndSeq
+	informChan      chan *types.ViewAndSeq
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -88,7 +84,7 @@ type ViewChanger struct {
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
 	v.startChangeChan = make(chan *change, 1)
-	v.informChan = make(chan *viewAndSeq, 1)
+	v.informChan = make(chan *types.ViewAndSeq, 1)
 
 	v.nodes = v.Comm.Nodes()
 
@@ -256,17 +252,17 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 // InformNewView tells the view changer to advance to a new view number
 func (v *ViewChanger) InformNewView(view uint64, seq uint64) {
 	select {
-	case v.informChan <- &viewAndSeq{
-		view: view,
-		seq:  seq,
+	case v.informChan <- &types.ViewAndSeq{
+		View: view,
+		Seq:  seq,
 	}:
 	case <-v.stopChan:
 		return
 	}
 }
 
-func (v *ViewChanger) informNewView(info *viewAndSeq) {
-	view := info.view
+func (v *ViewChanger) informNewView(info *types.ViewAndSeq) {
+	view := info.View
 	if view < v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
 		return
@@ -573,6 +569,17 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", viewToChange, maxLastDecisionSequence+1, maxLastDecision)
 		v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
+			newViewToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_NewView{
+					NewView: &protos.ViewMetadata{
+						ViewId:         v.currView,
+						LatestSequence: maxLastDecisionSequence,
+					},
+				},
+			}
+			if err := v.State.Save(newViewToSave); err != nil {
+				v.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
 			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
 		}
 		v.RequestsTimer.RestartTimers()
@@ -630,7 +637,7 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 		v.Synchronizer.Sync()
 		select { // wait for sync to return with expected info
 		case info := <-v.informChan:
-			if info.seq >= targetSeq {
+			if info.Seq >= targetSeq {
 				v.informNewView(info)
 				return
 			}
