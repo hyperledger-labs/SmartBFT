@@ -8,11 +8,13 @@ package bft_test
 import (
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -273,7 +275,11 @@ func TestViewDataProcess(t *testing.T) {
 	msg2.GetViewData().Signer = 2
 
 	verifierSigWG.Add(4)
-	verifierConsenterSigWG.Add(12)
+	// VerifyConsenterSig is called 3 times (3 signatures) during validation of the view data message
+	// 9 times after getting 3 view data messages and checking the in flight
+	// 9 times during validation of the new view message
+	// and 9 times when checking the in flight after validating the new view message
+	verifierConsenterSigWG.Add(30)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
@@ -365,7 +371,10 @@ func TestNewViewProcess(t *testing.T) {
 	}
 
 	verifierSigWG.Add(3)
-	verifierConsenterSigWG.Add(9)
+	// VerifyConsenterSig is called 9 times during validation of the new view message, there are 3 view date messages
+	// inside the new view message, each with 3 signatures on the last decision
+	// and 9 times when checking the in flight after validating the new view message
+	verifierConsenterSigWG.Add(18)
 	vc.HandleMessage(2, msg)
 	verifierSigWG.Wait()
 	verifierConsenterSigWG.Wait()
@@ -1079,7 +1088,7 @@ func TestValidateLastDecision(t *testing.T) {
 		t.Run(test.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerify(verifier)
-			err, seq := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
+			seq, err := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
 			if test.valid {
 				assert.NoError(t, err)
 			} else {
@@ -1180,4 +1189,486 @@ func TestInformViewChanger(t *testing.T) {
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	reqTimer.AssertCalled(t, "RestartTimers")
+}
+
+func TestCheckInFlightNoProposal(t *testing.T) {
+	expectedProposal := &protos.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			ViewId:         0,
+			LatestSequence: 2, // last decision sequence + 1
+		}),
+		VerificationSequence: uint64(1),
+	}
+	for _, test := range []struct {
+		description    string
+		mutateMessages func([]*protos.ViewData)
+		ok             bool
+	}{
+		{
+			description: "all without in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				// in flight is already unset
+			},
+			ok: true,
+		},
+		{
+			description: "all with old in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = msg.LastDecision
+				}
+			},
+			ok: true,
+		},
+		{
+			description: "quorum without in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				// in flight is already unset in all
+				messages[0].InFlightProposal = expectedProposal
+			},
+			ok: true,
+		},
+		{
+			description: "quorum with an old in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = msg.LastDecision // set all with an old proposal (same as last decision)
+				}
+				messages[0].InFlightProposal = expectedProposal
+			},
+			ok: true,
+		},
+		{
+			description: "some with no in flight proposal and some with an old one",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[0].InFlightProposal = messages[0].LastDecision
+				messages[1].InFlightProposal = messages[1].LastDecision
+				messages[2].InFlightProposal = expectedProposal
+				messages[3].InFlightProposal = nil
+			},
+			ok: true,
+		},
+		{
+			description: "some (not enough) with no in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[0].InFlightProposal = messages[0].LastDecision
+				messages[1].InFlightProposal = nil
+				messages[2].InFlightProposal = expectedProposal
+				messages[3].InFlightProposal = expectedProposal
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			messages := make([]*protos.ViewData, 0)
+			for i := 0; i < 4; i++ {
+				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
+			}
+			test.mutateMessages(messages)
+			ok, _, _, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			assert.NoError(t, err)
+			assert.Equal(t, test.ok, ok)
+		})
+	}
+}
+
+func TestCheckInFlightWithProposal(t *testing.T) {
+	expectedProposal := &protos.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			ViewId:         0,
+			LatestSequence: 2, // last decision sequence + 1
+		}),
+		VerificationSequence: uint64(1),
+	}
+	for _, test := range []struct {
+		description    string
+		mutateMessages func([]*protos.ViewData)
+		ok             bool
+		no             bool
+		proposal       *protos.Proposal
+	}{
+		{
+			description: "all with expected in flight proposal and prepared",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with no in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				messages[0].InFlightProposal = nil
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with old in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				messages[0].InFlightProposal = messages[0].LastDecision
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "quorum with expected in flight proposal and prepared, other with different in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Payload = []byte{5}
+				messages[0].InFlightProposal = different
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "all with expected in flight proposal, only one is prepared, other with different in flight",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Header = []byte{5}
+				messages[0].InFlightProposal = different
+				messages[3].InFlightPrepared = true
+			},
+			ok:       true,
+			no:       false,
+			proposal: expectedProposal,
+		},
+		{
+			description: "all with expected in flight proposal, no one is prepared",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = false
+				}
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+		{
+			description: "all with in flight proposal and prepared, but no quorum on any proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				for _, msg := range messages {
+					msg.InFlightProposal = expectedProposal
+					msg.InFlightPrepared = true
+				}
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.VerificationSequence = 10
+				messages[2].InFlightProposal = different
+				messages[3].InFlightProposal = different
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+		{
+			description: "not enough preprepared for quorum on in flight proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[2].InFlightProposal = expectedProposal
+				messages[2].InFlightPrepared = true
+			},
+			ok:       true,
+			no:       true,
+			proposal: nil,
+		},
+		{
+			description: "not enough for any in flight proposal, and also not enough for no proposal",
+			mutateMessages: func(messages []*protos.ViewData) {
+				messages[2].InFlightProposal = expectedProposal
+				messages[2].InFlightPrepared = true
+				different := proto.Clone(expectedProposal).(*protos.Proposal)
+				different.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					ViewId:         1,
+					LatestSequence: 2, // last decision sequence + 1
+				})
+				messages[3].InFlightProposal = different
+				messages[3].InFlightPrepared = true
+				different2 := proto.Clone(expectedProposal).(*protos.Proposal)
+				different2.VerificationSequence = 5
+				messages[1].InFlightProposal = different2
+				messages[1].InFlightPrepared = true
+			},
+			ok:       false,
+			no:       false,
+			proposal: nil,
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			messages := make([]*protos.ViewData, 0)
+			for i := 0; i < 4; i++ {
+				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
+			}
+			test.mutateMessages(messages)
+			ok, no, proposal, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			assert.NoError(t, err)
+			assert.Equal(t, test.ok, ok)
+			assert.Equal(t, test.no, no)
+			assert.Equal(t, test.proposal, proposal)
+		})
+	}
+}
+
+func TestCommitInFlight(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	msgChan := make(chan *protos.Message)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(0).(*protos.Message)
+		msgChan <- m
+	})
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	signWG := sync.WaitGroup{}
+	signer.On("SignProposal", mock.Anything).Run(func(args mock.Arguments) {
+		signWG.Done()
+	}).Return(&types.Signature{
+		Id:    1,
+		Value: []byte{4},
+	})
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	controller.On("AbortView")
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	app := &mocks.ApplicationMock{}
+	appChan := make(chan types.Proposal)
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		prop := args.Get(0).(types.Proposal)
+		appChan <- prop
+	})
+
+	vc := &bft.ViewChanger{
+		SelfID:        1,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &checkpoint,
+		ViewSequences: &atomic.Value{},
+		State:         &bft.StateRecorder{},
+		InMsqQSize:    consensus.DefaultConfig.IncomingMessageBufferSize,
+		Application:   app,
+	}
+
+	vc.Start(0)
+
+	vc.HandleMessage(2, viewChangeMsg)
+	vc.HandleMessage(3, viewChangeMsg)
+	m := <-msgChan
+	assert.NotNil(t, m.GetViewChange())
+
+	inFlightProposal := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 2,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.InFlightProposal = &protos.Proposal{
+		Payload:              inFlightProposal.Payload,
+		Header:               inFlightProposal.Header,
+		Metadata:             inFlightProposal.Metadata,
+		VerificationSequence: uint64(inFlightProposal.VerificationSequence),
+	}
+	viewData.InFlightPrepared = true
+
+	msg := proto.Clone(viewDataMsg1).(*protos.Message)
+	msg.GetViewData().RawViewData = bft.MarshalOrPanic(viewData)
+
+	signWG.Add(1)
+
+	vc.HandleMessage(0, msg)
+	msg2 := proto.Clone(msg).(*protos.Message)
+	msg2.GetViewData().Signer = 2
+	vc.HandleMessage(2, msg2)
+	m = <-msgChan
+	assert.NotNil(t, m.GetNewView())
+
+	signWG.Wait()
+
+	commitMsg := &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:   0,
+				Seq:    2,
+				Digest: inFlightProposal.Digest(),
+				Signature: &protos.Signature{
+					Signer: 0,
+					Value:  []byte{4},
+				},
+			},
+		},
+	}
+	vc.HandleViewMessage(0, commitMsg)
+	commitMsg2 := proto.Clone(commitMsg).(*protos.Message)
+	commitMsg2.GetCommit().Signature.Signer = 2
+	vc.HandleViewMessage(2, commitMsg2)
+
+	m = <-msgChan
+	assert.NotNil(t, m.GetCommit())
+
+	delivered := <-appChan
+	assert.Equal(t, inFlightProposal, delivered)
+
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
+
+	controller.AssertNumberOfCalls(t, "AbortView", 1)
+
+	vc.Stop()
+}
+
+func TestDontCommitInFlight(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("RestartTimers")
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	vc := &bft.ViewChanger{
+		SelfID:        3,
+		N:             4,
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		RequestsTimer: reqTimer,
+		Application:   app,
+		State:         state,
+	}
+
+	inFlightProposal := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 2,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.InFlightProposal = &protos.Proposal{
+		Payload:              inFlightProposal.Payload,
+		Header:               inFlightProposal.Header,
+		Metadata:             inFlightProposal.Metadata,
+		VerificationSequence: uint64(inFlightProposal.VerificationSequence),
+	}
+	viewData.InFlightPrepared = true
+
+	vdBytes := bft.MarshalOrPanic(viewData)
+
+	signed := make([]*protos.SignedViewData, 0)
+	for len(signed) < 3 { // quorum = 3
+		msg := &protos.Message{
+			Content: &protos.Message_ViewData{
+				ViewData: &protos.SignedViewData{
+					RawViewData: vdBytes,
+					Signer:      uint64(len(signed)),
+					Signature:   nil,
+				},
+			},
+		}
+		signed = append(signed, msg.GetViewData())
+	}
+
+	msg := &protos.Message{
+		Content: &protos.Message_NewView{
+			NewView: &protos.NewView{
+				SignedViewData: signed,
+			},
+		},
+	}
+
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(inFlightProposal, lastDecisionSignatures)
+	vc.Checkpoint = &checkpoint
+
+	vc.Start(1)
+
+	vc.HandleMessage(1, msg)
+
+	num := <-viewNumChan
+	assert.Equal(t, uint64(1), num)
+	num = <-seqNumChan
+	assert.Equal(t, uint64(2), num)
+
+	vc.Stop()
+
+	app.AssertNotCalled(t, "Deliver")
 }
