@@ -578,9 +578,16 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	// wait for a view change to occur
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
-	viewChangeWG.Add(1)
-	baseLogger := n3.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n3.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+	viewChangeWG.Add(2)
+	baseLogger1 := n1.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	n1.Consensus.Logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+	baseLogger3 := n3.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	n3.Consensus.Logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
 			viewChangeWG.Done()
 		}
@@ -613,6 +620,8 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	viewChangeWG.Wait()
 	close(done)
 
+	// restart new leader and a follower, will restore from new view
+	n1.Restart()
 	n3.Restart()
 
 	n1.Submit(Request{ID: "1", ClientID: "alice"})
