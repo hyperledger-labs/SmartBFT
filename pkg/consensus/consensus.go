@@ -129,9 +129,12 @@ func (c *Consensus) Start() {
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.RequestsTimer = pool
 
-	viewSeq, err := c.state.RestoreNewViewIfApplicable()
+	view := c.Metadata.ViewId
+	seq := c.Metadata.LatestSequence
+
+	viewSeq, err := c.state.LoadNewViewIfApplicable()
 	if err != nil {
-		c.Logger.Warnf("Failed restoring new view, error: %v", err)
+		c.Logger.Panicf("Failed loading new view, error: %v", err)
 	}
 	if viewSeq == nil {
 		c.Logger.Debugf("No new view to restore")
@@ -139,15 +142,15 @@ func (c *Consensus) Start() {
 		// Check if metadata should be taken from the restored new view or from the application
 		if viewSeq.Seq >= c.Metadata.LatestSequence {
 			c.Logger.Debugf("Restoring from new view with view %d and seq %d, while application has view %d and seq %d", viewSeq.View, viewSeq.Seq, c.Metadata.ViewId, c.Metadata.LatestSequence)
-			c.viewChanger.Start(viewSeq.View)
-			c.controller.Start(viewSeq.View, viewSeq.Seq+1)
-			return
+			view = viewSeq.View
+			seq = viewSeq.Seq
 		}
 	}
+
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
-	c.viewChanger.Start(c.Metadata.ViewId)
-	c.controller.Start(c.Metadata.ViewId, c.Metadata.LatestSequence+1)
+	c.viewChanger.Start(view)
+	c.controller.Start(view, seq+1)
 }
 
 func (c *Consensus) Stop() {

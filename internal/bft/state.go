@@ -74,7 +74,7 @@ func (ps *PersistedState) storePrepared(commitMsg *protos.Message) {
 	ps.InFlightProposal.StorePrepares(cmt.View, cmt.Seq)
 }
 
-func (ps *PersistedState) RestoreNewViewIfApplicable() (*types.ViewAndSeq, error) {
+func (ps *PersistedState) LoadNewViewIfApplicable() (*types.ViewAndSeq, error) {
 	entries := ps.Entries
 	if len(entries) == 0 {
 		ps.Logger.Infof("Nothing to restore")
