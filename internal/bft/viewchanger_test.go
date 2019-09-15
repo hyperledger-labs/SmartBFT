@@ -1596,6 +1596,8 @@ func TestDontCommitInFlight(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        3,
@@ -1607,6 +1609,7 @@ func TestDontCommitInFlight(t *testing.T) {
 		Ticker:        make(chan time.Time),
 		RequestsTimer: reqTimer,
 		Application:   app,
+		State:         state,
 	}
 
 	inFlightProposal := types.Proposal{

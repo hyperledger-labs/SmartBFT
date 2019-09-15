@@ -59,7 +59,6 @@ type ViewChanger struct {
 	RequestsTimer RequestsTimer
 
 	// for the in flight proposal view
-	State              State
 	ViewSequences      *atomic.Value
 	inFlightDecideChan chan struct{}
 	inFlightSyncChan   chan struct{}
