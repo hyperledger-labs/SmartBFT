@@ -1069,7 +1069,7 @@ func TestValidateLastDecision(t *testing.T) {
 		t.Run(test.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerify(verifier)
-			err, seq := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
+			seq, err := bft.ValidateLastDecision(test.viewData, 3, 4, verifier)
 			if test.valid {
 				assert.NoError(t, err)
 			} else {
@@ -1249,7 +1249,8 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
-			ok, _, _ := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			ok, _, _, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			assert.NoError(t, err)
 			assert.Equal(t, test.ok, ok)
 		})
 	}
@@ -1408,7 +1409,8 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
-			ok, no, proposal := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			ok, no, proposal, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			assert.NoError(t, err)
 			assert.Equal(t, test.ok, ok)
 			assert.Equal(t, test.no, no)
 			assert.Equal(t, test.proposal, proposal)
