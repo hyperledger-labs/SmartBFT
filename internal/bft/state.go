@@ -93,6 +93,25 @@ func (ps *PersistedState) LoadNewViewIfApplicable() (*types.ViewAndSeq, error) {
 	return nil, nil
 }
 
+func (ps *PersistedState) LoadViewChangeIfApplicable() (*protos.ViewChange, error) {
+	entries := ps.Entries
+	if len(entries) == 0 {
+		ps.Logger.Infof("Nothing to restore")
+		return nil, nil
+	}
+	lastEntry := entries[len(entries)-1]
+	lastPersistedMessage := &protos.SavedMessage{}
+	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
+		ps.Logger.Errorf("Failed unmarshaling last entry from WAL: %v", err)
+		return nil, errors.Wrap(err, "failed unmarshaling last entry from WAL")
+	}
+	if viewChangeMsg := lastPersistedMessage.GetViewChange(); viewChangeMsg != nil {
+		ps.Logger.Infof("last entry in WAL is a viewChange message")
+		return viewChangeMsg, nil
+	}
+	return nil, nil
+}
+
 func (ps *PersistedState) Restore(v *View) error {
 	// Unless we conclude otherwise, we're in a COMMITTED state
 	v.Phase = COMMITTED
@@ -122,6 +141,11 @@ func (ps *PersistedState) Restore(v *View) error {
 
 	if newViewMsg := lastPersistedMessage.GetNewView(); newViewMsg != nil {
 		ps.Logger.Infof("last entry in WAL is a newView record")
+		return nil
+	}
+
+	if viewChangeMsg := lastPersistedMessage.GetViewChange(); viewChangeMsg != nil {
+		ps.Logger.Infof("last entry in WAL is a viewChange message")
 		return nil
 	}
 
