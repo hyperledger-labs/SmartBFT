@@ -195,12 +195,13 @@ func TestReqPoolCapacity(t *testing.T) {
 		defer pool.Close()
 
 		var lengths []int
+		var totalLength int
 		for i := 0; i < 10; i++ {
 			r := makeTestRequest("1", fmt.Sprintf("%d", i), "aaaaaa")
 			lengths = append(lengths, len(r))
 			err := pool.Submit(r)
 			assert.NoError(t, err)
-			fmt.Println(lengths)
+			totalLength += len(r)
 		}
 
 		next, full := pool.NextRequests(5, 10000000)
@@ -217,6 +218,14 @@ func TestReqPoolCapacity(t *testing.T) {
 
 		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]/2))
 		assert.Equal(t, 3, len(next))
+		assert.True(t, full)
+
+		next, full = pool.NextRequests(4, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]))
+		assert.Equal(t, 4, len(next))
+		assert.True(t, full)
+
+		next, full = pool.NextRequests(20, uint64(totalLength))
+		assert.Equal(t, 10, len(next))
 		assert.True(t, full)
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)

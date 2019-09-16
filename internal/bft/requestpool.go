@@ -163,8 +163,9 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte,
 	for i := 0; i < count; i++ {
 		req := element.Value.(*requestItem).request
 		reqLen := uint64(len(req))
-		rp.logger.Debugf("i=%d, len(r)=%d, total=%d", i, len(req), totalSize)
 		if totalSize+reqLen > maxSizeBytes {
+			rp.logger.Debugf("Batch: full=true because of size; msg-count/max-count=%d/%d, total-size/max-size=%d/%d bytes",
+				len(batch), maxCount, totalSize, maxSizeBytes)
 			return batch, true
 		}
 		batch = append(batch, req)
@@ -172,7 +173,12 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte,
 		element = element.Next()
 	}
 
-	return batch, len(batch) == maxCount || totalSize >= maxSizeBytes
+	fullS := totalSize >= maxSizeBytes
+	fullC := len(batch) == maxCount
+	full = fullS || fullC
+	rp.logger.Debugf("Batch: full=%t because of count=%v size=%v; msg-count/max-count=%d/%d, total-size/max-size=%d/%d bytes",
+		full, fullC, fullS, len(batch), maxCount, totalSize, maxSizeBytes)
+	return batch, full
 }
 
 // Prune removes requests for which the given predicate returns error.
