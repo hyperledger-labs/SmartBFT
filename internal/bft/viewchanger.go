@@ -21,7 +21,7 @@ import (
 //go:generate mockery -dir . -name ViewController -case underscore -output ./mocks/
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
-	AbortView()
+	AbortView(view uint64)
 }
 
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
@@ -319,7 +319,7 @@ func (v *ViewChanger) startViewChange(change *change) {
 	v.Comm.BroadcastConsensus(msg)
 	v.Logger.Debugf("Node %d started view change, last view is %d", v.SelfID, v.currView)
 	if change.stopView {
-		v.Controller.AbortView() // abort the current view when joining view change
+		v.Controller.AbortView(v.currView) // abort the current view when joining view change
 	}
 	v.startViewChangeTime = v.lastTick
 	v.checkTimeout = true

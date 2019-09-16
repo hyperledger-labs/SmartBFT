@@ -60,8 +60,8 @@ func TestControllerBasic(t *testing.T) {
 	controller.ProcessMessages(1, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
-	controller.AbortView()
-	controller.AbortView()
+	controller.AbortView(3)
+	controller.AbortView(3)
 	controller.Stop()
 	controller.Stop()
 }
@@ -486,7 +486,7 @@ func TestSyncInform(t *testing.T) {
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
 	controllerMock := &mocks.ViewController{}
-	controllerMock.On("AbortView")
+	controllerMock.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
 		SelfID:        2,

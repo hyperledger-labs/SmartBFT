@@ -97,7 +97,7 @@ type Controller struct {
 	currViewNumber uint64
 
 	viewChange    chan viewInfo
-	abortViewChan chan struct{}
+	abortViewChan chan uint64
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -292,13 +292,18 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	}
 }
 
-func (c *Controller) abortView() {
+func (c *Controller) abortView(view uint64) {
+	if view < c.currViewNumber {
+		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, c.currViewNumber)
+		return
+	}
+
 	// Drain the leader token in case we held it,
 	// so we won't start proposing after view change.
 	c.relinquishLeaderToken()
 
 	// Kill current view
-	c.Logger.Debugf("Aborting current view with number %d", c.getCurrentViewNumber())
+	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
 	c.currView.Abort()
 }
 
@@ -310,12 +315,12 @@ func (c *Controller) Sync() {
 }
 
 // AbortView makes the controller abort the current view
-func (c *Controller) AbortView() {
+func (c *Controller) AbortView(view uint64) {
 	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
 
 	// don't close batcher, it will be closed in ViewChanged
 
-	c.abortViewChan <- struct{}{}
+	c.abortViewChan <- view
 }
 
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
@@ -386,8 +391,8 @@ func (c *Controller) run() {
 			}
 		case newView := <-c.viewChange:
 			c.changeView(newView.viewNumber, newView.proposalSeq)
-		case <-c.abortViewChan:
-			c.abortView()
+		case view := <-c.abortViewChan:
+			c.abortView(view)
 		case <-c.stopChan:
 			return
 		case <-c.leaderToken:
@@ -481,7 +486,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
-	c.abortViewChan = make(chan struct{}, 1)
+	c.abortViewChan = make(chan uint64, 1)
 
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)

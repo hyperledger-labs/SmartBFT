@@ -637,6 +637,126 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 
 }
 
+func TestRestoreViewChange(t *testing.T) {
+	// Scenario: the leader n0 gets disconnected and a view change starts (due to heartbeat timeout)
+	// after view change starts both n1 (the new leader) and a follower (n2) get disconnected
+	// the last follower n3 gets a view change timeout because the new leader (n1) is unavailable
+	// then both n1 and n2 are restarted and their view change gets restored from the WAL
+	// finally, all nodes change view to view number 2 with the new leader n2
+
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	// wait for a view change to start
+	done := make(chan struct{})
+	viewChangeFinishWG := sync.WaitGroup{}
+	viewChangeFinishWG.Add(3)
+
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(2)
+	baseLogger2 := n2.logger.Desugar()
+	n2.logger = baseLogger2.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 2 sent view data msg, with next view 1, to the new leader 1") {
+			viewChangeWG.Done()
+		}
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+			viewChangeFinishWG.Done()
+		}
+		return nil
+	})).Sugar()
+	baseLogger1 := n1.logger.Desugar()
+	n1.logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 1 sent view data msg, with next view 1, to the new leader 1") {
+			viewChangeWG.Done()
+		}
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+			viewChangeFinishWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	viewChangeTimeoutWG := sync.WaitGroup{}
+	viewChangeTimeoutWG.Add(1)
+	baseLogger3 := n3.logger.Desugar()
+	n3.logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 3 got a view change timeout, the current view is 1") {
+			viewChangeTimeoutWG.Done()
+		}
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+			viewChangeFinishWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	start := time.Now()
+	for _, n := range network {
+		n.app.heartbeatTime = make(chan time.Time, 1)
+		n.app.heartbeatTime <- start
+		n.app.viewChangeTime = make(chan time.Time, 1)
+		n.app.viewChangeTime <- start
+		n.app.Setup()
+	}
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n0.Disconnect()
+
+	// Accelerate the time until a view change
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 10):
+				for _, n := range network {
+					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
+				}
+			}
+		}
+	}()
+
+	viewChangeWG.Wait()
+	n1.Disconnect()
+	n2.Disconnect()
+
+	viewChangeTimeoutWG.Wait()
+	n2.Connect()
+	viewChangeWG.Add(2) // to avoid negative WaitGroup counter, n2 will send the view data again after restoring the view change
+	n2.Restart()
+	n1.Connect()
+	n1.Restart()
+
+	viewChangeFinishWG.Wait()
+	close(done)
+
+	n1.Submit(Request{ID: "1", ClientID: "alice"})
+	n2.Submit(Request{ID: "1", ClientID: "alice"})
+	n3.Submit(Request{ID: "1", ClientID: "alice"})
+
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+}
+
 func TestLeaderForwarding(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
