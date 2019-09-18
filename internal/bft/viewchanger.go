@@ -331,17 +331,18 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 		v.startViewChange(&change{v.currView, true})
 	}
 	if (len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView) || restore { // send view data
-		msgToSave := &protos.SavedMessage{
-			Content: &protos.SavedMessage_ViewChange{
-				ViewChange: &protos.ViewChange{
-					NextView: v.currView,
+		if !restore {
+			msgToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_ViewChange{
+					ViewChange: &protos.ViewChange{
+						NextView: v.currView,
+					},
 				},
-			},
+			}
+			if err := v.State.Save(msgToSave); err != nil {
+				v.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
 		}
-		if err := v.State.Save(msgToSave); err != nil {
-			v.Logger.Panicf("Failed to save message to state, error: %v", err)
-		}
-
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
 		v.viewChangeMsgs.clear(v.N)

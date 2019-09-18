@@ -657,6 +657,14 @@ func TestRestoreViewChange(t *testing.T) {
 	n2 := newNode(2, network, t.Name(), testDir)
 	n3 := newNode(3, network, t.Name(), testDir)
 
+	start := time.Now()
+	for _, n := range network {
+		n.app.heartbeatTime = make(chan time.Time, 1)
+		n.app.heartbeatTime <- start
+		n.app.viewChangeTime = make(chan time.Time, 1)
+		n.app.viewChangeTime <- start
+	}
+
 	// wait for a view change to start
 	done := make(chan struct{})
 	viewChangeFinishWG := sync.WaitGroup{}
@@ -698,12 +706,7 @@ func TestRestoreViewChange(t *testing.T) {
 		return nil
 	})).Sugar()
 
-	start := time.Now()
 	for _, n := range network {
-		n.app.heartbeatTime = make(chan time.Time, 1)
-		n.app.heartbeatTime <- start
-		n.app.viewChangeTime = make(chan time.Time, 1)
-		n.app.viewChangeTime <- start
 		n.app.Setup()
 	}
 

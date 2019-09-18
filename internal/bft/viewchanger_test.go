@@ -1222,8 +1222,6 @@ func TestRestoreViewChange(t *testing.T) {
 	reqTimer.On("StopTimers")
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
-	state := &mocks.State{}
-	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        0,
@@ -1237,7 +1235,6 @@ func TestRestoreViewChange(t *testing.T) {
 		Checkpoint:    &types.Checkpoint{},
 		Controller:    controller,
 		InMsqQSize:    100,
-		State:         state,
 	}
 
 	restoreChan := make(chan struct{}, 1)
@@ -1252,8 +1249,6 @@ func TestRestoreViewChange(t *testing.T) {
 	assert.NotNil(t, m.GetViewData())
 
 	comm.AssertNumberOfCalls(t, "SendConsensus", 1)
-	state.AssertNumberOfCalls(t, "Save", 1)
-
 	vc.Stop()
 }
 
