@@ -6,7 +6,6 @@
 package bft_test
 
 import (
-	"fmt"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -718,7 +717,6 @@ func TestBackOff(t *testing.T) {
 
 	vc.Start(0)
 	startTime := time.Now()
-	fmt.Printf("startTime %v\n", startTime)
 
 	controllerWG.Add(1)
 	reqTimerWG.Add(1)
