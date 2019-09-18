@@ -731,7 +731,7 @@ func TestBackOff(t *testing.T) {
 	synchronizerWG.Wait()
 	reqTimerWG.Wait()
 
-	ticker <- nextTick.Add(timeout) // no timeout
+	ticker <- nextTick.Add(timeout + 2*time.Second) // no timeout
 
 	reqTimerWG.Add(1)
 	synchronizerWG.Add(1)
