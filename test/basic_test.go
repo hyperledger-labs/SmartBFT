@@ -637,13 +637,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 
 }
 
-func TestRestoreViewChange(t *testing.T) {
-	// Scenario: the leader n0 gets disconnected and a view change starts (due to heartbeat timeout)
-	// after view change starts both n1 (the new leader) and a follower (n2) get disconnected
-	// the last follower n3 gets a view change timeout because the new leader (n1) is unavailable
-	// then both n1 and n2 are restarted and their view change gets restored from the WAL
-	// finally, all nodes change view to view number 2 with the new leader n2
-
+func TestRestoringViewChange(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -656,6 +650,9 @@ func TestRestoreViewChange(t *testing.T) {
 	n1 := newNode(1, network, t.Name(), testDir)
 	n2 := newNode(2, network, t.Name(), testDir)
 	n3 := newNode(3, network, t.Name(), testDir)
+	n4 := newNode(4, network, t.Name(), testDir)
+	n5 := newNode(5, network, t.Name(), testDir)
+	n6 := newNode(6, network, t.Name(), testDir)
 
 	start := time.Now()
 	for _, n := range network {
@@ -665,43 +662,24 @@ func TestRestoreViewChange(t *testing.T) {
 		n.app.viewChangeTime <- start
 	}
 
-	// wait for a view change to start
 	done := make(chan struct{})
 	viewChangeFinishWG := sync.WaitGroup{}
-	viewChangeFinishWG.Add(3)
-
+	viewChangeFinishWG.Add(1)
+	viewChangeFinishOnce := sync.Once{}
 	viewChangeWG := sync.WaitGroup{}
-	viewChangeWG.Add(2)
-	baseLogger2 := n2.logger.Desugar()
-	n2.logger = baseLogger2.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Node 2 sent view data msg, with next view 1, to the new leader 1") {
-			viewChangeWG.Done()
+	viewChangeWG.Add(1)
+	viewChangeOnce := sync.Once{}
+	baseLogger := n6.logger.Desugar()
+	n6.logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 6 sent view data msg, with next view 1, to the new leader 1") {
+			viewChangeOnce.Do(func() {
+				viewChangeWG.Done()
+			})
 		}
 		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
-			viewChangeFinishWG.Done()
-		}
-		return nil
-	})).Sugar()
-	baseLogger1 := n1.logger.Desugar()
-	n1.logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Node 1 sent view data msg, with next view 1, to the new leader 1") {
-			viewChangeWG.Done()
-		}
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
-			viewChangeFinishWG.Done()
-		}
-		return nil
-	})).Sugar()
-
-	viewChangeTimeoutWG := sync.WaitGroup{}
-	viewChangeTimeoutWG.Add(1)
-	baseLogger3 := n3.logger.Desugar()
-	n3.logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Node 3 got a view change timeout, the current view is 1") {
-			viewChangeTimeoutWG.Done()
-		}
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
-			viewChangeFinishWG.Done()
+			viewChangeFinishOnce.Do(func() {
+				viewChangeFinishWG.Done()
+			})
 		}
 		return nil
 	})).Sugar()
@@ -712,10 +690,15 @@ func TestRestoreViewChange(t *testing.T) {
 
 	n0.Consensus.Start()
 	n1.Consensus.Start()
+
+	n0.Disconnect() // leader in partition
+	n1.Disconnect() // next leader in partition
+
 	n2.Consensus.Start()
 	n3.Consensus.Start()
-
-	n0.Disconnect()
+	n4.Consensus.Start()
+	n5.Consensus.Start()
+	n6.Consensus.Start()
 
 	// Accelerate the time until a view change
 	go func() {
@@ -735,29 +718,30 @@ func TestRestoreViewChange(t *testing.T) {
 	}()
 
 	viewChangeWG.Wait()
-	n1.Disconnect()
-	n2.Disconnect()
-
-	viewChangeTimeoutWG.Wait()
-	n2.Connect()
-	viewChangeWG.Add(2) // to avoid negative WaitGroup counter, n2 will send the view data again after restoring the view change
-	n2.Restart()
-	n1.Connect()
-	n1.Restart()
+	n6.Disconnect()
+	n6.Restart()
+	n6.Connect()
 
 	viewChangeFinishWG.Wait()
 	close(done)
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"})
-	n2.Submit(Request{ID: "1", ClientID: "alice"})
-	n3.Submit(Request{ID: "1", ClientID: "alice"})
+	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
+	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
+	n4.Submit(Request{ID: "1", ClientID: "alice"})
+	n5.Submit(Request{ID: "1", ClientID: "alice"})
+	n6.Submit(Request{ID: "1", ClientID: "alice"})
 
-	data1 := <-n1.Delivered
 	data2 := <-n2.Delivered
 	data3 := <-n3.Delivered
+	data4 := <-n4.Delivered
+	data5 := <-n5.Delivered
+	data6 := <-n6.Delivered
 
-	assert.Equal(t, data1, data2)
 	assert.Equal(t, data2, data3)
+	assert.Equal(t, data3, data4)
+	assert.Equal(t, data4, data5)
+	assert.Equal(t, data5, data6)
+	assert.Equal(t, data6, data2)
 }
 
 func TestLeaderForwarding(t *testing.T) {
