@@ -21,7 +21,7 @@ import (
 //go:generate mockery -dir . -name ViewController -case underscore -output ./mocks/
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
-	AbortView()
+	AbortView(view uint64)
 }
 
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
@@ -74,6 +74,7 @@ type ViewChanger struct {
 	checkTimeout        bool
 
 	// Runtime
+	Restore         chan struct{}
 	InMsqQSize      int
 	incMsgs         chan *incMsg
 	viewChangeMsgs  *voteSet
@@ -187,6 +188,8 @@ func (v *ViewChanger) run() {
 			v.checkIfTimeout(now)
 		case info := <-v.informChan:
 			v.informNewView(info)
+		case <-v.Restore:
+			v.processViewChangeMsg(true)
 		}
 	}
 }
@@ -236,7 +239,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 			return
 		}
 		v.viewChangeMsgs.registerVote(sender, m)
-		v.processViewChangeMsg()
+		v.processViewChangeMsg(false)
 		return
 	}
 
@@ -316,18 +319,29 @@ func (v *ViewChanger) startViewChange(change *change) {
 	v.Comm.BroadcastConsensus(msg)
 	v.Logger.Debugf("Node %d started view change, last view is %d", v.SelfID, v.currView)
 	if change.stopView {
-		v.Controller.AbortView() // abort the current view when joining view change
+		v.Controller.AbortView(v.currView) // abort the current view when joining view change
 	}
 	v.startViewChangeTime = v.lastTick
 	v.checkTimeout = true
 }
 
-func (v *ViewChanger) processViewChangeMsg() {
-	if uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1) { // join view change
+func (v *ViewChanger) processViewChangeMsg(restore bool) {
+	if (uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1)) || restore { // join view change
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
-	if len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView { // send view data
+	if (len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView) || restore { // send view data
+		msgToSave := &protos.SavedMessage{
+			Content: &protos.SavedMessage_ViewChange{
+				ViewChange: &protos.ViewChange{
+					NextView: v.currView,
+				},
+			},
+		}
+		if err := v.State.Save(msgToSave); err != nil {
+			v.Logger.Panicf("Failed to save message to state, error: %v", err)
+		}
+
 		v.currView = v.nextView
 		v.leader = getLeaderID(v.currView, v.N, v.nodes)
 		v.viewChangeMsgs.clear(v.N)

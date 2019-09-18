@@ -106,5 +106,6 @@ message SavedMessage {
         ProposedRecord proposed_record = 1;
         Message commit = 2;
         ViewMetadata new_view = 3;
+        ViewChange view_change = 4;
     }
 }

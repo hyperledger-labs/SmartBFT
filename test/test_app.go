@@ -49,6 +49,7 @@ type App struct {
 	heartbeatTime  chan time.Time
 	viewChangeTime chan time.Time
 	secondClock    *time.Ticker
+	logger         *zap.SugaredLogger
 }
 
 func (a *App) Mute() {
@@ -278,13 +279,14 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 		logLevel:     logConfig.Level,
 		latestMD:     &smartbftprotos.ViewMetadata{},
 		lastDecision: &types.Decision{},
+		logger:       sugaredLogger,
 	}
 
 	config := fastConfig
 	config.SelfID = id
 
 	app.Setup = func() {
-		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(sugaredLogger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
@@ -292,7 +294,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 			Config:            config,
 			ViewChangerTicker: app.secondClock.C,
 			Scheduler:         app.clock.C,
-			Logger:            sugaredLogger,
+			Logger:            app.logger,
 			WAL:               writeAheadLog,
 			Metadata:          *app.latestMD,
 			Verifier:          app,

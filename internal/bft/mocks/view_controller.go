@@ -9,9 +9,9 @@ type ViewController struct {
 	mock.Mock
 }
 
-// AbortView provides a mock function with given fields:
-func (_m *ViewController) AbortView() {
-	_m.Called()
+// AbortView provides a mock function with given fields: view
+func (_m *ViewController) AbortView(view uint64) {
+	_m.Called(view)
 }
 
 // ViewChanged provides a mock function with given fields: newViewNumber, newProposalSequence

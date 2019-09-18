@@ -102,7 +102,7 @@ func TestStartViewChange(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	controller := &mocks.ViewController{}
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -149,7 +149,9 @@ func TestViewChangeProcess(t *testing.T) {
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	controller := &mocks.ViewController{}
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
 		SelfID:        0,
@@ -163,6 +165,7 @@ func TestViewChangeProcess(t *testing.T) {
 		Checkpoint:    &types.Checkpoint{},
 		Controller:    controller,
 		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(0)
@@ -174,6 +177,7 @@ func TestViewChangeProcess(t *testing.T) {
 	m = <-sendChan
 	assert.NotNil(t, m.GetViewData())
 	comm.AssertCalled(t, "SendConsensus", uint64(1), mock.Anything)
+	state.AssertNumberOfCalls(t, "Save", 1)
 
 	// sending viewChange messages with same view doesn't make a difference
 	vc.HandleMessage(1, viewChangeMsg)
@@ -198,6 +202,7 @@ func TestViewChangeProcess(t *testing.T) {
 
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
 	controller.AssertNumberOfCalls(t, "AbortView", 2)
+	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
 }
@@ -415,7 +420,7 @@ func TestNormalProcess(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
@@ -460,7 +465,7 @@ func TestNormalProcess(t *testing.T) {
 	assert.Equal(t, uint64(2), num)
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
-	state.AssertNumberOfCalls(t, "Save", 1)
+	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
 }
@@ -569,7 +574,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	controller := &mocks.ViewController{}
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
 		N:                 4,
@@ -631,7 +636,7 @@ func TestViewChangerTimeout(t *testing.T) {
 	})
 	controller := &mocks.ViewController{}
 	controllerWG := sync.WaitGroup{}
-	controller.On("AbortView").Run(func(args mock.Arguments) {
+	controller.On("AbortView", mock.Anything).Run(func(args mock.Arguments) {
 		controllerWG.Done()
 	})
 
@@ -698,7 +703,7 @@ func TestCommitLastDecision(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
@@ -756,7 +761,7 @@ func TestCommitLastDecision(t *testing.T) {
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	app.AssertNumberOfCalls(t, "Deliver", 1)
-	state.AssertNumberOfCalls(t, "Save", 1)
+	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
 
@@ -790,7 +795,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
@@ -945,9 +950,11 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
-			controller.On("AbortView")
+			controller.On("AbortView", mock.Anything)
 			checkpoint := types.Checkpoint{}
 			checkpoint.Set(lastDecision, lastDecisionSignatures)
+			state := &mocks.State{}
+			state.On("Save", mock.Anything).Return(nil)
 
 			vc := &bft.ViewChanger{
 				SelfID:        0,
@@ -961,6 +968,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 				Checkpoint:    &checkpoint,
 				Controller:    controller,
 				InMsqQSize:    100,
+				State:         state,
 			}
 
 			vc.Start(0)
@@ -984,6 +992,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 
 			reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 			controller.AssertNumberOfCalls(t, "AbortView", 1)
+			state.AssertNumberOfCalls(t, "Save", 1)
 		})
 	}
 
@@ -1161,7 +1170,7 @@ func TestInformViewChanger(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	controller := &mocks.ViewController{}
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
 		N:             4,
@@ -1189,6 +1198,63 @@ func TestInformViewChanger(t *testing.T) {
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	reqTimer.AssertCalled(t, "RestartTimers")
+}
+
+func TestRestoreViewChange(t *testing.T) {
+	comm := &mocks.CommMock{}
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
+	broadcastChan := make(chan *protos.Message)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(0).(*protos.Message)
+		broadcastChan <- m
+	}).Twice()
+	sendChan := make(chan *protos.Message)
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(1).(*protos.Message)
+		sendChan <- m
+	}).Twice()
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	controller := &mocks.ViewController{}
+	controller.On("AbortView", mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	vc := &bft.ViewChanger{
+		SelfID:        0,
+		N:             4,
+		Comm:          comm,
+		Signer:        signer,
+		Logger:        log,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &types.Checkpoint{},
+		Controller:    controller,
+		InMsqQSize:    100,
+		State:         state,
+	}
+
+	restoreChan := make(chan struct{}, 1)
+	restoreChan <- struct{}{}
+	vc.Restore = restoreChan
+
+	vc.Start(5)
+	m := <-broadcastChan
+	assert.NotNil(t, m.GetViewChange())
+	assert.Equal(t, uint64(6), m.GetViewChange().NextView)
+	m = <-sendChan
+	assert.NotNil(t, m.GetViewData())
+
+	comm.AssertNumberOfCalls(t, "SendConsensus", 1)
+	state.AssertNumberOfCalls(t, "Save", 1)
+
+	vc.Stop()
 }
 
 func TestCheckInFlightNoProposal(t *testing.T) {
@@ -1469,7 +1535,7 @@ func TestCommitInFlight(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
-	controller.On("AbortView")
+	controller.On("AbortView", mock.Anything)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")

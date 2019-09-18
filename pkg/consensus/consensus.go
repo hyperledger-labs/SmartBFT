@@ -133,6 +133,23 @@ func (c *Consensus) Start() {
 	view := c.Metadata.ViewId
 	seq := c.Metadata.LatestSequence
 
+	viewChange, err := c.state.LoadViewChangeIfApplicable()
+	if err != nil {
+		c.Logger.Panicf("Failed loading view change, error: %v", err)
+	}
+	if viewChange == nil {
+		c.Logger.Debugf("No view change to restore")
+	} else {
+		// Check if the application has a newer view
+		if viewChange.NextView >= c.Metadata.ViewId {
+			c.Logger.Debugf("Restoring from view change with view %d, while application has view %d and seq %d", viewChange.NextView, c.Metadata.ViewId, c.Metadata.LatestSequence)
+			view = viewChange.NextView
+			restoreChan := make(chan struct{}, 1)
+			restoreChan <- struct{}{}
+			c.viewChanger.Restore = restoreChan
+		}
+	}
+
 	viewSeq, err := c.state.LoadNewViewIfApplicable()
 	if err != nil {
 		c.Logger.Panicf("Failed loading new view, error: %v", err)
