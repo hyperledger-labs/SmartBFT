@@ -69,9 +69,10 @@ type ViewChanger struct {
 	lastTick            time.Time
 	ResendTimeout       time.Duration
 	lastResend          time.Time
-	TimeoutViewChange   time.Duration
+	ViewChangeTimeout   time.Duration
 	startViewChangeTime time.Time
 	checkTimeout        bool
+	backOffFactor       uint64
 
 	// Runtime
 	Restore         chan struct{}
@@ -113,6 +114,8 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 
 	v.lastTick = time.Now()
 	v.lastResend = v.lastTick
+
+	v.backOffFactor = 1
 
 	v.inFlightDecideChan = make(chan struct{})
 	v.inFlightSyncChan = make(chan struct{})
@@ -217,12 +220,13 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 	if !v.checkTimeout {
 		return
 	}
-	nextTimeout := v.startViewChangeTime.Add(v.TimeoutViewChange)
+	nextTimeout := v.startViewChangeTime.Add(v.ViewChangeTimeout * time.Duration(v.backOffFactor))
 	if nextTimeout.After(now) { // check if timeout has passed
 		return
 	}
 	v.Logger.Debugf("Node %d got a view change timeout, the current view is %d", v.SelfID, v.currView)
 	v.checkTimeout = false // stop timeout for now, a new one will start when a new view change begins
+	v.backOffFactor++      // next timeout will be longer
 	// the timeout has passed, something went wrong, try sync and complain
 	v.Logger.Debugf("Node %d is calling sync because it got a view change timeout", v.SelfID)
 	v.Synchronizer.Sync()
@@ -290,6 +294,7 @@ func (v *ViewChanger) informNewView(info *types.ViewAndSeq) {
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
+	v.backOffFactor = 1 //reset
 	v.RequestsTimer.RestartTimers()
 }
 
@@ -784,6 +789,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		}
 		v.RequestsTimer.RestartTimers()
 		v.checkTimeout = false
+		v.backOffFactor = 1 // reset
 	}
 }
 

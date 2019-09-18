@@ -584,7 +584,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		Logger:            log,
 		Controller:        controller,
 		ResendTimeout:     time.Second,
-		TimeoutViewChange: 10 * time.Second,
+		ViewChangeTimeout: 10 * time.Second,
 		InMsqQSize:        100,
 	}
 
@@ -646,7 +646,7 @@ func TestViewChangerTimeout(t *testing.T) {
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
 		Logger:            log,
-		TimeoutViewChange: 10 * time.Second,
+		ViewChangeTimeout: 10 * time.Second,
 		ResendTimeout:     20 * time.Second,
 		Synchronizer:      synchronizer,
 		Controller:        controller,
