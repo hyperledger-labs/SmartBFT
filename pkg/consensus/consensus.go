@@ -80,7 +80,7 @@ func (c *Consensus) Start() {
 		// RequestsTimer later
 		Ticker:            c.ViewChangerTicker,
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
-		TimeoutViewChange: c.Config.ViewChangeTimeout,
+		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        c.Config.IncomingMessageBufferSize,
 	}
 
