@@ -162,7 +162,7 @@ func (c *Controller) SubmitRequest(request []byte) error {
 func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 	err := c.RequestPool.Submit(request)
 	if err != nil {
-		c.Logger.Warnf("Request %s was not submitted, error: %s", info, err)
+		c.Logger.Infof("Request %s was not submitted, error: %s", info, err)
 		return err
 	}
 
@@ -176,11 +176,11 @@ func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Warnf("Request %s timeout expired, this node is the leader, nothing to do", info)
+		c.Logger.Infof("Request %s timeout expired, this node is the leader, nothing to do", info)
 		return
 	}
 
-	c.Logger.Warnf("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
+	c.Logger.Infof("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
 	c.Comm.SendTransaction(leaderID, request)
 
 	return
@@ -191,7 +191,7 @@ func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Warnf("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
+		c.Logger.Infof("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
 		return
 	}
 
@@ -204,7 +204,7 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 // OnAutoRemoveTimeout is called when the auto-remove timeout expires.
 // Called by the request-pool timeout goroutine.
 func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
-	c.Logger.Warnf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
+	c.Logger.Debugf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
 }
 
 // OnHeartbeatTimeout is called when the heartbeat timeout expires.
@@ -569,7 +569,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 func (c *Controller) removeDeliveredFromPool(d decision) {
 	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
-			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
+			c.Logger.Debugf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
 	}
 }

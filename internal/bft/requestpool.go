@@ -193,7 +193,7 @@ func (rp *Pool) Prune(predicate func([]byte) error) {
 		}
 
 		if remErr := rp.RemoveRequest(infoVec[i]); remErr != nil {
-			rp.logger.Warnf("Failed to prune request: %s; predicate error: %s; remove error: %s", infoVec[i], err, remErr)
+			rp.logger.Debugf("Failed to prune request: %s; predicate error: %s; remove error: %s", infoVec[i], err, remErr)
 		} else {
 			rp.logger.Debugf("Pruned request: %s; predicate error: %s", infoVec[i], err)
 			numPruned++
@@ -228,7 +228,7 @@ func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	element, exist := rp.existMap[requestInfo]
 	if !exist {
 		errStr := fmt.Sprintf("request %s is not in the pool at remove time", requestInfo)
-		rp.logger.Warnf(errStr)
+		rp.logger.Debugf(errStr)
 		return fmt.Errorf(errStr)
 	}
 
