@@ -18,8 +18,9 @@ message Message {
         SignedViewData view_data = 6;
         NewView new_view = 7;
         HeartBeat heart_beat = 8;
-        StateTransferRequest state_transfer_request = 9;
-        StateTransferResponse state_transfer_response = 10;
+        HeartBeatResponse heart_beat_response = 9;
+        StateTransferRequest state_transfer_request = 10;
+        StateTransferResponse state_transfer_response = 11;
     }
 }
 
@@ -83,6 +84,10 @@ message NewView {
 message HeartBeat {
     uint64 view = 1;
     uint64 seq  = 2;
+}
+
+message HeartBeatResponse {
+    uint64 view = 1;
 }
 
 message Signature {
