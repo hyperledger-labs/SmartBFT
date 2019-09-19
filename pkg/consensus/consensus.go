@@ -127,6 +127,7 @@ func (c *Consensus) Start() {
 	c.controller.LeaderMonitor = leaderMonitor
 
 	c.viewChanger.Controller = c.controller
+	c.viewChanger.Pruner = c.controller
 	c.viewChanger.RequestsTimer = pool
 	c.viewChanger.ViewSequences = c.controller.ViewSequences
 

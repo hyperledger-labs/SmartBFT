@@ -24,6 +24,11 @@ type ViewController interface {
 	AbortView(view uint64)
 }
 
+//go:generate mockery -dir . -name Pruner -case underscore -output ./mocks/
+type Pruner interface {
+	MaybePruneRevokedRequests()
+}
+
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
 type RequestsTimer interface {
 	StopTimers()
@@ -57,6 +62,7 @@ type ViewChanger struct {
 
 	Controller    ViewController
 	RequestsTimer RequestsTimer
+	Pruner        Pruner
 
 	// for the in flight proposal view
 	ViewSequences      *atomic.Value
@@ -354,7 +360,6 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
 		msg := v.prepareViewDataMsg()
-		// TODO write to log
 		if v.leader == v.SelfID {
 			v.processMsg(v.SelfID, msg)
 		} else {
@@ -874,7 +879,7 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
 		}
 	}
-	// TODO maybePruneRevokedRequests
+	v.Pruner.MaybePruneRevokedRequests()
 }
 
 func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
@@ -973,7 +978,7 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
 		}
 	}
-	// TODO maybePruneRevokedRequests
+	v.Pruner.MaybePruneRevokedRequests()
 	v.inFlightDecideChan <- struct{}{}
 }
 
