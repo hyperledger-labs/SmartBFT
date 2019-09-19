@@ -385,7 +385,7 @@ func (c *Controller) run() {
 			case <-c.stopChan:
 				return
 			}
-			c.maybePruneRevokedRequests()
+			c.MaybePruneRevokedRequests()
 			if iAm, _ := c.iAmTheLeader(); iAm {
 				c.acquireLeaderToken()
 			}
@@ -445,7 +445,7 @@ func (c *Controller) relinquishSyncToken() {
 	}
 }
 
-func (c *Controller) maybePruneRevokedRequests() {
+func (c *Controller) MaybePruneRevokedRequests() {
 	oldVerSqn := c.verificationSequence
 	newVerSqn := c.Verifier.VerificationSequence()
 	if newVerSqn == oldVerSqn {

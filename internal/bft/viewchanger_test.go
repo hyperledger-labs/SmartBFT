@@ -784,6 +784,8 @@ func TestCommitLastDecision(t *testing.T) {
 	app.On("Deliver", mock.Anything, mock.Anything)
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)
+	pruner := &mocks.Pruner{}
+	pruner.On("MaybePruneRevokedRequests")
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -800,6 +802,7 @@ func TestCommitLastDecision(t *testing.T) {
 		Application:   app,
 		InMsqQSize:    100,
 		State:         state,
+		Pruner:        pruner,
 	}
 
 	vc.Start(0)
@@ -832,6 +835,7 @@ func TestCommitLastDecision(t *testing.T) {
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	app.AssertNumberOfCalls(t, "Deliver", 1)
+	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
 	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
@@ -1613,6 +1617,8 @@ func TestCommitInFlight(t *testing.T) {
 		prop := args.Get(0).(types.Proposal)
 		appChan <- prop
 	})
+	pruner := &mocks.Pruner{}
+	pruner.On("MaybePruneRevokedRequests")
 
 	vc := &bft.ViewChanger{
 		SelfID:        1,
@@ -1630,6 +1636,7 @@ func TestCommitInFlight(t *testing.T) {
 		State:         &bft.StateRecorder{},
 		InMsqQSize:    consensus.DefaultConfig.IncomingMessageBufferSize,
 		Application:   app,
+		Pruner:        pruner,
 	}
 
 	vc.Start(0)
@@ -1702,6 +1709,7 @@ func TestCommitInFlight(t *testing.T) {
 	assert.Equal(t, uint64(2), num)
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
 
 	vc.Stop()
 }
