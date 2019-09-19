@@ -569,7 +569,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 func (c *Controller) removeDeliveredFromPool(d decision) {
 	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
-			c.Logger.Warnf("Error during remove of request %s from the pool : %s", reqInfo, err)
+			c.Logger.Debugf("Error during remove of request %s from the pool : %s", reqInfo, err)
 		}
 	}
 }
