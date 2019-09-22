@@ -93,12 +93,11 @@ func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
 		}
 	}
 
-	return nil
 }
 
 func (s *StateCollector) collectLogic() *types.ViewAndSeq {
 	if len(s.responses.voted) > s.f {
-		votesMap := make(map[types.ViewAndSeq]uint64, 0)
+		votesMap := make(map[types.ViewAndSeq]uint64)
 		num := len(s.responses.votes)
 		for i := 0; i < num; i++ {
 			vote := <-s.responses.votes
