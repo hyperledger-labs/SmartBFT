@@ -18,6 +18,8 @@ message Message {
         SignedViewData view_data = 6;
         NewView new_view = 7;
         HeartBeat heart_beat = 8;
+        StateTransferRequest state_transfer_request = 9;
+        StateTransferResponse state_transfer_response = 10;
     }
 }
 
@@ -108,4 +110,13 @@ message SavedMessage {
         ViewMetadata new_view = 3;
         ViewChange view_change = 4;
     }
+}
+
+message StateTransferRequest {
+
+}
+
+message StateTransferResponse {
+    uint64 view_num = 1;
+    uint64 sequence = 2;
 }

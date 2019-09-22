@@ -87,6 +87,7 @@ type Controller struct {
 	ProposerBuilder  ProposerBuilder
 	Checkpoint       *types.Checkpoint
 	ViewChanger      *ViewChanger
+	Collector        *StateCollector
 
 	quorum int
 	nodes  []uint64
@@ -242,6 +243,8 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.ViewChanger.HandleMessage(sender, m)
 	case *protos.Message_HeartBeat:
 		c.LeaderMonitor.ProcessMsg(sender, m)
+	case *protos.Message_StateTransferRequest:
+		c.respondToStateTransferRequest(sender)
 
 	case *protos.Message_Error:
 		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
@@ -249,6 +252,22 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	default:
 		c.Logger.Warnf("Unexpected message type, ignoring")
 	}
+}
+
+func (c *Controller) respondToStateTransferRequest(sender uint64) {
+	vs := c.ViewSequences.Load()
+	if vs == nil {
+		c.Logger.Panicf("ViewSequences is nil")
+	}
+	msg := &protos.Message{
+		Content: &protos.Message_StateTransferResponse{
+			StateTransferResponse: &protos.StateTransferResponse{
+				ViewNum:  c.getCurrentViewNumber(),
+				Sequence: vs.(ViewSequence).ProposalSeq,
+			},
+		},
+	}
+	c.Comm.SendConsensus(sender, msg)
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
@@ -425,10 +444,27 @@ func (c *Controller) sync() {
 		return
 	}
 	c.Logger.Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
+
+	view := md.ViewId
+
+	msg := &protos.Message{
+		Content: &protos.Message_StateTransferRequest{
+			StateTransferRequest: &protos.StateTransferRequest{},
+		},
+	}
+	c.Comm.BroadcastConsensus(msg)
+	response := c.Collector.CollectStateResponses()
+	if response != nil {
+		if response.View > md.ViewId && response.Seq == md.LatestSequence {
+			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
+			view = response.View
+		}
+	}
+
 	c.Checkpoint.Set(decision.Proposal, decision.Signatures)
 	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
-	c.ViewChanger.InformNewView(md.ViewId, md.LatestSequence)
-	c.viewChange <- viewInfo{viewNumber: md.ViewId, proposalSeq: md.LatestSequence + 1}
+	c.ViewChanger.InformNewView(view, md.LatestSequence)
+	c.viewChange <- viewInfo{viewNumber: view, proposalSeq: md.LatestSequence + 1}
 }
 
 func (c *Controller) grabSyncToken() {

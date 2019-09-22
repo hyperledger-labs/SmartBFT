@@ -488,6 +488,14 @@ func TestSyncInform(t *testing.T) {
 	controllerMock := &mocks.ViewController{}
 	controllerMock.On("AbortView", mock.Anything)
 
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 10 * time.Millisecond,
+	}
+	collector.Start()
+
 	vc := &bft.ViewChanger{
 		SelfID:        2,
 		N:             4,
@@ -514,6 +522,7 @@ func TestSyncInform(t *testing.T) {
 		Synchronizer:  synchronizer,
 		ViewChanger:   vc,
 		Checkpoint:    &types.Checkpoint{},
+		Collector:     &collector,
 	}
 	configureProposerBuilder(controller)
 
@@ -525,14 +534,14 @@ func TestSyncInform(t *testing.T) {
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
 
-	commWG.Add(2)
+	commWG.Add(3)
 	synchronizerWG.Add(1)
 	controller.Sync()
 	commWG.Wait()
 	synchronizerWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3)
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan
@@ -541,5 +550,6 @@ func TestSyncInform(t *testing.T) {
 
 	controller.Stop()
 	vc.Stop()
+	collector.Stop()
 	wal.Close()
 }
