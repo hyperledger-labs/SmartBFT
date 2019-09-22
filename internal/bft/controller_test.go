@@ -492,7 +492,7 @@ func TestSyncInform(t *testing.T) {
 		SelfID:         0,
 		N:              4,
 		Logger:         log,
-		CollectTimeout: 10 * time.Millisecond,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
 

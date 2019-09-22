@@ -50,6 +50,9 @@ func (s *StateCollector) Start() {
 
 // HandleMessage handle messages addressed to the state collector
 func (s *StateCollector) HandleMessage(sender uint64, m *protos.Message) {
+	if m.GetStateTransferResponse() == nil {
+		s.Logger.Panicf("Node %d handling a message which is not a response", s.SelfID)
+	}
 	msg := &incMsg{sender: sender, Message: m}
 	s.Logger.Debugf("Node %d handling state response: %v", s.SelfID, msg)
 	select {
@@ -63,21 +66,23 @@ func (s *StateCollector) HandleMessage(sender uint64, m *protos.Message) {
 
 // CollectStateResponses return a valid response or nil if reached timeout
 func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
-	// drain message channel
-	for len(s.incMsgs) > 0 {
-		<-s.incMsgs
-	}
+	defer func() {
+		// drain message channel
+		for len(s.incMsgs) > 0 {
+			<-s.incMsgs
+		}
 
-	s.responses.clear(s.N)
+		s.responses.clear(s.N)
+	}()
 
 	timer := time.NewTimer(s.CollectTimeout)
+	defer timer.Stop()
 
 	s.Logger.Debugf("Node %d started collecting state responses", s.SelfID)
 
 	for {
 		select {
 		case <-s.stopChan:
-			timer.Stop()
 			return nil
 		case <-timer.C:
 			s.Logger.Infof("Node %d reached the state collector timeout", s.SelfID)
@@ -85,9 +90,8 @@ func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
 		case msg := <-s.incMsgs:
 			s.Logger.Debugf("Node %d collected a response: %v", s.SelfID, msg)
 			s.responses.registerVote(msg.sender, msg.Message)
-			if viewAndSeq := s.collectLogic(); viewAndSeq != nil {
+			if viewAndSeq := s.collectedEnoughEqualVotes(); viewAndSeq != nil {
 				s.Logger.Infof("Node %d collected a valid state: view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
-				timer.Stop()
 				return viewAndSeq
 			}
 		}
@@ -95,29 +99,34 @@ func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
 
 }
 
-func (s *StateCollector) collectLogic() *types.ViewAndSeq {
-	if len(s.responses.voted) > s.f {
-		votesMap := make(map[types.ViewAndSeq]uint64)
-		num := len(s.responses.votes)
-		for i := 0; i < num; i++ {
-			vote := <-s.responses.votes
-			viewAndSeq := types.ViewAndSeq{
-				View: vote.GetStateTransferResponse().ViewNum,
-				Seq:  vote.GetStateTransferResponse().Sequence,
-			}
-			s.Logger.Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
-			s.responses.votes <- vote
-			if count, exist := votesMap[viewAndSeq]; exist {
-				count++
-				votesMap[viewAndSeq] = count
-			} else {
-				votesMap[viewAndSeq] = 1
-			}
+func (s *StateCollector) collectedEnoughEqualVotes() *types.ViewAndSeq {
+	if len(s.responses.voted) <= s.f {
+		return nil
+	}
+	votesMap := make(map[types.ViewAndSeq]uint64)
+	num := len(s.responses.votes)
+	for i := 0; i < num; i++ {
+		vote := <-s.responses.votes
+		response := vote.GetStateTransferResponse()
+		if response == nil {
+			s.Logger.Panicf("Node %d collected a message which is not a response", s.SelfID)
+			return nil
 		}
-		for viewAndSeq, count := range votesMap {
-			if count > uint64(s.f) {
-				return &viewAndSeq
-			}
+		viewAndSeq := types.ViewAndSeq{
+			View: response.ViewNum,
+			Seq:  response.Sequence,
+		}
+		s.Logger.Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
+		s.responses.votes <- vote
+		if _, exist := votesMap[viewAndSeq]; exist {
+			votesMap[viewAndSeq]++
+		} else {
+			votesMap[viewAndSeq] = 1
+		}
+	}
+	for viewAndSeq, count := range votesMap {
+		if count > uint64(s.f) {
+			return &viewAndSeq
 		}
 	}
 	return nil

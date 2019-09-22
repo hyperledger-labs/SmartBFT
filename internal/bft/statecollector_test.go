@@ -20,6 +20,8 @@ import (
 )
 
 func TestBasicTimeout(t *testing.T) {
+	t.Parallel()
+
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -28,12 +30,13 @@ func TestBasicTimeout(t *testing.T) {
 		SelfID:         0,
 		N:              4,
 		Logger:         log,
-		CollectTimeout: 10 * time.Millisecond,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 
 	collector.Start()
 
-	collector.CollectStateResponses()
+	response := collector.CollectStateResponses()
+	assert.Nil(t, response)
 
 	collector.Stop()
 }
@@ -95,7 +98,7 @@ func TestCollect(t *testing.T) {
 		},
 		{
 			description: "all different responses",
-			timeout:     20 * time.Millisecond,
+			timeout:     100 * time.Millisecond,
 			msg1:        msgV1S1,
 			msg2:        msgV1S2,
 			msg3:        msgV1S3,
@@ -103,7 +106,7 @@ func TestCollect(t *testing.T) {
 		},
 		{
 			description: "not enough responses",
-			timeout:     20 * time.Millisecond,
+			timeout:     100 * time.Millisecond,
 			msg1:        msgV1S1,
 			msg2:        nil,
 			msg3:        nil,

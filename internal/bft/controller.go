@@ -88,6 +88,7 @@ type Controller struct {
 	Checkpoint       *types.Checkpoint
 	ViewChanger      *ViewChanger
 	Collector        *StateCollector
+	State            State
 
 	quorum int
 	nodes  []uint64
@@ -458,6 +459,17 @@ func (c *Controller) sync() {
 		if response.View > md.ViewId && response.Seq == md.LatestSequence {
 			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
 			view = response.View
+			newViewToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_NewView{
+					NewView: &protos.ViewMetadata{
+						ViewId:         view,
+						LatestSequence: response.Seq,
+					},
+				},
+			}
+			if err := c.State.Save(newViewToSave); err != nil {
+				c.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
 		}
 	}
 

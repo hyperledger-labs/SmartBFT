@@ -109,6 +109,7 @@ func (c *Consensus) Start() {
 		ViewChanger:      c.viewChanger,
 		ViewSequences:    &atomic.Value{},
 		Collector:        c.collector,
+		State:            c.state,
 	}
 
 	c.viewChanger.Synchronizer = c.controller

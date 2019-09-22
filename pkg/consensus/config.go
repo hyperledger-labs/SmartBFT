@@ -54,7 +54,8 @@ type Configuration struct {
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
 	LeaderHeartbeatCount int
 
-	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages.
+	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,
+	// stops collecting information about view metadata from remote nodes.
 	CollectTimeout time.Duration
 }
 
