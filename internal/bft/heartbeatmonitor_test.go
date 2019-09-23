@@ -284,8 +284,10 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	hm2.ChangeRole(bft.Leader, 11, 2)
 	clock.advanceTime(heartbeatCount*2, scheduler1, scheduler2)
 
-	hm1.ChangeRole(bft.Follower, 12, 2)
+	// first advance the leader to avoid sending hb-response
 	hm2.ChangeRole(bft.Leader, 12, 2)
+	hm1.ChangeRole(bft.Follower, 12, 2)
+
 	hm2.Close()
 	clock.advanceTime(heartbeatCount*2, scheduler1)
 	hm1.Close()

@@ -242,7 +242,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.ViewChanger.HandleViewMessage(sender, m)
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
-	case *protos.Message_HeartBeat:
+	case *protos.Message_HeartBeat, *protos.Message_HeartBeatResponse:
 		c.LeaderMonitor.ProcessMsg(sender, m)
 	case *protos.Message_StateTransferRequest:
 		c.respondToStateTransferRequest(sender)
