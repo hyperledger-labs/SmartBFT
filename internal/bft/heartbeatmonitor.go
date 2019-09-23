@@ -34,25 +34,33 @@ type roleChange struct {
 	follower Role
 }
 
+// senderSet is a set of node IDs
+type senderSet map[uint64]bool
+
+// heartbeatResponseCollector is a map from view ID to a set of senders.
+type heartbeatResponseCollector map[uint64]senderSet
+
 type HeartbeatMonitor struct {
-	scheduler     <-chan time.Time
-	inc           chan incMsg
-	stopChan      chan struct{}
-	commandChan   chan roleChange
-	logger        api.Logger
-	hbTimeout     time.Duration
-	hbCount       int
-	comm          Comm
-	handler       HeartbeatTimeoutHandler
-	view          uint64
-	leaderID      uint64
-	follower      Role
-	lastHeartbeat time.Time
-	lastTick      time.Time
-	running       sync.WaitGroup
-	runOnce       sync.Once
-	timedOut      bool
-	viewSequences *atomic.Value
+	scheduler       <-chan time.Time
+	inc             chan incMsg
+	stopChan        chan struct{}
+	commandChan     chan roleChange
+	logger          api.Logger
+	hbTimeout       time.Duration
+	hbCount         int
+	comm            Comm
+	handler         HeartbeatTimeoutHandler
+	view            uint64
+	leaderID        uint64
+	follower        Role
+	lastHeartbeat   time.Time
+	lastTick        time.Time
+	hbRespCollector heartbeatResponseCollector
+	running         sync.WaitGroup
+	runOnce         sync.Once
+	timedOut        bool
+	syncReq         bool
+	viewSequences   *atomic.Value
 }
 
 func NewHeartbeatMonitor(
@@ -65,16 +73,17 @@ func NewHeartbeatMonitor(
 	viewSequences *atomic.Value,
 ) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
-		stopChan:      make(chan struct{}),
-		inc:           make(chan incMsg),
-		commandChan:   make(chan roleChange),
-		scheduler:     scheduler,
-		logger:        logger,
-		hbTimeout:     heartbeatTimeout,
-		hbCount:       heartbeatCount,
-		comm:          comm,
-		handler:       handler,
-		viewSequences: viewSequences,
+		stopChan:        make(chan struct{}),
+		inc:             make(chan incMsg),
+		commandChan:     make(chan roleChange),
+		scheduler:       scheduler,
+		logger:          logger,
+		hbTimeout:       heartbeatTimeout,
+		hbCount:         heartbeatCount,
+		comm:            comm,
+		handler:         handler,
+		hbRespCollector: make(heartbeatResponseCollector),
+		viewSequences:   viewSequences,
 	}
 	return hm
 }
@@ -180,11 +189,25 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 
 func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbftprotos.HeartBeatResponse) {
 	if hm.follower {
-		hm.logger.Infof("Heartbeat monitor is not a leader, ignoring; sender: %d, msg: %v", sender, hbr)
+		hm.logger.Infof("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
 		return
 	}
 
-	hm.logger.Debugf("Received heartbeat response; sender: %d, msg: %v", sender, hbr)
+	if hm.view >= hbr.View {
+		hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", sender, hbr)
+		return
+	}
+
+	hm.logger.Debugf("Received HeartBeatResponse, msg: %v; from %d", hbr, sender)
+	senders, exists := hm.hbRespCollector[hbr.View]
+	if !exists {
+		senders = make(senderSet)
+		hm.hbRespCollector[hbr.View] = senders
+	}
+	senders[sender] = true
+
+	hm.logger.Debugf("HeartBeatResponse Collector size: %d, senderSet(%d) size: %d", len(hm.hbRespCollector), hbr.View, len(senders))
+
 	//TODO keep track of these, and if we get f+1 identical, force a sync
 }
 
@@ -250,6 +273,8 @@ func (hm *HeartbeatMonitor) handleCommand(cmd roleChange) {
 	hm.leaderID = cmd.leaderID
 	hm.follower = cmd.follower
 	hm.lastHeartbeat = hm.lastTick
+	hm.hbRespCollector = make(heartbeatResponseCollector)
+	hm.syncReq = false
 }
 
 func (hm *HeartbeatMonitor) leaderTick(now time.Time) {
