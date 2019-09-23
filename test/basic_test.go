@@ -256,7 +256,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				n2.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n3.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n4.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
@@ -335,7 +335,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				n1.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n2.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
@@ -418,7 +418,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				for _, n := range network {
 					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
 					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
@@ -609,7 +609,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				for _, n := range network {
 					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
 				}
@@ -708,7 +708,7 @@ func TestRestoringViewChange(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				for _, n := range network {
 					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
 					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
@@ -918,7 +918,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 			select {
 			case <-done:
 				return
-			case <-time.After(time.Millisecond * 10):
+			case <-time.After(time.Millisecond * 100):
 				n0.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
 				n3.viewChangeTime <- time.Now().Add(time.Minute * time.Duration(10*i))

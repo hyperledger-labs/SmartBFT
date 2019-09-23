@@ -68,7 +68,7 @@ var DefaultConfig = Configuration{
 	RequestTimeout:            2 * time.Second,
 	RequestLeaderFwdTimeout:   20 * time.Second,
 	RequestAutoRemoveTimeout:  3 * time.Minute,
-	ViewChangeResendInterval:  time.Second,
+	ViewChangeResendInterval:  5 * time.Second,
 	ViewChangeTimeout:         20 * time.Second,
 	LeaderHeartbeatTimeout:    time.Minute,
 	LeaderHeartbeatCount:      10,
