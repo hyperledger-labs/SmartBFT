@@ -35,6 +35,7 @@ func TestBasicTimeout(t *testing.T) {
 
 	collector.Start()
 
+	collector.ClearCollected()
 	response := collector.CollectStateResponses()
 	assert.Nil(t, response)
 
@@ -133,7 +134,7 @@ func TestCollect(t *testing.T) {
 			}
 
 			collector.Start()
-
+			collector.ClearCollected()
 			responseChan := make(chan *types.ViewAndSeq)
 
 			go func() {

@@ -64,16 +64,17 @@ func (s *StateCollector) HandleMessage(sender uint64, m *protos.Message) {
 	}
 }
 
+// ClearCollected clears the responses collected by the state collector
+func (s *StateCollector) ClearCollected() {
+	// drain message channel
+	for len(s.incMsgs) > 0 {
+		<-s.incMsgs
+	}
+}
+
 // CollectStateResponses return a valid response or nil if reached timeout
 func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
-	defer func() {
-		// drain message channel
-		for len(s.incMsgs) > 0 {
-			<-s.incMsgs
-		}
-
-		s.responses.clear(s.N)
-	}()
+	s.responses.clear(s.N)
 
 	timer := time.NewTimer(s.CollectTimeout)
 	defer timer.Stop()

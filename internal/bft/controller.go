@@ -453,6 +453,7 @@ func (c *Controller) sync() {
 			StateTransferRequest: &protos.StateTransferRequest{},
 		},
 	}
+	c.Collector.ClearCollected()
 	c.Comm.BroadcastConsensus(msg)
 	response := c.Collector.CollectStateResponses()
 	if response != nil {
