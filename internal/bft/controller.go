@@ -340,7 +340,7 @@ func (c *Controller) Sync() {
 func (c *Controller) AbortView(view uint64) {
 	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
 
-	// don't close batcher, it will be closed in ViewChanged
+	c.Batcher.Close()
 
 	c.abortViewChan <- view
 }
