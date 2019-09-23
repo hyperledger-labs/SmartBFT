@@ -164,8 +164,8 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte,
 		req := element.Value.(*requestItem).request
 		reqLen := uint64(len(req))
 		if totalSize+reqLen > maxSizeBytes {
-			rp.logger.Debugf("Batch: full=true because of size; msg-count/max-count=%d/%d, total-size/max-size=%d/%d bytes",
-				len(batch), maxCount, totalSize, maxSizeBytes)
+			rp.logger.Debugf("Returning batch of %d requests totalling %dB as it exceeds threshold of %dB",
+				len(batch), totalSize, maxSizeBytes)
 			return batch, true
 		}
 		batch = append(batch, req)
@@ -176,8 +176,10 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte,
 	fullS := totalSize >= maxSizeBytes
 	fullC := len(batch) == maxCount
 	full = fullS || fullC
-	rp.logger.Debugf("Batch: full=%t because of count=%v size=%v; msg-count/max-count=%d/%d, total-size/max-size=%d/%d bytes",
-		full, fullC, fullS, len(batch), maxCount, totalSize, maxSizeBytes)
+	if len(batch) > 0 {
+		rp.logger.Debugf("Returning batch of %d requests totalling %dB",
+			len(batch), totalSize)
+	}
 	return batch, full
 }
 
