@@ -30,10 +30,11 @@ var fastConfig = consensus.Configuration{
 	RequestTimeout:            500 * time.Millisecond,
 	RequestLeaderFwdTimeout:   2 * time.Second,
 	RequestAutoRemoveTimeout:  3 * time.Minute,
-	ViewChangeResendInterval:  time.Second,
+	ViewChangeResendInterval:  5 * time.Second,
 	ViewChangeTimeout:         1 * time.Minute,
 	LeaderHeartbeatTimeout:    1 * time.Minute,
 	LeaderHeartbeatCount:      10,
+	CollectTimeout:            2 * time.Second,
 }
 
 type App struct {
