@@ -210,7 +210,7 @@ func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
 }
 
 // OnHeartbeatTimeout is called when the heartbeat timeout expires.
-// Called by the HeartbeatMonitor timer goroutine.
+// Called by the HeartbeatMonitor goroutine.
 func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	c.Logger.Debugf("Heartbeat timeout expired, reported-view: %d, reported-leader: %d", view, leaderID)
 
@@ -228,6 +228,13 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 
 	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
 	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
+}
+
+// OnHeartbeatResponseSync is called when a leader receives enough heartbeat responses that indicate its view is
+// outdated. Called by the HeartbeatMonitor goroutine.
+func (c *Controller) OnHeartbeatResponseSync(view uint64) {
+	c.Logger.Debugf("HeartBeatResponse triggers a Sync: reported-view: %d, current-view: %d", view, c.currViewNumber)
+	c.Sync()
 }
 
 // ProcessMessages dispatches the incoming message to the required component

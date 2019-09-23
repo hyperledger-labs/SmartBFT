@@ -26,6 +26,14 @@ type HeartbeatTimeoutHandler interface {
 	OnHeartbeatTimeout(view uint64, leaderID uint64)
 }
 
+//go:generate mockery -dir . -name HeartbeatResponseSyncHandler -case underscore -output ./mocks/
+
+// HeartbeatResponseSyncHandler defines who to call when enough heartbeat responses report that the current
+// leader's view is outdated.
+type HeartbeatResponseSyncHandler interface {
+	OnHeartbeatResponseSync(view uint64)
+}
+
 type Role bool
 
 type roleChange struct {
@@ -49,7 +57,9 @@ type HeartbeatMonitor struct {
 	hbTimeout       time.Duration
 	hbCount         int
 	comm            Comm
+	numberOfNodes   uint64
 	handler         HeartbeatTimeoutHandler
+	syncHandler     HeartbeatResponseSyncHandler
 	view            uint64
 	leaderID        uint64
 	follower        Role
@@ -63,15 +73,7 @@ type HeartbeatMonitor struct {
 	viewSequences   *atomic.Value
 }
 
-func NewHeartbeatMonitor(
-	scheduler <-chan time.Time,
-	logger api.Logger,
-	heartbeatTimeout time.Duration,
-	heartbeatCount int,
-	comm Comm,
-	handler HeartbeatTimeoutHandler,
-	viewSequences *atomic.Value,
-) *HeartbeatMonitor {
+func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount int, comm Comm, numberOfNodes uint64, handler HeartbeatTimeoutHandler, syncHandler HeartbeatResponseSyncHandler, viewSequences *atomic.Value) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
 		stopChan:        make(chan struct{}),
 		inc:             make(chan incMsg),
@@ -81,7 +83,9 @@ func NewHeartbeatMonitor(
 		hbTimeout:       heartbeatTimeout,
 		hbCount:         heartbeatCount,
 		comm:            comm,
+		numberOfNodes:   numberOfNodes,
 		handler:         handler,
+		syncHandler:     syncHandler,
 		hbRespCollector: make(heartbeatResponseCollector),
 		viewSequences:   viewSequences,
 	}
@@ -187,6 +191,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 	hm.lastHeartbeat = hm.lastTick
 }
 
+// handleHeartBeatResponse keeps track of responses, and if we get f+1 identical, force a sync
 func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbftprotos.HeartBeatResponse) {
 	if hm.follower {
 		hm.logger.Infof("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
@@ -208,7 +213,15 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 
 	hm.logger.Debugf("HeartBeatResponse Collector size: %d, senderSet(%d) size: %d", len(hm.hbRespCollector), hbr.View, len(senders))
 
-	//TODO keep track of these, and if we get f+1 identical, force a sync
+	if hm.syncReq {
+		return
+	}
+
+	_, f := computeQuorum(hm.numberOfNodes)
+	if len(senders) >= f+1 {
+		hm.syncHandler.OnHeartbeatResponseSync(hbr.View)
+		hm.syncReq = true
+	}
 }
 
 func (hm *HeartbeatMonitor) sendHeartBeatResponse(target uint64) {
