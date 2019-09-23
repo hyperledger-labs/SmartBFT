@@ -195,8 +195,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 }
 
 func TestLeaderInPartitionWithHealing(t *testing.T) {
-	t.Skip("work-in-progress")
-	//t.Parallel()
+	t.Parallel()
 
 	network := make(Network)
 	defer network.Shutdown()

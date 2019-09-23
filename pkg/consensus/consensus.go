@@ -124,14 +124,7 @@ func (c *Consensus) Start() {
 	}
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts)
 	batchBuilder := algorithm.NewBatchBuilder(pool, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(
-		c.Scheduler,
-		c.Logger,
-		c.Config.LeaderHeartbeatTimeout,
-		c.Config.LeaderHeartbeatCount,
-		c,
-		c.controller,
-		c.controller.ViewSequences)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c, c.numberOfNodes, c.controller, c.controller, c.controller.ViewSequences)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
