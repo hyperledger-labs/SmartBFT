@@ -110,7 +110,7 @@ func (hm *HeartbeatMonitor) run() {
 	}
 }
 
-// ProcessMsg handles an incoming heartbeat.
+// ProcessMsg handles an incoming heartbeat or heartbeat-response.
 // If the sender and msg.View equal what we expect, and the timeout had not expired yet, the timeout is extended.
 func (hm *HeartbeatMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.Message) {
 	hm.inc <- incMsg{
@@ -145,33 +145,59 @@ func (hm *HeartbeatMonitor) ChangeRole(follower Role, view uint64, leaderID uint
 }
 
 func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message) {
+	switch msg.GetContent().(type) {
+	case *smartbftprotos.Message_HeartBeat:
+		hm.handleHeartBeat(sender, msg.GetHeartBeat())
+	case *smartbftprotos.Message_HeartBeatResponse:
+		hm.handleHeartBeatResponse(sender, msg.GetHeartBeatResponse())
+	default:
+		hm.logger.Warnf("Unexpected message type, ignoring")
+	}
+}
+
+func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+	if sender != hm.leaderID || hb.View != hm.view {
+		hm.logger.Infof("Heartbeat is unexpected, ignoring; Monitor: leader=%d, view=%d; HB: sender: %d, view: %d, seq: %d",
+			hm.leaderID, hm.view, sender, hb.View, hb.Seq)
+		if hb.View < hm.view {
+			hm.sendHeartBeatResponse(sender)
+		}
+		return
+	}
+
 	if !hm.follower {
-		hm.logger.Infof("Heartbeat monitor is not a follower, ignoring; sender: %d, msg: %v", sender, msg)
+		hm.logger.Infof("Heartbeat monitor is not a follower, ignoring; sender: %d, msg: %v", sender, hb)
 		return
 	}
 
-	if sender != hm.leaderID {
-		hm.logger.Infof("Heartbeat from %d which is not the leader %d", sender, hm.leaderID)
-		return
-	}
-
-	hbMsg := msg.GetHeartBeat()
-	// TODO Optimisation: check for extension due to data messages sent by leader (backlog)
-	if hbMsg == nil {
-		return
-	}
-
-	if hbMsg.View != hm.view {
-		hm.logger.Infof("Heartbeat view is different than monitor view, ignoring; view: %d, sender: %d, msg: %v", hm.leaderID, sender, msg)
-		return
-	}
-
-	if hm.viewActiveButBehindLeader(hbMsg) {
+	if hm.viewActiveButBehindLeader(hb) {
 		return
 	}
 
 	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
 	hm.lastHeartbeat = hm.lastTick
+}
+
+func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbftprotos.HeartBeatResponse) {
+	if hm.follower {
+		hm.logger.Infof("Heartbeat monitor is not a leader, ignoring; sender: %d, msg: %v", sender, hbr)
+		return
+	}
+
+	hm.logger.Debugf("Received heartbeat response; sender: %d, msg: %v", sender, hbr)
+	//TODO keep track of these, and if we get f+1 identical, force a sync
+}
+
+func (hm *HeartbeatMonitor) sendHeartBeatResponse(target uint64) {
+	heartbeatResponse := &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeatResponse{
+			HeartBeatResponse: &smartbftprotos.HeartBeatResponse{
+				View: hm.view,
+			},
+		},
+	}
+	hm.comm.SendConsensus(target, heartbeatResponse)
+	hm.logger.Debugf("Sent HeartBeatResponse view: %d; to %d", hm.view, target)
 }
 
 func (hm *HeartbeatMonitor) viewActiveButBehindLeader(hbMsg *smartbftprotos.HeartBeat) bool {

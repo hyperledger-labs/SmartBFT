@@ -24,7 +24,7 @@ import (
 var fastConfig = consensus.Configuration{
 	RequestBatchMaxCount:      10,
 	RequestBatchMaxBytes:      10 * 1024 * 1024,
-	RequestBatchMaxInterval:   time.Millisecond,
+	RequestBatchMaxInterval:   10 * time.Millisecond,
 	IncomingMessageBufferSize: 200,
 	RequestPoolSize:           40,
 	RequestTimeout:            500 * time.Millisecond,
@@ -51,6 +51,10 @@ type App struct {
 	viewChangeTime chan time.Time
 	secondClock    *time.Ticker
 	logger         *zap.SugaredLogger
+}
+
+func (a *App) SetLogLevel(level zapcore.Level) {
+	a.logLevel.SetLevel(level)
 }
 
 func (a *App) Mute() {

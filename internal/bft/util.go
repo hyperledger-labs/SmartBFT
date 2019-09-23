@@ -258,6 +258,10 @@ func MsgToString(m *protos.Message) string {
 		return NewViewToString(m.GetNewView())
 	case *protos.Message_ViewData:
 		return ViewDataToString(m.GetViewData())
+	case *protos.Message_HeartBeat:
+		return HeartBeatToString(m.GetHeartBeat())
+	case *protos.Message_HeartBeatResponse:
+		return HeartBeatResponseToString(m.GetHeartBeatResponse())
 	default:
 		return m.String()
 	}
@@ -302,4 +306,20 @@ func ViewDataToString(svd *protos.SignedViewData) string {
 
 	return fmt.Sprintf("<ViewData from %d with NextView: %d",
 		svd.Signer, vd.NextView)
+}
+
+func HeartBeatToString(hb *protos.HeartBeat) string {
+	if hb == nil {
+		return "empty HeartBeat"
+	}
+
+	return fmt.Sprintf("<HeartBeat with view: %d, seq: %d", hb.View, hb.Seq)
+}
+
+func HeartBeatResponseToString(hbr *protos.HeartBeatResponse) string {
+	if hbr == nil {
+		return "empty HeartBeatResponse"
+	}
+
+	return fmt.Sprintf("<HeartBeatResponse with view: %d", hbr.View)
 }
