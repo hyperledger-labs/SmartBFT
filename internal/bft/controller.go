@@ -246,6 +246,8 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.LeaderMonitor.ProcessMsg(sender, m)
 	case *protos.Message_StateTransferRequest:
 		c.respondToStateTransferRequest(sender)
+	case *protos.Message_StateTransferResponse:
+		c.Collector.HandleMessage(sender, m)
 
 	case *protos.Message_Error:
 		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
@@ -434,6 +436,26 @@ func (c *Controller) sync() {
 	decision := c.Synchronizer.Sync()
 	if decision.Proposal.Metadata == nil {
 		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
+		response := c.transferState()
+		if response == nil {
+			return
+		}
+		if response.View > 0 && response.Seq == 1 {
+			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
+			newViewToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_NewView{
+					NewView: &protos.ViewMetadata{
+						ViewId:         response.View,
+						LatestSequence: 0,
+					},
+				},
+			}
+			if err := c.State.Save(newViewToSave); err != nil {
+				c.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
+		}
+		c.ViewChanger.InformNewView(response.View, 0)
+		c.viewChange <- viewInfo{viewNumber: response.View, proposalSeq: 1}
 		return
 	}
 	md := &protos.ViewMetadata{}
@@ -448,23 +470,16 @@ func (c *Controller) sync() {
 
 	view := md.ViewId
 
-	msg := &protos.Message{
-		Content: &protos.Message_StateTransferRequest{
-			StateTransferRequest: &protos.StateTransferRequest{},
-		},
-	}
-	c.Collector.ClearCollected()
-	c.Comm.BroadcastConsensus(msg)
-	response := c.Collector.CollectStateResponses()
+	response := c.transferState()
 	if response != nil {
-		if response.View > md.ViewId && response.Seq == md.LatestSequence {
+		if response.View > md.ViewId && response.Seq == md.LatestSequence+1 {
 			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
 			view = response.View
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
 					NewView: &protos.ViewMetadata{
 						ViewId:         view,
-						LatestSequence: response.Seq,
+						LatestSequence: md.LatestSequence,
 					},
 				},
 			}
@@ -478,6 +493,17 @@ func (c *Controller) sync() {
 	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
 	c.ViewChanger.InformNewView(view, md.LatestSequence)
 	c.viewChange <- viewInfo{viewNumber: view, proposalSeq: md.LatestSequence + 1}
+}
+
+func (c *Controller) transferState() *types.ViewAndSeq {
+	msg := &protos.Message{
+		Content: &protos.Message_StateTransferRequest{
+			StateTransferRequest: &protos.StateTransferRequest{},
+		},
+	}
+	c.Collector.ClearCollected()
+	c.Comm.BroadcastConsensus(msg)
+	return c.Collector.CollectStateResponses()
 }
 
 func (c *Controller) grabSyncToken() {

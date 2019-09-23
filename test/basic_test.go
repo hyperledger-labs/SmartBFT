@@ -938,6 +938,117 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	assert.Equal(t, uint32(0), atomic.LoadUint32(&detectedSequenceGap))
 }
 
+func TestFollowerStateTransfer(t *testing.T) {
+	// Scenario: the leader (n0) is disconnected and so there is a view change
+	// a follower (n6) is also disconnected and misses the view change
+	// after the follower reconnects and gets a view change timeout is calls sync
+	// where it collects state transfer requests and sees that there was a view change
+
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+	n4 := newNode(4, network, t.Name(), testDir)
+	n5 := newNode(5, network, t.Name(), testDir)
+	n6 := newNode(6, network, t.Name(), testDir)
+
+	start := time.Now()
+	for _, n := range network {
+		n.app.heartbeatTime = make(chan time.Time, 1)
+		n.app.heartbeatTime <- start
+		n.app.viewChangeTime = make(chan time.Time, 1)
+		n.app.viewChangeTime <- start
+	}
+
+	syncedWG := sync.WaitGroup{}
+	syncedWG.Add(1)
+	baseLogger6 := n6.logger.Desugar()
+	n6.logger = baseLogger6.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The collected state is with view 1 and sequence 1") {
+			syncedWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(1)
+	baseLogger1 := n1.logger.Desugar()
+	n1.logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	for _, n := range network {
+		n.app.Setup()
+	}
+
+	n0.Consensus.Start()
+	n0.Disconnect() // leader in partition
+	n6.Consensus.Start()
+	n6.Disconnect() // follower in partition
+
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+	n4.Consensus.Start()
+	n5.Consensus.Start()
+
+	// Accelerate the time until a view change
+	done := make(chan struct{})
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 100):
+				for _, n := range network {
+					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
+				}
+			}
+		}
+	}()
+
+	viewChangeWG.Wait()
+	n6.Connect()
+	syncedWG.Wait()
+	close(done)
+
+	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
+	n2.Submit(Request{ID: "1", ClientID: "alice"})
+	n3.Submit(Request{ID: "1", ClientID: "alice"})
+	n4.Submit(Request{ID: "1", ClientID: "alice"})
+	n5.Submit(Request{ID: "1", ClientID: "alice"})
+	n6.Submit(Request{ID: "1", ClientID: "alice"})
+
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+	data4 := <-n4.Delivered
+	data5 := <-n5.Delivered
+	data6 := <-n6.Delivered
+
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+	assert.Equal(t, data3, data4)
+	assert.Equal(t, data4, data5)
+	assert.Equal(t, data5, data6)
+	assert.Equal(t, data6, data2)
+
+}
+
 func countCommittedBatches(n *App) int {
 	var numBatchesCreated int
 	for {
