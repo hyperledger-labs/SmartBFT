@@ -53,6 +53,10 @@ type Configuration struct {
 	// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
 	LeaderHeartbeatCount int
+
+	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,
+	// stops collecting information about view metadata from remote nodes.
+	CollectTimeout time.Duration
 }
 
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
@@ -72,4 +76,5 @@ var DefaultConfig = Configuration{
 	ViewChangeTimeout:         20 * time.Second,
 	LeaderHeartbeatTimeout:    time.Minute,
 	LeaderHeartbeatCount:      10,
+	CollectTimeout:            2 * time.Second,
 }

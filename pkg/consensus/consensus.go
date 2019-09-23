@@ -39,6 +39,7 @@ type Consensus struct {
 
 	viewChanger   *algorithm.ViewChanger
 	controller    *algorithm.Controller
+	collector     *algorithm.StateCollector
 	state         *algorithm.PersistedState
 	numberOfNodes uint64
 }
@@ -84,6 +85,13 @@ func (c *Consensus) Start() {
 		InMsqQSize:        c.Config.IncomingMessageBufferSize,
 	}
 
+	c.collector = &algorithm.StateCollector{
+		SelfID:         c.Config.SelfID,
+		N:              c.numberOfNodes,
+		Logger:         c.Logger,
+		CollectTimeout: c.Config.CollectTimeout,
+	}
+
 	c.controller = &algorithm.Controller{
 		Checkpoint:       &cpt,
 		WAL:              c.WAL,
@@ -100,6 +108,8 @@ func (c *Consensus) Start() {
 		RequestInspector: c.RequestInspector,
 		ViewChanger:      c.viewChanger,
 		ViewSequences:    &atomic.Value{},
+		Collector:        c.collector,
+		State:            c.state,
 	}
 
 	c.viewChanger.Synchronizer = c.controller
@@ -168,6 +178,7 @@ func (c *Consensus) Start() {
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
+	c.collector.Start()
 	c.viewChanger.Start(view)
 	c.controller.Start(view, seq+1)
 }
@@ -175,6 +186,7 @@ func (c *Consensus) Start() {
 func (c *Consensus) Stop() {
 	c.viewChanger.Stop()
 	c.controller.Stop()
+	c.collector.Stop()
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
