@@ -436,7 +436,7 @@ func (c *Controller) sync() {
 	decision := c.Synchronizer.Sync()
 	if decision.Proposal.Metadata == nil {
 		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
-		response := c.transferState()
+		response := c.fetchState()
 		if response == nil {
 			return
 		}
@@ -453,9 +453,9 @@ func (c *Controller) sync() {
 			if err := c.State.Save(newViewToSave); err != nil {
 				c.Logger.Panicf("Failed to save message to state, error: %v", err)
 			}
+			c.ViewChanger.InformNewView(response.View, 0)
+			c.viewChange <- viewInfo{viewNumber: response.View, proposalSeq: 1}
 		}
-		c.ViewChanger.InformNewView(response.View, 0)
-		c.viewChange <- viewInfo{viewNumber: response.View, proposalSeq: 1}
 		return
 	}
 	md := &protos.ViewMetadata{}
@@ -470,7 +470,7 @@ func (c *Controller) sync() {
 
 	view := md.ViewId
 
-	response := c.transferState()
+	response := c.fetchState()
 	if response != nil {
 		if response.View > md.ViewId && response.Seq == md.LatestSequence+1 {
 			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
@@ -495,7 +495,7 @@ func (c *Controller) sync() {
 	c.viewChange <- viewInfo{viewNumber: view, proposalSeq: md.LatestSequence + 1}
 }
 
-func (c *Controller) transferState() *types.ViewAndSeq {
+func (c *Controller) fetchState() *types.ViewAndSeq {
 	msg := &protos.Message{
 		Content: &protos.Message_StateTransferRequest{
 			StateTransferRequest: &protos.StateTransferRequest{},
