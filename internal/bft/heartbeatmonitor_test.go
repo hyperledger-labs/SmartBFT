@@ -21,28 +21,14 @@ import (
 )
 
 const (
-	heartbeatTimeout = 60 * time.Second
-	heartbeatCount   = 10
+	heartbeatTimeout  = 60 * time.Second
+	heartbeatCount    = 10
+	tickIncrementUnit = heartbeatTimeout / heartbeatCount
 )
 
 var (
-	heartbeat = &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_HeartBeat{
-			HeartBeat: &smartbftprotos.HeartBeat{
-				View: 10,
-				Seq:  10,
-			},
-		},
-	}
-
-	heartbeatFromFarAheadLeader = &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_HeartBeat{
-			HeartBeat: &smartbftprotos.HeartBeat{
-				View: 10,
-				Seq:  15,
-			},
-		},
-	}
+	heartbeat                   = makeHeartBeat(10, 10)
+	heartbeatFromFarAheadLeader = makeHeartBeat(10, 15)
 )
 
 func TestHeartbeatMonitor_New(t *testing.T) {
@@ -295,23 +281,165 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 
 	hm2.Close()
 	clock.advanceTime(heartbeatCount*2, scheduler1)
+	toWG.Wait()
 	hm1.Close()
 
 	handler1.AssertCalled(t, "OnHeartbeatTimeout", uint64(12), uint64(2))
 	handler1.AssertNumberOfCalls(t, "OnHeartbeatTimeout", 1)
 }
 
+func TestHeartbeatResponse(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	t.Run("leader", func(t *testing.T) {
+		clock := &fakeTime{time: time.Now()}
+
+		scheduler1 := make(chan time.Time)
+		comm1 := &mocks.CommMock{}
+		handler1 := &mocks.HeartbeatTimeoutHandler{}
+		syncHandler1 := &mocks.HeartbeatResponseSyncHandler{}
+		vs1 := &atomic.Value{}
+		vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
+		hm1 := bft.NewHeartbeatMonitor(scheduler1, log,
+			consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount,
+			comm1, 7, handler1, syncHandler1, vs1)
+
+		comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
+			msg := args[0].(*smartbftprotos.Message)
+			hb := msg.GetHeartBeat()
+			assert.NotNil(t, hb)
+			assert.Equal(t, uint64(5), hb.View)
+			assert.Equal(t, uint64(12), hb.Seq)
+		})
+
+		hm1.ChangeRole(bft.Leader, 5, 0)
+		clock.advanceTime(2*heartbeatCount, scheduler1)
+
+		//this will be ignored, as view=4,5 <= leader-view=5
+		hbr4 := makeHeartBeatResponse(4)
+		hm1.ProcessMsg(1, hbr4)
+		hm1.ProcessMsg(2, hbr4)
+		hm1.ProcessMsg(3, hbr4)
+		hbr5 := makeHeartBeatResponse(5)
+		hm1.ProcessMsg(1, hbr5)
+		hm1.ProcessMsg(2, hbr5)
+		hm1.ProcessMsg(3, hbr5)
+
+		syncWG := &sync.WaitGroup{}
+		syncWG.Add(1)
+		syncHandler1.On("OnHeartbeatResponseSync", mock.AnythingOfType("uint64")).Run(func(args mock.Arguments) {
+			view := args[0].(uint64)
+			if view != 12 {
+				t.Fail()
+			} else {
+				syncWG.Done()
+			}
+		}).Return()
+
+		// 2 is not enough, need f+1=3, duplicates are filtered
+		hbr6 := makeHeartBeatResponse(6)
+		hm1.ProcessMsg(1, hbr6)
+		hm1.ProcessMsg(2, hbr6)
+		hm1.ProcessMsg(1, hbr6)
+		hm1.ProcessMsg(2, hbr6)
+
+		// trigger sync
+		hbr12 := makeHeartBeatResponse(12)
+		hm1.ProcessMsg(1, hbr12)
+		hm1.ProcessMsg(2, hbr12)
+		hm1.ProcessMsg(3, hbr12)
+		// only trigger once before role change
+		hbr13 := makeHeartBeatResponse(13)
+		hm1.ProcessMsg(1, hbr13)
+		hm1.ProcessMsg(2, hbr13)
+		hm1.ProcessMsg(3, hbr13)
+
+		syncWG.Wait()
+		syncHandler1.AssertCalled(t, "OnHeartbeatResponseSync", uint64(12))
+		syncHandler1.AssertNumberOfCalls(t, "OnHeartbeatResponseSync", 1)
+	})
+
+	t.Run("follower", func(t *testing.T) {
+		clock := &fakeTime{time: time.Now()}
+
+		scheduler1 := make(chan time.Time)
+		comm1 := &mocks.CommMock{}
+		handler1 := &mocks.HeartbeatTimeoutHandler{}
+		syncHandler1 := &mocks.HeartbeatResponseSyncHandler{}
+		vs1 := &atomic.Value{}
+		vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
+		hm1 := bft.NewHeartbeatMonitor(scheduler1, log,
+			consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount,
+			comm1, 7, handler1, syncHandler1, vs1)
+
+		respWG := &sync.WaitGroup{}
+		respWG.Add(1)
+		comm1.On("SendConsensus", mock.AnythingOfType("uint64"), mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
+			target := args[0].(uint64)
+			assert.Equal(t, uint64(1), target)
+			msg := args[1].(*smartbftprotos.Message)
+			hbr := msg.GetHeartBeatResponse()
+			assert.NotNil(t, hbr)
+			assert.Equal(t, uint64(6), hbr.View)
+			respWG.Done()
+		})
+
+		hb5 := makeHeartBeat(5, 12)
+		hb6 := makeHeartBeat(6, 12)
+		hb7 := makeHeartBeat(7, 12)
+
+		hm1.ChangeRole(bft.Follower, 5, 1)
+		clock.advanceTime(1, scheduler1)
+
+		hm1.ProcessMsg(1, hb5)
+
+		hm1.ChangeRole(bft.Follower, 6, 2)
+		clock.advanceTime(1, scheduler1)
+
+		hm1.ProcessMsg(2, hb6)
+		hm1.ProcessMsg(2, hb7)
+		// trigger response
+		hm1.ProcessMsg(1, hb5)
+		respWG.Wait()
+	})
+}
+
 type fakeTime struct {
 	time time.Time
 }
 
-func (t *fakeTime) advanceTime(ticks time.Duration, schedulers ...chan time.Time) {
-	for i := time.Duration(1); i <= ticks; i++ {
-		incrementUnit := heartbeatTimeout / heartbeatCount
-		newTime := t.time.Add(incrementUnit)
+// each tick is (heartbeatTimeout / heartbeatCount)
+func (t *fakeTime) advanceTime(ticks int, schedulers ...chan time.Time) {
+	for i := 1; i <= ticks; i++ {
+		newTime := t.time.Add(tickIncrementUnit)
 		for _, scheduler := range schedulers {
 			scheduler <- newTime
 		}
 		t.time = newTime
 	}
+}
+
+func makeHeartBeatResponse(view uint64) *smartbftprotos.Message {
+	hbr := &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeatResponse{
+			HeartBeatResponse: &smartbftprotos.HeartBeatResponse{
+				View: view,
+			},
+		},
+	}
+	return hbr
+}
+
+func makeHeartBeat(view, seq uint64) *smartbftprotos.Message {
+	hb := &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeat{
+			HeartBeat: &smartbftprotos.HeartBeat{
+				View: view,
+				Seq:  seq,
+			},
+		},
+	}
+	return hb
 }

@@ -199,7 +199,7 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 	}
 
 	if hm.view >= hbr.View {
-		hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", sender, hbr)
+		hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", hm.view, sender, hbr)
 		return
 	}
 
@@ -214,11 +214,13 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 	hm.logger.Debugf("HeartBeatResponse Collector size: %d, senderSet(%d) size: %d", len(hm.hbRespCollector), hbr.View, len(senders))
 
 	if hm.syncReq {
+		hm.logger.Debugf("HeartBeatResponse Sync already called, ignoring")
 		return
 	}
 
 	_, f := computeQuorum(hm.numberOfNodes)
 	if len(senders) >= f+1 {
+		hm.logger.Debugf("Calling HeartBeatResponse Sync, view: %d", hbr.View)
 		hm.syncHandler.OnHeartbeatResponseSync(hbr.View)
 		hm.syncReq = true
 	}
