@@ -383,7 +383,6 @@ func (c *Controller) propose() {
 		c.Logger.Debugf("Assembler packed only some of the batch TX's into the proposal, length of: batch=%d, remainder=%d, in-proposal=%d",
 			len(nextBatch), len(remainder), len(nextBatch)-len(remainder))
 	}
-	c.Logger.Debugf("Leader proposing proposal: %v", proposal)
 	c.currView.Propose(proposal)
 }
 
