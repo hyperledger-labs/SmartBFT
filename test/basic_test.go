@@ -69,31 +69,51 @@ func TestRestartFollowers(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
+
+	startViewWG := sync.WaitGroup{}
+	startViewWG.Add(1)
+	baseLogger := nodes[2].logger.Desugar()
+	nodes[2].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Starting view with number 0 and sequence 2") {
+			startViewWG.Done()
+		}
+		return nil
+	})).Sugar()
+	nodes[2].Setup()
+
 	for _, n := range nodes {
 		n.Consensus.Start()
 	}
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
-	nodes[1].Restart()
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data = append(data, d)
-	}
+	d0 := <-nodes[0].Delivered
+	d2 := <-nodes[2].Delivered
+	d3 := <-nodes[3].Delivered
+
+	nodes[1].Restart()
+	d1 := <-nodes[1].Delivered
+
+	data = append(data, d0, d1, d2, d3)
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
 	nodes[2].Restart()
+	startViewWG.Wait()
+
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
-	nodes[3].Restart()
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data = append(data, d)
-	}
+	d0 = <-nodes[0].Delivered
+	d1 = <-nodes[1].Delivered
+	d2 = <-nodes[2].Delivered
+
+	nodes[3].Restart()
+	d3 = <-nodes[3].Delivered
+
+	data = append(data, d0, d1, d2, d3)
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
