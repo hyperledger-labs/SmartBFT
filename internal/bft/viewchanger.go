@@ -318,6 +318,11 @@ func (v *ViewChanger) startViewChange(change *change) {
 		v.Logger.Debugf("Node %d has a view change request with an old view %d, while the current view is %d", v.SelfID, change.view, v.currView)
 		return
 	}
+	if v.nextView == v.currView+1 {
+		v.Logger.Debugf("Node %d has already started view change with last view %d", v.SelfID, v.currView)
+		v.checkTimeout = true // make sure timeout is checked anyway
+		return
+	}
 	v.nextView = v.currView + 1
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{

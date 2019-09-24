@@ -662,18 +662,16 @@ func TestViewChangerTimeout(t *testing.T) {
 	controllerWG.Wait()
 	reqTimerWG.Wait()
 
-	reqTimerWG.Add(1)
 	synchronizerWG.Add(1)
 	ticker <- startTime.Add(12 * time.Second) // timeout
 	synchronizerWG.Wait()
-	reqTimerWG.Wait()
 
 	vc.Stop()
 
 	synchronizer.AssertNumberOfCalls(t, "Sync", 1)
-	reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 1)
 }
 
 func TestBackOff(t *testing.T) {
@@ -724,27 +722,22 @@ func TestBackOff(t *testing.T) {
 	controllerWG.Wait()
 	reqTimerWG.Wait()
 
-	reqTimerWG.Add(1)
 	synchronizerWG.Add(1)
-	nextTick := startTime.Add(timeout + 2*time.Second)
-	ticker <- nextTick // timeout
+	ticker <- startTime.Add(timeout + 2*time.Second) // timeout
 	synchronizerWG.Wait()
-	reqTimerWG.Wait()
 
-	ticker <- nextTick.Add(timeout + 2*time.Second) // no timeout
+	ticker <- startTime.Add(timeout + 2*time.Second) // no timeout
 
-	reqTimerWG.Add(1)
 	synchronizerWG.Add(1)
-	ticker <- nextTick.Add(2*timeout + 2*time.Second) // timeout with backOff
+	ticker <- startTime.Add(2*timeout + 2*time.Second) // timeout with backOff
 	synchronizerWG.Wait()
-	reqTimerWG.Wait()
 
 	vc.Stop()
 
 	synchronizer.AssertNumberOfCalls(t, "Sync", 2)
-	reqTimer.AssertNumberOfCalls(t, "StopTimers", 3)
+	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3)
+	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 1)
 }
 
 func TestCommitLastDecision(t *testing.T) {
