@@ -30,29 +30,28 @@ func TestBasic(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
+	for i := 1; i < 5; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+	}
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"})
-	n1.Submit(Request{ID: "2", ClientID: "alice"})
-	n1.Submit(Request{ID: "3", ClientID: "alice"})
-	n1.Submit(Request{ID: "3", ClientID: "alice"})
-
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
-
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data1, data4)
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestRestartFollowers(t *testing.T) {
@@ -64,40 +63,60 @@ func TestRestartFollowers(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
+	startViewWG := sync.WaitGroup{}
+	startViewWG.Add(1)
+	baseLogger := nodes[2].logger.Desugar()
+	nodes[2].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Starting view with number 0 and sequence 2") {
+			startViewWG.Done()
+		}
+		return nil
+	})).Sugar()
+	nodes[2].Setup()
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"})
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n2.Restart()
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
+	data := make([]*AppRecord, 0)
+	d0 := <-nodes[0].Delivered
+	d2 := <-nodes[2].Delivered
+	d3 := <-nodes[3].Delivered
 
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data1, data4)
+	nodes[1].Restart()
+	d1 := <-nodes[1].Delivered
 
-	n3.Restart()
-	n1.Submit(Request{ID: "2", ClientID: "alice"})
-	n4.Restart()
+	data = append(data, d0, d1, d2, d3)
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	data4 = <-n4.Delivered
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data1, data4)
+	nodes[2].Restart()
+	startViewWG.Wait()
+
+	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
+
+	data = make([]*AppRecord, 0)
+	d0 = <-nodes[0].Delivered
+	d1 = <-nodes[1].Delivered
+	d2 = <-nodes[2].Delivered
+
+	nodes[3].Restart()
+	d3 = <-nodes[3].Delivered
+
+	data = append(data, d0, d1, d2, d3)
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestLeaderInPartition(t *testing.T) {
@@ -109,27 +128,30 @@ func TestLeaderInPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[0].Disconnect() // leader in partition
 
-	n0.Disconnect() // leader in partition
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
-	n2.Submit(Request{ID: "1", ClientID: "alice"})
-	n3.Submit(Request{ID: "1", ClientID: "alice"})
-
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	data := make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestAfterDecisionLeaderInPartition(t *testing.T) {
@@ -141,57 +163,65 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
-	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0 := <-n0.Delivered
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	assert.Equal(t, data0, data1)
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
-	n0.Submit(Request{ID: "2", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0 = <-n0.Delivered
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data0, data1)
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	nodes[0].Disconnect() // leader in partition
 
-	n0.Disconnect() // leader in partition
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
+	}
 
-	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
-	n2.Submit(Request{ID: "3", ClientID: "alice"})
-	n3.Submit(Request{ID: "3", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "4", ClientID: "alice"}) // submit to other nodes
+	}
 
-	n1.Submit(Request{ID: "4", ClientID: "alice"})
-	n2.Submit(Request{ID: "4", ClientID: "alice"})
-	n3.Submit(Request{ID: "4", ClientID: "alice"})
-
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestMultiLeadersPartition(t *testing.T) {
@@ -203,80 +233,43 @@ func TestMultiLeadersPartition(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
-	n5 := newNode(5, network, t.Name(), testDir)
-	n6 := newNode(6, network, t.Name(), testDir)
+	numberOfNodes := 7
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	n2.viewChangeTime = make(chan time.Time, 1)
-	n3.viewChangeTime = make(chan time.Time, 1)
-	n4.viewChangeTime = make(chan time.Time, 1)
-	n5.viewChangeTime = make(chan time.Time, 1)
-	n6.viewChangeTime = make(chan time.Time, 1)
-	n2.viewChangeTime <- start
-	n3.viewChangeTime <- start
-	n4.viewChangeTime <- start
-	n5.viewChangeTime <- start
-	n6.viewChangeTime <- start
-	n2.Setup()
-	n3.Setup()
-	n4.Setup()
-	n5.Setup()
-	n6.Setup()
+	for _, n := range nodes {
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Disconnect() // leader in partition
-	n1.Disconnect() // next leader in partition
+	nodes[0].Disconnect() // leader in partition
+	nodes[1].Disconnect() // next leader in partition
 
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
-	n5.Consensus.Start()
-	n6.Consensus.Start()
-
-	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
-	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
-	n4.Submit(Request{ID: "1", ClientID: "alice"})
-	n5.Submit(Request{ID: "1", ClientID: "alice"})
-	n6.Submit(Request{ID: "1", ClientID: "alice"})
+	for i := 2; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
 
 	done := make(chan struct{})
 	defer close(done)
-	// Accelerate the time for a view change timeout
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				n2.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n3.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n4.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n5.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n6.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-			}
-		}
-	}()
+	accelerateTime(nodes, done, false, true)
 
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
-	data5 := <-n5.Delivered
-	data6 := <-n6.Delivered
-
-	assert.Equal(t, data2, data3)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data4, data5)
-	assert.Equal(t, data5, data6)
-	assert.Equal(t, data6, data2)
+	data := make([]*AppRecord, 0)
+	for i := 2; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-3; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
 }
 
@@ -289,73 +282,58 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	n1.heartbeatTime = make(chan time.Time, 1)
-	n2.heartbeatTime = make(chan time.Time, 1)
-	n3.heartbeatTime = make(chan time.Time, 1)
-	n1.heartbeatTime <- start
-	n2.heartbeatTime <- start
-	n3.heartbeatTime <- start
-	n1.Setup()
-	n2.Setup()
-	n3.Setup()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.Setup()
+	}
 
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
-	viewChangeWG.Add(3)
-	for _, n := range network {
-		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-			if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+	viewChangeWG.Add(numberOfNodes - 1)
+	for _, n := range nodes {
+		baseLogger := n.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "ViewChanged") {
 				viewChangeWG.Done()
 			}
 			return nil
 		})).Sugar()
 	}
 
-	n0.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Disconnect() // leader in partition
-
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[0].Disconnect() // leader in partition
 
 	// Accelerate the time until a view change because of heartbeat timeout
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				n1.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n2.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
-			}
-		}
-	}()
+	accelerateTime(nodes, done, true, false)
 
 	viewChangeWG.Wait()
 	close(done)
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
-	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
 
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	data := make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
@@ -367,21 +345,20 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
-	n5 := newNode(5, network, t.Name(), testDir)
-	n6 := newNode(6, network, t.Name(), testDir)
+	numberOfNodes := 7
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	for _, n := range network {
-		n.app.heartbeatTime = make(chan time.Time, 1)
-		n.app.heartbeatTime <- start
-		n.app.viewChangeTime = make(chan time.Time, 1)
-		n.app.viewChangeTime <- start
-		n.app.Setup()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
 	}
 
 	// wait for the new leader to finish the view change before submitting
@@ -391,62 +368,36 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	for _, n := range network {
 		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-			if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+			if strings.Contains(entry.Message, "ViewChanged") {
 				viewChangeWG.Done()
 			}
 			return nil
 		})).Sugar()
 	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Disconnect() // leader in partition
-	n1.Disconnect() // next leader in partition
+	nodes[0].Disconnect() // leader in partition
+	nodes[1].Disconnect() // next leader in partition
 
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
-	n5.Consensus.Start()
-	n6.Consensus.Start()
-
-	// Accelerate the time until a view change
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				for _, n := range network {
-					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				}
-			}
-		}
-	}()
-
+	accelerateTime(nodes, done, true, true)
 	viewChangeWG.Wait()
 	close(done)
 
-	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
-	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
-	n4.Submit(Request{ID: "1", ClientID: "alice"})
-	n5.Submit(Request{ID: "1", ClientID: "alice"})
-	n6.Submit(Request{ID: "1", ClientID: "alice"})
+	for i := 2; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
 
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
-	data5 := <-n5.Delivered
-	data6 := <-n6.Delivered
-
-	assert.Equal(t, data2, data3)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data4, data5)
-	assert.Equal(t, data5, data6)
-	assert.Equal(t, data6, data2)
+	data := make([]*AppRecord, 0)
+	for i := 2; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-3; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestCatchingUpWithViewChange(t *testing.T) {
@@ -458,43 +409,47 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[3].Disconnect() // will need to catch up
 
-	n3.Disconnect() // will need to catch up
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
-	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes-1; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0 := <-n0.Delivered
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
+	nodes[3].Connect()
+	nodes[0].Disconnect() // leader in partition
 
-	assert.Equal(t, data0, data1)
-	assert.Equal(t, data1, data2)
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
+	}
 
-	n3.Connect()
-	n0.Disconnect() // leader in partition
+	data3 := <-nodes[3].Delivered // from catch up
+	assert.Equal(t, data[0], data3)
 
-	n1.Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
-	n2.Submit(Request{ID: "2", ClientID: "alice"})
-	n3.Submit(Request{ID: "2", ClientID: "alice"})
-
-	data3 := <-n3.Delivered // from catch up
-	assert.Equal(t, data2, data3)
-
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
@@ -506,47 +461,50 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
-	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0Seq1 := <-n0.Delivered
-	data1Seq1 := <-n1.Delivered
-	data2Seq1 := <-n2.Delivered
-	data3Seq1 := <-n3.Delivered
-	assert.Equal(t, data0Seq1, data1Seq1)
-	assert.Equal(t, data1Seq1, data2Seq1)
-	assert.Equal(t, data2Seq1, data3Seq1)
+	nodes[0].Disconnect() // leader in partition
 
-	n0.Disconnect() // leader in partition
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
+	}
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	n1.Submit(Request{ID: "2", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "2", ClientID: "alice"})
-	n3.Submit(Request{ID: "2", ClientID: "alice"})
-
-	data1Seq2 := <-n1.Delivered
-	data2Seq2 := <-n2.Delivered
-	data3Seq2 := <-n3.Delivered
-	assert.Equal(t, data1Seq2, data2Seq2)
-	assert.Equal(t, data2Seq2, data3Seq2)
-
-	n0.Connect() // old leader woke up
+	nodes[0].Connect() // old leader woke up
 
 	// We create new batches until it catches up
 	for reqID := 3; reqID < 100; reqID++ {
-		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
-		n2.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
-		<-n1.Delivered // Wait for new leader to commit
-		<-n2.Delivered // Wait for follower to commit
-		caughtUp := waitForCatchup(reqID, n0.Delivered)
+		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		nodes[2].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-nodes[1].Delivered // Wait for new leader to commit
+		<-nodes[2].Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, nodes[0].Delivered)
 		if caughtUp {
 			return
 		}
@@ -563,78 +521,65 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	for _, n := range network {
-		n.app.heartbeatTime = make(chan time.Time, 1)
-		n.app.heartbeatTime <- start
-		n.app.Setup()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.Setup()
 	}
 
 	// wait for a view change to occur
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(2)
-	baseLogger1 := n1.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n1.Consensus.Logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+	baseLogger1 := nodes[1].Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	nodes[1].Consensus.Logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeWG.Done()
 		}
 		return nil
 	})).Sugar()
-	baseLogger3 := n3.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n3.Consensus.Logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+	baseLogger3 := nodes[3].Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	nodes[3].Consensus.Logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeWG.Done()
 		}
 		return nil
 	})).Sugar()
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Disconnect()
+	nodes[0].Disconnect()
 
-	// Accelerate the time until a view change
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				for _, n := range network {
-					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				}
-			}
-		}
-	}()
+	accelerateTime(nodes, done, true, false)
 
 	viewChangeWG.Wait()
 	close(done)
 
-	// restart new leader and a follower, will restore from new view
-	n1.Restart()
-	n3.Restart()
+	// restart new leader and a follower, they will restore from new view
+	nodes[1].Restart()
+	nodes[3].Restart()
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"})
-	n2.Submit(Request{ID: "1", ClientID: "alice"})
-	n3.Submit(Request{ID: "1", ClientID: "alice"})
-
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
-
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
+	data := make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestRestoringViewChange(t *testing.T) {
@@ -646,20 +591,19 @@ func TestRestoringViewChange(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
-	n5 := newNode(5, network, t.Name(), testDir)
-	n6 := newNode(6, network, t.Name(), testDir)
+	numberOfNodes := 7
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	for _, n := range network {
-		n.app.heartbeatTime = make(chan time.Time, 1)
-		n.app.heartbeatTime <- start
-		n.app.viewChangeTime = make(chan time.Time, 1)
-		n.app.viewChangeTime <- start
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
 	}
 
 	done := make(chan struct{})
@@ -669,14 +613,14 @@ func TestRestoringViewChange(t *testing.T) {
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(1)
 	viewChangeOnce := sync.Once{}
-	baseLogger := n6.logger.Desugar()
-	n6.logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Node 6 sent view data msg, with next view 1, to the new leader 1") {
+	baseLogger := nodes[6].logger.Desugar()
+	nodes[6].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 6 sent view data msg") {
 			viewChangeOnce.Do(func() {
 				viewChangeWG.Done()
 			})
 		}
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 2") {
+		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeFinishOnce.Do(func() {
 				viewChangeFinishWG.Done()
 			})
@@ -684,64 +628,39 @@ func TestRestoringViewChange(t *testing.T) {
 		return nil
 	})).Sugar()
 
-	for _, n := range network {
-		n.app.Setup()
+	for _, n := range nodes {
+		n.Setup()
 	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Disconnect() // leader in partition
-	n1.Disconnect() // next leader in partition
+	nodes[0].Disconnect() // leader in partition
+	nodes[1].Disconnect() // next leader in partition
 
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
-	n5.Consensus.Start()
-	n6.Consensus.Start()
-
-	// Accelerate the time until a view change
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				for _, n := range network {
-					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				}
-			}
-		}
-	}()
+	accelerateTime(nodes, done, true, true)
 
 	viewChangeWG.Wait()
-	n6.Disconnect()
-	n6.Restart()
-	n6.Connect()
+	nodes[6].Disconnect()
+	nodes[6].Restart()
+	nodes[6].Connect()
 
 	viewChangeFinishWG.Wait()
 	close(done)
 
-	n2.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
-	n3.Submit(Request{ID: "1", ClientID: "alice"}) // submit to follower
-	n4.Submit(Request{ID: "1", ClientID: "alice"})
-	n5.Submit(Request{ID: "1", ClientID: "alice"})
-	n6.Submit(Request{ID: "1", ClientID: "alice"})
+	for i := 2; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"})
+	}
 
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
-	data5 := <-n5.Delivered
-	data6 := <-n6.Delivered
-
-	assert.Equal(t, data2, data3)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data4, data5)
-	assert.Equal(t, data5, data6)
-	assert.Equal(t, data6, data2)
+	data := make([]*AppRecord, 0)
+	for i := 2; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-3; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func TestLeaderForwarding(t *testing.T) {
@@ -753,24 +672,24 @@ func TestLeaderForwarding(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[1].Submit(Request{ID: "1", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "2", ClientID: "bob"})
+	nodes[3].Submit(Request{ID: "3", ClientID: "carol"})
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"})
-	n2.Submit(Request{ID: "2", ClientID: "bob"})
-	n3.Submit(Request{ID: "3", ClientID: "carol"})
-
-	numBatchesCreated := countCommittedBatches(n0)
+	numBatchesCreated := countCommittedBatches(nodes[0])
 
 	committedBatches := make([][]AppRecord, 3)
-	for nodeIndex, n := range []*App{n1, n2, n3} {
+	for nodeIndex, n := range []*App{nodes[1], nodes[2], nodes[3]} {
 		committedBatches = append(committedBatches, make([]AppRecord, numBatchesCreated))
 		for i := 0; i < numBatchesCreated; i++ {
 			record := <-n.Delivered
@@ -793,23 +712,24 @@ func TestLeaderExclusion(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
-	n0.DisconnectFrom(3)
+	nodes[0].DisconnectFrom(3)
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
 	// We create new batches until the disconnected node catches up the quorum.
 	for reqID := 1; reqID < 100; reqID++ {
-		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
-		<-n1.Delivered // Wait for follower to commit
-		caughtUp := waitForCatchup(reqID, n3.Delivered)
+		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-nodes[1].Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, nodes[3].Delivered)
 		if caughtUp {
 			return
 		}
@@ -826,32 +746,32 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-
-	n3.Disconnect() // will need to catch up
-
-	for i := 1; i <= 10; i++ {
-		n0.Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-n0.Delivered // Wait for leader to commit
-		<-n1.Delivered // Wait for follower to commit
-		<-n2.Delivered // Wait for follower to commit
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	for _, n := range nodes {
+		n.Consensus.Start()
 	}
 
-	n3.Connect()
+	nodes[3].Disconnect() // will need to catch up
+
+	for i := 1; i <= 10; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		<-nodes[0].Delivered // Wait for leader to commit
+		<-nodes[1].Delivered // Wait for follower to commit
+		<-nodes[2].Delivered // Wait for follower to commit
+	}
+
+	nodes[3].Connect()
 
 	// We create new batches until it catches up the quorum.
 	for reqID := 11; reqID < 100; reqID++ {
-		n1.Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
-		<-n1.Delivered // Wait for follower to commit
-		caughtUp := waitForCatchup(reqID, n3.Delivered)
+		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		<-nodes[1].Delivered // Wait for follower to commit
+		caughtUp := waitForCatchup(reqID, nodes[3].Delivered)
 		if caughtUp {
 			return
 		}
@@ -868,15 +788,17 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	var detectedSequenceGap uint32
 
-	baseLogger := n3.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	n3.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+	baseLogger := nodes[3].Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	nodes[3].Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Leader's sequence is 10 and ours is 1") {
 			atomic.StoreUint32(&detectedSequenceGap, 1)
 		}
@@ -884,30 +806,29 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	})).Sugar()
 
 	start := time.Now()
-	n0.heartbeatTime = make(chan time.Time, 1)
-	n0.heartbeatTime <- start
-	n3.heartbeatTime = make(chan time.Time, 1)
-	n3.heartbeatTime <- start
-	n3.viewChangeTime = make(chan time.Time, 1)
-	n3.viewChangeTime <- start
-	n0.Setup()
-	n3.Setup()
+	nodes[0].heartbeatTime = make(chan time.Time, 1)
+	nodes[0].heartbeatTime <- start
+	nodes[3].heartbeatTime = make(chan time.Time, 1)
+	nodes[3].heartbeatTime <- start
+	nodes[3].viewChangeTime = make(chan time.Time, 1)
+	nodes[3].viewChangeTime <- start
+	nodes[0].Setup()
+	nodes[3].Setup()
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-
-	n3.Disconnect() // will need to catch up
-
-	for i := 1; i <= 10; i++ {
-		n0.Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-n0.Delivered // Wait for leader to commit
-		<-n1.Delivered // Wait for follower to commit
-		<-n2.Delivered // Wait for follower to commit
+	for _, n := range nodes {
+		n.Consensus.Start()
 	}
 
-	n3.Connect()
+	nodes[3].Disconnect() // will need to catch up
+
+	for i := 1; i <= 10; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		<-nodes[0].Delivered // Wait for leader to commit
+		<-nodes[1].Delivered // Wait for follower to commit
+		<-nodes[2].Delivered // Wait for follower to commit
+	}
+
+	nodes[3].Connect()
 
 	done := make(chan struct{})
 	// Accelerate the time for n3 so it will suspect the leader and view change.
@@ -919,16 +840,16 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 			case <-done:
 				return
 			case <-time.After(time.Millisecond * 100):
-				n0.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n3.heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
-				n3.viewChangeTime <- time.Now().Add(time.Minute * time.Duration(10*i))
+				nodes[0].heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				nodes[3].heartbeatTime <- time.Now().Add(time.Second * time.Duration(10*i))
+				nodes[3].viewChangeTime <- time.Now().Add(time.Minute * time.Duration(10*i))
 			}
 		}
 	}()
 
 	for i := 1; i <= 10; i++ {
 		select {
-		case <-n3.Delivered:
+		case <-nodes[3].Delivered:
 		case <-time.After(time.Second * 10):
 			t.Fatalf("Didn't catch up within a timely period")
 		}
@@ -952,27 +873,26 @@ func TestFollowerStateTransfer(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
-	n4 := newNode(4, network, t.Name(), testDir)
-	n5 := newNode(5, network, t.Name(), testDir)
-	n6 := newNode(6, network, t.Name(), testDir)
+	numberOfNodes := 7
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
 
 	start := time.Now()
-	for _, n := range network {
-		n.app.heartbeatTime = make(chan time.Time, 1)
-		n.app.heartbeatTime <- start
-		n.app.viewChangeTime = make(chan time.Time, 1)
-		n.app.viewChangeTime <- start
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
 	}
 
 	syncedWG := sync.WaitGroup{}
 	syncedWG.Add(1)
-	baseLogger6 := n6.logger.Desugar()
-	n6.logger = baseLogger6.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The collected state is with view 1 and sequence 1") {
+	baseLogger6 := nodes[6].logger.Desugar()
+	nodes[6].logger = baseLogger6.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The collected state") {
 			syncedWG.Done()
 		}
 		return nil
@@ -980,73 +900,46 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(1)
-	baseLogger1 := n1.logger.Desugar()
-	n1.logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+	baseLogger1 := nodes[1].logger.Desugar()
+	nodes[1].logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeWG.Done()
 		}
 		return nil
 	})).Sugar()
 
-	for _, n := range network {
-		n.app.Setup()
+	for _, n := range nodes {
+		n.Setup()
 	}
 
-	n0.Consensus.Start()
-	n0.Disconnect() // leader in partition
-	n6.Consensus.Start()
-	n6.Disconnect() // follower in partition
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
 
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
-	n4.Consensus.Start()
-	n5.Consensus.Start()
+	nodes[0].Disconnect() // leader in partition
+	nodes[6].Disconnect() // follower in partition
 
 	// Accelerate the time until a view change
 	done := make(chan struct{})
-	go func() {
-		var i int
-		for {
-			i++
-			select {
-			case <-done:
-				return
-			case <-time.After(time.Millisecond * 100):
-				for _, n := range network {
-					n.app.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
-					n.app.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
-				}
-			}
-		}
-	}()
+	accelerateTime(nodes, done, true, true)
 
 	viewChangeWG.Wait()
-	n6.Connect()
+	nodes[6].Connect()
 	syncedWG.Wait()
 	close(done)
 
-	n1.Submit(Request{ID: "1", ClientID: "alice"}) // submit to new leader
-	n2.Submit(Request{ID: "1", ClientID: "alice"})
-	n3.Submit(Request{ID: "1", ClientID: "alice"})
-	n4.Submit(Request{ID: "1", ClientID: "alice"})
-	n5.Submit(Request{ID: "1", ClientID: "alice"})
-	n6.Submit(Request{ID: "1", ClientID: "alice"})
+	for i := 2; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"})
+	}
 
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	data4 := <-n4.Delivered
-	data5 := <-n5.Delivered
-	data6 := <-n6.Delivered
-
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
-	assert.Equal(t, data3, data4)
-	assert.Equal(t, data4, data5)
-	assert.Equal(t, data5, data6)
-	assert.Equal(t, data6, data2)
-
+	data := make([]*AppRecord, 0)
+	for i := 2; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-3; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 }
 
 func countCommittedBatches(n *App) int {
@@ -1077,4 +970,26 @@ func waitForCatchup(targetReqID int, out chan *AppRecord) bool {
 			return false
 		}
 	}
+}
+
+func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeTime bool) {
+	go func() {
+		var i int
+		for {
+			i++
+			select {
+			case <-done:
+				return
+			case <-time.After(time.Millisecond * 100):
+				for _, n := range nodes {
+					if heartbeatTime {
+						n.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+					}
+					if viewChangeTime {
+						n.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
+					}
+				}
+			}
+		}
+	}()
 }
