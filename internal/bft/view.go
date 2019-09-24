@@ -727,7 +727,7 @@ func (v *View) Propose(proposal types.Proposal) {
 	// Send the proposal to yourself in order to pre-prepare yourself and record
 	// it in the WAL before sending it to other nodes.
 	v.HandleMessage(v.LeaderID, msg)
-	v.Logger.Debugf("Proposing proposal sequence %d", seq)
+	v.Logger.Debugf("Proposing proposal sequence %d in view %d", seq, v.Number)
 }
 
 func (v *View) stop() {
