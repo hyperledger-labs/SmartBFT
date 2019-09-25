@@ -19,19 +19,15 @@ const (
 	Follower Role = true
 )
 
-//go:generate mockery -dir . -name HeartbeatTimeoutHandler -case underscore -output ./mocks/
+//go:generate mockery -dir . -name HeartbeatEventHandler -case underscore -output ./mocks/
 
-// HeartbeatTimeoutHandler defines who to call when a heartbeat timeout expires.
-type HeartbeatTimeoutHandler interface {
+// HeartbeatEventHandler defines who to call when a heartbeat timeout expires or a Sync needs to be triggered.
+// This is implemented by the Controller.
+type HeartbeatEventHandler interface {
+	// OnHeartbeatTimeout is called when a heartbeat timeout expires.
 	OnHeartbeatTimeout(view uint64, leaderID uint64)
-}
-
-//go:generate mockery -dir . -name HeartbeatResponseSyncHandler -case underscore -output ./mocks/
-
-// HeartbeatResponseSyncHandler defines who to call when enough heartbeat responses report that the current
-// leader's view is outdated.
-type HeartbeatResponseSyncHandler interface {
-	OnHeartbeatResponseSync(view uint64)
+	// Sync is called when enough heartbeat responses report that the current leader's view is outdated.
+	Sync()
 }
 
 type Role bool
@@ -42,11 +38,11 @@ type roleChange struct {
 	follower Role
 }
 
-// senderSet is a set of node IDs
-type senderSet map[uint64]bool
+// heartbeatResponseCollector is a map from node ID to view number, and hold the last response from each node.
+type heartbeatResponseCollector map[uint64]uint64
 
-// heartbeatResponseCollector is a map from view ID to a set of senders.
-type heartbeatResponseCollector map[uint64]senderSet
+// heartbeatResponseHistogram stores how many responses exist per view.
+type heartbeatResponseHistogram map[uint64]int
 
 type HeartbeatMonitor struct {
 	scheduler       <-chan time.Time
@@ -58,8 +54,7 @@ type HeartbeatMonitor struct {
 	hbCount         int
 	comm            Comm
 	numberOfNodes   uint64
-	handler         HeartbeatTimeoutHandler
-	syncHandler     HeartbeatResponseSyncHandler
+	handler         HeartbeatEventHandler
 	view            uint64
 	leaderID        uint64
 	follower        Role
@@ -73,7 +68,16 @@ type HeartbeatMonitor struct {
 	viewSequences   *atomic.Value
 }
 
-func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount int, comm Comm, numberOfNodes uint64, handler HeartbeatTimeoutHandler, syncHandler HeartbeatResponseSyncHandler, viewSequences *atomic.Value) *HeartbeatMonitor {
+func NewHeartbeatMonitor(
+	scheduler <-chan time.Time,
+	logger api.Logger,
+	heartbeatTimeout time.Duration,
+	heartbeatCount int,
+	comm Comm,
+	numberOfNodes uint64,
+	handler HeartbeatEventHandler,
+	viewSequences *atomic.Value,
+) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
 		stopChan:        make(chan struct{}),
 		inc:             make(chan incMsg),
@@ -85,7 +89,6 @@ func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbea
 		comm:            comm,
 		numberOfNodes:   numberOfNodes,
 		handler:         handler,
-		syncHandler:     syncHandler,
 		hbRespCollector: make(heartbeatResponseCollector),
 		viewSequences:   viewSequences,
 	}
@@ -198,30 +201,44 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 		return
 	}
 
+	if hm.syncReq {
+		hm.logger.Debugf("Monitor already called Sync, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
+		return
+	}
+
 	if hm.view >= hbr.View {
 		hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", hm.view, sender, hbr)
 		return
 	}
 
 	hm.logger.Debugf("Received HeartBeatResponse, msg: %v; from %d", hbr, sender)
-	senders, exists := hm.hbRespCollector[hbr.View]
-	if !exists {
-		senders = make(senderSet)
-		hm.hbRespCollector[hbr.View] = senders
+	prevVote, exists := hm.hbRespCollector[sender]
+	if exists && prevVote == hbr.View {
+		return
 	}
-	senders[sender] = true
+	hm.hbRespCollector[sender] = hbr.View
 
-	hm.logger.Debugf("HeartBeatResponse Collector size: %d, senderSet(%d) size: %d", len(hm.hbRespCollector), hbr.View, len(senders))
-
-	if hm.syncReq {
-		hm.logger.Debugf("HeartBeatResponse Sync already called, ignoring")
+	// check if we have f+1 identical votes
+	_, f := computeQuorum(hm.numberOfNodes)
+	if len(hm.hbRespCollector) < f+1 {
 		return
 	}
 
-	_, f := computeQuorum(hm.numberOfNodes)
-	if len(senders) >= f+1 {
-		hm.logger.Debugf("Calling HeartBeatResponse Sync, view: %d", hbr.View)
-		hm.syncHandler.OnHeartbeatResponseSync(hbr.View)
+	var doSync bool
+	histogram := make(heartbeatResponseHistogram)
+	for _, view := range hm.hbRespCollector {
+		numVotes := histogram[view] // if does not exist, returns 0
+		numVotes++
+		histogram[view] = numVotes
+		if numVotes >= f+1 {
+			doSync = true
+			break
+		}
+	}
+
+	if doSync {
+		hm.logger.Debugf("Calling HeartBeatEventHandler Sync, view: %d", hbr.View)
+		hm.handler.Sync()
 		hm.syncReq = true
 	}
 }

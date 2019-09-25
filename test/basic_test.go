@@ -234,11 +234,6 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	logConfig := zap.NewDevelopmentConfig()
-	logger, _ := logConfig.Build()
-	logger = logger.With(zap.String("t", t.Name())).With(zap.String("id", "TEST"))
-	sugaredLogger := logger.Sugar()
-
 	n0 := newNode(0, network, t.Name(), testDir)
 	n1 := newNode(1, network, t.Name(), testDir)
 	n2 := newNode(2, network, t.Name(), testDir)
@@ -270,7 +265,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	assert.Equal(t, data2, data3)
 
 	n0.Disconnect() // leader in partition
-	sugaredLogger.Infof("Disconnected n0")
+	t.Log("Disconnected n0")
 
 	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
 	n2.Submit(Request{ID: "3", ClientID: "alice"})
@@ -281,25 +276,13 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	data3 = <-n3.Delivered
 	assert.Equal(t, data1Tx3, data2)
 	assert.Equal(t, data2, data3)
+	assert.Len(t, n0.Delivered, 0) // n0 did not receive it
 
-	n1.Submit(Request{ID: "4", ClientID: "alice"})
-	n2.Submit(Request{ID: "4", ClientID: "alice"})
-	n3.Submit(Request{ID: "4", ClientID: "alice"})
-
-	data1Tx4 := <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data1Tx4, data2)
-	assert.Equal(t, data2, data3)
-
-	n0.Connect() // partition heals, leader should eventually sync and deliver
-	sugaredLogger.Infof("Connected n0")
+	n0.Connect() // partition heals, leader should eventually sync, become a follower, and deliver
+	t.Log("Connected n0")
 
 	data0 = <-n0.Delivered
 	assert.Equal(t, data1Tx3, data0)
-
-	data0 = <-n0.Delivered
-	assert.Equal(t, data1Tx4, data0)
 }
 
 func TestMultiLeadersPartition(t *testing.T) {

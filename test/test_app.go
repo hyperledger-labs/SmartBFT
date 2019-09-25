@@ -53,10 +53,6 @@ type App struct {
 	logger         *zap.SugaredLogger
 }
 
-func (a *App) SetLogLevel(level zapcore.Level) {
-	a.logLevel.SetLevel(level)
-}
-
 func (a *App) Mute() {
 	a.logLevel.SetLevel(zapcore.PanicLevel)
 }
