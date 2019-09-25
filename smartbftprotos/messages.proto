@@ -34,7 +34,6 @@ message Prepare {
     uint64 seq = 2;
     string digest = 3;
     bool assist = 4;
-    bytes signature = 5;
 }
 
 message ProposedRecord {

@@ -70,10 +70,9 @@ var (
 	prepare = &protos.Message{
 		Content: &protos.Message_Prepare{
 			Prepare: &protos.Prepare{
-				View:      1,
-				Seq:       0,
-				Digest:    digest,
-				Signature: []byte{1, 2, 3},
+				View:   1,
+				Seq:    0,
+				Digest: digest,
 			},
 		},
 	}
