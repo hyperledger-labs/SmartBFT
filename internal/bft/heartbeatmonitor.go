@@ -41,9 +41,6 @@ type roleChange struct {
 // heartbeatResponseCollector is a map from node ID to view number, and hold the last response from each node.
 type heartbeatResponseCollector map[uint64]uint64
 
-// heartbeatResponseHistogram stores how many responses exist per view.
-type heartbeatResponseHistogram map[uint64]int
-
 type HeartbeatMonitor struct {
 	scheduler       <-chan time.Time
 	inc             chan incMsg
