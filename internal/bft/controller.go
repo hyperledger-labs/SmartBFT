@@ -230,13 +230,6 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
 }
 
-// OnHeartbeatResponseSync is called when a leader receives enough heartbeat responses that indicate its view is
-// outdated. Called by the HeartbeatMonitor goroutine.
-func (c *Controller) OnHeartbeatResponseSync(view uint64) {
-	c.Logger.Debugf("HeartBeatResponse triggers a Sync: reported-view: %d, current-view: %d", view, c.currViewNumber)
-	c.Sync()
-}
-
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	c.Logger.Debugf("%d got message from %d: %s", c.ID, sender, MsgToString(m))

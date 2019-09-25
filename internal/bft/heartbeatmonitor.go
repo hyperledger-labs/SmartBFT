@@ -218,25 +218,9 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 	}
 	hm.hbRespCollector[sender] = hbr.View
 
-	// check if we have f+1 identical votes
+	// check if we have f+1 votes
 	_, f := computeQuorum(hm.numberOfNodes)
-	if len(hm.hbRespCollector) < f+1 {
-		return
-	}
-
-	var doSync bool
-	histogram := make(heartbeatResponseHistogram)
-	for _, view := range hm.hbRespCollector {
-		numVotes := histogram[view] // if does not exist, returns 0
-		numVotes++
-		histogram[view] = numVotes
-		if numVotes >= f+1 {
-			doSync = true
-			break
-		}
-	}
-
-	if doSync {
+	if len(hm.hbRespCollector) >= f+1 {
 		hm.logger.Debugf("Calling HeartBeatEventHandler Sync, view: %d", hbr.View)
 		hm.handler.Sync()
 		hm.syncReq = true

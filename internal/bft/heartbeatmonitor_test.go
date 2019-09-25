@@ -343,6 +343,8 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 	hm1.ProcessMsg(3, hbr13)
 
 	syncWG.Wait()
+	hm1.Close()
+
 	handler1.AssertCalled(t, "Sync")
 	handler1.AssertNumberOfCalls(t, "Sync", 1)
 }
@@ -390,6 +392,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	// trigger response
 	hm1.ProcessMsg(1, hb5)
 	respWG.Wait()
+	hm1.Close()
 }
 
 type fakeTime struct {
