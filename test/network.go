@@ -139,14 +139,14 @@ func (node *Node) serve() {
 			return
 		case m := <-node.in:
 			node.RLock()
+			handler := node.h
+			node.RUnlock()
 			switch msg := m.message.(type) {
 			case *smartbftprotos.Message:
-				node.h.HandleMessage(uint64(m.from), msg)
+				handler.HandleMessage(uint64(m.from), msg)
 			default:
-				node.h.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)
+				handler.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)
 			}
-			node.RUnlock()
-
 		}
 	}
 }
