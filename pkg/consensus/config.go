@@ -76,5 +76,5 @@ var DefaultConfig = Configuration{
 	ViewChangeTimeout:         20 * time.Second,
 	LeaderHeartbeatTimeout:    time.Minute,
 	LeaderHeartbeatCount:      10,
-	CollectTimeout:            2 * time.Second,
+	CollectTimeout:            time.Second,
 }

@@ -578,6 +578,22 @@ func (c *Controller) relinquishLeaderToken() {
 	}
 }
 
+func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence uint64) viewInfo {
+	c.sync()
+	info := viewInfo{startViewNumber, startProposalSequence}
+	select {
+	case newViewSeq := <-c.viewChange:
+		if newViewSeq.viewNumber > startViewNumber {
+			info.viewNumber = newViewSeq.viewNumber
+		}
+		if newViewSeq.proposalSeq > startProposalSequence {
+			info.proposalSeq = newViewSeq.proposalSeq
+		}
+	default:
+	}
+	return info
+}
+
 // Start the controller
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
 	c.controllerDone.Add(1)
@@ -594,8 +610,10 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
 
-	c.currViewNumber = startViewNumber
-	c.startView(startProposalSequence)
+	info := c.syncOnStart(startViewNumber, startProposalSequence)
+
+	c.currViewNumber = info.viewNumber
+	c.startView(info.proposalSeq)
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}

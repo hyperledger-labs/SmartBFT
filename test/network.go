@@ -57,7 +57,12 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 	n[id] = node
 	node.running.Add(1)
 	node.createCommittedBatches(n)
-	go node.serve()
+}
+
+func (n Network) StartServe() {
+	for _, node := range n {
+		go node.serve()
+	}
 }
 
 // Shutdown stops all nodes in the network
@@ -83,14 +88,14 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 		panic("node doesn't exist")
 	}
 
-	dstNode.RLock()
+	dstNode.probabilityLock.RLock()
 	p := dstNode.lossProbability
-	dstNode.RUnlock()
+	dstNode.probabilityLock.RUnlock()
 
-	srcNode.RLock()
+	srcNode.probabilityLock.RLock()
 	q := srcNode.lossProbability
 	w := srcNode.peerLossProbability[target]
-	srcNode.RUnlock()
+	srcNode.probabilityLock.RUnlock()
 
 	r := rand.Float32()
 	if r < p || r < q || r < w {
@@ -112,6 +117,7 @@ type Node struct {
 	n                   Network
 	lossProbability     float32
 	peerLossProbability map[uint64]float32
+	probabilityLock     sync.RWMutex
 	shutdownChan        chan struct{}
 	in                  chan msgFrom
 	h                   handler

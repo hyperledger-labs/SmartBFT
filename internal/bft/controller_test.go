@@ -38,6 +38,21 @@ func TestControllerBasic(t *testing.T) {
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", mock.Anything, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
+	comm := &mocks.CommMock{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything)
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+		Proposal:   types.Proposal{VerificationSequence: 0},
+		Signatures: nil,
+	})
+
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
 
 	controller := &bft.Controller{
 		Batcher:       batcher,
@@ -48,6 +63,9 @@ func TestControllerBasic(t *testing.T) {
 		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Application:   app,
+		Comm:          comm,
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
 	}
 	configureProposerBuilder(controller)
 
@@ -61,6 +79,7 @@ func TestControllerBasic(t *testing.T) {
 	controller.AbortView(3)
 	controller.Stop()
 	controller.Stop()
+	collector.Stop()
 }
 
 func TestControllerLeaderBasic(t *testing.T) {
@@ -82,6 +101,21 @@ func TestControllerLeaderBasic(t *testing.T) {
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
+	commMock := &mocks.CommMock{}
+	commMock.On("SendConsensus", mock.Anything, mock.Anything)
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+		Proposal:   types.Proposal{VerificationSequence: 0},
+		Signatures: nil,
+	})
+
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
 
 	controller := &bft.Controller{
 		RequestPool:   pool,
@@ -91,12 +125,16 @@ func TestControllerLeaderBasic(t *testing.T) {
 		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Batcher:       batcher,
+		Comm:          commMock,
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
 	}
 	configureProposerBuilder(controller)
 
 	controller.Start(1, 0)
 	<-batcherChan
 	controller.Stop()
+	collector.Stop()
 	batcher.AssertCalled(t, "NextBatch")
 }
 
@@ -156,6 +194,20 @@ func TestLeaderPropose(t *testing.T) {
 	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+		Proposal:   types.Proposal{VerificationSequence: 0},
+		Signatures: nil,
+	})
+
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
+
 	controller := &bft.Controller{
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
@@ -172,12 +224,14 @@ func TestLeaderPropose(t *testing.T) {
 		Application:   app,
 		Checkpoint:    &types.Checkpoint{},
 		ViewChanger:   &bft.ViewChanger{},
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
 	}
 	configureProposerBuilder(controller)
 
-	commWG.Add(6)
+	commWG.Add(9)
 	controller.Start(1, 0)
-	commWG.Wait() // propose
+	commWG.Wait() // propose + state request
 
 	commWG.Add(3)
 	controller.ProcessMessages(2, prepare)
@@ -217,6 +271,8 @@ func TestLeaderPropose(t *testing.T) {
 		23: {Signer: 23, Value: []byte{4}},
 	}, signaturesBySigners)
 
+	controller.Stop()
+	collector.Stop()
 	wal.Close()
 }
 
@@ -265,6 +321,20 @@ func TestViewChanged(t *testing.T) {
 	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+		Proposal:   types.Proposal{VerificationSequence: 0},
+		Signatures: nil,
+	})
+
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
+
 	controller := &bft.Controller{
 		Signer:        signer,
 		WAL:           wal,
@@ -278,19 +348,24 @@ func TestViewChanged(t *testing.T) {
 		Comm:          comm,
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
 	}
 	configureProposerBuilder(controller)
 
+	commWG.Add(3) // state request
 	controller.Start(1, 0)
+	commWG.Wait()
 
-	commWG.Add(6)
+	commWG.Add(6) // propose
 	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "SendConsensus", 6)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 9)
 	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 	controller.Stop()
+	collector.Stop()
 	wal.Close()
 }
 
@@ -351,8 +426,26 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				})
 			}
 
+			commMock := &mocks.CommMock{}
+			commMock.On("SendConsensus", mock.Anything, mock.Anything)
+
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyRequest", mock.Anything).Return(types.RequestInfo{}, testCase.verifyReqReturns)
+
+			synchronizer := &mocks.SynchronizerMock{}
+			synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+				Proposal:   types.Proposal{VerificationSequence: 0},
+				Signatures: nil,
+			})
+
+			collector := bft.StateCollector{
+				SelfID:         0,
+				N:              4,
+				Logger:         log,
+				CollectTimeout: 100 * time.Millisecond,
+			}
+			collector.Start()
+			defer collector.Stop()
 
 			controller := &bft.Controller{
 				RequestPool:   pool,
@@ -362,7 +455,10 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				NodesList:     []uint64{0, 1, 2, 3},
 				Logger:        log,
 				Batcher:       batcher,
+				Comm:          commMock,
 				Verifier:      verifier,
+				Synchronizer:  synchronizer,
+				Collector:     &collector,
 			}
 
 			configureProposerBuilder(controller)
@@ -524,28 +620,27 @@ func TestSyncInform(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	controller.Start(1, 0)
 	vc.Start(1)
-
 	vc.StartViewChange(1, true)
 	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
 
-	commWG.Add(9)
 	synchronizerWG.Add(1)
-	controller.Sync()
-	commWG.Wait()
+	commWG.Add(9)
+	controller.Start(1, 0)
 	synchronizerWG.Wait()
-	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
-	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "SendConsensus", 9)
-	leaderMon.AssertCalled(t, "HeartbeatWasSent")
+	commWG.Wait()
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, syncToView+1, msg.GetViewChange().NextView) // view number did change according to info
+
+	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
+	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 9)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	controller.Stop()
 	vc.Stop()

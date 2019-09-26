@@ -24,6 +24,7 @@ func TestNetwork(t *testing.T) {
 			Prepare: &smartbftprotos.Prepare{Seq: 1},
 		},
 	}
+	network.StartServe()
 
 	network.send(1, 2, prepare)
 	network.send(2, 1, prepare)

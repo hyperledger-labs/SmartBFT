@@ -34,7 +34,7 @@ var fastConfig = consensus.Configuration{
 	ViewChangeTimeout:         1 * time.Minute,
 	LeaderHeartbeatTimeout:    1 * time.Minute,
 	LeaderHeartbeatCount:      10,
-	CollectTimeout:            2 * time.Second,
+	CollectTimeout:            200 * time.Millisecond,
 }
 
 // App implements all interfaces required by an application using this library
@@ -93,29 +93,29 @@ func (a *App) Restart() {
 
 // Disconnect disconnects the node from the network
 func (a *App) Disconnect() {
-	a.Node.Lock()
-	defer a.Node.Unlock()
+	a.Node.probabilityLock.Lock()
+	defer a.Node.probabilityLock.Unlock()
 	a.Node.lossProbability = 1
 }
 
 // DisconnectFrom disconnects the node from a specific node
 func (a *App) DisconnectFrom(target uint64) {
-	a.Node.Lock()
-	defer a.Node.Unlock()
+	a.Node.probabilityLock.Lock()
+	defer a.Node.probabilityLock.Unlock()
 	a.Node.peerLossProbability[target] = 1.0
 }
 
 // ConnectTo connects the node to a specific node
 func (a *App) ConnectTo(target uint64) {
-	a.Node.Lock()
-	defer a.Node.Unlock()
+	a.Node.probabilityLock.Lock()
+	defer a.Node.probabilityLock.Unlock()
 	delete(a.Node.peerLossProbability, target)
 }
 
 // Connect connects the node to the network
 func (a *App) Connect() {
-	a.Node.Lock()
-	defer a.Node.Unlock()
+	a.Node.probabilityLock.Lock()
+	defer a.Node.probabilityLock.Unlock()
 	a.Node.lossProbability = 0
 }
 
