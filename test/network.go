@@ -82,11 +82,11 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 
 	dstNode.RLock()
 	p := dstNode.lossProbability
-	w := srcNode.peerLossProbability[target]
 	dstNode.RUnlock()
 
 	srcNode.RLock()
 	q := srcNode.lossProbability
+	w := srcNode.peerLossProbability[target]
 	srcNode.RUnlock()
 
 	r := rand.Float32()
