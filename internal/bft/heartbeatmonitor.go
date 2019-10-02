@@ -169,9 +169,15 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 }
 
 func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
-	if sender != hm.leaderID || hb.View != hm.view {
-		hm.logger.Infof("Heartbeat is unexpected, ignoring; Monitor: leader=%d, view=%d; HB: sender: %d, view: %d, seq: %d",
-			hm.leaderID, hm.view, sender, hb.View, hb.Seq)
+	senderNotLeader := sender != hm.leaderID
+	viewMismatch := hb.View != hm.view
+	if senderNotLeader || viewMismatch {
+		if senderNotLeader {
+			hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
+		}
+		if viewMismatch {
+			hm.logger.Debugf("Heartbeat view different than expected, ignoring; expected-view=%d, received-view: %d", hm.view, hb.View)
+		}
 		if hb.View < hm.view {
 			hm.sendHeartBeatResponse(sender)
 		}
@@ -179,7 +185,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 	}
 
 	if !hm.follower {
-		hm.logger.Infof("Heartbeat monitor is not a follower, ignoring; sender: %d, msg: %v", sender, hb)
+		hm.logger.Debugf("Heartbeat monitor is not a follower, ignoring; sender: %d, msg: %v", sender, hb)
 		return
 	}
 
@@ -194,7 +200,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 // handleHeartBeatResponse keeps track of responses, and if we get f+1 identical, force a sync
 func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbftprotos.HeartBeatResponse) {
 	if hm.follower {
-		hm.logger.Infof("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
+		hm.logger.Debugf("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
 		return
 	}
 
@@ -209,16 +215,12 @@ func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbft
 	}
 
 	hm.logger.Debugf("Received HeartBeatResponse, msg: %v; from %d", hbr, sender)
-	prevVote, exists := hm.hbRespCollector[sender]
-	if exists && prevVote == hbr.View {
-		return
-	}
 	hm.hbRespCollector[sender] = hbr.View
 
 	// check if we have f+1 votes
 	_, f := computeQuorum(hm.numberOfNodes)
 	if len(hm.hbRespCollector) >= f+1 {
-		hm.logger.Debugf("Calling HeartBeatEventHandler Sync, view: %d", hbr.View)
+		hm.logger.Infof("Received HeartBeatResponse triggered a call to HeartBeatEventHandler Sync, view: %d", hbr.View)
 		hm.handler.Sync()
 		hm.syncReq = true
 	}
@@ -253,7 +255,7 @@ func (hm *HeartbeatMonitor) viewActiveButBehindLeader(hbMsg *smartbftprotos.Hear
 	areWeBehind := ourSeq+1 < hbMsg.Seq
 
 	if areWeBehind {
-		hm.logger.Infof("Leader's sequence is %d and ours is %d", hbMsg.Seq, ourSeq)
+		hm.logger.Debugf("Leader's sequence is %d and ours is %d", hbMsg.Seq, ourSeq)
 	}
 
 	return areWeBehind
