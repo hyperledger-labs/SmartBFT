@@ -224,6 +224,67 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	}
 }
 
+func TestLeaderInPartitionWithHealing(t *testing.T) {
+	t.Parallel()
+
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	n0 := newNode(0, network, t.Name(), testDir)
+	n1 := newNode(1, network, t.Name(), testDir)
+	n2 := newNode(2, network, t.Name(), testDir)
+	n3 := newNode(3, network, t.Name(), testDir)
+
+	n0.Consensus.Start()
+	n1.Consensus.Start()
+	n2.Consensus.Start()
+	n3.Consensus.Start()
+
+	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+
+	data0 := <-n0.Delivered
+	data1 := <-n1.Delivered
+	data2 := <-n2.Delivered
+	data3 := <-n3.Delivered
+	assert.Equal(t, data0, data1)
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+	n0.Submit(Request{ID: "2", ClientID: "alice"})
+
+	data0 = <-n0.Delivered
+	data1 = <-n1.Delivered
+	data2 = <-n2.Delivered
+	data3 = <-n3.Delivered
+	assert.Equal(t, data0, data1)
+	assert.Equal(t, data1, data2)
+	assert.Equal(t, data2, data3)
+
+	n0.Disconnect() // leader in partition
+	t.Log("Disconnected n0")
+
+	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
+	n2.Submit(Request{ID: "3", ClientID: "alice"})
+	n3.Submit(Request{ID: "3", ClientID: "alice"})
+
+	data1Tx3 := <-n1.Delivered
+	data2 = <-n2.Delivered
+	data3 = <-n3.Delivered
+	assert.Equal(t, data1Tx3, data2)
+	assert.Equal(t, data2, data3)
+	assert.Len(t, n0.Delivered, 0) // n0 did not receive it
+
+	n0.Connect() // partition heals, leader should eventually sync, become a follower, and deliver
+	t.Log("Connected n0")
+
+	data0 = <-n0.Delivered
+	assert.Equal(t, data1Tx3, data0)
+}
+
 func TestMultiLeadersPartition(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
