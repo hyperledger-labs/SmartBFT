@@ -478,7 +478,7 @@ func TestSyncInform(t *testing.T) {
 				LatestSequence: 1,
 				ViewId:         syncToView,
 			}),
-			VerificationSequence: 0},
+			VerificationSequence: 1},
 		Signatures: nil,
 	})
 
