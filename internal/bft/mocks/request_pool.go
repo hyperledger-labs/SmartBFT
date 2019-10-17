@@ -17,13 +17,13 @@ func (_m *RequestPool) Close() {
 	_m.Called()
 }
 
-// NextRequests provides a mock function with given fields: maxCount, maxSizeBytes
-func (_m *RequestPool) NextRequests(maxCount int, maxSizeBytes uint64) ([][]byte, bool) {
-	ret := _m.Called(maxCount, maxSizeBytes)
+// NextRequests provides a mock function with given fields: maxCount, maxSizeBytes, check
+func (_m *RequestPool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) ([][]byte, bool) {
+	ret := _m.Called(maxCount, maxSizeBytes, check)
 
 	var r0 [][]byte
-	if rf, ok := ret.Get(0).(func(int, uint64) [][]byte); ok {
-		r0 = rf(maxCount, maxSizeBytes)
+	if rf, ok := ret.Get(0).(func(int, uint64, bool) [][]byte); ok {
+		r0 = rf(maxCount, maxSizeBytes, check)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([][]byte)
@@ -31,8 +31,8 @@ func (_m *RequestPool) NextRequests(maxCount int, maxSizeBytes uint64) ([][]byte
 	}
 
 	var r1 bool
-	if rf, ok := ret.Get(1).(func(int, uint64) bool); ok {
-		r1 = rf(maxCount, maxSizeBytes)
+	if rf, ok := ret.Get(1).(func(int, uint64, bool) bool); ok {
+		r1 = rf(maxCount, maxSizeBytes, check)
 	} else {
 		r1 = ret.Get(1).(bool)
 	}

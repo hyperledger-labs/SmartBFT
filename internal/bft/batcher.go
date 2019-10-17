@@ -36,7 +36,7 @@ func NewBatchBuilder(pool RequestPool, submittedChan chan struct{}, maxMsgCount 
 // The method returns as soon as the batch is full, in terms of request count or total size, or after a timeout.
 // The method may block.
 func (b *BatchBuilder) NextBatch() [][]byte {
-	currBatch, full := b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
+	currBatch, full := b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes, true)
 	if full {
 		return currBatch
 	}
@@ -48,11 +48,11 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 		case <-b.closeChan:
 			return nil
 		case <-timeout:
-			currBatch, _ = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
+			currBatch, _ = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes, false)
 			return currBatch
 		case <-b.submittedChan:
 			// there is a possibility to extend the current batch
-			currBatch, full = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
+			currBatch, full = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes, true)
 			if full {
 				return currBatch
 			}

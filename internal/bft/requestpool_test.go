@@ -103,7 +103,7 @@ func TestReqPoolBasic(t *testing.T) {
 		err = pool.Submit(byteReq3)
 		assert.NoError(t, err)
 
-		next, full := pool.NextRequests(4, 10000000)
+		next, full := pool.NextRequests(4, 10000000, false)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Equal(t, "2", insp.RequestID(next[1]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[2]).ID)
@@ -113,13 +113,13 @@ func TestReqPoolBasic(t *testing.T) {
 		err = pool.RemoveRequest(req2)
 		assert.NoError(t, err)
 
-		next, _ = pool.NextRequests(4, 10000000)
+		next, _ = pool.NextRequests(4, 10000000, false)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[1]).ID)
 		assert.Len(t, next, 2)
 		assert.False(t, full)
 
-		next, full = pool.NextRequests(1, 10000000)
+		next, full = pool.NextRequests(1, 10000000, false)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Len(t, next, 1)
 		assert.True(t, full)
@@ -135,7 +135,7 @@ func TestReqPoolBasic(t *testing.T) {
 		err = pool.RemoveRequest(req3)
 		assert.NoError(t, err)
 
-		next, _ = pool.NextRequests(1, 10000000)
+		next, _ = pool.NextRequests(1, 10000000, false)
 		assert.Len(t, next, 0)
 
 		timeoutHandler.AssertNumberOfCalls(t, "OnRequestTimeout", 0)
@@ -207,27 +207,27 @@ func TestReqPoolCapacity(t *testing.T) {
 			totalLength += len(r)
 		}
 
-		next, full := pool.NextRequests(5, 10000000)
+		next, full := pool.NextRequests(5, 10000000, false)
 		assert.Equal(t, 5, len(next))
 		assert.True(t, full)
 
-		next, full = pool.NextRequests(20, 10000000)
+		next, full = pool.NextRequests(20, 10000000, false)
 		assert.Equal(t, 10, len(next))
 		assert.False(t, full)
 
-		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]))
+		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]), false)
 		assert.Equal(t, 2, len(next))
 		assert.True(t, full)
 
-		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]/2))
+		next, full = pool.NextRequests(20, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]/2), false)
 		assert.Equal(t, 3, len(next))
 		assert.True(t, full)
 
-		next, full = pool.NextRequests(4, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]))
+		next, full = pool.NextRequests(4, uint64(lengths[0]+lengths[1]+lengths[2]+lengths[3]), false)
 		assert.Equal(t, 4, len(next))
 		assert.True(t, full)
 
-		next, full = pool.NextRequests(20, uint64(totalLength))
+		next, full = pool.NextRequests(20, uint64(totalLength), false)
 		assert.Equal(t, 10, len(next))
 		assert.True(t, full)
 
@@ -266,7 +266,7 @@ func TestReqPoolPrune(t *testing.T) {
 	})
 
 	assert.Equal(t, 1, pool.Size())
-	req, _ := pool.NextRequests(1, 10000000)
+	req, _ := pool.NextRequests(1, 10000000, false)
 	client, tx, _ := parseTestRequest(req[0])
 	assert.Equal(t, "2", client)
 	assert.Equal(t, "2", tx)

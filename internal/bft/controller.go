@@ -39,7 +39,7 @@ type RequestPool interface {
 	Prune(predicate func([]byte) error)
 	Submit(request []byte) error
 	Size() int
-	NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte, full bool)
+	NextRequests(maxCount int, maxSizeBytes uint64, check bool) (batch [][]byte, full bool)
 	RemoveRequest(request types.RequestInfo) error
 	StopTimers()
 	RestartTimers()
