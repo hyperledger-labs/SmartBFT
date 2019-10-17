@@ -119,6 +119,10 @@ func TestReqPoolBasic(t *testing.T) {
 		assert.Len(t, next, 2)
 		assert.False(t, full)
 
+		next, _ = pool.NextRequests(4, 10000000, true)
+		assert.Nil(t, next)a
+		assert.False(t, full)
+
 		next, full = pool.NextRequests(1, 10000000, false)
 		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
 		assert.Len(t, next, 1)
