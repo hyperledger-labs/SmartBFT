@@ -52,6 +52,7 @@ type Pool struct {
 	existMap       map[types.RequestInfo]*list.Element
 	timeoutHandler RequestTimeoutHandler
 	stopped        bool
+	submittedChan  chan struct{}
 }
 
 // requestItem captures request related information
@@ -68,7 +69,7 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions) *Pool {
+func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
 	if options.RequestTimeout == 0 {
 		options.RequestTimeout = defaultRequestTimeout
 	}
@@ -87,6 +88,7 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 		semaphore:      semaphore.NewWeighted(options.QueueSize),
 		existMap:       make(map[types.RequestInfo]*list.Element),
 		options:        options,
+		submittedChan:  submittedChan,
 	}
 }
 
@@ -138,6 +140,13 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	rp.logger.Debugf("Request %s submitted; started a timeout: %s", reqInfo, rp.options.RequestTimeout)
+
+	// notify that a request was submitted
+	select {
+	case rp.submittedChan <- struct{}{}:
+	default:
+	}
+
 	return nil
 }
 

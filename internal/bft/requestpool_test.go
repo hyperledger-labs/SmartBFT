@@ -30,10 +30,12 @@ func TestReqPoolBasic(t *testing.T) {
 	insp := &testRequestInspector{}
 	byteReq1 := makeTestRequest("1", "1", "foo")
 
+	submittedChan := make(chan struct{}, 1)
+
 	t.Run("create close", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour}, submittedChan)
 
 		assert.Equal(t, 0, pool.Size())
 		err = pool.Submit(byteReq1)
@@ -49,7 +51,7 @@ func TestReqPoolBasic(t *testing.T) {
 	t.Run("submit remove next", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour}, submittedChan)
 		defer pool.Close()
 
 		assert.Equal(t, 0, pool.Size())
@@ -149,10 +151,11 @@ func TestReqPoolCapacity(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
+	submittedChan := make(chan struct{}, 1)
 
 	t.Run("submit storm", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
+		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour}, submittedChan)
 		defer pool.Close()
 
 		wg := sync.WaitGroup{}
@@ -191,7 +194,7 @@ func TestReqPoolCapacity(t *testing.T) {
 
 	t.Run("respect max count and size", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour})
+		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, RequestTimeout: time.Hour}, submittedChan)
 		defer pool.Close()
 
 		var lengths []int
@@ -241,10 +244,11 @@ func TestReqPoolPrune(t *testing.T) {
 
 	insp := &testRequestInspector{}
 	timeoutHandler := &mocks.RequestTimeoutHandler{}
+	submittedChan := make(chan struct{}, 1)
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "bar")
-	pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour})
+	pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, RequestTimeout: time.Hour}, submittedChan)
 	defer pool.Close()
 
 	assert.Equal(t, 0, pool.Size())
@@ -281,6 +285,7 @@ func TestReqPoolTimeout(t *testing.T) {
 	byteReq2 := makeTestRequest("2", "2", "foo")
 
 	insp := &testRequestInspector{}
+	submittedChan := make(chan struct{}, 1)
 
 	t.Run("request timeout", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
@@ -306,6 +311,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				LeaderFwdTimeout:  time.Hour,
 				AutoRemoveTimeout: time.Hour,
 			},
+			submittedChan,
 		)
 		defer pool.Close()
 
@@ -350,6 +356,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				LeaderFwdTimeout:  10 * time.Millisecond,
 				AutoRemoveTimeout: time.Hour,
 			},
+			submittedChan,
 		)
 		defer pool.Close()
 
@@ -396,6 +403,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				LeaderFwdTimeout:  10 * time.Millisecond,
 				AutoRemoveTimeout: 10 * time.Millisecond,
 			},
+			submittedChan,
 		)
 		defer pool.Close()
 
@@ -441,6 +449,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				LeaderFwdTimeout:  time.Hour,
 				AutoRemoveTimeout: time.Hour,
 			},
+			submittedChan,
 		)
 		defer pool.Close()
 		assert.Equal(t, 0, pool.Size())
