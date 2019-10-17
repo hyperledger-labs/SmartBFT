@@ -420,6 +420,7 @@ func (c *Controller) run() {
 			c.propose()
 		case <-c.syncChan:
 			c.sync()
+			c.MaybePruneRevokedRequests()
 		}
 	}
 }
