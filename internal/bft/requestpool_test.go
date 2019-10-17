@@ -120,7 +120,7 @@ func TestReqPoolBasic(t *testing.T) {
 		assert.False(t, full)
 
 		next, _ = pool.NextRequests(4, 10000000, true)
-		assert.Nil(t, next)a
+		assert.Nil(t, next)
 		assert.False(t, full)
 
 		next, full = pool.NextRequests(1, 10000000, false)
