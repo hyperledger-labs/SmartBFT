@@ -32,15 +32,16 @@ func TestBatcherBasic(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
+	submittedChan := make(chan struct{}, 1)
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo-bar")
 	byteReq3 := makeTestRequest("3", "3", "foo-bar-foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq1) // pool: [req1]
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 1, 2048, 10*time.Millisecond)
+	batcher := bft.NewBatchBuilder(pool, submittedChan, 1, 2048, 10*time.Millisecond)
 
 	res := batcher.NextBatch()
 	assert.Len(t, res, 1)
@@ -79,7 +80,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq3, res[0])
 
 	// count limit
-	batcher = bft.NewBatchBuilder(pool, 2, 2048, 10*time.Millisecond)
+	batcher = bft.NewBatchBuilder(pool, submittedChan, 2, 2048, 10*time.Millisecond)
 
 	err = pool.Submit(byteReq2) // pool: [req2, req3]
 	assert.NoError(t, err)
@@ -92,7 +93,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq2, res[1])
 
 	// size limit
-	batcher = bft.NewBatchBuilder(pool, 10, uint64(len(byteReq3)+len(byteReq2)), 10*time.Millisecond)
+	batcher = bft.NewBatchBuilder(pool, submittedChan, 10, uint64(len(byteReq3)+len(byteReq2)), 10*time.Millisecond)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 2)
@@ -100,7 +101,7 @@ func TestBatcherBasic(t *testing.T) {
 	assert.Equal(t, byteReq2, res[1])
 
 	// high limits
-	batcher = bft.NewBatchBuilder(pool, 10, 2048, 10*time.Millisecond)
+	batcher = bft.NewBatchBuilder(pool, submittedChan, 10, 2048, 10*time.Millisecond)
 	res = batcher.NextBatch()
 	assert.Len(t, res, 3)
 	assert.Equal(t, byteReq3, res[0])
@@ -115,9 +116,10 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200})
+	submittedChan := make(chan struct{}, 1)
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200}, submittedChan)
 
-	batcher := bft.NewBatchBuilder(pool, 100, 5000, 100*time.Second)
+	batcher := bft.NewBatchBuilder(pool, submittedChan, 100, 5000, 100*time.Second)
 
 	go func() {
 		for i := 0; i < 300; i++ {
@@ -167,12 +169,13 @@ func TestBatcherClose(t *testing.T) {
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
 
+	submittedChan := make(chan struct{}, 1)
 	byteReq := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq)
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 100, 2048, time.Minute)
+	batcher := bft.NewBatchBuilder(pool, submittedChan, 100, 2048, time.Minute)
 
 	go func() {
 		batcher.Close()
@@ -191,12 +194,13 @@ func TestBatcherReset(t *testing.T) {
 	log := basicLog.Sugar()
 	insp := &testRequestInspector{}
 
+	submittedChan := make(chan struct{}, 1)
 	byteReq1 := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3})
+	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 
-	batcher := bft.NewBatchBuilder(pool, 1, 2048, 10*time.Millisecond)
+	batcher := bft.NewBatchBuilder(pool, submittedChan, 1, 2048, 10*time.Millisecond)
 
 	res := batcher.NextBatch()
 	assert.Len(t, res, 1)

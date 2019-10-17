@@ -11,28 +11,30 @@ import (
 )
 
 type BatchBuilder struct {
-	pool         RequestPool
-	maxMsgCount  int
-	maxSizeBytes uint64
-	batchTimeout time.Duration
-	closeChan    chan struct{}
-	closeLock    sync.Mutex // Reset and Close may be called by different threads
+	pool          RequestPool
+	submittedChan chan struct{}
+	maxMsgCount   int
+	maxSizeBytes  uint64
+	batchTimeout  time.Duration
+	closeChan     chan struct{}
+	closeLock     sync.Mutex // Reset and Close may be called by different threads
 }
 
-func NewBatchBuilder(pool RequestPool, maxMsgCount int, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
+func NewBatchBuilder(pool RequestPool, submittedChan chan struct{}, maxMsgCount int, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
 	b := &BatchBuilder{
-		pool:         pool,
-		maxMsgCount:  maxMsgCount,
-		maxSizeBytes: maxSizeBytes,
-		batchTimeout: batchTimeout,
-		closeChan:    make(chan struct{}),
+		pool:          pool,
+		submittedChan: submittedChan,
+		maxMsgCount:   maxMsgCount,
+		maxSizeBytes:  maxSizeBytes,
+		batchTimeout:  batchTimeout,
+		closeChan:     make(chan struct{}),
 	}
 	return b
 }
 
 // NextBatch returns the next batch of requests to be proposed.
-// The method returns as soon as a the batch is full, in terms of request count or total size, or after a timeout.
-// The method may block
+// The method returns as soon as the batch is full, in terms of request count or total size, or after a timeout.
+// The method may block.
 func (b *BatchBuilder) NextBatch() [][]byte {
 	currBatch, full := b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
 	if full {
@@ -48,13 +50,11 @@ func (b *BatchBuilder) NextBatch() [][]byte {
 		case <-timeout:
 			currBatch, _ = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
 			return currBatch
-		default:
-			time.Sleep(10 * time.Millisecond)
-			if len(currBatch) < b.pool.Size() { // there is a possibility to extend the current batch
-				currBatch, full = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
-				if full {
-					return currBatch
-				}
+		case <-b.submittedChan:
+			// there is a possibility to extend the current batch
+			currBatch, full = b.pool.NextRequests(b.maxMsgCount, b.maxSizeBytes)
+			if full {
+				return currBatch
 			}
 		}
 	}
