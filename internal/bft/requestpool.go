@@ -53,6 +53,7 @@ type Pool struct {
 	timeoutHandler RequestTimeoutHandler
 	stopped        bool
 	submittedChan  chan struct{}
+	sizeBytes      uint64
 }
 
 // requestItem captures request related information
@@ -147,6 +148,8 @@ func (rp *Pool) Submit(request []byte) error {
 	default:
 	}
 
+	rp.sizeBytes += uint64(len(element.Value.(*requestItem).request))
+
 	return nil
 }
 
@@ -161,9 +164,15 @@ func (rp *Pool) Size() int {
 // NextRequests returns the next requests to be batched.
 // It returns at most maxCount requests, and at most maxSizeBytes, in a newly allocated slice.
 // Return variable full indicates that the batch cannot be increased further by calling again with the same arguments.
-func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64) (batch [][]byte, full bool) {
+func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) (batch [][]byte, full bool) {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
+
+	if check {
+		if (len(rp.existMap) < maxCount) && (rp.sizeBytes < maxSizeBytes) {
+			return nil, false
+		}
+	}
 
 	count := minInt(rp.fifo.Len(), maxCount)
 	var totalSize uint64
@@ -243,10 +252,12 @@ func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 		return fmt.Errorf(errStr)
 	}
 
-	return rp.deleteRequest(element, requestInfo)
+	rp.deleteRequest(element, requestInfo)
+	rp.sizeBytes -= uint64(len(element.Value.(*requestItem).request))
+	return nil
 }
 
-func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestInfo) error {
+func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestInfo) {
 	item := element.Value.(*requestItem)
 	item.timeout.Stop()
 
@@ -258,8 +269,6 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 	if len(rp.existMap) != rp.fifo.Len() {
 		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
 	}
-
-	return nil
 }
 
 // Close removes all the requests, stops all the timeout timers.
@@ -270,7 +279,7 @@ func (rp *Pool) Close() {
 	rp.stopped = true
 
 	for requestInfo, element := range rp.existMap {
-		_ = rp.deleteRequest(element, requestInfo)
+		rp.deleteRequest(element, requestInfo)
 	}
 }
 
