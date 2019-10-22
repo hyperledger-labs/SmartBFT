@@ -110,6 +110,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 		sender                      uint64
 		viewActive                  bool
 		proposalSeqInView           uint64
+		syncCalled                  bool
 	}{
 		{
 			description:                 "timeout expires",
@@ -117,18 +118,21 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			heartbeatMessage:            &smartbftprotos.Message{},
 			onHeartbeatTimeoutCallCount: 1,
 			event:                       noop,
+			proposalSeqInView:           10,
 		},
 		{
-			description:      "heartbeats prevent timeout",
-			sender:           12,
-			heartbeatMessage: heartbeat,
-			event:            noop,
+			description:       "heartbeats prevent timeout",
+			sender:            12,
+			heartbeatMessage:  heartbeat,
+			event:             noop,
+			proposalSeqInView: 10,
 		},
 		{
-			description:      "heartbeats from leader with inactive view don't prevent timeout",
-			sender:           12,
-			heartbeatMessage: heartbeat,
-			event:            noop,
+			description:       "heartbeats from leader with inactive view don't prevent timeout",
+			sender:            12,
+			heartbeatMessage:  heartbeat,
+			event:             noop,
+			proposalSeqInView: 10,
 		},
 		{
 			description:                 "bad heartbeats do not prevent timeout",
@@ -136,6 +140,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			heartbeatMessage:            prePrepare,
 			onHeartbeatTimeoutCallCount: 1,
 			event:                       noop,
+			proposalSeqInView:           10,
 		},
 		{
 			description:                 "heartbeats not from the leader do not prevent timeout",
@@ -143,15 +148,17 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			heartbeatMessage:            heartbeat,
 			onHeartbeatTimeoutCallCount: 1,
 			event:                       noop,
+			proposalSeqInView:           10,
 		},
 		{
-			description:                 "heartbeats from a leader too far ahead lead to timeout",
+			description:                 "heartbeats from a leader too far ahead lead to sync and timeout",
 			sender:                      12,
 			heartbeatMessage:            heartbeatFromFarAheadLeader,
 			onHeartbeatTimeoutCallCount: 1,
 			event:                       noop,
 			proposalSeqInView:           10,
 			viewActive:                  true,
+			syncCalled:                  true,
 		},
 		{
 			description:       "heartbeats from a leader only 1 seq ahead do not lead to timeout",
@@ -190,6 +197,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			handler := &mocks.HeartbeatEventHandler{}
 			handler.On("OnHeartbeatTimeout", uint64(10), uint64(12))
 			handler.On("OnHeartbeatTimeout", uint64(11), uint64(12))
+			handler.On("Sync")
 
 			viewSequence := &atomic.Value{}
 			viewSequence.Store(bft.ViewSequence{
@@ -215,6 +223,9 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			hm.Close()
 
 			handler.AssertNumberOfCalls(t, "OnHeartbeatTimeout", testCase.onHeartbeatTimeoutCallCount)
+			if testCase.syncCalled {
+				handler.AssertCalled(t, "Sync")
+			}
 		})
 	}
 }
@@ -359,6 +370,11 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	scheduler1 := make(chan time.Time)
 	comm1 := &mocks.CommMock{}
 	handler1 := &mocks.HeartbeatEventHandler{}
+	syncWG := &sync.WaitGroup{}
+	syncWG.Add(1)
+	handler1.On("Sync").Run(func(args mock.Arguments) {
+		syncWG.Done()
+	})
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
 	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1)
@@ -367,7 +383,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	respWG.Add(1)
 	comm1.On("SendConsensus", mock.AnythingOfType("uint64"), mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		target := args[0].(uint64)
-		assert.Equal(t, uint64(1), target)
+		assert.Equal(t, uint64(2), target)
 		msg := args[1].(*smartbftprotos.Message)
 		hbr := msg.GetHeartBeatResponse()
 		assert.NotNil(t, hbr)
@@ -388,10 +404,15 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	clock.advanceTime(1, scheduler1)
 
 	hm1.ProcessMsg(2, hb6)
-	hm1.ProcessMsg(2, hb7)
+
 	// trigger response
-	hm1.ProcessMsg(1, hb5)
+	hm1.ProcessMsg(2, hb5)
 	respWG.Wait()
+
+	// trigger sync
+	hm1.ProcessMsg(2, hb7)
+	syncWG.Wait()
+
 	hm1.Close()
 }
 
