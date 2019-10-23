@@ -15,7 +15,9 @@ import (
 )
 
 const (
-	Leader   Role = false
+	// Leader indicates that this node is a leader
+	Leader Role = false
+	// Follower indicates that this node is a follower
 	Follower Role = true
 )
 
@@ -30,6 +32,7 @@ type HeartbeatEventHandler interface {
 	Sync()
 }
 
+// Role indicates if this node is a follower or a leader
 type Role bool
 
 type roleChange struct {
@@ -41,6 +44,7 @@ type roleChange struct {
 // heartbeatResponseCollector is a map from node ID to view number, and hold the last response from each node.
 type heartbeatResponseCollector map[uint64]uint64
 
+// HeartbeatMonitor implements LeaderMonitor
 type HeartbeatMonitor struct {
 	scheduler       <-chan time.Time
 	inc             chan incMsg
@@ -65,6 +69,7 @@ type HeartbeatMonitor struct {
 	viewSequences   *atomic.Value
 }
 
+// NewHeartbeatMonitor creates a new HeartbeatMonitor
 func NewHeartbeatMonitor(
 	scheduler <-chan time.Time,
 	logger api.Logger,

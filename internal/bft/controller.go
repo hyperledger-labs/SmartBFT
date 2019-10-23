@@ -15,16 +15,19 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+// Decider delivers the proposal with signatures to the application
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
 	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
 }
 
+// FailureDetector initiates a view change when there is a complaint
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
 type FailureDetector interface {
 	Complain(viewNum uint64, stopView bool)
 }
 
+// Batcher batches requests to eventually become a new proposal
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
 	NextBatch() [][]byte
@@ -33,8 +36,8 @@ type Batcher interface {
 	Reset()
 }
 
+// RequestPool is a pool of client's requests
 //go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
-
 type RequestPool interface {
 	Prune(predicate func([]byte) error)
 	Submit(request []byte) error
@@ -46,14 +49,15 @@ type RequestPool interface {
 	Close()
 }
 
+// LeaderMonitor monitors the heartbeat from the current leader
 //go:generate mockery -dir . -name LeaderMonitor -case underscore -output ./mocks/
-
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
 	ProcessMsg(sender uint64, msg *protos.Message)
 	Close()
 }
 
+// Proposer proposes a new proposal to be agreed on
 type Proposer interface {
 	Propose(proposal types.Proposal)
 	Start()
@@ -62,11 +66,13 @@ type Proposer interface {
 	HandleMessage(sender uint64, m *protos.Message)
 }
 
+// ProposerBuilder builds a new Proposer
 //go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
 type ProposerBuilder interface {
 	NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) Proposer
 }
 
+// Controller controls the entire flow of the consensus
 type Controller struct {
 	// configuration
 	ID               uint64
@@ -140,6 +146,7 @@ func (c *Controller) leaderID() uint64 {
 	return getLeaderID(c.getCurrentViewNumber(), c.N, c.nodes)
 }
 
+// HandleRequest handles a request from the client
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
 	iAm, leaderID := c.iAmTheLeader()
 	if !iAm {
@@ -329,6 +336,7 @@ func (c *Controller) abortView(view uint64) {
 	c.currView.Abort()
 }
 
+// Sync initiates a synchronization
 func (c *Controller) Sync() {
 	if iAmLeader, _ := c.iAmTheLeader(); iAmLeader {
 		c.Batcher.Close()
@@ -520,6 +528,7 @@ func (c *Controller) relinquishSyncToken() {
 	}
 }
 
+// MaybePruneRevokedRequests prunes requests with different verification sequence
 func (c *Controller) MaybePruneRevokedRequests() {
 	oldVerSqn := c.verificationSequence
 	newVerSqn := c.Verifier.VerificationSequence()

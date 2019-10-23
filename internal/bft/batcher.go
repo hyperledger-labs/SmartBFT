@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// BatchBuilder implements Batcher
 type BatchBuilder struct {
 	pool          RequestPool
 	submittedChan chan struct{}
@@ -20,6 +21,7 @@ type BatchBuilder struct {
 	closeLock     sync.Mutex // Reset and Close may be called by different threads
 }
 
+// NewBatchBuilder creates a new BatchBuilder
 func NewBatchBuilder(pool RequestPool, submittedChan chan struct{}, maxMsgCount int, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
 	b := &BatchBuilder{
 		pool:          pool,
@@ -73,6 +75,7 @@ func (b *BatchBuilder) Close() {
 	close(b.closeChan)
 }
 
+// Closed returns true if the batcher is closed
 func (b *BatchBuilder) Closed() bool {
 	select {
 	case <-b.closeChan:
