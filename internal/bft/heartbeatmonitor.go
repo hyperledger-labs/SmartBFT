@@ -169,27 +169,26 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 }
 
 func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
-	senderNotLeader := sender != hm.leaderID
-	viewMismatch := hb.View != hm.view
-	if senderNotLeader || viewMismatch {
-		if senderNotLeader {
-			hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
-		}
-		if viewMismatch {
-			hm.logger.Debugf("Heartbeat view different than expected, ignoring; expected-view=%d, received-view: %d", hm.view, hb.View)
-		}
-		if hb.View < hm.view {
-			hm.sendHeartBeatResponse(sender)
-		}
+	if hb.View < hm.view {
+		hm.logger.Debugf("Heartbeat view is lower than expected, sending response; expected-view=%d, received-view: %d", hm.view, hb.View)
+		hm.sendHeartBeatResponse(sender)
 		return
 	}
 
-	if !hm.follower {
-		hm.logger.Debugf("Heartbeat monitor is not a follower, ignoring; sender: %d, msg: %v", sender, hb)
+	if sender != hm.leaderID {
+		hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
+		return
+	}
+
+	if hb.View > hm.view {
+		hm.logger.Debugf("Heartbeat view is bigger than expected, syncing and ignoring; expected-view=%d, received-view: %d", hm.view, hb.View)
+		hm.handler.Sync()
 		return
 	}
 
 	if hm.viewActiveButBehindLeader(hb) {
+		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
+		hm.handler.Sync()
 		return
 	}
 
