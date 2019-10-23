@@ -65,6 +65,7 @@ func minInt(a, b int) int {
 	return b
 }
 
+// MarshalOrPanic marshals or panics when an error occurs
 func MarshalOrPanic(msg proto.Message) []byte {
 	b, err := proto.Marshal(msg)
 	if err != nil {
@@ -148,7 +149,7 @@ type inFlightProposalData struct {
 	prepared bool
 }
 
-// InFlightData returns an in-flight proposal or nil if there is no such.
+// InFlightProposal returns an in-flight proposal or nil if there is no such.
 func (ifp *InFlightData) InFlightProposal() *types.Proposal {
 	fetched := ifp.v.Load()
 	if fetched == nil {
@@ -159,6 +160,7 @@ func (ifp *InFlightData) InFlightProposal() *types.Proposal {
 	return data.proposal
 }
 
+// IsInFlightPrepared returns true if the in-flight proposal is prepared.
 func (ifp *InFlightData) IsInFlightPrepared() bool {
 	fetched := ifp.v.Load()
 	if fetched == nil {
@@ -168,12 +170,13 @@ func (ifp *InFlightData) IsInFlightPrepared() bool {
 	return data.prepared
 }
 
-// Store stores an in-flight proposal.
+// StoreProposal stores an in-flight proposal.
 func (ifp *InFlightData) StoreProposal(prop types.Proposal) {
 	p := prop
 	ifp.v.Store(inFlightProposalData{proposal: &p})
 }
 
+// StorePrepares stores alongside the already stored in-flight proposal that it is prepared.
 func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 	prop := ifp.InFlightProposal()
 	if prop == nil {
@@ -183,6 +186,7 @@ func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 	ifp.v.Store(inFlightProposalData{proposal: p, prepared: true})
 }
 
+// ProposalMaker implements ProposerBuilder
 type ProposalMaker struct {
 	N                  uint64
 	SelfID             uint64
@@ -199,6 +203,7 @@ type ProposalMaker struct {
 	restoreOnceFromWAL sync.Once
 }
 
+// NewProposer returns a new view
 func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) Proposer {
 	view := &View{
 		N:                pm.N,
@@ -242,32 +247,34 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum uint64, q
 	return view
 }
 
+// ViewSequence indicates if a view is currently active and its current proposal sequence
 type ViewSequence struct {
 	ViewActive  bool
 	ProposalSeq uint64
 }
 
+// MsgToString converts a given message to a printable string
 func MsgToString(m *protos.Message) string {
 	if m == nil {
 		return "empty message"
 	}
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare:
-		return PrePrepareToString(m.GetPrePrepare())
+		return prePrepareToString(m.GetPrePrepare())
 	case *protos.Message_NewView:
-		return NewViewToString(m.GetNewView())
+		return newViewToString(m.GetNewView())
 	case *protos.Message_ViewData:
-		return ViewDataToString(m.GetViewData())
+		return viewDataToString(m.GetViewData())
 	case *protos.Message_HeartBeat:
-		return HeartBeatToString(m.GetHeartBeat())
+		return heartBeatToString(m.GetHeartBeat())
 	case *protos.Message_HeartBeatResponse:
-		return HeartBeatResponseToString(m.GetHeartBeatResponse())
+		return heartBeatResponseToString(m.GetHeartBeatResponse())
 	default:
 		return m.String()
 	}
 }
 
-func PrePrepareToString(prp *protos.PrePrepare) string {
+func prePrepareToString(prp *protos.PrePrepare) string {
 	if prp == nil {
 		return "<empty PrePrepare>"
 	}
@@ -278,14 +285,14 @@ func PrePrepareToString(prp *protos.PrePrepare) string {
 		prp.View, prp.Seq, len(prp.Proposal.Payload), base64.StdEncoding.EncodeToString(prp.Proposal.Header))
 }
 
-func NewViewToString(nv *protos.NewView) string {
+func newViewToString(nv *protos.NewView) string {
 	if nv == nil || nv.SignedViewData == nil {
 		return "<empty NewView>"
 	}
 	buff := bytes.Buffer{}
 	buff.WriteString("< NewView with ")
 	for i, svd := range nv.SignedViewData {
-		buff.WriteString(ViewDataToString(svd))
+		buff.WriteString(viewDataToString(svd))
 		if i == len(nv.SignedViewData)-1 {
 			break
 		}
@@ -295,7 +302,7 @@ func NewViewToString(nv *protos.NewView) string {
 	return buff.String()
 }
 
-func ViewDataToString(svd *protos.SignedViewData) string {
+func viewDataToString(svd *protos.SignedViewData) string {
 	if svd == nil {
 		return "empty ViewData"
 	}
@@ -308,7 +315,7 @@ func ViewDataToString(svd *protos.SignedViewData) string {
 		svd.Signer, vd.NextView)
 }
 
-func HeartBeatToString(hb *protos.HeartBeat) string {
+func heartBeatToString(hb *protos.HeartBeat) string {
 	if hb == nil {
 		return "empty HeartBeat"
 	}
@@ -316,7 +323,7 @@ func HeartBeatToString(hb *protos.HeartBeat) string {
 	return fmt.Sprintf("<HeartBeat with view: %d, seq: %d", hb.View, hb.Seq)
 }
 
-func HeartBeatResponseToString(hbr *protos.HeartBeatResponse) string {
+func heartBeatResponseToString(hbr *protos.HeartBeatResponse) string {
 	if hbr == nil {
 		return "empty HeartBeatResponse"
 	}

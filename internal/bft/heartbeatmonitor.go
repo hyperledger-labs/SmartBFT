@@ -14,10 +14,9 @@ import (
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
+// A node could either be a leader or a follower
 const (
-	// Leader indicates that this node is a leader
-	Leader Role = false
-	// Follower indicates that this node is a follower
+	Leader   Role = false
 	Follower Role = true
 )
 
