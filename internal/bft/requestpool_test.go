@@ -45,7 +45,7 @@ func TestReqPoolBasic(t *testing.T) {
 		assert.Equal(t, 0, pool.Size())
 
 		err = pool.Submit(byteReq1)
-		assert.EqualError(t, err, "pool stopped, request rejected: {1 1}")
+		assert.EqualError(t, err, "pool closed, request rejected: {1 1}")
 	})
 
 	t.Run("submit remove next", func(t *testing.T) {
@@ -467,11 +467,11 @@ func TestReqPoolTimeout(t *testing.T) {
 		err = pool.RemoveRequest(insp.RequestID(byteReq1))
 		assert.NoError(t, err)
 		err = pool.Submit(byteReq2)
-		assert.EqualError(t, err, "pool stopped, request rejected: {2 2}")
+		assert.NoError(t, err)
 
 		pool.RestartTimers()
 		err = pool.Submit(byteReq2)
-		assert.NoError(t, err)
+		assert.EqualError(t, err, "request {2 2} already exists in the pool")
 		pool.StopTimers()
 		pool.RestartTimers()
 
