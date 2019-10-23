@@ -186,17 +186,10 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	vs := hm.viewSequences.Load()
-	if vs != nil { // initialized
-		viewSeq := vs.(ViewSequence)
-		if viewSeq.ViewActive { // don't check sequence when view is not active
-			ourSeq := viewSeq.ProposalSeq
-			if ourSeq+1 < hb.Seq { // leader can be one sequence ahead of us
-				hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring; expected-seq=%d, received-seq: %d", ourSeq, hb.Seq)
-				hm.handler.Sync()
-				return
-			}
-		}
+	if hm.viewActiveButBehindLeader(hb) {
+		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
+		hm.handler.Sync()
+		return
 	}
 
 	if !hm.follower {
