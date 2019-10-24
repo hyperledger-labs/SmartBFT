@@ -34,8 +34,10 @@ type msgFrom struct {
 	from    int
 }
 
+// Network is a map of ids and nodes
 type Network map[uint64]*Node
 
+// AddOrUpdateNode adds or updates a node in the network
 func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 	node, exists := n[id]
 	if exists {
@@ -58,6 +60,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 	go node.serve()
 }
 
+// Shutdown stops all nodes in the network
 func (n Network) Shutdown() {
 	for _, node := range n {
 		close(node.shutdownChan)
@@ -101,6 +104,7 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 	}
 }
 
+// Node represents a node in a network
 type Node struct {
 	sync.RWMutex
 	running             sync.WaitGroup
@@ -115,14 +119,17 @@ type Node struct {
 	app                 *App
 }
 
+// SendConsensus sends a consensus related message to a target node
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
 	node.n.send(node.id, targetID, m)
 }
 
+// SendTransaction sends a client's request to a target node
 func (node *Node) SendTransaction(targetID uint64, request []byte) {
 	node.n.send(node.id, targetID, &FwdMessage{Payload: request})
 }
 
+// Nodes returns the ids of all nodes in the network
 func (node *Node) Nodes() []uint64 {
 	var res []uint64
 	for _, n := range node.n {

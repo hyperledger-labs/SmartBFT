@@ -37,6 +37,7 @@ var fastConfig = consensus.Configuration{
 	CollectTimeout:            2 * time.Second,
 }
 
+// App implements all interfaces required by an application using this library
 type App struct {
 	ID             uint64
 	Delivered      chan *AppRecord
@@ -53,23 +54,27 @@ type App struct {
 	logger         *zap.SugaredLogger
 }
 
+// Mute mutes the log
 func (a *App) Mute() {
 	a.logLevel.SetLevel(zapcore.PanicLevel)
 }
 
+// UnMute unmutes the log
 func (a *App) UnMute() {
 	a.logLevel.SetLevel(zapcore.DebugLevel)
 }
 
+// Submit submits the client request
 func (a *App) Submit(req Request) {
 	a.Consensus.SubmitRequest(req.ToBytes())
 }
 
+// Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.Decision {
 	records := a.Node.cb.readAll(*a.latestMD)
 	for _, record := range records {
 		proposal := types.Proposal{
-			Payload:  record.Batch.ToBytes(),
+			Payload:  record.Batch.toBytes(),
 			Metadata: record.Metadata,
 		}
 		a.Deliver(proposal, nil)
@@ -77,6 +82,7 @@ func (a *App) Sync() types.Decision {
 	return *a.lastDecision
 }
 
+// Restart restarts the node
 func (a *App) Restart() {
 	a.Consensus.Stop()
 	a.Node.Lock()
@@ -85,30 +91,35 @@ func (a *App) Restart() {
 	a.Consensus.Start()
 }
 
+// Disconnect disconnects the node from the network
 func (a *App) Disconnect() {
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	a.Node.lossProbability = 1
 }
 
+// DisconnectFrom disconnects the node from a specific node
 func (a *App) DisconnectFrom(target uint64) {
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	a.Node.peerLossProbability[target] = 1.0
 }
 
+// ConnectTo connects the node to a specific node
 func (a *App) ConnectTo(target uint64) {
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	delete(a.Node.peerLossProbability, target)
 }
 
+// Connect connects the node to the network
 func (a *App) Connect() {
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	a.Node.lossProbability = 0
 }
 
+// RequestID returns info about the given request
 func (a *App) RequestID(req []byte) types.RequestInfo {
 	txn := requestFromBytes(req)
 	return types.RequestInfo{
@@ -117,8 +128,9 @@ func (a *App) RequestID(req []byte) types.RequestInfo {
 	}
 }
 
+// VerifyProposal verifies the given proposal and returns the included requests
 func (a *App) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
-	blockData := BatchFromBytes(proposal.Payload)
+	blockData := batchFromBytes(proposal.Payload)
 	requests := make([]types.RequestInfo, 0)
 	for _, t := range blockData.Requests {
 		req := requestFromBytes(t)
@@ -128,42 +140,50 @@ func (a *App) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, erro
 	return requests, nil
 }
 
+// VerifyRequest verifies the given request and returns its info
 func (a *App) VerifyRequest(val []byte) (types.RequestInfo, error) {
 	req := requestFromBytes(val)
 	return types.RequestInfo{ID: req.ID, ClientID: req.ClientID}, nil
 }
 
+// VerifyConsenterSig verifies a nodes signature on the given proposal
 func (a *App) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error {
 	return nil
 }
 
+// VerifySignature verifies a signature
 func (a *App) VerifySignature(signature types.Signature) error {
 	return nil
 }
 
+// VerificationSequence returns the current verification sequence
 func (a *App) VerificationSequence() uint64 {
 	return 0
 }
 
+// Sign signs on the given value
 func (a *App) Sign([]byte) []byte {
 	return nil
 }
 
+// SignProposal signs on the given proposal
 func (a *App) SignProposal(types.Proposal) *types.Signature {
 	return &types.Signature{Id: a.ID}
 }
 
+// AssembleProposal assembles a new proposal from the given requests
 func (a *App) AssembleProposal(metadata []byte, requests [][]byte) (nextProp types.Proposal, remainder [][]byte) {
 	return types.Proposal{
-		Payload:  Batch{Requests: requests}.ToBytes(),
+		Payload:  batch{Requests: requests}.toBytes(),
 		Metadata: metadata,
 	}, nil
 }
 
+// Deliver delivers the given proposal
 func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) {
 	record := &AppRecord{
 		Metadata: proposal.Metadata,
-		Batch:    BatchFromBytes(proposal.Payload),
+		Batch:    batchFromBytes(proposal.Payload),
 	}
 	a.Node.cb.add(record)
 	a.lastDecision = &types.Decision{
@@ -224,11 +244,13 @@ func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppReco
 	return res
 }
 
+// Request represents a client's request
 type Request struct {
 	ClientID string
 	ID       string
 }
 
+// ToBytes returns a byte array representation of the request
 func (txn Request) ToBytes() []byte {
 	rawTxn, err := asn1.Marshal(txn)
 	if err != nil {
@@ -243,11 +265,11 @@ func requestFromBytes(req []byte) *Request {
 	return &r
 }
 
-type Batch struct {
+type batch struct {
 	Requests [][]byte
 }
 
-func (b Batch) ToBytes() []byte {
+func (b batch) toBytes() []byte {
 	rawBlock, err := asn1.Marshal(b)
 	if err != nil {
 		panic(err)
@@ -255,14 +277,15 @@ func (b Batch) ToBytes() []byte {
 	return rawBlock
 }
 
-func BatchFromBytes(rawBlock []byte) *Batch {
-	var block Batch
+func batchFromBytes(rawBlock []byte) *batch {
+	var block batch
 	asn1.Unmarshal(rawBlock, &block)
 	return &block
 }
 
+// AppRecord represents a committed batch and metadata
 type AppRecord struct {
-	Batch    *Batch
+	Batch    *batch
 	Metadata []byte
 }
 
