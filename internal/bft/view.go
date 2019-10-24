@@ -17,8 +17,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Phase indicates the status of the view
 type Phase uint8
 
+// These are the different phases
 const (
 	COMMITTED = iota
 	PROPOSED
@@ -26,8 +28,8 @@ const (
 	ABORT
 )
 
+// State can save and restore the state
 //go:generate mockery -dir . -name State -case underscore -output ./mocks/
-
 type State interface {
 	// Save saves a message.
 	Save(message *protos.SavedMessage) error
@@ -37,11 +39,13 @@ type State interface {
 	Restore(*View) error
 }
 
+// Comm adds broadcast to the regular comm interface
 type Comm interface {
 	api.Comm
 	BroadcastConsensus(m *protos.Message)
 }
 
+// View is responsible for running the view protocol
 type View struct {
 	// Configuration
 	SelfID           uint64
@@ -90,6 +94,7 @@ type View struct {
 	ViewSequences *atomic.Value
 }
 
+// Start starts the view
 func (v *View) Start() {
 	v.stopOnce = sync.Once{}
 	v.incMsgs = make(chan *incMsg, v.InMsgQSize)
@@ -147,6 +152,7 @@ func (v *View) setupVotes() {
 	v.nextCommits.clear(v.N)
 }
 
+// HandleMessage handles incoming messages
 func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 	msg := &incMsg{sender: sender, Message: m}
 	select {
@@ -694,6 +700,7 @@ func (v *View) startNextSeq() {
 	v.nextCommits = tmpVotes
 }
 
+// GetMetadata returns the current sequence and view number (in a marshaled ViewMetadata protobuf message)
 func (v *View) GetMetadata() []byte {
 	propSeq := v.ProposalSequence
 	md := &protos.ViewMetadata{

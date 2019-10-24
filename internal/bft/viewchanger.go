@@ -18,17 +18,20 @@ import (
 	"github.com/pkg/errors"
 )
 
+// ViewController controls the view
 //go:generate mockery -dir . -name ViewController -case underscore -output ./mocks/
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
 	AbortView(view uint64)
 }
 
+// Pruner prunes revoked requests
 //go:generate mockery -dir . -name Pruner -case underscore -output ./mocks/
 type Pruner interface {
 	MaybePruneRevokedRequests()
 }
 
+// RequestsTimer controls requests
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
 type RequestsTimer interface {
 	StopTimers()
@@ -41,6 +44,7 @@ type change struct {
 	stopView bool
 }
 
+// ViewChanger is responsible for running the view change protocol
 type ViewChanger struct {
 	// Configuration
 	SelfID uint64
@@ -474,6 +478,7 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 	return true
 }
 
+// ValidateLastDecision validates the given decision, and returns its sequence when valid
 func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier api.Verifier) (lastSequence uint64, err error) {
 	if vd.LastDecision == nil {
 		return 0, errors.Errorf("the last decision is not set")
@@ -522,6 +527,7 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 	return md.LatestSequence, nil
 }
 
+// ValidateInFlight validates the given in-flight proposal
 func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) error {
 	if inFlightProposal == nil {
 		return nil
@@ -599,8 +605,9 @@ type proposalAndMetadata struct {
 	metadata *protos.ViewMetadata
 }
 
+// CheckInFlight checks if there is an in-flight proposal that needs to be decided on (because a node might decided on it already)
 func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal, err error) {
-	expectedSequence := MaxLastDecisionSequence(messages, quorum, N, verifier) + 1
+	expectedSequence := maxLastDecisionSequence(messages, quorum, N, verifier) + 1
 	possibleProposals := make([]*possibleProposal, 0)
 	proposalsAndMetadata := make([]*proposalAndMetadata, 0)
 	noInFlightCount := 0
@@ -697,7 +704,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 	return false, false, nil, nil
 }
 
-func MaxLastDecisionSequence(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) uint64 {
+func maxLastDecisionSequence(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) uint64 {
 	max := uint64(0)
 	for _, vd := range messages {
 		seq, err := ValidateLastDecision(vd, quorum, N, verifier)
@@ -973,6 +980,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 	v.inFlightView.Abort()
 }
 
+// Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
 	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
@@ -987,10 +995,12 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 	v.inFlightDecideChan <- struct{}{}
 }
 
+// Complain panics when a view change is requested
 func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
 	v.Logger.Panicf("Node %d has complained while in the view for the in flight proposal", v.SelfID)
 }
 
+// Sync calls the synchronizer and informs the view changer of the sync
 func (v *ViewChanger) Sync() {
 	// the in flight proposal view asked to sync
 	v.Logger.Debugf("Node %d is calling sync because the in flight proposal view has asked to sync", v.SelfID)
