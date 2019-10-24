@@ -51,6 +51,7 @@ type Pool struct {
 	semaphore      *semaphore.Weighted
 	existMap       map[types.RequestInfo]*list.Element
 	timeoutHandler RequestTimeoutHandler
+	closed         bool
 	stopped        bool
 	submittedChan  chan struct{}
 	sizeBytes      uint64
@@ -93,18 +94,18 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 	}
 }
 
-func (rp *Pool) isStopped() bool {
+func (rp *Pool) isClosed() bool {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
-	return rp.stopped
+	return rp.closed
 }
 
 // Submit a request into the pool, returns an error when request is already in the pool
 func (rp *Pool) Submit(request []byte) error {
 	reqInfo := rp.inspector.RequestID(request)
-	if rp.isStopped() {
-		return errors.Errorf("pool stopped, request rejected: %s", reqInfo)
+	if rp.isClosed() {
+		return errors.Errorf("pool closed, request rejected: %s", reqInfo)
 	}
 
 	// do not wait for a semaphore with a lock, as it will prevent draining the pool.
@@ -128,6 +129,10 @@ func (rp *Pool) Submit(request []byte) error {
 		rp.options.RequestTimeout,
 		func() { rp.onRequestTO(reqCopy, reqInfo) },
 	)
+	if rp.stopped {
+		rp.logger.Debugf("pool stopped, submitting with a stopped timer, request: %s", reqInfo)
+		to.Stop()
+	}
 	reqItem := &requestItem{
 		request: reqCopy,
 		timeout: to,
@@ -276,7 +281,7 @@ func (rp *Pool) Close() {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
-	rp.stopped = true
+	rp.closed = true
 
 	for requestInfo, element := range rp.existMap {
 		rp.deleteRequest(element, requestInfo)
@@ -346,7 +351,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 		return
 	}
 
-	if rp.stopped {
+	if rp.closed || rp.stopped {
 		rp.logger.Debugf("Pool stopped, will NOT start a leader-forwarding timeout")
 		return
 	}
@@ -378,7 +383,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 		return
 	}
 
-	if rp.stopped {
+	if rp.closed || rp.stopped {
 		rp.logger.Debugf("Pool stopped, will NOT start auto-remove timeout")
 		return
 	}
