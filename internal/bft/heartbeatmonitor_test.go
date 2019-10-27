@@ -453,3 +453,44 @@ func makeHeartBeat(view, seq uint64) *smartbftprotos.Message {
 	}
 	return hb
 }
+
+func TestHeartbeatWasSent(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	comm := &mocks.CommMock{}
+	handler := &mocks.HeartbeatEventHandler{}
+	scheduler := make(chan time.Time)
+
+	vs := &atomic.Value{}
+	vs.Store(bft.ViewSequence{ViewActive: true})
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs)
+
+	var heartBeatsSent uint32
+
+	var toWG sync.WaitGroup
+	toWG.Add(2)
+	comm.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
+		msg := args[0].(*smartbftprotos.Message)
+		view := msg.GetHeartBeat().View
+		atomic.AddUint32(&heartBeatsSent, 1)
+		if uint64(10) == view {
+			toWG.Done()
+		}
+	}).Return()
+
+	clock := fakeTime{}
+	hm.ChangeRole(bft.Leader, 10, 12)
+	scheduler <- clock.time.Add(tickIncrementUnit)
+	scheduler <- clock.time.Add(tickIncrementUnit * 2)                     // sending heartbeat
+	scheduler <- clock.time.Add(tickIncrementUnit*2 + tickIncrementUnit/2) // not sending yet
+	hm.HeartbeatWasSent()
+	scheduler <- clock.time.Add(tickIncrementUnit * 3) // not sending because sent already (by HeartbeatWasSent)
+	scheduler <- clock.time.Add(tickIncrementUnit * 4) // sending now
+	toWG.Wait()
+
+	hm.Close()
+
+	assert.Equal(t, uint32(2), atomic.LoadUint32(&heartBeatsSent))
+}
