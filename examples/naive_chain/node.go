@@ -109,15 +109,6 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 	}, nil
 }
 
-func (n *Node) BroadcastConsensus(m *smartbftprotos.Message) {
-	for receiver, out := range n.out {
-		if n.id == uint64(receiver) {
-			continue
-		}
-		out <- m
-	}
-}
-
 func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 	n.out[int(targetID)] <- message
 }

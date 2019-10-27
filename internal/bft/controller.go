@@ -54,6 +54,7 @@ type RequestPool interface {
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
 	ProcessMsg(sender uint64, msg *protos.Message)
+	HeartbeatWasSent()
 	Close()
 }
 
@@ -74,6 +75,7 @@ type ProposerBuilder interface {
 
 // Controller controls the entire flow of the consensus
 type Controller struct {
+	api.Comm
 	// configuration
 	ID               uint64
 	N                uint64
@@ -86,7 +88,6 @@ type Controller struct {
 	Application      api.Application
 	FailureDetector  FailureDetector
 	Synchronizer     api.Synchronizer
-	Comm             Comm
 	Signer           api.Signer
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
@@ -247,6 +248,9 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.currViewLock.RUnlock()
 		view.HandleMessage(sender, m)
 		c.ViewChanger.HandleViewMessage(sender, m)
+		if sender == c.leaderID() {
+			c.LeaderMonitor.ProcessMsg(sender, c.convertViewMessageToHeartbeat(m))
+		}
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
 	case *protos.Message_HeartBeat, *protos.Message_HeartBeatResponse:
@@ -278,6 +282,29 @@ func (c *Controller) respondToStateTransferRequest(sender uint64) {
 		},
 	}
 	c.Comm.SendConsensus(sender, msg)
+}
+
+func (c *Controller) convertViewMessageToHeartbeat(m *protos.Message) *protos.Message {
+	var view, seq uint64
+	switch m.GetContent().(type) {
+	case *protos.Message_PrePrepare:
+		view = m.GetPrePrepare().View
+		seq = m.GetPrePrepare().Seq
+	case *protos.Message_Prepare:
+		view = m.GetPrepare().View
+		seq = m.GetPrepare().Seq
+	case *protos.Message_Commit:
+		view = m.GetCommit().View
+		seq = m.GetCommit().Seq
+	}
+	return &protos.Message{
+		Content: &protos.Message_HeartBeat{
+			HeartBeat: &protos.HeartBeat{
+				View: view,
+				Seq:  seq,
+			},
+		},
+	}
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
@@ -510,7 +537,7 @@ func (c *Controller) fetchState() *types.ViewAndSeq {
 		},
 	}
 	c.Collector.ClearCollected()
-	c.Comm.BroadcastConsensus(msg)
+	c.BroadcastConsensus(msg)
 	return c.Collector.CollectStateResponses()
 }
 
@@ -667,4 +694,22 @@ type decision struct {
 	proposal   types.Proposal
 	signatures []types.Signature
 	requests   []types.RequestInfo
+}
+
+//BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
+func (c *Controller) BroadcastConsensus(m *protos.Message) {
+	for _, node := range c.nodes {
+		// Do not send to yourself
+		if c.ID == node {
+			continue
+		}
+		c.Comm.SendConsensus(node, m)
+	}
+
+	if m.GetPrePrepare() != nil || m.GetPrepare() != nil || m.GetCommit() != nil {
+		if leader, _ := c.iAmTheLeader(); leader {
+			c.LeaderMonitor.HeartbeatWasSent()
+		}
+	}
+
 }

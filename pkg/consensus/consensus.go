@@ -19,13 +19,12 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	bft.Comm
-
 	Config            Configuration
 	Application       bft.Application
 	Assembler         bft.Assembler
 	WAL               bft.WriteAheadLog
 	WALInitialContent [][]byte
+	Comm              bft.Comm
 	Signer            bft.Signer
 	Verifier          bft.Verifier
 	RequestInspector  bft.RequestInspector
@@ -53,7 +52,7 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() {
-	c.numberOfNodes = uint64(len(c.Nodes()))
+	c.numberOfNodes = uint64(len(c.Comm.Nodes()))
 	inFlight := algorithm.InFlightData{}
 
 	c.state = &algorithm.PersistedState{
@@ -70,7 +69,6 @@ func (c *Consensus) Start() {
 		SelfID:      c.Config.SelfID,
 		N:           c.numberOfNodes,
 		Logger:      c.Logger,
-		Comm:        c,
 		Signer:      c.Signer,
 		Verifier:    c.Verifier,
 		Application: c,
@@ -103,7 +101,7 @@ func (c *Consensus) Start() {
 		Application:      c,
 		FailureDetector:  c,
 		Synchronizer:     c.Synchronizer,
-		Comm:             c,
+		Comm:             c.Comm,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,
 		ViewChanger:      c.viewChanger,
@@ -112,6 +110,7 @@ func (c *Consensus) Start() {
 		State:            c.state,
 	}
 
+	c.viewChanger.Comm = c.controller
 	c.viewChanger.Synchronizer = c.controller
 
 	c.controller.ProposerBuilder = c.proposalMaker()
@@ -125,7 +124,7 @@ func (c *Consensus) Start() {
 	submittedChan := make(chan struct{}, 1)
 	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, submittedChan)
 	batchBuilder := algorithm.NewBatchBuilder(pool, submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c, c.numberOfNodes, c.controller, c.controller.ViewSequences)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences)
 	c.controller.RequestPool = pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
@@ -209,7 +208,7 @@ func (c *Consensus) BroadcastConsensus(m *protos.Message) {
 func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 	return &algorithm.ProposalMaker{
 		State:           c.state,
-		Comm:            c,
+		Comm:            c.controller,
 		Decider:         c.controller,
 		Logger:          c.Logger,
 		Signer:          c.Signer,

@@ -321,6 +321,7 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 			Logger:            app.logger,
 			WAL:               writeAheadLog,
 			Metadata:          *app.latestMD,
+			Comm:              app.Node,
 			Verifier:          app,
 			Signer:            app,
 			RequestInspector:  app,

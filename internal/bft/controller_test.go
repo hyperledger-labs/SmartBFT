@@ -133,10 +133,10 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
@@ -153,6 +153,7 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
@@ -161,12 +162,13 @@ func TestLeaderPropose(t *testing.T) {
 	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
+	n := 4
 	controller := &bft.Controller{
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
 		WAL:           wal,
 		ID:            17, // the leader
-		N:             4,
+		N:             uint64(n),
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -179,11 +181,11 @@ func TestLeaderPropose(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	commWG.Add(2)
+	commWG.Add(2 * (n - 1))
 	controller.Start(1, 0)
 	commWG.Wait() // propose
 
-	commWG.Add(1)
+	commWG.Add(n - 1)
 	controller.ProcessMessages(2, prepare)
 	controller.ProcessMessages(3, prepare)
 	commWG.Wait()
@@ -192,8 +194,8 @@ func TestLeaderPropose(t *testing.T) {
 	commit3 := proto.Clone(commit2).(*protos.Message)
 	commit3Get := commit3.GetCommit()
 	commit3Get.Signature.Signer = 23
-	appWG.Add(1)  // deliver
-	commWG.Add(2) // next proposal
+	appWG.Add(1)            // deliver
+	commWG.Add(2 * (n - 1)) // next proposal
 	controller.ProcessMessages(23, commit3)
 	appWG.Wait()
 	commWG.Wait()
@@ -248,7 +250,8 @@ func TestViewChanged(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything)
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
@@ -258,6 +261,7 @@ func TestViewChanged(t *testing.T) {
 	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
+	leaderMon.On("HeartbeatWasSent")
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
@@ -268,11 +272,13 @@ func TestViewChanged(t *testing.T) {
 	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
+	n := 4
+
 	controller := &bft.Controller{
 		Signer:        signer,
 		WAL:           wal,
 		ID:            2, // the next leader
-		N:             4,
+		N:             uint64(n),
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -285,12 +291,12 @@ func TestViewChanged(t *testing.T) {
 
 	controller.Start(1, 0)
 
-	commWG.Add(2)
+	commWG.Add(2 * (n - 1))
 	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 2*(n-1))
 	controller.Stop()
 	wal.Close()
 }
@@ -394,7 +400,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		FailureDetector:  c.FailureDetector,
 		Sync:             c,
 		Logger:           c.Logger,
-		Comm:             c.Comm,
+		Comm:             c,
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
@@ -439,7 +445,8 @@ func TestSyncInform(t *testing.T) {
 
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("BroadcastConsensus", mock.Anything)
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
@@ -457,6 +464,7 @@ func TestSyncInform(t *testing.T) {
 	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
+	leaderMon.On("HeartbeatWasSent")
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
@@ -488,9 +496,11 @@ func TestSyncInform(t *testing.T) {
 	controllerMock := &mocks.ViewController{}
 	controllerMock.On("AbortView", mock.Anything)
 
+	n := 4
+
 	collector := bft.StateCollector{
 		SelfID:         0,
-		N:              4,
+		N:              uint64(n),
 		Logger:         log,
 		CollectTimeout: 100 * time.Millisecond,
 	}
@@ -498,7 +508,7 @@ func TestSyncInform(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		SelfID:        2,
-		N:             4,
+		N:             uint64(n),
 		Logger:        log,
 		Comm:          commWithChan,
 		RequestsTimer: reqTimer,
@@ -511,7 +521,7 @@ func TestSyncInform(t *testing.T) {
 		Signer:        signer,
 		WAL:           wal,
 		ID:            2,
-		N:             4,
+		N:             uint64(n),
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -534,14 +544,14 @@ func TestSyncInform(t *testing.T) {
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
 
-	commWG.Add(3)
+	commWG.Add(3 * (n - 1))
 	synchronizerWG.Add(1)
 	controller.Sync()
 	commWG.Wait()
 	synchronizerWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 3*(n-1))
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan
