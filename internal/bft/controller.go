@@ -54,6 +54,7 @@ type RequestPool interface {
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
 	ProcessMsg(sender uint64, msg *protos.Message)
+	InjectArtificialHeartbeat(sender uint64, msg *protos.Message)
 	HeartbeatWasSent()
 	Close()
 }
@@ -249,7 +250,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		view.HandleMessage(sender, m)
 		c.ViewChanger.HandleViewMessage(sender, m)
 		if sender == c.leaderID() {
-			c.LeaderMonitor.ProcessMsg(sender, c.convertViewMessageToHeartbeat(m))
+			c.LeaderMonitor.InjectArtificialHeartbeat(sender, c.convertViewMessageToHeartbeat(m))
 		}
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)

@@ -29,6 +29,11 @@ func (_m *LeaderMonitor) HeartbeatWasSent() {
 	_m.Called()
 }
 
+// InjectArtificialHeartbeat provides a mock function with given fields: sender, msg
+func (_m *LeaderMonitor) InjectArtificialHeartbeat(sender uint64, msg *smartbftprotos.Message) {
+	_m.Called(sender, msg)
+}
+
 // ProcessMsg provides a mock function with given fields: sender, msg
 func (_m *LeaderMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.Message) {
 	_m.Called(sender, msg)
