@@ -78,16 +78,11 @@ func TestChain(t *testing.T) {
 	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second}, testDir)
 
 	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
-		for _, chain := range chains {
-			err := chain.Order(Transaction{
-				ClientID: "alice",
-				Id:       fmt.Sprintf("tx%d", blockSeq),
-			})
-			assert.NoError(t, err)
-		}
-	}
-
-	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
+		err := chains[0].Order(Transaction{
+			ClientID: "alice",
+			Id:       fmt.Sprintf("tx%d", blockSeq),
+		})
+		assert.NoError(t, err)
 		for _, chain := range chains {
 			block := chain.Listen()
 			assert.Equal(t, uint64(blockSeq), block.Sequence)
