@@ -66,6 +66,7 @@ type HeartbeatMonitor struct {
 	timedOut        bool
 	syncReq         bool
 	viewSequences   *atomic.Value
+	sentHeartbeat   chan struct{}
 }
 
 // NewHeartbeatMonitor creates a new HeartbeatMonitor
@@ -92,6 +93,7 @@ func NewHeartbeatMonitor(
 		handler:         handler,
 		hbRespCollector: make(heartbeatResponseCollector),
 		viewSequences:   viewSequences,
+		sentHeartbeat:   make(chan struct{}, 1),
 	}
 	return hm
 }
@@ -123,6 +125,8 @@ func (hm *HeartbeatMonitor) run() {
 			hm.handleMsg(msg.sender, msg.Message)
 		case cmd := <-hm.commandChan:
 			hm.handleCommand(cmd)
+		case <-hm.sentHeartbeat:
+			hm.lastHeartbeat = hm.lastTick
 		}
 	}
 }
@@ -340,4 +344,11 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 	}
 
 	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
+}
+
+func (hm *HeartbeatMonitor) HeartbeatWasSent() {
+	select {
+	case hm.sentHeartbeat <- struct{}{}:
+	default:
+	}
 }
