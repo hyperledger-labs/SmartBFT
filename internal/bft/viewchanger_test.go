@@ -71,12 +71,9 @@ var (
 func TestViewChangerBasic(t *testing.T) {
 	// A simple test that starts a viewChanger and stops it
 
-	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
-
 	vc := &bft.ViewChanger{
 		N:          4,
-		Comm:       comm,
+		NodesList:  []uint64{0, 1, 2, 3},
 		Ticker:     make(chan time.Time),
 		InMsqQSize: 100,
 	}
@@ -91,7 +88,6 @@ func TestStartViewChange(t *testing.T) {
 	// Test that when StartViewChange is called it broadcasts a message
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		msgChan <- args.Get(0).(*protos.Message)
@@ -106,6 +102,7 @@ func TestStartViewChange(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
@@ -130,7 +127,6 @@ func TestViewChangeProcess(t *testing.T) {
 	// Test the view change messages handling and process until sending a viewData message
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	broadcastChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -156,6 +152,7 @@ func TestViewChangeProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        0,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Signer:        signer,
 		Logger:        log,
@@ -211,7 +208,6 @@ func TestViewDataProcess(t *testing.T) {
 	// Test the view data messages handling and process until sending a newView message
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	broadcastChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -248,6 +244,7 @@ func TestViewDataProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -303,8 +300,6 @@ func TestViewDataProcess(t *testing.T) {
 func TestNewViewProcess(t *testing.T) {
 	// Test the new view messages handling and process until calling controller
 
-	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -336,7 +331,7 @@ func TestNewViewProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        0,
 		N:             4,
-		Comm:          comm,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Verifier:      verifier,
 		Controller:    controller,
@@ -397,7 +392,6 @@ func TestNormalProcess(t *testing.T) {
 	// Test a full view change process
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -432,6 +426,7 @@ func TestNormalProcess(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -530,15 +525,13 @@ func TestBadViewDataMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			comm := &mocks.CommMock{}
-			comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			vc := &bft.ViewChanger{
 				SelfID:     2,
 				N:          4,
-				Comm:       comm,
+				NodesList:  []uint64{0, 1, 2, 3},
 				Logger:     log,
 				Verifier:   verifier,
 				Ticker:     make(chan time.Time),
@@ -562,7 +555,6 @@ func TestBadViewDataMessage(t *testing.T) {
 func TestResendViewChangeMessage(t *testing.T) {
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		msgChan <- args.Get(0).(*protos.Message)
@@ -578,6 +570,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		N:                 4,
+		NodesList:         []uint64{0, 1, 2, 3},
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
@@ -618,7 +611,6 @@ func TestResendViewChangeMessage(t *testing.T) {
 
 func TestViewChangerTimeout(t *testing.T) {
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	comm.On("BroadcastConsensus", mock.Anything)
 	reqTimerWG := sync.WaitGroup{}
 	reqTimer := &mocks.RequestsTimer{}
@@ -642,6 +634,7 @@ func TestViewChangerTimeout(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		N:                 4,
+		NodesList:         []uint64{0, 1, 2, 3},
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
@@ -676,7 +669,6 @@ func TestViewChangerTimeout(t *testing.T) {
 
 func TestBackOff(t *testing.T) {
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	comm.On("BroadcastConsensus", mock.Anything)
 	reqTimerWG := sync.WaitGroup{}
 	reqTimer := &mocks.RequestsTimer{}
@@ -702,6 +694,7 @@ func TestBackOff(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		N:                 4,
+		NodesList:         []uint64{0, 1, 2, 3},
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
@@ -743,7 +736,6 @@ func TestBackOff(t *testing.T) {
 func TestCommitLastDecision(t *testing.T) {
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -783,6 +775,7 @@ func TestCommitLastDecision(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -843,7 +836,6 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	// which informs on seq 3 as expected.
 
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	comm.On("BroadcastConsensus", mock.Anything)
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
@@ -882,6 +874,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        3,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -999,7 +992,6 @@ func TestInFlightProposalInViewData(t *testing.T) {
 	} {
 		t.Run(test.description, func(t *testing.T) {
 			comm := &mocks.CommMock{}
-			comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 			broadcastChan := make(chan *protos.Message)
 			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 				m := args.Get(0).(*protos.Message)
@@ -1027,6 +1019,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			vc := &bft.ViewChanger{
 				SelfID:        0,
 				N:             4,
+				NodesList:     []uint64{0, 1, 2, 3},
 				Comm:          comm,
 				Signer:        signer,
 				Logger:        log,
@@ -1226,7 +1219,6 @@ func TestValidateInFlight(t *testing.T) {
 
 func TestInformViewChanger(t *testing.T) {
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		msgChan <- args.Get(0).(*protos.Message)
@@ -1242,6 +1234,7 @@ func TestInformViewChanger(t *testing.T) {
 
 	vc := &bft.ViewChanger{
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
@@ -1270,7 +1263,6 @@ func TestInformViewChanger(t *testing.T) {
 
 func TestRestoreViewChange(t *testing.T) {
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	broadcastChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -1294,6 +1286,7 @@ func TestRestoreViewChange(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        0,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Signer:        signer,
 		Logger:        log,
@@ -1568,7 +1561,6 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 
 func TestCommitInFlight(t *testing.T) {
 	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		m := args.Get(0).(*protos.Message)
@@ -1616,6 +1608,7 @@ func TestCommitInFlight(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Logger:        log,
 		Verifier:      verifier,
@@ -1708,8 +1701,6 @@ func TestCommitInFlight(t *testing.T) {
 }
 
 func TestDontCommitInFlight(t *testing.T) {
-	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -1735,7 +1726,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        3,
 		N:             4,
-		Comm:          comm,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Verifier:      verifier,
 		Controller:    controller,
