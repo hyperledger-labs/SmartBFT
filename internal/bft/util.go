@@ -10,7 +10,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"math"
-	"sort"
 	"sync"
 	"sync/atomic"
 
@@ -75,10 +74,7 @@ func MarshalOrPanic(msg proto.Message) []byte {
 }
 
 func getLeaderID(view uint64, N uint64, nodes []uint64) uint64 {
-	sort.Slice(nodes, func(i, j int) bool {
-		return nodes[i] < nodes[j]
-	})
-	return nodes[view%N]
+	return nodes[view%N] // assuming this is sorted
 }
 
 type vote struct {

@@ -128,7 +128,7 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	signer := &mocks.SignerMock{}
@@ -174,11 +174,11 @@ func TestLeaderPropose(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	commWG.Add(2)
+	commWG.Add(6)
 	controller.Start(1, 0)
 	commWG.Wait() // propose
 
-	commWG.Add(1)
+	commWG.Add(3)
 	controller.ProcessMessages(2, prepare)
 	controller.ProcessMessages(3, prepare)
 	commWG.Wait()
@@ -188,7 +188,7 @@ func TestLeaderPropose(t *testing.T) {
 	commit3Get := commit3.GetCommit()
 	commit3Get.Signature.Signer = 23
 	appWG.Add(1)  // deliver
-	commWG.Add(2) // next proposal
+	commWG.Add(6) // next proposal
 	controller.ProcessMessages(23, commit3)
 	appWG.Wait()
 	commWG.Wait()
@@ -243,7 +243,7 @@ func TestViewChanged(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	reqPool := &mocks.RequestPool{}
@@ -280,12 +280,12 @@ func TestViewChanged(t *testing.T) {
 
 	controller.Start(1, 0)
 
-	commWG.Add(2)
+	commWG.Add(6)
 	controller.ViewChanged(2, 0)
 	commWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 2)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 6)
 	controller.Stop()
 	wal.Close()
 }
@@ -386,7 +386,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		FailureDetector:  c.FailureDetector,
 		Sync:             c,
 		Logger:           c.Logger,
-		Comm:             c.Comm,
+		Comm:             c,
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
@@ -431,7 +431,7 @@ func TestSyncInform(t *testing.T) {
 
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 
@@ -527,14 +527,14 @@ func TestSyncInform(t *testing.T) {
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
 
-	commWG.Add(3)
+	commWG.Add(9)
 	synchronizerWG.Add(1)
 	controller.Sync()
 	commWG.Wait()
 	synchronizerWG.Wait()
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
-	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3)
+	comm.AssertNumberOfCalls(t, "SendConsensus", 9)
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan
