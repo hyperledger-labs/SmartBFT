@@ -285,18 +285,8 @@ func (c *Controller) respondToStateTransferRequest(sender uint64) {
 }
 
 func (c *Controller) convertViewMessageToHeartbeat(m *protos.Message) *protos.Message {
-	var view, seq uint64
-	switch m.GetContent().(type) {
-	case *protos.Message_PrePrepare:
-		view = m.GetPrePrepare().View
-		seq = m.GetPrePrepare().Seq
-	case *protos.Message_Prepare:
-		view = m.GetPrepare().View
-		seq = m.GetPrepare().Seq
-	case *protos.Message_Commit:
-		view = m.GetCommit().View
-		seq = m.GetCommit().Seq
-	}
+	view := viewNumber(m)
+	seq := proposalSequence(m)
 	return &protos.Message{
 		Content: &protos.Message_HeartBeat{
 			HeartBeat: &protos.HeartBeat{

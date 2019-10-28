@@ -195,16 +195,6 @@ func (c *Consensus) SubmitRequest(req []byte) error {
 	return c.controller.SubmitRequest(req)
 }
 
-func (c *Consensus) BroadcastConsensus(m *protos.Message) {
-	for _, node := range c.Comm.Nodes() {
-		// Do not send to yourself
-		if c.Config.SelfID == node {
-			continue
-		}
-		c.Comm.SendConsensus(node, m)
-	}
-}
-
 func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 	return &algorithm.ProposalMaker{
 		State:           c.state,

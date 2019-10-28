@@ -37,6 +37,7 @@ func TestControllerBasic(t *testing.T) {
 	pool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", mock.Anything, mock.Anything, mock.Anything)
+	leaderMon.On("ProcessMsg", uint64(1), heartbeat)
 	leaderMon.On("Close")
 
 	comm := &mocks.CommMock{}
@@ -55,8 +56,6 @@ func TestControllerBasic(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	controller.Start(1, 0)
-
-	leaderMon.On("ProcessMsg", uint64(1), heartbeat)
 	controller.ProcessMessages(1, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
@@ -202,6 +201,7 @@ func TestLeaderPropose(t *testing.T) {
 
 	controller.Stop()
 	app.AssertNumberOfCalls(t, "Deliver", 1)
+	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 5)
 
 	// Ensure checkpoint was updated
 	expected := protos.Proposal{
@@ -297,6 +297,7 @@ func TestViewChanged(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 2*(n-1))
+	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 2)
 	controller.Stop()
 	wal.Close()
 }
@@ -552,6 +553,12 @@ func TestSyncInform(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 3*(n-1))
+
+	// There are three broadcasts, the first one is a part of the sync process
+	// Afterwards the view changes and this node becomes a leader
+	// Then there are two broadcasts, one for preprepare and the other for prepare
+	// Where this node is the leader
+	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 2)
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan

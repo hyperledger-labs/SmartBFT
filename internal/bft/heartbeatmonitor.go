@@ -134,9 +134,12 @@ func (hm *HeartbeatMonitor) run() {
 // ProcessMsg handles an incoming heartbeat or heartbeat-response.
 // If the sender and msg.View equal what we expect, and the timeout had not expired yet, the timeout is extended.
 func (hm *HeartbeatMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.Message) {
-	hm.inc <- incMsg{
+	select {
+	case hm.inc <- incMsg{
 		sender:  sender,
 		Message: msg,
+	}:
+	case <-hm.stopChan:
 	}
 }
 
