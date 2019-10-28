@@ -74,6 +74,7 @@ type ProposerBuilder interface {
 
 // Controller controls the entire flow of the consensus
 type Controller struct {
+	api.Comm
 	// configuration
 	ID               uint64
 	N                uint64
@@ -87,7 +88,6 @@ type Controller struct {
 	Application      api.Application
 	FailureDetector  FailureDetector
 	Synchronizer     api.Synchronizer
-	Comm             Comm
 	Signer           api.Signer
 	RequestInspector api.RequestInspector
 	WAL              api.WriteAheadLog
@@ -510,7 +510,7 @@ func (c *Controller) fetchState() *types.ViewAndSeq {
 		},
 	}
 	c.Collector.ClearCollected()
-	c.Comm.BroadcastConsensus(msg)
+	c.BroadcastConsensus(msg)
 	return c.Collector.CollectStateResponses()
 }
 
@@ -665,4 +665,14 @@ type decision struct {
 	proposal   types.Proposal
 	signatures []types.Signature
 	requests   []types.RequestInfo
+}
+
+func (c *Controller) BroadcastConsensus(m *protos.Message) {
+	for _, node := range c.NodesList {
+		// Do not send to yourself
+		if c.ID == node {
+			continue
+		}
+		c.Comm.SendConsensus(node, m)
+	}
 }
