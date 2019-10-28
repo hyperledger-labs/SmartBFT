@@ -75,10 +75,12 @@ func MarshalOrPanic(msg proto.Message) []byte {
 }
 
 func getLeaderID(view uint64, N uint64, nodes []uint64) uint64 {
-	sort.Slice(nodes, func(i, j int) bool {
-		return nodes[i] < nodes[j]
+	nodesCopy := make([]uint64, len(nodes)) // copy slice to avoid data race
+	copy(nodesCopy, nodes)
+	sort.Slice(nodesCopy, func(i, j int) bool {
+		return nodesCopy[i] < nodesCopy[j]
 	})
-	return nodes[view%N]
+	return nodesCopy[view%N]
 }
 
 type vote struct {

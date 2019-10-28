@@ -48,7 +48,7 @@ type change struct {
 type ViewChanger struct {
 	// Configuration
 	SelfID uint64
-	nodes  []uint64
+	Nodes  []uint64
 	N      uint64
 	f      int
 	quorum int
@@ -107,8 +107,6 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.startChangeChan = make(chan *change, 1)
 	v.informChan = make(chan *types.ViewAndSeq, 1)
 
-	v.nodes = v.Comm.Nodes()
-
 	v.quorum, v.f = computeQuorum(v.N)
 
 	v.stopChan = make(chan struct{})
@@ -120,7 +118,7 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	// set without locking
 	v.currView = startViewNumber
 	v.nextView = v.currView
-	v.leader = getLeaderID(v.currView, v.N, v.nodes)
+	v.leader = getLeaderID(v.currView, v.N, v.Nodes)
 
 	v.lastTick = time.Now()
 	v.lastResend = v.lastTick
@@ -300,7 +298,7 @@ func (v *ViewChanger) informNewView(info *types.ViewAndSeq) {
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
 	v.nextView = v.currView
-	v.leader = getLeaderID(v.currView, v.N, v.nodes)
+	v.leader = getLeaderID(v.currView, v.N, v.Nodes)
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
@@ -364,7 +362,7 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 			}
 		}
 		v.currView = v.nextView
-		v.leader = getLeaderID(v.currView, v.N, v.nodes)
+		v.leader = getLeaderID(v.currView, v.N, v.Nodes)
 		v.viewChangeMsgs.clear(v.N)
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
@@ -460,7 +458,7 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.currView)
 		return false
 	}
-	if getLeaderID(rvd.NextView, v.N, v.nodes) != v.SelfID { // check if I am the next leader
+	if getLeaderID(rvd.NextView, v.N, v.Nodes) != v.SelfID { // check if I am the next leader
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
 		return false
 	}

@@ -41,6 +41,7 @@ type Consensus struct {
 	collector     *algorithm.StateCollector
 	state         *algorithm.PersistedState
 	numberOfNodes uint64
+	nodes         []uint64
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
@@ -52,7 +53,8 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() {
-	c.numberOfNodes = uint64(len(c.Comm.Nodes()))
+	c.nodes = c.Comm.Nodes()
+	c.numberOfNodes = uint64(len(c.nodes))
 	inFlight := algorithm.InFlightData{}
 
 	c.state = &algorithm.PersistedState{
@@ -68,6 +70,7 @@ func (c *Consensus) Start() {
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:      c.Config.SelfID,
 		N:           c.numberOfNodes,
+		Nodes:       c.nodes,
 		Logger:      c.Logger,
 		Signer:      c.Signer,
 		Verifier:    c.Verifier,
@@ -95,6 +98,7 @@ func (c *Consensus) Start() {
 		WAL:              c.WAL,
 		ID:               c.Config.SelfID,
 		N:                c.numberOfNodes,
+		NodesList:        c.nodes,
 		Verifier:         c.Verifier,
 		Logger:           c.Logger,
 		Assembler:        c.Assembler,

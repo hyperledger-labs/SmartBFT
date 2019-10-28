@@ -79,6 +79,7 @@ type Controller struct {
 	// configuration
 	ID               uint64
 	N                uint64
+	NodesList        []uint64
 	RequestPool      RequestPool
 	Batcher          Batcher
 	LeaderMonitor    LeaderMonitor
@@ -98,7 +99,6 @@ type Controller struct {
 	State            State
 
 	quorum int
-	nodes  []uint64
 
 	currView Proposer
 
@@ -144,7 +144,7 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 
 // thread safe
 func (c *Controller) leaderID() uint64 {
-	return getLeaderID(c.getCurrentViewNumber(), c.N, c.nodes)
+	return getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList)
 }
 
 // HandleRequest handles a request from the client
@@ -593,8 +593,6 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
 
-	c.nodes = c.Comm.Nodes()
-
 	c.currViewNumber = startViewNumber
 	c.startView(startProposalSequence)
 	if iAm, _ := c.iAmTheLeader(); iAm {
@@ -688,7 +686,7 @@ type decision struct {
 
 //BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
 func (c *Controller) BroadcastConsensus(m *protos.Message) {
-	for _, node := range c.nodes {
+	for _, node := range c.NodesList {
 		// Do not send to yourself
 		if c.ID == node {
 			continue

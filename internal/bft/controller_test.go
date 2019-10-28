@@ -40,18 +40,15 @@ func TestControllerBasic(t *testing.T) {
 	leaderMon.On("ProcessMsg", uint64(1), heartbeat)
 	leaderMon.On("Close")
 
-	comm := &mocks.CommMock{}
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
-
 	controller := &bft.Controller{
 		Batcher:       batcher,
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
 		ID:            4, // not the leader
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Application:   app,
-		Comm:          comm,
 	}
 	configureProposerBuilder(controller)
 
@@ -84,17 +81,15 @@ func TestControllerLeaderBasic(t *testing.T) {
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
 	leaderMon.On("Close")
-	commMock := &mocks.CommMock{}
-	commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	controller := &bft.Controller{
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
 		ID:            1, // the leader
 		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Batcher:       batcher,
-		Comm:          commMock,
 	}
 	configureProposerBuilder(controller)
 
@@ -132,7 +127,6 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
-	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
@@ -168,6 +162,7 @@ func TestLeaderPropose(t *testing.T) {
 		WAL:           wal,
 		ID:            17, // the leader
 		N:             uint64(n),
+		NodesList:     []uint64{11, 17, 23, 37},
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -201,7 +196,7 @@ func TestLeaderPropose(t *testing.T) {
 
 	controller.Stop()
 	app.AssertNumberOfCalls(t, "Deliver", 1)
-	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 5)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	// Ensure checkpoint was updated
 	expected := protos.Proposal{
@@ -254,7 +249,6 @@ func TestViewChanged(t *testing.T) {
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
@@ -279,6 +273,7 @@ func TestViewChanged(t *testing.T) {
 		WAL:           wal,
 		ID:            2, // the next leader
 		N:             uint64(n),
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -297,7 +292,7 @@ func TestViewChanged(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 2*(n-1))
-	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 2)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 	controller.Stop()
 	wal.Close()
 }
@@ -359,9 +354,6 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				})
 			}
 
-			commMock := &mocks.CommMock{}
-			commMock.On("Nodes").Return([]uint64{0, 1, 2, 3})
-
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyRequest", mock.Anything).Return(types.RequestInfo{}, testCase.verifyReqReturns)
 
@@ -370,9 +362,9 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				LeaderMonitor: leaderMon,
 				ID:            1,
 				N:             4,
+				NodesList:     []uint64{0, 1, 2, 3},
 				Logger:        log,
 				Batcher:       batcher,
-				Comm:          commMock,
 				Verifier:      verifier,
 			}
 
@@ -450,14 +442,12 @@ func TestSyncInform(t *testing.T) {
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
-	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	commWithChan := &mocks.CommMock{}
 	msgChan := make(chan *protos.Message)
 	commWithChan.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
 		msgChan <- args.Get(0).(*protos.Message)
 	})
-	commWithChan.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Close")
@@ -510,6 +500,7 @@ func TestSyncInform(t *testing.T) {
 	vc := &bft.ViewChanger{
 		SelfID:        2,
 		N:             uint64(n),
+		Nodes:         []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Comm:          commWithChan,
 		RequestsTimer: reqTimer,
@@ -523,6 +514,7 @@ func TestSyncInform(t *testing.T) {
 		WAL:           wal,
 		ID:            2,
 		N:             uint64(n),
+		NodesList:     []uint64{0, 1, 2, 3},
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
@@ -553,12 +545,7 @@ func TestSyncInform(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 3*(n-1))
-
-	// There are three broadcasts, the first one is a part of the sync process
-	// Afterwards the view changes and this node becomes a leader
-	// Then there are two broadcasts, one for preprepare and the other for prepare
-	// Where this node is the leader
-	leaderMon.AssertNumberOfCalls(t, "HeartbeatWasSent", 2)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan
