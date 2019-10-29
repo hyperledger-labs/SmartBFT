@@ -54,6 +54,8 @@ type RequestPool interface {
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
 	ProcessMsg(sender uint64, msg *protos.Message)
+	InjectArtificialHeartbeat(sender uint64, msg *protos.Message)
+	HeartbeatWasSent()
 	Close()
 }
 
@@ -247,6 +249,9 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.currViewLock.RUnlock()
 		view.HandleMessage(sender, m)
 		c.ViewChanger.HandleViewMessage(sender, m)
+		if sender == c.leaderID() {
+			c.LeaderMonitor.InjectArtificialHeartbeat(sender, c.convertViewMessageToHeartbeat(m))
+		}
 	case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
 		c.ViewChanger.HandleMessage(sender, m)
 	case *protos.Message_HeartBeat, *protos.Message_HeartBeatResponse:
@@ -278,6 +283,19 @@ func (c *Controller) respondToStateTransferRequest(sender uint64) {
 		},
 	}
 	c.Comm.SendConsensus(sender, msg)
+}
+
+func (c *Controller) convertViewMessageToHeartbeat(m *protos.Message) *protos.Message {
+	view := viewNumber(m)
+	seq := proposalSequence(m)
+	return &protos.Message{
+		Content: &protos.Message_HeartBeat{
+			HeartBeat: &protos.HeartBeat{
+				View: view,
+				Seq:  seq,
+			},
+		},
+	}
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
@@ -667,6 +685,7 @@ type decision struct {
 	requests   []types.RequestInfo
 }
 
+//BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
 func (c *Controller) BroadcastConsensus(m *protos.Message) {
 	for _, node := range c.NodesList {
 		// Do not send to yourself
@@ -674,5 +693,11 @@ func (c *Controller) BroadcastConsensus(m *protos.Message) {
 			continue
 		}
 		c.Comm.SendConsensus(node, m)
+	}
+
+	if m.GetPrePrepare() != nil || m.GetPrepare() != nil || m.GetCommit() != nil {
+		if leader, _ := c.iAmTheLeader(); leader {
+			c.LeaderMonitor.HeartbeatWasSent()
+		}
 	}
 }

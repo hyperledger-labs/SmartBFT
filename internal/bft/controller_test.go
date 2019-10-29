@@ -147,6 +147,7 @@ func TestLeaderPropose(t *testing.T) {
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
@@ -195,6 +196,7 @@ func TestLeaderPropose(t *testing.T) {
 
 	controller.Stop()
 	app.AssertNumberOfCalls(t, "Deliver", 1)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	// Ensure checkpoint was updated
 	expected := protos.Proposal{
@@ -251,6 +253,7 @@ func TestViewChanged(t *testing.T) {
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
 	signer := &mocks.SignerMock{}
@@ -286,6 +289,7 @@ func TestViewChanged(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 6)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 	controller.Stop()
 	wal.Close()
 }
@@ -447,6 +451,7 @@ func TestSyncInform(t *testing.T) {
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
 	signer := &mocks.SignerMock{}
@@ -535,6 +540,7 @@ func TestSyncInform(t *testing.T) {
 	batcher.AssertNumberOfCalls(t, "NextBatch", 1)
 	assembler.AssertNumberOfCalls(t, "AssembleProposal", 1)
 	comm.AssertNumberOfCalls(t, "SendConsensus", 9)
+	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	vc.StartViewChange(2, true)
 	msg = <-msgChan

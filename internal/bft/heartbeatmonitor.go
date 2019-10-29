@@ -45,28 +45,29 @@ type heartbeatResponseCollector map[uint64]uint64
 
 // HeartbeatMonitor implements LeaderMonitor
 type HeartbeatMonitor struct {
-	scheduler       <-chan time.Time
-	inc             chan incMsg
-	stopChan        chan struct{}
-	commandChan     chan roleChange
-	logger          api.Logger
-	hbTimeout       time.Duration
-	hbCount         int
-	comm            Comm
-	numberOfNodes   uint64
-	handler         HeartbeatEventHandler
-	view            uint64
-	leaderID        uint64
-	follower        Role
-	lastHeartbeat   time.Time
-	lastTick        time.Time
-	hbRespCollector heartbeatResponseCollector
-	running         sync.WaitGroup
-	runOnce         sync.Once
-	timedOut        bool
-	syncReq         bool
-	viewSequences   *atomic.Value
-	sentHeartbeat   chan struct{}
+	scheduler           <-chan time.Time
+	inc                 chan incMsg
+	stopChan            chan struct{}
+	commandChan         chan roleChange
+	logger              api.Logger
+	hbTimeout           time.Duration
+	hbCount             int
+	comm                Comm
+	numberOfNodes       uint64
+	handler             HeartbeatEventHandler
+	view                uint64
+	leaderID            uint64
+	follower            Role
+	lastHeartbeat       time.Time
+	lastTick            time.Time
+	hbRespCollector     heartbeatResponseCollector
+	running             sync.WaitGroup
+	runOnce             sync.Once
+	timedOut            bool
+	syncReq             bool
+	viewSequences       *atomic.Value
+	sentHeartbeat       chan struct{}
+	artificialHeartbeat chan incMsg
 }
 
 // NewHeartbeatMonitor creates a new HeartbeatMonitor
@@ -81,19 +82,20 @@ func NewHeartbeatMonitor(
 	viewSequences *atomic.Value,
 ) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
-		stopChan:        make(chan struct{}),
-		inc:             make(chan incMsg),
-		commandChan:     make(chan roleChange),
-		scheduler:       scheduler,
-		logger:          logger,
-		hbTimeout:       heartbeatTimeout,
-		hbCount:         heartbeatCount,
-		comm:            comm,
-		numberOfNodes:   numberOfNodes,
-		handler:         handler,
-		hbRespCollector: make(heartbeatResponseCollector),
-		viewSequences:   viewSequences,
-		sentHeartbeat:   make(chan struct{}, 1),
+		stopChan:            make(chan struct{}),
+		inc:                 make(chan incMsg),
+		commandChan:         make(chan roleChange),
+		scheduler:           scheduler,
+		logger:              logger,
+		hbTimeout:           heartbeatTimeout,
+		hbCount:             heartbeatCount,
+		comm:                comm,
+		numberOfNodes:       numberOfNodes,
+		handler:             handler,
+		hbRespCollector:     make(heartbeatResponseCollector),
+		viewSequences:       viewSequences,
+		sentHeartbeat:       make(chan struct{}, 1),
+		artificialHeartbeat: make(chan incMsg, 1),
 	}
 	return hm
 }
@@ -127,6 +129,8 @@ func (hm *HeartbeatMonitor) run() {
 			hm.handleCommand(cmd)
 		case <-hm.sentHeartbeat:
 			hm.lastHeartbeat = hm.lastTick
+		case msg := <-hm.artificialHeartbeat:
+			hm.handleArtificialHeartBeat(msg.sender, msg.GetHeartBeat())
 		}
 	}
 }
@@ -140,6 +144,17 @@ func (hm *HeartbeatMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.Messag
 		Message: msg,
 	}:
 	case <-hm.stopChan:
+	}
+}
+
+// InjectArtificialHeartbeat injects an artificial heartbeat to the monitor
+func (hm *HeartbeatMonitor) InjectArtificialHeartbeat(sender uint64, msg *smartbftprotos.Message) {
+	select {
+	case hm.artificialHeartbeat <- incMsg{
+		sender:  sender,
+		Message: msg,
+	}:
+	default:
 	}
 }
 
@@ -171,7 +186,7 @@ func (hm *HeartbeatMonitor) ChangeRole(follower Role, view uint64, leaderID uint
 func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message) {
 	switch msg.GetContent().(type) {
 	case *smartbftprotos.Message_HeartBeat:
-		hm.handleHeartBeat(sender, msg.GetHeartBeat())
+		hm.handleRealHeartBeat(sender, msg.GetHeartBeat())
 	case *smartbftprotos.Message_HeartBeatResponse:
 		hm.handleHeartBeatResponse(sender, msg.GetHeartBeatResponse())
 	default:
@@ -179,7 +194,15 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 	}
 }
 
-func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+func (hm *HeartbeatMonitor) handleRealHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+	hm.handleHeartBeat(sender, hb, false)
+}
+
+func (hm *HeartbeatMonitor) handleArtificialHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+	hm.handleHeartBeat(sender, hb, true)
+}
+
+func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat, artificial bool) {
 	if hb.View < hm.view {
 		hm.logger.Debugf("Heartbeat view is lower than expected, sending response; expected-view=%d, received-view: %d", hm.view, hb.View)
 		hm.sendHeartBeatResponse(sender)
@@ -197,7 +220,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	if hm.viewActiveButBehindLeader(hb) {
+	if hm.viewActiveButBehindLeader(hb) && !artificial {
 		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
 		hm.handler.Sync()
 		return
