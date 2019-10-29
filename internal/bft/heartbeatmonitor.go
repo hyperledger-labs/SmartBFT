@@ -220,12 +220,10 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	if !artificial {
-		if hm.viewActiveButBehindLeader(hb) {
-			hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
-			hm.handler.Sync()
-			return
-		}
+	if hm.viewActiveButBehindLeader(hb) && !artificial {
+		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
+		hm.handler.Sync()
+		return
 	}
 
 	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
