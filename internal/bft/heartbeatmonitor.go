@@ -130,7 +130,7 @@ func (hm *HeartbeatMonitor) run() {
 		case <-hm.sentHeartbeat:
 			hm.lastHeartbeat = hm.lastTick
 		case msg := <-hm.artificialHeartbeat:
-			hm.handleMsg(msg.sender, msg.Message)
+			hm.handleArtificialHeartBeat(msg.sender, msg.GetHeartBeat())
 		}
 	}
 }
@@ -186,7 +186,7 @@ func (hm *HeartbeatMonitor) ChangeRole(follower Role, view uint64, leaderID uint
 func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message) {
 	switch msg.GetContent().(type) {
 	case *smartbftprotos.Message_HeartBeat:
-		hm.handleHeartBeat(sender, msg.GetHeartBeat())
+		hm.handleRealHeartBeat(sender, msg.GetHeartBeat())
 	case *smartbftprotos.Message_HeartBeatResponse:
 		hm.handleHeartBeatResponse(sender, msg.GetHeartBeatResponse())
 	default:
@@ -194,7 +194,15 @@ func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message
 	}
 }
 
-func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+func (hm *HeartbeatMonitor) handleRealHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+	hm.handleHeartBeat(sender, hb, false)
+}
+
+func (hm *HeartbeatMonitor) handleArtificialHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat) {
+	hm.handleHeartBeat(sender, hb, true)
+}
+
+func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat, artificial bool) {
 	if hb.View < hm.view {
 		hm.logger.Debugf("Heartbeat view is lower than expected, sending response; expected-view=%d, received-view: %d", hm.view, hb.View)
 		hm.sendHeartBeatResponse(sender)
@@ -212,10 +220,12 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	if hm.viewActiveButBehindLeader(hb) {
-		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
-		hm.handler.Sync()
-		return
+	if !artificial {
+		if hm.viewActiveButBehindLeader(hb) {
+			hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
+			hm.handler.Sync()
+			return
+		}
 	}
 
 	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
