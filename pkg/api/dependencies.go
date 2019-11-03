@@ -57,7 +57,7 @@ type Verifier interface {
 	VerifyRequest(val []byte) (bft.RequestInfo, error)
 	// VerifyConsenterSig verifies the signature for the given proposal.
 	VerifyConsenterSig(signature bft.Signature, prop bft.Proposal) error
-	// 	VerifySignature verifies the signature.
+	// VerifySignature verifies the signature.
 	VerifySignature(signature bft.Signature) error
 	// VerificationSequence returns the current verification sequence.
 	VerificationSequence() uint64
