@@ -13,14 +13,13 @@ message Message {
         PrePrepare pre_prepare = 1;
         Prepare prepare = 2;
         Commit commit = 3;
-        Error error = 4;
-        ViewChange view_change = 5;
-        SignedViewData view_data = 6;
-        NewView new_view = 7;
-        HeartBeat heart_beat = 8;
-        HeartBeatResponse heart_beat_response = 9;
-        StateTransferRequest state_transfer_request = 10;
-        StateTransferResponse state_transfer_response = 11;
+        ViewChange view_change = 4;
+        SignedViewData view_data = 5;
+        NewView new_view = 6;
+        HeartBeat heart_beat = 7;
+        HeartBeatResponse heart_beat_response = 8;
+        StateTransferRequest state_transfer_request = 9;
+        StateTransferResponse state_transfer_response = 10;
     }
 }
 
@@ -48,13 +47,6 @@ message Commit {
     string digest = 3;
     Signature signature = 4;
     bool assist = 5;
-}
-
-message Error {
-    uint64 view = 1;
-    uint64 seq = 2;
-    string digest = 3;
-    string reason = 4;
 }
 
 message ViewChange {
