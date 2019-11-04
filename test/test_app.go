@@ -311,7 +311,6 @@ func newNode(id uint64, network Network, testName string, testDir string) *App {
 	config := fastConfig
 	config.SelfID = id
 	config.SyncOnStart = true
-	config.SpeedUpViewChange = true
 
 	app.Setup = func() {
 		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
