@@ -77,16 +77,17 @@ func (c *Consensus) Start() error {
 	cpt.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:      c.Config.SelfID,
-		N:           c.numberOfNodes,
-		NodesList:   c.nodes,
-		Logger:      c.Logger,
-		Signer:      c.Signer,
-		Verifier:    c.Verifier,
-		Application: c,
-		Checkpoint:  &cpt,
-		InFlight:    &inFlight,
-		State:       c.state,
+		SelfID:            c.Config.SelfID,
+		N:                 c.numberOfNodes,
+		NodesList:         c.nodes,
+		SpeedUpViewChange: c.Config.SpeedUpViewChange,
+		Logger:            c.Logger,
+		Signer:            c.Signer,
+		Verifier:          c.Verifier,
+		Application:       c,
+		Checkpoint:        &cpt,
+		InFlight:          &inFlight,
+		State:             c.state,
 		// Controller later
 		// RequestsTimer later
 		Ticker:            c.ViewChangerTicker,

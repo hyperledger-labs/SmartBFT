@@ -47,11 +47,12 @@ type change struct {
 // ViewChanger is responsible for running the view change protocol
 type ViewChanger struct {
 	// Configuration
-	SelfID    uint64
-	NodesList []uint64
-	N         uint64
-	f         int
-	quorum    int
+	SelfID            uint64
+	NodesList         []uint64
+	N                 uint64
+	f                 int
+	quorum            int
+	SpeedUpViewChange bool
 
 	Logger       api.Logger
 	Comm         Comm
@@ -344,11 +345,15 @@ func (v *ViewChanger) startViewChange(change *change) {
 }
 
 func (v *ViewChanger) processViewChangeMsg(restore bool) {
-	if (uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1)) || restore { // join view change
+	if ((uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1)) && v.SpeedUpViewChange) || restore { // join view change
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
-	if (len(v.viewChangeMsgs.voted) >= v.quorum-1 && v.nextView > v.currView) || restore { // send view data
+	if (len(v.viewChangeMsgs.voted) >= v.quorum-1) || restore { // send view data
+		if !v.SpeedUpViewChange {
+			v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
+			v.startViewChange(&change{v.currView, true})
+		}
 		if !restore {
 			msgToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_ViewChange{
