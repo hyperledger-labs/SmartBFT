@@ -44,9 +44,7 @@ type Node struct {
 }
 
 func (*Node) Sync() bft.Decision {
-	return bft.Decision{
-		Proposal: bft.Proposal{},
-	}
+	panic("implement me")
 }
 
 func (*Node) RequestID(req []byte) bft.RequestInfo {

@@ -595,7 +595,7 @@ func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence u
 }
 
 // Start the controller
-func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64) {
+func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64, syncOnStart bool) {
 	c.controllerDone.Add(1)
 	c.stopOnce = sync.Once{}
 	c.syncChan = make(chan struct{}, 1)
@@ -610,7 +610,13 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
 
-	info := c.syncOnStart(startViewNumber, startProposalSequence)
+	info := viewInfo{
+		viewNumber:  startViewNumber,
+		proposalSeq: startProposalSequence,
+	}
+	if syncOnStart {
+		info = c.syncOnStart(startViewNumber, startProposalSequence)
+	}
 
 	c.currViewNumber = info.viewNumber
 	c.startView(info.proposalSeq)
