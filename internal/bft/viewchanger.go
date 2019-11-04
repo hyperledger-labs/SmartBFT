@@ -345,14 +345,12 @@ func (v *ViewChanger) startViewChange(change *change) {
 }
 
 func (v *ViewChanger) processViewChangeMsg(restore bool) {
-	started := false
 	if ((uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1)) && v.SpeedUpViewChange) || restore { // join view change
 		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
-		started = true
 	}
 	if (len(v.viewChangeMsgs.voted) >= v.quorum-1) || restore { // send view data
-		if !started {
+		if !v.SpeedUpViewChange {
 			v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
 			v.startViewChange(&change{v.currView, true})
 		}
