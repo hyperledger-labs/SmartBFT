@@ -182,7 +182,7 @@ func (c *Consensus) Start() {
 	// then we are expecting to be proposed a proposal with sequence i+1.
 	c.collector.Start()
 	c.viewChanger.Start(view)
-	c.controller.Start(view, seq+1)
+	c.controller.Start(view, seq+1, c.Config.SyncOnStart)
 }
 
 func (c *Consensus) Stop() {

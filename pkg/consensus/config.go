@@ -57,6 +57,9 @@ type Configuration struct {
 	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,
 	// stops collecting information about view metadata from remote nodes.
 	CollectTimeout time.Duration
+
+	// SyncOnStart is a flag indicating whether a sync is required on startup.
+	SyncOnStart bool
 }
 
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
@@ -76,5 +79,6 @@ var DefaultConfig = Configuration{
 	ViewChangeTimeout:         20 * time.Second,
 	LeaderHeartbeatTimeout:    time.Minute,
 	LeaderHeartbeatCount:      10,
-	CollectTimeout:            2 * time.Second,
+	CollectTimeout:            time.Second,
+	SyncOnStart:               false,
 }

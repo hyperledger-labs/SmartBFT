@@ -36,9 +36,7 @@ func TestBasic(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	for i := 1; i < 5; i++ {
 		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
@@ -81,9 +79,7 @@ func TestRestartFollowers(t *testing.T) {
 	})).Sugar()
 	nodes[2].Setup()
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -134,9 +130,7 @@ func TestLeaderInPartition(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 
@@ -169,9 +163,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
@@ -234,55 +226,59 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	n0 := newNode(0, network, t.Name(), testDir)
-	n1 := newNode(1, network, t.Name(), testDir)
-	n2 := newNode(2, network, t.Name(), testDir)
-	n3 := newNode(3, network, t.Name(), testDir)
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
 
-	n0.Consensus.Start()
-	n1.Consensus.Start()
-	n2.Consensus.Start()
-	n3.Consensus.Start()
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
-	n0.Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0 := <-n0.Delivered
-	data1 := <-n1.Delivered
-	data2 := <-n2.Delivered
-	data3 := <-n3.Delivered
-	assert.Equal(t, data0, data1)
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
+	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
-	n0.Submit(Request{ID: "2", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	data0 = <-n0.Delivered
-	data1 = <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data0, data1)
-	assert.Equal(t, data1, data2)
-	assert.Equal(t, data2, data3)
-
-	n0.Disconnect() // leader in partition
+	nodes[0].Disconnect() // leader in partition
 	t.Log("Disconnected n0")
 
-	n1.Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
-	n2.Submit(Request{ID: "3", ClientID: "alice"})
-	n3.Submit(Request{ID: "3", ClientID: "alice"})
+	for i := 1; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "3", ClientID: "alice"}) // submit to other nodes
+	}
 
-	data1Tx3 := <-n1.Delivered
-	data2 = <-n2.Delivered
-	data3 = <-n3.Delivered
-	assert.Equal(t, data1Tx3, data2)
-	assert.Equal(t, data2, data3)
-	assert.Len(t, n0.Delivered, 0) // n0 did not receive it
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
-	n0.Connect() // partition heals, leader should eventually sync, become a follower, and deliver
+	assert.Len(t, nodes[0].Delivered, 0) // n0 did not receive it
+
+	nodes[0].Connect() // partition heals, leader should eventually sync, become a follower, and deliver
 	t.Log("Connected n0")
 
-	data0 = <-n0.Delivered
-	assert.Equal(t, data1Tx3, data0)
+	data0 := <-nodes[0].Delivered
+	assert.Equal(t, data[0], data0)
 }
 
 func TestMultiLeadersPartition(t *testing.T) {
@@ -308,9 +304,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 		n.Setup()
 	}
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -371,9 +365,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 		})).Sugar()
 	}
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 
@@ -436,9 +428,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 		})).Sugar()
 	}
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -476,9 +466,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -528,9 +516,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
@@ -615,9 +601,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 		return nil
 	})).Sugar()
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect()
 
@@ -693,9 +677,7 @@ func TestRestoringViewChange(t *testing.T) {
 		n.Setup()
 	}
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -739,9 +721,7 @@ func TestLeaderForwarding(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[1].Submit(Request{ID: "1", ClientID: "alice"})
 	nodes[2].Submit(Request{ID: "2", ClientID: "bob"})
@@ -780,11 +760,9 @@ func TestLeaderExclusion(t *testing.T) {
 		nodes = append(nodes, n)
 	}
 
-	nodes[0].DisconnectFrom(3)
+	startNodes(nodes, &network)
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	nodes[0].DisconnectFrom(3)
 
 	// We create new batches until the disconnected node catches up the quorum.
 	for reqID := 1; reqID < 100; reqID++ {
@@ -813,9 +791,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -876,9 +852,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	nodes[0].Setup()
 	nodes[3].Setup()
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -973,9 +947,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 		n.Setup()
 	}
 
-	for _, n := range nodes {
-		n.Consensus.Start()
-	}
+	startNodes(nodes, &network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[6].Disconnect() // follower in partition
@@ -1053,4 +1025,11 @@ func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeT
 			}
 		}
 	}()
+}
+
+func startNodes(nodes []*App, network *Network) {
+	for _, n := range nodes {
+		n.Consensus.Start()
+	}
+	network.StartServe()
 }
