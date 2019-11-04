@@ -10,7 +10,7 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
-// Application delivers the committed proposal and corresponding signatures.
+// Application delivers the consented proposal and corresponding signatures.
 type Application interface {
 	// Deliver delivers the given proposal and signatures.
 	// After the call returns we assume that this proposal is stored in persistent memory.
