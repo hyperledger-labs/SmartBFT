@@ -92,7 +92,7 @@ func (n *Node) SignProposal(bft.Proposal) *bft.Signature {
 	}
 }
 
-func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bft.Proposal, remainder [][]byte) {
+func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal {
 	blockData := BlockData{Transactions: requests}.ToBytes()
 	md := &smartbftprotos.ViewMetadata{}
 	if err := proto.Unmarshal(metadata, md); err != nil {
@@ -106,7 +106,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) (nextProp bf
 		}.ToBytes(),
 		Payload:  BlockData{Transactions: requests}.ToBytes(),
 		Metadata: metadata,
-	}, nil
+	}
 }
 
 func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {

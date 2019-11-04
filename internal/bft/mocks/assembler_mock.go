@@ -13,7 +13,7 @@ type AssemblerMock struct {
 }
 
 // AssembleProposal provides a mock function with given fields: metadata, requests
-func (_m *AssemblerMock) AssembleProposal(metadata []byte, requests [][]byte) (types.Proposal, [][]byte) {
+func (_m *AssemblerMock) AssembleProposal(metadata []byte, requests [][]byte) types.Proposal {
 	ret := _m.Called(metadata, requests)
 
 	var r0 types.Proposal
@@ -23,14 +23,5 @@ func (_m *AssemblerMock) AssembleProposal(metadata []byte, requests [][]byte) (t
 		r0 = ret.Get(0).(types.Proposal)
 	}
 
-	var r1 [][]byte
-	if rf, ok := ret.Get(1).(func([]byte, [][]byte) [][]byte); ok {
-		r1 = rf(metadata, requests)
-	} else {
-		if ret.Get(1) != nil {
-			r1 = ret.Get(1).([][]byte)
-		}
-	}
-
-	return r0, r1
+	return r0
 }

@@ -172,11 +172,11 @@ func (a *App) SignProposal(types.Proposal) *types.Signature {
 }
 
 // AssembleProposal assembles a new proposal from the given requests
-func (a *App) AssembleProposal(metadata []byte, requests [][]byte) (nextProp types.Proposal, remainder [][]byte) {
+func (a *App) AssembleProposal(metadata []byte, requests [][]byte) types.Proposal {
 	return types.Proposal{
 		Payload:  batch{Requests: requests}.toBytes(),
 		Metadata: metadata,
-	}, nil
+	}
 }
 
 // Deliver delivers the given proposal
