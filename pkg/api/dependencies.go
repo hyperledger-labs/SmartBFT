@@ -31,7 +31,7 @@ type Comm interface {
 type Assembler interface {
 	// AssembleProposal creates a proposal which includes
 	// the given requests (when permitting) and metadata.
-	AssembleProposal(metadata []byte, requests [][]byte) (nextProp bft.Proposal, remainder [][]byte)
+	AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 }
 
 // WriteAheadLog is a write ahead log.

@@ -404,11 +404,7 @@ func (c *Controller) propose() {
 		return
 	}
 	metadata := c.currView.GetMetadata()
-	proposal, remainder := c.Assembler.AssembleProposal(metadata, nextBatch)
-	if len(remainder) != 0 {
-		c.Logger.Debugf("Assembler packed only some of the batch TX's into the proposal, length of: batch=%d, remainder=%d, in-proposal=%d",
-			len(nextBatch), len(remainder), len(nextBatch)-len(remainder))
-	}
+	proposal := c.Assembler.AssembleProposal(metadata, nextBatch)
 	c.currView.Propose(proposal)
 }
 
