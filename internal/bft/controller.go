@@ -260,10 +260,6 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 		c.respondToStateTransferRequest(sender)
 	case *protos.Message_StateTransferResponse:
 		c.Collector.HandleMessage(sender, m)
-
-	case *protos.Message_Error:
-		c.Logger.Debugf("Error message handling not yet implemented, ignoring message: %v, from %d", m, sender)
-
 	default:
 		c.Logger.Warnf("Unexpected message type, ignoring")
 	}
