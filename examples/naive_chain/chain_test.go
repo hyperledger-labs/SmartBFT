@@ -75,15 +75,17 @@ func TestChain(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	chains := setupNetwork(t, NetworkOptions{NumNodes: 4, BatchSize: 1, BatchTimeout: 10 * time.Second}, testDir)
+	numNodes := 4
+	chains := setupNetwork(t, NetworkOptions{NumNodes: numNodes, BatchSize: 1, BatchTimeout: 10 * time.Second}, testDir)
 
 	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
-		err := chains[0].Order(Transaction{
+		err := chains[1].Order(Transaction{
 			ClientID: "alice",
 			Id:       fmt.Sprintf("tx%d", blockSeq),
 		})
 		assert.NoError(t, err)
-		for _, chain := range chains {
+		for i := 1; i <= numNodes; i++ {
+			chain := chains[i]
 			block := chain.Listen()
 			assert.Equal(t, uint64(blockSeq), block.Sequence)
 			assert.Equal(t, []Transaction{{Id: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
@@ -97,12 +99,12 @@ func TestChain(t *testing.T) {
 
 func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int]chan proto.Message, testDir string) *Chain {
 	ingress := make(Ingress)
-	for from := 0; from < opt.NumNodes; from++ {
+	for from := 1; from <= opt.NumNodes; from++ {
 		ingress[from] = network[id][from]
 	}
 
 	egress := make(Egress)
-	for to := 0; to < opt.NumNodes; to++ {
+	for to := 1; to <= opt.NumNodes; to++ {
 		egress[to] = network[to][id]
 	}
 
@@ -120,14 +122,14 @@ func setupNetwork(t *testing.T, opt NetworkOptions, testDir string) map[int]*Cha
 
 	chains := make(map[int]*Chain)
 
-	for id := 0; id < opt.NumNodes; id++ {
+	for id := 1; id <= opt.NumNodes; id++ {
 		network[id] = make(map[int]chan proto.Message)
-		for i := 0; i < opt.NumNodes; i++ {
+		for i := 1; i <= opt.NumNodes; i++ {
 			network[id][i] = make(chan proto.Message, 128)
 		}
 	}
 
-	for id := 0; id < opt.NumNodes; id++ {
+	for id := 1; id <= opt.NumNodes; id++ {
 		chains[id] = setupNode(t, id, opt, network, testDir)
 	}
 	return chains
