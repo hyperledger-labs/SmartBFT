@@ -10,45 +10,73 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
+// Application delivers the consented proposal and corresponding signatures.
 type Application interface {
+	// Deliver delivers the given proposal and signatures.
+	// After the call returns we assume that this proposal is stored in persistent memory.
 	Deliver(proposal bft.Proposal, signature []bft.Signature)
 }
 
+// Comm enables the communications between the nodes.
 type Comm interface {
+	// SendConsensus sends the consensus protocol related message m to the node with id targetID.
 	SendConsensus(targetID uint64, m *protos.Message)
+	// SendTransaction sends the given client's request to the node with id targetID.
 	SendTransaction(targetID uint64, request []byte)
+	// Nodes returns a set of ids of participating nodes.
 	Nodes() []uint64
 }
 
+// Assembler creates proposals.
 type Assembler interface {
+	// AssembleProposal creates a proposal which includes
+	// the given requests (when permitting) and metadata.
 	AssembleProposal(metadata []byte, requests [][]byte) (nextProp bft.Proposal, remainder [][]byte)
 }
 
+// WriteAheadLog is a write ahead log.
 type WriteAheadLog interface {
+	// Append appends a data item to the end of the WAL
+	// and indicate whether this entry is a truncation point.
 	Append(entry []byte, truncateTo bool) error
 }
 
+// Signer signs on the given data.
 type Signer interface {
+	// Sign signs on the given data and returns the signature.
 	Sign([]byte) []byte
+	// SignProposal signs on the given proposal and returns a composite Signature.
 	SignProposal(bft.Proposal) *bft.Signature
 }
 
+// Verifier validates data and verifies signatures.
 type Verifier interface {
+	// VerifyProposal verifies the given proposal and returns the included requests' info.
 	VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error)
+	// VerifyRequest verifies the given request and returns its info.
 	VerifyRequest(val []byte) (bft.RequestInfo, error)
+	// VerifyConsenterSig verifies the signature for the given proposal.
 	VerifyConsenterSig(signature bft.Signature, prop bft.Proposal) error
+	// VerifySignature verifies the signature.
 	VerifySignature(signature bft.Signature) error
+	// VerificationSequence returns the current verification sequence.
 	VerificationSequence() uint64
 }
 
+// RequestInspector extracts info (i.e. request id and client id) from a given request.
 type RequestInspector interface {
+	// RequestID returns info about the given request.
 	RequestID(req []byte) bft.RequestInfo
 }
 
+// Synchronizer reaches the cluster nodes and fetches blocks in order to sync the replica's state.
 type Synchronizer interface {
+	// Sync blocks indefinitely until the replica's state is synchronized to the latest decision,
+	// and returns it.
 	Sync() bft.Decision
 }
 
+// Logger defines the contract for logging.
 type Logger interface {
 	Debugf(template string, args ...interface{})
 	Infof(template string, args ...interface{})
