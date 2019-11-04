@@ -60,6 +60,11 @@ type Configuration struct {
 
 	// SyncOnStart is a flag indicating whether a sync is required on startup.
 	SyncOnStart bool
+
+	// SpeedUpViewChange is a flag indicating whether a node waits for only f+1 view change messages to join
+	// the view change (hence speeds up the view change process), or it waits for a quorum before joining.
+	// Waiting only for f+1 is considered less safe.
+	SpeedUpViewChange bool
 }
 
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
@@ -81,4 +86,5 @@ var DefaultConfig = Configuration{
 	LeaderHeartbeatCount:      10,
 	CollectTimeout:            time.Second,
 	SyncOnStart:               false,
+	SpeedUpViewChange:         false,
 }
