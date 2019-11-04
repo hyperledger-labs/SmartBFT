@@ -14,6 +14,7 @@ import (
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/pkg/errors"
 )
 
 // Consensus submits requests to be total ordered,
@@ -53,8 +54,14 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 	c.Application.Deliver(proposal, signatures)
 }
 
-func (c *Consensus) Start() {
+func (c *Consensus) Start() error {
 	nodes := c.Comm.Nodes()
+	for _, val := range nodes {
+		c.Logger.Debugf("Node id is %d", val)
+		if val == 0 {
+			return errors.Errorf("Node id 0 is not permitted")
+		}
+	}
 	sort.Slice(nodes, func(i, j int) bool {
 		return nodes[i] < nodes[j]
 	})
@@ -183,6 +190,7 @@ func (c *Consensus) Start() {
 	c.collector.Start()
 	c.viewChanger.Start(view)
 	c.controller.Start(view, seq+1, c.Config.SyncOnStart)
+	return nil
 }
 
 func (c *Consensus) Stop() {

@@ -88,7 +88,9 @@ func (a *App) Restart() {
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	a.Setup()
-	a.Consensus.Start()
+	if err := a.Consensus.Start(); err != nil {
+		a.logger.Panicf("Consensus start returned an error : %v", err)
+	}
 }
 
 // Disconnect disconnects the node from the network

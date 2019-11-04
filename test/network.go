@@ -50,7 +50,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 		h:                   h,
 		shutdownChan:        make(chan struct{}),
 		n:                   n,
-		id:                  uint64(id),
+		id:                  id,
 		peerLossProbability: make(map[uint64]float32),
 		app:                 app,
 	}

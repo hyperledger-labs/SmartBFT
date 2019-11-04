@@ -32,7 +32,7 @@ func TestBasic(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -63,7 +63,7 @@ func TestRestartFollowers(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -126,7 +126,7 @@ func TestLeaderInPartition(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -159,7 +159,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -228,7 +228,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -292,7 +292,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -339,7 +339,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -400,7 +400,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -462,7 +462,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -512,7 +512,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -570,7 +570,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -638,7 +638,7 @@ func TestRestoringViewChange(t *testing.T) {
 
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -660,7 +660,7 @@ func TestRestoringViewChange(t *testing.T) {
 	viewChangeOnce := sync.Once{}
 	baseLogger := nodes[6].logger.Desugar()
 	nodes[6].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Node 6 sent view data msg") {
+		if strings.Contains(entry.Message, "Node 7 sent view data msg") {
 			viewChangeOnce.Do(func() {
 				viewChangeWG.Done()
 			})
@@ -717,7 +717,7 @@ func TestLeaderForwarding(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -755,7 +755,7 @@ func TestLeaderExclusion(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -787,7 +787,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -827,7 +827,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -910,7 +910,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -1029,7 +1029,9 @@ func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeT
 
 func startNodes(nodes []*App, network *Network) {
 	for _, n := range nodes {
-		n.Consensus.Start()
+		if err := n.Consensus.Start(); err != nil {
+			n.logger.Panicf("Consensus returned an error : %v", err)
+		}
 	}
 	network.StartServe()
 }
