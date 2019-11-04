@@ -55,13 +55,10 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() error {
-	nodes := c.Comm.Nodes()
-	for _, val := range nodes {
-		c.Logger.Debugf("Node id is %d", val)
-		if val == 0 {
-			return errors.Errorf("Node id 0 is not permitted")
-		}
+	if err := c.validateConfiguration(); err != nil {
+		return errors.Wrapf(err, "configuration is invalid")
 	}
+	nodes := c.Comm.Nodes()
 	sort.Slice(nodes, func(i, j int) bool {
 		return nodes[i] < nodes[j]
 	})
@@ -227,4 +224,68 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		InMsqQSize:      c.Config.IncomingMessageBufferSize,
 		ViewSequences:   c.controller.ViewSequences,
 	}
+}
+
+func (c *Consensus) validateConfiguration() error {
+	if !(c.Config.SelfID > 0) {
+		return errors.Errorf("SelfID is lower than or equal to zero")
+	}
+	nodes := c.Comm.Nodes()
+	for _, val := range nodes {
+		if val == 0 {
+			return errors.Errorf("node id 0 is not permitted")
+		}
+	}
+	if !(c.Config.RequestBatchMaxCount > 0) {
+		return errors.Errorf("RequestBatchMaxCount should be greater than zero")
+	}
+	if !(c.Config.RequestBatchMaxBytes > 0) {
+		return errors.Errorf("RequestBatchMaxBytes should be greater than zero")
+	}
+	if !(c.Config.RequestBatchMaxInterval > 0) {
+		return errors.Errorf("RequestBatchMaxInterval should be greater than zero")
+	}
+	if !(c.Config.IncomingMessageBufferSize > 0) {
+		return errors.Errorf("IncomingMessageBufferSize should be greater than zero")
+	}
+	if !(c.Config.RequestPoolSize > 0) {
+		return errors.Errorf("RequestPoolSize should be greater than zero")
+	}
+	if !(c.Config.RequestTimeout > 0) {
+		return errors.Errorf("RequestTimeout should be greater than zero")
+	}
+	if !(c.Config.RequestLeaderFwdTimeout > 0) {
+		return errors.Errorf("RequestLeaderFwdTimeout should be greater than zero")
+	}
+	if !(c.Config.RequestAutoRemoveTimeout > 0) {
+		return errors.Errorf("RequestAutoRemoveTimeout should be greater than zero")
+	}
+	if !(c.Config.ViewChangeResendInterval > 0) {
+		return errors.Errorf("ViewChangeResendInterval should be greater than zero")
+	}
+	if !(c.Config.ViewChangeTimeout > 0) {
+		return errors.Errorf("ViewChangeTimeout should be greater than zero")
+	}
+	if !(c.Config.LeaderHeartbeatTimeout > 0) {
+		return errors.Errorf("LeaderHeartbeatTimeout should be greater than zero")
+	}
+	if !(c.Config.LeaderHeartbeatCount > 0) {
+		return errors.Errorf("LeaderHeartbeatCount should be greater than zero")
+	}
+	if !(c.Config.CollectTimeout > 0) {
+		return errors.Errorf("CollectTimeout should be greater than zero")
+	}
+	if uint64(c.Config.RequestBatchMaxCount) > c.Config.RequestBatchMaxBytes {
+		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
+	}
+	if c.Config.RequestTimeout > c.Config.RequestLeaderFwdTimeout {
+		return errors.Errorf("RequestTimeout is bigger than RequestLeaderFwdTimeout")
+	}
+	if c.Config.RequestLeaderFwdTimeout > c.Config.RequestAutoRemoveTimeout {
+		return errors.Errorf("RequestLeaderFwdTimeout is bigger than RequestAutoRemoveTimeout")
+	}
+	if c.Config.ViewChangeResendInterval > c.Config.ViewChangeTimeout {
+		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
+	}
+	return nil
 }
