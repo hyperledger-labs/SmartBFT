@@ -44,7 +44,7 @@ var (
 		Metadata:             metadata,
 		VerificationSequence: 1,
 	}
-	lastDecisionSignatures       = []types.Signature{{Id: 0, Value: []byte{4}, Msg: []byte{5}}, {Id: 1, Value: []byte{4}, Msg: []byte{5}}, {Id: 2, Value: []byte{4}, Msg: []byte{5}}}
+	lastDecisionSignatures       = []types.Signature{{ID: 0, Value: []byte{4}, Msg: []byte{5}}, {ID: 1, Value: []byte{4}, Msg: []byte{5}}, {ID: 2, Value: []byte{4}, Msg: []byte{5}}}
 	lastDecisionSignaturesProtos = []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}, {Signer: 2, Value: []byte{4}, Msg: []byte{5}}}
 	vd                           = &protos.ViewData{
 		NextView: 1,
@@ -1607,7 +1607,7 @@ func TestCommitInFlight(t *testing.T) {
 	signer.On("SignProposal", mock.Anything).Run(func(args mock.Arguments) {
 		signWG.Done()
 	}).Return(&types.Signature{
-		Id:    1,
+		ID:    1,
 		Value: []byte{4},
 	})
 	verifier := &mocks.VerifierMock{}

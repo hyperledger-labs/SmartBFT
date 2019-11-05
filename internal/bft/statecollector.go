@@ -14,6 +14,7 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
+// StateCollector collects the current state from other nodes
 type StateCollector struct {
 	SelfID uint64
 	N      uint64

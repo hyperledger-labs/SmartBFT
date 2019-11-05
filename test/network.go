@@ -59,6 +59,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 	node.createCommittedBatches(n)
 }
 
+// StartServe calls serve on all nodes in the network
 func (n Network) StartServe() {
 	for _, node := range n {
 		go node.serve()

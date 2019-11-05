@@ -369,6 +369,7 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
 }
 
+// HeartbeatWasSent tells the monitor to skip sending a heartbeat
 func (hm *HeartbeatMonitor) HeartbeatWasSent() {
 	select {
 	case hm.sentHeartbeat <- struct{}{}:

@@ -20,7 +20,7 @@ import (
 
 func TestTxn(t *testing.T) {
 	txn := &Transaction{
-		Id:       "id",
+		ID:       "id",
 		ClientID: "client",
 	}
 	rawTxn := txn.ToBytes()
@@ -30,15 +30,15 @@ func TestTxn(t *testing.T) {
 
 func TestBlock(t *testing.T) {
 	tx1 := &Transaction{
-		Id:       "tx1",
+		ID:       "tx1",
 		ClientID: "alice",
 	}
 	tx2 := &Transaction{
-		Id:       "tx2",
+		ID:       "tx2",
 		ClientID: "bob",
 	}
 	tx3 := &Transaction{
-		Id:       "tx3",
+		ID:       "tx3",
 		ClientID: "carol",
 	}
 
@@ -81,14 +81,14 @@ func TestChain(t *testing.T) {
 	for blockSeq := 1; blockSeq < blockCount; blockSeq++ {
 		err := chains[1].Order(Transaction{
 			ClientID: "alice",
-			Id:       fmt.Sprintf("tx%d", blockSeq),
+			ID:       fmt.Sprintf("tx%d", blockSeq),
 		})
 		assert.NoError(t, err)
 		for i := 1; i <= numNodes; i++ {
 			chain := chains[i]
 			block := chain.Listen()
 			assert.Equal(t, uint64(blockSeq), block.Sequence)
-			assert.Equal(t, []Transaction{{Id: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
+			assert.Equal(t, []Transaction{{ID: fmt.Sprintf("tx%d", blockSeq), ClientID: "alice"}}, block.Transactions)
 		}
 	}
 
