@@ -979,6 +979,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 func TestLeaderModifiesPreprepare(t *testing.T) {
 	t.Parallel()
+	rand.Seed(time.Now().UnixNano())
 
 	for _, test := range []struct {
 		description  string
@@ -999,7 +1000,6 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
-				rand.Seed(time.Now().UnixNano())
 				randomReq := Request{ID: fmt.Sprintf("%d", rand.Intn(5)), ClientID: "alice"}
 				randomData := batch{
 					Requests: [][]byte{randomReq.ToBytes()},
