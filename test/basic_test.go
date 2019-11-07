@@ -978,15 +978,14 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 func TestLeaderModifiesPreprepare(t *testing.T) {
 	t.Parallel()
-	var txID int32
 
 	for _, test := range []struct {
 		description  string
-		mutatingFunc func(m *smartbftprotos.Message)
+		mutatingFunc func(target uint64, m *smartbftprotos.Message)
 	}{
 		{
 			description: "wrong view",
-			mutatingFunc: func(m *smartbftprotos.Message) {
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
@@ -995,11 +994,11 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 		},
 		{
 			description: "conflicting proposals",
-			mutatingFunc: func(m *smartbftprotos.Message) {
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
-				incReq := Request{ID: fmt.Sprintf("%d", atomic.AddInt32(&txID, 1)), ClientID: "alice"}
+				incReq := Request{ID: fmt.Sprintf("%d", target), ClientID: "alice"}
 				incData := batch{
 					Requests: [][]byte{incReq.ToBytes()},
 				}
@@ -1008,7 +1007,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 		},
 		{
 			description: "next sequence",
-			mutatingFunc: func(m *smartbftprotos.Message) {
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
@@ -1017,7 +1016,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 		},
 		{
 			description: "wrong verification sequence",
-			mutatingFunc: func(m *smartbftprotos.Message) {
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
 				if m.GetPrePrepare() == nil {
 					return
 				}

@@ -122,7 +122,7 @@ func (a *App) Connect() {
 }
 
 // MutateSend set the mutating function to be called before sending a message to the target node
-func (a *App) MutateSend(target uint64, mutating func(*smartbftprotos.Message)) {
+func (a *App) MutateSend(target uint64, mutating func(uint64, *smartbftprotos.Message)) {
 	a.Node.mutatingFuncLock.Lock()
 	defer a.Node.mutatingFuncLock.Unlock()
 	a.Node.peerMutatingFunc[target] = mutating
