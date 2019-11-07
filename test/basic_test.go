@@ -8,7 +8,6 @@ package test
 import (
 	"fmt"
 	"io/ioutil"
-	"math/rand"
 	"os"
 	"strconv"
 	"strings"
@@ -979,7 +978,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 func TestLeaderModifiesPreprepare(t *testing.T) {
 	t.Parallel()
-	rand.Seed(time.Now().UnixNano())
+	var txID int32
 
 	for _, test := range []struct {
 		description  string
@@ -1000,11 +999,11 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
-				randomReq := Request{ID: fmt.Sprintf("%d", rand.Intn(5)), ClientID: "alice"}
-				randomData := batch{
-					Requests: [][]byte{randomReq.ToBytes()},
+				incReq := Request{ID: fmt.Sprintf("%d", atomic.AddInt32(&txID, 1)), ClientID: "alice"}
+				incData := batch{
+					Requests: [][]byte{incReq.ToBytes()},
 				}
-				m.GetPrePrepare().Proposal.Payload = randomData.toBytes()
+				m.GetPrePrepare().Proposal.Payload = incData.toBytes()
 			},
 		},
 		{
