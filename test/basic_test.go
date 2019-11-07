@@ -977,8 +977,6 @@ func TestFollowerStateTransfer(t *testing.T) {
 }
 
 func TestLeaderModifiesPreprepare(t *testing.T) {
-	t.Parallel()
-
 	for _, test := range []struct {
 		description  string
 		mutatingFunc func(target uint64, m *smartbftprotos.Message)
@@ -1025,6 +1023,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 		},
 	} {
 		t.Run(test.description, func(t *testing.T) {
+			t.Parallel()
 			network := make(Network)
 			defer network.Shutdown()
 
