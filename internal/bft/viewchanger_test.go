@@ -1522,8 +1522,8 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 					msg.InFlightPrepared = false
 				}
 			},
-			ok:       false,
-			no:       false,
+			ok:       true,
+			no:       true,
 			proposal: nil,
 		},
 		{

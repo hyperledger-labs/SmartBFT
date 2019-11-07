@@ -614,6 +614,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 	possibleProposals := make([]*possibleProposal, 0)
 	proposalsAndMetadata := make([]*proposalAndMetadata, 0)
 	noInFlightCount := 0
+	noInFlightPreparedCount := 0
 	for _, vd := range messages {
 
 		if vd.InFlightProposal == nil { // there is no in flight proposal here
@@ -642,6 +643,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 		// find possible proposals
 
 		if !vd.InFlightPrepared { // no prepared so isn't a possible proposal
+			noInFlightPreparedCount++
 			continue
 		}
 
@@ -702,6 +704,11 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 	// condition A holds
 	if agreed != -1 {
 		return true, false, possibleProposals[agreed].proposal, nil
+	}
+
+	// condition B holds
+	if noInFlightPreparedCount >= quorum { // there is a quorum of messages that support that there is no prepared in flight proposal
+		return true, true, nil, nil
 	}
 
 	return false, false, nil, nil
