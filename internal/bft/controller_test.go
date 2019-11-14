@@ -140,7 +140,7 @@ func TestLeaderPropose(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    17,
+		ID:    17,
 		Value: []byte{4},
 	})
 	app := &mocks.ApplicationMock{}

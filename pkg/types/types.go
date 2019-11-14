@@ -23,7 +23,7 @@ type Proposal struct {
 }
 
 type Signature struct {
-	Id    uint64
+	ID    uint64
 	Value []byte
 	Msg   []byte
 }
@@ -91,7 +91,7 @@ func (c *Checkpoint) Get() (smartbftprotos.Proposal, []*smartbftprotos.Signature
 		signatures = append(signatures, &smartbftprotos.Signature{
 			Msg:    sig.Msg,
 			Value:  sig.Value,
-			Signer: sig.Id,
+			Signer: sig.ID,
 		})
 	}
 	return p, signatures

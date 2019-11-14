@@ -450,7 +450,7 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but signer %d is not the sender %d", v.SelfID, vd, sender, vd.Signer, sender)
 		return false
 	}
-	if err := v.Verifier.VerifySignature(types.Signature{Id: vd.Signer, Value: vd.Signature, Msg: vd.RawViewData}); err != nil {
+	if err := v.Verifier.VerifySignature(types.Signature{ID: vd.Signer, Value: vd.Signature, Msg: vd.RawViewData}); err != nil {
 		v.Logger.Warnf("Node %d got viewData message %v from %d, but signature is invalid, error: %v", v.SelfID, vd, sender, err)
 		return false
 	}
@@ -509,7 +509,7 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 		}
 		nodesMap[sig.Signer] = struct{}{}
 		signature := types.Signature{
-			Id:    sig.Signer,
+			ID:    sig.Signer,
 			Value: sig.Value,
 			Msg:   sig.Msg,
 		}
@@ -736,7 +736,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		}
 		nodesMap[svd.Signer] = struct{}{}
 
-		if err := v.Verifier.VerifySignature(types.Signature{Id: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
+		if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but signature of viewData %v is invalid, error: %v", v.SelfID, svd, err)
 			continue
 		}
@@ -828,7 +828,7 @@ func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecisi
 	signatures := make([]types.Signature, 0)
 	for _, sig := range lastDecisionSigs {
 		signature := types.Signature{
-			Id:    sig.Signer,
+			ID:    sig.Signer,
 			Value: sig.Value,
 			Msg:   sig.Msg,
 		}
@@ -958,7 +958,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 				Digest: v.inFlightView.inFlightProposal.Digest(),
 				Seq:    v.inFlightView.ProposalSequence,
 				Signature: &protos.Signature{
-					Signer: v.inFlightView.myProposalSig.Id,
+					Signer: v.inFlightView.myProposalSig.ID,
 					Value:  v.inFlightView.myProposalSig.Value,
 					Msg:    v.inFlightView.myProposalSig.Msg,
 				},

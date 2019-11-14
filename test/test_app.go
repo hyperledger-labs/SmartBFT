@@ -170,7 +170,7 @@ func (a *App) Sign([]byte) []byte {
 
 // SignProposal signs on the given proposal
 func (a *App) SignProposal(types.Proposal) *types.Signature {
-	return &types.Signature{Id: a.ID}
+	return &types.Signature{ID: a.ID}
 }
 
 // AssembleProposal assembles a new proposal from the given requests

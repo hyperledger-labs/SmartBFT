@@ -51,7 +51,7 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 	txn := TransactionFromBytes(req)
 	return bft.RequestInfo{
 		ClientID: txn.ClientID,
-		ID:       txn.Id,
+		ID:       txn.ID,
 	}
 }
 
@@ -60,7 +60,7 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	requests := make([]bft.RequestInfo, 0)
 	for _, t := range blockData.Transactions {
 		tx := TransactionFromBytes(t)
-		reqInfo := bft.RequestInfo{ID: tx.Id, ClientID: tx.ClientID}
+		reqInfo := bft.RequestInfo{ID: tx.ID, ClientID: tx.ClientID}
 		requests = append(requests, reqInfo)
 	}
 	return requests, nil
@@ -88,7 +88,7 @@ func (*Node) Sign(msg []byte) []byte {
 
 func (n *Node) SignProposal(bft.Proposal) *bft.Signature {
 	return &bft.Signature{
-		Id: n.id,
+		ID: n.id,
 	}
 }
 
@@ -128,7 +128,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 		txn := TransactionFromBytes(rawTxn)
 		txns = append(txns, Transaction{
 			ClientID: txn.ClientID,
-			Id:       txn.Id,
+			ID:       txn.ID,
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)

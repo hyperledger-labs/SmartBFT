@@ -416,7 +416,7 @@ func (v *View) processPrepares() Phase {
 	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(voterIDs), voterIDs)
 
 	// SignProposal returns a types.Signature with the following 3 fields:
-	// Id: The integer that represents this node.
+	// ID: The integer that represents this node.
 	// Value: The signature, encoded according to the specific signature specification.
 	// Msg: A succinct representation of the proposal that binds this proposal unequivocally.
 
@@ -432,7 +432,7 @@ func (v *View) processPrepares() Phase {
 				Digest: expectedDigest,
 				Seq:    seq,
 				Signature: &protos.Signature{
-					Signer: v.myProposalSig.Id,
+					Signer: v.myProposalSig.ID,
 					Value:  v.myProposalSig.Value,
 					Msg:    v.myProposalSig.Msg,
 				},
@@ -484,7 +484,7 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 			}(vote.Message)
 		case signature := <-signatureCollector.validVotes:
 			signatures = append(signatures, signature)
-			voterIDs = append(voterIDs, signature.Id)
+			voterIDs = append(voterIDs, signature.ID)
 		}
 	}
 
@@ -643,7 +643,7 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 	}
 
 	err := vv.v.Verifier.VerifyConsenterSig(types.Signature{
-		Id:    commit.Signature.Signer,
+		ID:    commit.Signature.Signer,
 		Value: commit.Signature.Value,
 		Msg:   commit.Signature.Msg,
 	}, *vv.proposal)
@@ -653,7 +653,7 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 	}
 
 	vv.validVotes <- types.Signature{
-		Id:    commit.Signature.Signer,
+		ID:    commit.Signature.Signer,
 		Value: commit.Signature.Value,
 		Msg:   commit.Signature.Msg,
 	}

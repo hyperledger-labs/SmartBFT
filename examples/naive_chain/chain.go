@@ -39,7 +39,7 @@ func BlockHeaderFromBytes(rawHeader []byte) *BlockHeader {
 
 type Transaction struct {
 	ClientID string
-	Id       string
+	ID       string
 }
 
 func (txn Transaction) ToBytes() []byte {

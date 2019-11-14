@@ -63,6 +63,7 @@ type requestItem struct {
 	timeout *time.Timer
 }
 
+// PoolOptions is the pool configuration
 type PoolOptions struct {
 	QueueSize         int64
 	RequestTimeout    time.Duration

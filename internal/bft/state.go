@@ -227,7 +227,7 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 	// Restore signature
 	signatureInLastSentCommit := v.lastBroadcastSent.GetCommit().Signature
 	v.myProposalSig = &types.Signature{
-		Id:    signatureInLastSentCommit.Signer,
+		ID:    signatureInLastSentCommit.Signer,
 		Msg:   signatureInLastSentCommit.Msg,
 		Value: signatureInLastSentCommit.Value,
 	}

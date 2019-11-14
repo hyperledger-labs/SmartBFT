@@ -411,7 +411,7 @@ func TestBadPrepare(t *testing.T) {
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 			signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-				Id:    4,
+				ID:    4,
 				Value: []byte{4},
 			})
 			state := &bft.StateRecorder{}
@@ -481,7 +481,7 @@ func TestBadCommit(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    4,
+		ID:    4,
 		Value: []byte{4},
 	})
 	state := &bft.StateRecorder{}
@@ -565,7 +565,7 @@ func TestNormalPath(t *testing.T) {
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    4,
+		ID:    4,
 		Value: []byte{4},
 	})
 	viewSeq := &atomic.Value{}
@@ -606,8 +606,8 @@ func TestNormalPath(t *testing.T) {
 	dSigs := <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 2 && sig.Id != 3 && sig.Id != 4 {
-			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		if sig.ID != 2 && sig.ID != 3 && sig.ID != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.ID)
 		}
 	}
 
@@ -649,8 +649,8 @@ func TestNormalPath(t *testing.T) {
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 2 && sig.Id != 3 && sig.Id != 4 {
-			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		if sig.ID != 2 && sig.ID != 3 && sig.ID != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.ID)
 		}
 	}
 
@@ -688,7 +688,7 @@ func TestTwoSequences(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		Id:    4,
+		ID:    4,
 		Value: []byte{4},
 	})
 	state := &bft.StateRecorder{}
@@ -766,8 +766,8 @@ func TestTwoSequences(t *testing.T) {
 	dSigs := <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
-			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		if sig.ID != 1 && sig.ID != 2 && sig.ID != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.ID)
 		}
 	}
 
@@ -776,8 +776,8 @@ func TestTwoSequences(t *testing.T) {
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
-		if sig.Id != 1 && sig.Id != 2 && sig.Id != 4 {
-			assert.Fail(t, "signatures is from a different node with id", sig.Id)
+		if sig.ID != 1 && sig.ID != 2 && sig.ID != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.ID)
 		}
 	}
 
@@ -842,7 +842,7 @@ func TestViewPersisted(t *testing.T) {
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 2})
+			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 2})
 
 			var deciderWG sync.WaitGroup
 			deciderWG.Add(1)
@@ -1139,7 +1139,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: 3})
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 3})
 
 	var broadcastSent sync.WaitGroup
 	comm := &mocks.CommMock{}
@@ -1397,7 +1397,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, Id: selfID})
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: selfID})
 
 	decider := &mocks.Decider{}
 	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
