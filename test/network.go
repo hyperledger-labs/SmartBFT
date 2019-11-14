@@ -131,11 +131,11 @@ type Node struct {
 // SendConsensus sends a consensus related message to a target node
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
 	node.mutatingFuncLock.RLock()
-	mutatungFunc := node.peerMutatingFunc[targetID]
+	mutatingFunc := node.peerMutatingFunc[targetID]
 	msg := m
-	if mutatungFunc != nil {
+	if mutatingFunc != nil {
 		msg = proto.Clone(m).(*smartbftprotos.Message)
-		mutatungFunc(targetID, msg)
+		mutatingFunc(targetID, msg)
 	}
 	node.mutatingFuncLock.RUnlock()
 	node.n.send(node.id, targetID, msg)

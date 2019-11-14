@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -1069,6 +1070,13 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			for i := 0; i < numberOfNodes-1; i++ {
 				assert.Equal(t, data[i], data[i+1])
 			}
+
+			md := &smartbftprotos.ViewMetadata{}
+			if err := proto.Unmarshal(data[0].Metadata, md); err != nil {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, uint64(1), md.ViewId)
+			assert.Equal(t, uint64(1), md.LatestSequence)
 
 			for i := 2; i <= numberOfNodes; i++ {
 				nodes[0].ClearMutateSend(uint64(i))
