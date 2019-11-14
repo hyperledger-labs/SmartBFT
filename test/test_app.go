@@ -121,6 +121,20 @@ func (a *App) Connect() {
 	a.Node.lossProbability = 0
 }
 
+// MutateSend set the mutating function to be called before sending a message to the target node
+func (a *App) MutateSend(target uint64, mutating func(uint64, *smartbftprotos.Message)) {
+	a.Node.mutatingFuncLock.Lock()
+	defer a.Node.mutatingFuncLock.Unlock()
+	a.Node.peerMutatingFunc[target] = mutating
+}
+
+// ClearMutateSend clears any mutating function called before sending a message to the target node
+func (a *App) ClearMutateSend(target uint64) {
+	a.Node.mutatingFuncLock.Lock()
+	defer a.Node.mutatingFuncLock.Unlock()
+	delete(a.Node.peerMutatingFunc, target)
+}
+
 // RequestID returns info about the given request
 func (a *App) RequestID(req []byte) types.RequestInfo {
 	txn := requestFromBytes(req)

@@ -1358,14 +1358,12 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 	for _, test := range []struct {
 		description    string
 		mutateMessages func([]*protos.ViewData)
-		ok             bool
 	}{
 		{
 			description: "all without in flight proposal",
 			mutateMessages: func(messages []*protos.ViewData) {
 				// in flight is already unset
 			},
-			ok: true,
 		},
 		{
 			description: "all with old in flight proposal",
@@ -1374,7 +1372,6 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 					msg.InFlightProposal = msg.LastDecision
 				}
 			},
-			ok: true,
 		},
 		{
 			description: "quorum without in flight proposal",
@@ -1382,7 +1379,6 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				// in flight is already unset in all
 				messages[0].InFlightProposal = expectedProposal
 			},
-			ok: true,
 		},
 		{
 			description: "quorum with an old in flight proposal",
@@ -1392,7 +1388,6 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				}
 				messages[0].InFlightProposal = expectedProposal
 			},
-			ok: true,
 		},
 		{
 			description: "some with no in flight proposal and some with an old one",
@@ -1402,10 +1397,9 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				messages[2].InFlightProposal = expectedProposal
 				messages[3].InFlightProposal = nil
 			},
-			ok: true,
 		},
 		{
-			description: "some (not enough) with no in flight proposal",
+			description: "enough with a different in flight proposal",
 			mutateMessages: func(messages []*protos.ViewData) {
 				messages[0].InFlightProposal = messages[0].LastDecision
 				messages[1].InFlightProposal = nil
@@ -1424,7 +1418,7 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 			test.mutateMessages(messages)
 			ok, _, _, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
 			assert.NoError(t, err)
-			assert.Equal(t, test.ok, ok)
+			assert.True(t, ok)
 		})
 	}
 }
@@ -1522,8 +1516,8 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 					msg.InFlightPrepared = false
 				}
 			},
-			ok:       false,
-			no:       false,
+			ok:       true,
+			no:       true,
 			proposal: nil,
 		},
 		{

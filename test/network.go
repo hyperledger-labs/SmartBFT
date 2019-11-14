@@ -52,6 +52,7 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 		n:                   n,
 		id:                  id,
 		peerLossProbability: make(map[uint64]float32),
+		peerMutatingFunc:    make(map[uint64]func(uint64, *smartbftprotos.Message)),
 		app:                 app,
 	}
 	n[id] = node
@@ -119,6 +120,8 @@ type Node struct {
 	lossProbability     float32
 	peerLossProbability map[uint64]float32
 	probabilityLock     sync.RWMutex
+	peerMutatingFunc    map[uint64]func(uint64, *smartbftprotos.Message)
+	mutatingFuncLock    sync.RWMutex
 	shutdownChan        chan struct{}
 	in                  chan msgFrom
 	h                   handler
@@ -128,7 +131,15 @@ type Node struct {
 
 // SendConsensus sends a consensus related message to a target node
 func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
-	node.n.send(node.id, targetID, m)
+	node.mutatingFuncLock.RLock()
+	mutatingFunc := node.peerMutatingFunc[targetID]
+	msg := m
+	if mutatingFunc != nil {
+		msg = proto.Clone(m).(*smartbftprotos.Message)
+		mutatingFunc(targetID, msg)
+	}
+	node.mutatingFuncLock.RUnlock()
+	node.n.send(node.id, targetID, msg)
 }
 
 // SendTransaction sends a client's request to a target node

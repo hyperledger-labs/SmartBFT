@@ -16,6 +16,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -972,6 +974,114 @@ func TestFollowerStateTransfer(t *testing.T) {
 	}
 	for i := 0; i < numberOfNodes-3; i++ {
 		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
+func TestLeaderModifiesPreprepare(t *testing.T) {
+	for _, test := range []struct {
+		description  string
+		mutatingFunc func(target uint64, m *smartbftprotos.Message)
+	}{
+		{
+			description: "wrong view",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				m.GetPrePrepare().View = 1
+			},
+		},
+		{
+			description: "conflicting proposals",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				incReq := Request{ID: fmt.Sprintf("%d", target), ClientID: "alice"}
+				incData := batch{
+					Requests: [][]byte{incReq.ToBytes()},
+				}
+				m.GetPrePrepare().Proposal.Payload = incData.toBytes()
+			},
+		},
+		{
+			description: "next sequence",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				m.GetPrePrepare().Seq = 2
+			},
+		},
+		{
+			description: "wrong verification sequence",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				m.GetPrePrepare().Proposal.VerificationSequence = 2
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			t.Parallel()
+			network := make(Network)
+			defer network.Shutdown()
+
+			testDir, err := ioutil.TempDir("", test.description)
+			assert.NoErrorf(t, err, "generate temporary test dir")
+			defer os.RemoveAll(testDir)
+
+			numberOfNodes := 4
+			nodes := make([]*App, 0)
+			for i := 1; i <= numberOfNodes; i++ {
+				n := newNode(uint64(i), network, t.Name(), testDir)
+				nodes = append(nodes, n)
+			}
+
+			viewChangeWG := sync.WaitGroup{}
+			viewChangeWG.Add(1)
+			baseLogger1 := nodes[1].logger.Desugar()
+			nodes[1].logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, "ViewChanged") {
+					viewChangeWG.Done()
+				}
+				return nil
+			})).Sugar()
+			nodes[1].Setup()
+
+			startNodes(nodes, &network)
+
+			for i := 2; i <= numberOfNodes; i++ {
+				nodes[0].MutateSend(uint64(i), test.mutatingFunc)
+			}
+
+			for i := 0; i < numberOfNodes; i++ {
+				nodes[i].Submit(Request{ID: fmt.Sprintf("%d", 1), ClientID: "alice"})
+			}
+
+			viewChangeWG.Wait()
+
+			data := make([]*AppRecord, 0)
+			for i := 0; i < numberOfNodes; i++ {
+				d := <-nodes[i].Delivered
+				data = append(data, d)
+			}
+			for i := 0; i < numberOfNodes-1; i++ {
+				assert.Equal(t, data[i], data[i+1])
+			}
+
+			md := &smartbftprotos.ViewMetadata{}
+			if err := proto.Unmarshal(data[0].Metadata, md); err != nil {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, uint64(1), md.ViewId)
+			assert.Equal(t, uint64(1), md.LatestSequence)
+
+			for i := 2; i <= numberOfNodes; i++ {
+				nodes[0].ClearMutateSend(uint64(i))
+			}
+		})
 	}
 }
 
