@@ -34,13 +34,13 @@ type Configuration struct {
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
 	RequestPoolSize int
 
-	// RequestTimeout is started from the moment a request is submitted, and defines the interval after which a request
+	// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a request
 	// is forwarded to the leader.
-	RequestTimeout time.Duration
-	// RequestLeaderFwdTimeout is started when RequestTimeout expires, and defines the interval after which the node
+	RequestForwardTimeout time.Duration
+	// RequestComplainTimeout is started when RequestForwardTimeout expires, and defines the interval after which the node
 	// complains about the view leader.
-	RequestLeaderFwdTimeout time.Duration
-	// RequestAutoRemoveTimeout is started when RequestLeaderFwdTimeout expires, and defines the interval after which
+	RequestComplainTimeout time.Duration
+	// RequestAutoRemoveTimeout is started when RequestComplainTimeout expires, and defines the interval after which
 	// a request is removed (dropped) from the request pool.
 	RequestAutoRemoveTimeout time.Duration
 
@@ -81,8 +81,8 @@ var DefaultConfig = Configuration{
 	RequestBatchMaxInterval:   50 * time.Millisecond,
 	IncomingMessageBufferSize: 200,
 	RequestPoolSize:           400,
-	RequestTimeout:            2 * time.Second,
-	RequestLeaderFwdTimeout:   20 * time.Second,
+	RequestForwardTimeout:     2 * time.Second,
+	RequestComplainTimeout:    20 * time.Second,
 	RequestAutoRemoveTimeout:  3 * time.Minute,
 	ViewChangeResendInterval:  5 * time.Second,
 	ViewChangeTimeout:         20 * time.Second,
@@ -113,11 +113,11 @@ func (c Configuration) Validate() error {
 	if !(c.RequestPoolSize > 0) {
 		return errors.Errorf("RequestPoolSize should be greater than zero")
 	}
-	if !(c.RequestTimeout > 0) {
-		return errors.Errorf("RequestTimeout should be greater than zero")
+	if !(c.RequestForwardTimeout > 0) {
+		return errors.Errorf("RequestForwardTimeout should be greater than zero")
 	}
-	if !(c.RequestLeaderFwdTimeout > 0) {
-		return errors.Errorf("RequestLeaderFwdTimeout should be greater than zero")
+	if !(c.RequestComplainTimeout > 0) {
+		return errors.Errorf("RequestComplainTimeout should be greater than zero")
 	}
 	if !(c.RequestAutoRemoveTimeout > 0) {
 		return errors.Errorf("RequestAutoRemoveTimeout should be greater than zero")
@@ -140,11 +140,11 @@ func (c Configuration) Validate() error {
 	if uint64(c.RequestBatchMaxCount) > c.RequestBatchMaxBytes {
 		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
 	}
-	if c.RequestTimeout > c.RequestLeaderFwdTimeout {
-		return errors.Errorf("RequestTimeout is bigger than RequestLeaderFwdTimeout")
+	if c.RequestForwardTimeout > c.RequestComplainTimeout {
+		return errors.Errorf("RequestForwardTimeout is bigger than RequestComplainTimeout")
 	}
-	if c.RequestLeaderFwdTimeout > c.RequestAutoRemoveTimeout {
-		return errors.Errorf("RequestLeaderFwdTimeout is bigger than RequestAutoRemoveTimeout")
+	if c.RequestComplainTimeout > c.RequestAutoRemoveTimeout {
+		return errors.Errorf("RequestComplainTimeout is bigger than RequestAutoRemoveTimeout")
 	}
 	if c.ViewChangeResendInterval > c.ViewChangeTimeout {
 		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")

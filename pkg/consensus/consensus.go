@@ -131,8 +131,8 @@ func (c *Consensus) Start() error {
 
 	opts := algorithm.PoolOptions{
 		QueueSize:         int64(c.Config.RequestPoolSize),
-		RequestTimeout:    c.Config.RequestTimeout,
-		LeaderFwdTimeout:  c.Config.RequestLeaderFwdTimeout,
+		ForwardTimeout:    c.Config.RequestForwardTimeout,
+		ComplainTimeout:   c.Config.RequestComplainTimeout,
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
 	submittedChan := make(chan struct{}, 1)

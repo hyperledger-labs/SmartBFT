@@ -66,18 +66,18 @@ type requestItem struct {
 // PoolOptions is the pool configuration
 type PoolOptions struct {
 	QueueSize         int64
-	RequestTimeout    time.Duration
-	LeaderFwdTimeout  time.Duration
+	ForwardTimeout    time.Duration
+	ComplainTimeout   time.Duration
 	AutoRemoveTimeout time.Duration
 }
 
 // NewPool constructs new requests pool
 func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
-	if options.RequestTimeout == 0 {
-		options.RequestTimeout = defaultRequestTimeout
+	if options.ForwardTimeout == 0 {
+		options.ForwardTimeout = defaultRequestTimeout
 	}
-	if options.LeaderFwdTimeout == 0 {
-		options.LeaderFwdTimeout = defaultRequestTimeout
+	if options.ComplainTimeout == 0 {
+		options.ComplainTimeout = defaultRequestTimeout
 	}
 	if options.AutoRemoveTimeout == 0 {
 		options.AutoRemoveTimeout = defaultRequestTimeout
@@ -127,7 +127,7 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	to := time.AfterFunc(
-		rp.options.RequestTimeout,
+		rp.options.ForwardTimeout,
 		func() { rp.onRequestTO(reqCopy, reqInfo) },
 	)
 	if rp.stopped {
@@ -146,7 +146,7 @@ func (rp *Pool) Submit(request []byte) error {
 		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
 	}
 
-	rp.logger.Debugf("Request %s submitted; started a timeout: %s", reqInfo, rp.options.RequestTimeout)
+	rp.logger.Debugf("Request %s submitted; started a timeout: %s", reqInfo, rp.options.ForwardTimeout)
 
 	// notify that a request was submitted
 	select {
@@ -306,7 +306,7 @@ func (rp *Pool) StopTimers() {
 	rp.logger.Debugf("Stopped all timers: size=%d", len(rp.existMap))
 }
 
-// RestartTimers restarts all the timeout timers attached to the pending requests, as RequestTimeout, and re-allows
+// RestartTimers restarts all the timeout timers attached to the pending requests, as RequestForwardTimeout, and re-allows
 // submission of new requests.
 func (rp *Pool) RestartTimers() {
 	rp.lock.Lock()
@@ -318,7 +318,7 @@ func (rp *Pool) RestartTimers() {
 		item := element.Value.(*requestItem)
 		item.timeout.Stop()
 		to := time.AfterFunc(
-			rp.options.RequestTimeout,
+			rp.options.ForwardTimeout,
 			func() { rp.onRequestTO(item.request, reqInfo) },
 		)
 		item.timeout = to
@@ -360,10 +360,10 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	//start a second timeout
 	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
-		rp.options.LeaderFwdTimeout,
+		rp.options.ComplainTimeout,
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
 	)
-	rp.logger.Debugf("Request %s; started a leader-forwarding timeout: %s", reqInfo, rp.options.LeaderFwdTimeout)
+	rp.logger.Debugf("Request %s; started a leader-forwarding timeout: %s", reqInfo, rp.options.ComplainTimeout)
 }
 
 // called by the goroutine spawned by time.AfterFunc
