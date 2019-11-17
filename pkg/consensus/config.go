@@ -5,7 +5,11 @@
 
 package consensus
 
-import "time"
+import (
+	"time"
+
+	"github.com/pkg/errors"
+)
 
 // Configuration defines the parameters needed in order to create an instance of Consensus.
 type Configuration struct {
@@ -87,4 +91,64 @@ var DefaultConfig = Configuration{
 	CollectTimeout:            time.Second,
 	SyncOnStart:               false,
 	SpeedUpViewChange:         false,
+}
+
+func (c Configuration) Validate() error {
+	if !(c.SelfID > 0) {
+		return errors.Errorf("SelfID is lower than or equal to zero")
+	}
+
+	if !(c.RequestBatchMaxCount > 0) {
+		return errors.Errorf("RequestBatchMaxCount should be greater than zero")
+	}
+	if !(c.RequestBatchMaxBytes > 0) {
+		return errors.Errorf("RequestBatchMaxBytes should be greater than zero")
+	}
+	if !(c.RequestBatchMaxInterval > 0) {
+		return errors.Errorf("RequestBatchMaxInterval should be greater than zero")
+	}
+	if !(c.IncomingMessageBufferSize > 0) {
+		return errors.Errorf("IncomingMessageBufferSize should be greater than zero")
+	}
+	if !(c.RequestPoolSize > 0) {
+		return errors.Errorf("RequestPoolSize should be greater than zero")
+	}
+	if !(c.RequestTimeout > 0) {
+		return errors.Errorf("RequestTimeout should be greater than zero")
+	}
+	if !(c.RequestLeaderFwdTimeout > 0) {
+		return errors.Errorf("RequestLeaderFwdTimeout should be greater than zero")
+	}
+	if !(c.RequestAutoRemoveTimeout > 0) {
+		return errors.Errorf("RequestAutoRemoveTimeout should be greater than zero")
+	}
+	if !(c.ViewChangeResendInterval > 0) {
+		return errors.Errorf("ViewChangeResendInterval should be greater than zero")
+	}
+	if !(c.ViewChangeTimeout > 0) {
+		return errors.Errorf("ViewChangeTimeout should be greater than zero")
+	}
+	if !(c.LeaderHeartbeatTimeout > 0) {
+		return errors.Errorf("LeaderHeartbeatTimeout should be greater than zero")
+	}
+	if !(c.LeaderHeartbeatCount > 0) {
+		return errors.Errorf("LeaderHeartbeatCount should be greater than zero")
+	}
+	if !(c.CollectTimeout > 0) {
+		return errors.Errorf("CollectTimeout should be greater than zero")
+	}
+	if uint64(c.RequestBatchMaxCount) > c.RequestBatchMaxBytes {
+		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
+	}
+	if c.RequestTimeout > c.RequestLeaderFwdTimeout {
+		return errors.Errorf("RequestTimeout is bigger than RequestLeaderFwdTimeout")
+	}
+	if c.RequestLeaderFwdTimeout > c.RequestAutoRemoveTimeout {
+		return errors.Errorf("RequestLeaderFwdTimeout is bigger than RequestAutoRemoveTimeout")
+	}
+	if c.ViewChangeResendInterval > c.ViewChangeTimeout {
+		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
+	}
+
+	return nil
 }

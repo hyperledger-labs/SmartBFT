@@ -228,65 +228,16 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 }
 
 func (c *Consensus) validateConfiguration() error {
-	if !(c.Config.SelfID > 0) {
-		return errors.Errorf("SelfID is lower than or equal to zero")
+	if err := c.Config.Validate(); err != nil {
+		return errors.Wrap(err, "bad configuration")
 	}
+
 	nodes := c.Comm.Nodes()
 	for _, val := range nodes {
 		if val == 0 {
-			return errors.Errorf("node id 0 is not permitted")
+			return errors.Errorf("Comm.Nodes() contains node id 0 which is not permitted, nodes: %v", nodes)
 		}
 	}
-	if !(c.Config.RequestBatchMaxCount > 0) {
-		return errors.Errorf("RequestBatchMaxCount should be greater than zero")
-	}
-	if !(c.Config.RequestBatchMaxBytes > 0) {
-		return errors.Errorf("RequestBatchMaxBytes should be greater than zero")
-	}
-	if !(c.Config.RequestBatchMaxInterval > 0) {
-		return errors.Errorf("RequestBatchMaxInterval should be greater than zero")
-	}
-	if !(c.Config.IncomingMessageBufferSize > 0) {
-		return errors.Errorf("IncomingMessageBufferSize should be greater than zero")
-	}
-	if !(c.Config.RequestPoolSize > 0) {
-		return errors.Errorf("RequestPoolSize should be greater than zero")
-	}
-	if !(c.Config.RequestTimeout > 0) {
-		return errors.Errorf("RequestTimeout should be greater than zero")
-	}
-	if !(c.Config.RequestLeaderFwdTimeout > 0) {
-		return errors.Errorf("RequestLeaderFwdTimeout should be greater than zero")
-	}
-	if !(c.Config.RequestAutoRemoveTimeout > 0) {
-		return errors.Errorf("RequestAutoRemoveTimeout should be greater than zero")
-	}
-	if !(c.Config.ViewChangeResendInterval > 0) {
-		return errors.Errorf("ViewChangeResendInterval should be greater than zero")
-	}
-	if !(c.Config.ViewChangeTimeout > 0) {
-		return errors.Errorf("ViewChangeTimeout should be greater than zero")
-	}
-	if !(c.Config.LeaderHeartbeatTimeout > 0) {
-		return errors.Errorf("LeaderHeartbeatTimeout should be greater than zero")
-	}
-	if !(c.Config.LeaderHeartbeatCount > 0) {
-		return errors.Errorf("LeaderHeartbeatCount should be greater than zero")
-	}
-	if !(c.Config.CollectTimeout > 0) {
-		return errors.Errorf("CollectTimeout should be greater than zero")
-	}
-	if uint64(c.Config.RequestBatchMaxCount) > c.Config.RequestBatchMaxBytes {
-		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
-	}
-	if c.Config.RequestTimeout > c.Config.RequestLeaderFwdTimeout {
-		return errors.Errorf("RequestTimeout is bigger than RequestLeaderFwdTimeout")
-	}
-	if c.Config.RequestLeaderFwdTimeout > c.Config.RequestAutoRemoveTimeout {
-		return errors.Errorf("RequestLeaderFwdTimeout is bigger than RequestAutoRemoveTimeout")
-	}
-	if c.Config.ViewChangeResendInterval > c.Config.ViewChangeTimeout {
-		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
-	}
+
 	return nil
 }
