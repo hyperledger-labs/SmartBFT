@@ -18,7 +18,7 @@ type Configuration struct {
 
 	// RequestBatchMaxCount is the maximal number of requests in a batch.
 	// A request batch that reaches this count is proposed immediately.
-	RequestBatchMaxCount int
+	RequestBatchMaxCount uint64
 	// RequestBatchMaxBytes is the maximal total size of requests in a batch, in bytes.
 	// This is also the maximal size of a request. A request batch that reaches this size is proposed immediately.
 	RequestBatchMaxBytes uint64
@@ -137,7 +137,7 @@ func (c Configuration) Validate() error {
 	if !(c.CollectTimeout > 0) {
 		return errors.Errorf("CollectTimeout should be greater than zero")
 	}
-	if uint64(c.RequestBatchMaxCount) > c.RequestBatchMaxBytes {
+	if c.RequestBatchMaxCount > c.RequestBatchMaxBytes {
 		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
 	}
 	if c.RequestForwardTimeout > c.RequestComplainTimeout {
