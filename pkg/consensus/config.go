@@ -32,7 +32,7 @@ type Configuration struct {
 	IncomingMessageBufferSize uint64
 	// RequestPoolSize is the number of pending requests retained by the node.
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
-	RequestPoolSize int
+	RequestPoolSize uint64
 
 	// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a
 	// request is forwarded to the leader.
