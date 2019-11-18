@@ -96,7 +96,7 @@ func (c *Consensus) Start() error {
 		Ticker:            c.ViewChangerTicker,
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
-		InMsqQSize:        c.Config.IncomingMessageBufferSize,
+		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
 	}
 
 	c.collector = &algorithm.StateCollector{
@@ -225,7 +225,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		FailureDetector: c,
 		Verifier:        c.Verifier,
 		N:               c.numberOfNodes,
-		InMsqQSize:      c.Config.IncomingMessageBufferSize,
+		InMsqQSize:      int(c.Config.IncomingMessageBufferSize),
 		ViewSequences:   c.controller.ViewSequences,
 	}
 }

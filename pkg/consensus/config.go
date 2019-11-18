@@ -29,7 +29,7 @@ type Configuration struct {
 	RequestBatchMaxInterval time.Duration
 
 	// IncomingMessageBufferSize is the size of the buffer holding incoming messages before they are processed.
-	IncomingMessageBufferSize int
+	IncomingMessageBufferSize uint64
 	// RequestPoolSize is the number of pending requests retained by the node.
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
 	RequestPoolSize int
