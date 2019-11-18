@@ -24,6 +24,7 @@ type Comm interface {
 	// SendTransaction sends the given client's request to the node with id targetID.
 	SendTransaction(targetID uint64, request []byte)
 	// Nodes returns a set of ids of participating nodes.
+	// In case you need to change or keep this slice, create a copy.
 	Nodes() []uint64
 }
 

@@ -34,11 +34,11 @@ type Configuration struct {
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
 	RequestPoolSize int
 
-	// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a request
-	// is forwarded to the leader.
+	// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a
+	// request is forwarded to the leader.
 	RequestForwardTimeout time.Duration
-	// RequestComplainTimeout is started when RequestForwardTimeout expires, and defines the interval after which the node
-	// complains about the view leader.
+	// RequestComplainTimeout is started when RequestForwardTimeout expires, and defines the interval after which the
+	// node complains about the view leader.
 	RequestComplainTimeout time.Duration
 	// RequestAutoRemoveTimeout is started when RequestComplainTimeout expires, and defines the interval after which
 	// a request is removed (dropped) from the request pool.

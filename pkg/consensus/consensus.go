@@ -55,15 +55,18 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Start() error {
-	if err := c.validateConfiguration(); err != nil {
+	if err := c.ValidateConfiguration(); err != nil {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
+
 	nodes := c.Comm.Nodes()
-	sort.Slice(nodes, func(i, j int) bool {
-		return nodes[i] < nodes[j]
+	c.numberOfNodes = uint64(len(nodes))
+	c.nodes = make([]uint64, c.numberOfNodes)
+	copy(c.nodes, nodes)
+	sort.Slice(c.nodes, func(i, j int) bool {
+		return c.nodes[i] < c.nodes[j]
 	})
-	c.nodes = nodes
-	c.numberOfNodes = uint64(len(c.nodes))
+
 	inFlight := algorithm.InFlightData{}
 
 	c.state = &algorithm.PersistedState{
@@ -227,16 +230,26 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 	}
 }
 
-func (c *Consensus) validateConfiguration() error {
+func (c *Consensus) ValidateConfiguration() error {
 	if err := c.Config.Validate(); err != nil {
 		return errors.Wrap(err, "bad configuration")
 	}
 
 	nodes := c.Comm.Nodes()
+	nodeSet := make(map[uint64]bool)
 	for _, val := range nodes {
 		if val == 0 {
 			return errors.Errorf("Comm.Nodes() contains node id 0 which is not permitted, nodes: %v", nodes)
 		}
+		nodeSet[val] = true
+	}
+
+	if !nodeSet[c.Config.SelfID] {
+		return errors.Errorf("Comm.Nodes() does not contain the SelfID: %d, nodes: %v", c.Config.SelfID, nodes)
+	}
+
+	if len(nodeSet) != len(nodes) {
+		return errors.Errorf("Comm.Nodes() contains duplicate IDs, nodes: %v", nodes)
 	}
 
 	return nil
