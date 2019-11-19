@@ -22,11 +22,11 @@ type BatchBuilder struct {
 }
 
 // NewBatchBuilder creates a new BatchBuilder
-func NewBatchBuilder(pool RequestPool, submittedChan chan struct{}, maxMsgCount int, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
+func NewBatchBuilder(pool RequestPool, submittedChan chan struct{}, maxMsgCount uint64, maxSizeBytes uint64, batchTimeout time.Duration) *BatchBuilder {
 	b := &BatchBuilder{
 		pool:          pool,
 		submittedChan: submittedChan,
-		maxMsgCount:   maxMsgCount,
+		maxMsgCount:   int(maxMsgCount),
 		maxSizeBytes:  maxSizeBytes,
 		batchTimeout:  batchTimeout,
 		closeChan:     make(chan struct{}),

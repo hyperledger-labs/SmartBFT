@@ -5,7 +5,11 @@
 
 package consensus
 
-import "time"
+import (
+	"time"
+
+	"github.com/pkg/errors"
+)
 
 // Configuration defines the parameters needed in order to create an instance of Consensus.
 type Configuration struct {
@@ -14,7 +18,7 @@ type Configuration struct {
 
 	// RequestBatchMaxCount is the maximal number of requests in a batch.
 	// A request batch that reaches this count is proposed immediately.
-	RequestBatchMaxCount int
+	RequestBatchMaxCount uint64
 	// RequestBatchMaxBytes is the maximal total size of requests in a batch, in bytes.
 	// This is also the maximal size of a request. A request batch that reaches this size is proposed immediately.
 	RequestBatchMaxBytes uint64
@@ -25,18 +29,18 @@ type Configuration struct {
 	RequestBatchMaxInterval time.Duration
 
 	// IncomingMessageBufferSize is the size of the buffer holding incoming messages before they are processed.
-	IncomingMessageBufferSize int
+	IncomingMessageBufferSize uint64
 	// RequestPoolSize is the number of pending requests retained by the node.
 	// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.
-	RequestPoolSize int
+	RequestPoolSize uint64
 
-	// RequestTimeout is started from the moment a request is submitted, and defines the interval after which a request
-	// is forwarded to the leader.
-	RequestTimeout time.Duration
-	// RequestLeaderFwdTimeout is started when RequestTimeout expires, and defines the interval after which the node
-	// complains about the view leader.
-	RequestLeaderFwdTimeout time.Duration
-	// RequestAutoRemoveTimeout is started when RequestLeaderFwdTimeout expires, and defines the interval after which
+	// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a
+	// request is forwarded to the leader.
+	RequestForwardTimeout time.Duration
+	// RequestComplainTimeout is started when RequestForwardTimeout expires, and defines the interval after which the
+	// node complains about the view leader.
+	RequestComplainTimeout time.Duration
+	// RequestAutoRemoveTimeout is started when RequestComplainTimeout expires, and defines the interval after which
 	// a request is removed (dropped) from the request pool.
 	RequestAutoRemoveTimeout time.Duration
 
@@ -52,7 +56,7 @@ type Configuration struct {
 	LeaderHeartbeatTimeout time.Duration
 	// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
-	LeaderHeartbeatCount int
+	LeaderHeartbeatCount uint64
 
 	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,
 	// stops collecting information about view metadata from remote nodes.
@@ -77,8 +81,8 @@ var DefaultConfig = Configuration{
 	RequestBatchMaxInterval:   50 * time.Millisecond,
 	IncomingMessageBufferSize: 200,
 	RequestPoolSize:           400,
-	RequestTimeout:            2 * time.Second,
-	RequestLeaderFwdTimeout:   20 * time.Second,
+	RequestForwardTimeout:     2 * time.Second,
+	RequestComplainTimeout:    20 * time.Second,
 	RequestAutoRemoveTimeout:  3 * time.Minute,
 	ViewChangeResendInterval:  5 * time.Second,
 	ViewChangeTimeout:         20 * time.Second,
@@ -87,4 +91,64 @@ var DefaultConfig = Configuration{
 	CollectTimeout:            time.Second,
 	SyncOnStart:               false,
 	SpeedUpViewChange:         false,
+}
+
+func (c Configuration) Validate() error {
+	if !(c.SelfID > 0) {
+		return errors.Errorf("SelfID is lower than or equal to zero")
+	}
+
+	if !(c.RequestBatchMaxCount > 0) {
+		return errors.Errorf("RequestBatchMaxCount should be greater than zero")
+	}
+	if !(c.RequestBatchMaxBytes > 0) {
+		return errors.Errorf("RequestBatchMaxBytes should be greater than zero")
+	}
+	if !(c.RequestBatchMaxInterval > 0) {
+		return errors.Errorf("RequestBatchMaxInterval should be greater than zero")
+	}
+	if !(c.IncomingMessageBufferSize > 0) {
+		return errors.Errorf("IncomingMessageBufferSize should be greater than zero")
+	}
+	if !(c.RequestPoolSize > 0) {
+		return errors.Errorf("RequestPoolSize should be greater than zero")
+	}
+	if !(c.RequestForwardTimeout > 0) {
+		return errors.Errorf("RequestForwardTimeout should be greater than zero")
+	}
+	if !(c.RequestComplainTimeout > 0) {
+		return errors.Errorf("RequestComplainTimeout should be greater than zero")
+	}
+	if !(c.RequestAutoRemoveTimeout > 0) {
+		return errors.Errorf("RequestAutoRemoveTimeout should be greater than zero")
+	}
+	if !(c.ViewChangeResendInterval > 0) {
+		return errors.Errorf("ViewChangeResendInterval should be greater than zero")
+	}
+	if !(c.ViewChangeTimeout > 0) {
+		return errors.Errorf("ViewChangeTimeout should be greater than zero")
+	}
+	if !(c.LeaderHeartbeatTimeout > 0) {
+		return errors.Errorf("LeaderHeartbeatTimeout should be greater than zero")
+	}
+	if !(c.LeaderHeartbeatCount > 0) {
+		return errors.Errorf("LeaderHeartbeatCount should be greater than zero")
+	}
+	if !(c.CollectTimeout > 0) {
+		return errors.Errorf("CollectTimeout should be greater than zero")
+	}
+	if c.RequestBatchMaxCount > c.RequestBatchMaxBytes {
+		return errors.Errorf("RequestBatchMaxCount is bigger than RequestBatchMaxBytes")
+	}
+	if c.RequestForwardTimeout > c.RequestComplainTimeout {
+		return errors.Errorf("RequestForwardTimeout is bigger than RequestComplainTimeout")
+	}
+	if c.RequestComplainTimeout > c.RequestAutoRemoveTimeout {
+		return errors.Errorf("RequestComplainTimeout is bigger than RequestAutoRemoveTimeout")
+	}
+	if c.ViewChangeResendInterval > c.ViewChangeTimeout {
+		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
+	}
+
+	return nil
 }

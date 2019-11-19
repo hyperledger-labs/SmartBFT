@@ -26,7 +26,7 @@ type Egress map[int]chan<- proto.Message
 
 type NetworkOptions struct {
 	NumNodes     int
-	BatchSize    int
+	BatchSize    uint64
 	BatchTimeout time.Duration
 }
 

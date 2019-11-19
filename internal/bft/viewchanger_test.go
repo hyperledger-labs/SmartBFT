@@ -1646,7 +1646,7 @@ func TestCommitInFlight(t *testing.T) {
 		Checkpoint:    &checkpoint,
 		ViewSequences: &atomic.Value{},
 		State:         &bft.StateRecorder{},
-		InMsqQSize:    consensus.DefaultConfig.IncomingMessageBufferSize,
+		InMsqQSize:    int(consensus.DefaultConfig.IncomingMessageBufferSize),
 		Application:   app,
 		Pruner:        pruner,
 	}
