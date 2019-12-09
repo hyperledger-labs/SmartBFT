@@ -1086,7 +1086,11 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 }
 
 func TestGradualStart(t *testing.T) {
-
+	// Scenario: initially the network has only one node
+	// a transaction is submitted and committed with that node
+	// then another node is introduced, with a reset to the original node
+	// and another transaction is passed
+	// lastly a third node is added and another transaction is submitted
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -1095,6 +1099,7 @@ func TestGradualStart(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
+	// start with only one node
 	n0 := newNode(uint64(1), network, t.Name(), testDir)
 
 	if err := n0.Consensus.Start(); err != nil {
@@ -1115,6 +1120,7 @@ func TestGradualStart(t *testing.T) {
 
 	network.StopServe()
 
+	// add a second node
 	n1 := newNode(uint64(2), network, t.Name(), testDir)
 
 	if err := n1.Consensus.Start(); err != nil {
@@ -1144,6 +1150,7 @@ func TestGradualStart(t *testing.T) {
 
 	network.StopServe()
 
+	// add a third node
 	n2 := newNode(uint64(3), network, t.Name(), testDir)
 
 	if err := n2.Consensus.Start(); err != nil {
