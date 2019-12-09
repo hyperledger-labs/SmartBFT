@@ -1095,7 +1095,6 @@ func TestGradualStart(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-
 	n0 := newNode(uint64(1), network, t.Name(), testDir)
 
 	if err := n0.Consensus.Start(); err != nil {
@@ -1127,7 +1126,7 @@ func TestGradualStart(t *testing.T) {
 	network.StartServe()
 
 	d1 := <-n1.Delivered
-	assert.Equal(t,d0,d1)
+	assert.Equal(t, d0, d1)
 
 	n0.Submit(Request{ID: fmt.Sprintf("%d", 2), ClientID: "alice"})
 
@@ -1141,7 +1140,7 @@ func TestGradualStart(t *testing.T) {
 	second := d0
 
 	d1 = <-n1.Delivered
-	assert.Equal(t,d0,d1)
+	assert.Equal(t, d0, d1)
 
 	network.StopServe()
 
@@ -1157,9 +1156,9 @@ func TestGradualStart(t *testing.T) {
 	network.StartServe()
 
 	d2 := <-n2.Delivered
-	assert.Equal(t,first,d2)
+	assert.Equal(t, first, d2)
 	d2 = <-n2.Delivered
-	assert.Equal(t,second,d2)
+	assert.Equal(t, second, d2)
 
 	n0.Submit(Request{ID: fmt.Sprintf("%d", 3), ClientID: "alice"})
 
@@ -1172,9 +1171,9 @@ func TestGradualStart(t *testing.T) {
 	assert.Equal(t, uint64(3), md.LatestSequence)
 
 	d1 = <-n1.Delivered
-	assert.Equal(t,d0,d1)
+	assert.Equal(t, d0, d1)
 	d2 = <-n2.Delivered
-	assert.Equal(t,d0,d2)
+	assert.Equal(t, d0, d2)
 
 }
 
