@@ -56,14 +56,23 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 		app:                 app,
 	}
 	n[id] = node
-	node.running.Add(1)
 	node.createCommittedBatches(n)
 }
 
 // StartServe calls serve on all nodes in the network
 func (n Network) StartServe() {
 	for _, node := range n {
+		node.running.Add(1)
 		go node.serve()
+	}
+}
+
+// StopServe stops serve for all nodes in the network
+func (n Network) StopServe() {
+	for _, node := range n {
+		close(node.shutdownChan)
+		node.running.Wait()
+		node.shutdownChan = make(chan struct{}) // reopen for next time
 	}
 }
 

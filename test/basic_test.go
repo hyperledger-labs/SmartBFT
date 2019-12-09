@@ -1085,6 +1085,105 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 	}
 }
 
+func TestGradualStart(t *testing.T) {
+	// Scenario: initially the network has only one node
+	// a transaction is submitted and committed with that node
+	// then another node is introduced, with a reset to the original node
+	// and another transaction is passed
+	// lastly a third node is added and another transaction is submitted
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	// start with only one node
+	n0 := newNode(uint64(1), network, t.Name(), testDir)
+
+	if err := n0.Consensus.Start(); err != nil {
+		n0.logger.Panicf("Consensus returned an error : %v", err)
+	}
+	network.StartServe()
+
+	n0.Submit(Request{ID: fmt.Sprintf("%d", 1), ClientID: "alice"})
+
+	d0 := <-n0.Delivered
+	md := &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(d0.Metadata, md); err != nil {
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, uint64(0), md.ViewId)
+	assert.Equal(t, uint64(1), md.LatestSequence)
+	first := d0
+
+	network.StopServe()
+
+	// add a second node
+	n1 := newNode(uint64(2), network, t.Name(), testDir)
+
+	if err := n1.Consensus.Start(); err != nil {
+		n1.logger.Panicf("Consensus returned an error : %v", err)
+	}
+
+	n0.Restart()
+
+	network.StartServe()
+
+	d1 := <-n1.Delivered
+	assert.Equal(t, d0, d1)
+
+	n0.Submit(Request{ID: fmt.Sprintf("%d", 2), ClientID: "alice"})
+
+	d0 = <-n0.Delivered
+	md = &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(d0.Metadata, md); err != nil {
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, uint64(0), md.ViewId)
+	assert.Equal(t, uint64(2), md.LatestSequence)
+	second := d0
+
+	d1 = <-n1.Delivered
+	assert.Equal(t, d0, d1)
+
+	network.StopServe()
+
+	// add a third node
+	n2 := newNode(uint64(3), network, t.Name(), testDir)
+
+	if err := n2.Consensus.Start(); err != nil {
+		n2.logger.Panicf("Consensus returned an error : %v", err)
+	}
+
+	n0.Restart()
+	n1.Restart()
+
+	network.StartServe()
+
+	d2 := <-n2.Delivered
+	assert.Equal(t, first, d2)
+	d2 = <-n2.Delivered
+	assert.Equal(t, second, d2)
+
+	n0.Submit(Request{ID: fmt.Sprintf("%d", 3), ClientID: "alice"})
+
+	d0 = <-n0.Delivered
+	md = &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(d0.Metadata, md); err != nil {
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, uint64(0), md.ViewId)
+	assert.Equal(t, uint64(3), md.LatestSequence)
+
+	d1 = <-n1.Delivered
+	assert.Equal(t, d0, d1)
+	d2 = <-n2.Delivered
+	assert.Equal(t, d0, d2)
+
+}
+
 func countCommittedBatches(n *App) int {
 	var numBatchesCreated int
 	for {
