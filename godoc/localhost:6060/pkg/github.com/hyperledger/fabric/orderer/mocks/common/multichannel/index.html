@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>multichannel - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package multichannel
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/mocks/common/multichannel"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ConsenterSupport">type ConsenterSupport</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.Append">func (mcs *ConsenterSupport) Append(block *cb.Block) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.Block">func (mcs *ConsenterSupport) Block(number uint64) *cb.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.BlockCutter">func (mcs *ConsenterSupport) BlockCutter() blockcutter.Receiver</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ChainID">func (mcs *ConsenterSupport) ChainID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ChannelConfig">func (mcs *ConsenterSupport) ChannelConfig() channelconfig.Channel</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ClassifyMsg">func (mcs *ConsenterSupport) ClassifyMsg(chdr *cb.ChannelHeader) msgprocessor.Classification</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.CreateNextBlock">func (mcs *ConsenterSupport) CreateNextBlock(data []*cb.Envelope) *cb.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.Height">func (mcs *ConsenterSupport) Height() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.NewSignatureHeader">func (mcs *ConsenterSupport) NewSignatureHeader() (*cb.SignatureHeader, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ProcessConfigMsg">func (mcs *ConsenterSupport) ProcessConfigMsg(env *cb.Envelope) (*cb.Envelope, uint64, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ProcessConfigUpdateMsg">func (mcs *ConsenterSupport) ProcessConfigUpdateMsg(env *cb.Envelope) (config *cb.Envelope, configSeq uint64, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.ProcessNormalMsg">func (mcs *ConsenterSupport) ProcessNormalMsg(env *cb.Envelope) (configSeq uint64, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.Sequence">func (mcs *ConsenterSupport) Sequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.SharedConfig">func (mcs *ConsenterSupport) SharedConfig() channelconfig.Orderer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.Sign">func (mcs *ConsenterSupport) Sign(message []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.VerifyBlockSignature">func (mcs *ConsenterSupport) VerifyBlockSignature(_ []*cb.SignedData, _ *cb.ConfigEnvelope) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.WriteBlock">func (mcs *ConsenterSupport) WriteBlock(block *cb.Block, encodedMetadataValue []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterSupport.WriteConfigBlock">func (mcs *ConsenterSupport) WriteConfigBlock(block *cb.Block, encodedMetadataValue []byte)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go">multichannel.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ConsenterSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=710:2353#L11">ConsenterSupport</a>
+				<a class="permalink" href="index.html#ConsenterSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConsenterSupport is used to mock the multichannel.ConsenterSupport interface
+Whenever a block is written, it writes to the Batches channel to allow for synchronization
+</p>
+
+			<pre>type ConsenterSupport struct {
+<span id="ConsenterSupport.SharedConfigVal"></span>    <span class="comment">// SharedConfigVal is the value returned by SharedConfig()</span>
+    SharedConfigVal *<a href="../../../../common/mocks/config/index.html">mockconfig</a>.<a href="../../../../common/mocks/config/index.html#Orderer">Orderer</a>
+
+    <span class="comment">// SharedConfigVal is the value returned by ChannelConfig()</span>
+<span id="ConsenterSupport.ChannelConfigVal"></span>    ChannelConfigVal *<a href="../../../../common/mocks/config/index.html">mockconfig</a>.<a href="../../../../common/mocks/config/index.html#Channel">Channel</a>
+
+<span id="ConsenterSupport.BlockCutterVal"></span>    <span class="comment">// BlockCutterVal is the value returned by BlockCutter()</span>
+    BlockCutterVal *<a href="../blockcutter/index.html">mockblockcutter</a>.<a href="../blockcutter/index.html#Receiver">Receiver</a>
+
+<span id="ConsenterSupport.BlockByIndex"></span>    <span class="comment">// BlockByIndex maps block numbers to retrieved values of these blocks</span>
+    BlockByIndex map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>
+
+<span id="ConsenterSupport.Blocks"></span>    <span class="comment">// Blocks is the channel where WriteBlock writes the most recently created block,</span>
+    Blocks chan *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>
+
+<span id="ConsenterSupport.ChainIDVal"></span>    <span class="comment">// ChainIDVal is the value returned by ChainID()</span>
+    ChainIDVal <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="ConsenterSupport.HeightVal"></span>    <span class="comment">// HeightVal is the value returned by Height()</span>
+    HeightVal <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="ConsenterSupport.NextBlockVal"></span>    <span class="comment">// NextBlockVal stores the block created by the most recent CreateNextBlock() call</span>
+    NextBlockVal *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>
+
+<span id="ConsenterSupport.ClassifyMsgVal"></span>    <span class="comment">// ClassifyMsgVal is returned by ClassifyMsg</span>
+    ClassifyMsgVal <a href="../../../common/msgprocessor/index.html">msgprocessor</a>.<a href="../../../common/msgprocessor/index.html#Classification">Classification</a>
+
+<span id="ConsenterSupport.ConfigSeqVal"></span>    <span class="comment">// ConfigSeqVal is returned as the configSeq for Process*Msg</span>
+    ConfigSeqVal <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="ConsenterSupport.ProcessNormalMsgErr"></span>    <span class="comment">// ProcessNormalMsgErr is returned as the error for ProcessNormalMsg</span>
+    ProcessNormalMsgErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="ConsenterSupport.ProcessConfigUpdateMsgVal"></span>    <span class="comment">// ProcessConfigUpdateMsgVal is returned as the error for ProcessConfigUpdateMsg</span>
+    ProcessConfigUpdateMsgVal *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>
+
+<span id="ConsenterSupport.ProcessConfigUpdateMsgErr"></span>    <span class="comment">// ProcessConfigUpdateMsgErr is returned as the error for ProcessConfigUpdateMsg</span>
+    ProcessConfigUpdateMsgErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="ConsenterSupport.ProcessConfigMsgVal"></span>    <span class="comment">// ProcessConfigMsgVal is returned as the error for ProcessConfigMsg</span>
+    ProcessConfigMsgVal *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>
+
+<span id="ConsenterSupport.ProcessConfigMsgErr"></span>    <span class="comment">// ProcessConfigMsgErr is returned by ProcessConfigMsg</span>
+    ProcessConfigMsgErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="ConsenterSupport.SequenceVal"></span>    <span class="comment">// SequenceVal is returned by Sequence</span>
+    SequenceVal <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="ConsenterSupport.BlockVerificationErr"></span>    <span class="comment">// BlockVerificationErr is returned by VerifyBlockSignature</span>
+    BlockVerificationErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConsenterSupport.Append">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=5813:5871#L161">Append</a>
+					<a class="permalink" href="index.html#ConsenterSupport.Append">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) Append(block *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Append appends a new block to the ledger in its raw form,
+unlike WriteBlock that also mutates its metadata.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.Block">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=2424:2483#L65">Block</a>
+					<a class="permalink" href="index.html#ConsenterSupport.Block">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+Block returns the block with the given number or nil if not found
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.BlockCutter">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=2560:2623#L70">BlockCutter</a>
+					<a class="permalink" href="index.html#ConsenterSupport.BlockCutter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) BlockCutter() <a href="../../../common/blockcutter/index.html">blockcutter</a>.<a href="../../../common/blockcutter/index.html#Receiver">Receiver</a></pre>
+				<p>
+BlockCutter returns BlockCutterVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ChainID">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=3885:3930#L110">ChainID</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ChainID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ChainID returns the chain ID this specific consenter instance is associated with
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ChannelConfig">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=2837:2903#L80">ChannelConfig</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ChannelConfig() <a href="../../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../../common/channelconfig/index.html#Channel">Channel</a></pre>
+				<p>
+ChannelConfig returns ChannelConfigVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ClassifyMsg">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4492:4584#L130">ClassifyMsg</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ClassifyMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ClassifyMsg(chdr *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ChannelHeader">ChannelHeader</a>) <a href="../../../common/msgprocessor/index.html">msgprocessor</a>.<a href="../../../common/msgprocessor/index.html#Classification">Classification</a></pre>
+				<p>
+ClassifyMsg returns ClassifyMsgVal, ClassifyMsgErr
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.CreateNextBlock">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=3010:3085#L85">CreateNextBlock</a>
+					<a class="permalink" href="index.html#ConsenterSupport.CreateNextBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) CreateNextBlock(data []*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>) *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+CreateNextBlock creates a simple block structure with the given data
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.Height">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4063:4107#L115">Height</a>
+					<a class="permalink" href="index.html#ConsenterSupport.Height">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Height returns the number of blocks of the chain this specific consenter instance is associated with
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.NewSignatureHeader">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4319:4397#L125">NewSignatureHeader</a>
+					<a class="permalink" href="index.html#ConsenterSupport.NewSignatureHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) NewSignatureHeader() (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewSignatureHeader returns an empty signature header
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ProcessConfigMsg">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=5225:5318#L145">ProcessConfigMsg</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ProcessConfigMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ProcessConfigMsg(env *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessConfigMsg returns ProcessConfigMsgVal, ConfigSeqVal, ProcessConfigMsgErr
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ProcessConfigUpdateMsg">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4929:5049#L140">ProcessConfigUpdateMsg</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ProcessConfigUpdateMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ProcessConfigUpdateMsg(env *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>) (config *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>, configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessConfigUpdateMsg returns ProcessConfigUpdateMsgVal, ConfigSeqVal, ProcessConfigUpdateMsgErr
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.ProcessNormalMsg">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4679:4772#L135">ProcessNormalMsg</a>
+					<a class="permalink" href="index.html#ConsenterSupport.ProcessNormalMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) ProcessNormalMsg(env *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>) (configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessNormalMsg returns ConfigSeqVal, ProcessNormalMsgErr
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.Sequence">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=5431:5477#L150">Sequence</a>
+					<a class="permalink" href="index.html#ConsenterSupport.Sequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Sequence returns SequenceVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.SharedConfig">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=2696:2761#L75">SharedConfig</a>
+					<a class="permalink" href="index.html#ConsenterSupport.SharedConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) SharedConfig() <a href="../../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../../common/channelconfig/index.html#Orderer">Orderer</a></pre>
+				<p>
+SharedConfig returns SharedConfigVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.Sign">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=4171:4236#L120">Sign</a>
+					<a class="permalink" href="index.html#ConsenterSupport.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) Sign(message []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign returns the bytes passed in
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.VerifyBlockSignature">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=5563:5660#L155">VerifyBlockSignature</a>
+					<a class="permalink" href="index.html#ConsenterSupport.VerifyBlockSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) VerifyBlockSignature(_ []*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#SignedData">SignedData</a>, _ *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyBlockSignature verifies a signature of a block
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.WriteBlock">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=3352:3437#L97">WriteBlock</a>
+					<a class="permalink" href="index.html#ConsenterSupport.WriteBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) WriteBlock(block *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+WriteBlock writes data to the Blocks channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConsenterSupport.WriteConfigBlock">func (*ConsenterSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/mocks/common/multichannel/multichannel.go?s=3659:3750#L105">WriteConfigBlock</a>
+					<a class="permalink" href="index.html#ConsenterSupport.WriteConfigBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mcs *<a href="index.html#ConsenterSupport">ConsenterSupport</a>) WriteConfigBlock(block *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+WriteConfigBlock calls WriteBlock
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

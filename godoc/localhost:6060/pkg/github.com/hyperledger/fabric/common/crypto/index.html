@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>crypto - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package crypto
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/crypto"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#ExpiresAt">func ExpiresAt(identityBytes []byte) time.Time</a></dd>
+			
+				
+				<dd><a href="index.html#GetRandomBytes">func GetRandomBytes(len int) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetRandomNonce">func GetRandomNonce() ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#SanitizeIdentity">func SanitizeIdentity(identity []byte) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#TrackExpiration">func TrackExpiration(tls bool, serverCert []byte, clientCertChain [][]byte, sIDBytes []byte, warn WarnFunc, now time.Time, s Scheduler)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#IdentitySerializer">type IdentitySerializer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LocalSigner">type LocalSigner</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Scheduler">type Scheduler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignatureHeaderCreator">type SignatureHeaderCreator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewSignatureHeaderCreator">func NewSignatureHeaderCreator(ss SignerSupport) *SignatureHeaderCreator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignatureHeaderCreator.NewSignatureHeader">func (bs *SignatureHeaderCreator) NewSignatureHeader() (*cb.SignatureHeader, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignatureHeaderMaker">type SignatureHeaderMaker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignerSupport">type SignerSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#WarnFunc">type WarnFunc</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/expiration.go">expiration.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/random.go">random.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/sanitize.go">sanitize.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go">signer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// NonceSize is the default NonceSize</span>
+    <span id="NonceSize">NonceSize</span> = 24
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="ExpiresAt">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/expiration.go?s=343:389#L10">ExpiresAt</a>
+				<a class="permalink" href="index.html#ExpiresAt">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExpiresAt(identityBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a></pre>
+			<p>
+ExpiresAt returns when the given identity expires, or a zero time.Time
+in case we cannot determine that
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRandomBytes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/random.go?s=763:807#L21">GetRandomBytes</a>
+				<a class="permalink" href="index.html#GetRandomBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRandomBytes(len <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetRandomBytes returns len random looking bytes
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRandomNonce">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/random.go?s=1077:1114#L34">GetRandomNonce</a>
+				<a class="permalink" href="index.html#GetRandomNonce">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRandomNonce() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetRandomNonce returns a random byte array of length NonceSize
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SanitizeIdentity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/sanitize.go?s=369:423#L15">SanitizeIdentity</a>
+				<a class="permalink" href="index.html#SanitizeIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SanitizeIdentity(identity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="TrackExpiration">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/expiration.go?s=1328:1463#L39">TrackExpiration</a>
+				<a class="permalink" href="index.html#TrackExpiration">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func TrackExpiration(tls <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, serverCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, clientCertChain [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sIDBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, warn <a href="index.html#WarnFunc">WarnFunc</a>, now <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>, s <a href="index.html#Scheduler">Scheduler</a>)</pre>
+			<p>
+TrackExpiration warns a week before one of the certificates expires
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="IdentitySerializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=528:638#L16">IdentitySerializer</a>
+				<a class="permalink" href="index.html#IdentitySerializer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentitySerializer serializes identities
+</p>
+
+			<pre>type IdentitySerializer interface {
+    <span class="comment">// Serialize converts an identity to bytes</span>
+    Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LocalSigner">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=251:311#L4">LocalSigner</a>
+				<a class="permalink" href="index.html#LocalSigner">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LocalSigner is a temporary stub interface which will be implemented by the local MSP
+</p>
+
+			<pre>type LocalSigner interface {
+    <a href="index.html#SignatureHeaderMaker">SignatureHeaderMaker</a>
+    <a href="index.html#Signer">Signer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Scheduler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/expiration.go?s=1197:1255#L36">Scheduler</a>
+				<a class="permalink" href="index.html#Scheduler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Scheduler invokes f after d time, and can be replaced with time.AfterFunc.
+</p>
+
+			<pre>type Scheduler func(d <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, f func()) *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Timer">Timer</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignatureHeaderCreator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=939:992#L28">SignatureHeaderCreator</a>
+				<a class="permalink" href="index.html#SignatureHeaderCreator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignatureHeaderCreator creates signature headers
+</p>
+
+			<pre>type SignatureHeaderCreator struct {
+    <a href="index.html#SignerSupport">SignerSupport</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewSignatureHeaderCreator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=1178:1250#L39">NewSignatureHeaderCreator</a>
+					<a class="permalink" href="index.html#NewSignatureHeaderCreator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewSignatureHeaderCreator(ss <a href="index.html#SignerSupport">SignerSupport</a>) *<a href="index.html#SignatureHeaderCreator">SignatureHeaderCreator</a></pre>
+				<p>
+NewSignatureHeaderCreator creates new signature headers
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="SignatureHeaderCreator.NewSignatureHeader">func (*SignatureHeaderCreator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=1392:1475#L44">NewSignatureHeader</a>
+					<a class="permalink" href="index.html#SignatureHeaderCreator.NewSignatureHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bs *<a href="index.html#SignatureHeaderCreator">SignatureHeaderCreator</a>) NewSignatureHeader() (*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewSignatureHeader creates a SignatureHeader with the correct signing identity and a valid nonce
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignatureHeaderMaker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=694:885#L22">SignatureHeaderMaker</a>
+				<a class="permalink" href="index.html#SignatureHeaderMaker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignatureHeaderMaker creates a new SignatureHeader
+</p>
+
+			<pre>type SignatureHeaderMaker interface {
+    <span class="comment">// NewSignatureHeader creates a SignatureHeader with the correct signing identity and a valid nonce</span>
+    NewSignatureHeader() (*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=338:482#L10">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Signer signs messages
+</p>
+
+			<pre>type Signer interface {
+    <span class="comment">// Sign a message and return the signature over the digest, or error on failure</span>
+    Sign(message []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignerSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/signer.go?s=1057:1117#L33">SignerSupport</a>
+				<a class="permalink" href="index.html#SignerSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignerSupport implements the needed support for LocalSigner
+</p>
+
+			<pre>type SignerSupport interface {
+    <a href="index.html#Signer">Signer</a>
+    <a href="index.html#IdentitySerializer">IdentitySerializer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WarnFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/crypto/expiration.go?s=1063:1117#L33">WarnFunc</a>
+				<a class="permalink" href="index.html#WarnFunc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+WarnFunc notifies a warning happened with the given format, and can be replaced with Warnf of a logger.
+</p>
+
+			<pre>type WarnFunc func(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="tlsgen/index.html">tlsgen</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

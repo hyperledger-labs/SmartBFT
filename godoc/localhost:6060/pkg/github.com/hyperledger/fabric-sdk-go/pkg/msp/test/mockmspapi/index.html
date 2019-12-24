@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mockmspapi - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mockmspapi
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package mockmspapi is a generated GoMock package.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#MockCAClient">type MockCAClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockCAClient">func NewMockCAClient(ctrl *gomock.Controller) *MockCAClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.AddAffiliation">func (m *MockCAClient) AddAffiliation(arg0 *api.AffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.CreateIdentity">func (m *MockCAClient) CreateIdentity(arg0 *api.IdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.EXPECT">func (m *MockCAClient) EXPECT() *MockCAClientMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.Enroll">func (m *MockCAClient) Enroll(arg0 *api.EnrollmentRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.GetAffiliation">func (m *MockCAClient) GetAffiliation(arg0, arg1 string) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.GetAllAffiliations">func (m *MockCAClient) GetAllAffiliations(arg0 string) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.GetAllIdentities">func (m *MockCAClient) GetAllIdentities(arg0 string) ([]*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.GetCAInfo">func (m *MockCAClient) GetCAInfo() (*api.GetCAInfoResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.GetIdentity">func (m *MockCAClient) GetIdentity(arg0, arg1 string) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.ModifyAffiliation">func (m *MockCAClient) ModifyAffiliation(arg0 *api.ModifyAffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.ModifyIdentity">func (m *MockCAClient) ModifyIdentity(arg0 *api.IdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.Reenroll">func (m *MockCAClient) Reenroll(arg0 *api.ReenrollmentRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.Register">func (m *MockCAClient) Register(arg0 *api.RegistrationRequest) (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.RemoveAffiliation">func (m *MockCAClient) RemoveAffiliation(arg0 *api.AffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.RemoveIdentity">func (m *MockCAClient) RemoveIdentity(arg0 *api.RemoveIdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClient.Revoke">func (m *MockCAClient) Revoke(arg0 *api.RevocationRequest) (*api.RevocationResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockCAClientMockRecorder">type MockCAClientMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.AddAffiliation">func (mr *MockCAClientMockRecorder) AddAffiliation(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.CreateIdentity">func (mr *MockCAClientMockRecorder) CreateIdentity(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.Enroll">func (mr *MockCAClientMockRecorder) Enroll(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.GetAffiliation">func (mr *MockCAClientMockRecorder) GetAffiliation(arg0, arg1 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.GetAllAffiliations">func (mr *MockCAClientMockRecorder) GetAllAffiliations(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.GetAllIdentities">func (mr *MockCAClientMockRecorder) GetAllIdentities(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.GetCAInfo">func (mr *MockCAClientMockRecorder) GetCAInfo() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.GetIdentity">func (mr *MockCAClientMockRecorder) GetIdentity(arg0, arg1 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.ModifyAffiliation">func (mr *MockCAClientMockRecorder) ModifyAffiliation(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.ModifyIdentity">func (mr *MockCAClientMockRecorder) ModifyIdentity(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.Reenroll">func (mr *MockCAClientMockRecorder) Reenroll(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.Register">func (mr *MockCAClientMockRecorder) Register(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.RemoveAffiliation">func (mr *MockCAClientMockRecorder) RemoveAffiliation(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.RemoveIdentity">func (mr *MockCAClientMockRecorder) RemoveIdentity(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCAClientMockRecorder.Revoke">func (mr *MockCAClientMockRecorder) Revoke(arg0 interface{}) *gomock.Call</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go">mockmspapi.gen.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="MockCAClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=376:469#L5">MockCAClient</a>
+				<a class="permalink" href="index.html#MockCAClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockCAClient is a mock of CAClient interface
+</p>
+
+			<pre>type MockCAClient struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockCAClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=646:705#L16">NewMockCAClient</a>
+					<a class="permalink" href="index.html#NewMockCAClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockCAClient(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockCAClient">MockCAClient</a></pre>
+				<p>
+NewMockCAClient creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockCAClient.AddAffiliation">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=1002:1103#L28">AddAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClient.AddAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) AddAffiliation(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AddAffiliation mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.CreateIdentity">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=1610:1705#L43">CreateIdentity</a>
+					<a class="permalink" href="index.html#MockCAClient.CreateIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) CreateIdentity(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityRequest">IdentityRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.EXPECT">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=884:941#L23">EXPECT</a>
+					<a class="permalink" href="index.html#MockCAClient.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) EXPECT() *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.Enroll">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=2201:2265#L58">Enroll</a>
+					<a class="permalink" href="index.html#MockCAClient.Enroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) Enroll(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#EnrollmentRequest">EnrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Enroll mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.GetAffiliation">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=2672:2762#L72">GetAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClient.GetAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) GetAffiliation(arg0, arg1 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAffiliation mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.GetAllAffiliations">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=3291:3379#L87">GetAllAffiliations</a>
+					<a class="permalink" href="index.html#MockCAClient.GetAllAffiliations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) GetAllAffiliations(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllAffiliations mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.GetAllIdentities">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=3912:3997#L102">GetAllIdentities</a>
+					<a class="permalink" href="index.html#MockCAClient.GetAllIdentities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) GetAllIdentities(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllIdentities mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.GetCAInfo">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=4510:4576#L117">GetCAInfo</a>
+					<a class="permalink" href="index.html#MockCAClient.GetCAInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) GetCAInfo() (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#GetCAInfoResponse">GetCAInfoResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCAInfo mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.GetIdentity">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=5020:5104#L132">GetIdentity</a>
+					<a class="permalink" href="index.html#MockCAClient.GetIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) GetIdentity(arg0, arg1 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.ModifyAffiliation">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=5611:5721#L147">ModifyAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClient.ModifyAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) ModifyAffiliation(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#ModifyAffiliationRequest">ModifyAffiliationRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyAffiliation mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.ModifyIdentity">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=6246:6341#L162">ModifyIdentity</a>
+					<a class="permalink" href="index.html#MockCAClient.ModifyIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) ModifyIdentity(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityRequest">IdentityRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.Reenroll">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=6839:6907#L177">Reenroll</a>
+					<a class="permalink" href="index.html#MockCAClient.Reenroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) Reenroll(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#ReenrollmentRequest">ReenrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Reenroll mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.Register">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=7320:7398#L191">Register</a>
+					<a class="permalink" href="index.html#MockCAClient.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) Register(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#RegistrationRequest">RegistrationRequest</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Register mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.RemoveAffiliation">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=7854:7958#L206">RemoveAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClient.RemoveAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) RemoveAffiliation(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveAffiliation mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.RemoveIdentity">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=8483:8584#L221">RemoveIdentity</a>
+					<a class="permalink" href="index.html#MockCAClient.RemoveIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) RemoveIdentity(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#RemoveIdentityRequest">RemoveIdentityRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClient.Revoke">func (*MockCAClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=9080:9171#L236">Revoke</a>
+					<a class="permalink" href="index.html#MockCAClient.Revoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCAClient">MockCAClient</a>) Revoke(arg0 *<a href="../../api/index.html">api</a>.<a href="../../api/index.html#RevocationRequest">RevocationRequest</a>) (*<a href="../../api/index.html">api</a>.<a href="../../api/index.html#RevocationResponse">RevocationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Revoke mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockCAClientMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=537:597#L11">MockCAClientMockRecorder</a>
+				<a class="permalink" href="index.html#MockCAClientMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockCAClientMockRecorder is the mock recorder for MockCAClient
+</p>
+
+			<pre>type MockCAClientMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockCAClientMockRecorder.AddAffiliation">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=1330:1411#L37">AddAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.AddAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) AddAffiliation(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+AddAffiliation indicates an expected call of AddAffiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.CreateIdentity">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=1929:2010#L52">CreateIdentity</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.CreateIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) CreateIdentity(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CreateIdentity indicates an expected call of CreateIdentity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.Enroll">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=2416:2489#L66">Enroll</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.Enroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) Enroll(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Enroll indicates an expected call of Enroll
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.GetAffiliation">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=2995:3082#L81">GetAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.GetAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) GetAffiliation(arg0, arg1 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetAffiliation indicates an expected call of GetAffiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.GetAllAffiliations">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=3618:3703#L96">GetAllAffiliations</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.GetAllAffiliations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) GetAllAffiliations(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetAllAffiliations indicates an expected call of GetAllAffiliations
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.GetAllIdentities">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=4229:4312#L111">GetAllIdentities</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.GetAllIdentities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) GetAllIdentities(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetAllIdentities indicates an expected call of GetAllIdentities
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.GetCAInfo">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=4780:4840#L126">GetCAInfo</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.GetCAInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) GetCAInfo() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetCAInfo indicates an expected call of GetCAInfo
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.GetIdentity">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=5325:5409#L141">GetIdentity</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.GetIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) GetIdentity(arg0, arg1 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetIdentity indicates an expected call of GetIdentity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.ModifyAffiliation">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=5957:6041#L156">ModifyAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.ModifyAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) ModifyAffiliation(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ModifyAffiliation indicates an expected call of ModifyAffiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.ModifyIdentity">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=6565:6646#L171">ModifyIdentity</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.ModifyIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) ModifyIdentity(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ModifyIdentity indicates an expected call of ModifyIdentity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.Reenroll">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=7064:7139#L185">Reenroll</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.Reenroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) Reenroll(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Reenroll indicates an expected call of Reenroll
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.Register">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=7589:7664#L200">Register</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) Register(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Register indicates an expected call of Register
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.RemoveAffiliation">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=8194:8278#L215">RemoveAffiliation</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.RemoveAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) RemoveAffiliation(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+RemoveAffiliation indicates an expected call of RemoveAffiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.RemoveIdentity">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=8808:8889#L230">RemoveIdentity</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.RemoveIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) RemoveIdentity(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+RemoveIdentity indicates an expected call of RemoveIdentity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCAClientMockRecorder.Revoke">func (*MockCAClientMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmspapi/mockmspapi.gen.go?s=9373:9446#L245">Revoke</a>
+					<a class="permalink" href="index.html#MockCAClientMockRecorder.Revoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockCAClientMockRecorder">MockCAClientMockRecorder</a>) Revoke(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Revoke indicates an expected call of Revoke
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

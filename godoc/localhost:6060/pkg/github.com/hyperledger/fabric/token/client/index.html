@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>client - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package client
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/token/client"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#BroadcastReceive">func BroadcastReceive(broadcast Broadcast, addr string, responses chan common.Status, errs chan error)</a></dd>
+			
+				
+				<dd><a href="index.html#BroadcastSend">func BroadcastSend(broadcast Broadcast, addr string, envelope *common.Envelope) error</a></dd>
+			
+				
+				<dd><a href="index.html#BroadcastWaitForResponse">func BroadcastWaitForResponse(responses chan common.Status, errs chan error) (common.Status, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateDeliverEnvelope">func CreateDeliverEnvelope(channelId string, creator []byte, signer SignerIdentity, cert *tls.Certificate) (*common.Envelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateEnvelope">func CreateEnvelope(data []byte, header *common.Header, signer SignerIdentity) (*common.Envelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateHeader">func CreateHeader(txType common.HeaderType, channelId string, creator []byte, tlsCertHash []byte) (string, *common.Header, error)</a></dd>
+			
+				
+				<dd><a href="index.html#DeliverReceive">func DeliverReceive(df DeliverFiltered, address string, txid string, eventCh chan TxEvent) error</a></dd>
+			
+				
+				<dd><a href="index.html#DeliverSend">func DeliverSend(df DeliverFiltered, address string, envelope *common.Envelope) error</a></dd>
+			
+				
+				<dd><a href="index.html#DeliverWaitForResponse">func DeliverWaitForResponse(ctx context.Context, eventCh chan TxEvent, txid string) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ValidateClientConfig">func ValidateClientConfig(config *ClientConfig) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Broadcast">type Broadcast</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Issue">func (c *Client) Issue(tokensToIssue []*token.TokenToIssue) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Transfer">func (c *Client) Transfer(tokenIDs [][]byte, shares []*token.RecipientTransferShare) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClientConfig">type ClientConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectionConfig">type ConnectionConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeliverClient">type DeliverClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDeliverClient">func NewDeliverClient(config *ClientConfig) (DeliverClient, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeliverFiltered">type DeliverFiltered</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FabricTxSubmitter">type FabricTxSubmitter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererClient">type OrdererClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewOrdererClient">func NewOrdererClient(config *ClientConfig) (OrdererClient, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Prover">type Prover</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProverPeer">type ProverPeer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProverPeer.CreateSignedCommand">func (prover *ProverPeer) CreateSignedCommand(payload interface{}, signingIdentity tk.SigningIdentity) (*token.SignedCommand, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProverPeer.RequestImport">func (prover *ProverPeer) RequestImport(tokensToIssue []*token.TokenToIssue, signingIdentity tk.SigningIdentity) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProverPeer.RequestTransfer">func (prover *ProverPeer) RequestTransfer(tokenIDs [][]byte, shares []*token.RecipientTransferShare, signingIdentity tk.SigningIdentity) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignerIdentity">type SignerIdentity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TimeFunc">type TimeFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxEvent">type TxEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxSubmitter">type TxSubmitter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTxSubmitter">func NewTxSubmitter(config *ClientConfig) (*TxSubmitter, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSubmitter.CreateTxEnvelope">func (s *TxSubmitter) CreateTxEnvelope(txBytes []byte) (string, *common.Envelope, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSubmitter.SubmitTransaction">func (s *TxSubmitter) SubmitTransaction(txEnvelope *common.Envelope, waitTimeInSeconds int) (committed bool, txId string, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSubmitter.SubmitTransactionWithChan">func (s *TxSubmitter) SubmitTransactionWithChan(txEnvelope *common.Envelope, eventCh chan TxEvent) (committed bool, txId string, err error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go">client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go">deliver_client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/msp.go">msp.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go">orderer_client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go">prover.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go">tx_submitter.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="BroadcastReceive">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=3463:3565#L101">BroadcastReceive</a>
+				<a class="permalink" href="index.html#BroadcastReceive">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BroadcastReceive(broadcast <a href="index.html#Broadcast">Broadcast</a>, addr <a href="http://localhost:6060/pkg/builtin/#string">string</a>, responses chan <a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Status">Status</a>, errs chan <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+broadReceive waits until it receives the response from broadcast stream
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BroadcastSend">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=3131:3216#L90">BroadcastSend</a>
+				<a class="permalink" href="index.html#BroadcastSend">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BroadcastSend(broadcast <a href="index.html#Broadcast">Broadcast</a>, addr <a href="http://localhost:6060/pkg/builtin/#string">string</a>, envelope *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+broadcastSend sends transaction envelope to orderer service
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BroadcastWaitForResponse">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=4251:4350#L126">BroadcastWaitForResponse</a>
+				<a class="permalink" href="index.html#BroadcastWaitForResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BroadcastWaitForResponse(responses chan <a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Status">Status</a>, errs chan <a href="http://localhost:6060/pkg/builtin/#error">error</a>) (<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Status">Status</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+broadcastWaitForResponse reads from response and errs chans until responses chan is closed
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateDeliverEnvelope">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=3314:3446#L93">CreateDeliverEnvelope</a>
+				<a class="permalink" href="index.html#CreateDeliverEnvelope">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateDeliverEnvelope(channelId <a href="http://localhost:6060/pkg/builtin/#string">string</a>, creator []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, signer <a href="index.html#SignerIdentity">SignerIdentity</a>, cert *<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+create a signed envelope with SeekPosition_Newest for block
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateEnvelope">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=7935:8039#L238">CreateEnvelope</a>
+				<a class="permalink" href="index.html#CreateEnvelope">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateEnvelope(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, header *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Header">Header</a>, signer <a href="index.html#SignerIdentity">SignerIdentity</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+CreateEnvelope creates a common.Envelope with given tx bytes, header, and Signer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateHeader">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=6913:7042#L191">CreateHeader</a>
+				<a class="permalink" href="index.html#CreateHeader">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateHeader(txType <a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#HeaderType">HeaderType</a>, channelId <a href="http://localhost:6060/pkg/builtin/#string">string</a>, creator []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, tlsCertHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Header">Header</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+CreateHeader creates common.Header for a token transaction
+tlsCertHash is for client TLS cert, only applicable when ClientAuthRequired is true
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DeliverReceive">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=4820:4916#L153">DeliverReceive</a>
+				<a class="permalink" href="index.html#DeliverReceive">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeliverReceive(df <a href="index.html#DeliverFiltered">DeliverFiltered</a>, address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, eventCh chan <a href="index.html#TxEvent">TxEvent</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="DeliverSend">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=4573:4658#L144">DeliverSend</a>
+				<a class="permalink" href="index.html#DeliverSend">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeliverSend(df <a href="index.html#DeliverFiltered">DeliverFiltered</a>, address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, envelope *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="DeliverWaitForResponse">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=6652:6749#L206">DeliverWaitForResponse</a>
+				<a class="permalink" href="index.html#DeliverWaitForResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeliverWaitForResponse(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, eventCh chan <a href="index.html#TxEvent">TxEvent</a>, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+DeliverWaitForResponse waits for either eventChan has value (i.e., response has been received) or ctx is timed out
+This function assumes that the eventCh is only for the specified txid
+If an eventCh is shared by multiple transactions, a loop should be used to listen to events from multiple transactions
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ValidateClientConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/config.go?s=699:752#L19">ValidateClientConfig</a>
+				<a class="permalink" href="index.html#ValidateClientConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ValidateClientConfig(config *<a href="index.html#ClientConfig">ClientConfig</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Broadcast">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=568:686#L16">Broadcast</a>
+				<a class="permalink" href="index.html#Broadcast">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Broadcast defines the interface that abstracts grpc calls to broadcast transactions to orderer
+</p>
+
+			<pre>type Broadcast interface {
+    Send(m *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../../protos/orderer/index.html">ab</a>.<a href="../../protos/orderer/index.html#BroadcastResponse">BroadcastResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CloseSend() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go?s=1877:1994#L36">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client represents the client struct that calls Prover and TxSubmitter
+</p>
+
+			<pre>type Client struct {
+<span id="Client.SigningIdentity"></span>    SigningIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>
+<span id="Client.Prover"></span>    Prover          <a href="index.html#Prover">Prover</a>
+<span id="Client.TxSubmitter"></span>    TxSubmitter     <a href="index.html#FabricTxSubmitter">FabricTxSubmitter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Client.Issue">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go?s=2195:2270#L46">Issue</a>
+					<a class="permalink" href="index.html#Client.Issue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Issue(tokensToIssue []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenToIssue">TokenToIssue</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Client.Transfer">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go?s=2752:2852#L63">Transfer</a>
+					<a class="permalink" href="index.html#Client.Transfer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Transfer(tokenIDs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, shares []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#RecipientTransferShare">RecipientTransferShare</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Transfer is the function that the client calls to transfer his tokens.
+Transfer takes as parameter an array of token.RecipientTransferShare that
+identifies who receives the tokens and describes how the tokens are distributed.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/config.go?s=487:697#L9">ClientConfig</a>
+				<a class="permalink" href="index.html#ClientConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientConfig will be updated after the CR for token client config is merged, where the config data
+will be populated based on a config file.
+</p>
+
+			<pre>type ClientConfig struct {
+<span id="ClientConfig.ChannelId"></span>    ChannelId     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ClientConfig.MspDir"></span>    MspDir        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ClientConfig.MspId"></span>    MspId         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ClientConfig.TlsEnabled"></span>    TlsEnabled    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ClientConfig.OrdererCfg"></span>    OrdererCfg    <a href="index.html#ConnectionConfig">ConnectionConfig</a>
+<span id="ClientConfig.CommitPeerCfg"></span>    CommitPeerCfg <a href="index.html#ConnectionConfig">ConnectionConfig</a>
+<span id="ClientConfig.ProverPeerCfg"></span>    ProverPeerCfg <a href="index.html#ConnectionConfig">ConnectionConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectionConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/config.go?s=225:338#L1">ConnectionConfig</a>
+				<a class="permalink" href="index.html#ConnectionConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionConfig contains data required to establish grpc connection to a peer or orderer
+</p>
+
+			<pre>type ConnectionConfig struct {
+<span id="ConnectionConfig.Address"></span>    Address            <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ConnectionConfig.TlsRootCertFile"></span>    TlsRootCertFile    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ConnectionConfig.ServerNameOverride"></span>    ServerNameOverride <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeliverClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=1041:1323#L28">DeliverClient</a>
+				<a class="permalink" href="index.html#DeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeliverClient defines the interface to create a DeliverFiltered client
+</p>
+
+			<pre>type DeliverClient interface {
+    <span class="comment">// NewDeliverFilterd returns a DeliverFiltered</span>
+    NewDeliverFiltered(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="index.html#DeliverFiltered">DeliverFiltered</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Certificate returns tls certificate for the deliver client to commit peer</span>
+    Certificate() *<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDeliverClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=1536:1602#L44">NewDeliverClient</a>
+					<a class="permalink" href="index.html#NewDeliverClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDeliverClient(config *<a href="index.html#ClientConfig">ClientConfig</a>) (<a href="index.html#DeliverClient">DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="DeliverFiltered">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/deliver_client.go?s=749:869#L19">DeliverFiltered</a>
+				<a class="permalink" href="index.html#DeliverFiltered">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeliverFiltered defines the interface that abstracts deliver filtered grpc calls to commit peer
+</p>
+
+			<pre>type DeliverFiltered interface {
+    Send(*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CloseSend() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FabricTxSubmitter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go?s=1463:1802#L26">FabricTxSubmitter</a>
+				<a class="permalink" href="index.html#FabricTxSubmitter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FabricTxSubmitter interface {
+
+    <span class="comment">// Submit allows the client to build and submit a fabric transaction for fabtoken that has as</span>
+    <span class="comment">// payload a serialized tx; it takes as input an array of bytes</span>
+    <span class="comment">// and returns an error indicating the success or the failure of the tx submission and an error</span>
+    <span class="comment">// explaining why.</span>
+    Submit(tx []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=845:1089#L25">OrdererClient</a>
+				<a class="permalink" href="index.html#OrdererClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererClient defines the interface to create a Broadcast
+</p>
+
+			<pre>type OrdererClient interface {
+    <span class="comment">// NewBroadcast returns a Broadcast</span>
+    NewBroadcast(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="index.html#Broadcast">Broadcast</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Certificate returns tls certificate for the orderer client</span>
+    Certificate() *<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewOrdererClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/orderer_client.go?s=1302:1368#L41">NewOrdererClient</a>
+					<a class="permalink" href="index.html#NewOrdererClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewOrdererClient(config *<a href="index.html#ClientConfig">ClientConfig</a>) (<a href="index.html#OrdererClient">OrdererClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Prover">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/client.go?s=358:1352#L8">Prover</a>
+				<a class="permalink" href="index.html#Prover">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Prover interface {
+
+    <span class="comment">// RequestImport allows the client to submit an issue request to a prover peer service;</span>
+    <span class="comment">// the function takes as parameters tokensToIssue and the signing identity of the client;</span>
+    <span class="comment">// it returns a response in bytes and an error message in the case the request fails.</span>
+    <span class="comment">// The response corresponds to a serialized TokenTransaction protobuf message.</span>
+    RequestImport(tokensToIssue []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenToIssue">TokenToIssue</a>, signingIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestTransfer allows the client to submit a transfer request to a prover peer service;</span>
+    <span class="comment">// the function takes as parameters a fabtoken application credential, the identifiers of the tokens</span>
+    <span class="comment">// to be transfererd and the shares describing how they are going to be distributed</span>
+    <span class="comment">// among recipients; it returns a response in bytes and an error message in the case the</span>
+    <span class="comment">// request fails</span>
+    RequestTransfer(tokenIDs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, shares []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#RecipientTransferShare">RecipientTransferShare</a>, signingIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProverPeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go?s=357:500#L13">ProverPeer</a>
+				<a class="permalink" href="index.html#ProverPeer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ProverPeer struct {
+<span id="ProverPeer.ChannelID"></span>    ChannelID        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ProverPeer.ProverClient"></span>    ProverClient     <a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ProverClient">ProverClient</a>
+<span id="ProverPeer.RandomnessReader"></span>    RandomnessReader <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>
+<span id="ProverPeer.Time"></span>    Time             <a href="index.html#TimeFunc">TimeFunc</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ProverPeer.CreateSignedCommand">func (*ProverPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go?s=1550:1682#L62">CreateSignedCommand</a>
+					<a class="permalink" href="index.html#ProverPeer.CreateSignedCommand">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (prover *<a href="index.html#ProverPeer">ProverPeer</a>) CreateSignedCommand(payload interface{}, signingIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommand">SignedCommand</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProverPeer.RequestImport">func (*ProverPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go?s=502:630#L20">RequestImport</a>
+					<a class="permalink" href="index.html#ProverPeer.RequestImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (prover *<a href="index.html#ProverPeer">ProverPeer</a>) RequestImport(tokensToIssue []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenToIssue">TokenToIssue</a>, signingIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProverPeer.RequestTransfer">func (*ProverPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go?s=1004:1160#L39">RequestTransfer</a>
+					<a class="permalink" href="index.html#ProverPeer.RequestTransfer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (prover *<a href="index.html#ProverPeer">ProverPeer</a>) RequestTransfer(
+    tokenIDs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>,
+    shares []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#RecipientTransferShare">RecipientTransferShare</a>,
+    signingIdentity <a href="../index.html">tk</a>.<a href="../index.html#SigningIdentity">SigningIdentity</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/msp.go?s=199:311#L1">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signer interface {
+    <span class="comment">// Sign signs the given payload and returns a signature</span>
+    Sign([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignerIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/msp.go?s=390:589#L6">SignerIdentity</a>
+				<a class="permalink" href="index.html#SignerIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignerIdentity signs messages and serializes its public identity to bytes
+</p>
+
+			<pre>type SignerIdentity interface {
+    <a href="index.html#Signer">Signer</a>
+
+    <span class="comment">// Serialize returns a byte representation of this identity which is used to verify</span>
+    <span class="comment">// messages signed by this SignerIdentity</span>
+    Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TimeFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/prover.go?s=325:355#L11">TimeFunc</a>
+				<a class="permalink" href="index.html#TimeFunc">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TimeFunc func() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=1322:1418#L34">TxEvent</a>
+				<a class="permalink" href="index.html#TxEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxEvent contains information for token transaction commit
+If application wants to be notified when a token transaction is committed,
+do the following:
+- create a event chan with size 1 or bigger, e.g. txChan := make(chan TxEvent, 1)
+- call client.SubmitTransactionWithChan(txBytes, txChan)
+- implement a function to read TxEvent from txChan so that it will be notified when transaction is committed or failed
+</p>
+
+			<pre>type TxEvent struct {
+<span id="TxEvent.Txid"></span>    Txid       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxEvent.Committed"></span>    Committed  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="TxEvent.CommitPeer"></span>    CommitPeer <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxEvent.Err"></span>    Err        <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxSubmitter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=727:893#L20">TxSubmitter</a>
+				<a class="permalink" href="index.html#TxSubmitter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TxSubmitter struct {
+<span id="TxSubmitter.Config"></span>    Config        *<a href="index.html#ClientConfig">ClientConfig</a>
+<span id="TxSubmitter.Signer"></span>    Signer        <a href="index.html#SignerIdentity">SignerIdentity</a>
+<span id="TxSubmitter.Creator"></span>    Creator       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="TxSubmitter.OrdererClient"></span>    OrdererClient <a href="index.html#OrdererClient">OrdererClient</a>
+<span id="TxSubmitter.DeliverClient"></span>    DeliverClient <a href="index.html#DeliverClient">DeliverClient</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTxSubmitter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=1498:1561#L42">NewTxSubmitter</a>
+					<a class="permalink" href="index.html#NewTxSubmitter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTxSubmitter(config *<a href="index.html#ClientConfig">ClientConfig</a>) (*<a href="index.html#TxSubmitter">TxSubmitter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewTransactionSubmitter creates a new TxSubmitter from token client config
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TxSubmitter.CreateTxEnvelope">func (*TxSubmitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=5816:5904#L164">CreateTxEnvelope</a>
+					<a class="permalink" href="index.html#TxSubmitter.CreateTxEnvelope">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#TxSubmitter">TxSubmitter</a>) CreateTxEnvelope(txBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxSubmitter.SubmitTransaction">func (*TxSubmitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=2696:2828#L85">SubmitTransaction</a>
+					<a class="permalink" href="index.html#TxSubmitter.SubmitTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#TxSubmitter">TxSubmitter</a>) SubmitTransaction(txEnvelope *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, waitTimeInSeconds <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (committed <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, txId <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SubmitTransaction submits a token transaction to fabric.
+It takes TokenTransaction bytes and waitTimeInSeconds as input parameters.
+The &#39;waitTimeInSeconds&#39; indicates how long to wait for transaction commit event.
+If it is 0, the function will not wait for transaction to be committed.
+If it is greater than 0, the function will wait until timeout or transaction is committed, whichever is earlier
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxSubmitter.SubmitTransactionWithChan">func (*TxSubmitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/client/tx_submitter.go?s=3793:3932#L105">SubmitTransactionWithChan</a>
+					<a class="permalink" href="index.html#TxSubmitter.SubmitTransactionWithChan">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#TxSubmitter">TxSubmitter</a>) SubmitTransactionWithChan(txEnvelope *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, eventCh chan <a href="index.html#TxEvent">TxEvent</a>) (committed <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, txId <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SubmitTransactionWithChan submits a token transaction to fabric with an event channel.
+This function does not wait for transaction commit and returns as soon as the orderer client receives the response.
+The application will be notified on transaction completion by reading events from the eventCh.
+When the transaction is committed or failed, an event will be added to eventCh so that the application will be notified.
+If eventCh has buffer size 0 or its buffer is full, an error will be returned.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

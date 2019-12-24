@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>privacyenabledstate - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package privacyenabledstate
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CommonStorageDB">type CommonStorageDB</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.ApplyPrivacyAwareUpdates">func (s *CommonStorageDB) ApplyPrivacyAwareUpdates(updates *UpdateBatch, height *version.Height) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.ApplyUpdates">func (s *CommonStorageDB) ApplyUpdates(batch *statedb.UpdateBatch, height *version.Height) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.ChaincodeDeployDone">func (s *CommonStorageDB) ChaincodeDeployDone(succeeded bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.ClearCachedVersions">func (s *CommonStorageDB) ClearCachedVersions()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.ExecuteQueryOnPrivateData">func (s CommonStorageDB) ExecuteQueryOnPrivateData(namespace, collection, query string) (statedb.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetCachedKeyHashVersion">func (s *CommonStorageDB) GetCachedKeyHashVersion(namespace, collection string, keyHash []byte) (*version.Height, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetChaincodeEventListener">func (s *CommonStorageDB) GetChaincodeEventListener() cceventmgmt.ChaincodeLifecycleEventListener</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetKeyHashVersion">func (s *CommonStorageDB) GetKeyHashVersion(namespace, collection string, keyHash []byte) (*version.Height, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetPrivateData">func (s *CommonStorageDB) GetPrivateData(namespace, collection, key string) (*statedb.VersionedValue, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetPrivateDataMetadataByHash">func (s *CommonStorageDB) GetPrivateDataMetadataByHash(namespace, collection string, keyHash []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetPrivateDataMultipleKeys">func (s *CommonStorageDB) GetPrivateDataMultipleKeys(namespace, collection string, keys []string) ([]*statedb.VersionedValue, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetPrivateDataRangeScanIterator">func (s *CommonStorageDB) GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey string) (statedb.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetStateMetadata">func (s *CommonStorageDB) GetStateMetadata(namespace, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.GetValueHash">func (s *CommonStorageDB) GetValueHash(namespace, collection string, keyHash []byte) (*statedb.VersionedValue, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.HandleChaincodeDeploy">func (s *CommonStorageDB) HandleChaincodeDeploy(chaincodeDefinition *cceventmgmt.ChaincodeDefinition, dbArtifactsTar []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.IsBulkOptimizable">func (s *CommonStorageDB) IsBulkOptimizable() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDB.LoadCommittedVersionsOfPubAndHashedKeys">func (s *CommonStorageDB) LoadCommittedVersionsOfPubAndHashedKeys(pubKeys []*statedb.CompositeKey, hashedKeys []*HashedCompositeKey) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CommonStorageDBProvider">type CommonStorageDBProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDBProvider.Close">func (p *CommonStorageDBProvider) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDBProvider.GetDBHandle">func (p *CommonStorageDBProvider) GetDBHandle(id string) (DB, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonStorageDBProvider.RegisterHealthChecker">func (p *CommonStorageDBProvider) RegisterHealthChecker() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CouchDBCommonStorageTestEnv">type CouchDBCommonStorageTestEnv</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CouchDBCommonStorageTestEnv.Cleanup">func (env *CouchDBCommonStorageTestEnv) Cleanup()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CouchDBCommonStorageTestEnv.GetDBHandle">func (env *CouchDBCommonStorageTestEnv) GetDBHandle(id string) DB</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CouchDBCommonStorageTestEnv.GetName">func (env *CouchDBCommonStorageTestEnv) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CouchDBCommonStorageTestEnv.Init">func (env *CouchDBCommonStorageTestEnv) Init(t testing.TB)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DB">type DB</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommonStorageDB">func NewCommonStorageDB(vdb statedb.VersionedDB, ledgerid string, metadataHint *metadataHint) (DB, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DBProvider">type DBProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommonStorageDBProvider">func NewCommonStorageDBProvider(bookkeeperProvider bookkeeping.Provider, metricsProvider metrics.Provider, healthCheckRegistry ledger.HealthCheckRegistry) (DBProvider, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HashedCompositeKey">type HashedCompositeKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedCompositeKey.String">func (hck *HashedCompositeKey) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HashedUpdateBatch">type HashedUpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewHashedUpdateBatch">func NewHashedUpdateBatch() *HashedUpdateBatch</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedUpdateBatch.Contains">func (h HashedUpdateBatch) Contains(ns, coll string, keyHash []byte) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedUpdateBatch.Delete">func (h HashedUpdateBatch) Delete(ns, coll string, key []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedUpdateBatch.Put">func (h HashedUpdateBatch) Put(ns, coll string, key []byte, value []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedUpdateBatch.PutValHashAndMetadata">func (h HashedUpdateBatch) PutValHashAndMetadata(ns, coll string, key []byte, value []byte, metadata []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedUpdateBatch.ToCompositeKeyMap">func (h HashedUpdateBatch) ToCompositeKeyMap() map[HashedCompositeKey]*statedb.VersionedValue</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVWriteProto">type KVWriteProto</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.Descriptor">func (*KVWriteProto) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetCollection">func (m *KVWriteProto) GetCollection() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetIsDelete">func (m *KVWriteProto) GetIsDelete() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetKey">func (m *KVWriteProto) GetKey() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetNamespace">func (m *KVWriteProto) GetNamespace() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetValue">func (m *KVWriteProto) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.GetVersionBytes">func (m *KVWriteProto) GetVersionBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.ProtoMessage">func (*KVWriteProto) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.Reset">func (m *KVWriteProto) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.String">func (m *KVWriteProto) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.XXX_DiscardUnknown">func (m *KVWriteProto) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.XXX_Marshal">func (m *KVWriteProto) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.XXX_Merge">func (dst *KVWriteProto) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.XXX_Size">func (m *KVWriteProto) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteProto.XXX_Unmarshal">func (m *KVWriteProto) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVWritesBatchProto">type KVWritesBatchProto</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.Descriptor">func (*KVWritesBatchProto) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.GetKvwrites">func (m *KVWritesBatchProto) GetKvwrites() []*KVWriteProto</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.ProtoMessage">func (*KVWritesBatchProto) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.Reset">func (m *KVWritesBatchProto) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.String">func (m *KVWritesBatchProto) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.XXX_DiscardUnknown">func (m *KVWritesBatchProto) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.XXX_Marshal">func (m *KVWritesBatchProto) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.XXX_Merge">func (dst *KVWritesBatchProto) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.XXX_Size">func (m *KVWritesBatchProto) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWritesBatchProto.XXX_Unmarshal">func (m *KVWritesBatchProto) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LevelDBCommonStorageTestEnv">type LevelDBCommonStorageTestEnv</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LevelDBCommonStorageTestEnv.Cleanup">func (env *LevelDBCommonStorageTestEnv) Cleanup()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LevelDBCommonStorageTestEnv.GetDBHandle">func (env *LevelDBCommonStorageTestEnv) GetDBHandle(id string) DB</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LevelDBCommonStorageTestEnv.GetName">func (env *LevelDBCommonStorageTestEnv) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LevelDBCommonStorageTestEnv.Init">func (env *LevelDBCommonStorageTestEnv) Init(t testing.TB)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PubUpdateBatch">type PubUpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPubUpdateBatch">func NewPubUpdateBatch() *PubUpdateBatch</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtKVWrite">type PvtKVWrite</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtUpdateBatch">type PvtUpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPvtUpdateBatch">func NewPvtUpdateBatch() *PvtUpdateBatch</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PvtUpdateBatch.ToCompositeKeyMap">func (p PvtUpdateBatch) ToCompositeKeyMap() PvtdataCompositeKeyMap</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PvtdataCompositeKey">type PvtdataCompositeKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtdataCompositeKeyMap">type PvtdataCompositeKeyMap</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TestEnv">type TestEnv</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UpdateBatch">type UpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUpdateBatch">func NewUpdateBatch() *UpdateBatch</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UpdateMap">type UpdateMap</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.Contains">func (b UpdateMap) Contains(ns, coll, key string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.Delete">func (b UpdateMap) Delete(ns, coll, key string, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.Get">func (b UpdateMap) Get(ns, coll, key string) *statedb.VersionedValue</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.IsEmpty">func (b UpdateMap) IsEmpty() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.Put">func (b UpdateMap) Put(ns, coll, key string, value []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateMap.PutValAndMetadata">func (b UpdateMap) PutValAndMetadata(ns, coll, key string, value []byte, metadata []byte, version *version.Height)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#UpdatesBytesBuilder">type UpdatesBytesBuilder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdatesBytesBuilder.DeterministicBytesForPubAndHashUpdates">func (bb *UpdatesBytesBuilder) DeterministicBytesForPubAndHashUpdates(u *UpdateBatch) ([]byte, error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go">common_storage_db.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go">db.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/optimization.go">optimization.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go">test_exports.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go">update_batch.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch_bytes.go">update_batch_bytes.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CommonStorageDB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=2908:2988#L80">CommonStorageDB</a>
+				<a class="permalink" href="index.html#CommonStorageDB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommonStorageDB implements interface DB. This implementation uses a single database to maintain
+both the public and private data
+</p>
+
+			<pre>type CommonStorageDB struct {
+    <a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedDB">VersionedDB</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CommonStorageDB.ApplyPrivacyAwareUpdates">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=7966:8068#L205">ApplyPrivacyAwareUpdates</a>
+					<a class="permalink" href="index.html#CommonStorageDB.ApplyPrivacyAwareUpdates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) ApplyPrivacyAwareUpdates(updates *<a href="index.html#UpdateBatch">UpdateBatch</a>, height *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ApplyPrivacyAwareUpdates implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.ApplyUpdates">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=7666:7762#L200">ApplyUpdates</a>
+					<a class="permalink" href="index.html#CommonStorageDB.ApplyUpdates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) ApplyUpdates(batch *<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#UpdateBatch">UpdateBatch</a>, height *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ApplyUpdates overrides the function in statedb.VersionedDB and throws appropriate error message
+Otherwise, somewhere in the code, usage of this function could lead to updating only public data.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.ChaincodeDeployDone">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=12548:12609#L301">ChaincodeDeployDone</a>
+					<a class="permalink" href="index.html#CommonStorageDB.ChaincodeDeployDone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) ChaincodeDeployDone(succeeded <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+ChaincodeDeployDone is a noop for couchdb state impl
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.ClearCachedVersions">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=4614:4661#L130">ClearCachedVersions</a>
+					<a class="permalink" href="index.html#CommonStorageDB.ClearCachedVersions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) ClearCachedVersions()</pre>
+				<p>
+ClearCachedVersions implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.ExecuteQueryOnPrivateData">func (CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=7270:7390#L194">ExecuteQueryOnPrivateData</a>
+					<a class="permalink" href="index.html#CommonStorageDB.ExecuteQueryOnPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#CommonStorageDB">CommonStorageDB</a>) ExecuteQueryOnPrivateData(namespace, collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ExecuteQueryOnPrivateData implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetCachedKeyHashVersion">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=6133:6252#L170">GetCachedKeyHashVersion</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetCachedKeyHashVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetCachedKeyHashVersion(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+GetCachedKeyHashVersion retrieves the keyhash version from cache
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetChaincodeEventListener">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=4862:4959#L138">GetChaincodeEventListener</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetChaincodeEventListener">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetChaincodeEventListener() <a href="../../../cceventmgmt/index.html">cceventmgmt</a>.<a href="../../../cceventmgmt/index.html#ChaincodeLifecycleEventListener">ChaincodeLifecycleEventListener</a></pre>
+				<p>
+GetChaincodeEventListener implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetKeyHashVersion">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=5748:5862#L161">GetKeyHashVersion</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetKeyHashVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetKeyHashVersion(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetKeyHashVersion implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetPrivateData">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=5115:5223#L147">GetPrivateData</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateData implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetPrivateDataMetadataByHash">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=9414:9530#L232">GetPrivateDataMetadataByHash</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetPrivateDataMetadataByHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetPrivateDataMetadataByHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataMetadataByHash implements corresponding function in interface DB. For additional details, see
+description of the similar function &#39;GetStateMetadata&#39;
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetPrivateDataMultipleKeys">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=6653:6785#L184">GetPrivateDataMultipleKeys</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetPrivateDataMultipleKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataMultipleKeys implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetPrivateDataRangeScanIterator">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=6953:7091#L189">GetPrivateDataRangeScanIterator</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetPrivateDataRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataRangeScanIterator implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetStateMetadata">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=8969:9050#L219">GetStateMetadata</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateMetadata implements corresponding function in interface DB. This implementation provides
+an optimization such that it keeps track if a namespaces has never stored metadata for any of
+its items, the value &#39;nil&#39; is returned without going to the db. This is intended to be invoked
+in the validation and commit path. This saves the chaincodes from paying unnecessary performance
+penalty if they do not use features that leverage metadata (such as key-level endorsement),
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.GetValueHash">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=5359:5476#L152">GetValueHash</a>
+					<a class="permalink" href="index.html#CommonStorageDB.GetValueHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) GetValueHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetValueHash implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.HandleChaincodeDeploy">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=10405:10535#L249">HandleChaincodeDeploy</a>
+					<a class="permalink" href="index.html#CommonStorageDB.HandleChaincodeDeploy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) HandleChaincodeDeploy(chaincodeDefinition *<a href="../../../cceventmgmt/index.html">cceventmgmt</a>.<a href="../../../cceventmgmt/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, dbArtifactsTar []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+HandleChaincodeDeploy initializes database artifacts for the database associated with the namespace
+This function deliberately suppresses the errors that occur during the creation of the indexes on couchdb.
+This is because, in the present code, we do not differentiate between the errors because of couchdb interaction
+and the errors because of bad index files - the later being unfixable by the admin. Note that the error suppression
+is acceptable since peer can continue in the committing role without the indexes. However, executing chaincode queries
+may be affected, until a new chaincode with fixed indexes is installed and instantiated
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.IsBulkOptimizable">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=3453:3503#L92">IsBulkOptimizable</a>
+					<a class="permalink" href="index.html#CommonStorageDB.IsBulkOptimizable">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) IsBulkOptimizable() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsBulkOptimizable implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDB.LoadCommittedVersionsOfPubAndHashedKeys">func (*CommonStorageDB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=3663:3802#L98">LoadCommittedVersionsOfPubAndHashedKeys</a>
+					<a class="permalink" href="index.html#CommonStorageDB.LoadCommittedVersionsOfPubAndHashedKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CommonStorageDB">CommonStorageDB</a>) LoadCommittedVersionsOfPubAndHashedKeys(pubKeys []*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#CompositeKey">CompositeKey</a>,
+    hashedKeys []*<a href="index.html#HashedCompositeKey">HashedCompositeKey</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+LoadCommittedVersionsOfPubAndHashedKeys implements corresponding function in interface DB
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CommonStorageDBProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=1108:1266#L27">CommonStorageDBProvider</a>
+				<a class="permalink" href="index.html#CommonStorageDBProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommonStorageDBProvider implements interface DBProvider
+</p>
+
+			<pre>type CommonStorageDBProvider struct {
+    <a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedDBProvider">VersionedDBProvider</a>
+<span id="CommonStorageDBProvider.HealthCheckRegistry"></span>    HealthCheckRegistry <a href="../../../index.html">ledger</a>.<a href="../../../index.html#HealthCheckRegistry">HealthCheckRegistry</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CommonStorageDBProvider.Close">func (*CommonStorageDBProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=2695:2736#L74">Close</a>
+					<a class="permalink" href="index.html#CommonStorageDBProvider.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#CommonStorageDBProvider">CommonStorageDBProvider</a>) Close()</pre>
+				<p>
+Close implements function from interface DBProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDBProvider.GetDBHandle">func (*CommonStorageDBProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=2290:2358#L63">GetDBHandle</a>
+					<a class="permalink" href="index.html#CommonStorageDBProvider.GetDBHandle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#CommonStorageDBProvider">CommonStorageDBProvider</a>) GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#DB">DB</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetDBHandle implements function from interface DBProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonStorageDBProvider.RegisterHealthChecker">func (*CommonStorageDBProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=1995:2058#L55">RegisterHealthChecker</a>
+					<a class="permalink" href="index.html#CommonStorageDBProvider.RegisterHealthChecker">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#CommonStorageDBProvider">CommonStorageDBProvider</a>) RegisterHealthChecker() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CouchDBCommonStorageTestEnv">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=2508:2677#L70">CouchDBCommonStorageTestEnv</a>
+				<a class="permalink" href="index.html#CouchDBCommonStorageTestEnv">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CouchDBCommonStorageTestEnv implements TestEnv interface for couchdb based storage
+</p>
+
+			<pre>type CouchDBCommonStorageTestEnv struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CouchDBCommonStorageTestEnv.Cleanup">func (*CouchDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=4472:4521#L126">Cleanup</a>
+					<a class="permalink" href="index.html#CouchDBCommonStorageTestEnv.Cleanup">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#CouchDBCommonStorageTestEnv">CouchDBCommonStorageTestEnv</a>) Cleanup()</pre>
+				<p>
+Cleanup implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CouchDBCommonStorageTestEnv.GetDBHandle">func (*CouchDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=4085:4150#L114">GetDBHandle</a>
+					<a class="permalink" href="index.html#CouchDBCommonStorageTestEnv.GetDBHandle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#CouchDBCommonStorageTestEnv">CouchDBCommonStorageTestEnv</a>) GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#DB">DB</a></pre>
+				<p>
+GetDBHandle implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CouchDBCommonStorageTestEnv.GetName">func (*CouchDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=4304:4360#L121">GetName</a>
+					<a class="permalink" href="index.html#CouchDBCommonStorageTestEnv.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#CouchDBCommonStorageTestEnv">CouchDBCommonStorageTestEnv</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetName implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CouchDBCommonStorageTestEnv.Init">func (*CouchDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=3144:3202#L94">Init</a>
+					<a class="permalink" href="index.html#CouchDBCommonStorageTestEnv.Init">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#CouchDBCommonStorageTestEnv">CouchDBCommonStorageTestEnv</a>) Init(t <a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#TB">TB</a>)</pre>
+				<p>
+Init implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=727:1913#L16">DB</a>
+				<a class="permalink" href="index.html#DB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DB extends VersionedDB interface. This interface provides additional functions for managing private data state
+</p>
+
+			<pre>type DB interface {
+    <a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedDB">VersionedDB</a>
+    IsBulkOptimizable() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    LoadCommittedVersionsOfPubAndHashedKeys(pubKeys []*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#CompositeKey">CompositeKey</a>, hashedKeys []*<a href="index.html#HashedCompositeKey">HashedCompositeKey</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    GetCachedKeyHashVersion(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    ClearCachedVersions()
+    GetChaincodeEventListener() <a href="../../../cceventmgmt/index.html">cceventmgmt</a>.<a href="../../../cceventmgmt/index.html#ChaincodeLifecycleEventListener">ChaincodeLifecycleEventListener</a>
+    GetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetValueHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetKeyHashVersion(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetPrivateDataMetadataByHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ExecuteQueryOnPrivateData(namespace, collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ApplyPrivacyAwareUpdates(updates *<a href="index.html#UpdateBatch">UpdateBatch</a>, height *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCommonStorageDB">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=3222:3327#L87">NewCommonStorageDB</a>
+					<a class="permalink" href="index.html#NewCommonStorageDB">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCommonStorageDB(vdb <a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedDB">VersionedDB</a>, ledgerid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadataHint *metadataHint) (<a href="index.html#DB">DB</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCommonStorageDB wraps a VersionedDB instance. The public data is managed directly by the wrapped versionedDB.
+For managing the hashed data and private data, this implementation creates separate namespaces in the wrapped db
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="DBProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=379:611#L8">DBProvider</a>
+				<a class="permalink" href="index.html#DBProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DBProvider provides handle to a PvtVersionedDB
+</p>
+
+			<pre>type DBProvider interface {
+    <span class="comment">// GetDBHandle returns a handle to a PvtVersionedDB</span>
+    GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#DB">DB</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Close closes all the PvtVersionedDB instances and releases any resources held by VersionedDBProvider</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCommonStorageDBProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/common_storage_db.go?s=1335:1509#L34">NewCommonStorageDBProvider</a>
+					<a class="permalink" href="index.html#NewCommonStorageDBProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCommonStorageDBProvider(bookkeeperProvider <a href="../../bookkeeping/index.html">bookkeeping</a>.<a href="../../bookkeeping/index.html#Provider">Provider</a>, metricsProvider <a href="../../../../../common/metrics/index.html">metrics</a>.<a href="../../../../../common/metrics/index.html#Provider">Provider</a>, healthCheckRegistry <a href="../../../index.html">ledger</a>.<a href="../../../index.html#HealthCheckRegistry">HealthCheckRegistry</a>) (<a href="index.html#DBProvider">DBProvider</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCommonStorageDBProvider constructs an instance of DBProvider
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="HashedCompositeKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2178:2281#L42">HashedCompositeKey</a>
+				<a class="permalink" href="index.html#HashedCompositeKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HashedCompositeKey encloses Namespace, CollectionName and KeyHash components
+</p>
+
+			<pre>type HashedCompositeKey struct {
+<span id="HashedCompositeKey.Namespace"></span>    Namespace      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="HashedCompositeKey.CollectionName"></span>    CollectionName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="HashedCompositeKey.KeyHash"></span>    KeyHash        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HashedCompositeKey.String">func (*HashedCompositeKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=7963:8009#L221">String</a>
+					<a class="permalink" href="index.html#HashedCompositeKey.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (hck *<a href="index.html#HashedCompositeKey">HashedCompositeKey</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a print friendly form of HashedCompositeKey
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HashedUpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2890:2934#L70">HashedUpdateBatch</a>
+				<a class="permalink" href="index.html#HashedUpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HashedUpdateBatch contains updates for the hashes of the private data
+</p>
+
+			<pre>type HashedUpdateBatch struct {
+    <a href="index.html#UpdateMap">UpdateMap</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewHashedUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3626:3672#L98">NewHashedUpdateBatch</a>
+					<a class="permalink" href="index.html#NewHashedUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewHashedUpdateBatch() *<a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a></pre>
+				<p>
+NewHashedUpdateBatch creates an empty HashedUpdateBatch
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="HashedUpdateBatch.Contains">func (HashedUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=5839:5912#L171">Contains</a>
+					<a class="permalink" href="index.html#HashedUpdateBatch.Contains">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>) Contains(ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Contains returns true if the given &lt;ns,coll,keyHash&gt; tuple is present in the batch
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HashedUpdateBatch.Delete">func (HashedUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=6747:6834#L187">Delete</a>
+					<a class="permalink" href="index.html#HashedUpdateBatch.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>) Delete(ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Delete overrides the function in UpdateMap for allowing the key to be a []byte instead of a string
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HashedUpdateBatch.Put">func (HashedUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=6073:6171#L176">Put</a>
+					<a class="permalink" href="index.html#HashedUpdateBatch.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>) Put(ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Put overrides the function in UpdateMap for allowing the key to be a []byte instead of a string
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HashedUpdateBatch.PutValHashAndMetadata">func (HashedUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=6426:6559#L182">PutValHashAndMetadata</a>
+					<a class="permalink" href="index.html#HashedUpdateBatch.PutValHashAndMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>) PutValHashAndMetadata(ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+PutValHashAndMetadata adds a key with value and metadata
+TODO introducing a new function to limit the refactoring. Later in a separate CR, the &#39;Put&#39; function above should be removed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HashedUpdateBatch.ToCompositeKeyMap">func (HashedUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=6974:7067#L192">ToCompositeKeyMap</a>
+					<a class="permalink" href="index.html#HashedUpdateBatch.ToCompositeKeyMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>) ToCompositeKeyMap() map[<a href="index.html#HashedCompositeKey">HashedCompositeKey</a>]*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a></pre>
+				<p>
+ToCompositeKeyMap rearranges the update batch data in the form of a single map
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVWriteProto">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=731:1522#L15">KVWriteProto</a>
+				<a class="permalink" href="index.html#KVWriteProto">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KVWriteProto struct {
+<span id="KVWriteProto.Namespace"></span>    Namespace            <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=namespace,proto3&#34; json:&#34;namespace,omitempty&#34;`
+<span id="KVWriteProto.Collection"></span>    Collection           <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=collection,proto3&#34; json:&#34;collection,omitempty&#34;`
+<span id="KVWriteProto.Key"></span>    Key                  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`
+<span id="KVWriteProto.IsDelete"></span>    IsDelete             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>     `protobuf:&#34;varint,4,opt,name=isDelete,proto3&#34; json:&#34;isDelete,omitempty&#34;`
+<span id="KVWriteProto.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,5,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="KVWriteProto.VersionBytes"></span>    VersionBytes         []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,6,opt,name=version_bytes,json=versionBytes,proto3&#34; json:&#34;version_bytes,omitempty&#34;`
+<span id="KVWriteProto.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVWriteProto.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVWriteProto.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVWriteProto.Descriptor">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1706:1755#L30">Descriptor</a>
+					<a class="permalink" href="index.html#KVWriteProto.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWriteProto">KVWriteProto</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetCollection">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2532:2577#L58">GetCollection</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetCollection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetCollection() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetIsDelete">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2723:2764#L72">GetIsDelete</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetIsDelete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetIsDelete() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetKey">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2634:2672#L65">GetKey</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetKey() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetNamespace">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2432:2476#L51">GetNamespace</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetNamespace">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetNamespace() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetValue">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2822:2862#L79">GetValue</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.GetVersionBytes">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2915:2962#L86">GetVersionBytes</a>
+					<a class="permalink" href="index.html#KVWriteProto.GetVersionBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) GetVersionBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.ProtoMessage">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1664:1699#L29">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVWriteProto.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWriteProto">KVWriteProto</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.Reset">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1524:1554#L27">Reset</a>
+					<a class="permalink" href="index.html#KVWriteProto.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.String">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1587:1625#L28">String</a>
+					<a class="permalink" href="index.html#KVWriteProto.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.XXX_DiscardUnknown">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2275:2318#L45">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVWriteProto.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.XXX_Marshal">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1933:2013#L36">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVWriteProto.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.XXX_Merge">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2084:2137#L39">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVWriteProto.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVWriteProto">KVWriteProto</a>) XXX_Merge(src <a href="../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.XXX_Size">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=2188:2225#L42">XXX_Size</a>
+					<a class="permalink" href="index.html#KVWriteProto.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteProto.XXX_Unmarshal">func (*KVWriteProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=1823:1875#L33">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVWriteProto.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteProto">KVWriteProto</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVWritesBatchProto">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3022:3313#L93">KVWritesBatchProto</a>
+				<a class="permalink" href="index.html#KVWritesBatchProto">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KVWritesBatchProto struct {
+<span id="KVWritesBatchProto.Kvwrites"></span>    Kvwrites             []*<a href="index.html#KVWriteProto">KVWriteProto</a> `protobuf:&#34;bytes,1,rep,name=kvwrites,proto3&#34; json:&#34;kvwrites,omitempty&#34;`
+<span id="KVWritesBatchProto.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}        `json:&#34;-&#34;`
+<span id="KVWritesBatchProto.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `json:&#34;-&#34;`
+<span id="KVWritesBatchProto.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>           `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVWritesBatchProto.Descriptor">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3521:3576#L103">Descriptor</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.GetKvwrites">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=4319:4377#L124">GetKvwrites</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.GetKvwrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) GetKvwrites() []*<a href="index.html#KVWriteProto">KVWriteProto</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.ProtoMessage">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3473:3514#L102">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.Reset">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3315:3351#L100">Reset</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.String">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3390:3434#L101">String</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.XXX_DiscardUnknown">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=4144:4193#L118">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.XXX_Marshal">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3766:3852#L109">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.XXX_Merge">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3929:3988#L112">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) XXX_Merge(src <a href="../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.XXX_Size">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=4045:4088#L115">XXX_Size</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWritesBatchProto.XXX_Unmarshal">func (*KVWritesBatchProto) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch.pb.go?s=3644:3702#L106">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVWritesBatchProto.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWritesBatchProto">KVWritesBatchProto</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LevelDBCommonStorageTestEnv">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=1199:1342#L31">LevelDBCommonStorageTestEnv</a>
+				<a class="permalink" href="index.html#LevelDBCommonStorageTestEnv">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LevelDBCommonStorageTestEnv implements TestEnv interface for leveldb based storage
+</p>
+
+			<pre>type LevelDBCommonStorageTestEnv struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LevelDBCommonStorageTestEnv.Cleanup">func (*LevelDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=2241:2290#L61">Cleanup</a>
+					<a class="permalink" href="index.html#LevelDBCommonStorageTestEnv.Cleanup">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#LevelDBCommonStorageTestEnv">LevelDBCommonStorageTestEnv</a>) Cleanup()</pre>
+				<p>
+Cleanup implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LevelDBCommonStorageTestEnv.GetDBHandle">func (*LevelDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=1854:1919#L49">GetDBHandle</a>
+					<a class="permalink" href="index.html#LevelDBCommonStorageTestEnv.GetDBHandle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#LevelDBCommonStorageTestEnv">LevelDBCommonStorageTestEnv</a>) GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#DB">DB</a></pre>
+				<p>
+GetDBHandle implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LevelDBCommonStorageTestEnv.GetName">func (*LevelDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=2073:2129#L56">GetName</a>
+					<a class="permalink" href="index.html#LevelDBCommonStorageTestEnv.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#LevelDBCommonStorageTestEnv">LevelDBCommonStorageTestEnv</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetName implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LevelDBCommonStorageTestEnv.Init">func (*LevelDBCommonStorageTestEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=1409:1467#L38">Init</a>
+					<a class="permalink" href="index.html#LevelDBCommonStorageTestEnv.Init">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#LevelDBCommonStorageTestEnv">LevelDBCommonStorageTestEnv</a>) Init(t <a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#TB">TB</a>)</pre>
+				<p>
+Init implements corresponding function from interface TestEnv
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PubUpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2763:2815#L65">PubUpdateBatch</a>
+				<a class="permalink" href="index.html#PubUpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PubUpdateBatch contains update for the public data
+</p>
+
+			<pre>type PubUpdateBatch struct {
+    *<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#UpdateBatch">UpdateBatch</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPubUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3471:3511#L93">NewPubUpdateBatch</a>
+					<a class="permalink" href="index.html#NewPubUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPubUpdateBatch() *<a href="index.html#PubUpdateBatch">PubUpdateBatch</a></pre>
+				<p>
+NewPubUpdateBatch creates an empty PubUpdateBatch
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="PvtKVWrite">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2351:2452#L49">PvtKVWrite</a>
+				<a class="permalink" href="index.html#PvtKVWrite">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtKVWrite encloses Key, IsDelete, Value, and Version components
+</p>
+
+			<pre>type PvtKVWrite struct {
+<span id="PvtKVWrite.Key"></span>    Key      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PvtKVWrite.IsDelete"></span>    IsDelete <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="PvtKVWrite.Value"></span>    Value    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="PvtKVWrite.Version"></span>    Version  *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PvtUpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2992:3033#L75">PvtUpdateBatch</a>
+				<a class="permalink" href="index.html#PvtUpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtUpdateBatch contains updates for the private data
+</p>
+
+			<pre>type PvtUpdateBatch struct {
+    <a href="index.html#UpdateMap">UpdateMap</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPvtUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3784:3824#L103">NewPvtUpdateBatch</a>
+					<a class="permalink" href="index.html#NewPvtUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPvtUpdateBatch() *<a href="index.html#PvtUpdateBatch">PvtUpdateBatch</a></pre>
+				<p>
+NewPvtUpdateBatch creates an empty PvtUpdateBatch
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PvtUpdateBatch.ToCompositeKeyMap">func (PvtUpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=7580:7646#L208">ToCompositeKeyMap</a>
+					<a class="permalink" href="index.html#PvtUpdateBatch.ToCompositeKeyMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#PvtUpdateBatch">PvtUpdateBatch</a>) ToCompositeKeyMap() <a href="index.html#PvtdataCompositeKeyMap">PvtdataCompositeKeyMap</a></pre>
+				<p>
+ToCompositeKeyMap rearranges the update batch data in the form of a single map
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PvtdataCompositeKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=1992:2096#L35">PvtdataCompositeKey</a>
+				<a class="permalink" href="index.html#PvtdataCompositeKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtdataCompositeKey encloses Namespace, CollectionName and Key components
+</p>
+
+			<pre>type PvtdataCompositeKey struct {
+<span id="PvtdataCompositeKey.Namespace"></span>    Namespace      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PvtdataCompositeKey.CollectionName"></span>    CollectionName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PvtdataCompositeKey.Key"></span>    Key            <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PvtdataCompositeKeyMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=7421:7496#L205">PvtdataCompositeKeyMap</a>
+				<a class="permalink" href="index.html#PvtdataCompositeKeyMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtdataCompositeKeyMap is a map of PvtdataCompositeKey to VersionedValue
+</p>
+
+			<pre>type PvtdataCompositeKeyMap map[<a href="index.html#PvtdataCompositeKey">PvtdataCompositeKey</a>]*<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TestEnv">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/test_exports.go?s=649:751#L16">TestEnv</a>
+				<a class="permalink" href="index.html#TestEnv">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TestEnv - an interface that a test environment implements
+</p>
+
+			<pre>type TestEnv interface {
+    Init(t <a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#TB">TB</a>)
+    GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#DB">DB</a>
+    GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Cleanup()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=2590:2707#L58">UpdateBatch</a>
+				<a class="permalink" href="index.html#UpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpdateBatch encapsulates the updates to Public, Private, and Hashed data.
+This is expected to contain a consistent set of updates
+</p>
+
+			<pre>type UpdateBatch struct {
+<span id="UpdateBatch.PubUpdates"></span>    PubUpdates  *<a href="index.html#PubUpdateBatch">PubUpdateBatch</a>
+<span id="UpdateBatch.HashUpdates"></span>    HashUpdates *<a href="index.html#HashedUpdateBatch">HashedUpdateBatch</a>
+<span id="UpdateBatch.PvtUpdates"></span>    PvtUpdates  *<a href="index.html#PvtUpdateBatch">PvtUpdateBatch</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3291:3325#L88">NewUpdateBatch</a>
+					<a class="permalink" href="index.html#NewUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewUpdateBatch() *<a href="index.html#UpdateBatch">UpdateBatch</a></pre>
+				<p>
+NewUpdateBatch creates and empty UpdateBatch
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="UpdateMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3108:3141#L80">UpdateMap</a>
+				<a class="permalink" href="index.html#UpdateMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpdateMap maintains entries of tuple &lt;Namespace, UpdatesForNamespace&gt;
+</p>
+
+			<pre>type UpdateMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]nsBatch</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UpdateMap.Contains">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=5058:5112#L137">Contains</a>
+					<a class="permalink" href="index.html#UpdateMap.Contains">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) Contains(ns, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Contains returns true if the given &lt;ns,coll,key&gt; tuple is present in the batch
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateMap.Delete">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=4587:4659#L123">Delete</a>
+					<a class="permalink" href="index.html#UpdateMap.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) Delete(ns, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Delete adds a delete marker in the batch for a given combination of namespace and collection name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateMap.Get">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=4817:4885#L128">Get</a>
+					<a class="permalink" href="index.html#UpdateMap.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) Get(ns, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../statedb/index.html">statedb</a>.<a href="../statedb/index.html#VersionedValue">VersionedValue</a></pre>
+				<p>
+Get retrieves the value from the batch for a given combination of namespace and collection name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateMap.IsEmpty">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=3932:3965#L108">IsEmpty</a>
+					<a class="permalink" href="index.html#UpdateMap.IsEmpty">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) IsEmpty() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsEmpty returns true if there exists any updates
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateMap.Put">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=4083:4166#L113">Put</a>
+					<a class="permalink" href="index.html#UpdateMap.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) Put(ns, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Put sets the value in the batch for a given combination of namespace and collection name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateMap.PutValAndMetadata">func (UpdateMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/db.go?s=4285:4399#L118">PutValAndMetadata</a>
+					<a class="permalink" href="index.html#UpdateMap.PutValAndMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#UpdateMap">UpdateMap</a>) PutValAndMetadata(ns, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+PutValAndMetadata adds a key with value and metadata
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UpdatesBytesBuilder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch_bytes.go?s=314:349#L7">UpdatesBytesBuilder</a>
+				<a class="permalink" href="index.html#UpdatesBytesBuilder">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type UpdatesBytesBuilder struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UpdatesBytesBuilder.DeterministicBytesForPubAndHashUpdates">func (*UpdatesBytesBuilder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/privacyenabledstate/update_batch_bytes.go?s=1221:1322#L20">DeterministicBytesForPubAndHashUpdates</a>
+					<a class="permalink" href="index.html#UpdatesBytesBuilder.DeterministicBytesForPubAndHashUpdates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bb *<a href="index.html#UpdatesBytesBuilder">UpdatesBytesBuilder</a>) DeterministicBytesForPubAndHashUpdates(u *<a href="index.html#UpdateBatch">UpdateBatch</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeterministicBytesForPubAndHashUpdates constructs the bytes for a given UpdateBatch
+while constructing the bytes, it considers only public writes and hashed writes for
+the collections. For achieving the determinism, it constructs a slice of proto messages
+of type &#39;KVWriteProto&#39;. In the slice, all the writes for a namespace &#34;ns1&#34; appear before
+the writes for another namespace &#34;ns2&#34; if &#34;ns1&#34; &lt; &#34;ns2&#34; (lexicographically). Within a
+namespace, all the public writes appear before the collection writes. Like namespaces,
+the collections writes within a namespace appear in the order of lexicographical order.
+If an entry has the same namespace as its preceding entry, the namespace field is skipped.
+A Similar treatment is given to the repetitive entries for a collection within a namespace.
+For illustration, see the corresponding unit tests
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

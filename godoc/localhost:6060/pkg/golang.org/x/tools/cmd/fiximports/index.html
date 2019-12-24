@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>fiximports - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Command fiximports
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<p>
+The fiximports command fixes import declarations to use the canonical
+import path for packages that have an &#34;import comment&#34; as defined by
+<a href="https://golang.org/s/go14customimport">https://golang.org/s/go14customimport</a>.
+</p>
+<h3 id="hdr-Background">Background</h3>
+<p>
+The Go 1 custom import path mechanism lets the maintainer of a
+package give it a stable name by which clients may import and &#34;go
+get&#34; it, independent of the underlying version control system (such
+as Git) or server (such as github.com) that hosts it.  Requests for
+the custom name are redirected to the underlying name.  This allows
+packages to be migrated from one underlying server or system to
+another without breaking existing clients.
+</p>
+<p>
+Because this redirect mechanism creates aliases for existing
+packages, it&#39;s possible for a single program to import the same
+package by its canonical name and by an alias.  The resulting
+executable will contain two copies of the package, which is wasteful
+at best and incorrect at worst.
+</p>
+<p>
+To avoid this, &#34;go build&#34; reports an error if it encounters a special
+comment like the one below, and if the import path in the comment
+does not match the path of the enclosing package relative to
+GOPATH/src:
+</p>
+<pre>     $ grep ^package $GOPATH/src/github.com/bob/vanity/foo/foo.go
+	package foo // import &#34;vanity.com/foo&#34;
+</pre>
+<p>
+The error from &#34;go build&#34; indicates that the package canonically
+known as &#34;vanity.com/foo&#34; is locally installed under the
+non-canonical name &#34;github.com/bob/vanity/foo&#34;.
+</p>
+<h3 id="hdr-Usage">Usage</h3>
+<p>
+When a package that you depend on introduces a custom import comment,
+and your workspace imports it by the non-canonical name, your build
+will stop working as soon as you update your copy of that package
+using &#34;go get -u&#34;.
+</p>
+<p>
+The purpose of the fiximports tool is to fix up all imports of the
+non-canonical path within a Go workspace, replacing them with imports
+of the canonical path.  Following a run of fiximports, the workspace
+will no longer depend on the non-canonical copy of the package, so it
+should be safe to delete.  It may be necessary to run &#34;go get -u&#34;
+again to ensure that the package is locally installed under its
+canonical path, if it was not already.
+</p>
+<p>
+The fiximports tool operates locally; it does not make HTTP requests
+and does not discover new custom import comments.  It only operates
+on non-canonical packages present in your workspace.
+</p>
+<p>
+The -baddomains flag is a list of domain names that should always be
+considered non-canonical.  You can use this if you wish to make sure
+that you no longer have any dependencies on packages from that
+domain, even those that do not yet provide a canonical import path
+comment.  For example, the default value of -baddomains includes the
+moribund code hosting site code.google.com, so fiximports will report
+an error for each import of a package from this domain remaining
+after canonicalization.
+</p>
+<p>
+To see the changes fiximports would make without applying them, use
+the -n flag.
+</p>
+
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

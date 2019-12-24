@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mocks - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mocks
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/deliverservice/mocks"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#MockRecv">func MockRecv(mock *MockBlocksDeliverer) (*orderer.DeliverResponse, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#EndpointUpdater">type EndpointUpdater</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndpointUpdater.GetEndpoint">func (_m *EndpointUpdater) GetEndpoint() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndpointUpdater.UpdateEndpoints">func (_m *EndpointUpdater) UpdateEndpoints(endpoints []comm.EndpointCriteria)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LedgerInfo">type LedgerInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerInfo.LedgerHeight">func (_m *LedgerInfo) LedgerHeight() (uint64, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MessageCryptoVerifier">type MessageCryptoVerifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MessageCryptoVerifier.VerifyHeader">func (_m *MessageCryptoVerifier) VerifyHeader(chainID string, signedBlock *common.Block) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockAtomicBroadcastClient">type MockAtomicBroadcastClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockAtomicBroadcastClient.Broadcast">func (mabc *MockAtomicBroadcastClient) Broadcast(ctx context.Context, opts ...grpc.CallOption) (orderer.AtomicBroadcast_BroadcastClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockAtomicBroadcastClient.Deliver">func (mabc *MockAtomicBroadcastClient) Deliver(ctx context.Context, opts ...grpc.CallOption) (orderer.AtomicBroadcast_DeliverClient, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockBlocksDeliverer">type MockBlocksDeliverer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.Close">func (mock *MockBlocksDeliverer) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.Disconnect">func (mock *MockBlocksDeliverer) Disconnect()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.GetEndpoints">func (mock *MockBlocksDeliverer) GetEndpoints() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.Recv">func (mock *MockBlocksDeliverer) Recv() (*orderer.DeliverResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.RecvCount">func (mock *MockBlocksDeliverer) RecvCount() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.Send">func (mock *MockBlocksDeliverer) Send(env *common.Envelope) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.UpdateEndpoints">func (mock *MockBlocksDeliverer) UpdateEndpoints(endpoints []string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockBlocksDeliverer.UpdateReceived">func (mock *MockBlocksDeliverer) UpdateReceived(blockNumber uint64)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockGossipServiceAdapter">type MockGossipServiceAdapter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockGossipServiceAdapter.AddPayload">func (mock *MockGossipServiceAdapter) AddPayload(chainID string, payload *gossip_proto.Payload) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockGossipServiceAdapter.AddPayloadCount">func (mock *MockGossipServiceAdapter) AddPayloadCount() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockGossipServiceAdapter.Gossip">func (mock *MockGossipServiceAdapter) Gossip(msg *gossip_proto.GossipMessage)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockGossipServiceAdapter.PeersOfChannel">func (*MockGossipServiceAdapter) PeersOfChannel(gossip_common.ChainID) []discovery.NetworkMember</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockLedgerInfo">type MockLedgerInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockLedgerInfo.LedgerHeight">func (li *MockLedgerInfo) LedgerHeight() (uint64, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockLedgerInfo.Set">func (li *MockLedgerInfo) Set(height uint64)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Orderer">type Orderer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewOrderer">func NewOrderer(port int, t *testing.T) *Orderer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Broadcast">func (*Orderer) Broadcast(orderer.AtomicBroadcast_BroadcastServer) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.ConnCount">func (o *Orderer) ConnCount() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.ConnCountType">func (o *Orderer) ConnCountType() (int, orderer.SeekInfo_SeekContentType)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Deliver">func (o *Orderer) Deliver(stream orderer.AtomicBroadcast_DeliverServer) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Fail">func (o *Orderer) Fail()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Resurrect">func (o *Orderer) Resurrect()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.SendBlock">func (o *Orderer) SendBlock(seq uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.SetNextExpectedSeek">func (o *Orderer) SetNextExpectedSeek(seq uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Shutdown">func (o *Orderer) Shutdown()</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go">blocksprovider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/endpoint_updater.go">endpoint_updater.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/ledger_info.go">ledger_info.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/message_crypto_verifier.go">message_crypto_verifier.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go">orderer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="MockRecv">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=2828:2902#L78">MockRecv</a>
+				<a class="permalink" href="index.html#MockRecv">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MockRecv(mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MockRecv mock for the Recv function
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="EndpointUpdater">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/endpoint_updater.go?s=247:289#L1">EndpointUpdater</a>
+				<a class="permalink" href="index.html#EndpointUpdater">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndpointUpdater is an autogenerated mock type for the EndpointUpdater type
+</p>
+
+			<pre>type EndpointUpdater struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="EndpointUpdater.GetEndpoint">func (*EndpointUpdater) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/endpoint_updater.go?s=350:397#L5">GetEndpoint</a>
+					<a class="permalink" href="index.html#EndpointUpdater.GetEndpoint">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#EndpointUpdater">EndpointUpdater</a>) GetEndpoint() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetEndpoint provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EndpointUpdater.UpdateEndpoints">func (*EndpointUpdater) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/endpoint_updater.go?s=623:700#L19">UpdateEndpoints</a>
+					<a class="permalink" href="index.html#EndpointUpdater.UpdateEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#EndpointUpdater">EndpointUpdater</a>) UpdateEndpoints(endpoints []<a href="../../comm/index.html">comm</a>.<a href="../../comm/index.html#EndpointCriteria">EndpointCriteria</a>)</pre>
+				<p>
+UpdateEndpoints provides a mock function with given fields: endpoints
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LedgerInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/ledger_info.go?s=182:219#L1">LedgerInfo</a>
+				<a class="permalink" href="index.html#LedgerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerInfo is an autogenerated mock type for the LedgerInfo type
+</p>
+
+			<pre>type LedgerInfo struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LedgerInfo.LedgerHeight">func (*LedgerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/ledger_info.go?s=281:333#L3">LedgerHeight</a>
+					<a class="permalink" href="index.html#LedgerInfo.LedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#LedgerInfo">LedgerInfo</a>) LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LedgerHeight provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MessageCryptoVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/message_crypto_verifier.go?s=265:313#L1">MessageCryptoVerifier</a>
+				<a class="permalink" href="index.html#MessageCryptoVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MessageCryptoVerifier is an autogenerated mock type for the MessageCryptoVerifier type
+</p>
+
+			<pre>type MessageCryptoVerifier struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MessageCryptoVerifier.VerifyHeader">func (*MessageCryptoVerifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/message_crypto_verifier.go?s=396:490#L5">VerifyHeader</a>
+					<a class="permalink" href="index.html#MessageCryptoVerifier.VerifyHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#MessageCryptoVerifier">MessageCryptoVerifier</a>) VerifyHeader(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signedBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyHeader provides a mock function with given fields: chainID, signedBlock
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockAtomicBroadcastClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=790:856#L22">MockAtomicBroadcastClient</a>
+				<a class="permalink" href="index.html#MockAtomicBroadcastClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockAtomicBroadcastClient struct {
+<span id="MockAtomicBroadcastClient.BD"></span>    BD *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockAtomicBroadcastClient.Broadcast">func (*MockAtomicBroadcastClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=858:1001#L26">Broadcast</a>
+					<a class="permalink" href="index.html#MockAtomicBroadcastClient.Broadcast">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mabc *<a href="index.html#MockAtomicBroadcastClient">MockAtomicBroadcastClient</a>) Broadcast(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#AtomicBroadcast_BroadcastClient">AtomicBroadcast_BroadcastClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockAtomicBroadcastClient.Deliver">func (*MockAtomicBroadcastClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=1035:1174#L29">Deliver</a>
+					<a class="permalink" href="index.html#MockAtomicBroadcastClient.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mabc *<a href="index.html#MockAtomicBroadcastClient">MockAtomicBroadcastClient</a>) Deliver(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#AtomicBroadcast_DeliverClient">AtomicBroadcast_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockBlocksDeliverer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=2135:2370#L56">MockBlocksDeliverer</a>
+				<a class="permalink" href="index.html#MockBlocksDeliverer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockBlocksDeliverer mocking structure of BlocksDeliverer interface to initialize
+the blocks provider implementation
+</p>
+
+			<pre>type MockBlocksDeliverer struct {
+<span id="MockBlocksDeliverer.DisconnectCalled"></span>    DisconnectCalled chan struct{}
+<span id="MockBlocksDeliverer.CloseCalled"></span>    CloseCalled      chan struct{}
+<span id="MockBlocksDeliverer.Pos"></span>    Pos              <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>
+
+<span id="MockBlocksDeliverer.MockRecv"></span>    MockRecv func(mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockBlocksDeliverer.Close">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=3960:4000#L124">Close</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) Close()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.Disconnect">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=3781:3826#L116">Disconnect</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.Disconnect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) Disconnect()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.GetEndpoints">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=4155:4211#L135">GetEndpoints</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.GetEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) GetEndpoints() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.Recv">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=2488:2561#L67">Recv</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.Recv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) Recv() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Recv gets responses from the ordering service, currently mocked to return
+only one response with empty block.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.RecvCount">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=2693:2743#L73">RecvCount</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.RecvCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) RecvCount() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				<p>
+RecvCount returns the number of times Recv has been called.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.Send">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=3391:3456#L100">Send</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) Send(env *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Send sends the envelope with request for the blocks for ordering service
+currently mocked and not doing anything
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.UpdateEndpoints">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=4080:4148#L131">UpdateEndpoints</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.UpdateEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) UpdateEndpoints(endpoints []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockBlocksDeliverer.UpdateReceived">func (*MockBlocksDeliverer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=3869:3936#L120">UpdateReceived</a>
+					<a class="permalink" href="index.html#MockBlocksDeliverer.UpdateReceived">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockBlocksDeliverer">MockBlocksDeliverer</a>) UpdateReceived(blockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockGossipServiceAdapter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=687:788#L16">MockGossipServiceAdapter</a>
+				<a class="permalink" href="index.html#MockGossipServiceAdapter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockGossipServiceAdapter mocking structure for gossip service, used to initialize
+the blocks providers implementation and asserts the number
+of function calls used.
+</p>
+
+			<pre>type MockGossipServiceAdapter struct {
+<span id="MockGossipServiceAdapter.GossipBlockDisseminations"></span>    GossipBlockDisseminations chan <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockGossipServiceAdapter.AddPayload">func (*MockGossipServiceAdapter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=1486:1587#L39">AddPayload</a>
+					<a class="permalink" href="index.html#MockGossipServiceAdapter.AddPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockGossipServiceAdapter">MockGossipServiceAdapter</a>) AddPayload(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload *<a href="../../../protos/gossip/index.html">gossip_proto</a>.<a href="../../../protos/gossip/index.html#Payload">Payload</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+AddPayload adds gossip payload to the local state transfer buffer
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockGossipServiceAdapter.AddPayloadCount">func (*MockGossipServiceAdapter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=1715:1776#L45">AddPayloadCount</a>
+					<a class="permalink" href="index.html#MockGossipServiceAdapter.AddPayloadCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockGossipServiceAdapter">MockGossipServiceAdapter</a>) AddPayloadCount() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				<p>
+AddPayloadCount returns the number of times Recv has been called.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockGossipServiceAdapter.Gossip">func (*MockGossipServiceAdapter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=1863:1940#L50">Gossip</a>
+					<a class="permalink" href="index.html#MockGossipServiceAdapter.Gossip">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mock *<a href="index.html#MockGossipServiceAdapter">MockGossipServiceAdapter</a>) Gossip(msg *<a href="../../../protos/gossip/index.html">gossip_proto</a>.<a href="../../../protos/gossip/index.html#GossipMessage">GossipMessage</a>)</pre>
+				<p>
+Gossip message to the all peers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockGossipServiceAdapter.PeersOfChannel">func (*MockGossipServiceAdapter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=1279:1375#L34">PeersOfChannel</a>
+					<a class="permalink" href="index.html#MockGossipServiceAdapter.PeersOfChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MockGossipServiceAdapter">MockGossipServiceAdapter</a>) PeersOfChannel(<a href="../../../gossip/common/index.html">gossip_common</a>.<a href="../../../gossip/common/index.html#ChainID">ChainID</a>) []<a href="../../../gossip/discovery/index.html">discovery</a>.<a href="../../../gossip/discovery/index.html#NetworkMember">NetworkMember</a></pre>
+				<p>
+PeersOfChannel returns the slice with peers participating in given channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockLedgerInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=4360:4405#L141">MockLedgerInfo</a>
+				<a class="permalink" href="index.html#MockLedgerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockLedgerInfo mocking implementation of LedgerInfo interface, needed
+for test initialization purposes
+</p>
+
+			<pre>type MockLedgerInfo struct {
+<span id="MockLedgerInfo.Height"></span>    Height <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockLedgerInfo.LedgerHeight">func (*MockLedgerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=4465:4521#L146">LedgerHeight</a>
+					<a class="permalink" href="index.html#MockLedgerInfo.LedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (li *<a href="index.html#MockLedgerInfo">MockLedgerInfo</a>) LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LedgerHeight returns mocked value to the ledger height
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockLedgerInfo.Set">func (*MockLedgerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/blocksprovider.go?s=4570:4614#L150">Set</a>
+					<a class="permalink" href="index.html#MockLedgerInfo.Set">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (li *<a href="index.html#MockLedgerInfo">MockLedgerInfo</a>) Set(height <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Orderer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=356:661#L13">Orderer</a>
+				<a class="permalink" href="index.html#Orderer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Orderer struct {
+    <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Listener">Listener</a>
+    *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewOrderer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=663:711#L28">NewOrderer</a>
+					<a class="permalink" href="index.html#NewOrderer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewOrderer(port <a href="http://localhost:6060/pkg/builtin/#int">int</a>, t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>) *<a href="index.html#Orderer">Orderer</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Orderer.Broadcast">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=2109:2181#L111">Broadcast</a>
+					<a class="permalink" href="index.html#Orderer.Broadcast">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Orderer">Orderer</a>) Broadcast(<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#AtomicBroadcast_BroadcastServer">AtomicBroadcast_BroadcastServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.ConnCount">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=1754:1787#L93">ConnCount</a>
+					<a class="permalink" href="index.html#Orderer.ConnCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) ConnCount() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.ConnCountType">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=1859:1932#L100">ConnCountType</a>
+					<a class="permalink" href="index.html#Orderer.ConnCountType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) ConnCountType() (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SeekInfo_SeekContentType">SeekInfo_SeekContentType</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Deliver">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=2430:2507#L126">Deliver</a>
+					<a class="permalink" href="index.html#Orderer.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Deliver(stream <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#AtomicBroadcast_DeliverServer">AtomicBroadcast_DeliverServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Fail">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=1443:1467#L70">Fail</a>
+					<a class="permalink" href="index.html#Orderer.Fail">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Fail()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Resurrect">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=1565:1594#L78">Resurrect</a>
+					<a class="permalink" href="index.html#Orderer.Resurrect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Resurrect()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.SendBlock">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=2333:2372#L119">SendBlock</a>
+					<a class="permalink" href="index.html#Orderer.SendBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) SendBlock(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.SetNextExpectedSeek">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=2224:2273#L115">SetNextExpectedSeek</a>
+					<a class="permalink" href="index.html#Orderer.SetNextExpectedSeek">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) SetNextExpectedSeek(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Shutdown">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/deliverservice/mocks/orderer.go?s=1146:1174#L47">Shutdown</a>
+					<a class="permalink" href="index.html#Orderer.Shutdown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Shutdown()</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

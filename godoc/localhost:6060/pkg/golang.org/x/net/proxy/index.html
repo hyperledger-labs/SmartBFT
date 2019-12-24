@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>proxy - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package proxy
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/net/proxy"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package proxy provides support for a variety of protocols to proxy network
+data.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#RegisterDialerType">func RegisterDialerType(scheme string, f func(*url.URL, Dialer) (Dialer, error))</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Auth">type Auth</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Dialer">type Dialer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FromEnvironment">func FromEnvironment() Dialer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FromURL">func FromURL(u *url.URL, forward Dialer) (Dialer, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SOCKS5">func SOCKS5(network, address string, auth *Auth, forward Dialer) (Dialer, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PerHost">type PerHost</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPerHost">func NewPerHost(defaultDialer, bypass Dialer) *PerHost</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.AddFromString">func (p *PerHost) AddFromString(s string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.AddHost">func (p *PerHost) AddHost(host string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.AddIP">func (p *PerHost) AddIP(ip net.IP)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.AddNetwork">func (p *PerHost) AddNetwork(net *net.IPNet)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.AddZone">func (p *PerHost) AddZone(zone string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PerHost.Dial">func (p *PerHost) Dial(network, addr string) (c net.Conn, err error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/proxy/direct.go">direct.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go">per_host.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go">proxy.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/proxy/socks5.go">socks5.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+Direct is a direct proxy: one that makes network connections directly.
+</p>
+
+				<pre>var <span id="Direct">Direct</span> = direct{}</pre>
+			
+		
+		
+			
+			
+			<h2 id="RegisterDialerType">func <a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go?s=1535:1615#L52">RegisterDialerType</a>
+				<a class="permalink" href="index.html#RegisterDialerType">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterDialerType(scheme <a href="http://localhost:6060/pkg/builtin/#string">string</a>, f func(*<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>, <a href="index.html#Dialer">Dialer</a>) (<a href="index.html#Dialer">Dialer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>))</pre>
+			<p>
+RegisterDialerType takes a URL scheme and a function to generate Dialers from
+a URL with that scheme and a forwarding Dialer. Registered schemes are used
+by FromURL.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Auth">type <a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go?s=612:655#L14">Auth</a>
+				<a class="permalink" href="index.html#Auth">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Auth contains authentication parameters that specific Dialers may require.
+</p>
+
+			<pre>type Auth struct {
+<span id="Auth.User"></span>    User, Password <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Dialer">type <a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go?s=401:532#L8">Dialer</a>
+				<a class="permalink" href="index.html#Dialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Dialer is a means to establish a connection.
+</p>
+
+			<pre>type Dialer interface {
+    <span class="comment">// Dial connects to the given address via the proxy.</span>
+    Dial(network, addr <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (c <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Conn">Conn</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="FromEnvironment">func <a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go?s=759:788#L20">FromEnvironment</a>
+					<a class="permalink" href="index.html#FromEnvironment">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func FromEnvironment() <a href="index.html#Dialer">Dialer</a></pre>
+				<p>
+FromEnvironment returns the dialer specified by the proxy related variables in
+the environment.
+</p>
+
+				
+				
+			
+				
+				<h3 id="FromURL">func <a href="http://localhost:6060/src/golang.org/x/net/proxy/proxy.go?s=1864:1920#L61">FromURL</a>
+					<a class="permalink" href="index.html#FromURL">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func FromURL(u *<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>, forward <a href="index.html#Dialer">Dialer</a>) (<a href="index.html#Dialer">Dialer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+FromURL returns a Dialer given a URL specification and an underlying
+Dialer for it to make network requests.
+</p>
+
+				
+				
+			
+				
+				<h3 id="SOCKS5">func <a href="http://localhost:6060/src/golang.org/x/net/proxy/socks5.go?s=393:473#L7">SOCKS5</a>
+					<a class="permalink" href="index.html#SOCKS5">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func SOCKS5(network, address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, auth *<a href="index.html#Auth">Auth</a>, forward <a href="index.html#Dialer">Dialer</a>) (<a href="index.html#Dialer">Dialer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SOCKS5 returns a Dialer that makes SOCKSv5 connections to the given
+address with an optional username and password.
+See RFC 1928 and RFC 1929.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="PerHost">type <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=331:479#L4">PerHost</a>
+				<a class="permalink" href="index.html#PerHost">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PerHost directs connections to a default Dialer unless the host name
+requested matches one of a number of exceptions.
+</p>
+
+			<pre>type PerHost struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPerHost">func <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=659:713#L16">NewPerHost</a>
+					<a class="permalink" href="index.html#NewPerHost">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPerHost(defaultDialer, bypass <a href="index.html#Dialer">Dialer</a>) *<a href="index.html#PerHost">PerHost</a></pre>
+				<p>
+NewPerHost returns a PerHost Dialer that directs connections to either
+defaultDialer or bypass, depending on whether the connection matches one of
+the configured rules.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PerHost.AddFromString">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=2028:2069#L72">AddFromString</a>
+					<a class="permalink" href="index.html#PerHost.AddFromString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) AddFromString(s <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+AddFromString parses a string that contains comma-separated values
+specifying hosts that should use the bypass proxy. Each value is either an
+IP address, a CIDR range, a zone (*.example.com) or a host name
+(localhost). A best effort is made to parse the string and errors are
+ignored.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PerHost.AddHost">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=3558:3596#L125">AddHost</a>
+					<a class="permalink" href="index.html#PerHost.AddHost">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) AddHost(host <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+AddHost specifies a host name that will use the bypass proxy.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PerHost.AddIP">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=2765:2799#L101">AddIP</a>
+					<a class="permalink" href="index.html#PerHost.AddIP">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) AddIP(ip <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#IP">IP</a>)</pre>
+				<p>
+AddIP specifies an IP address that will use the bypass proxy. Note that
+this will only take effect if a literal IP address is dialed. A connection
+to a named host will never match an IP.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PerHost.AddNetwork">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=3037:3081#L108">AddNetwork</a>
+					<a class="permalink" href="index.html#PerHost.AddNetwork">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) AddNetwork(net *<a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#IPNet">IPNet</a>)</pre>
+				<p>
+AddNetwork specifies an IP range that will use the bypass proxy. Note that
+this will only take effect if a literal IP address is dialed. A connection
+to a named host will never match.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PerHost.AddZone">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=3279:3317#L114">AddZone</a>
+					<a class="permalink" href="index.html#PerHost.AddZone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) AddZone(zone <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+AddZone specifies a DNS suffix that will use the bypass proxy. A zone of
+&#34;example.com&#34; matches &#34;example.com&#34; and all of its subdomains.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PerHost.Dial">func (*PerHost) <a href="http://localhost:6060/src/golang.org/x/net/proxy/per_host.go?s=884:952#L25">Dial</a>
+					<a class="permalink" href="index.html#PerHost.Dial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PerHost">PerHost</a>) Dial(network, addr <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (c <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Conn">Conn</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Dial connects to the address addr on the given network through either
+defaultDialer or bypass.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

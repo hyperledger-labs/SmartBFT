@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>plain - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package plain
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/token/tms/plain"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#GenerateKeyForTest">func GenerateKeyForTest(txID string, index int) (string, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#HistoryIterator">type HistoryIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HistoryIterator.Next">func (it *HistoryIterator) Next() (string, *token.TokenTransaction, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Issuer">type Issuer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Issuer.RequestExpectation">func (i *Issuer) RequestExpectation(request *token.ExpectationRequest) (*token.TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Issuer.RequestImport">func (i *Issuer) RequestImport(tokensToIssue []*token.TokenToIssue) (*token.TokenTransaction, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Manager">type Manager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Manager.GetTxProcessor">func (m *Manager) GetTxProcessor(channel string) (transaction.TMSTxProcessor, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Manager.SetPolicyValidator">func (m *Manager) SetPolicyValidator(channel string, validator identity.IssuingValidator)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MemoryLedger">type MemoryLedger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemoryLedger">func NewMemoryLedger() *MemoryLedger</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryLedger.Done">func (p *MemoryLedger) Done()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryLedger.GetState">func (p *MemoryLedger) GetState(namespace string, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryLedger.GetStateRangeScanIterator">func (p *MemoryLedger) GetStateRangeScanIterator(namespace string, startKey string, endKey string) (ledger.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryLedger.SetState">func (p *MemoryLedger) SetState(namespace string, key string, value []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MemoryPool">type MemoryPool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemoryPool">func NewMemoryPool() *MemoryPool</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryPool.CommitUpdate">func (p *MemoryPool) CommitUpdate(transactionData []tms.TransactionData) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryPool.HistoryIterator">func (p *MemoryPool) HistoryIterator() *HistoryIterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryPool.Iterator">func (p *MemoryPool) Iterator() *PoolIterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryPool.OutputByID">func (p *MemoryPool) OutputByID(id string) (*token.PlainOutput, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryPool.TxByID">func (p *MemoryPool) TxByID(txID string) (*token.TokenTransaction, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OutputNotFoundError">type OutputNotFoundError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OutputNotFoundError.Error">func (o *OutputNotFoundError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PoolIterator">type PoolIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PoolIterator.Next">func (it *PoolIterator) Next() (string, *token.PlainOutput, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Transactor">type Transactor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.Done">func (t *Transactor) Done()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.ListTokens">func (t *Transactor) ListTokens() (*token.UnspentTokens, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.RequestApprove">func (t *Transactor) RequestApprove(request *token.ApproveRequest) (*token.TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.RequestExpectation">func (t *Transactor) RequestExpectation(request *token.ExpectationRequest) (*token.TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.RequestRedeem">func (t *Transactor) RequestRedeem(request *token.RedeemRequest) (*token.TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.RequestTransfer">func (t *Transactor) RequestTransfer(request *token.TransferRequest) (*token.TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transactor.RequestTransferFrom">func (t *Transactor) RequestTransferFrom(request *token.TransferRequest) (*token.TokenTransaction, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxNotFoundError">type TxNotFoundError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNotFoundError.Error">func (p *TxNotFoundError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Verifier">type Verifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.ProcessTx">func (v *Verifier) ProcessTx(txID string, creator identity.PublicInfo, ttx *token.TokenTransaction, simulator ledger.LedgerWriter) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/issuer.go">issuer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go">ledger.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/manager.go">manager.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go">pool.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go">transactor.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/verifier.go">verifier.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="TokenInputSpentMarker">TokenInputSpentMarker</span> = []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>{1}</pre>
+			
+		
+		
+			
+			
+			<h2 id="GenerateKeyForTest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=10275:10338#L330">GenerateKeyForTest</a>
+				<a class="permalink" href="index.html#GenerateKeyForTest">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateKeyForTest(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, index <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GenerateKeyForTest is here only for testing purposes, to be removed later.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="HistoryIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=5526:5609#L209">HistoryIterator</a>
+				<a class="permalink" href="index.html#HistoryIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HistoryIterator is an iterator for iterating through the transaction history.
+</p>
+
+			<pre>type HistoryIterator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HistoryIterator.Next">func (*HistoryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=5708:5782#L216">Next</a>
+					<a class="permalink" href="index.html#HistoryIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (it *<a href="index.html#HistoryIterator">HistoryIterator</a>) Next() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Next gets the next transaction from the history, or io.EOF if there are no more transactions.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Issuer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/issuer.go?s=198:218#L4">Issuer</a>
+				<a class="permalink" href="index.html#Issuer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Issuer that can import new tokens
+</p>
+
+			<pre>type Issuer struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Issuer.RequestExpectation">func (*Issuer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/issuer.go?s=1067:1170#L32">RequestExpectation</a>
+					<a class="permalink" href="index.html#Issuer.RequestExpectation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i *<a href="index.html#Issuer">Issuer</a>) RequestExpectation(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#ExpectationRequest">ExpectationRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestExpectation allows indirect import based on the expectation.
+It creates a token transaction with the outputs as specified in the expectation.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Issuer.RequestImport">func (*Issuer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/issuer.go?s=336:436#L7">RequestImport</a>
+					<a class="permalink" href="index.html#Issuer.RequestImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i *<a href="index.html#Issuer">Issuer</a>) RequestImport(tokensToIssue []*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenToIssue">TokenToIssue</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestImport creates an import request with the token owners, types, and quantities specified in tokensToIssue.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Manager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/manager.go?s=290:399#L8">Manager</a>
+				<a class="permalink" href="index.html#Manager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Manager is used to access TMS components.
+</p>
+
+			<pre>type Manager struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Manager.GetTxProcessor">func (*Manager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/manager.go?s=488:572#L14">GetTxProcessor</a>
+					<a class="permalink" href="index.html#Manager.GetTxProcessor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Manager">Manager</a>) GetTxProcessor(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../transaction/index.html">transaction</a>.<a href="../../transaction/index.html#TMSTxProcessor">TMSTxProcessor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTxProcessor returns a TMSTxProcessor that is used to process token transactions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Manager.SetPolicyValidator">func (*Manager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/manager.go?s=909:998#L25">SetPolicyValidator</a>
+					<a class="permalink" href="index.html#Manager.SetPolicyValidator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Manager">Manager</a>) SetPolicyValidator(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, validator <a href="../../identity/index.html">identity</a>.<a href="../../identity/index.html#IssuingValidator">IssuingValidator</a>)</pre>
+				<p>
+SetPolicyValidator sets the policy validator for the specified channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MemoryLedger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=287:342#L5">MemoryLedger</a>
+				<a class="permalink" href="index.html#MemoryLedger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MemoryLedger is an in-memory ledger of transactions and unspent outputs.
+This implementation is only meant for testing.
+</p>
+
+			<pre>type MemoryLedger struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMemoryLedger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=390:426#L10">NewMemoryLedger</a>
+					<a class="permalink" href="index.html#NewMemoryLedger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMemoryLedger() *<a href="index.html#MemoryLedger">MemoryLedger</a></pre>
+				<p>
+NewMemoryLedger creates a new MemoryLedger
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MemoryLedger.Done">func (*MemoryLedger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=1355:1384#L37">Done</a>
+					<a class="permalink" href="index.html#MemoryLedger.Done">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryLedger">MemoryLedger</a>) Done()</pre>
+				<p>
+Done releases resources occupied by the MemoryLedger
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryLedger.GetState">func (*MemoryLedger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=612:689#L17">GetState</a>
+					<a class="permalink" href="index.html#MemoryLedger.GetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryLedger">MemoryLedger</a>) GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetState gets the value for given namespace and Key. For a chaincode, the namespace corresponds to the chaincodeID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryLedger.GetStateRangeScanIterator">func (*MemoryLedger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=1146:1276#L32">GetStateRangeScanIterator</a>
+					<a class="permalink" href="index.html#MemoryLedger.GetStateRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryLedger">MemoryLedger</a>) GetStateRangeScanIterator(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/ledger/index.html">ledger</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateRangeScanIterator gets the values for a given namespace that lie in an interval determined by startKey and endKey.
+this is a mock function.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryLedger.SetState">func (*MemoryLedger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/ledger.go?s=868:949#L24">SetState</a>
+					<a class="permalink" href="index.html#MemoryLedger.SetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryLedger">MemoryLedger</a>) SetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetState sets the given value for the given namespace and Key. For a chaincode, the namespace corresponds to the chaincodeID
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MemoryPool">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=859:990#L30">MemoryPool</a>
+				<a class="permalink" href="index.html#MemoryPool">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MemoryPool is an in-memory ledger of transactions and unspent outputs.
+This implementation is only meant for testing.
+</p>
+
+			<pre>type MemoryPool struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMemoryPool">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=1034:1066#L37">NewMemoryPool</a>
+					<a class="permalink" href="index.html#NewMemoryPool">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMemoryPool() *<a href="index.html#MemoryPool">MemoryPool</a></pre>
+				<p>
+NewMemoryPool creates a new MemoryPool
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MemoryPool.CommitUpdate">func (*MemoryPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=1814:1892#L66">CommitUpdate</a>
+					<a class="permalink" href="index.html#MemoryPool.CommitUpdate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryPool">MemoryPool</a>) CommitUpdate(transactionData []<a href="../index.html">tms</a>.<a href="../index.html#TransactionData">TransactionData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CommitUpdate commits transaction data into the pool.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryPool.HistoryIterator">func (*MemoryPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=5185:5240#L194">HistoryIterator</a>
+					<a class="permalink" href="index.html#MemoryPool.HistoryIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryPool">MemoryPool</a>) HistoryIterator() *<a href="index.html#HistoryIterator">HistoryIterator</a></pre>
+				<p>
+HistoryIterator creates a new HistoryIterator for iterating through the transaction history.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryPool.Iterator">func (*MemoryPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=4348:4393#L159">Iterator</a>
+					<a class="permalink" href="index.html#MemoryPool.Iterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryPool">MemoryPool</a>) Iterator() *<a href="index.html#PoolIterator">PoolIterator</a></pre>
+				<p>
+Iterator returns an iterator of the unspent outputs based on a copy of the pool.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryPool.OutputByID">func (*MemoryPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=3679:3749#L132">OutputByID</a>
+					<a class="permalink" href="index.html#MemoryPool.OutputByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryPool">MemoryPool</a>) OutputByID(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#PlainOutput">PlainOutput</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+OutputByID gets an output by its ID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryPool.TxByID">func (*MemoryPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=4040:4113#L146">TxByID</a>
+					<a class="permalink" href="index.html#MemoryPool.TxByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MemoryPool">MemoryPool</a>) TxByID(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+TxByID gets a transaction by its transaction ID.
+If no transaction exists with the given ID, a TxNotFoundError is returned.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OutputNotFoundError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=360:406#L11">OutputNotFoundError</a>
+				<a class="permalink" href="index.html#OutputNotFoundError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OutputNotFoundError is returned when an entry was not found in the pool.
+</p>
+
+			<pre>type OutputNotFoundError struct {
+<span id="OutputNotFoundError.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="OutputNotFoundError.Error">func (*OutputNotFoundError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=408:452#L15">Error</a>
+					<a class="permalink" href="index.html#OutputNotFoundError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#OutputNotFoundError">OutputNotFoundError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PoolIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=4671:4751#L174">PoolIterator</a>
+				<a class="permalink" href="index.html#PoolIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PoolIterator is an iterator for iterating through the items in the pool.
+</p>
+
+			<pre>type PoolIterator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PoolIterator.Next">func (*PoolIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=4837:4903#L181">Next</a>
+					<a class="permalink" href="index.html#PoolIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (it *<a href="index.html#PoolIterator">PoolIterator</a>) Next() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#PlainOutput">PlainOutput</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Next gets the next output from the pool, or io.EOF if there are no more outputs.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Transactor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=405:494#L13">Transactor</a>
+				<a class="permalink" href="index.html#Transactor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Transactor that can transfer tokens.
+</p>
+
+			<pre>type Transactor struct {
+<span id="Transactor.PublicCredential"></span>    PublicCredential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Transactor.Ledger"></span>    Ledger           <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#LedgerReader">LedgerReader</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Transactor.Done">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=9306:9333#L295">Done</a>
+					<a class="permalink" href="index.html#Transactor.Done">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) Done()</pre>
+				<p>
+Done releases any resources held by this transactor
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transactor.ListTokens">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=5643:5706#L167">ListTokens</a>
+					<a class="permalink" href="index.html#Transactor.ListTokens">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) ListTokens() (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#UnspentTokens">UnspentTokens</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListTokens creates a TokenTransaction that lists the unspent tokens owned by owner.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transactor.RequestApprove">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=6936:7035#L220">RequestApprove</a>
+					<a class="permalink" href="index.html#Transactor.RequestApprove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) RequestApprove(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#ApproveRequest">ApproveRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Transactor.RequestExpectation">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=9108:9215#L290">RequestExpectation</a>
+					<a class="permalink" href="index.html#Transactor.RequestExpectation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) RequestExpectation(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#ExpectationRequest">ExpectationRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestExpectation allows indirect transfer based on the expectation.
+It creates a token transaction based on the outputs as specified in the expectation.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transactor.RequestRedeem">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=1573:1670#L54">RequestRedeem</a>
+					<a class="permalink" href="index.html#Transactor.RequestRedeem">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) RequestRedeem(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#RedeemRequest">RedeemRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestRedeem creates a TokenTransaction of type redeem request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transactor.RequestTransfer">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=718:819#L20">RequestTransfer</a>
+					<a class="permalink" href="index.html#Transactor.RequestTransfer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) RequestTransfer(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestTransfer creates a TokenTransaction of type transfer request
+func (t *Transactor) RequestTransfer(inTokens []*token.InputId, tokensToTransfer []*token.RecipientTransferShare) (*token.TokenTransaction, error) {
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transactor.RequestTransferFrom">func (*Transactor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/transactor.go?s=8812:8917#L284">RequestTransferFrom</a>
+					<a class="permalink" href="index.html#Transactor.RequestTransferFrom">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transactor">Transactor</a>) RequestTransferFrom(request *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxNotFoundError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=584:628#L20">TxNotFoundError</a>
+				<a class="permalink" href="index.html#TxNotFoundError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxNotFoundError is returned when a transaction was not found in the pool.
+</p>
+
+			<pre>type TxNotFoundError struct {
+<span id="TxNotFoundError.TxID"></span>    TxID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TxNotFoundError.Error">func (*TxNotFoundError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/pool.go?s=630:670#L24">Error</a>
+					<a class="permalink" href="index.html#TxNotFoundError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#TxNotFoundError">TxNotFoundError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Verifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/verifier.go?s=1105:1173#L32">Verifier</a>
+				<a class="permalink" href="index.html#Verifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Verifier validates and commits token transactions.
+</p>
+
+			<pre>type Verifier struct {
+<span id="Verifier.IssuingValidator"></span>    IssuingValidator <a href="../../identity/index.html">identity</a>.<a href="../../identity/index.html#IssuingValidator">IssuingValidator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Verifier.ProcessTx">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/tms/plain/verifier.go?s=1384:1520#L38">ProcessTx</a>
+					<a class="permalink" href="index.html#Verifier.ProcessTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) ProcessTx(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, creator <a href="../../identity/index.html">identity</a>.<a href="../../identity/index.html#PublicInfo">PublicInfo</a>, ttx *<a href="../../../protos/token/index.html">token</a>.<a href="../../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, simulator <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#LedgerWriter">LedgerWriter</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ProcessTx checks that transactions are correct wrt. the most recent ledger state.
+ProcessTx checks are ones that shall be done sequentially, since transactions within a block may introduce dependencies.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

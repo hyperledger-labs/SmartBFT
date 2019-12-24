@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>gcexportdata - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package gcexportdata
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/gcexportdata"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package gcexportdata provides functions for locating, reading, and
+writing export data files containing type information produced by the
+gc compiler.  This package supports go1.7 export data format and all
+later versions.
+</p>
+<p>
+Although it might seem convenient for this package to live alongside
+go/types in the standard library, this would cause version skew
+problems for developer tools that use it, since they must be able to
+consume the outputs of the gc compiler both before and after a Go
+update such as from Go 1.7 to Go 1.8.  Because this package lives in
+golang.org/x/tools, sites can update their version of this repo some
+time before the Go 1.8 release and rebuild and redeploy their
+developer tools, which will then be able to consume both Go 1.7 and
+Go 1.8 export data files, so they will work before and after the
+Go update. (See discussion at <a href="https://golang.org/issue/15651.">https://golang.org/issue/15651.</a>.)
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#Find">func Find(importPath, srcDir string) (filename, path string)</a></dd>
+			
+				
+				<dd><a href="index.html#NewImporter">func NewImporter(fset *token.FileSet, imports map[string]*types.Package) types.ImporterFrom</a></dd>
+			
+				
+				<dd><a href="index.html#NewReader">func NewReader(r io.Reader) (io.Reader, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Read">func Read(in io.Reader, fset *token.FileSet, imports map[string]*types.Package, path string) (*types.Package, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Write">func Write(out io.Writer, fset *token.FileSet, pkg *types.Package) error</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_NewImporter">NewImporter</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Read">Read</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/gcexportdata.go">gcexportdata.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/importer.go">importer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="Find">func <a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/gcexportdata.go?s=1745:1805#L34">Find</a>
+				<a class="permalink" href="index.html#Find">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Find(importPath, srcDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (filename, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+Find returns the name of an object (.o) or archive (.a) file
+containing type information for the specified import path,
+using the workspace layout conventions of go/build.
+If no file was found, an empty filename is returned.
+</p>
+<p>
+A relative srcDir is interpreted relative to the current working directory.
+</p>
+<p>
+Find also returns the package&#39;s resolved (canonical) import path,
+reflecting the effects of srcDir and vendoring on importPath.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewImporter">func <a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/importer.go?s=773:864#L16">NewImporter</a>
+				<a class="permalink" href="index.html#NewImporter">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewImporter(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, imports map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>) <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#ImporterFrom">ImporterFrom</a></pre>
+			<p>
+NewImporter returns a new instance of the types.Importer interface
+that reads type information from export data files written by gc.
+The Importer also satisfies types.ImporterFrom.
+</p>
+<p>
+Export data files are located using &#34;go build&#34; workspace conventions
+and the build.Default context.
+</p>
+<p>
+Use this importer instead of go/importer.For(&#34;gc&#34;, ...) to avoid the
+version-skew problems described in the documentation of this package,
+or to control the FileSet or access the imports map populated during
+package loading.
+</p>
+
+			<div id="example_NewImporter" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		<p>ExampleNewImporter demonstrates usage of NewImporter to provide type
+information for dependencies when type-checking Go source code.
+</p>
+		
+		
+			<p>Code:</p>
+			<pre class="code">const src = `package myrpc
+
+// choosing a package that doesn&#39;t change across releases
+import &#34;net/rpc&#34;
+
+const serverError rpc.ServerError = &#34;&#34;
+`
+fset := token.NewFileSet()
+f, err := parser.ParseFile(fset, &#34;myrpc.go&#34;, src, 0)
+if err != nil {
+    log.Fatal(err)
+}
+
+packages := make(map[string]*types.Package)
+imp := gcexportdata.NewImporter(fset, packages)
+conf := types.Config{Importer: imp}
+pkg, err := conf.Check(&#34;myrpc&#34;, fset, []*ast.File{f}, nil)
+if err != nil {
+    log.Fatal(err)
+}
+
+<span class="comment">// object from imported package</span>
+pi := packages[&#34;net/rpc&#34;].Scope().Lookup(&#34;ServerError&#34;)
+fmt.Printf(&#34;type %s.%s %s // %s\n&#34;,
+    pi.Pkg().Path(),
+    pi.Name(),
+    pi.Type().Underlying(),
+    slashify(fset.Position(pi.Pos())),
+)
+
+<span class="comment">// object in source package</span>
+twopi := pkg.Scope().Lookup(&#34;serverError&#34;)
+fmt.Printf(&#34;const %s %s = %s // %s\n&#34;,
+    twopi.Name(),
+    twopi.Type(),
+    twopi.(*types.Const).Val(),
+    slashify(fset.Position(twopi.Pos())),
+)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">
+type net/rpc.ServerError string // $GOROOT/src/net/rpc/client.go:20:1
+const serverError net/rpc.ServerError = &#34;&#34; // myrpc.go:6:7
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+
+		
+			
+			
+			<h2 id="NewReader">func <a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/gcexportdata.go?s=2062:2108#L41">NewReader</a>
+				<a class="permalink" href="index.html#NewReader">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewReader(r <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>) (<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewReader returns a reader for the export data section of an object
+(.o) or archive (.a) file read from r.  The new reader may provide
+additional trailing data beyond the end of the export data.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Read">func <a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/gcexportdata.go?s=2952:3068#L62">Read</a>
+				<a class="permalink" href="index.html#Read">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Read(in <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, imports map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Read reads export data from in, decodes it, and returns type
+information for the package.
+The package name is specified by path.
+File position information is added to fset.
+</p>
+<p>
+Read may inspect and add to the imports map to ensure that references
+within the export data to other packages are consistent.  The caller
+must ensure that imports[path] does not exist, or exists but is
+incomplete (see types.Package.Complete), and Read inserts the
+resulting package into this map entry.
+</p>
+<p>
+On return, the state of the reader is undefined.
+</p>
+
+			<div id="example_Read" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		<p>ExampleRead uses gcexportdata.Read to load type information for the
+&#34;fmt&#34; package from the fmt.a file produced by the gc compiler.
+</p>
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Find the export data file.</span>
+filename, path := gcexportdata.Find(&#34;fmt&#34;, &#34;&#34;)
+if filename == &#34;&#34; {
+    log.Fatalf(&#34;can&#39;t find export data for fmt&#34;)
+}
+fmt.Printf(&#34;Package path:       %s\n&#34;, path)
+fmt.Printf(&#34;Export data:        %s\n&#34;, filepath.Base(filename))
+
+<span class="comment">// Open and read the file.</span>
+f, err := os.Open(filename)
+if err != nil {
+    log.Fatal(err)
+}
+defer f.Close()
+r, err := gcexportdata.NewReader(f)
+if err != nil {
+    log.Fatalf(&#34;reading export data %s: %v&#34;, filename, err)
+}
+
+<span class="comment">// Decode the export data.</span>
+fset := token.NewFileSet()
+imports := make(map[string]*types.Package)
+pkg, err := gcexportdata.Read(r, fset, imports, path)
+if err != nil {
+    log.Fatal(err)
+}
+
+<span class="comment">// Print package information.</span>
+members := pkg.Scope().Names()
+if members[0] == &#34;.inittask&#34; {
+    <span class="comment">// An improvement to init handling in 1.13 added &#34;.inittask&#34;. Remove so go &gt;= 1.13 and go &lt; 1.13 both pass.</span>
+    members = members[1:]
+}
+fmt.Printf(&#34;Package members:    %s...\n&#34;, members[:5])
+println := pkg.Scope().Lookup(&#34;Println&#34;)
+posn := fset.Position(println.Pos())
+posn.Line = 123 <span class="comment">// make example deterministic</span>
+fmt.Printf(&#34;Println type:       %s\n&#34;, println.Type())
+fmt.Printf(&#34;Println location:   %s\n&#34;, slashify(posn))
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">
+Package path:       fmt
+Export data:        fmt.a
+Package members:    [Errorf Formatter Fprint Fprintf Fprintln]...
+Println type:       func(a ...interface{}) (n int, err error)
+Println location:   $GOROOT/src/fmt/print.go:123:1
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+
+		
+			
+			
+			<h2 id="Write">func <a href="http://localhost:6060/src/golang.org/x/tools/go/gcexportdata/gcexportdata.go?s=4188:4260#L92">Write</a>
+				<a class="permalink" href="index.html#Write">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Write(out <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, pkg *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+Write writes encoded type information for the specified package to out.
+The FileSet provides file position information for named objects.
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>naive - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package naive
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/SmartBFT-Go/consensus/examples/naive_chain"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Block">type Block</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockData">type BlockData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockDataFromBytes">func BlockDataFromBytes(rawBlock []byte) *BlockData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockData.ToBytes">func (b BlockData) ToBytes() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BlockHeader">type BlockHeader</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockHeaderFromBytes">func BlockHeaderFromBytes(rawHeader []byte) *BlockHeader</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockHeader.ToBytes">func (header BlockHeader) ToBytes() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Chain">type Chain</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChain">func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, opts NetworkOptions, testDir string) *Chain</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Chain.Listen">func (chain *Chain) Listen() Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Chain.Order">func (chain *Chain) Order(txn Transaction) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Egress">type Egress</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FwdMessage">type FwdMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.Descriptor">func (*FwdMessage) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.GetPayload">func (m *FwdMessage) GetPayload() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.GetSender">func (m *FwdMessage) GetSender() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.ProtoMessage">func (*FwdMessage) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.Reset">func (m *FwdMessage) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.String">func (m *FwdMessage) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_DiscardUnknown">func (m *FwdMessage) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Marshal">func (m *FwdMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Merge">func (m *FwdMessage) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Size">func (m *FwdMessage) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Unmarshal">func (m *FwdMessage) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Ingress">type Ingress</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NetworkOptions">type NetworkOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Node">type Node</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewNode">func NewNode(id uint64, in Ingress, out Egress, deliverChan chan&lt;- *Block, logger smart.Logger, opts NetworkOptions, testDir string) *Node</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.AssembleProposal">func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Deliver">func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Nodes">func (n *Node) Nodes() []uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.RequestID">func (*Node) RequestID(req []byte) bft.RequestInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.SendConsensus">func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.SendTransaction">func (n *Node) SendTransaction(targetID uint64, request []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Sign">func (*Node) Sign(msg []byte) []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.SignProposal">func (n *Node) SignProposal(bft.Proposal) *bft.Signature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Start">func (n *Node) Start()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Stop">func (n *Node) Stop()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Sync">func (*Node) Sync() bft.Decision</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.VerificationSequence">func (*Node) VerificationSequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.VerifyConsenterSig">func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.VerifyProposal">func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.VerifyRequest">func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.VerifySignature">func (*Node) VerifySignature(signature bft.Signature) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Transaction">type Transaction</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionFromBytes">func TransactionFromBytes(rawTxn []byte) *Transaction</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transaction.ToBytes">func (txn Transaction) ToBytes() []byte</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go">chain.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go">node.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go">test_message.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Block">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=185:276#L4">Block</a>
+				<a class="permalink" href="index.html#Block">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Block struct {
+<span id="Block.Sequence"></span>    Sequence     <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Block.PrevHash"></span>    PrevHash     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Block.Transactions"></span>    Transactions []<a href="index.html#Transaction">Transaction</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockData">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=947:995#L49">BlockData</a>
+				<a class="permalink" href="index.html#BlockData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BlockData struct {
+<span id="BlockData.Transactions"></span>    Transactions [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="BlockDataFromBytes">func <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=1122:1173#L61">BlockDataFromBytes</a>
+					<a class="permalink" href="index.html#BlockDataFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func BlockDataFromBytes(rawBlock []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#BlockData">BlockData</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="BlockData.ToBytes">func (BlockData) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=997:1032#L53">ToBytes</a>
+					<a class="permalink" href="index.html#BlockData.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b <a href="index.html#BlockData">BlockData</a>) ToBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BlockHeader">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=278:355#L10">BlockHeader</a>
+				<a class="permalink" href="index.html#BlockHeader">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BlockHeader struct {
+<span id="BlockHeader.Sequence"></span>    Sequence <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>
+<span id="BlockHeader.PrevHash"></span>    PrevHash <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BlockHeader.DataHash"></span>    DataHash <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="BlockHeaderFromBytes">func <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=496:552#L24">BlockHeaderFromBytes</a>
+					<a class="permalink" href="index.html#BlockHeaderFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func BlockHeaderFromBytes(rawHeader []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#BlockHeader">BlockHeader</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="BlockHeader.ToBytes">func (BlockHeader) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=357:399#L16">ToBytes</a>
+					<a class="permalink" href="index.html#BlockHeader.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (header <a href="index.html#BlockHeader">BlockHeader</a>) ToBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Chain">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=1249:1316#L67">Chain</a>
+				<a class="permalink" href="index.html#Chain">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Chain struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChain">func <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=1318:1431#L72">NewChain</a>
+					<a class="permalink" href="index.html#NewChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChain(id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, in <a href="index.html#Ingress">Ingress</a>, out <a href="index.html#Egress">Egress</a>, logger <a href="../../pkg/api/index.html">smart</a>.<a href="../../pkg/api/index.html#Logger">Logger</a>, opts <a href="index.html#NetworkOptions">NetworkOptions</a>, testDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Chain">Chain</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Chain.Listen">func (*Chain) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=1605:1639#L81">Listen</a>
+					<a class="permalink" href="index.html#Chain.Listen">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (chain *<a href="index.html#Chain">Chain</a>) Listen() <a href="index.html#Block">Block</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Chain.Order">func (*Chain) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=1690:1738#L86">Order</a>
+					<a class="permalink" href="index.html#Chain.Order">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (chain *<a href="index.html#Chain">Chain</a>) Order(txn <a href="index.html#Transaction">Transaction</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Egress">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=523:563#L15">Egress</a>
+				<a class="permalink" href="index.html#Egress">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Egress map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]chan&lt;- <a href="../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FwdMessage">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=626:979#L14">FwdMessage</a>
+				<a class="permalink" href="index.html#FwdMessage">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FwdMessage struct {
+<span id="FwdMessage.Sender"></span>    Sender               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=sender,proto3&#34; json:&#34;sender,omitempty&#34;`
+<span id="FwdMessage.Payload"></span>    Payload              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=payload,proto3&#34; json:&#34;payload,omitempty&#34;`
+<span id="FwdMessage.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="FwdMessage.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="FwdMessage.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FwdMessage.Descriptor">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1155:1202#L25">Descriptor</a>
+					<a class="permalink" href="index.html#FwdMessage.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FwdMessage">FwdMessage</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.GetPayload">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1932:1972#L54">GetPayload</a>
+					<a class="permalink" href="index.html#FwdMessage.GetPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) GetPayload() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.GetSender">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1841:1880#L47">GetSender</a>
+					<a class="permalink" href="index.html#FwdMessage.GetSender">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) GetSender() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.ProtoMessage">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1115:1148#L24">ProtoMessage</a>
+					<a class="permalink" href="index.html#FwdMessage.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FwdMessage">FwdMessage</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.Reset">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=981:1009#L22">Reset</a>
+					<a class="permalink" href="index.html#FwdMessage.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.String">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1040:1076#L23">String</a>
+					<a class="permalink" href="index.html#FwdMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_DiscardUnknown">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1690:1731#L41">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Marshal">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1364:1442#L32">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Merge">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1511:1560#L35">XXX_Merge</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Merge(src <a href="../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Size">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1607:1642#L38">XXX_Size</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Unmarshal">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/test_message.pb.go?s=1258:1308#L29">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Ingress">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=481:522#L14">Ingress</a>
+				<a class="permalink" href="index.html#Ingress">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Ingress map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>]&lt;-chan <a href="../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NetworkOptions">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=565:662#L17">NetworkOptions</a>
+				<a class="permalink" href="index.html#NetworkOptions">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type NetworkOptions struct {
+<span id="NetworkOptions.NumNodes"></span>    NumNodes     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="NetworkOptions.BatchSize"></span>    BatchSize    <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="NetworkOptions.BatchTimeout"></span>    BatchTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Node">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=664:932#L23">Node</a>
+				<a class="permalink" href="index.html#Node">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Node struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewNode">func <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=3401:3539#L137">NewNode</a>
+					<a class="permalink" href="index.html#NewNode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewNode(id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, in <a href="index.html#Ingress">Ingress</a>, out <a href="index.html#Egress">Egress</a>, deliverChan chan&lt;- *<a href="index.html#Block">Block</a>, logger <a href="../../pkg/api/index.html">smart</a>.<a href="../../pkg/api/index.html#Logger">Logger</a>, opts <a href="index.html#NetworkOptions">NetworkOptions</a>, testDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Node">Node</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Node.AssembleProposal">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=2017:2097#L85">AssembleProposal</a>
+					<a class="permalink" href="index.html#Node.AssembleProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) AssembleProposal(metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, requests [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Proposal">Proposal</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Deliver">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=2847:2919#L114">Deliver</a>
+					<a class="permalink" href="index.html#Node.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) Deliver(proposal <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Proposal">Proposal</a>, signature []<a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Signature">Signature</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Nodes">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=5395:5426#L223">Nodes</a>
+					<a class="permalink" href="index.html#Node.Nodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) Nodes() []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.RequestID">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=995:1045#L40">RequestID</a>
+					<a class="permalink" href="index.html#Node.RequestID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) RequestID(req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#RequestInfo">RequestInfo</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.SendConsensus">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=2571:2649#L102">SendConsensus</a>
+					<a class="permalink" href="index.html#Node.SendConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) SendConsensus(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, message *<a href="../../smartbftprotos/index.html">smartbftprotos</a>.<a href="../../smartbftprotos/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.SendTransaction">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=2688:2751#L106">SendTransaction</a>
+					<a class="permalink" href="index.html#Node.SendTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) SendTransaction(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Sign">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1862:1898#L75">Sign</a>
+					<a class="permalink" href="index.html#Node.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.SignProposal">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1916:1972#L79">SignProposal</a>
+					<a class="permalink" href="index.html#Node.SignProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) SignProposal(<a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Proposal">Proposal</a>) *<a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Signature">Signature</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Start">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=4724:4746#L184">Start</a>
+					<a class="permalink" href="index.html#Node.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) Start()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Stop">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=5244:5265#L211">Stop</a>
+					<a class="permalink" href="index.html#Node.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Node">Node</a>) Stop()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.Sync">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=934:966#L36">Sync</a>
+					<a class="permalink" href="index.html#Node.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) Sync() <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Decision">Decision</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.VerificationSequence">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1804:1846#L71">VerificationSequence</a>
+					<a class="permalink" href="index.html#Node.VerificationSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) VerificationSequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.VerifyConsenterSig">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1636:1709#L63">VerifyConsenterSig</a>
+					<a class="permalink" href="index.html#Node.VerifyConsenterSig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) VerifyConsenterSig(_ <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Signature">Signature</a>, prop <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Proposal">Proposal</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.VerifyProposal">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1159:1236#L48">VerifyProposal</a>
+					<a class="permalink" href="index.html#Node.VerifyProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) VerifyProposal(proposal <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Proposal">Proposal</a>) ([]<a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.VerifyRequest">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1536:1599#L59">VerifyRequest</a>
+					<a class="permalink" href="index.html#Node.VerifyRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) VerifyRequest(val []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Node.VerifySignature">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/node.go?s=1727:1786#L67">VerifySignature</a>
+					<a class="permalink" href="index.html#Node.VerifySignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Node">Node</a>) VerifySignature(signature <a href="../../pkg/types/index.html">bft</a>.<a href="../../pkg/types/index.html#Signature">Signature</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Transaction">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=634:695#L30">Transaction</a>
+				<a class="permalink" href="index.html#Transaction">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Transaction struct {
+<span id="Transaction.ClientID"></span>    ClientID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Transaction.ID"></span>    ID       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="TransactionFromBytes">func <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=824:877#L43">TransactionFromBytes</a>
+					<a class="permalink" href="index.html#TransactionFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func TransactionFromBytes(rawTxn []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#Transaction">Transaction</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Transaction.ToBytes">func (Transaction) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/examples/naive_chain/chain.go?s=697:736#L35">ToBytes</a>
+					<a class="permalink" href="index.html#Transaction.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txn <a href="index.html#Transaction">Transaction</a>) ToBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

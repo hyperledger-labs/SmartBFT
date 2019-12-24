@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>etcdraft - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package etcdraft
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/protos/orderer/etcdraft"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Marshal">func Marshal(md *ConfigMetadata) ([]byte, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BlockMetadata">type BlockMetadata</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.Descriptor">func (*BlockMetadata) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.GetConsenterIds">func (m *BlockMetadata) GetConsenterIds() []uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.GetNextConsenterId">func (m *BlockMetadata) GetNextConsenterId() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.GetRaftIndex">func (m *BlockMetadata) GetRaftIndex() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.ProtoMessage">func (*BlockMetadata) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.Reset">func (m *BlockMetadata) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.String">func (m *BlockMetadata) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.XXX_DiscardUnknown">func (m *BlockMetadata) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.XXX_Marshal">func (m *BlockMetadata) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.XXX_Merge">func (dst *BlockMetadata) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.XXX_Size">func (m *BlockMetadata) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockMetadata.XXX_Unmarshal">func (m *BlockMetadata) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConfigMetadata">type ConfigMetadata</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.Descriptor">func (*ConfigMetadata) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.GetConsenters">func (m *ConfigMetadata) GetConsenters() []*Consenter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.GetOptions">func (m *ConfigMetadata) GetOptions() *Options</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.ProtoMessage">func (*ConfigMetadata) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.Reset">func (m *ConfigMetadata) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.String">func (m *ConfigMetadata) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.XXX_DiscardUnknown">func (m *ConfigMetadata) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.XXX_Marshal">func (m *ConfigMetadata) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.XXX_Merge">func (dst *ConfigMetadata) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.XXX_Size">func (m *ConfigMetadata) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigMetadata.XXX_Unmarshal">func (m *ConfigMetadata) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConsensusTypeMetadataFactory">type ConsensusTypeMetadataFactory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusTypeMetadataFactory.NewMessage">func (dogf ConsensusTypeMetadataFactory) NewMessage() proto.Message</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Consenter">type Consenter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.Descriptor">func (*Consenter) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.GetClientTlsCert">func (m *Consenter) GetClientTlsCert() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.GetHost">func (m *Consenter) GetHost() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.GetPort">func (m *Consenter) GetPort() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.GetServerTlsCert">func (m *Consenter) GetServerTlsCert() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.ProtoMessage">func (*Consenter) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.Reset">func (m *Consenter) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.String">func (m *Consenter) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.XXX_DiscardUnknown">func (m *Consenter) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.XXX_Marshal">func (m *Consenter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.XXX_Merge">func (dst *Consenter) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.XXX_Size">func (m *Consenter) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.XXX_Unmarshal">func (m *Consenter) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Options">type Options</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.Descriptor">func (*Options) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.GetElectionTick">func (m *Options) GetElectionTick() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.GetHeartbeatTick">func (m *Options) GetHeartbeatTick() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.GetMaxInflightBlocks">func (m *Options) GetMaxInflightBlocks() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.GetSnapshotIntervalSize">func (m *Options) GetSnapshotIntervalSize() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.GetTickInterval">func (m *Options) GetTickInterval() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.ProtoMessage">func (*Options) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.Reset">func (m *Options) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.String">func (m *Options) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.XXX_DiscardUnknown">func (m *Options) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.XXX_Marshal">func (m *Options) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.XXX_Merge">func (dst *Options) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.XXX_Size">func (m *Options) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Options.XXX_Unmarshal">func (m *Options) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.go">configuration.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go">configuration.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+TypeKey is the string with which this consensus implementation is identified across Fabric.
+</p>
+
+				<pre>const <span id="TypeKey">TypeKey</span> = &#34;etcdraft&#34;</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Marshal">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.go?s=979:1027#L25">Marshal</a>
+				<a class="permalink" href="index.html#Marshal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Marshal(md *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Marshal serializes this implementation&#39;s proto messages. It is called by the encoder package
+during the creation of the Orderer ConfigGroup.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BlockMetadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6870:7639#L202">BlockMetadata</a>
+				<a class="permalink" href="index.html#BlockMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockMetadata stores data used by the Raft OSNs when
+coordinating with each other, to be serialized into
+block meta dta field and used after failres and restarts.
+</p>
+
+			<pre>type BlockMetadata struct {
+    <span class="comment">// Maintains a mapping between the cluster&#39;s OSNs</span>
+    <span class="comment">// and their Raft IDs.</span>
+<span id="BlockMetadata.ConsenterIds"></span>    ConsenterIds []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a> `protobuf:&#34;varint,1,rep,packed,name=consenter_ids,json=consenterIds,proto3&#34; json:&#34;consenter_ids,omitempty&#34;`
+    <span class="comment">// Carries the Raft ID value that will be assigned</span>
+    <span class="comment">// to the next OSN that will join this cluster.</span>
+<span id="BlockMetadata.NextConsenterId"></span>    NextConsenterId <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a> `protobuf:&#34;varint,2,opt,name=next_consenter_id,json=nextConsenterId,proto3&#34; json:&#34;next_consenter_id,omitempty&#34;`
+    <span class="comment">// Index of etcd/raft entry for current block.</span>
+<span id="BlockMetadata.RaftIndex"></span>    RaftIndex            <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,3,opt,name=raft_index,json=raftIndex,proto3&#34; json:&#34;raft_index,omitempty&#34;`
+<span id="BlockMetadata.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="BlockMetadata.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="BlockMetadata.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockMetadata.Descriptor">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=7827:7877#L219">Descriptor</a>
+					<a class="permalink" href="index.html#BlockMetadata.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BlockMetadata">BlockMetadata</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.GetConsenterIds">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8566:8616#L240">GetConsenterIds</a>
+					<a class="permalink" href="index.html#BlockMetadata.GetConsenterIds">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) GetConsenterIds() []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.GetNextConsenterId">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8676:8727#L247">GetNextConsenterId</a>
+					<a class="permalink" href="index.html#BlockMetadata.GetNextConsenterId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) GetNextConsenterId() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.GetRaftIndex">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8788:8833#L254">GetRaftIndex</a>
+					<a class="permalink" href="index.html#BlockMetadata.GetRaftIndex">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) GetRaftIndex() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.ProtoMessage">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=7784:7820#L218">ProtoMessage</a>
+					<a class="permalink" href="index.html#BlockMetadata.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BlockMetadata">BlockMetadata</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.Reset">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=7641:7672#L216">Reset</a>
+					<a class="permalink" href="index.html#BlockMetadata.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.String">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=7706:7745#L217">String</a>
+					<a class="permalink" href="index.html#BlockMetadata.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.XXX_DiscardUnknown">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8406:8450#L234">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#BlockMetadata.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.XXX_Marshal">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8058:8139#L225">XXX_Marshal</a>
+					<a class="permalink" href="index.html#BlockMetadata.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.XXX_Merge">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8211:8265#L228">XXX_Merge</a>
+					<a class="permalink" href="index.html#BlockMetadata.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#BlockMetadata">BlockMetadata</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.XXX_Size">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=8317:8355#L231">XXX_Size</a>
+					<a class="permalink" href="index.html#BlockMetadata.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BlockMetadata.XXX_Unmarshal">func (*BlockMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=7946:7999#L222">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#BlockMetadata.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BlockMetadata">BlockMetadata</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConfigMetadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=870:1254#L17">ConfigMetadata</a>
+				<a class="permalink" href="index.html#ConfigMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigMetadata is serialized and set as the value of ConsensusType.Metadata in
+a channel configuration when the ConsensusType.Type is set &#34;etcdraft&#34;.
+</p>
+
+			<pre>type ConfigMetadata struct {
+<span id="ConfigMetadata.Consenters"></span>    Consenters           []*<a href="index.html#Consenter">Consenter</a> `protobuf:&#34;bytes,1,rep,name=consenters,proto3&#34; json:&#34;consenters,omitempty&#34;`
+<span id="ConfigMetadata.Options"></span>    Options              *<a href="index.html#Options">Options</a>     `protobuf:&#34;bytes,2,opt,name=options,proto3&#34; json:&#34;options,omitempty&#34;`
+<span id="ConfigMetadata.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}     `json:&#34;-&#34;`
+<span id="ConfigMetadata.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>       `json:&#34;-&#34;`
+<span id="ConfigMetadata.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>        `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConfigMetadata.Descriptor">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1446:1497#L28">Descriptor</a>
+					<a class="permalink" href="index.html#ConfigMetadata.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ConfigMetadata">ConfigMetadata</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.GetConsenters">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=2197:2250#L49">GetConsenters</a>
+					<a class="permalink" href="index.html#ConfigMetadata.GetConsenters">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) GetConsenters() []*<a href="index.html#Consenter">Consenter</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.GetOptions">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=2308:2354#L56">GetOptions</a>
+					<a class="permalink" href="index.html#ConfigMetadata.GetOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) GetOptions() *<a href="index.html#Options">Options</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.ProtoMessage">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1402:1439#L27">ProtoMessage</a>
+					<a class="permalink" href="index.html#ConfigMetadata.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ConfigMetadata">ConfigMetadata</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.Reset">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1256:1288#L25">Reset</a>
+					<a class="permalink" href="index.html#ConfigMetadata.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.String">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1323:1363#L26">String</a>
+					<a class="permalink" href="index.html#ConfigMetadata.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.XXX_DiscardUnknown">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=2034:2079#L43">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ConfigMetadata.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.XXX_Marshal">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1680:1762#L34">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ConfigMetadata.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.XXX_Merge">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1835:1890#L37">XXX_Merge</a>
+					<a class="permalink" href="index.html#ConfigMetadata.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.XXX_Size">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1943:1982#L40">XXX_Size</a>
+					<a class="permalink" href="index.html#ConfigMetadata.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConfigMetadata.XXX_Unmarshal">func (*ConfigMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=1566:1620#L31">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ConfigMetadata.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConfigMetadata">ConfigMetadata</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConsensusTypeMetadataFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.go?s=612:654#L16">ConsensusTypeMetadataFactory</a>
+				<a class="permalink" href="index.html#ConsensusTypeMetadataFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConsensusTypeMetadataFactory allows this implementation&#39;s proto messages to register
+their type with the orderer&#39;s proto messages. This is needed for protolator to work.
+</p>
+
+			<pre>type ConsensusTypeMetadataFactory struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConsensusTypeMetadataFactory.NewMessage">func (ConsensusTypeMetadataFactory) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.go?s=733:800#L19">NewMessage</a>
+					<a class="permalink" href="index.html#ConsensusTypeMetadataFactory.NewMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dogf <a href="index.html#ConsensusTypeMetadataFactory">ConsensusTypeMetadataFactory</a>) NewMessage() <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+				<p>
+NewMessage implements the Orderer.ConsensusTypeMetadataFactory interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Consenter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=2467:3081#L64">Consenter</a>
+				<a class="permalink" href="index.html#Consenter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Consenter represents a consenting node (i.e. replica).
+</p>
+
+			<pre>type Consenter struct {
+<span id="Consenter.Host"></span>    Host                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=host,proto3&#34; json:&#34;host,omitempty&#34;`
+<span id="Consenter.Port"></span>    Port                 <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>   `protobuf:&#34;varint,2,opt,name=port,proto3&#34; json:&#34;port,omitempty&#34;`
+<span id="Consenter.ClientTlsCert"></span>    ClientTlsCert        []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=client_tls_cert,json=clientTlsCert,proto3&#34; json:&#34;client_tls_cert,omitempty&#34;`
+<span id="Consenter.ServerTlsCert"></span>    ServerTlsCert        []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,4,opt,name=server_tls_cert,json=serverTlsCert,proto3&#34; json:&#34;server_tls_cert,omitempty&#34;`
+<span id="Consenter.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Consenter.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Consenter.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Consenter.Descriptor">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3253:3299#L77">Descriptor</a>
+					<a class="permalink" href="index.html#Consenter.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Consenter">Consenter</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.GetClientTlsCert">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=4117:4162#L112">GetClientTlsCert</a>
+					<a class="permalink" href="index.html#Consenter.GetClientTlsCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) GetClientTlsCert() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.GetHost">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3944:3980#L98">GetHost</a>
+					<a class="permalink" href="index.html#Consenter.GetHost">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) GetHost() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.GetPort">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=4031:4067#L105">GetPort</a>
+					<a class="permalink" href="index.html#Consenter.GetPort">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) GetPort() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.GetServerTlsCert">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=4223:4268#L119">GetServerTlsCert</a>
+					<a class="permalink" href="index.html#Consenter.GetServerTlsCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) GetServerTlsCert() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.ProtoMessage">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3214:3246#L76">ProtoMessage</a>
+					<a class="permalink" href="index.html#Consenter.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Consenter">Consenter</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.Reset">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3083:3110#L74">Reset</a>
+					<a class="permalink" href="index.html#Consenter.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.String">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3140:3175#L75">String</a>
+					<a class="permalink" href="index.html#Consenter.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.XXX_DiscardUnknown">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3796:3836#L92">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Consenter.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.XXX_Marshal">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3472:3549#L83">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Consenter.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.XXX_Merge">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3617:3667#L86">XXX_Merge</a>
+					<a class="permalink" href="index.html#Consenter.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Consenter">Consenter</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.XXX_Size">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3715:3749#L89">XXX_Size</a>
+					<a class="permalink" href="index.html#Consenter.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.XXX_Unmarshal">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=3368:3417#L80">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Consenter.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Consenter">Consenter</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Options">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=4434:5338#L128">Options</a>
+				<a class="permalink" href="index.html#Options">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Options to be specified for all the etcd/raft nodes. These can be modified on a
+per-channel basis.
+</p>
+
+			<pre>type Options struct {
+<span id="Options.TickInterval"></span>    TickInterval      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=tick_interval,json=tickInterval,proto3&#34; json:&#34;tick_interval,omitempty&#34;`
+<span id="Options.ElectionTick"></span>    ElectionTick      <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a> `protobuf:&#34;varint,2,opt,name=election_tick,json=electionTick,proto3&#34; json:&#34;election_tick,omitempty&#34;`
+<span id="Options.HeartbeatTick"></span>    HeartbeatTick     <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a> `protobuf:&#34;varint,3,opt,name=heartbeat_tick,json=heartbeatTick,proto3&#34; json:&#34;heartbeat_tick,omitempty&#34;`
+<span id="Options.MaxInflightBlocks"></span>    MaxInflightBlocks <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a> `protobuf:&#34;varint,4,opt,name=max_inflight_blocks,json=maxInflightBlocks,proto3&#34; json:&#34;max_inflight_blocks,omitempty&#34;`
+    <span class="comment">// Take snapshot when cumulative data exceeds certain size in bytes.</span>
+<span id="Options.SnapshotIntervalSize"></span>    SnapshotIntervalSize <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>   `protobuf:&#34;varint,5,opt,name=snapshot_interval_size,json=snapshotIntervalSize,proto3&#34; json:&#34;snapshot_interval_size,omitempty&#34;`
+<span id="Options.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Options.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Options.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Options.Descriptor">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5502:5546#L143">Descriptor</a>
+					<a class="permalink" href="index.html#Options.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Options">Options</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.GetElectionTick">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6270:6312#L171">GetElectionTick</a>
+					<a class="permalink" href="index.html#Options.GetElectionTick">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) GetElectionTick() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.GetHeartbeatTick">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6370:6413#L178">GetHeartbeatTick</a>
+					<a class="permalink" href="index.html#Options.GetHeartbeatTick">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) GetHeartbeatTick() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.GetMaxInflightBlocks">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6472:6519#L185">GetMaxInflightBlocks</a>
+					<a class="permalink" href="index.html#Options.GetMaxInflightBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) GetMaxInflightBlocks() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.GetSnapshotIntervalSize">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6582:6632#L192">GetSnapshotIntervalSize</a>
+					<a class="permalink" href="index.html#Options.GetSnapshotIntervalSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) GetSnapshotIntervalSize() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.GetTickInterval">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6169:6211#L164">GetTickInterval</a>
+					<a class="permalink" href="index.html#Options.GetTickInterval">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) GetTickInterval() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.ProtoMessage">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5465:5495#L142">ProtoMessage</a>
+					<a class="permalink" href="index.html#Options.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Options">Options</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.Reset">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5340:5365#L140">Reset</a>
+					<a class="permalink" href="index.html#Options.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.String">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5393:5426#L141">String</a>
+					<a class="permalink" href="index.html#Options.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.XXX_DiscardUnknown">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=6027:6065#L158">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Options.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.XXX_Marshal">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5715:5790#L149">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Options.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.XXX_Merge">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5856:5904#L152">XXX_Merge</a>
+					<a class="permalink" href="index.html#Options.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Options">Options</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.XXX_Size">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5950:5982#L155">XXX_Size</a>
+					<a class="permalink" href="index.html#Options.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Options.XXX_Unmarshal">func (*Options) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/etcdraft/configuration.pb.go?s=5615:5662#L146">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Options.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Options">Options</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

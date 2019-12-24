@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>metadata - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package metadata
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ParseLevel">func ParseLevel(level string) (api.Level, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ParseString">func ParseString(level api.Level) string</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CallerInfo">type CallerInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CallerInfo.HideCallerInfo">func (l *CallerInfo) HideCallerInfo(module string, level api.Level)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CallerInfo.IsCallerInfoEnabled">func (l *CallerInfo) IsCallerInfoEnabled(module string, level api.Level) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CallerInfo.ShowCallerInfo">func (l *CallerInfo) ShowCallerInfo(module string, level api.Level)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ModuleLevels">type ModuleLevels</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ModuleLevels.GetLevel">func (l *ModuleLevels) GetLevel(module string) api.Level</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ModuleLevels.IsEnabledFor">func (l *ModuleLevels) IsEnabledFor(module string, level api.Level) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ModuleLevels.SetLevel">func (l *ModuleLevels) SetLevel(module string, level api.Level)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/callerInfo.go">callerInfo.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/level.go">level.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/utils.go">utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ParseLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/utils.go?s=394:442#L16">ParseLevel</a>
+				<a class="permalink" href="index.html#ParseLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ParseLevel(level <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ParseLevel returns the log level from a string representation.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ParseString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/utils.go?s=679:719#L26">ParseString</a>
+				<a class="permalink" href="index.html#ParseString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ParseString(level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+ParseString returns String repressentation of given log level
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CallerInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/callerInfo.go?s=329:390#L7">CallerInfo</a>
+				<a class="permalink" href="index.html#CallerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CallerInfo maintains module-level based information to toggle caller info
+</p>
+
+			<pre>type CallerInfo struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CallerInfo.HideCallerInfo">func (*CallerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/callerInfo.go?s=723:790#L20">HideCallerInfo</a>
+					<a class="permalink" href="index.html#CallerInfo.HideCallerInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#CallerInfo">CallerInfo</a>) HideCallerInfo(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+				<p>
+HideCallerInfo disables caller info for given module and level
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CallerInfo.IsCallerInfoEnabled">func (*CallerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/callerInfo.go?s=1005:1082#L28">IsCallerInfoEnabled</a>
+					<a class="permalink" href="index.html#CallerInfo.IsCallerInfoEnabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#CallerInfo">CallerInfo</a>) IsCallerInfoEnabled(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsCallerInfoEnabled returns if callerinfo enabled for given module and level
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CallerInfo.ShowCallerInfo">func (*CallerInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/callerInfo.go?s=456:523#L12">ShowCallerInfo</a>
+					<a class="permalink" href="index.html#CallerInfo.ShowCallerInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#CallerInfo">CallerInfo</a>) ShowCallerInfo(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+				<p>
+ShowCallerInfo enables caller info for given module and level
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ModuleLevels">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/level.go?s=241:298#L2">ModuleLevels</a>
+				<a class="permalink" href="index.html#ModuleLevels">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ModuleLevels maintains log levels based on module
+</p>
+
+			<pre>type ModuleLevels struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ModuleLevels.GetLevel">func (*ModuleLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/level.go?s=356:412#L7">GetLevel</a>
+					<a class="permalink" href="index.html#ModuleLevels.GetLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#ModuleLevels">ModuleLevels</a>) GetLevel(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a></pre>
+				<p>
+GetLevel returns the log level for the given module.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ModuleLevels.IsEnabledFor">func (*ModuleLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/level.go?s=890:962#L28">IsEnabledFor</a>
+					<a class="permalink" href="index.html#ModuleLevels.IsEnabledFor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#ModuleLevels">ModuleLevels</a>) IsEnabledFor(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsEnabledFor will return true if logging is enabled for the given module.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ModuleLevels.SetLevel">func (*ModuleLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/metadata/level.go?s=653:716#L20">SetLevel</a>
+					<a class="permalink" href="index.html#ModuleLevels.SetLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#ModuleLevels">ModuleLevels</a>) SetLevel(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+				<p>
+SetLevel sets the log level for the given module.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>idemix - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package idemix
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-ca/lib/server/idemix"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#CheckRole">func CheckRole(bitmask int, role Role) bool</a></dd>
+			
+				
+				<dd><a href="index.html#DecodeKeys">func DecodeKeys(pemEncodedPK, pemEncodedPubKey []byte) (*ecdsa.PrivateKey, *ecdsa.PublicKey, error)</a></dd>
+			
+				
+				<dd><a href="index.html#EncodeKeys">func EncodeKeys(privateKey *ecdsa.PrivateKey, publicKey *ecdsa.PublicKey) ([]byte, []byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetAttributeNames">func GetAttributeNames() []string</a></dd>
+			
+				
+				<dd><a href="index.html#GetRoleMask">func GetRoleMask(roles []Role) int</a></dd>
+			
+				
+				<dd><a href="index.html#IsToken">func IsToken(token string) bool</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CRIRequestHandler">type CRIRequestHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CRIRequestHandler.HandleRequest">func (ch *CRIRequestHandler) HandleRequest() (*api.GetCRIResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Clock">type Clock</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CredDBAccessor">type CredDBAccessor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCredentialAccessor">func NewCredentialAccessor(db db.FabricCADB, level int) CredDBAccessor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CredRecord">type CredRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CredentialAccessor">type CredentialAccessor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialAccessor.GetCredential">func (ac *CredentialAccessor) GetCredential(revocationHandle string) (*CredRecord, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialAccessor.GetCredentialsByID">func (ac *CredentialAccessor) GetCredentialsByID(id string) ([]CredRecord, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialAccessor.GetRevokedCredentials">func (ac *CredentialAccessor) GetRevokedCredentials() ([]CredRecord, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialAccessor.InsertCredential">func (ac *CredentialAccessor) InsertCredential(cr CredRecord) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialAccessor.SetDB">func (ac *CredentialAccessor) SetDB(db db.FabricCADB)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EnrollRequestHandler">type EnrollRequestHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnrollRequestHandler.Authenticate">func (h *EnrollRequestHandler) Authenticate() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnrollRequestHandler.GenerateNonce">func (h *EnrollRequestHandler) GenerateNonce() (*fp256bn.BIG, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnrollRequestHandler.GetAttributeValues">func (h *EnrollRequestHandler) GetAttributeValues(caller user.User, ipk *idemix.IssuerPublicKey, rh *fp256bn.BIG) (map[string]interface{}, []*fp256bn.BIG, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnrollRequestHandler.HandleRequest">func (h *EnrollRequestHandler) HandleRequest() (*EnrollmentResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EnrollmentResponse">type EnrollmentResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Issuer">type Issuer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewIssuer">func NewIssuer(name, homeDir string, config *Config, csp bccsp.BCCSP, idemixLib Lib) Issuer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IssuerCredential">type IssuerCredential</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewIssuerCredential">func NewIssuerCredential(pubKeyFile, secretKeyFile string, lib Lib) IssuerCredential</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Lib">type Lib</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLib">func NewLib() Lib</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MyIssuer">type MyIssuer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Nonce">type Nonce</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NonceManager">type NonceManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewNonceManager">func NewNonceManager(issuer MyIssuer, clock Clock, level int) (NonceManager, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationAuthority">type RevocationAuthority</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRevocationAuthority">func NewRevocationAuthority(issuer MyIssuer, level int) (RevocationAuthority, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationAuthorityInfo">type RevocationAuthorityInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationKey">type RevocationKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRevocationKey">func NewRevocationKey(pubKeyFile, privateKeyFile string, lib Lib) RevocationKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Role">type Role</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ServerRequestCtx">type ServerRequestCtx</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go">creddbaccessor.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/cri.go">cri.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go">enroll.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemix_roles.go">idemix_roles.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemixlib.go">idemixlib.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go">issuer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuercredential.go">issuercredential.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/nonce.go">nonce.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationauthority.go">revocationauthority.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationkey.go">revocationkey.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// DefaultIssuerPublicKeyFile is the default name of the file that contains issuer public key</span>
+    <span id="DefaultIssuerPublicKeyFile">DefaultIssuerPublicKeyFile</span> = &#34;IssuerPublicKey&#34;
+    <span class="comment">// DefaultIssuerSecretKeyFile is the default name of the file that contains issuer secret key</span>
+    <span id="DefaultIssuerSecretKeyFile">DefaultIssuerSecretKeyFile</span> = &#34;IssuerSecretKey&#34;
+    <span class="comment">// DefaultRevocationPublicKeyFile is the name of the file where revocation public key is stored</span>
+    <span id="DefaultRevocationPublicKeyFile">DefaultRevocationPublicKeyFile</span> = &#34;IssuerRevocationPublicKey&#34;
+    <span class="comment">// DefaultRevocationPrivateKeyFile is the name of the file where revocation private key is stored</span>
+    <span id="DefaultRevocationPrivateKeyFile">DefaultRevocationPrivateKeyFile</span> = &#34;IssuerRevocationPrivateKey&#34;
+    <span class="comment">// KeystoreDir is the keystore directory where all keys are stored. It is relative to the server home directory.</span>
+    <span id="KeystoreDir">KeystoreDir</span> = &#34;msp/keystore&#34;
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// InsertCredentialSQL is the SQL to add a credential to database</span>
+    <span id="InsertCredentialSQL">InsertCredentialSQL</span> = `
+INSERT INTO credentials (id, revocation_handle, cred, ca_label, status, reason, expiry, revoked_at, level)
+    VALUES (:id, :revocation_handle, :cred, :ca_label, :status, :reason, :expiry, :revoked_at, :level);`
+
+    <span class="comment">// SelectCredentialByIDSQL is the SQL for getting credentials of a user</span>
+    <span id="SelectCredentialByIDSQL">SelectCredentialByIDSQL</span> = `
+SELECT %s FROM credentials
+WHERE (id = ?);`
+
+    <span class="comment">// SelectCredentialSQL is the SQL for getting a credential given a revocation handle</span>
+    <span id="SelectCredentialSQL">SelectCredentialSQL</span> = `
+SELECT %s FROM credentials
+WHERE (revocation_handle = ?);`
+
+    <span class="comment">// SelectRevokedCredentialSQL is the SQL for getting revoked credentials</span>
+    <span id="SelectRevokedCredentialSQL">SelectRevokedCredentialSQL</span> = `
+SELECT %s FROM credentials
+WHERE (status = &#39;revoked&#39;);`
+
+    <span class="comment">// UpdateRevokeCredentialSQL is the SQL for updating status of a credential to revoked</span>
+    <span id="UpdateRevokeCredentialSQL">UpdateRevokeCredentialSQL</span> = `
+UPDATE credentials
+SET status=&#39;revoked&#39;, revoked_at=CURRENT_TIMESTAMP, reason=:reason
+WHERE (id = :id AND status != &#39;revoked&#39;);`
+
+    <span class="comment">// DeleteCredentialbyID is the SQL for deleting credential of a user</span>
+    <span id="DeleteCredentialbyID">DeleteCredentialbyID</span> = `
+DELETE FROM credentials
+        WHERE (id = ?);`
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// AttrEnrollmentID is the attribute name for enrollment ID</span>
+    <span id="AttrEnrollmentID">AttrEnrollmentID</span> = &#34;EnrollmentID&#34;
+    <span class="comment">// AttrRole is the attribute name for role</span>
+    <span id="AttrRole">AttrRole</span> = &#34;Role&#34;
+    <span class="comment">// AttrOU is the attribute name for OU</span>
+    <span id="AttrOU">AttrOU</span> = &#34;OU&#34;
+    <span class="comment">// AttrRevocationHandle is the attribute name for revocation handle</span>
+    <span id="AttrRevocationHandle">AttrRevocationHandle</span> = &#34;RevocationHandle&#34;
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// InsertNonce is the SQL for inserting a nonce</span>
+    <span id="InsertNonce">InsertNonce</span> = &#34;INSERT into nonces(val, expiry, level) VALUES (:val, :expiry, :level)&#34;
+    <span class="comment">// SelectNonce is query string for getting a particular nonce</span>
+    <span id="SelectNonce">SelectNonce</span> = &#34;SELECT * FROM nonces WHERE (val = ?)&#34;
+    <span class="comment">// RemoveNonce is the query string for removing a specified nonce</span>
+    <span id="RemoveNonce">RemoveNonce</span> = &#34;DELETE FROM nonces WHERE (val = ?)&#34;
+    <span class="comment">// RemoveExpiredNonces is the SQL string removing expired nonces</span>
+    <span id="RemoveExpiredNonces">RemoveExpiredNonces</span> = &#34;DELETE FROM nonces WHERE (expiry &lt; ?)&#34;
+    <span class="comment">// DefaultNonceExpiration is the default value for nonce expiration</span>
+    <span id="DefaultNonceExpiration">DefaultNonceExpiration</span> = &#34;15s&#34;
+    <span class="comment">// DefaultNonceSweepInterval is the default value for nonce sweep interval</span>
+    <span id="DefaultNonceSweepInterval">DefaultNonceSweepInterval</span> = &#34;15m&#34;
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// InsertRAInfo is the SQL for inserting revocation authority info</span>
+    <span id="InsertRAInfo">InsertRAInfo</span> = &#34;INSERT into revocation_authority_info(epoch, next_handle, lasthandle_in_pool, level) VALUES (:epoch, :next_handle, :lasthandle_in_pool, :level)&#34;
+    <span class="comment">// SelectRAInfo is the query string for getting revocation authority info</span>
+    <span id="SelectRAInfo">SelectRAInfo</span> = &#34;SELECT * FROM revocation_authority_info&#34;
+    <span class="comment">// UpdateNextAndLastHandle is the SQL for updating next and last revocation handle</span>
+    <span id="UpdateNextAndLastHandle">UpdateNextAndLastHandle</span> = &#34;UPDATE revocation_authority_info SET next_handle = ?, lasthandle_in_pool = ?, epoch = ? WHERE (epoch = ?)&#34;
+    <span class="comment">// UpdateNextHandle s the SQL for updating next revocation handle</span>
+    <span id="UpdateNextHandle">UpdateNextHandle</span> = &#34;UPDATE revocation_authority_info SET next_handle = ? WHERE (epoch = ?)&#34;
+    <span class="comment">// DefaultRevocationHandlePoolSize is the default revocation handle pool size</span>
+    <span id="DefaultRevocationHandlePoolSize">DefaultRevocationHandlePoolSize</span> = 1000
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="CheckRole">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemix_roles.go?s=464:507#L16">CheckRole</a>
+				<a class="permalink" href="index.html#CheckRole">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CheckRole(bitmask <a href="http://localhost:6060/pkg/builtin/#int">int</a>, role <a href="index.html#Role">Role</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CheckRole Prove that the desired role is contained or not in the bitmask
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DecodeKeys">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationkey.go?s=4467:4566#L128">DecodeKeys</a>
+				<a class="permalink" href="index.html#DecodeKeys">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DecodeKeys(pemEncodedPK, pemEncodedPubKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+DecodeKeys decodes ECDSA key pair that are pem encoded
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="EncodeKeys">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationkey.go?s=3777:3874#L112">EncodeKeys</a>
+				<a class="permalink" href="index.html#EncodeKeys">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func EncodeKeys(privateKey *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, publicKey *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+EncodeKeys encodes ECDSA key pair to PEM encoding
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetAttributeNames">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuercredential.go?s=4985:5018#L152">GetAttributeNames</a>
+				<a class="permalink" href="index.html#GetAttributeNames">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetAttributeNames() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetAttributeNames returns attribute names supported by the Fabric CA for Idemix credentials
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRoleMask">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemix_roles.go?s=638:672#L21">GetRoleMask</a>
+				<a class="permalink" href="index.html#GetRoleMask">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRoleMask(roles []<a href="index.html#Role">Role</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+			<p>
+GetRoleMask Receive a list of roles to combine in a single bitmask
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsToken">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go?s=10707:10738#L347">IsToken</a>
+				<a class="permalink" href="index.html#IsToken">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsToken(token <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsToken returns true if the specified token has the format expected of an authorization token
+that is created using an Idemix credential
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CRIRequestHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/cri.go?s=356:431#L7">CRIRequestHandler</a>
+				<a class="permalink" href="index.html#CRIRequestHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CRIRequestHandler is the handler for Idemix CRI (credential revocation information) request
+</p>
+
+			<pre>type CRIRequestHandler struct {
+<span id="CRIRequestHandler.Ctx"></span>    Ctx    <a href="index.html#ServerRequestCtx">ServerRequestCtx</a>
+<span id="CRIRequestHandler.Issuer"></span>    Issuer <a href="index.html#MyIssuer">MyIssuer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CRIRequestHandler.HandleRequest">func (*CRIRequestHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/cri.go?s=492:565#L13">HandleRequest</a>
+					<a class="permalink" href="index.html#CRIRequestHandler.HandleRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ch *<a href="index.html#CRIRequestHandler">CRIRequestHandler</a>) HandleRequest() (*<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#GetCRIResponse">GetCRIResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+HandleRequest handles processing for idemix/cri request
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Clock">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/nonce.go?s=1731:1772#L45">Clock</a>
+				<a class="permalink" href="index.html#Clock">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Clock provides time related functions
+</p>
+
+			<pre>type Clock interface {
+    Now() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/config.go?s=999:1899#L19">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config encapsulates Idemix related the configuration options
+</p>
+
+			<pre>type Config struct {
+<span id="Config.IssuerPublicKeyfile"></span>    IssuerPublicKeyfile      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;IssuerPublicKey&#34; skip:&#34;true&#34; help:&#34;Name of the file that contains marshalled bytes of CA&#39;s Idemix issuer public key&#34;`
+<span id="Config.IssuerSecretKeyfile"></span>    IssuerSecretKeyfile      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;IssuerSecretKey&#34; skip:&#34;true&#34; help:&#34;Name of the file that contains CA&#39;s Idemix issuer secret key&#34;`
+<span id="Config.RevocationPublicKeyfile"></span>    RevocationPublicKeyfile  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;IssuerRevocationPublicKey&#34; skip:&#34;true&#34; help:&#34;Name of the file that contains Idemix issuer revocation public key&#34;`
+<span id="Config.RevocationPrivateKeyfile"></span>    RevocationPrivateKeyfile <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;IssuerRevocationPrivateKey&#34; skip:&#34;true&#34; help:&#34;Name of the file that contains Idemix issuer revocation private key&#34;`
+<span id="Config.RHPoolSize"></span>    RHPoolSize               <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `def:&#34;100&#34; help:&#34;Specifies revocation handle pool size&#34;`
+<span id="Config.NonceExpiration"></span>    NonceExpiration          <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;15s&#34; help:&#34;Duration after which a nonce expires&#34;`
+<span id="Config.NonceSweepInterval"></span>    NonceSweepInterval       <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;15m&#34; help:&#34;Interval at which expired nonces are deleted&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CredDBAccessor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=2060:2683#L59">CredDBAccessor</a>
+				<a class="permalink" href="index.html#CredDBAccessor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredDBAccessor is the accessor for credentials database table
+</p>
+
+			<pre>type CredDBAccessor interface {
+    <span class="comment">// Sets reference to datastore object</span>
+    SetDB(db <a href="../db/index.html">db</a>.<a href="../db/index.html#FabricCADB">FabricCADB</a>)
+    <span class="comment">// InsertCredential inserts specified Idemix credential record into database</span>
+    InsertCredential(cr <a href="index.html#CredRecord">CredRecord</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetCredential returns Idemix credential associated with the specified revocation</span>
+    <span class="comment">// handle</span>
+    GetCredential(revocationHandle <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetCredentialsByID returns Idemix credentials associated with the specified</span>
+    <span class="comment">// enrollment ID</span>
+    GetCredentialsByID(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetRevokedCredentials returns revoked credentials</span>
+    GetRevokedCredentials() ([]<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCredentialAccessor">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=2876:2946#L81">NewCredentialAccessor</a>
+					<a class="permalink" href="index.html#NewCredentialAccessor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCredentialAccessor(db <a href="../db/index.html">db</a>.<a href="../db/index.html#FabricCADB">FabricCADB</a>, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#CredDBAccessor">CredDBAccessor</a></pre>
+				<p>
+NewCredentialAccessor returns a new CredentialAccessor.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CredRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=1518:1932#L44">CredRecord</a>
+				<a class="permalink" href="index.html#CredRecord">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredRecord represents a credential database record
+</p>
+
+			<pre>type CredRecord struct {
+<span id="CredRecord.ID"></span>    ID               <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;id&#34;`
+<span id="CredRecord.RevocationHandle"></span>    RevocationHandle <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;revocation_handle&#34;`
+<span id="CredRecord.Cred"></span>    Cred             <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;cred&#34;`
+<span id="CredRecord.CALabel"></span>    CALabel          <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;ca_label&#34;`
+<span id="CredRecord.Status"></span>    Status           <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;status&#34;`
+<span id="CredRecord.Reason"></span>    Reason           <a href="http://localhost:6060/pkg/builtin/#int">int</a>       `db:&#34;reason&#34;`
+<span id="CredRecord.Expiry"></span>    Expiry           <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `db:&#34;expiry&#34;`
+<span id="CredRecord.RevokedAt"></span>    RevokedAt        <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `db:&#34;revoked_at&#34;`
+<span id="CredRecord.Level"></span>    Level            <a href="http://localhost:6060/pkg/builtin/#int">int</a>       `db:&#34;level&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CredentialAccessor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=2749:2815#L75">CredentialAccessor</a>
+				<a class="permalink" href="index.html#CredentialAccessor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredentialAccessor implements IdemixCredDBAccessor interface
+</p>
+
+			<pre>type CredentialAccessor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CredentialAccessor.GetCredential">func (*CredentialAccessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=4503:4592#L137">GetCredential</a>
+					<a class="permalink" href="index.html#CredentialAccessor.GetCredential">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#CredentialAccessor">CredentialAccessor</a>) GetCredential(revocationHandle <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCredential gets a CredentialRecord indexed by revocationHandle.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredentialAccessor.GetCredentialsByID">func (*CredentialAccessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=3941:4022#L121">GetCredentialsByID</a>
+					<a class="permalink" href="index.html#CredentialAccessor.GetCredentialsByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#CredentialAccessor">CredentialAccessor</a>) GetCredentialsByID(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCredentialsByID gets a CredentialRecord indexed by id.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredentialAccessor.GetRevokedCredentials">func (*CredentialAccessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=5119:5194#L153">GetRevokedCredentials</a>
+					<a class="permalink" href="index.html#CredentialAccessor.GetRevokedCredentials">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#CredentialAccessor">CredentialAccessor</a>) GetRevokedCredentials() ([]<a href="index.html#CredRecord">CredRecord</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetRevokedCredentials returns revoked certificates
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredentialAccessor.InsertCredential">func (*CredentialAccessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=3220:3287#L94">InsertCredential</a>
+					<a class="permalink" href="index.html#CredentialAccessor.InsertCredential">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#CredentialAccessor">CredentialAccessor</a>) InsertCredential(cr <a href="index.html#CredRecord">CredRecord</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+InsertCredential puts a CredentialRecord into db.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredentialAccessor.SetDB">func (*CredentialAccessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/creddbaccessor.go?s=3096:3149#L89">SetDB</a>
+					<a class="permalink" href="index.html#CredentialAccessor.SetDB">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#CredentialAccessor">CredentialAccessor</a>) SetDB(db <a href="../db/index.html">db</a>.<a href="../db/index.html#FabricCADB">FabricCADB</a>)</pre>
+				<p>
+SetDB changes the underlying sql.DB object Accessor is manipulating.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EnrollRequestHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=894:1023#L27">EnrollRequestHandler</a>
+				<a class="permalink" href="index.html#EnrollRequestHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollRequestHandler is the handler for Idemix enroll request
+</p>
+
+			<pre>type EnrollRequestHandler struct {
+<span id="EnrollRequestHandler.Ctx"></span>    Ctx          <a href="index.html#ServerRequestCtx">ServerRequestCtx</a>
+<span id="EnrollRequestHandler.EnrollmentID"></span>    EnrollmentID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="EnrollRequestHandler.Issuer"></span>    Issuer       <a href="index.html#MyIssuer">MyIssuer</a>
+<span id="EnrollRequestHandler.IdmxLib"></span>    IdmxLib      <a href="index.html#Lib">Lib</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="EnrollRequestHandler.Authenticate">func (*EnrollRequestHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=4506:4557#L153">Authenticate</a>
+					<a class="permalink" href="index.html#EnrollRequestHandler.Authenticate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#EnrollRequestHandler">EnrollRequestHandler</a>) Authenticate() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Authenticate authenticates the Idemix enroll request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EnrollRequestHandler.GenerateNonce">func (*EnrollRequestHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=4869:4937#L170">GenerateNonce</a>
+					<a class="permalink" href="index.html#EnrollRequestHandler.GenerateNonce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#EnrollRequestHandler">EnrollRequestHandler</a>) GenerateNonce() (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GenerateNonce generates a nonce for an Idemix enroll request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EnrollRequestHandler.GetAttributeValues">func (*EnrollRequestHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=5083:5245#L175">GetAttributeValues</a>
+					<a class="permalink" href="index.html#EnrollRequestHandler.GetAttributeValues">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#EnrollRequestHandler">EnrollRequestHandler</a>) GetAttributeValues(caller <a href="../user/index.html">user</a>.<a href="../user/index.html#User">User</a>, ipk *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerPublicKey">IssuerPublicKey</a>,
+    rh *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}, []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAttributeValues returns attribute values of the caller of Idemix enroll request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EnrollRequestHandler.HandleRequest">func (*EnrollRequestHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=1079:1154#L35">HandleRequest</a>
+					<a class="permalink" href="index.html#EnrollRequestHandler.HandleRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#EnrollRequestHandler">EnrollRequestHandler</a>) HandleRequest() (*<a href="index.html#EnrollmentResponse">EnrollmentResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+HandleRequest handles processing for Idemix enroll
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EnrollmentResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/enroll.go?s=549:827#L15">EnrollmentResponse</a>
+				<a class="permalink" href="index.html#EnrollmentResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollmentResponse is the idemix enrollment response from the server
+</p>
+
+			<pre>type EnrollmentResponse struct {
+    <span class="comment">// Base64 encoding of idemix Credential</span>
+<span id="EnrollmentResponse.Credential"></span>    Credential <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Attribute name-value pairs</span>
+<span id="EnrollmentResponse.Attrs"></span>    Attrs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}
+    <span class="comment">// Base64 encoding of Credential Revocation information</span>
+<span id="EnrollmentResponse.CRI"></span>    CRI <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Base64 encoding of the issuer nonce</span>
+<span id="EnrollmentResponse.Nonce"></span>    Nonce <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Issuer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go?s=830:1192#L24">Issuer</a>
+				<a class="permalink" href="index.html#Issuer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Issuer is the interface to the Issuer for external components
+</p>
+
+			<pre>type Issuer interface {
+    Init(renew <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, db <a href="../db/index.html">db</a>.<a href="../db/index.html#FabricCADB">FabricCADB</a>, levels *<a href="../db/util/index.html">dbutil</a>.<a href="../db/util/index.html#Levels">Levels</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    IssuerPublicKey() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RevocationPublicKey() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    IssueCredential(ctx <a href="index.html#ServerRequestCtx">ServerRequestCtx</a>) (*<a href="index.html#EnrollmentResponse">EnrollmentResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetCRI(ctx <a href="index.html#ServerRequestCtx">ServerRequestCtx</a>) (*<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#GetCRIResponse">GetCRIResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    VerifyToken(authHdr, method, uri <a href="http://localhost:6060/pkg/builtin/#string">string</a>, body []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewIssuer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go?s=2488:2579#L80">NewIssuer</a>
+					<a class="permalink" href="index.html#NewIssuer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewIssuer(name, homeDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, config *<a href="index.html#Config">Config</a>, csp <a href="../../../../fabric/bccsp/index.html">bccsp</a>.<a href="../../../../fabric/bccsp/index.html#BCCSP">BCCSP</a>, idemixLib <a href="index.html#Lib">Lib</a>) <a href="index.html#Issuer">Issuer</a></pre>
+				<p>
+NewIssuer returns an object that implements Issuer interface
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="IssuerCredential">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuercredential.go?s=701:1175#L21">IssuerCredential</a>
+				<a class="permalink" href="index.html#IssuerCredential">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IssuerCredential represents CA&#39;s Idemix credential
+</p>
+
+			<pre>type IssuerCredential interface {
+    <span class="comment">// Load loads the CA&#39;s Idemix credential from the disk</span>
+    Load() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Store stores the CA&#39;s Idemix credential to the disk</span>
+    Store() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetIssuerKey returns *idemix.IssuerKey that represents</span>
+    <span class="comment">// CA&#39;s Idemix public and secret key</span>
+    GetIssuerKey() (*<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerKey">IssuerKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// SetIssuerKey sets issuer key</span>
+    SetIssuerKey(key *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerKey">IssuerKey</a>)
+    <span class="comment">// Returns new instance of idemix.IssuerKey</span>
+    NewIssuerKey() (*<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerKey">IssuerKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewIssuerCredential">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuercredential.go?s=1468:1552#L44">NewIssuerCredential</a>
+					<a class="permalink" href="index.html#NewIssuerCredential">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewIssuerCredential(pubKeyFile, secretKeyFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>, lib <a href="index.html#Lib">Lib</a>) <a href="index.html#IssuerCredential">IssuerCredential</a></pre>
+				<p>
+NewIssuerCredential returns an instance of an object that implements IssuerCredential interface
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Lib">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemixlib.go?s=330:927#L9">Lib</a>
+				<a class="permalink" href="index.html#Lib">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Lib represents idemix library
+</p>
+
+			<pre>type Lib interface {
+    NewIssuerKey(AttributeNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (ik *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerKey">IssuerKey</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    NewCredential(key *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#IssuerKey">IssuerKey</a>, m *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#CredRequest">CredRequest</a>, attrs []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (cred *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#Credential">Credential</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CreateCRI(key *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, unrevokedHandles []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>, alg <a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#RevocationAlgorithm">RevocationAlgorithm</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (cri *<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GenerateLongTermRevocationKey() (pk *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetRand() (rand *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RandModOrder(rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (big *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLib">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemixlib.go?s=1095:1112#L22">NewLib</a>
+					<a class="permalink" href="index.html#NewLib">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLib() <a href="index.html#Lib">Lib</a></pre>
+				<p>
+NewLib returns an instance of an object that implements Lib interface
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MyIssuer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go?s=1312:1594#L36">MyIssuer</a>
+				<a class="permalink" href="index.html#MyIssuer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MyIssuer provides functions for accessing issuer components
+</p>
+
+			<pre>type MyIssuer interface {
+    Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    HomeDir() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Config() *<a href="index.html#Config">Config</a>
+    IdemixLib() <a href="index.html#Lib">Lib</a>
+    DB() <a href="../db/index.html">db</a>.<a href="../db/index.html#FabricCADB">FabricCADB</a>
+    IdemixRand() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+    IssuerCredential() <a href="index.html#IssuerCredential">IssuerCredential</a>
+    RevocationAuthority() <a href="index.html#RevocationAuthority">RevocationAuthority</a>
+    NonceManager() <a href="index.html#NonceManager">NonceManager</a>
+    CredDBAccessor() <a href="index.html#CredDBAccessor">CredDBAccessor</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Nonce">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/nonce.go?s=1131:1244#L27">Nonce</a>
+				<a class="permalink" href="index.html#Nonce">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Nonce represents a nonce
+</p>
+
+			<pre>type Nonce struct {
+<span id="Nonce.Val"></span>    Val    <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `db:&#34;val&#34;`
+<span id="Nonce.Expiry"></span>    Expiry <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `db:&#34;expiry&#34;`
+<span id="Nonce.Level"></span>    Level  <a href="http://localhost:6060/pkg/builtin/#int">int</a>       `db:&#34;level&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NonceManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/nonce.go?s=1334:1688#L35">NonceManager</a>
+				<a class="permalink" href="index.html#NonceManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NonceManager represents nonce manager that is responsible for
+getting a new nonce
+</p>
+
+			<pre>type NonceManager interface {
+    <span class="comment">// GetNonce creates a nonce, stores it in the database and returns it</span>
+    GetNonce() (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// CheckNonce checks if the specified nonce exists in the database and has not expired</span>
+    CheckNonce(nonce *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SweepExpiredNonces removes expired nonces from the database</span>
+    SweepExpiredNonces() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewNonceManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/nonce.go?s=2092:2175#L59">NewNonceManager</a>
+					<a class="permalink" href="index.html#NewNonceManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewNonceManager(issuer <a href="index.html#MyIssuer">MyIssuer</a>, clock <a href="index.html#Clock">Clock</a>, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="index.html#NonceManager">NonceManager</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewNonceManager returns an instance of an object that implements NonceManager interface
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationAuthority">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationauthority.go?s=1407:2356#L28">RevocationAuthority</a>
+				<a class="permalink" href="index.html#RevocationAuthority">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationAuthority is responsible for generating revocation handles and
+credential revocation info (CRI)
+</p>
+
+			<pre>type RevocationAuthority interface {
+    <span class="comment">// GetNewRevocationHandle returns new revocation handle, which is required to</span>
+    <span class="comment">// create a new Idemix credential</span>
+    GetNewRevocationHandle() (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">fp256bn</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// CreateCRI returns latest credential revocation information (CRI). CRI contains</span>
+    <span class="comment">// information that allows a prover to create a proof that the revocation handle associated</span>
+    <span class="comment">// with his credential is not revoked and by the verifier to verify the non-revocation</span>
+    <span class="comment">// proof of the prover. Verification will fail if the version of the CRI that verifier has</span>
+    <span class="comment">// does not match the version of the CRI that prover used to create non-revocation proof.</span>
+    <span class="comment">// The version of the CRI is specified by the Epoch value associated with the CRI.</span>
+    CreateCRI() (*<a href="../../../../fabric/idemix/index.html">idemix</a>.<a href="../../../../fabric/idemix/index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Epoch returns epoch value of the latest CRI</span>
+    Epoch() (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// PublicKey returns revocation authority&#39;s public key</span>
+    PublicKey() *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRevocationAuthority">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationauthority.go?s=2971:3055#L63">NewRevocationAuthority</a>
+					<a class="permalink" href="index.html#NewRevocationAuthority">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRevocationAuthority(issuer <a href="index.html#MyIssuer">MyIssuer</a>, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="index.html#RevocationAuthority">RevocationAuthority</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewRevocationAuthority constructor for revocation authority
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationAuthorityInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationauthority.go?s=2466:2680#L47">RevocationAuthorityInfo</a>
+				<a class="permalink" href="index.html#RevocationAuthorityInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationAuthorityInfo is the revocation authority information record that is
+stored in the database
+</p>
+
+			<pre>type RevocationAuthorityInfo struct {
+<span id="RevocationAuthorityInfo.Epoch"></span>    Epoch                <a href="http://localhost:6060/pkg/builtin/#int">int</a> `db:&#34;epoch&#34;`
+<span id="RevocationAuthorityInfo.NextRevocationHandle"></span>    NextRevocationHandle <a href="http://localhost:6060/pkg/builtin/#int">int</a> `db:&#34;next_handle&#34;`
+<span id="RevocationAuthorityInfo.LastHandleInPool"></span>    LastHandleInPool     <a href="http://localhost:6060/pkg/builtin/#int">int</a> `db:&#34;lasthandle_in_pool&#34;`
+<span id="RevocationAuthorityInfo.Level"></span>    Level                <a href="http://localhost:6060/pkg/builtin/#int">int</a> `db:&#34;level&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationkey.go?s=344:817#L11">RevocationKey</a>
+				<a class="permalink" href="index.html#RevocationKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationKey represents issuer revocation public and private key
+</p>
+
+			<pre>type RevocationKey interface {
+    <span class="comment">// Load loads this revocation key from the disk</span>
+    Load() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Store stores this revocation key to the disk</span>
+    Store() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetKey returns *ecdsa.PrivateKey that represents revocation public and private key pair</span>
+    GetKey() *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>
+    <span class="comment">// SetKey sets revocation public and private key</span>
+    SetKey(key *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>)
+    <span class="comment">// SetNewKey creates new revocation public and private key pair and sets them in this object</span>
+    SetNewKey() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRevocationKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/revocationkey.go?s=1111:1190#L33">NewRevocationKey</a>
+					<a class="permalink" href="index.html#NewRevocationKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRevocationKey(pubKeyFile, privateKeyFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>, lib <a href="index.html#Lib">Lib</a>) <a href="index.html#RevocationKey">RevocationKey</a></pre>
+				<p>
+NewRevocationKey returns an instance of an object that implements RevocationKey interface
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Role">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/idemix_roles.go?s=135:150#L1">Role</a>
+				<a class="permalink" href="index.html#Role">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Role : Represents a IdemixRole
+</p>
+
+			<pre>type Role <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				<p>
+The expected roles are 4; We can combine them using a bitmask
+</p>
+
+				<pre>const (
+    <span id="MEMBER">MEMBER</span> <a href="index.html#Role">Role</a> = 1
+    <span id="ADMIN">ADMIN</span>  <a href="index.html#Role">Role</a> = 2
+    <span id="CLIENT">CLIENT</span> <a href="index.html#Role">Role</a> = 4
+    <span id="PEER">PEER</span>   <a href="index.html#Role">Role</a> = 8
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ServerRequestCtx">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/idemix/issuer.go?s=1736:1935#L52">ServerRequestCtx</a>
+				<a class="permalink" href="index.html#ServerRequestCtx">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ServerRequestCtx is the server request context that Idemix enroll expects
+</p>
+
+			<pre>type ServerRequestCtx interface {
+    IsBasicAuth() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    BasicAuthentication() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    TokenAuthentication() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetCaller() (<a href="../user/index.html">user</a>.<a href="../user/index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ReadBody(body interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

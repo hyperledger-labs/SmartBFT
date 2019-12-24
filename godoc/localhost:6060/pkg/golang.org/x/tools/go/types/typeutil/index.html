@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>typeutil - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package typeutil
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/types/typeutil"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package typeutil defines various utilities for types, such as Map,
+a mapping from types.Type to interface{} values.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#Callee">func Callee(info *types.Info, call *ast.CallExpr) types.Object</a></dd>
+			
+				
+				<dd><a href="index.html#Dependencies">func Dependencies(pkgs ...*types.Package) []*types.Package</a></dd>
+			
+				
+				<dd><a href="index.html#IntuitiveMethodSet">func IntuitiveMethodSet(T types.Type, msets *MethodSetCache) []*types.Selection</a></dd>
+			
+				
+				<dd><a href="index.html#StaticCallee">func StaticCallee(info *types.Info, call *ast.CallExpr) *types.Func</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Hasher">type Hasher</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MakeHasher">func MakeHasher() Hasher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Hasher.Hash">func (h Hasher) Hash(t types.Type) uint32</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Map">type Map</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.At">func (m *Map) At(key types.Type) interface{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.Delete">func (m *Map) Delete(key types.Type) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.Iterate">func (m *Map) Iterate(f func(key types.Type, value interface{}))</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.Keys">func (m *Map) Keys() []types.Type</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.KeysString">func (m *Map) KeysString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.Len">func (m *Map) Len() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.Set">func (m *Map) Set(key types.Type, value interface{}) (prev interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.SetHasher">func (m *Map) SetHasher(hasher Hasher)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Map.String">func (m *Map) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MethodSetCache">type MethodSetCache</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MethodSetCache.MethodSet">func (cache *MethodSetCache) MethodSet(T types.Type) *types.MethodSet</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Map">Map</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/callee.go">callee.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/imports.go">imports.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go">map.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/methodsetcache.go">methodsetcache.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/ui.go">ui.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="Callee">func <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/callee.go?s=358:420#L6">Callee</a>
+				<a class="permalink" href="index.html#Callee">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Callee(info *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Info">Info</a>, call *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#CallExpr">CallExpr</a>) <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Object">Object</a></pre>
+			<p>
+Callee returns the named target of a function call, if any:
+a function, method, builtin, or variable.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Dependencies">func <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/imports.go?s=520:578#L6">Dependencies</a>
+				<a class="permalink" href="index.html#Dependencies">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Dependencies(pkgs ...*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>) []*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a></pre>
+			<p>
+Dependencies returns all dependencies of the specified packages.
+</p>
+<p>
+Dependent packages appear in topological order: if package P imports
+package Q, Q appears earlier than P in the result.
+The algorithm follows import statements in the order they
+appear in the source code, so the result is a total order.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IntuitiveMethodSet">func <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/ui.go?s=888:967#L16">IntuitiveMethodSet</a>
+				<a class="permalink" href="index.html#IntuitiveMethodSet">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IntuitiveMethodSet(T <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>, msets *<a href="index.html#MethodSetCache">MethodSetCache</a>) []*<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Selection">Selection</a></pre>
+			<p>
+IntuitiveMethodSet returns the intuitive method set of a type T,
+which is the set of methods you can call on an addressable value of
+that type.
+</p>
+<p>
+The result always contains MethodSet(T), and is exactly MethodSet(T)
+for interface types and for pointer-to-concrete types.
+For all other concrete types T, the result additionally
+contains each method belonging to *T if there is no identically
+named method on T itself.
+</p>
+<p>
+This corresponds to user intuition about method sets;
+this function is intended only for user interfaces.
+</p>
+<p>
+The order of the result is as for types.MethodSet(T).
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StaticCallee">func <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/callee.go?s=993:1060#L26">StaticCallee</a>
+				<a class="permalink" href="index.html#StaticCallee">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StaticCallee(info *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Info">Info</a>, call *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#CallExpr">CallExpr</a>) *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Func">Func</a></pre>
+			<p>
+StaticCallee returns the target (function or method) of a static
+function call, if any. It returns nil for calls to builtins.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Hasher">type <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=5699:5749#L202">Hasher</a>
+				<a class="permalink" href="index.html#Hasher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Hasher maps each type to its hash value.
+For efficiency, a hasher uses memoization; thus its memory
+footprint grows monotonically over time.
+Hashers are not thread-safe.
+Hashers have reference semantics.
+Call MakeHasher to create a Hasher.
+</p>
+
+			<pre>type Hasher struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="MakeHasher">func <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=5796:5820#L207">MakeHasher</a>
+					<a class="permalink" href="index.html#MakeHasher">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func MakeHasher() <a href="index.html#Hasher">Hasher</a></pre>
+				<p>
+MakeHasher returns a new Hasher instance.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Hasher.Hash">func (Hasher) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=5975:6016#L213">Hash</a>
+					<a class="permalink" href="index.html#Hasher.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#Hasher">Hasher</a>) Hash(t <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+Hash computes a hash value for the given type t such that
+Identical(t, t&#39;) =&gt; Hash(t) == Hash(t&#39;).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Map">type <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=780:980#L16">Map</a>
+				<a class="permalink" href="index.html#Map">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Map is a hash-table-based mapping from types (types.Type) to
+arbitrary interface{} values.  The concrete types that implement
+the Type interface are pointers.  Since they are not canonicalized,
+== cannot be used to check for equivalence, and thus we cannot
+simply use a Go map.
+</p>
+<p>
+Just as with map[K]V, a nil *Map is a valid empty map.
+</p>
+<p>
+Not thread-safe.
+</p>
+
+			<pre>type Map struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			<div id="example_Map" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">const source = `package P
+
+var X []string
+var Y []string
+
+const p, q = 1.0, 2.0
+
+func f(offset int32) (value byte, ok bool)
+func g(rune) (uint8, bool)
+`
+
+<span class="comment">// Parse and type-check the package.</span>
+fset := token.NewFileSet()
+f, err := parser.ParseFile(fset, &#34;P.go&#34;, source, 0)
+if err != nil {
+    panic(err)
+}
+pkg, err := new(types.Config).Check(&#34;P&#34;, fset, []*ast.File{f}, nil)
+if err != nil {
+    panic(err)
+}
+
+scope := pkg.Scope()
+
+<span class="comment">// Group names of package-level objects by their type.</span>
+var namesByType typeutil.Map <span class="comment">// value is []string</span>
+for _, name := range scope.Names() {
+    T := scope.Lookup(name).Type()
+
+    names, _ := namesByType.At(T).([]string)
+    names = append(names, name)
+    namesByType.Set(T, names)
+}
+
+<span class="comment">// Format, sort, and print the map entries.</span>
+var lines []string
+namesByType.Iterate(func(T types.Type, names interface{}) {
+    lines = append(lines, fmt.Sprintf(&#34;%s   %s&#34;, names, T))
+})
+sort.Strings(lines)
+for _, line := range lines {
+    fmt.Println(line)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">[X Y]   []string
+[f g]   func(offset int32) (value byte, ok bool)
+[p q]   untyped float
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+			
+
+			
+
+			
+				
+				<h3 id="Map.At">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=2678:2722#L76">At</a>
+					<a class="permalink" href="index.html#Map.At">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) At(key <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) interface{}</pre>
+				<p>
+At returns the map entry for the given key.
+The result is nil if the entry is not present.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.Delete">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=2208:2249#L56">Delete</a>
+					<a class="permalink" href="index.html#Map.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) Delete(key <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Delete removes the entry with the given key, if any.
+It returns true if the entry was found.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.Iterate">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=4166:4230#L137">Iterate</a>
+					<a class="permalink" href="index.html#Map.Iterate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) Iterate(f func(key <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>, value interface{}))</pre>
+				<p>
+Iterate calls function f on each entry in the map in unspecified order.
+</p>
+<p>
+If f should mutate the map, Iterate provides the same guarantees as
+Go maps: if f deletes a map entry that Iterate has not yet reached,
+f will not be invoked for it, but if f inserts a map entry that
+Iterate has not yet reached, whether or not f will be invoked for
+it is unspecified.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.Keys">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=4468:4501#L151">Keys</a>
+					<a class="permalink" href="index.html#Map.Keys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) Keys() []<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a></pre>
+				<p>
+Keys returns a new slice containing the set of map keys.
+The order is unspecified.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.KeysString">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=5290:5323#L189">KeysString</a>
+					<a class="permalink" href="index.html#Map.KeysString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) KeysString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+KeysString returns a string representation of the map&#39;s key set.
+Order is unspecified.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.Len">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=3710:3733#L122">Len</a>
+					<a class="permalink" href="index.html#Map.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) Len() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len returns the number of map entries.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.Set">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=2991:3062#L89">Set</a>
+					<a class="permalink" href="index.html#Map.Set">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) Set(key <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>, value interface{}) (prev interface{})</pre>
+				<p>
+Set sets the map entry for key to val,
+and returns the previous entry, if any.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.SetHasher">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=2043:2081#L49">SetHasher</a>
+					<a class="permalink" href="index.html#Map.SetHasher">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) SetHasher(hasher <a href="index.html#Hasher">Hasher</a>)</pre>
+				<p>
+SetHasher sets the hasher used by Map.
+</p>
+<p>
+All Hashers are functionally equivalent but contain internal state
+used to cache the results of hashing previously seen types.
+</p>
+<p>
+A single Hasher created by MakeHasher() may be shared among many
+Maps.  This is recommended if the instances have many keys in
+common, as it will amortize the cost of hash computation.
+</p>
+<p>
+A Hasher may grow without bound as new types are seen.  Even when a
+type is deleted from the map, the Hasher never shrinks, since other
+types in the map may reference the deleted type indirectly.
+</p>
+<p>
+Hashers are not thread-safe, and read-only operations such as
+Map.Lookup require updates to the hasher, so a full Mutex lock (not a
+read-lock) is require around all Map operations if a shared
+hasher is accessed from multiple threads.
+</p>
+<p>
+If SetHasher is not called, the Map will create a private hasher at
+the first call to Insert.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Map.String">func (*Map) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/map.go?s=5134:5163#L182">String</a>
+					<a class="permalink" href="index.html#Map.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Map">Map</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of the map&#39;s entries.
+Values are printed using fmt.Sprintf(&#34;%v&#34;, v).
+Order is unspecified.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MethodSetCache">type <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/methodsetcache.go?s=438:674#L7">MethodSetCache</a>
+				<a class="permalink" href="index.html#MethodSetCache">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MethodSetCache records the method set of each type T for which
+MethodSet(T) is called so that repeat queries are fast.
+The zero value is a ready-to-use cache instance.
+</p>
+
+			<pre>type MethodSetCache struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MethodSetCache.MethodSet">func (*MethodSetCache) <a href="http://localhost:6060/src/golang.org/x/tools/go/types/typeutil/methodsetcache.go?s=941:1010#L19">MethodSet</a>
+					<a class="permalink" href="index.html#MethodSetCache.MethodSet">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cache *<a href="index.html#MethodSetCache">MethodSetCache</a>) MethodSet(T <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#MethodSet">MethodSet</a></pre>
+				<p>
+MethodSet returns the method set of type T.  It is thread-safe.
+</p>
+<p>
+If cache is nil, this function is equivalent to types.NewMethodSet(T).
+Utility functions can thus expose an optional *MethodSetCache
+parameter to clients that care about performance.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

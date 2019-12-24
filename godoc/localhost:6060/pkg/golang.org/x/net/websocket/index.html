@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>websocket - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package websocket
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/net/websocket"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package websocket implements a client and server for the WebSocket protocol
+as specified in RFC 6455.
+</p>
+<p>
+This package currently lacks some features found in an alternative
+and more actively maintained WebSocket package:
+</p>
+<pre><a href="https://godoc.org/github.com/gorilla/websocket">https://godoc.org/github.com/gorilla/websocket</a>
+</pre>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Origin">func Origin(config *Config, req *http.Request) (*url.URL, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Addr">type Addr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Addr.Network">func (addr *Addr) Network() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Codec">type Codec</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Codec.Receive">func (cd Codec) Receive(ws *Conn, v interface{}) (err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Codec.Send">func (cd Codec) Send(ws *Conn, v interface{}) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConfig">func NewConfig(server, origin string) (config *Config, err error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Conn">type Conn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dial">func Dial(url_, protocol, origin string) (ws *Conn, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DialConfig">func DialConfig(config *Config) (ws *Conn, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewClient">func NewClient(config *Config, rwc io.ReadWriteCloser) (ws *Conn, err error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.Close">func (ws *Conn) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.Config">func (ws *Conn) Config() *Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.IsClientConn">func (ws *Conn) IsClientConn() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.IsServerConn">func (ws *Conn) IsServerConn() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.LocalAddr">func (ws *Conn) LocalAddr() net.Addr</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.Read">func (ws *Conn) Read(msg []byte) (n int, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.RemoteAddr">func (ws *Conn) RemoteAddr() net.Addr</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.Request">func (ws *Conn) Request() *http.Request</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.SetDeadline">func (ws *Conn) SetDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.SetReadDeadline">func (ws *Conn) SetReadDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.SetWriteDeadline">func (ws *Conn) SetWriteDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Conn.Write">func (ws *Conn) Write(msg []byte) (n int, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DialError">type DialError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DialError.Error">func (e *DialError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.ServeHTTP">func (h Handler) ServeHTTP(w http.ResponseWriter, req *http.Request)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ProtocolError">type ProtocolError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProtocolError.Error">func (err *ProtocolError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Server">type Server</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Server.ServeHTTP">func (s Server) ServeHTTP(w http.ResponseWriter, req *http.Request)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Dial">Dial</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Handler">Handler</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go">client.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/websocket/dial.go">dial.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/websocket/hybi.go">hybi.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/websocket/server.go">server.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go">websocket.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="ProtocolVersionHybi13">ProtocolVersionHybi13</span>    = 13
+    <span id="ProtocolVersionHybi">ProtocolVersionHybi</span>      = <a href="index.html#ProtocolVersionHybi13">ProtocolVersionHybi13</a>
+    <span id="SupportedProtocolVersion">SupportedProtocolVersion</span> = &#34;13&#34;
+
+    <span id="ContinuationFrame">ContinuationFrame</span> = 0
+    <span id="TextFrame">TextFrame</span>         = 1
+    <span id="BinaryFrame">BinaryFrame</span>       = 2
+    <span id="CloseFrame">CloseFrame</span>        = 8
+    <span id="PingFrame">PingFrame</span>         = 9
+    <span id="PongFrame">PongFrame</span>         = 10
+    <span id="UnknownFrame">UnknownFrame</span>      = 255
+
+    <span id="DefaultMaxPayloadBytes">DefaultMaxPayloadBytes</span> = 32 &lt;&lt; 20 <span class="comment">// 32MB</span>
+)</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span id="ErrBadMaskingKey">ErrBadMaskingKey</span>         = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad masking key&#34;}
+    <span id="ErrBadPongMessage">ErrBadPongMessage</span>        = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad pong message&#34;}
+    <span id="ErrBadClosingStatus">ErrBadClosingStatus</span>      = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad closing status&#34;}
+    <span id="ErrUnsupportedExtensions">ErrUnsupportedExtensions</span> = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;unsupported extensions&#34;}
+    <span id="ErrNotImplemented">ErrNotImplemented</span>        = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;not implemented&#34;}
+)</pre>
+			
+				
+				<pre>var (
+    <span id="ErrBadProtocolVersion">ErrBadProtocolVersion</span>   = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad protocol version&#34;}
+    <span id="ErrBadScheme">ErrBadScheme</span>            = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad scheme&#34;}
+    <span id="ErrBadStatus">ErrBadStatus</span>            = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad status&#34;}
+    <span id="ErrBadUpgrade">ErrBadUpgrade</span>           = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;missing or bad upgrade&#34;}
+    <span id="ErrBadWebSocketOrigin">ErrBadWebSocketOrigin</span>   = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;missing or bad WebSocket-Origin&#34;}
+    <span id="ErrBadWebSocketLocation">ErrBadWebSocketLocation</span> = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;missing or bad WebSocket-Location&#34;}
+    <span id="ErrBadWebSocketProtocol">ErrBadWebSocketProtocol</span> = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;missing or bad WebSocket-Protocol&#34;}
+    <span id="ErrBadWebSocketVersion">ErrBadWebSocketVersion</span>  = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;missing or bad WebSocket Version&#34;}
+    <span id="ErrChallengeResponse">ErrChallengeResponse</span>    = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;mismatch challenge/response&#34;}
+    <span id="ErrBadFrame">ErrBadFrame</span>             = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad frame&#34;}
+    <span id="ErrBadFrameBoundary">ErrBadFrameBoundary</span>     = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;not on frame boundary&#34;}
+    <span id="ErrNotWebSocket">ErrNotWebSocket</span>         = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;not websocket protocol&#34;}
+    <span id="ErrBadRequestMethod">ErrBadRequestMethod</span>     = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;bad method&#34;}
+    <span id="ErrNotSupported">ErrNotSupported</span>         = &amp;<a href="index.html#ProtocolError">ProtocolError</a>{&#34;not supported&#34;}
+)</pre>
+			
+				<p>
+ErrFrameTooLarge is returned by Codec&#39;s Receive method if payload size
+exceeds limit set by Conn.MaxPayloadBytes
+</p>
+
+				<pre>var <span id="ErrFrameTooLarge">ErrFrameTooLarge</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;websocket: frame payload size exceeds limit&#34;)</pre>
+			
+				<p>
+JSON is a codec to send/receive JSON data in a frame from a WebSocket connection.
+</p>
+<p>
+Trivial usage:
+</p>
+<pre>import &#34;websocket&#34;
+
+type T struct {
+	Msg string
+	Count int
+}
+
+// receive JSON type T
+var data T
+websocket.JSON.Receive(ws, &amp;data)
+
+// send JSON type T
+websocket.JSON.Send(ws, data)
+</pre>
+
+				<pre>var <span id="JSON">JSON</span> = <a href="index.html#Codec">Codec</a>{jsonMarshal, jsonUnmarshal}</pre>
+			
+				<p>
+Message is a codec to send/receive text/binary data in a frame on WebSocket connection.
+To send/receive text frame, use string type.
+To send/receive binary frame, use []byte type.
+</p>
+<p>
+Trivial usage:
+</p>
+<pre>import &#34;websocket&#34;
+
+// receive text frame
+var message string
+websocket.Message.Receive(ws, &amp;message)
+
+// send text frame
+message = &#34;hello&#34;
+websocket.Message.Send(ws, message)
+
+// receive binary frame
+var data []byte
+websocket.Message.Receive(ws, &amp;data)
+
+// send binary frame
+data = []byte{0, 1, 2}
+websocket.Message.Send(ws, data)
+</pre>
+
+				<pre>var <span id="Message">Message</span> = <a href="index.html#Codec">Codec</a>{marshal, unmarshal}</pre>
+			
+		
+		
+			
+			
+			<h2 id="Origin">func <a href="http://localhost:6060/src/golang.org/x/net/websocket/hybi.go?s=14517:14581#L529">Origin</a>
+				<a class="permalink" href="index.html#Origin">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Origin(config *<a href="index.html#Config">Config</a>, req *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Request">Request</a>) (*<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Origin parses the Origin header in req.
+If the Origin header is not set, it returns nil and nil.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Addr">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=2349:2379#L64">Addr</a>
+				<a class="permalink" href="index.html#Addr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Addr is an implementation of net.Addr for WebSocket.
+</p>
+
+			<pre>type Addr struct {
+    *<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Addr.Network">func (*Addr) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=2447:2481#L69">Network</a>
+					<a class="permalink" href="index.html#Addr.Network">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (addr *<a href="index.html#Addr">Addr</a>) Network() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Network returns the network type for a WebSocket, &#34;websocket&#34;.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Codec">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=8549:8718#L292">Codec</a>
+				<a class="permalink" href="index.html#Codec">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Codec represents a symmetric pair of functions that implement a codec.
+</p>
+
+			<pre>type Codec struct {
+<span id="Codec.Marshal"></span>    Marshal   func(v interface{}) (data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, payloadType <a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+<span id="Codec.Unmarshal"></span>    Unmarshal func(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, payloadType <a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, v interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Codec.Receive">func (Codec) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=9550:9610#L320">Receive</a>
+					<a class="permalink" href="index.html#Codec.Receive">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd <a href="index.html#Codec">Codec</a>) Receive(ws *<a href="index.html#Conn">Conn</a>, v interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Receive receives single frame from ws, unmarshaled by cd.Unmarshal and stores
+in v. The whole frame payload is read to an in-memory buffer; max size of
+payload is defined by ws.MaxPayloadBytes. If frame payload size exceeds
+limit, ErrFrameTooLarge is returned; in this case frame is not read off wire
+completely. The next call to Receive would read and discard leftover data of
+previous oversized frame before processing next frame.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Codec.Send">func (Codec) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=8783:8840#L298">Send</a>
+					<a class="permalink" href="index.html#Codec.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd <a href="index.html#Codec">Codec</a>) Send(ws *<a href="index.html#Conn">Conn</a>, v interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Send sends v marshaled by cd.Marshal as single frame to ws.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=2545:3028#L72">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config is a WebSocket configuration
+</p>
+
+			<pre>type Config struct {
+    <span class="comment">// A WebSocket server address.</span>
+<span id="Config.Location"></span>    Location *<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>
+
+    <span class="comment">// A Websocket client origin.</span>
+<span id="Config.Origin"></span>    Origin *<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>
+
+    <span class="comment">// WebSocket subprotocols.</span>
+<span id="Config.Protocol"></span>    Protocol []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// WebSocket protocol version.</span>
+<span id="Config.Version"></span>    Version <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// TLS config for secure WebSocket (wss).</span>
+<span id="Config.TlsConfig"></span>    TlsConfig *<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Config">Config</a>
+
+    <span class="comment">// Additional header fields to be sent in WebSocket opening handshake.</span>
+<span id="Config.Header"></span>    Header <a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Header">Header</a>
+
+<span id="Config.Dialer"></span>    <span class="comment">// Dialer used when opening websocket connections.</span>
+    Dialer *<a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Dialer">Dialer</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConfig">func <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=540:605#L16">NewConfig</a>
+					<a class="permalink" href="index.html#NewConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConfig(server, origin <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (config *<a href="index.html#Config">Config</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewConfig creates a new WebSocket config for client connection.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Conn">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=4881:5306#L154">Conn</a>
+				<a class="permalink" href="index.html#Conn">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Conn represents a WebSocket connection.
+</p>
+<p>
+Multiple goroutines may invoke methods on a Conn simultaneously.
+</p>
+
+			<pre>type Conn struct {
+<span id="Conn.PayloadType"></span>    PayloadType <a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+<span id="Conn.MaxPayloadBytes"></span>    <span class="comment">// MaxPayloadBytes limits the size of frame payload received over Conn</span>
+    <span class="comment">// by Codec&#39;s Receive method. If zero, DefaultMaxPayloadBytes is used.</span>
+    MaxPayloadBytes <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Dial">func <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=1312:1374#L45">Dial</a>
+					<a class="permalink" href="index.html#Dial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Dial(url_, protocol, origin <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (ws *<a href="index.html#Conn">Conn</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Dial opens a new client connection to a WebSocket.
+</p>
+
+				<div id="example_Dial" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		<p>This example demonstrates a trivial client.
+</p>
+		
+		
+			<p>Code:</p>
+			<pre class="code">
+origin := &#34;http://localhost/&#34;
+url := &#34;ws://localhost:12345/ws&#34;
+ws, err := websocket.Dial(url, &#34;&#34;, origin)
+if err != nil {
+    log.Fatal(err)
+}
+if _, err := ws.Write([]byte(&#34;hello, world!\n&#34;)); err != nil {
+    log.Fatal(err)
+}
+var msg = make([]byte, 512)
+var n int
+if n, err = ws.Read(msg); err != nil {
+    log.Fatal(err)
+}
+fmt.Printf(&#34;Received: %s.\n&#34;, msg[:n])
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="DialConfig">func <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=1944:1997#L71">DialConfig</a>
+					<a class="permalink" href="index.html#DialConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func DialConfig(config *<a href="index.html#Config">Config</a>) (ws *<a href="index.html#Conn">Conn</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DialConfig opens a new client connection to a WebSocket with a config.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewClient">func <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=962:1038#L32">NewClient</a>
+					<a class="permalink" href="index.html#NewClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewClient(config *<a href="index.html#Config">Config</a>, rwc <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#ReadWriteCloser">ReadWriteCloser</a>) (ws *<a href="index.html#Conn">Conn</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewClient creates a new WebSocket client connection over rwc.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Conn.Close">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=6552:6581#L225">Close</a>
+					<a class="permalink" href="index.html#Conn.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close implements the io.Closer interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.Config">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=8264:8296#L285">Config</a>
+					<a class="permalink" href="index.html#Conn.Config">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) Config() *<a href="index.html#Config">Config</a></pre>
+				<p>
+Config returns the WebSocket config.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.IsClientConn">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=6779:6814#L235">IsClientConn</a>
+					<a class="permalink" href="index.html#Conn.IsClientConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) IsClientConn() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsClientConn reports whether ws is a client-side connection.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.IsServerConn">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=6909:6944#L238">IsServerConn</a>
+					<a class="permalink" href="index.html#Conn.IsServerConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) IsServerConn() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsServerConn reports whether ws is a server-side connection.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.LocalAddr">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=7089:7125#L242">LocalAddr</a>
+					<a class="permalink" href="index.html#Conn.LocalAddr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) LocalAddr() <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Addr">Addr</a></pre>
+				<p>
+LocalAddr returns the WebSocket Origin for the connection for client, or
+the WebSocket location for server.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.Read">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=5573:5624#L182">Read</a>
+					<a class="permalink" href="index.html#Conn.Read">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) Read(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Read implements the io.Reader interface:
+it reads data of a frame from the WebSocket connection.
+if msg is not large enough for the frame data, it fills the msg and next Read
+will read the rest of the frame data.
+it reads Text frame or Binary frame.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.RemoteAddr">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=7340:7377#L251">RemoteAddr</a>
+					<a class="permalink" href="index.html#Conn.RemoteAddr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) RemoteAddr() <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Addr">Addr</a></pre>
+				<p>
+RemoteAddr returns the WebSocket location for the connection for client, or
+the Websocket Origin for server.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.Request">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=8412:8451#L289">Request</a>
+					<a class="permalink" href="index.html#Conn.Request">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) Request() *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Request">Request</a></pre>
+				<p>
+Request returns the http request upgraded to the WebSocket.
+It is nil for client side.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.SetDeadline">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=7635:7681#L261">SetDeadline</a>
+					<a class="permalink" href="index.html#Conn.SetDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) SetDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetDeadline sets the connection&#39;s network read &amp; write deadlines.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.SetReadDeadline">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=7846:7896#L269">SetReadDeadline</a>
+					<a class="permalink" href="index.html#Conn.SetReadDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) SetReadDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetReadDeadline sets the connection&#39;s network read deadline.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.SetWriteDeadline">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=8067:8118#L277">SetWriteDeadline</a>
+					<a class="permalink" href="index.html#Conn.SetWriteDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) SetWriteDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetWriteDeadline sets the connection&#39;s network write deadline.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Conn.Write">func (*Conn) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=6262:6314#L212">Write</a>
+					<a class="permalink" href="index.html#Conn.Write">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ws *<a href="index.html#Conn">Conn</a>) Write(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Write implements the io.Writer interface:
+it writes data as a frame to the WebSocket connection.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DialError">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=308:353#L6">DialError</a>
+				<a class="permalink" href="index.html#DialError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DialError is an error that occurs while dialling a websocket server.
+</p>
+
+			<pre>type DialError struct {
+    *<a href="index.html#Config">Config</a>
+<span id="DialError.Err"></span>    Err <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DialError.Error">func (*DialError) <a href="http://localhost:6060/src/golang.org/x/net/websocket/client.go?s=355:389#L11">Error</a>
+					<a class="permalink" href="index.html#DialError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#DialError">DialError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/server.go?s=3015:3039#L89">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler is a simple interface to a WebSocket browser client.
+It checks if Origin header is valid URL by default.
+You might want to verify websocket.Conn.Config().Origin in the func.
+If you use Server instead of Handler, you could call websocket.Origin and
+check the origin in your Handshake func. So, if you want to accept
+non-browser clients, which do not send an Origin header, set a
+Server.Handshake that does not check the origin.
+</p>
+
+			<pre>type Handler func(*<a href="index.html#Conn">Conn</a>)</pre>
+
+			
+
+			
+
+			<div id="example_Handler" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		<p>This example demonstrates a trivial echo server.
+</p>
+		
+		
+			<p>Code:</p>
+			<pre class="code">package websocket_test
+
+import (
+    &#34;io&#34;
+    &#34;net/http&#34;
+
+    &#34;golang.org/x/net/websocket&#34;
+)
+
+<span class="comment">// Echo the data received on the WebSocket.</span>
+func EchoServer(ws *websocket.Conn) {
+    io.Copy(ws, ws)
+}
+
+<span class="comment">// This example demonstrates a trivial echo server.</span>
+func ExampleHandler() {
+    http.Handle(&#34;/echo&#34;, websocket.Handler(EchoServer))
+    err := http.ListenAndServe(&#34;:12345&#34;, nil)
+    if err != nil {
+        panic(&#34;ListenAndServe: &#34; + err.Error())
+    }
+}
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+			
+
+			
+
+			
+				
+				<h3 id="Handler.ServeHTTP">func (Handler) <a href="http://localhost:6060/src/golang.org/x/net/websocket/server.go?s=3310:3378#L100">ServeHTTP</a>
+					<a class="permalink" href="index.html#Handler.ServeHTTP">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h <a href="index.html#Handler">Handler</a>) ServeHTTP(w <a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#ResponseWriter">ResponseWriter</a>, req *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Request">Request</a>)</pre>
+				<p>
+ServeHTTP implements the http.Handler interface for a WebSocket
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ProtocolError">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=1026:1075#L36">ProtocolError</a>
+				<a class="permalink" href="index.html#ProtocolError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProtocolError represents WebSocket protocol errors.
+</p>
+
+			<pre>type ProtocolError struct {
+<span id="ProtocolError.ErrorString"></span>    ErrorString <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ProtocolError.Error">func (*ProtocolError) <a href="http://localhost:6060/src/golang.org/x/net/websocket/websocket.go?s=1077:1117#L40">Error</a>
+					<a class="permalink" href="index.html#ProtocolError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (err *<a href="index.html#ProtocolError">ProtocolError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Server">type <a href="http://localhost:6060/src/golang.org/x/net/websocket/server.go?s=1494:1872#L45">Server</a>
+				<a class="permalink" href="index.html#Server">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Server represents a server of a WebSocket.
+</p>
+
+			<pre>type Server struct {
+    <span class="comment">// Config is a WebSocket configuration for new WebSocket connection.</span>
+    <a href="index.html#Config">Config</a>
+
+<span id="Server.Handshake"></span>    <span class="comment">// Handshake is an optional function in WebSocket handshake.</span>
+    <span class="comment">// For example, you can check, or don&#39;t check Origin header.</span>
+    <span class="comment">// Another example, you can select config.Protocol.</span>
+    Handshake func(*<a href="index.html#Config">Config</a>, *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Request">Request</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Handler handles a WebSocket connection.</span>
+    <a href="index.html#Handler">Handler</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Server.ServeHTTP">func (Server) <a href="http://localhost:6060/src/golang.org/x/net/websocket/server.go?s=1941:2008#L59">ServeHTTP</a>
+					<a class="permalink" href="index.html#Server.ServeHTTP">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Server">Server</a>) ServeHTTP(w <a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#ResponseWriter">ResponseWriter</a>, req *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Request">Request</a>)</pre>
+				<p>
+ServeHTTP implements the http.Handler interface for a WebSocket
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

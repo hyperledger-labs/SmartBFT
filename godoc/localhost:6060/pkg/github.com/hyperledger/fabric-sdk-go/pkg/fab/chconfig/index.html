@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>chconfig - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package chconfig
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#NewRefCache">func NewRefCache(opts ...options.Opt) *lazycache.Cache</a></dd>
+			
+				
+				<dd><a href="index.html#WithErrorHandler">func WithErrorHandler(value fab.ErrorHandler) coptions.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithRefreshInterval">func WithRefreshInterval(value time.Duration) coptions.Opt</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CacheKey">type CacheKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCacheKey">func NewCacheKey(ctx fab.ClientContext, pvdr Provider, channelID string) (CacheKey, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelCfg">type ChannelCfg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChannelCfg">func NewChannelCfg(channelID string) *ChannelCfg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.AnchorPeers">func (cfg *ChannelCfg) AnchorPeers() []*fab.OrgAnchorPeer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.BlockNumber">func (cfg *ChannelCfg) BlockNumber() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.HasCapability">func (cfg *ChannelCfg) HasCapability(group fab.ConfigGroupKey, capability string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.ID">func (cfg *ChannelCfg) ID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.MSPs">func (cfg *ChannelCfg) MSPs() []*mb.MSPConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.Orderers">func (cfg *ChannelCfg) Orderers() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCfg.Versions">func (cfg *ChannelCfg) Versions() *fab.Versions</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelConfig">type ChannelConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(channelID string, options ...Option) (*ChannelConfig, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelConfig.Query">func (c *ChannelConfig) Query(reqCtx reqContext.Context) (fab.ChannelCfg, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelConfigError">type ChannelConfigError</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Context">type Context</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Option">type Option</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithMaxTargets">func WithMaxTargets(maxTargets int) Option</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithMinResponses">func WithMinResponses(min int) Option</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithOrderer">func WithOrderer(orderer fab.Orderer) Option</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithPeers">func WithPeers(peers []fab.Peer) Option</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithRetryOpts">func WithRetryOpts(retryOpts retry.Opts) Option</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Opts">type Opts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Ref">type Ref</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRef">func NewRef(ctx fab.ClientContext, pvdr Provider, channel string, opts ...options.Opt) *Ref</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/cache.go">cache.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go">chconfig.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/reference.go">reference.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="NewRefCache">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/cache.go?s=1111:1165#L37">NewRefCache</a>
+				<a class="permalink" href="index.html#NewRefCache">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewRefCache(opts ...<a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a>) *<a href="../../util/concurrent/lazycache/index.html">lazycache</a>.<a href="../../util/concurrent/lazycache/index.html#Cache">Cache</a></pre>
+			<p>
+NewRefCache a cache of channel config references that refreshed with the
+given interval
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithErrorHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/opts.go?s=852:910#L32">WithErrorHandler</a>
+				<a class="permalink" href="index.html#WithErrorHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithErrorHandler(value <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ErrorHandler">ErrorHandler</a>) <a href="../../common/options/index.html">coptions</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithErrorHandler sets the error handler
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithRefreshInterval">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/opts.go?s=609:667#L23">WithRefreshInterval</a>
+				<a class="permalink" href="index.html#WithRefreshInterval">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithRefreshInterval(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="../../common/options/index.html">coptions</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithRefreshInterval sets the interval in which the
+channel config cache is refreshed
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CacheKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/cache.go?s=499:611#L10">CacheKey</a>
+				<a class="permalink" href="index.html#CacheKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CacheKey channel config reference cache key
+</p>
+
+			<pre>type CacheKey interface {
+    <a href="../../util/concurrent/lazycache/index.html">lazycache</a>.<a href="../../util/concurrent/lazycache/index.html#Key">Key</a>
+    Context() <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ClientContext">ClientContext</a>
+    ChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Provider() <a href="index.html#Provider">Provider</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCacheKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/cache.go?s=809:899#L26">NewCacheKey</a>
+					<a class="permalink" href="index.html#NewCacheKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCacheKey(ctx <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ClientContext">ClientContext</a>, pvdr <a href="index.html#Provider">Provider</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CacheKey">CacheKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCacheKey returns a new CacheKey
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelCfg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2375:2612#L52">ChannelCfg</a>
+				<a class="permalink" href="index.html#ChannelCfg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelCfg contains channel configuration
+</p>
+
+			<pre>type ChannelCfg struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChannelCfg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2722:2770#L64">NewChannelCfg</a>
+					<a class="permalink" href="index.html#NewChannelCfg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChannelCfg(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#ChannelCfg">ChannelCfg</a></pre>
+				<p>
+NewChannelCfg creates channel cfg
+TODO: This is temporary, Remove once we have config injected in sdk
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChannelCfg.AnchorPeers">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=3148:3205#L84">AnchorPeers</a>
+					<a class="permalink" href="index.html#ChannelCfg.AnchorPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) AnchorPeers() []*<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#OrgAnchorPeer">OrgAnchorPeer</a></pre>
+				<p>
+AnchorPeers returns anchor peers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.BlockNumber">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2950:2993#L74">BlockNumber</a>
+					<a class="permalink" href="index.html#ChannelCfg.BlockNumber">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) BlockNumber() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+BlockNumber returns the channel config block number
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.HasCapability">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=3519:3605#L99">HasCapability</a>
+					<a class="permalink" href="index.html#ChannelCfg.HasCapability">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) HasCapability(group <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ConfigGroupKey">ConfigGroupKey</a>, capability <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasCapability indicates whether or not the given group has the given capability
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.ID">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2840:2874#L69">ID</a>
+					<a class="permalink" href="index.html#ChannelCfg.ID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) ID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ID returns the channel ID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.MSPs">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=3044:3089#L79">MSPs</a>
+					<a class="permalink" href="index.html#ChannelCfg.MSPs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) MSPs() []*<a href="../../../third_party/github.com/hyperledger/fabric/protos/msp/index.html">mb</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/msp/index.html#MSPConfig">MSPConfig</a></pre>
+				<p>
+MSPs returns msps
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.Orderers">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=3264:3306#L89">Orderers</a>
+					<a class="permalink" href="index.html#ChannelCfg.Orderers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) Orderers() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Orderers returns orderers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCfg.Versions">func (*ChannelCfg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=3362:3409#L94">Versions</a>
+					<a class="permalink" href="index.html#ChannelCfg.Versions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#ChannelCfg">ChannelCfg</a>) Versions() *<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Versions">Versions</a></pre>
+				<p>
+Versions returns versions
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2265:2328#L46">ChannelConfig</a>
+				<a class="permalink" href="index.html#ChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelConfig implements query channel configuration
+</p>
+
+			<pre>type ChannelConfig struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=4191:4260#L122">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#Option">Option</a>) (*<a href="index.html#ChannelConfig">ChannelConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New channel config implementation
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChannelConfig.Query">func (*ChannelConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=4444:4524#L132">Query</a>
+					<a class="permalink" href="index.html#ChannelConfig.Query">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChannelConfig">ChannelConfig</a>) Query(reqCtx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Query returns channel configuration
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelConfigError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/reference.go?s=679:708#L17">ChannelConfigError</a>
+				<a class="permalink" href="index.html#ChannelConfigError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelConfigError is returned when the channel config could not be refreshed
+</p>
+
+			<pre>type ChannelConfigError <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Context">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2151:2207#L40">Context</a>
+				<a class="permalink" href="index.html#Context">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Context holds the providers and identity
+</p>
+
+			<pre>type Context struct {
+    <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#Providers">Providers</a>
+    <a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#Identity">Identity</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Option">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=2071:2105#L37">Option</a>
+				<a class="permalink" href="index.html#Option">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Option func for each Opts argument
+</p>
+
+			<pre>type Option func(opts *<a href="index.html#Opts">Opts</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithMaxTargets">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=9305:9347#L304">WithMaxTargets</a>
+					<a class="permalink" href="index.html#WithMaxTargets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithMaxTargets(maxTargets <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#Option">Option</a></pre>
+				<p>
+WithMaxTargets encapsulates minTargets to Option
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithMinResponses">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=8965:9002#L288">WithMinResponses</a>
+					<a class="permalink" href="index.html#WithMinResponses">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithMinResponses(min <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#Option">Option</a></pre>
+				<p>
+WithMinResponses encapsulates minimum responses to Option
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithOrderer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=9129:9173#L296">WithOrderer</a>
+					<a class="permalink" href="index.html#WithOrderer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithOrderer(orderer <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Orderer">Orderer</a>) <a href="index.html#Option">Option</a></pre>
+				<p>
+WithOrderer encapsulates orderer to Option
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithPeers">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=8787:8826#L280">WithPeers</a>
+					<a class="permalink" href="index.html#WithPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithPeers(peers []<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Peer">Peer</a>) <a href="index.html#Option">Option</a></pre>
+				<p>
+WithPeers encapsulates peers to Option
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithRetryOpts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=9484:9531#L312">WithRetryOpts</a>
+					<a class="permalink" href="index.html#WithRetryOpts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithRetryOpts(retryOpts <a href="../../common/errors/retry/index.html">retry</a>.<a href="../../common/errors/retry/index.html#Opts">Opts</a>) <a href="index.html#Option">Option</a></pre>
+				<p>
+WithRetryOpts encapsulates retry opts to Option
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/chconfig.go?s=1534:2031#L28">Opts</a>
+				<a class="permalink" href="index.html#Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Opts contains options for retrieving channel configuration
+</p>
+
+			<pre>type Opts struct {
+<span id="Opts.Orderer"></span>    Orderer      <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Orderer">Orderer</a> <span class="comment">// if configured, channel config will be retrieved from this orderer</span>
+<span id="Opts.Targets"></span>    Targets      []<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Peer">Peer</a>  <span class="comment">// if configured, channel config will be retrieved from peers (targets)</span>
+<span id="Opts.MinResponses"></span>    MinResponses <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">// used with targets option; min number of success responses (from targets/peers)</span>
+<span id="Opts.MaxTargets"></span>    MaxTargets   <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">//if configured, channel config will be retrieved for these number of random targets</span>
+<span id="Opts.RetryOpts"></span>    RetryOpts    <a href="../../common/errors/retry/index.html">retry</a>.<a href="../../common/errors/retry/index.html#Opts">Opts</a>  <span class="comment">//opts for channel query retry handler</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/cache.go?s=387:450#L7">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider provides ChannelConfig
+</p>
+
+			<pre>type Provider func(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelConfig">ChannelConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Ref">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/reference.go?s=458:596#L8">Ref</a>
+				<a class="permalink" href="index.html#Ref">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Ref channel configuration lazy reference
+</p>
+
+			<pre>type Ref struct {
+    *<a href="../../util/concurrent/lazyref/index.html">lazyref</a>.<a href="../../util/concurrent/lazyref/index.html#Reference">Reference</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRef">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/chconfig/reference.go?s=759:850#L20">NewRef</a>
+					<a class="permalink" href="index.html#NewRef">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRef(ctx <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ClientContext">ClientContext</a>, pvdr <a href="index.html#Provider">Provider</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Ref">Ref</a></pre>
+				<p>
+NewRef returns a new channel config reference
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

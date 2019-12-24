@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>dispatcher - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package dispatcher
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#WithLoadBalancePolicy">func WithLoadBalancePolicy(value lbp.LoadBalancePolicy) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithPeerMonitorPeriod">func WithPeerMonitorPeriod(value time.Duration) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithPeerResolver">func WithPeerResolver(value peerresolver.Provider) options.Opt</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ConnectEvent">type ConnectEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConnectEvent">func NewConnectEvent(errch chan&lt;- error) *ConnectEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectedEvent">type ConnectedEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConnectedEvent">func NewConnectedEvent() *ConnectedEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectionEvent">type ConnectionEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConnectionEvent">func NewConnectionEvent(connected bool, err DisconnectedError) *ConnectionEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectionReg">type ConnectionReg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DisconnectEvent">type DisconnectEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDisconnectEvent">func NewDisconnectEvent(errch chan&lt;- error) *DisconnectEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DisconnectedError">type DisconnectedError</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DisconnectedEvent">type DisconnectedEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDisconnectedEvent">func NewDisconnectedEvent(cause error) *DisconnectedEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFatalDisconnectedEvent">func NewFatalDisconnectedEvent(cause error) *DisconnectedEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Dispatcher">type Dispatcher</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(context context.Client, chConfig fab.ChannelCfg, discoveryService fab.DiscoveryService, connectionProvider api.ConnectionProvider, opts ...options.Opt) *Dispatcher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.ChannelConfig">func (ed *Dispatcher) ChannelConfig() fab.ChannelCfg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.ConnectedPeer">func (ed *Dispatcher) ConnectedPeer() fab.Peer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.Connection">func (ed *Dispatcher) Connection() api.Connection</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleConnectEvent">func (ed *Dispatcher) HandleConnectEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleConnectedEvent">func (ed *Dispatcher) HandleConnectedEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleDisconnectEvent">func (ed *Dispatcher) HandleDisconnectEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleDisconnectedEvent">func (ed *Dispatcher) HandleDisconnectedEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleRegisterConnectionEvent">func (ed *Dispatcher) HandleRegisterConnectionEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleStopEvent">func (ed *Dispatcher) HandleStopEvent(e esdispatcher.Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.SetPeerMonitorPeriod">func (p *Dispatcher) SetPeerMonitorPeriod(value time.Duration)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.SetPeerResolver">func (p *Dispatcher) SetPeerResolver(value peerresolver.Provider)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.Start">func (ed *Dispatcher) Start() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RegisterConnectionEvent">type RegisterConnectionEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterConnectionEvent">func NewRegisterConnectionEvent(eventch chan&lt;- *ConnectionEvent, regch chan&lt;- fab.Registration, errch chan&lt;- error) *RegisterConnectionEvent</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go">dispatcher.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go">events.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/registrations.go">registrations.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="WithLoadBalancePolicy">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go?s=1838:1905#L43">WithLoadBalancePolicy</a>
+				<a class="permalink" href="index.html#WithLoadBalancePolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithLoadBalancePolicy(value <a href="../lbp/index.html">lbp</a>.<a href="../lbp/index.html#LoadBalancePolicy">LoadBalancePolicy</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithLoadBalancePolicy sets the load-balance policy to use when
+choosing an event endpoint from a set of endpoints
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithPeerMonitorPeriod">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go?s=2176:2235#L53">WithPeerMonitorPeriod</a>
+				<a class="permalink" href="index.html#WithPeerMonitorPeriod">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithPeerMonitorPeriod(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithPeerMonitorPeriod is the period with which the connected peer is monitored
+to see whether or not it should be disconnected.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithPeerResolver">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go?s=2470:2532#L62">WithPeerResolver</a>
+				<a class="permalink" href="index.html#WithPeerResolver">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithPeerResolver(value <a href="../peerresolver/index.html">peerresolver</a>.<a href="../peerresolver/index.html#Provider">Provider</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithPeerResolver sets the peer resolver that chooses the peer from a discovered list of peers.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ConnectEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=2105:2181#L64">ConnectEvent</a>
+				<a class="permalink" href="index.html#ConnectEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectEvent is a request to connect to the server
+</p>
+
+			<pre>type ConnectEvent struct {
+<span id="ConnectEvent.ErrCh"></span>    ErrCh        chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+<span id="ConnectEvent.FromBlockNum"></span>    FromBlockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConnectEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=2229:2283#L70">NewConnectEvent</a>
+					<a class="permalink" href="index.html#NewConnectEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConnectEvent(errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#ConnectEvent">ConnectEvent</a></pre>
+				<p>
+NewConnectEvent creates a new ConnectEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectedEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=886:916#L19">ConnectedEvent</a>
+				<a class="permalink" href="index.html#ConnectedEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectedEvent indicates that the client has connected to the server
+</p>
+
+			<pre>type ConnectedEvent struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConnectedEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=968:1008#L23">NewConnectedEvent</a>
+					<a class="permalink" href="index.html#NewConnectedEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConnectedEvent() *<a href="index.html#ConnectedEvent">ConnectedEvent</a></pre>
+				<p>
+NewConnectedEvent creates a new ConnectedEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectionEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=2885:2961#L89">ConnectionEvent</a>
+				<a class="permalink" href="index.html#ConnectionEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionEvent is sent when the client disconnects from or
+reconnects to the event server. Connected == true means that the
+client has connected, whereas Connected == false means that the
+client has disconnected. In the disconnected case, Err contains
+the disconnect error.
+</p>
+
+			<pre>type ConnectionEvent struct {
+<span id="ConnectionEvent.Connected"></span>    Connected <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ConnectionEvent.Err"></span>    Err       <a href="index.html#DisconnectedError">DisconnectedError</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConnectionEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=3015:3094#L95">NewConnectionEvent</a>
+					<a class="permalink" href="index.html#NewConnectionEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConnectionEvent(connected <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, err <a href="index.html#DisconnectedError">DisconnectedError</a>) *<a href="index.html#ConnectionEvent">ConnectionEvent</a></pre>
+				<p>
+NewConnectionEvent returns a new ConnectionEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectionReg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/registrations.go?s=169:231#L1">ConnectionReg</a>
+				<a class="permalink" href="index.html#ConnectionReg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionReg is a connection registration
+</p>
+
+			<pre>type ConnectionReg struct {
+<span id="ConnectionReg.Eventch"></span>    Eventch chan&lt;- *<a href="index.html#ConnectionEvent">ConnectionEvent</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DisconnectEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=2385:2436#L75">DisconnectEvent</a>
+				<a class="permalink" href="index.html#DisconnectEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DisconnectEvent is a request to disconnect to the server
+</p>
+
+			<pre>type DisconnectEvent struct {
+<span id="DisconnectEvent.Errch"></span>    Errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDisconnectEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=2490:2550#L80">NewDisconnectEvent</a>
+					<a class="permalink" href="index.html#NewDisconnectEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDisconnectEvent(errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#DisconnectEvent">DisconnectEvent</a></pre>
+				<p>
+NewDisconnectEvent creates a new DisconnectEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="DisconnectedError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=1114:1273#L28">DisconnectedError</a>
+				<a class="permalink" href="index.html#DisconnectedError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DisconnectedError is the error that is associated with the disconnect.
+</p>
+
+			<pre>type DisconnectedError interface {
+    <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// IsFatal returns true if the error is fatal, meaning that a reconnect attempt would not succeed</span>
+    IsFatal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DisconnectedEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=1551:1607#L49">DisconnectedEvent</a>
+				<a class="permalink" href="index.html#DisconnectedEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DisconnectedEvent indicates that the client has disconnected from the server
+</p>
+
+			<pre>type DisconnectedEvent struct {
+<span id="DisconnectedEvent.Err"></span>    Err <a href="index.html#DisconnectedError">DisconnectedError</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDisconnectedEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=1665:1722#L54">NewDisconnectedEvent</a>
+					<a class="permalink" href="index.html#NewDisconnectedEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDisconnectedEvent(cause <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#DisconnectedEvent">DisconnectedEvent</a></pre>
+				<p>
+NewDisconnectedEvent creates a new DisconnectedEvent
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewFatalDisconnectedEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=1904:1966#L59">NewFatalDisconnectedEvent</a>
+					<a class="permalink" href="index.html#NewFatalDisconnectedEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFatalDisconnectedEvent(cause <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#DisconnectedEvent">DisconnectedEvent</a></pre>
+				<p>
+NewFatalDisconnectedEvent creates a new DisconnectedEvent which indicates that a reconnect is not possible
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Dispatcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=1084:1546#L19">Dispatcher</a>
+				<a class="permalink" href="index.html#Dispatcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Dispatcher is responsible for handling all events, including connection and registration events originating from the client,
+and events originating from the event server. All events are processed in a single Go routine
+in order to avoid any race conditions and to ensure that events are processed in the order that they are received.
+This avoids the need for synchronization.
+</p>
+
+			<pre>type Dispatcher struct {
+    *<a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Dispatcher">Dispatcher</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=1580:1752#L35">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(context <a href="../../../../common/providers/context/index.html">context</a>.<a href="../../../../common/providers/context/index.html#Client">Client</a>, chConfig <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, discoveryService <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#DiscoveryService">DiscoveryService</a>, connectionProvider <a href="../../api/index.html">api</a>.<a href="../../api/index.html#ConnectionProvider">ConnectionProvider</a>, opts ...<a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Dispatcher">Dispatcher</a></pre>
+				<p>
+New creates a new dispatcher
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Dispatcher.ChannelConfig">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=2497:2549#L63">ChannelConfig</a>
+					<a class="permalink" href="index.html#Dispatcher.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) ChannelConfig() <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a></pre>
+				<p>
+ChannelConfig returns the channel configuration
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.ConnectedPeer">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=9448:9494#L312">ConnectedPeer</a>
+					<a class="permalink" href="index.html#Dispatcher.ConnectedPeer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) ConnectedPeer() <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Peer">Peer</a></pre>
+				<p>
+ConnectedPeer returns the connected peer
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.Connection">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=2632:2681#L68">Connection</a>
+					<a class="permalink" href="index.html#Dispatcher.Connection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) Connection() <a href="../../api/index.html">api</a>.<a href="../../api/index.html#Connection">Connection</a></pre>
+				<p>
+Connection returns the connection to the event server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleConnectEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=3240:3302#L87">HandleConnectEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleConnectEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleConnectEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleConnectEvent initiates a connection to the event server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleConnectedEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=4965:5029#L166">HandleConnectedEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleConnectedEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleConnectedEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleConnectedEvent sends a &#39;connected&#39; event to any registered listener
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleDisconnectEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=4168:4233#L135">HandleDisconnectEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleDisconnectEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleDisconnectEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleDisconnectEvent disconnects from the event server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleDisconnectedEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=5568:5635#L186">HandleDisconnectedEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleDisconnectedEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleDisconnectedEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleDisconnectedEvent sends a &#39;disconnected&#39; event to any registered listener
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleRegisterConnectionEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=4582:4655#L153">HandleRegisterConnectionEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleRegisterConnectionEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleRegisterConnectionEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleRegisterConnectionEvent registers a connection listener
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleStopEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=2808:2867#L74">HandleStopEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleStopEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleStopEvent(e <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#Event">Event</a>)</pre>
+				<p>
+HandleStopEvent handles a Stop event by clearing all registrations
+and stopping the listener
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.SetPeerMonitorPeriod">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go?s=2841:2899#L78">SetPeerMonitorPeriod</a>
+					<a class="permalink" href="index.html#Dispatcher.SetPeerMonitorPeriod">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Dispatcher">Dispatcher</a>) SetPeerMonitorPeriod(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.SetPeerResolver">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/opts.go?s=3066:3127#L87">SetPeerResolver</a>
+					<a class="permalink" href="index.html#Dispatcher.SetPeerResolver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Dispatcher">Dispatcher</a>) SetPeerResolver(value <a href="../peerresolver/index.html">peerresolver</a>.<a href="../peerresolver/index.html#Provider">Provider</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.Start">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/dispatcher.go?s=2244:2279#L53">Start</a>
+					<a class="permalink" href="index.html#Dispatcher.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) Start() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Start starts the dispatcher
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RegisterConnectionEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=361:448#L5">RegisterConnectionEvent</a>
+				<a class="permalink" href="index.html#RegisterConnectionEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterConnectionEvent is a request to register for connection events
+</p>
+
+			<pre>type RegisterConnectionEvent struct {
+    <a href="../../service/dispatcher/index.html">esdispatcher</a>.<a href="../../service/dispatcher/index.html#RegisterEvent">RegisterEvent</a>
+<span id="RegisterConnectionEvent.Reg"></span>    Reg *<a href="index.html#ConnectionReg">ConnectionReg</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterConnectionEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/dispatcher/events.go?s=518:658#L11">NewRegisterConnectionEvent</a>
+					<a class="permalink" href="index.html#NewRegisterConnectionEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterConnectionEvent(eventch chan&lt;- *<a href="index.html#ConnectionEvent">ConnectionEvent</a>, regch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#RegisterConnectionEvent">RegisterConnectionEvent</a></pre>
+				<p>
+NewRegisterConnectionEvent creates a new RegisterConnectionEvent
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>preferorg - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package preferorg
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#NewResolver">func NewResolver() peerresolver.Provider</a></dd>
+			
+			
+				
+				<dd><a href="index.html#PeerResolver">type PeerResolver</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(dispatcher service.Dispatcher, context context.Client, channelID string, opts ...options.Opt) *PeerResolver</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerResolver.Resolve">func (r *PeerResolver) Resolve(peers []fab.Peer) (fab.Peer, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerResolver.SetLoadBalancePolicy">func (p PeerResolver) SetLoadBalancePolicy(value lbp.LoadBalancePolicy)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerResolver.ShouldDisconnect">func (r *PeerResolver) ShouldDisconnect(peers []fab.Peer, connectedPeer fab.Peer) bool</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go">preferorg.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="NewResolver">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go?s=1153:1193#L21">NewResolver</a>
+				<a class="permalink" href="index.html#NewResolver">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewResolver() <a href="../index.html">peerresolver</a>.<a href="../index.html#Provider">Provider</a></pre>
+			<p>
+NewResolver returns a new &#34;prefer org&#34; resolver provider.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="PeerResolver">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go?s=975:1090#L14">PeerResolver</a>
+				<a class="permalink" href="index.html#PeerResolver">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerResolver is a peer resolver that determines which peers are suitable based on block height, although
+will prefer the peers in the current org (as long as their block height is above a configured threshold).
+If none of the peers from the current org are suitable then a peer from another org is chosen.
+</p>
+
+			<pre>type PeerResolver struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go?s=1415:1531#L28">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(dispatcher <a href="../../../service/index.html">service</a>.<a href="../../../service/index.html#Dispatcher">Dispatcher</a>, context <a href="../../../../../common/providers/context/index.html">context</a>.<a href="../../../../../common/providers/context/index.html#Client">Client</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="../../../../../common/options/index.html">options</a>.<a href="../../../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#PeerResolver">PeerResolver</a></pre>
+				<p>
+New returns a new &#34;prefer org&#34; resolver.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PeerResolver.Resolve">func (*PeerResolver) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go?s=2010:2076#L44">Resolve</a>
+					<a class="permalink" href="index.html#PeerResolver.Resolve">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#PeerResolver">PeerResolver</a>) Resolve(peers []<a href="../../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../../common/providers/fab/index.html#Peer">Peer</a>) (<a href="../../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../../common/providers/fab/index.html#Peer">Peer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Resolve uses the MinBlockHeight resolver to choose peers but will prefer peers in the given org.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerResolver.SetLoadBalancePolicy">func (PeerResolver) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/opts.go?s=623:689#L15">SetLoadBalancePolicy</a>
+					<a class="permalink" href="index.html#PeerResolver.SetLoadBalancePolicy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#PeerResolver">PeerResolver</a>) SetLoadBalancePolicy(value <a href="../../lbp/index.html">lbp</a>.<a href="../../lbp/index.html#LoadBalancePolicy">LoadBalancePolicy</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PeerResolver.ShouldDisconnect">func (*PeerResolver) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/client/peerresolver/preferorg/preferorg.go?s=2773:2859#L66">ShouldDisconnect</a>
+					<a class="permalink" href="index.html#PeerResolver.ShouldDisconnect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#PeerResolver">PeerResolver</a>) ShouldDisconnect(peers []<a href="../../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../../common/providers/fab/index.html#Peer">Peer</a>, connectedPeer <a href="../../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../../common/providers/fab/index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ShouldDisconnect determines whether connected peer not in our org should be disconnected
+and reconnected to a peer in our org.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

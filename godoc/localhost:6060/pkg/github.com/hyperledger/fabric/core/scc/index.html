@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>scc - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package scc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/scc"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#PluginConfig">type PluginConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider(pOps peer.Operations, pSup peer.Support, r Registrar) *Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.DeDeploySysCCs">func (p *Provider) DeDeploySysCCs(chainID string, ccp ccprovider.ChaincodeProvider)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.DeploySysCCs">func (p *Provider) DeploySysCCs(chainID string, ccp ccprovider.ChaincodeProvider)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.GetApplicationConfig">func (p *Provider) GetApplicationConfig(cid string) (channelconfig.Application, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.GetQueryExecutorForLedger">func (p *Provider) GetQueryExecutorForLedger(cid string) (ledger.QueryExecutor, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.IsSysCC">func (p *Provider) IsSysCC(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.IsSysCCAndNotInvokableCC2CC">func (p *Provider) IsSysCCAndNotInvokableCC2CC(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.IsSysCCAndNotInvokableExternal">func (p *Provider) IsSysCCAndNotInvokableExternal(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.PolicyManager">func (p *Provider) PolicyManager(channelID string) (policies.Manager, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.RegisterSysCC">func (p *Provider) RegisterSysCC(scc SelfDescribingSysCC)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Registrar">type Registrar</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelfDescribingSysCC">type SelfDescribingSysCC</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CreatePluginSysCCs">func CreatePluginSysCCs(p *Provider) []SelfDescribingSysCC</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SysCCWrapper">type SysCCWrapper</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.Chaincode">func (sccw *SysCCWrapper) Chaincode() shim.Chaincode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.Enabled">func (sccw *SysCCWrapper) Enabled() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.InitArgs">func (sccw *SysCCWrapper) InitArgs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.InvokableCC2CC">func (sccw *SysCCWrapper) InvokableCC2CC() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.InvokableExternal">func (sccw *SysCCWrapper) InvokableExternal() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.Name">func (sccw *SysCCWrapper) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SysCCWrapper.Path">func (sccw *SysCCWrapper) Path() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SystemChaincode">type SystemChaincode</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/importsysccs.go">importsysccs.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/loadsysccs.go">loadsysccs.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/register.go">register.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go">sccproviderimpl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go">sysccapi.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="PluginConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/loadsysccs.go?s=366:746#L15">PluginConfig</a>
+				<a class="permalink" href="index.html#PluginConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginConfig SCC plugin configuration
+</p>
+
+			<pre>type PluginConfig struct {
+<span id="PluginConfig.Enabled"></span>    Enabled           <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   `mapstructure:&#34;enabled&#34; yaml:&#34;enabled&#34;`
+<span id="PluginConfig.Name"></span>    Name              <a href="http://localhost:6060/pkg/builtin/#string">string</a> `mapstructure:&#34;name&#34; yaml:&#34;name&#34;`
+<span id="PluginConfig.Path"></span>    Path              <a href="http://localhost:6060/pkg/builtin/#string">string</a> `mapstructure:&#34;path&#34; yaml:&#34;path&#34;`
+<span id="PluginConfig.InvokableExternal"></span>    InvokableExternal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   `mapstructure:&#34;invokableExternal&#34; yaml:&#34;invokableExternal&#34;`
+<span id="PluginConfig.InvokableCC2CC"></span>    InvokableCC2CC    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   `mapstructure:&#34;invokableCC2CC&#34; yaml:&#34;invokableCC2CC&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=585:722#L18">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider implements sysccprovider.SystemChaincodeProvider
+</p>
+
+			<pre>type Provider struct {
+<span id="Provider.Peer"></span>    Peer        <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Operations">Operations</a>
+<span id="Provider.PeerSupport"></span>    PeerSupport <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Support">Support</a>
+<span id="Provider.Registrar"></span>    Registrar   <a href="index.html#Registrar">Registrar</a>
+<span id="Provider.SysCCs"></span>    SysCCs      []<a href="index.html#SelfDescribingSysCC">SelfDescribingSysCC</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=356:436#L9">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider(pOps <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Operations">Operations</a>, pSup <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Support">Support</a>, r <a href="index.html#Registrar">Registrar</a>) *<a href="index.html#Provider">Provider</a></pre>
+				<p>
+NewProvider creates a new Provider instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Provider.DeDeploySysCCs">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/importsysccs.go?s=702:785#L14">DeDeploySysCCs</a>
+					<a class="permalink" href="index.html#Provider.DeDeploySysCCs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) DeDeploySysCCs(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>)</pre>
+				<p>
+DeDeploySysCCs is used in unit tests to stop and remove the system chaincodes before
+restarting them in the same process. This allows clean start of the system
+in the same process
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.DeploySysCCs">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/importsysccs.go?s=357:438#L5">DeploySysCCs</a>
+					<a class="permalink" href="index.html#Provider.DeploySysCCs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) DeploySysCCs(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>)</pre>
+				<p>
+DeploySysCCs is the hook for system chaincodes where system chaincodes are registered with the fabric
+note the chaincode must still be deployed and launched like a user chaincode will be
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.GetApplicationConfig">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=2498:2583#L93">GetApplicationConfig</a>
+					<a class="permalink" href="index.html#Provider.GetApplicationConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) GetApplicationConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+GetApplicationConfig returns the configtxapplication.SharedConfig for the channel
+and whether the Application config exists
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.GetQueryExecutorForLedger">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=1736:1822#L65">GetQueryExecutorForLedger</a>
+					<a class="permalink" href="index.html#Provider.GetQueryExecutorForLedger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) GetQueryExecutorForLedger(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetQueryExecutorForLedger returns a query executor for the specified channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.IsSysCC">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=1085:1129#L35">IsSysCC</a>
+					<a class="permalink" href="index.html#Provider.IsSysCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) IsSysCC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSysCC returns true if the supplied chaincode is a system chaincode
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.IsSysCCAndNotInvokableCC2CC">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=1420:1484#L50">IsSysCCAndNotInvokableCC2CC</a>
+					<a class="permalink" href="index.html#Provider.IsSysCCAndNotInvokableCC2CC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) IsSysCCAndNotInvokableCC2CC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSysCCAndNotInvokableCC2CC returns true if the chaincode
+is a system chaincode and *CANNOT* be invoked through
+a cc2cc invocation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.IsSysCCAndNotInvokableExternal">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=2126:2193#L77">IsSysCCAndNotInvokableExternal</a>
+					<a class="permalink" href="index.html#Provider.IsSysCCAndNotInvokableExternal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) IsSysCCAndNotInvokableExternal(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSysCCAndNotInvokableExternal returns true if the chaincode
+is a system chaincode and *CANNOT* be invoked through
+a proposal to this peer
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.PolicyManager">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=2741:2816#L99">PolicyManager</a>
+					<a class="permalink" href="index.html#Provider.PolicyManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) PolicyManager(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/policies/index.html">policies</a>.<a href="../../common/policies/index.html#Manager">Manager</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Returns the policy manager associated to the passed channel
+and whether the policy manager exists
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.RegisterSysCC">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sccproviderimpl.go?s=795:852#L26">RegisterSysCC</a>
+					<a class="permalink" href="index.html#Provider.RegisterSysCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) RegisterSysCC(scc <a href="index.html#SelfDescribingSysCC">SelfDescribingSysCC</a>)</pre>
+				<p>
+RegisterSysCC registers a system chaincode with the syscc provider.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Registrar">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=687:811#L17">Registrar</a>
+				<a class="permalink" href="index.html#Registrar">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Registrar provides a way for system chaincodes to be registered
+</p>
+
+			<pre>type Registrar interface {
+    <span class="comment">// Register registers a system chaincode</span>
+    Register(ccid *<a href="../container/ccintf/index.html">ccintf</a>.<a href="../container/ccintf/index.html#CCID">CCID</a>, cc <a href="../chaincode/shim/index.html">shim</a>.<a href="../chaincode/shim/index.html#Chaincode">Chaincode</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelfDescribingSysCC">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=2392:3174#L66">SelfDescribingSysCC</a>
+				<a class="permalink" href="index.html#SelfDescribingSysCC">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SelfDescribingSysCC interface {
+    <span class="comment">//Unique name of the system chaincode</span>
+    Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//Path to the system chaincode; currently not used</span>
+    Path() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//InitArgs initialization arguments to startup the system chaincode</span>
+    InitArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// Chaincode returns the underlying chaincode</span>
+    Chaincode() <a href="../chaincode/shim/index.html">shim</a>.<a href="../chaincode/shim/index.html#Chaincode">Chaincode</a>
+
+    <span class="comment">// InvokableExternal keeps track of whether</span>
+    <span class="comment">// this system chaincode can be invoked</span>
+    <span class="comment">// through a proposal sent to this peer</span>
+    InvokableExternal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// InvokableCC2CC keeps track of whether</span>
+    <span class="comment">// this system chaincode can be invoked</span>
+    <span class="comment">// by way of a chaincode-to-chaincode</span>
+    <span class="comment">// invocation</span>
+    InvokableCC2CC() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Enabled a convenient switch to enable/disable system chaincode without</span>
+    <span class="comment">// having to remove entry from importsysccs.go</span>
+    Enabled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreatePluginSysCCs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/register.go?s=270:328#L2">CreatePluginSysCCs</a>
+					<a class="permalink" href="index.html#CreatePluginSysCCs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func CreatePluginSysCCs(p *<a href="index.html#Provider">Provider</a>) []<a href="index.html#SelfDescribingSysCC">SelfDescribingSysCC</a></pre>
+				<p>
+CreatePluginSysCCs creates all of the system chaincodes which are compiled into fabric
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="SysCCWrapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=1758:1808#L54">SysCCWrapper</a>
+				<a class="permalink" href="index.html#SysCCWrapper">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SysCCWrapper struct {
+<span id="SysCCWrapper.SCC"></span>    SCC *<a href="index.html#SystemChaincode">SystemChaincode</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SysCCWrapper.Chaincode">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=2048:2100#L61">Chaincode</a>
+					<a class="permalink" href="index.html#SysCCWrapper.Chaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) Chaincode() <a href="../chaincode/shim/index.html">shim</a>.<a href="../chaincode/shim/index.html#Chaincode">Chaincode</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.Enabled">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=2310:2350#L64">Enabled</a>
+					<a class="permalink" href="index.html#SysCCWrapper.Enabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) Enabled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.InitArgs">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=1966:2011#L60">InitArgs</a>
+					<a class="permalink" href="index.html#SysCCWrapper.InitArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) InitArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.InvokableCC2CC">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=2222:2269#L63">InvokableCC2CC</a>
+					<a class="permalink" href="index.html#SysCCWrapper.InvokableCC2CC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) InvokableCC2CC() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.InvokableExternal">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=2131:2181#L62">InvokableExternal</a>
+					<a class="permalink" href="index.html#SysCCWrapper.InvokableExternal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) InvokableExternal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.Name">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=1810:1849#L58">Name</a>
+					<a class="permalink" href="index.html#SysCCWrapper.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SysCCWrapper.Path">func (*SysCCWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=1888:1927#L59">Path</a>
+					<a class="permalink" href="index.html#SysCCWrapper.Path">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sccw *<a href="index.html#SysCCWrapper">SysCCWrapper</a>) Path() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SystemChaincode">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/sysccapi.go?s=992:1756#L25">SystemChaincode</a>
+				<a class="permalink" href="index.html#SystemChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SystemChaincode defines the metadata needed to initialize system chaincode
+when the fabric comes up. SystemChaincodes are installed by adding an
+entry in importsysccs.go
+</p>
+
+			<pre>type SystemChaincode struct {
+    <span class="comment">//Unique name of the system chaincode</span>
+<span id="SystemChaincode.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//Path to the system chaincode; currently not used</span>
+<span id="SystemChaincode.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//InitArgs initialization arguments to startup the system chaincode</span>
+<span id="SystemChaincode.InitArgs"></span>    InitArgs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+<span id="SystemChaincode.Chaincode"></span>    <span class="comment">// Chaincode holds the actual chaincode instance</span>
+    Chaincode <a href="../chaincode/shim/index.html">shim</a>.<a href="../chaincode/shim/index.html#Chaincode">Chaincode</a>
+
+<span id="SystemChaincode.InvokableExternal"></span>    <span class="comment">// InvokableExternal keeps track of whether</span>
+    <span class="comment">// this system chaincode can be invoked</span>
+    <span class="comment">// through a proposal sent to this peer</span>
+    InvokableExternal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="SystemChaincode.InvokableCC2CC"></span>    <span class="comment">// InvokableCC2CC keeps track of whether</span>
+    <span class="comment">// this system chaincode can be invoked</span>
+    <span class="comment">// by way of a chaincode-to-chaincode</span>
+    <span class="comment">// invocation</span>
+    InvokableCC2CC <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="SystemChaincode.Enabled"></span>    <span class="comment">// Enabled a convenient switch to enable/disable system chaincode without</span>
+    <span class="comment">// having to remove entry from importsysccs.go</span>
+    Enabled <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="cscc/index.html">cscc</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package cscc chaincode configer provides functions to manage configuration transactions as the network is being reconfigured.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="cscc/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="lscc/index.html">lscc</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="lscc/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="qscc/index.html">qscc</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

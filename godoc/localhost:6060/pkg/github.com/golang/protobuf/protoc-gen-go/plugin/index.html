@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>plugin_go - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package plugin_go
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/golang/protobuf/protoc-gen-go/plugin"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package plugin_go is a generated protocol buffer package.
+</p>
+<p>
+It is generated from these files:
+</p>
+<pre>google/protobuf/compiler/plugin.proto
+</pre>
+<p>
+It has these top-level messages:
+</p>
+<pre>Version
+CodeGeneratorRequest
+CodeGeneratorResponse
+</pre>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CodeGeneratorRequest">type CodeGeneratorRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.Descriptor">func (*CodeGeneratorRequest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.GetCompilerVersion">func (m *CodeGeneratorRequest) GetCompilerVersion() *Version</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.GetFileToGenerate">func (m *CodeGeneratorRequest) GetFileToGenerate() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.GetParameter">func (m *CodeGeneratorRequest) GetParameter() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.GetProtoFile">func (m *CodeGeneratorRequest) GetProtoFile() []*google_protobuf.FileDescriptorProto</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.Marshal">func (m *CodeGeneratorRequest) Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.ProtoMessage">func (*CodeGeneratorRequest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.Reset">func (m *CodeGeneratorRequest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.String">func (m *CodeGeneratorRequest) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.Unmarshal">func (m *CodeGeneratorRequest) Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.XXX_DiscardUnknown">func (m *CodeGeneratorRequest) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.XXX_Merge">func (dst *CodeGeneratorRequest) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorRequest.XXX_Size">func (m *CodeGeneratorRequest) XXX_Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CodeGeneratorResponse">type CodeGeneratorResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.Descriptor">func (*CodeGeneratorResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.GetError">func (m *CodeGeneratorResponse) GetError() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.GetFile">func (m *CodeGeneratorResponse) GetFile() []*CodeGeneratorResponse_File</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.Marshal">func (m *CodeGeneratorResponse) Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.ProtoMessage">func (*CodeGeneratorResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.Reset">func (m *CodeGeneratorResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.String">func (m *CodeGeneratorResponse) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.Unmarshal">func (m *CodeGeneratorResponse) Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.XXX_DiscardUnknown">func (m *CodeGeneratorResponse) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.XXX_Merge">func (dst *CodeGeneratorResponse) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse.XXX_Size">func (m *CodeGeneratorResponse) XXX_Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CodeGeneratorResponse_File">type CodeGeneratorResponse_File</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.Descriptor">func (*CodeGeneratorResponse_File) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.GetContent">func (m *CodeGeneratorResponse_File) GetContent() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.GetInsertionPoint">func (m *CodeGeneratorResponse_File) GetInsertionPoint() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.GetName">func (m *CodeGeneratorResponse_File) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.Marshal">func (m *CodeGeneratorResponse_File) Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.ProtoMessage">func (*CodeGeneratorResponse_File) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.Reset">func (m *CodeGeneratorResponse_File) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.String">func (m *CodeGeneratorResponse_File) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.Unmarshal">func (m *CodeGeneratorResponse_File) Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.XXX_DiscardUnknown">func (m *CodeGeneratorResponse_File) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.XXX_Merge">func (dst *CodeGeneratorResponse_File) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeGeneratorResponse_File.XXX_Size">func (m *CodeGeneratorResponse_File) XXX_Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Version">type Version</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Descriptor">func (*Version) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetMajor">func (m *Version) GetMajor() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetMinor">func (m *Version) GetMinor() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetPatch">func (m *Version) GetPatch() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetSuffix">func (m *Version) GetSuffix() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Marshal">func (m *Version) Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.ProtoMessage">func (*Version) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Reset">func (m *Version) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.String">func (m *Version) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Unmarshal">func (m *Version) Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_DiscardUnknown">func (m *Version) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Merge">func (dst *Version) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Size">func (m *Version) XXX_Size() int</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go">plugin.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CodeGeneratorRequest">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2901:4651#L87">CodeGeneratorRequest</a>
+				<a class="permalink" href="index.html#CodeGeneratorRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An encoded CodeGeneratorRequest is written to the plugin&#39;s stdin.
+</p>
+
+			<pre>type CodeGeneratorRequest struct {
+    <span class="comment">// The .proto files that were explicitly listed on the command-line.  The</span>
+    <span class="comment">// code generator should generate code only for these files.  Each file&#39;s</span>
+    <span class="comment">// descriptor will be included in proto_file, below.</span>
+<span id="CodeGeneratorRequest.FileToGenerate"></span>    FileToGenerate []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,rep,name=file_to_generate,json=fileToGenerate&#34; json:&#34;file_to_generate,omitempty&#34;`
+    <span class="comment">// The generator parameter passed on the command-line.</span>
+<span id="CodeGeneratorRequest.Parameter"></span>    Parameter *<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=parameter&#34; json:&#34;parameter,omitempty&#34;`
+    <span class="comment">// FileDescriptorProtos for all files in files_to_generate and everything</span>
+    <span class="comment">// they import.  The files will appear in topological order, so each file</span>
+    <span class="comment">// appears before any file that imports it.</span>
+    <span class="comment">//</span>
+    <span class="comment">// protoc guarantees that all proto_files will be written after</span>
+    <span class="comment">// the fields above, even though this is not technically guaranteed by the</span>
+    <span class="comment">// protobuf wire format.  This theoretically could allow a plugin to stream</span>
+    <span class="comment">// in the FileDescriptorProtos and handle them one by one rather than read</span>
+    <span class="comment">// the entire set into memory at once.  However, as of this writing, this</span>
+    <span class="comment">// is not similarly optimized on protoc&#39;s end -- it will store all fields in</span>
+    <span class="comment">// memory at once before sending them to the plugin.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Type names of fields and extensions in the FileDescriptorProto are always</span>
+    <span class="comment">// fully qualified.</span>
+<span id="CodeGeneratorRequest.ProtoFile"></span>    ProtoFile []*<a href="../descriptor/index.html">google_protobuf</a>.<a href="../descriptor/index.html#FileDescriptorProto">FileDescriptorProto</a> `protobuf:&#34;bytes,15,rep,name=proto_file,json=protoFile&#34; json:&#34;proto_file,omitempty&#34;`
+    <span class="comment">// The version number of protocol compiler.</span>
+<span id="CodeGeneratorRequest.CompilerVersion"></span>    CompilerVersion      *<a href="index.html#Version">Version</a> `protobuf:&#34;bytes,3,opt,name=compiler_version,json=compilerVersion&#34; json:&#34;compiler_version,omitempty&#34;`
+<span id="CodeGeneratorRequest.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="CodeGeneratorRequest.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="CodeGeneratorRequest.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CodeGeneratorRequest.Descriptor">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=4900:4957#L119">Descriptor</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.GetCompilerVersion">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=6077:6137#L159">GetCompilerVersion</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.GetCompilerVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) GetCompilerVersion() *<a href="index.html#Version">Version</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.GetFileToGenerate">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5684:5743#L138">GetFileToGenerate</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.GetFileToGenerate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) GetFileToGenerate() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.GetParameter">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5805:5857#L145">GetParameter</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.GetParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) GetParameter() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.GetProtoFile">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5936:6020#L152">GetProtoFile</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.GetProtoFile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) GetProtoFile() []*<a href="../descriptor/index.html">google_protobuf</a>.<a href="../descriptor/index.html#FileDescriptorProto">FileDescriptorProto</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.Marshal">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5117:5201#L123">Marshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.ProtoMessage">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=4839:4882#L118">ProtoMessage</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.Reset">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=4653:4691#L116">Reset</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.String">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=4743:4789#L117">String</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.Unmarshal">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=4995:5051#L120">Unmarshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.XXX_DiscardUnknown">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5503:5554#L132">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.XXX_Merge">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5280:5341#L126">XXX_Merge</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorRequest.XXX_Size">func (*CodeGeneratorRequest) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=5400:5445#L129">XXX_Size</a>
+					<a class="permalink" href="index.html#CodeGeneratorRequest.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CodeGeneratorResponse">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=6265:7215#L167">CodeGeneratorResponse</a>
+				<a class="permalink" href="index.html#CodeGeneratorResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The plugin writes an encoded CodeGeneratorResponse to stdout.
+</p>
+
+			<pre>type CodeGeneratorResponse struct {
+<span id="CodeGeneratorResponse.Error"></span>    <span class="comment">// Error message.  If non-empty, code generation failed.  The plugin process</span>
+    <span class="comment">// should exit with status code zero even if it reports an error in this way.</span>
+    <span class="comment">//</span>
+    <span class="comment">// This should be used to indicate errors in .proto files which prevent the</span>
+    <span class="comment">// code generator from generating correct code.  Errors which indicate a</span>
+    <span class="comment">// problem in protoc itself -- such as the input CodeGeneratorRequest being</span>
+    <span class="comment">// unparseable -- should be reported by writing a message to stderr and</span>
+    <span class="comment">// exiting with a non-zero status code.</span>
+    Error                *<a href="http://localhost:6060/pkg/builtin/#string">string</a>                       `protobuf:&#34;bytes,1,opt,name=error&#34; json:&#34;error,omitempty&#34;`
+<span id="CodeGeneratorResponse.File"></span>    File                 []*<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a> `protobuf:&#34;bytes,15,rep,name=file&#34; json:&#34;file,omitempty&#34;`
+<span id="CodeGeneratorResponse.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}                      `json:&#34;-&#34;`
+<span id="CodeGeneratorResponse.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                        `json:&#34;-&#34;`
+<span id="CodeGeneratorResponse.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                         `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CodeGeneratorResponse.Descriptor">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7468:7526#L186">Descriptor</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.GetError">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=8264:8313#L205">GetError</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.GetError">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) GetError() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.GetFile">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=8384:8455#L212">GetFile</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.GetFile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) GetFile() []*<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.Marshal">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7688:7773#L190">Marshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.ProtoMessage">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7406:7450#L185">ProtoMessage</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.Reset">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7217:7256#L183">Reset</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.String">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7309:7356#L184">String</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.Unmarshal">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7564:7621#L187">Unmarshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.XXX_DiscardUnknown">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=8080:8132#L199">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.XXX_Merge">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7853:7915#L193">XXX_Merge</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse.XXX_Size">func (*CodeGeneratorResponse) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=7975:8021#L196">XXX_Size</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse">CodeGeneratorResponse</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CodeGeneratorResponse_File">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=8546:11916#L220">CodeGeneratorResponse_File</a>
+				<a class="permalink" href="index.html#CodeGeneratorResponse_File">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Represents a single generated file.
+</p>
+
+			<pre>type CodeGeneratorResponse_File struct {
+    <span class="comment">// The file name, relative to the output directory.  The name must not</span>
+    <span class="comment">// contain &#34;.&#34; or &#34;..&#34; components and must be relative, not be absolute (so,</span>
+    <span class="comment">// the file cannot lie outside the output directory).  &#34;/&#34; must be used as</span>
+    <span class="comment">// the path separator, not &#34;\&#34;.</span>
+    <span class="comment">//</span>
+    <span class="comment">// If the name is omitted, the content will be appended to the previous</span>
+    <span class="comment">// file.  This allows the generator to break large files into small chunks,</span>
+    <span class="comment">// and allows the generated text to be streamed back to protoc so that large</span>
+    <span class="comment">// files need not reside completely in memory at one time.  Note that as of</span>
+    <span class="comment">// this writing protoc does not optimize for this -- it will read the entire</span>
+    <span class="comment">// CodeGeneratorResponse before writing files to disk.</span>
+<span id="CodeGeneratorResponse_File.Name"></span>    Name *<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// If non-empty, indicates that the named file should already exist, and the</span>
+    <span class="comment">// content here is to be inserted into that file at a defined insertion</span>
+    <span class="comment">// point.  This feature allows a code generator to extend the output</span>
+    <span class="comment">// produced by another code generator.  The original generator may provide</span>
+    <span class="comment">// insertion points by placing special annotations in the file that look</span>
+    <span class="comment">// like:</span>
+    <span class="comment">//   @@protoc_insertion_point(NAME)</span>
+    <span class="comment">// The annotation can have arbitrary text before and after it on the line,</span>
+    <span class="comment">// which allows it to be placed in a comment.  NAME should be replaced with</span>
+    <span class="comment">// an identifier naming the point -- this is what other generators will use</span>
+    <span class="comment">// as the insertion_point.  Code inserted at this point will be placed</span>
+    <span class="comment">// immediately above the line containing the insertion point (thus multiple</span>
+    <span class="comment">// insertions to the same point will come out in the order they were added).</span>
+    <span class="comment">// The double-@ is intended to make it unlikely that the generated code</span>
+    <span class="comment">// could contain things that look like insertion points by accident.</span>
+    <span class="comment">//</span>
+    <span class="comment">// For example, the C++ code generator places the following line in the</span>
+    <span class="comment">// .pb.h files that it generates:</span>
+    <span class="comment">//   // @@protoc_insertion_point(namespace_scope)</span>
+    <span class="comment">// This line appears within the scope of the file&#39;s package namespace, but</span>
+    <span class="comment">// outside of any particular class.  Another plugin can then specify the</span>
+    <span class="comment">// insertion_point &#34;namespace_scope&#34; to generate additional classes or</span>
+    <span class="comment">// other declarations that should be placed in this scope.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Note that if the line containing the insertion point begins with</span>
+    <span class="comment">// whitespace, the same whitespace will be added to every line of the</span>
+    <span class="comment">// inserted text.  This is useful for languages like Python, where</span>
+    <span class="comment">// indentation matters.  In these languages, the insertion point comment</span>
+    <span class="comment">// should be indented the same amount as any inserted code will need to be</span>
+    <span class="comment">// in order to work correctly in that context.</span>
+    <span class="comment">//</span>
+    <span class="comment">// The code generator that generates the initial file and the one which</span>
+    <span class="comment">// inserts into it must both run as part of a single invocation of protoc.</span>
+    <span class="comment">// Code generators are executed in the order in which they appear on the</span>
+    <span class="comment">// command line.</span>
+    <span class="comment">//</span>
+    <span class="comment">// If |insertion_point| is present, |name| must also be present.</span>
+<span id="CodeGeneratorResponse_File.InsertionPoint"></span>    InsertionPoint *<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=insertion_point,json=insertionPoint&#34; json:&#34;insertion_point,omitempty&#34;`
+    <span class="comment">// The file contents.</span>
+<span id="CodeGeneratorResponse_File.Content"></span>    Content              *<a href="http://localhost:6060/pkg/builtin/#string">string</a>  `protobuf:&#34;bytes,15,opt,name=content&#34; json:&#34;content,omitempty&#34;`
+<span id="CodeGeneratorResponse_File.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="CodeGeneratorResponse_File.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="CodeGeneratorResponse_File.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CodeGeneratorResponse_File.Descriptor">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12189:12252#L281">Descriptor</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.GetContent">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=13322:13378#L314">GetContent</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.GetContent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) GetContent() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.GetInsertionPoint">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=13170:13233#L307">GetInsertionPoint</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.GetInsertionPoint">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) GetInsertionPoint() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.GetName">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=13048:13101#L300">GetName</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.Marshal">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12427:12517#L285">Marshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.ProtoMessage">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12122:12171#L280">ProtoMessage</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.Reset">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=11918:11962#L278">Reset</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.String">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12020:12072#L279">String</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.Unmarshal">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12293:12355#L282">Unmarshal</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.XXX_DiscardUnknown">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12849:12906#L294">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.XXX_Merge">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12602:12669#L288">XXX_Merge</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CodeGeneratorResponse_File.XXX_Size">func (*CodeGeneratorResponse_File) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=12734:12785#L291">XXX_Size</a>
+					<a class="permalink" href="index.html#CodeGeneratorResponse_File.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CodeGeneratorResponse_File">CodeGeneratorResponse_File</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Version">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1002:1586#L24">Version</a>
+				<a class="permalink" href="index.html#Version">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The version number of protocol compiler.
+</p>
+
+			<pre>type Version struct {
+<span id="Version.Major"></span>    Major *<a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,1,opt,name=major&#34; json:&#34;major,omitempty&#34;`
+<span id="Version.Minor"></span>    Minor *<a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,2,opt,name=minor&#34; json:&#34;minor,omitempty&#34;`
+<span id="Version.Patch"></span>    Patch *<a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,3,opt,name=patch&#34; json:&#34;patch,omitempty&#34;`
+    <span class="comment">// A suffix for alpha, beta or rc release, e.g., &#34;alpha-1&#34;, &#34;rc2&#34;. It should</span>
+    <span class="comment">// be empty for mainline stable releases.</span>
+<span id="Version.Suffix"></span>    Suffix               *<a href="http://localhost:6060/pkg/builtin/#string">string</a>  `protobuf:&#34;bytes,4,opt,name=suffix&#34; json:&#34;suffix,omitempty&#34;`
+<span id="Version.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Version.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Version.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Version.Descriptor">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1783:1827#L39">Descriptor</a>
+					<a class="permalink" href="index.html#Version.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Version">Version</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetMajor">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2411:2445#L58">GetMajor</a>
+					<a class="permalink" href="index.html#Version.GetMajor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetMajor() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetMinor">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2515:2549#L65">GetMinor</a>
+					<a class="permalink" href="index.html#Version.GetMinor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetMinor() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetPatch">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2619:2653#L72">GetPatch</a>
+					<a class="permalink" href="index.html#Version.GetPatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetPatch() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetSuffix">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2723:2759#L79">GetSuffix</a>
+					<a class="permalink" href="index.html#Version.GetSuffix">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetSuffix() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.Marshal">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1961:2032#L43">Marshal</a>
+					<a class="permalink" href="index.html#Version.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.ProtoMessage">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1735:1765#L38">ProtoMessage</a>
+					<a class="permalink" href="index.html#Version.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Version">Version</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.Reset">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1588:1613#L36">Reset</a>
+					<a class="permalink" href="index.html#Version.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.String">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1652:1685#L37">String</a>
+					<a class="permalink" href="index.html#Version.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.Unmarshal">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=1865:1908#L40">Unmarshal</a>
+					<a class="permalink" href="index.html#Version.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_DiscardUnknown">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2269:2307#L52">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Version.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Merge">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2098:2146#L46">XXX_Merge</a>
+					<a class="permalink" href="index.html#Version.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Version">Version</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Size">func (*Version) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/plugin/plugin.pb.go?s=2192:2224#L49">XXX_Size</a>
+					<a class="permalink" href="index.html#Version.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

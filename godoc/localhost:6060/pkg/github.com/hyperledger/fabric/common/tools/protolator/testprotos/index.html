@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>testprotos - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package testprotos
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/tools/protolator/testprotos"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ContextlessMsg">type ContextlessMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.Descriptor">func (*ContextlessMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.GetOpaqueField">func (m *ContextlessMsg) GetOpaqueField() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.ProtoMessage">func (*ContextlessMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.Reset">func (m *ContextlessMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.String">func (m *ContextlessMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.VariablyOpaqueFields">func (cm *ContextlessMsg) VariablyOpaqueFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.XXX_DiscardUnknown">func (m *ContextlessMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.XXX_Marshal">func (m *ContextlessMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.XXX_Merge">func (dst *ContextlessMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.XXX_Size">func (m *ContextlessMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContextlessMsg.XXX_Unmarshal">func (m *ContextlessMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DynamicMessageWrapper">type DynamicMessageWrapper</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMessageWrapper.Underlying">func (dmw *DynamicMessageWrapper) Underlying() proto.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMessageWrapper.VariablyOpaqueFieldProto">func (dmw *DynamicMessageWrapper) VariablyOpaqueFieldProto(name string) (proto.Message, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DynamicMsg">type DynamicMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.Descriptor">func (*DynamicMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicFieldProto">func (vom *DynamicMsg) DynamicFieldProto(name string, underlying proto.Message) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicFields">func (vom *DynamicMsg) DynamicFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicMapFieldProto">func (vom *DynamicMsg) DynamicMapFieldProto(name string, key string, underlying proto.Message) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicMapFields">func (vom *DynamicMsg) DynamicMapFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicSliceFieldProto">func (vom *DynamicMsg) DynamicSliceFieldProto(name string, index int, underlying proto.Message) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.DynamicSliceFields">func (vom *DynamicMsg) DynamicSliceFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.GetDynamicType">func (m *DynamicMsg) GetDynamicType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.GetMapDynamicField">func (m *DynamicMsg) GetMapDynamicField() map[string]*ContextlessMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.GetPlainDynamicField">func (m *DynamicMsg) GetPlainDynamicField() *ContextlessMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.GetSliceDynamicField">func (m *DynamicMsg) GetSliceDynamicField() []*ContextlessMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.ProtoMessage">func (*DynamicMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.Reset">func (m *DynamicMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.String">func (m *DynamicMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.XXX_DiscardUnknown">func (m *DynamicMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.XXX_Marshal">func (m *DynamicMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.XXX_Merge">func (dst *DynamicMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.XXX_Size">func (m *DynamicMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DynamicMsg.XXX_Unmarshal">func (m *DynamicMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NestedMsg">type NestedMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.Descriptor">func (*NestedMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.GetMapNestedField">func (m *NestedMsg) GetMapNestedField() map[string]*SimpleMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.GetPlainNestedField">func (m *NestedMsg) GetPlainNestedField() *SimpleMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.GetSliceNestedField">func (m *NestedMsg) GetSliceNestedField() []*SimpleMsg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.ProtoMessage">func (*NestedMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.Reset">func (m *NestedMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.String">func (m *NestedMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.XXX_DiscardUnknown">func (m *NestedMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.XXX_Marshal">func (m *NestedMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.XXX_Merge">func (dst *NestedMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.XXX_Size">func (m *NestedMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NestedMsg.XXX_Unmarshal">func (m *NestedMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SimpleMsg">type SimpleMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.Descriptor">func (*SimpleMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.GetMapField">func (m *SimpleMsg) GetMapField() map[string]string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.GetPlainField">func (m *SimpleMsg) GetPlainField() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.GetSliceField">func (m *SimpleMsg) GetSliceField() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.ProtoMessage">func (*SimpleMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.Reset">func (m *SimpleMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.String">func (m *SimpleMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.XXX_DiscardUnknown">func (m *SimpleMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.XXX_Marshal">func (m *SimpleMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.XXX_Merge">func (dst *SimpleMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.XXX_Size">func (m *SimpleMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SimpleMsg.XXX_Unmarshal">func (m *SimpleMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StaticallyOpaqueMsg">type StaticallyOpaqueMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.Descriptor">func (*StaticallyOpaqueMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.GetMapOpaqueField">func (m *StaticallyOpaqueMsg) GetMapOpaqueField() map[string][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.GetPlainOpaqueField">func (m *StaticallyOpaqueMsg) GetPlainOpaqueField() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.GetSliceOpaqueField">func (m *StaticallyOpaqueMsg) GetSliceOpaqueField() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.ProtoMessage">func (*StaticallyOpaqueMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.Reset">func (m *StaticallyOpaqueMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueFieldProto">func (som *StaticallyOpaqueMsg) StaticallyOpaqueFieldProto(name string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueFields">func (som *StaticallyOpaqueMsg) StaticallyOpaqueFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueMapFieldProto">func (som *StaticallyOpaqueMsg) StaticallyOpaqueMapFieldProto(name string, key string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueMapFields">func (som *StaticallyOpaqueMsg) StaticallyOpaqueMapFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueSliceFieldProto">func (som *StaticallyOpaqueMsg) StaticallyOpaqueSliceFieldProto(name string, index int) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueSliceFields">func (som *StaticallyOpaqueMsg) StaticallyOpaqueSliceFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.String">func (m *StaticallyOpaqueMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.XXX_DiscardUnknown">func (m *StaticallyOpaqueMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.XXX_Marshal">func (m *StaticallyOpaqueMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.XXX_Merge">func (dst *StaticallyOpaqueMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.XXX_Size">func (m *StaticallyOpaqueMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StaticallyOpaqueMsg.XXX_Unmarshal">func (m *StaticallyOpaqueMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#UnmarshalableDeepFields">type UnmarshalableDeepFields</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.Descriptor">func (*UnmarshalableDeepFields) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.GetMapOpaqueField">func (m *UnmarshalableDeepFields) GetMapOpaqueField() map[string][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.GetPlainOpaqueField">func (m *UnmarshalableDeepFields) GetPlainOpaqueField() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.GetSliceOpaqueField">func (m *UnmarshalableDeepFields) GetSliceOpaqueField() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.ProtoMessage">func (*UnmarshalableDeepFields) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.Reset">func (m *UnmarshalableDeepFields) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueFieldProto">func (udf *UnmarshalableDeepFields) StaticallyOpaqueFieldProto(name string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueFields">func (udf *UnmarshalableDeepFields) StaticallyOpaqueFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueMapFieldProto">func (udf *UnmarshalableDeepFields) StaticallyOpaqueMapFieldProto(name, key string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueMapFields">func (udf *UnmarshalableDeepFields) StaticallyOpaqueMapFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueSliceFieldProto">func (udf *UnmarshalableDeepFields) StaticallyOpaqueSliceFieldProto(name string, index int) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.StaticallyOpaqueSliceFields">func (udf *UnmarshalableDeepFields) StaticallyOpaqueSliceFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.String">func (m *UnmarshalableDeepFields) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.XXX_DiscardUnknown">func (m *UnmarshalableDeepFields) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.XXX_Marshal">func (m *UnmarshalableDeepFields) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.XXX_Merge">func (dst *UnmarshalableDeepFields) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.XXX_Size">func (m *UnmarshalableDeepFields) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UnmarshalableDeepFields.XXX_Unmarshal">func (m *UnmarshalableDeepFields) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VariablyOpaqueMsg">type VariablyOpaqueMsg</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.Descriptor">func (*VariablyOpaqueMsg) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.GetMapOpaqueField">func (m *VariablyOpaqueMsg) GetMapOpaqueField() map[string][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.GetOpaqueType">func (m *VariablyOpaqueMsg) GetOpaqueType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.GetPlainOpaqueField">func (m *VariablyOpaqueMsg) GetPlainOpaqueField() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.GetSliceOpaqueField">func (m *VariablyOpaqueMsg) GetSliceOpaqueField() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.ProtoMessage">func (*VariablyOpaqueMsg) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.Reset">func (m *VariablyOpaqueMsg) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.String">func (m *VariablyOpaqueMsg) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueFieldProto">func (vom *VariablyOpaqueMsg) VariablyOpaqueFieldProto(name string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueFields">func (vom *VariablyOpaqueMsg) VariablyOpaqueFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueMapFieldProto">func (vom *VariablyOpaqueMsg) VariablyOpaqueMapFieldProto(name string, key string) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueMapFields">func (vom *VariablyOpaqueMsg) VariablyOpaqueMapFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueSliceFieldProto">func (vom *VariablyOpaqueMsg) VariablyOpaqueSliceFieldProto(name string, index int) (proto.Message, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.VariablyOpaqueSliceFields">func (vom *VariablyOpaqueMsg) VariablyOpaqueSliceFields() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.XXX_DiscardUnknown">func (m *VariablyOpaqueMsg) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.XXX_Marshal">func (m *VariablyOpaqueMsg) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.XXX_Merge">func (dst *VariablyOpaqueMsg) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.XXX_Size">func (m *VariablyOpaqueMsg) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VariablyOpaqueMsg.XXX_Unmarshal">func (m *VariablyOpaqueMsg) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go">sample.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go">sample.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ContextlessMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12038:12322#L314">ContextlessMsg</a>
+				<a class="permalink" href="index.html#ContextlessMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ContextlessMsg is designed to carry a message of completely arbitrary type
+Because there is no context for the type embedded in the message, the opaque
+type must be dynamically added at runtime
+</p>
+
+			<pre>type ContextlessMsg struct {
+<span id="ContextlessMsg.OpaqueField"></span>    OpaqueField          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=opaque_field,json=opaqueField,proto3&#34; json:&#34;opaque_field,omitempty&#34;`
+<span id="ContextlessMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ContextlessMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ContextlessMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ContextlessMsg.Descriptor">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12514:12565#L324">Descriptor</a>
+					<a class="permalink" href="index.html#ContextlessMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ContextlessMsg">ContextlessMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.GetOpaqueField">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=13258:13306#L345">GetOpaqueField</a>
+					<a class="permalink" href="index.html#ContextlessMsg.GetOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) GetOpaqueField() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.ProtoMessage">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12470:12507#L323">ProtoMessage</a>
+					<a class="permalink" href="index.html#ContextlessMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ContextlessMsg">ContextlessMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.Reset">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12324:12356#L321">Reset</a>
+					<a class="permalink" href="index.html#ContextlessMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.String">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12391:12431#L322">String</a>
+					<a class="permalink" href="index.html#ContextlessMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.VariablyOpaqueFields">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=3254:3311#L102">VariablyOpaqueFields</a>
+					<a class="permalink" href="index.html#ContextlessMsg.VariablyOpaqueFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) VariablyOpaqueFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.XXX_DiscardUnknown">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=13095:13140#L339">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ContextlessMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.XXX_Marshal">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12741:12823#L330">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ContextlessMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.XXX_Merge">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12896:12951#L333">XXX_Merge</a>
+					<a class="permalink" href="index.html#ContextlessMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.XXX_Size">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=13004:13043#L336">XXX_Size</a>
+					<a class="permalink" href="index.html#ContextlessMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ContextlessMsg.XXX_Unmarshal">func (*ContextlessMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=12627:12681#L327">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ContextlessMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ContextlessMsg">ContextlessMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DynamicMessageWrapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=3350:3421#L106">DynamicMessageWrapper</a>
+				<a class="permalink" href="index.html#DynamicMessageWrapper">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DynamicMessageWrapper struct {
+    *<a href="index.html#ContextlessMsg">ContextlessMsg</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DynamicMessageWrapper.Underlying">func (*DynamicMessageWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=3687:3747#L119">Underlying</a>
+					<a class="permalink" href="index.html#DynamicMessageWrapper.Underlying">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dmw *<a href="index.html#DynamicMessageWrapper">DynamicMessageWrapper</a>) Underlying() <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMessageWrapper.VariablyOpaqueFieldProto">func (*DynamicMessageWrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=3423:3517#L111">VariablyOpaqueFieldProto</a>
+					<a class="permalink" href="index.html#DynamicMessageWrapper.VariablyOpaqueFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dmw *<a href="index.html#DynamicMessageWrapper">DynamicMessageWrapper</a>) VariablyOpaqueFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DynamicMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=9548:10480#L249">DynamicMsg</a>
+				<a class="permalink" href="index.html#DynamicMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DynamicMsg is designed to test the dynamic message component
+The dynamic wrapper applied to ContextlessMsg is determined by
+dynamic_type
+</p>
+
+			<pre>type DynamicMsg struct {
+<span id="DynamicMsg.DynamicType"></span>    DynamicType          <a href="http://localhost:6060/pkg/builtin/#string">string</a>                     `protobuf:&#34;bytes,1,opt,name=dynamic_type,json=dynamicType,proto3&#34; json:&#34;dynamic_type,omitempty&#34;`
+<span id="DynamicMsg.PlainDynamicField"></span>    PlainDynamicField    *<a href="index.html#ContextlessMsg">ContextlessMsg</a>            `protobuf:&#34;bytes,2,opt,name=plain_dynamic_field,json=plainDynamicField,proto3&#34; json:&#34;plain_dynamic_field,omitempty&#34;`
+<span id="DynamicMsg.MapDynamicField"></span>    MapDynamicField      map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#ContextlessMsg">ContextlessMsg</a> `protobuf:&#34;bytes,3,rep,name=map_dynamic_field,json=mapDynamicField,proto3&#34; json:&#34;map_dynamic_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="DynamicMsg.SliceDynamicField"></span>    SliceDynamicField    []*<a href="index.html#ContextlessMsg">ContextlessMsg</a>          `protobuf:&#34;bytes,4,rep,name=slice_dynamic_field,json=sliceDynamicField,proto3&#34; json:&#34;slice_dynamic_field,omitempty&#34;`
+<span id="DynamicMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}                   `json:&#34;-&#34;`
+<span id="DynamicMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                     `json:&#34;-&#34;`
+<span id="DynamicMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                      `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DynamicMsg.Descriptor">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10656:10703#L262">Descriptor</a>
+					<a class="permalink" href="index.html#DynamicMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#DynamicMsg">DynamicMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicFieldProto">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4220:4322#L139">DynamicFieldProto</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, underlying <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicFields">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4127:4174#L135">DynamicFields</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicMapFieldProto">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4574:4691#L151">DynamicMapFieldProto</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicMapFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicMapFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, underlying <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicMapFields">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4480:4530#L147">DynamicMapFields</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicMapFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicMapFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicSliceFieldProto">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4954:5072#L163">DynamicSliceFieldProto</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicSliceFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicSliceFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, index <a href="http://localhost:6060/pkg/builtin/#int">int</a>, underlying <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.DynamicSliceFields">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=4856:4908#L159">DynamicSliceFields</a>
+					<a class="permalink" href="index.html#DynamicMsg.DynamicSliceFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#DynamicMsg">DynamicMsg</a>) DynamicSliceFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.GetDynamicType">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11352:11396#L283">GetDynamicType</a>
+					<a class="permalink" href="index.html#DynamicMsg.GetDynamicType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) GetDynamicType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.GetMapDynamicField">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11578:11646#L297">GetMapDynamicField</a>
+					<a class="permalink" href="index.html#DynamicMsg.GetMapDynamicField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) GetMapDynamicField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#ContextlessMsg">ContextlessMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.GetPlainDynamicField">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11454:11513#L290">GetPlainDynamicField</a>
+					<a class="permalink" href="index.html#DynamicMsg.GetPlainDynamicField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) GetPlainDynamicField() *<a href="index.html#ContextlessMsg">ContextlessMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.GetSliceDynamicField">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11709:11770#L304">GetSliceDynamicField</a>
+					<a class="permalink" href="index.html#DynamicMsg.GetSliceDynamicField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) GetSliceDynamicField() []*<a href="index.html#ContextlessMsg">ContextlessMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.ProtoMessage">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10616:10649#L261">ProtoMessage</a>
+					<a class="permalink" href="index.html#DynamicMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#DynamicMsg">DynamicMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.Reset">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10482:10510#L259">Reset</a>
+					<a class="permalink" href="index.html#DynamicMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.String">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10541:10577#L260">String</a>
+					<a class="permalink" href="index.html#DynamicMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.XXX_DiscardUnknown">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11201:11242#L277">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#DynamicMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.XXX_Marshal">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10871:10949#L268">XXX_Marshal</a>
+					<a class="permalink" href="index.html#DynamicMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.XXX_Merge">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11018:11069#L271">XXX_Merge</a>
+					<a class="permalink" href="index.html#DynamicMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#DynamicMsg">DynamicMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.XXX_Size">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=11118:11153#L274">XXX_Size</a>
+					<a class="permalink" href="index.html#DynamicMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DynamicMsg.XXX_Unmarshal">func (*DynamicMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=10765:10815#L265">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#DynamicMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DynamicMsg">DynamicMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NestedMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2724:3470#L72">NestedMsg</a>
+				<a class="permalink" href="index.html#NestedMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NestedMsg is designed to test the nested message component
+</p>
+
+			<pre>type NestedMsg struct {
+<span id="NestedMsg.PlainNestedField"></span>    PlainNestedField     *<a href="index.html#SimpleMsg">SimpleMsg</a>            `protobuf:&#34;bytes,1,opt,name=plain_nested_field,json=plainNestedField,proto3&#34; json:&#34;plain_nested_field,omitempty&#34;`
+<span id="NestedMsg.MapNestedField"></span>    MapNestedField       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#SimpleMsg">SimpleMsg</a> `protobuf:&#34;bytes,2,rep,name=map_nested_field,json=mapNestedField,proto3&#34; json:&#34;map_nested_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="NestedMsg.SliceNestedField"></span>    SliceNestedField     []*<a href="index.html#SimpleMsg">SimpleMsg</a>          `protobuf:&#34;bytes,3,rep,name=slice_nested_field,json=sliceNestedField,proto3&#34; json:&#34;slice_nested_field,omitempty&#34;`
+<span id="NestedMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}              `json:&#34;-&#34;`
+<span id="NestedMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                `json:&#34;-&#34;`
+<span id="NestedMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                 `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NestedMsg.Descriptor">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3642:3688#L84">Descriptor</a>
+					<a class="permalink" href="index.html#NestedMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NestedMsg">NestedMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.GetMapNestedField">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4442:4503#L112">GetMapNestedField</a>
+					<a class="permalink" href="index.html#NestedMsg.GetMapNestedField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) GetMapNestedField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#SimpleMsg">SimpleMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.GetPlainNestedField">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4326:4378#L105">GetPlainNestedField</a>
+					<a class="permalink" href="index.html#NestedMsg.GetPlainNestedField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) GetPlainNestedField() *<a href="index.html#SimpleMsg">SimpleMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.GetSliceNestedField">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4565:4619#L119">GetSliceNestedField</a>
+					<a class="permalink" href="index.html#NestedMsg.GetSliceNestedField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) GetSliceNestedField() []*<a href="index.html#SimpleMsg">SimpleMsg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.ProtoMessage">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3603:3635#L83">ProtoMessage</a>
+					<a class="permalink" href="index.html#NestedMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NestedMsg">NestedMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.Reset">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3472:3499#L81">Reset</a>
+					<a class="permalink" href="index.html#NestedMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.String">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3529:3564#L82">String</a>
+					<a class="permalink" href="index.html#NestedMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.XXX_DiscardUnknown">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4178:4218#L99">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#NestedMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.XXX_Marshal">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3854:3931#L90">XXX_Marshal</a>
+					<a class="permalink" href="index.html#NestedMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.XXX_Merge">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3999:4049#L93">XXX_Merge</a>
+					<a class="permalink" href="index.html#NestedMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#NestedMsg">NestedMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.XXX_Size">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4097:4131#L96">XXX_Size</a>
+					<a class="permalink" href="index.html#NestedMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NestedMsg.XXX_Unmarshal">func (*NestedMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=3750:3799#L87">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#NestedMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NestedMsg">NestedMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SimpleMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=836:1498#L17">SimpleMsg</a>
+				<a class="permalink" href="index.html#SimpleMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SimpleMsg is designed to test that all three types of message fields, plain, map,
+and slice are handled by the protolator tool
+</p>
+
+			<pre>type SimpleMsg struct {
+<span id="SimpleMsg.PlainField"></span>    PlainField           <a href="http://localhost:6060/pkg/builtin/#string">string</a>            `protobuf:&#34;bytes,1,opt,name=plain_field,json=plainField,proto3&#34; json:&#34;plain_field,omitempty&#34;`
+<span id="SimpleMsg.MapField"></span>    MapField             map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,rep,name=map_field,json=mapField,proto3&#34; json:&#34;map_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="SimpleMsg.SliceField"></span>    SliceField           []<a href="http://localhost:6060/pkg/builtin/#string">string</a>          `protobuf:&#34;bytes,3,rep,name=slice_field,json=sliceField,proto3&#34; json:&#34;slice_field,omitempty&#34;`
+<span id="SimpleMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="SimpleMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="SimpleMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SimpleMsg.Descriptor">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1670:1716#L29">Descriptor</a>
+					<a class="permalink" href="index.html#SimpleMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SimpleMsg">SimpleMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.GetMapField">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2453:2504#L57">GetMapField</a>
+					<a class="permalink" href="index.html#SimpleMsg.GetMapField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) GetMapField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.GetPlainField">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2354:2396#L50">GetPlainField</a>
+					<a class="permalink" href="index.html#SimpleMsg.GetPlainField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) GetPlainField() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.GetSliceField">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2560:2604#L64">GetSliceField</a>
+					<a class="permalink" href="index.html#SimpleMsg.GetSliceField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) GetSliceField() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.ProtoMessage">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1631:1663#L28">ProtoMessage</a>
+					<a class="permalink" href="index.html#SimpleMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SimpleMsg">SimpleMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.Reset">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1500:1527#L26">Reset</a>
+					<a class="permalink" href="index.html#SimpleMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.String">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1557:1592#L27">String</a>
+					<a class="permalink" href="index.html#SimpleMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.XXX_DiscardUnknown">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2206:2246#L44">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SimpleMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.XXX_Marshal">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1882:1959#L35">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SimpleMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.XXX_Merge">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2027:2077#L38">XXX_Merge</a>
+					<a class="permalink" href="index.html#SimpleMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SimpleMsg">SimpleMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.XXX_Size">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=2125:2159#L41">XXX_Size</a>
+					<a class="permalink" href="index.html#SimpleMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SimpleMsg.XXX_Unmarshal">func (*SimpleMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=1778:1827#L32">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SimpleMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SimpleMsg">SimpleMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StaticallyOpaqueMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=4827:5559#L128">StaticallyOpaqueMsg</a>
+				<a class="permalink" href="index.html#StaticallyOpaqueMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StaticallyOpaqueMsg is designed to test the statically opaque message component
+All fields are statically marshaled to the NestedMsg type
+</p>
+
+			<pre>type StaticallyOpaqueMsg struct {
+<span id="StaticallyOpaqueMsg.PlainOpaqueField"></span>    PlainOpaqueField     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `protobuf:&#34;bytes,1,opt,name=plain_opaque_field,json=plainOpaqueField,proto3&#34; json:&#34;plain_opaque_field,omitempty&#34;`
+<span id="StaticallyOpaqueMsg.MapOpaqueField"></span>    MapOpaqueField       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,rep,name=map_opaque_field,json=mapOpaqueField,proto3&#34; json:&#34;map_opaque_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="StaticallyOpaqueMsg.SliceOpaqueField"></span>    SliceOpaqueField     [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `protobuf:&#34;bytes,3,rep,name=slice_opaque_field,json=sliceOpaqueField,proto3&#34; json:&#34;slice_opaque_field,omitempty&#34;`
+<span id="StaticallyOpaqueMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="StaticallyOpaqueMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="StaticallyOpaqueMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StaticallyOpaqueMsg.Descriptor">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=5771:5827#L140">Descriptor</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.GetMapOpaqueField">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6697:6764#L168">GetMapOpaqueField</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.GetMapOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) GetMapOpaqueField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.GetPlainOpaqueField">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6575:6633#L161">GetPlainOpaqueField</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.GetPlainOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) GetPlainOpaqueField() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.GetSliceOpaqueField">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6826:6886#L175">GetSliceOpaqueField</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.GetSliceOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) GetSliceOpaqueField() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.ProtoMessage">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=5722:5764#L139">ProtoMessage</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.Reset">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=5561:5598#L137">Reset</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueFieldProto">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=777:871#L19">StaticallyOpaqueFieldProto</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueFields">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=667:732#L15">StaticallyOpaqueFields</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueMapFieldProto">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=1132:1241#L31">StaticallyOpaqueMapFieldProto</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueMapFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueMapFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueMapFields">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=1021:1089#L27">StaticallyOpaqueMapFields</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueMapFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueMapFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueSliceFieldProto">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=1509:1619#L43">StaticallyOpaqueSliceFieldProto</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueSliceFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueSliceFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, index <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.StaticallyOpaqueSliceFields">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=1394:1464#L39">StaticallyOpaqueSliceFields</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.StaticallyOpaqueSliceFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (som *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) StaticallyOpaqueSliceFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.String">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=5638:5683#L138">String</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.XXX_DiscardUnknown">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6397:6447#L155">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.XXX_Marshal">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6013:6100#L146">XXX_Marshal</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.XXX_Merge">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6178:6238#L149">XXX_Merge</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.XXX_Size">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=6296:6340#L152">XXX_Size</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StaticallyOpaqueMsg.XXX_Unmarshal">func (*StaticallyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=5889:5948#L143">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#StaticallyOpaqueMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#StaticallyOpaqueMsg">StaticallyOpaqueMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UnmarshalableDeepFields">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=13506:14242#L354">UnmarshalableDeepFields</a>
+				<a class="permalink" href="index.html#UnmarshalableDeepFields">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UnmarshalableDeepFields contains fields which are defined to be opaque, but will
+return an error if they are asked to be deserialized.
+</p>
+
+			<pre>type UnmarshalableDeepFields struct {
+<span id="UnmarshalableDeepFields.PlainOpaqueField"></span>    PlainOpaqueField     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `protobuf:&#34;bytes,1,opt,name=plain_opaque_field,json=plainOpaqueField,proto3&#34; json:&#34;plain_opaque_field,omitempty&#34;`
+<span id="UnmarshalableDeepFields.MapOpaqueField"></span>    MapOpaqueField       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,rep,name=map_opaque_field,json=mapOpaqueField,proto3&#34; json:&#34;map_opaque_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="UnmarshalableDeepFields.SliceOpaqueField"></span>    SliceOpaqueField     [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `protobuf:&#34;bytes,3,rep,name=slice_opaque_field,json=sliceOpaqueField,proto3&#34; json:&#34;slice_opaque_field,omitempty&#34;`
+<span id="UnmarshalableDeepFields.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="UnmarshalableDeepFields.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="UnmarshalableDeepFields.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UnmarshalableDeepFields.Descriptor">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14470:14530#L366">Descriptor</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.GetMapOpaqueField">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=15448:15519#L394">GetMapOpaqueField</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.GetMapOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) GetMapOpaqueField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.GetPlainOpaqueField">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=15322:15384#L387">GetPlainOpaqueField</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.GetPlainOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) GetPlainOpaqueField() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.GetSliceOpaqueField">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=15581:15645#L401">GetSliceOpaqueField</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.GetSliceOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) GetSliceOpaqueField() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.ProtoMessage">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14417:14463#L365">ProtoMessage</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.Reset">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14244:14285#L363">Reset</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueFieldProto">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5355:5453#L175">StaticallyOpaqueFieldProto</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueFields">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5241:5310#L171">StaticallyOpaqueFields</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueMapFieldProto">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5619:5725#L183">StaticallyOpaqueMapFieldProto</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueMapFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueMapFieldProto(name, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueMapFields">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5504:5576#L179">StaticallyOpaqueMapFields</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueMapFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueMapFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueSliceFieldProto">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5895:6009#L191">StaticallyOpaqueSliceFieldProto</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueSliceFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueSliceFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, index <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.StaticallyOpaqueSliceFields">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=5776:5850#L187">StaticallyOpaqueSliceFields</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.StaticallyOpaqueSliceFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (udf *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) StaticallyOpaqueSliceFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.String">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14329:14378#L364">String</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.XXX_DiscardUnknown">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=15132:15186#L381">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.XXX_Marshal">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14724:14815#L372">XXX_Marshal</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.XXX_Merge">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14897:14961#L375">XXX_Merge</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.XXX_Size">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=15023:15071#L378">XXX_Size</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="UnmarshalableDeepFields.XXX_Unmarshal">func (*UnmarshalableDeepFields) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=14592:14655#L369">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#UnmarshalableDeepFields.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#UnmarshalableDeepFields">UnmarshalableDeepFields</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VariablyOpaqueMsg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=7078:7942#L184">VariablyOpaqueMsg</a>
+				<a class="permalink" href="index.html#VariablyOpaqueMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VariablyOpaqueMsg is designed to test the staticaly opaque message component
+The opaque type is determined by opaque_type
+</p>
+
+			<pre>type VariablyOpaqueMsg struct {
+<span id="VariablyOpaqueMsg.OpaqueType"></span>    OpaqueType           <a href="http://localhost:6060/pkg/builtin/#string">string</a>            `protobuf:&#34;bytes,1,opt,name=opaque_type,json=opaqueType,proto3&#34; json:&#34;opaque_type,omitempty&#34;`
+<span id="VariablyOpaqueMsg.PlainOpaqueField"></span>    PlainOpaqueField     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `protobuf:&#34;bytes,2,opt,name=plain_opaque_field,json=plainOpaqueField,proto3&#34; json:&#34;plain_opaque_field,omitempty&#34;`
+<span id="VariablyOpaqueMsg.MapOpaqueField"></span>    MapOpaqueField       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,rep,name=map_opaque_field,json=mapOpaqueField,proto3&#34; json:&#34;map_opaque_field,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="VariablyOpaqueMsg.SliceOpaqueField"></span>    SliceOpaqueField     [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `protobuf:&#34;bytes,4,rep,name=slice_opaque_field,json=sliceOpaqueField,proto3&#34; json:&#34;slice_opaque_field,omitempty&#34;`
+<span id="VariablyOpaqueMsg.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="VariablyOpaqueMsg.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="VariablyOpaqueMsg.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VariablyOpaqueMsg.Descriptor">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8146:8200#L197">Descriptor</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.GetMapOpaqueField">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=9153:9218#L232">GetMapOpaqueField</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.GetMapOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) GetMapOpaqueField() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.GetOpaqueType">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8926:8976#L218">GetOpaqueType</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.GetOpaqueType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) GetOpaqueType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.GetPlainOpaqueField">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=9033:9089#L225">GetPlainOpaqueField</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.GetPlainOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) GetPlainOpaqueField() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.GetSliceOpaqueField">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=9280:9338#L239">GetSliceOpaqueField</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.GetSliceOpaqueField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) GetSliceOpaqueField() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.ProtoMessage">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8099:8139#L196">ProtoMessage</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.Reset">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=7944:7979#L194">Reset</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.String">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8017:8060#L195">String</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueFieldProto">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2256:2346#L70">VariablyOpaqueFieldProto</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueFields">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2150:2211#L66">VariablyOpaqueFields</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueMapFieldProto">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2610:2715#L82">VariablyOpaqueMapFieldProto</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueMapFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueMapFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueMapFields">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2503:2567#L78">VariablyOpaqueMapFields</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueMapFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueMapFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueSliceFieldProto">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2986:3092#L94">VariablyOpaqueSliceFieldProto</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueSliceFieldProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueSliceFieldProto(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, index <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.VariablyOpaqueSliceFields">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.go?s=2875:2941#L90">VariablyOpaqueSliceFields</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.VariablyOpaqueSliceFields">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vom *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) VariablyOpaqueSliceFields() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.XXX_DiscardUnknown">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8754:8802#L212">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.XXX_Marshal">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8382:8467#L203">XXX_Marshal</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.XXX_Merge">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8543:8601#L206">XXX_Merge</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.XXX_Size">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8657:8699#L209">XXX_Size</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="VariablyOpaqueMsg.XXX_Unmarshal">func (*VariablyOpaqueMsg) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/protolator/testprotos/sample.pb.go?s=8262:8319#L200">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#VariablyOpaqueMsg.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#VariablyOpaqueMsg">VariablyOpaqueMsg</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

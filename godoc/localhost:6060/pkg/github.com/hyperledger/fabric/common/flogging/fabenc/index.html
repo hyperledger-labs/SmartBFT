@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>fabenc - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package fabenc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/flogging/fabenc"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ResetColor">func ResetColor() string</a></dd>
+			
+				
+				<dd><a href="index.html#SetSequence">func SetSequence(s uint64)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Color">type Color</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Color.Bold">func (c Color) Bold() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Color.Normal">func (c Color) Normal() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ColorFormatter">type ColorFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ColorFormatter.Format">func (c ColorFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ColorFormatter.LevelColor">func (c ColorFormatter) LevelColor(l zapcore.Level) Color</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FormatEncoder">type FormatEncoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFormatEncoder">func NewFormatEncoder(formatters ...Formatter) *FormatEncoder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FormatEncoder.Clone">func (f *FormatEncoder) Clone() zapcore.Encoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FormatEncoder.EncodeEntry">func (f *FormatEncoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field) (*buffer.Buffer, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Formatter">type Formatter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFormatter">func NewFormatter(verb, format string) (Formatter, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ParseFormat">func ParseFormat(spec string) ([]Formatter, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LevelFormatter">type LevelFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LevelFormatter.Format">func (l LevelFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MessageFormatter">type MessageFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MessageFormatter.Format">func (m MessageFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ModuleFormatter">type ModuleFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ModuleFormatter.Format">func (m ModuleFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MultiFormatter">type MultiFormatter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMultiFormatter">func NewMultiFormatter(formatters ...Formatter) *MultiFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MultiFormatter.Format">func (m *MultiFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MultiFormatter.SetFormatters">func (m *MultiFormatter) SetFormatters(formatters []Formatter)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SequenceFormatter">type SequenceFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SequenceFormatter.Format">func (s SequenceFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ShortFuncFormatter">type ShortFuncFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ShortFuncFormatter.Format">func (s ShortFuncFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StringFormatter">type StringFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StringFormatter.Format">func (s StringFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TimeFormatter">type TimeFormatter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TimeFormatter.Format">func (t TimeFormatter) Format(w io.Writer, entry zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/color.go">color.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go">encoder.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go">formatter.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ResetColor">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/color.go?s=475:499#L29">ResetColor</a>
+				<a class="permalink" href="index.html#ResetColor">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetColor() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="SetSequence">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=7038:7064#L232">SetSequence</a>
+				<a class="permalink" href="index.html#SetSequence">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetSequence(s <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+			<p>
+SetSequence explicitly sets the global sequence number.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Color">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/color.go?s=120:136#L3">Color</a>
+				<a class="permalink" href="index.html#Color">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Color <a href="http://localhost:6060/pkg/builtin/#uint8">uint8</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="ColorBlack">ColorBlack</span> <a href="index.html#Color">Color</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a> + 30
+    <span id="ColorRed">ColorRed</span>
+    <span id="ColorGreen">ColorGreen</span>
+    <span id="ColorYellow">ColorYellow</span>
+    <span id="ColorBlue">ColorBlue</span>
+    <span id="ColorMagenta">ColorMagenta</span>
+    <span id="ColorCyan">ColorCyan</span>
+    <span id="ColorWhite">ColorWhite</span>
+)</pre>
+			
+				
+				<pre>const <span id="ColorNone">ColorNone</span> <a href="index.html#Color">Color</a> = 0</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Color.Bold">func (Color) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/color.go?s=360:388#L22">Bold</a>
+					<a class="permalink" href="index.html#Color.Bold">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Color">Color</a>) Bold() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Color.Normal">func (Color) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/color.go?s=289:319#L18">Normal</a>
+					<a class="permalink" href="index.html#Color.Normal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Color">Color</a>) Normal() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ColorFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=4328:4439#L141">ColorFormatter</a>
+				<a class="permalink" href="index.html#ColorFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ColorFormatter formats an SGR color code.
+</p>
+
+			<pre>type ColorFormatter struct {
+<span id="ColorFormatter.Bold"></span>    Bold  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// set the bold attribute</span>
+<span id="ColorFormatter.Reset"></span>    Reset <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// reset colors and attributes</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ColorFormatter.Format">func (ColorFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=5291:5379#L180">Format</a>
+					<a class="permalink" href="index.html#ColorFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#ColorFormatter">ColorFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the SGR color code to the provided writer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ColorFormatter.LevelColor">func (ColorFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=4828:4885#L160">LevelColor</a>
+					<a class="permalink" href="index.html#ColorFormatter.LevelColor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#ColorFormatter">ColorFormatter</a>) LevelColor(l <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a>) <a href="index.html#Color">Color</a></pre>
+				<p>
+LevelColor returns the Color associated with a specific zap logging level.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FormatEncoder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go?s=341:435#L10">FormatEncoder</a>
+				<a class="permalink" href="index.html#FormatEncoder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A FormatEncoder is a zapcore.Encoder that formats log records according to a
+go-logging based format specifier.
+</p>
+
+			<pre>type FormatEncoder struct {
+    <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Encoder">Encoder</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFormatEncoder">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go?s=603:664#L21">NewFormatEncoder</a>
+					<a class="permalink" href="index.html#NewFormatEncoder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFormatEncoder(formatters ...<a href="index.html#Formatter">Formatter</a>) *<a href="index.html#FormatEncoder">FormatEncoder</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="FormatEncoder.Clone">func (*FormatEncoder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go?s=1312:1359#L42">Clone</a>
+					<a class="permalink" href="index.html#FormatEncoder.Clone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FormatEncoder">FormatEncoder</a>) Clone() <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Encoder">Encoder</a></pre>
+				<p>
+Clone creates a new instance of this encoder with the same configuration.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FormatEncoder.EncodeEntry">func (*FormatEncoder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go?s=1687:1791#L53">EncodeEntry</a>
+					<a class="permalink" href="index.html#FormatEncoder.EncodeEntry">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FormatEncoder">FormatEncoder</a>) EncodeEntry(entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>) (*<a href="http://localhost:6060/pkg/go.uber.org/zap/buffer/">buffer</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/buffer/#Buffer">Buffer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EncodeEntry formats a zap log record. The structured fields are formatted by a
+zapcore.ConsoleEncoder and are appended as JSON to the end of the formatted entry.
+All entries are terminated by a newline.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Formatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/encoder.go?s=507:601#L17">Formatter</a>
+				<a class="permalink" href="index.html#Formatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Formatter is used to format and write data from a zap log entry.
+</p>
+
+			<pre>type Formatter interface {
+    Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFormatter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=3747:3804#L119">NewFormatter</a>
+					<a class="permalink" href="index.html#NewFormatter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFormatter(verb, format <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Formatter">Formatter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewFormatter creates the formatter for the provided verb. When a format is
+not provided, the default format for the verb is used.
+</p>
+
+				
+				
+			
+				
+				<h3 id="ParseFormat">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=1452:1502#L38">ParseFormat</a>
+					<a class="permalink" href="index.html#ParseFormat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ParseFormat(spec <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="index.html#Formatter">Formatter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParseFormat parses a log format spec and returns a slice of formatters
+that should be iterated over to build a formatted log record.
+</p>
+<p>
+The op-loggng specifiers supported by this formatter are:
+</p>
+<pre>- %{color} - level specific SGR color escape or SGR reset
+- %{id} - a unique log sequence number
+- %{level} - the log level of the entry
+- %{message} - the log message
+- %{module} - the zap logger name
+- %{shortfunc} - the name of the function creating the log record
+- %{time} - the time the log entry was created
+</pre>
+<p>
+Specifiers may include an optional format verb:
+</p>
+<pre>- color: reset|bold
+- id: a fmt style numeric formatter without the leading %
+- level: a fmt style string formatter without the leading %
+- message: a fmt style string formatter without the leading %
+- module: a fmt style string formatter without the leading %
+</pre>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="LevelFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=5611:5658#L192">LevelFormatter</a>
+				<a class="permalink" href="index.html#LevelFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LevelFormatter formats a log level.
+</p>
+
+			<pre>type LevelFormatter struct{ FormatVerb <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LevelFormatter.Format">func (LevelFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=5838:5926#L199">Format</a>
+					<a class="permalink" href="index.html#LevelFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#LevelFormatter">LevelFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the logging level to the provided writer.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MessageFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=6034:6083#L204">MessageFormatter</a>
+				<a class="permalink" href="index.html#MessageFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MessageFormatter formats a log message.
+</p>
+
+			<pre>type MessageFormatter struct{ FormatVerb <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MessageFormatter.Format">func (MessageFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=6273:6363#L211">Format</a>
+					<a class="permalink" href="index.html#MessageFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m <a href="index.html#MessageFormatter">MessageFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the log entry message to the provided writer.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ModuleFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=6487:6535#L216">ModuleFormatter</a>
+				<a class="permalink" href="index.html#ModuleFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ModuleFormatter formats the zap logger name.
+</p>
+
+			<pre>type ModuleFormatter struct{ FormatVerb <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ModuleFormatter.Format">func (ModuleFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=6721:6810#L223">Format</a>
+					<a class="permalink" href="index.html#ModuleFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m <a href="index.html#ModuleFormatter">ModuleFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the zap logger name to the specified writer.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MultiFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=2493:2572#L78">MultiFormatter</a>
+				<a class="permalink" href="index.html#MultiFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MultiFormatter presents multiple formatters as a single Formatter. It can
+be used to change the set of formatters associated with an encoder at
+runtime.
+</p>
+
+			<pre>type MultiFormatter struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMultiFormatter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=2730:2793#L86">NewMultiFormatter</a>
+					<a class="permalink" href="index.html#NewMultiFormatter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMultiFormatter(formatters ...<a href="index.html#Formatter">Formatter</a>) *<a href="index.html#MultiFormatter">MultiFormatter</a></pre>
+				<p>
+NewMultiFormatter creates a new MultiFormatter that delegates to the
+provided formatters. The formatters are used in the order they are
+presented.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MultiFormatter.Format">func (*MultiFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=2941:3030#L94">Format</a>
+					<a class="permalink" href="index.html#MultiFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MultiFormatter">MultiFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format iterates over its delegates to format a log record to the provided
+buffer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MultiFormatter.SetFormatters">func (*MultiFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=3200:3262#L103">SetFormatters</a>
+					<a class="permalink" href="index.html#MultiFormatter.SetFormatters">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MultiFormatter">MultiFormatter</a>) SetFormatters(formatters []<a href="index.html#Formatter">Formatter</a>)</pre>
+				<p>
+SetFormatters replaces the delegate formatters.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SequenceFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=7158:7208#L235">SequenceFormatter</a>
+				<a class="permalink" href="index.html#SequenceFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SequenceFormatter formats a global sequence number.
+</p>
+
+			<pre>type SequenceFormatter struct{ FormatVerb <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SequenceFormatter.Format">func (SequenceFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=7436:7527#L243">Format</a>
+					<a class="permalink" href="index.html#SequenceFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SequenceFormatter">SequenceFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+SequenceFormatter increments a global sequence number and writes it to the
+provided writer.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ShortFuncFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=7675:7726#L248">ShortFuncFormatter</a>
+				<a class="permalink" href="index.html#ShortFuncFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ShortFuncFormatter formats the name of the function creating the log record.
+</p>
+
+			<pre>type ShortFuncFormatter struct{ FormatVerb <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ShortFuncFormatter.Format">func (ShortFuncFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=8015:8107#L256">Format</a>
+					<a class="permalink" href="index.html#ShortFuncFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#ShortFuncFormatter">ShortFuncFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the calling function name to the provided writer. The name is obtained from
+the runtime and the package and line numbers are discarded.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StringFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=3374:3417#L110">StringFormatter</a>
+				<a class="permalink" href="index.html#StringFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A StringFormatter formats a fixed string.
+</p>
+
+			<pre>type StringFormatter struct{ Value <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StringFormatter.Format">func (StringFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=3485:3574#L113">Format</a>
+					<a class="permalink" href="index.html#StringFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#StringFormatter">StringFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the formatter&#39;s fixed string to provided writer.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TimeFormatter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=8394:8436#L269">TimeFormatter</a>
+				<a class="permalink" href="index.html#TimeFormatter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TimeFormatter formats the time from the zap log entry.
+</p>
+
+			<pre>type TimeFormatter struct{ Layout <a href="http://localhost:6060/pkg/builtin/#string">string</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TimeFormatter.Format">func (TimeFormatter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/fabenc/formatter.go?s=8639:8726#L276">Format</a>
+					<a class="permalink" href="index.html#TimeFormatter.Format">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#TimeFormatter">TimeFormatter</a>) Format(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, entry <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				<p>
+Format writes the log record time stamp to the provided writer.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

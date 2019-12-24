@@ -1,0 +1,4165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>smartbftprotos - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package smartbftprotos
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/protos/orderer/smartbftprotos"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Commit">type Commit</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.Descriptor">func (*Commit) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.GetAssist">func (m *Commit) GetAssist() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.GetDigest">func (m *Commit) GetDigest() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.GetSeq">func (m *Commit) GetSeq() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.GetSignature">func (m *Commit) GetSignature() *Signature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.GetView">func (m *Commit) GetView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.ProtoMessage">func (*Commit) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.Reset">func (m *Commit) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.String">func (m *Commit) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.XXX_DiscardUnknown">func (m *Commit) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.XXX_Marshal">func (m *Commit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.XXX_Merge">func (dst *Commit) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.XXX_Size">func (m *Commit) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Commit.XXX_Unmarshal">func (m *Commit) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Error">type Error</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.Descriptor">func (*Error) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.GetDigest">func (m *Error) GetDigest() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.GetReason">func (m *Error) GetReason() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.GetSeq">func (m *Error) GetSeq() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.GetView">func (m *Error) GetView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.ProtoMessage">func (*Error) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.Reset">func (m *Error) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.String">func (m *Error) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.XXX_DiscardUnknown">func (m *Error) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.XXX_Marshal">func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.XXX_Merge">func (dst *Error) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.XXX_Size">func (m *Error) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Error.XXX_Unmarshal">func (m *Error) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HeartBeat">type HeartBeat</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.Descriptor">func (*HeartBeat) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.GetSeq">func (m *HeartBeat) GetSeq() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.GetView">func (m *HeartBeat) GetView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.ProtoMessage">func (*HeartBeat) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.Reset">func (m *HeartBeat) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.String">func (m *HeartBeat) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.XXX_DiscardUnknown">func (m *HeartBeat) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.XXX_Marshal">func (m *HeartBeat) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.XXX_Merge">func (dst *HeartBeat) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.XXX_Size">func (m *HeartBeat) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeartBeat.XXX_Unmarshal">func (m *HeartBeat) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LogRecord">type LogRecord</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.Descriptor">func (*LogRecord) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.GetData">func (m *LogRecord) GetData() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.GetTruncateTo">func (m *LogRecord) GetTruncateTo() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.GetType">func (m *LogRecord) GetType() LogRecord_Type</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.ProtoMessage">func (*LogRecord) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.Reset">func (m *LogRecord) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.String">func (m *LogRecord) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.XXX_DiscardUnknown">func (m *LogRecord) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.XXX_Marshal">func (m *LogRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.XXX_Merge">func (dst *LogRecord) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.XXX_Size">func (m *LogRecord) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord.XXX_Unmarshal">func (m *LogRecord) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LogRecord_Type">type LogRecord_Type</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord_Type.EnumDescriptor">func (LogRecord_Type) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogRecord_Type.String">func (x LogRecord_Type) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Message">type Message</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Descriptor">func (*Message) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetCommit">func (m *Message) GetCommit() *Commit</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetContent">func (m *Message) GetContent() isMessage_Content</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetError">func (m *Message) GetError() *Error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetHeartBeat">func (m *Message) GetHeartBeat() *HeartBeat</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetNewView">func (m *Message) GetNewView() *NewView</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetPrePrepare">func (m *Message) GetPrePrepare() *PrePrepare</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetPrepare">func (m *Message) GetPrepare() *Prepare</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetViewChange">func (m *Message) GetViewChange() *ViewChange</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetViewData">func (m *Message) GetViewData() *SignedViewData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.ProtoMessage">func (*Message) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Reset">func (m *Message) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.String">func (m *Message) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_DiscardUnknown">func (m *Message) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Marshal">func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Merge">func (dst *Message) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_OneofFuncs">func (*Message) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Size">func (m *Message) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Unmarshal">func (m *Message) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Message_Commit">type Message_Commit</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_Error">type Message_Error</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_HeartBeat">type Message_HeartBeat</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_NewView">type Message_NewView</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_PrePrepare">type Message_PrePrepare</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_Prepare">type Message_Prepare</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_ViewChange">type Message_ViewChange</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message_ViewData">type Message_ViewData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NewView">type NewView</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.Descriptor">func (*NewView) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.GetSignedViewData">func (m *NewView) GetSignedViewData() []*SignedViewData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.ProtoMessage">func (*NewView) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.Reset">func (m *NewView) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.String">func (m *NewView) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.XXX_DiscardUnknown">func (m *NewView) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.XXX_Marshal">func (m *NewView) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.XXX_Merge">func (dst *NewView) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.XXX_Size">func (m *NewView) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewView.XXX_Unmarshal">func (m *NewView) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PrePrepare">type PrePrepare</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.Descriptor">func (*PrePrepare) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.GetProposal">func (m *PrePrepare) GetProposal() *Proposal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.GetSeq">func (m *PrePrepare) GetSeq() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.GetView">func (m *PrePrepare) GetView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.ProtoMessage">func (*PrePrepare) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.Reset">func (m *PrePrepare) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.String">func (m *PrePrepare) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.XXX_DiscardUnknown">func (m *PrePrepare) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.XXX_Marshal">func (m *PrePrepare) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.XXX_Merge">func (dst *PrePrepare) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.XXX_Size">func (m *PrePrepare) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrePrepare.XXX_Unmarshal">func (m *PrePrepare) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Prepare">type Prepare</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.Descriptor">func (*Prepare) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.GetAssist">func (m *Prepare) GetAssist() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.GetDigest">func (m *Prepare) GetDigest() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.GetSeq">func (m *Prepare) GetSeq() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.GetSignature">func (m *Prepare) GetSignature() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.GetView">func (m *Prepare) GetView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.ProtoMessage">func (*Prepare) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.Reset">func (m *Prepare) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.String">func (m *Prepare) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.XXX_DiscardUnknown">func (m *Prepare) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.XXX_Marshal">func (m *Prepare) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.XXX_Merge">func (dst *Prepare) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.XXX_Size">func (m *Prepare) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prepare.XXX_Unmarshal">func (m *Prepare) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Proposal">type Proposal</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.Descriptor">func (*Proposal) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.GetHeader">func (m *Proposal) GetHeader() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.GetMetadata">func (m *Proposal) GetMetadata() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.GetPayload">func (m *Proposal) GetPayload() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.GetVerificationSequence">func (m *Proposal) GetVerificationSequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.ProtoMessage">func (*Proposal) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.Reset">func (m *Proposal) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.String">func (m *Proposal) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.XXX_DiscardUnknown">func (m *Proposal) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.XXX_Marshal">func (m *Proposal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.XXX_Merge">func (dst *Proposal) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.XXX_Size">func (m *Proposal) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Proposal.XXX_Unmarshal">func (m *Proposal) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ProposedRecord">type ProposedRecord</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.Descriptor">func (*ProposedRecord) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.GetPrePrepare">func (m *ProposedRecord) GetPrePrepare() *PrePrepare</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.GetPrepare">func (m *ProposedRecord) GetPrepare() *Prepare</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.ProtoMessage">func (*ProposedRecord) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.Reset">func (m *ProposedRecord) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.String">func (m *ProposedRecord) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.XXX_DiscardUnknown">func (m *ProposedRecord) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.XXX_Marshal">func (m *ProposedRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.XXX_Merge">func (dst *ProposedRecord) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.XXX_Size">func (m *ProposedRecord) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposedRecord.XXX_Unmarshal">func (m *ProposedRecord) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SavedMessage">type SavedMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.Descriptor">func (*SavedMessage) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.GetCommit">func (m *SavedMessage) GetCommit() *Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.GetContent">func (m *SavedMessage) GetContent() isSavedMessage_Content</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.GetProposedRecord">func (m *SavedMessage) GetProposedRecord() *ProposedRecord</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.ProtoMessage">func (*SavedMessage) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.Reset">func (m *SavedMessage) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.String">func (m *SavedMessage) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_DiscardUnknown">func (m *SavedMessage) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_Marshal">func (m *SavedMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_Merge">func (dst *SavedMessage) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_OneofFuncs">func (*SavedMessage) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_Size">func (m *SavedMessage) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SavedMessage.XXX_Unmarshal">func (m *SavedMessage) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SavedMessage_Commit">type SavedMessage_Commit</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SavedMessage_ProposedRecord">type SavedMessage_ProposedRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Signature">type Signature</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Descriptor">func (*Signature) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetMsg">func (m *Signature) GetMsg() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetSigner">func (m *Signature) GetSigner() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetValue">func (m *Signature) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.ProtoMessage">func (*Signature) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Reset">func (m *Signature) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.String">func (m *Signature) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_DiscardUnknown">func (m *Signature) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Marshal">func (m *Signature) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Merge">func (dst *Signature) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Size">func (m *Signature) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Unmarshal">func (m *Signature) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignedViewData">type SignedViewData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.Descriptor">func (*SignedViewData) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.GetRawViewData">func (m *SignedViewData) GetRawViewData() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.GetSignature">func (m *SignedViewData) GetSignature() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.GetSigner">func (m *SignedViewData) GetSigner() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.ProtoMessage">func (*SignedViewData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.Reset">func (m *SignedViewData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.String">func (m *SignedViewData) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.XXX_DiscardUnknown">func (m *SignedViewData) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.XXX_Marshal">func (m *SignedViewData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.XXX_Merge">func (dst *SignedViewData) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.XXX_Size">func (m *SignedViewData) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedViewData.XXX_Unmarshal">func (m *SignedViewData) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ViewChange">type ViewChange</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.Descriptor">func (*ViewChange) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.GetNextView">func (m *ViewChange) GetNextView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.GetReason">func (m *ViewChange) GetReason() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.ProtoMessage">func (*ViewChange) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.Reset">func (m *ViewChange) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.String">func (m *ViewChange) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.XXX_DiscardUnknown">func (m *ViewChange) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.XXX_Marshal">func (m *ViewChange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.XXX_Merge">func (dst *ViewChange) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.XXX_Size">func (m *ViewChange) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewChange.XXX_Unmarshal">func (m *ViewChange) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ViewData">type ViewData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.Descriptor">func (*ViewData) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.GetInFlightPrepared">func (m *ViewData) GetInFlightPrepared() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.GetInFlightProposal">func (m *ViewData) GetInFlightProposal() *Proposal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.GetLastDecision">func (m *ViewData) GetLastDecision() *Proposal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.GetLastDecisionSignatures">func (m *ViewData) GetLastDecisionSignatures() []*Signature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.GetNextView">func (m *ViewData) GetNextView() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.ProtoMessage">func (*ViewData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.Reset">func (m *ViewData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.String">func (m *ViewData) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.XXX_DiscardUnknown">func (m *ViewData) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.XXX_Marshal">func (m *ViewData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.XXX_Merge">func (dst *ViewData) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.XXX_Size">func (m *ViewData) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewData.XXX_Unmarshal">func (m *ViewData) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ViewMetadata">type ViewMetadata</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.Descriptor">func (*ViewMetadata) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.GetLatestSequence">func (m *ViewMetadata) GetLatestSequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.GetViewId">func (m *ViewMetadata) GetViewId() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.ProtoMessage">func (*ViewMetadata) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.Reset">func (m *ViewMetadata) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.String">func (m *ViewMetadata) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.XXX_DiscardUnknown">func (m *ViewMetadata) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.XXX_Marshal">func (m *ViewMetadata) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.XXX_Merge">func (dst *ViewMetadata) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.XXX_Size">func (m *ViewMetadata) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ViewMetadata.XXX_Unmarshal">func (m *ViewMetadata) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go">logrecord.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go">messages.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="LogRecord_Type_name">LogRecord_Type_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;ENTRY&#34;,
+    1: &#34;CONTROL&#34;,
+    2: &#34;CRC_ANCHOR&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="LogRecord_Type_value">LogRecord_Type_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;ENTRY&#34;:      0,
+    &#34;CONTROL&#34;:    1,
+    &#34;CRC_ANCHOR&#34;: 2,
+}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Commit">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14695:15353#L528">Commit</a>
+				<a class="permalink" href="index.html#Commit">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Commit struct {
+<span id="Commit.View"></span>    View                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>     `protobuf:&#34;varint,1,opt,name=view,proto3&#34; json:&#34;view,omitempty&#34;`
+<span id="Commit.Seq"></span>    Seq                  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>     `protobuf:&#34;varint,2,opt,name=seq,proto3&#34; json:&#34;seq,omitempty&#34;`
+<span id="Commit.Digest"></span>    Digest               <a href="http://localhost:6060/pkg/builtin/#string">string</a>     `protobuf:&#34;bytes,3,opt,name=digest,proto3&#34; json:&#34;digest,omitempty&#34;`
+<span id="Commit.Signature"></span>    Signature            *<a href="index.html#Signature">Signature</a> `protobuf:&#34;bytes,4,opt,name=signature,proto3&#34; json:&#34;signature,omitempty&#34;`
+<span id="Commit.Assist"></span>    Assist               <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>       `protobuf:&#34;varint,5,opt,name=assist,proto3&#34; json:&#34;assist,omitempty&#34;`
+<span id="Commit.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}   `json:&#34;-&#34;`
+<span id="Commit.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>     `json:&#34;-&#34;`
+<span id="Commit.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>      `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Commit.Descriptor">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15513:15556#L542">Descriptor</a>
+					<a class="permalink" href="index.html#Commit.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Commit">Commit</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.GetAssist">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16514:16547#L591">GetAssist</a>
+					<a class="permalink" href="index.html#Commit.GetAssist">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) GetAssist() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.GetDigest">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16327:16362#L577">GetDigest</a>
+					<a class="permalink" href="index.html#Commit.GetDigest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) GetDigest() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.GetSeq">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16246:16278#L570">GetSeq</a>
+					<a class="permalink" href="index.html#Commit.GetSeq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) GetSeq() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.GetSignature">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16415:16457#L584">GetSignature</a>
+					<a class="permalink" href="index.html#Commit.GetSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) GetSignature() *<a href="index.html#Signature">Signature</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.GetView">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16163:16196#L563">GetView</a>
+					<a class="permalink" href="index.html#Commit.GetView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) GetView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.ProtoMessage">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15477:15506#L541">ProtoMessage</a>
+					<a class="permalink" href="index.html#Commit.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Commit">Commit</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.Reset">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15355:15379#L539">Reset</a>
+					<a class="permalink" href="index.html#Commit.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.String">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15406:15438#L540">String</a>
+					<a class="permalink" href="index.html#Commit.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.XXX_DiscardUnknown">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16024:16061#L557">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Commit.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.XXX_Marshal">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15718:15792#L548">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Commit.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.XXX_Merge">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15857:15904#L551">XXX_Merge</a>
+					<a class="permalink" href="index.html#Commit.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Commit">Commit</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.XXX_Size">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15949:15980#L554">XXX_Size</a>
+					<a class="permalink" href="index.html#Commit.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Commit.XXX_Unmarshal">func (*Commit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=15620:15666#L545">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Commit.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Commit">Commit</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Error">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=16603:17138#L598">Error</a>
+				<a class="permalink" href="index.html#Error">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Error struct {
+<span id="Error.View"></span>    View                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=view,proto3&#34; json:&#34;view,omitempty&#34;`
+<span id="Error.Seq"></span>    Seq                  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=seq,proto3&#34; json:&#34;seq,omitempty&#34;`
+<span id="Error.Digest"></span>    Digest               <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,3,opt,name=digest,proto3&#34; json:&#34;digest,omitempty&#34;`
+<span id="Error.Reason"></span>    Reason               <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,4,opt,name=reason,proto3&#34; json:&#34;reason,omitempty&#34;`
+<span id="Error.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Error.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Error.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Error.Descriptor">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17294:17336#L611">Descriptor</a>
+					<a class="permalink" href="index.html#Error.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Error">Error</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.GetDigest">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18094:18128#L646">GetDigest</a>
+					<a class="permalink" href="index.html#Error.GetDigest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) GetDigest() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.GetReason">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18181:18215#L653">GetReason</a>
+					<a class="permalink" href="index.html#Error.GetReason">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) GetReason() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.GetSeq">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18014:18045#L639">GetSeq</a>
+					<a class="permalink" href="index.html#Error.GetSeq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) GetSeq() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.GetView">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17932:17964#L632">GetView</a>
+					<a class="permalink" href="index.html#Error.GetView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) GetView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.ProtoMessage">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17259:17287#L610">ProtoMessage</a>
+					<a class="permalink" href="index.html#Error.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Error">Error</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.Reset">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17140:17163#L608">Reset</a>
+					<a class="permalink" href="index.html#Error.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.String">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17189:17220#L609">String</a>
+					<a class="permalink" href="index.html#Error.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.XXX_DiscardUnknown">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17796:17832#L626">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Error.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.XXX_Marshal">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17496:17569#L617">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Error.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.XXX_Merge">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17633:17679#L620">XXX_Merge</a>
+					<a class="permalink" href="index.html#Error.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Error">Error</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.XXX_Size">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17723:17753#L623">XXX_Size</a>
+					<a class="permalink" href="index.html#Error.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Error.XXX_Unmarshal">func (*Error) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=17400:17445#L614">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Error.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Error">Error</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HeartBeat">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24999:25340#L868">HeartBeat</a>
+				<a class="permalink" href="index.html#HeartBeat">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type HeartBeat struct {
+<span id="HeartBeat.View"></span>    View                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=view,proto3&#34; json:&#34;view,omitempty&#34;`
+<span id="HeartBeat.Seq"></span>    Seq                  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=seq,proto3&#34; json:&#34;seq,omitempty&#34;`
+<span id="HeartBeat.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="HeartBeat.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="HeartBeat.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HeartBeat.Descriptor">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25512:25558#L879">Descriptor</a>
+					<a class="permalink" href="index.html#HeartBeat.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#HeartBeat">HeartBeat</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.GetSeq">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26285:26320#L907">GetSeq</a>
+					<a class="permalink" href="index.html#HeartBeat.GetSeq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) GetSeq() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.GetView">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26199:26235#L900">GetView</a>
+					<a class="permalink" href="index.html#HeartBeat.GetView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) GetView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.ProtoMessage">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25473:25505#L878">ProtoMessage</a>
+					<a class="permalink" href="index.html#HeartBeat.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#HeartBeat">HeartBeat</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.Reset">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25342:25369#L876">Reset</a>
+					<a class="permalink" href="index.html#HeartBeat.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.String">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25399:25434#L877">String</a>
+					<a class="permalink" href="index.html#HeartBeat.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.XXX_DiscardUnknown">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26051:26091#L894">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#HeartBeat.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.XXX_Marshal">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25727:25804#L885">XXX_Marshal</a>
+					<a class="permalink" href="index.html#HeartBeat.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.XXX_Merge">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25872:25922#L888">XXX_Merge</a>
+					<a class="permalink" href="index.html#HeartBeat.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#HeartBeat">HeartBeat</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.XXX_Size">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25970:26004#L891">XXX_Size</a>
+					<a class="permalink" href="index.html#HeartBeat.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HeartBeat.XXX_Unmarshal">func (*HeartBeat) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=25623:25672#L882">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#HeartBeat.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HeartBeat">HeartBeat</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LogRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1304:1843#L41">LogRecord</a>
+				<a class="permalink" href="index.html#LogRecord">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LogRecord struct {
+<span id="LogRecord.Type"></span>    Type                 <a href="index.html#LogRecord_Type">LogRecord_Type</a> `protobuf:&#34;varint,1,opt,name=type,proto3,enum=smartbftprotos.LogRecord_Type&#34; json:&#34;type,omitempty&#34;`
+<span id="LogRecord.TruncateTo"></span>    TruncateTo           <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>           `protobuf:&#34;varint,2,opt,name=truncate_to,json=truncateTo,proto3&#34; json:&#34;truncate_to,omitempty&#34;`
+<span id="LogRecord.Data"></span>    Data                 []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>         `protobuf:&#34;bytes,3,opt,name=data,proto3&#34; json:&#34;data,omitempty&#34;`
+<span id="LogRecord.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}       `json:&#34;-&#34;`
+<span id="LogRecord.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>         `json:&#34;-&#34;`
+<span id="LogRecord.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>          `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LogRecord.Descriptor">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2015:2061#L53">Descriptor</a>
+					<a class="permalink" href="index.html#LogRecord.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#LogRecord">LogRecord</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.GetData">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2910:2946#L88">GetData</a>
+					<a class="permalink" href="index.html#LogRecord.GetData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) GetData() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.GetTruncateTo">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2810:2850#L81">GetTruncateTo</a>
+					<a class="permalink" href="index.html#LogRecord.GetTruncateTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) GetTruncateTo() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.GetType">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2702:2746#L74">GetType</a>
+					<a class="permalink" href="index.html#LogRecord.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) GetType() <a href="index.html#LogRecord_Type">LogRecord_Type</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.ProtoMessage">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1976:2008#L52">ProtoMessage</a>
+					<a class="permalink" href="index.html#LogRecord.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#LogRecord">LogRecord</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.Reset">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1845:1872#L50">Reset</a>
+					<a class="permalink" href="index.html#LogRecord.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.String">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1902:1937#L51">String</a>
+					<a class="permalink" href="index.html#LogRecord.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.XXX_DiscardUnknown">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2554:2594#L68">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#LogRecord.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.XXX_Marshal">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2230:2307#L59">XXX_Marshal</a>
+					<a class="permalink" href="index.html#LogRecord.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.XXX_Merge">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2375:2425#L62">XXX_Merge</a>
+					<a class="permalink" href="index.html#LogRecord.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#LogRecord">LogRecord</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.XXX_Size">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2473:2507#L65">XXX_Size</a>
+					<a class="permalink" href="index.html#LogRecord.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord.XXX_Unmarshal">func (*LogRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=2126:2175#L56">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#LogRecord.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#LogRecord">LogRecord</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LogRecord_Type">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=728:753#L15">LogRecord_Type</a>
+				<a class="permalink" href="index.html#LogRecord_Type">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LogRecord_Type <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="LogRecord_ENTRY">LogRecord_ENTRY</span>      <a href="index.html#LogRecord_Type">LogRecord_Type</a> = 0
+    <span id="LogRecord_CONTROL">LogRecord_CONTROL</span>    <a href="index.html#LogRecord_Type">LogRecord_Type</a> = 1
+    <span id="LogRecord_CRC_ANCHOR">LogRecord_CRC_ANCHOR</span> <a href="index.html#LogRecord_Type">LogRecord_Type</a> = 2
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LogRecord_Type.EnumDescriptor">func (LogRecord_Type) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1181:1235#L37">EnumDescriptor</a>
+					<a class="permalink" href="index.html#LogRecord_Type.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#LogRecord_Type">LogRecord_Type</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LogRecord_Type.String">func (LogRecord_Type) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/logrecord.pb.go?s=1083:1122#L34">String</a>
+					<a class="permalink" href="index.html#LogRecord_Type.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#LogRecord_Type">LogRecord_Type</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Message">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=727:1196#L15">Message</a>
+				<a class="permalink" href="index.html#Message">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message struct {
+    <span class="comment">// Types that are valid to be assigned to Content:</span>
+    <span class="comment">//	*Message_PrePrepare</span>
+    <span class="comment">//	*Message_Prepare</span>
+    <span class="comment">//	*Message_Commit</span>
+    <span class="comment">//	*Message_Error</span>
+    <span class="comment">//	*Message_ViewChange</span>
+    <span class="comment">//	*Message_ViewData</span>
+    <span class="comment">//	*Message_NewView</span>
+    <span class="comment">//	*Message_HeartBeat</span>
+<span id="Message.Content"></span>    Content              isMessage_Content `protobuf_oneof:&#34;content&#34;`
+<span id="Message.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="Message.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="Message.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Message.Descriptor">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1360:1404#L34">Descriptor</a>
+					<a class="permalink" href="index.html#Message.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Message">Message</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetCommit">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=3775:3812#L128">GetCommit</a>
+					<a class="permalink" href="index.html#Message.GetCommit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetCommit() *<a href="index.html#Commit">Commit</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetContent">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=3396:3444#L107">GetContent</a>
+					<a class="permalink" href="index.html#Message.GetContent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetContent() isMessage_Content</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetError">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=3903:3938#L135">GetError</a>
+					<a class="permalink" href="index.html#Message.GetError">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetError() *<a href="index.html#Error">Error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetHeartBeat">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=4445:4488#L163">GetHeartBeat</a>
+					<a class="permalink" href="index.html#Message.GetHeartBeat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetHeartBeat() *<a href="index.html#HeartBeat">HeartBeat</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetNewView">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=4313:4352#L156">GetNewView</a>
+					<a class="permalink" href="index.html#Message.GetNewView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetNewView() *<a href="index.html#NewView">NewView</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetPrePrepare">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=3499:3544#L114">GetPrePrepare</a>
+					<a class="permalink" href="index.html#Message.GetPrePrepare">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetPrePrepare() *<a href="index.html#PrePrepare">PrePrepare</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetPrepare">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=3643:3682#L121">GetPrepare</a>
+					<a class="permalink" href="index.html#Message.GetPrepare">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetPrepare() *<a href="index.html#Prepare">Prepare</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetViewChange">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=4027:4072#L142">GetViewChange</a>
+					<a class="permalink" href="index.html#Message.GetViewChange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetViewChange() *<a href="index.html#ViewChange">ViewChange</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetViewData">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=4171:4218#L149">GetViewData</a>
+					<a class="permalink" href="index.html#Message.GetViewData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetViewData() *<a href="index.html#SignedViewData">SignedViewData</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.ProtoMessage">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1323:1353#L33">ProtoMessage</a>
+					<a class="permalink" href="index.html#Message.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Message">Message</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.Reset">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1198:1223#L31">Reset</a>
+					<a class="permalink" href="index.html#Message.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.String">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1251:1284#L32">String</a>
+					<a class="permalink" href="index.html#Message.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_DiscardUnknown">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1880:1918#L49">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Message.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Marshal">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1568:1643#L40">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Message.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Merge">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1709:1757#L43">XXX_Merge</a>
+					<a class="permalink" href="index.html#Message.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Message">Message</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_OneofFuncs">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=4649:4849#L171">XXX_OneofFuncs</a>
+					<a class="permalink" href="index.html#Message.XXX_OneofFuncs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Message">Message</a>) XXX_OneofFuncs() (func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>, b *<a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>, func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>, tag, wire <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b *<a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>), func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>), []interface{})</pre>
+				<p>
+XXX_OneofFuncs is for the internal use of the proto package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Size">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1803:1835#L46">XXX_Size</a>
+					<a class="permalink" href="index.html#Message.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Unmarshal">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=1468:1515#L37">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Message.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Message_Commit">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2314:2410#L67">Message_Commit</a>
+				<a class="permalink" href="index.html#Message_Commit">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_Commit struct {
+<span id="Message_Commit.Commit"></span>    Commit *<a href="index.html#Commit">Commit</a> `protobuf:&#34;bytes,3,opt,name=commit,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_Error">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2412:2504#L71">Message_Error</a>
+				<a class="permalink" href="index.html#Message_Error">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_Error struct {
+<span id="Message_Error.Error"></span>    Error *<a href="index.html#Error">Error</a> `protobuf:&#34;bytes,4,opt,name=error,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_HeartBeat">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2880:3004#L87">Message_HeartBeat</a>
+				<a class="permalink" href="index.html#Message_HeartBeat">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_HeartBeat struct {
+<span id="Message_HeartBeat.HeartBeat"></span>    HeartBeat *<a href="index.html#HeartBeat">HeartBeat</a> `protobuf:&#34;bytes,8,opt,name=heart_beat,json=heartBeat,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_NewView">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2764:2878#L83">Message_NewView</a>
+				<a class="permalink" href="index.html#Message_NewView">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_NewView struct {
+<span id="Message_NewView.NewView"></span>    NewView *<a href="index.html#NewView">NewView</a> `protobuf:&#34;bytes,7,opt,name=new_view,json=newView,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_PrePrepare">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2081:2210#L59">Message_PrePrepare</a>
+				<a class="permalink" href="index.html#Message_PrePrepare">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_PrePrepare struct {
+<span id="Message_PrePrepare.PrePrepare"></span>    PrePrepare *<a href="index.html#PrePrepare">PrePrepare</a> `protobuf:&#34;bytes,1,opt,name=pre_prepare,json=prePrepare,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_Prepare">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2212:2312#L63">Message_Prepare</a>
+				<a class="permalink" href="index.html#Message_Prepare">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_Prepare struct {
+<span id="Message_Prepare.Prepare"></span>    Prepare *<a href="index.html#Prepare">Prepare</a> `protobuf:&#34;bytes,2,opt,name=prepare,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_ViewChange">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2506:2635#L75">Message_ViewChange</a>
+				<a class="permalink" href="index.html#Message_ViewChange">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_ViewChange struct {
+<span id="Message_ViewChange.ViewChange"></span>    ViewChange *<a href="index.html#ViewChange">ViewChange</a> `protobuf:&#34;bytes,5,opt,name=view_change,json=viewChange,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message_ViewData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=2637:2762#L79">Message_ViewData</a>
+				<a class="permalink" href="index.html#Message_ViewData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message_ViewData struct {
+<span id="Message_ViewData.ViewData"></span>    ViewData *<a href="index.html#SignedViewData">SignedViewData</a> `protobuf:&#34;bytes,6,opt,name=view_data,json=viewData,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NewView">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23732:24056#L830">NewView</a>
+				<a class="permalink" href="index.html#NewView">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type NewView struct {
+<span id="NewView.SignedViewData"></span>    SignedViewData       []*<a href="index.html#SignedViewData">SignedViewData</a> `protobuf:&#34;bytes,2,rep,name=signed_view_data,json=signedViewData,proto3&#34; json:&#34;signed_view_data,omitempty&#34;`
+<span id="NewView.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}          `json:&#34;-&#34;`
+<span id="NewView.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `json:&#34;-&#34;`
+<span id="NewView.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>             `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NewView.Descriptor">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24220:24264#L840">Descriptor</a>
+					<a class="permalink" href="index.html#NewView.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NewView">NewView</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.GetSignedViewData">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24882:24937#L861">GetSignedViewData</a>
+					<a class="permalink" href="index.html#NewView.GetSignedViewData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) GetSignedViewData() []*<a href="index.html#SignedViewData">SignedViewData</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.ProtoMessage">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24183:24213#L839">ProtoMessage</a>
+					<a class="permalink" href="index.html#NewView.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NewView">NewView</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.Reset">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24058:24083#L837">Reset</a>
+					<a class="permalink" href="index.html#NewView.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.String">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24111:24144#L838">String</a>
+					<a class="permalink" href="index.html#NewView.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.XXX_DiscardUnknown">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24740:24778#L855">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#NewView.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.XXX_Marshal">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24428:24503#L846">XXX_Marshal</a>
+					<a class="permalink" href="index.html#NewView.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.XXX_Merge">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24569:24617#L849">XXX_Merge</a>
+					<a class="permalink" href="index.html#NewView.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#NewView">NewView</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.XXX_Size">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24663:24695#L852">XXX_Size</a>
+					<a class="permalink" href="index.html#NewView.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NewView.XXX_Unmarshal">func (*NewView) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=24328:24375#L843">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#NewView.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NewView">NewView</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PrePrepare">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=9642:10093#L358">PrePrepare</a>
+				<a class="permalink" href="index.html#PrePrepare">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PrePrepare struct {
+<span id="PrePrepare.View"></span>    View                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>    `protobuf:&#34;varint,1,opt,name=view,proto3&#34; json:&#34;view,omitempty&#34;`
+<span id="PrePrepare.Seq"></span>    Seq                  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>    `protobuf:&#34;varint,2,opt,name=seq,proto3&#34; json:&#34;seq,omitempty&#34;`
+<span id="PrePrepare.Proposal"></span>    Proposal             *<a href="index.html#Proposal">Proposal</a> `protobuf:&#34;bytes,3,opt,name=proposal,proto3&#34; json:&#34;proposal,omitempty&#34;`
+<span id="PrePrepare.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}  `json:&#34;-&#34;`
+<span id="PrePrepare.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>    `json:&#34;-&#34;`
+<span id="PrePrepare.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>     `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PrePrepare.Descriptor">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10269:10316#L370">Descriptor</a>
+					<a class="permalink" href="index.html#PrePrepare.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#PrePrepare">PrePrepare</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.GetProposal">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=11139:11183#L405">GetProposal</a>
+					<a class="permalink" href="index.html#PrePrepare.GetProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) GetProposal() *<a href="index.html#Proposal">Proposal</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.GetSeq">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=11054:11090#L398">GetSeq</a>
+					<a class="permalink" href="index.html#PrePrepare.GetSeq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) GetSeq() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.GetView">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10967:11004#L391">GetView</a>
+					<a class="permalink" href="index.html#PrePrepare.GetView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) GetView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.ProtoMessage">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10229:10262#L369">ProtoMessage</a>
+					<a class="permalink" href="index.html#PrePrepare.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#PrePrepare">PrePrepare</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.Reset">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10095:10123#L367">Reset</a>
+					<a class="permalink" href="index.html#PrePrepare.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.String">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10154:10190#L368">String</a>
+					<a class="permalink" href="index.html#PrePrepare.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.XXX_DiscardUnknown">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10816:10857#L385">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#PrePrepare.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.XXX_Marshal">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10486:10564#L376">XXX_Marshal</a>
+					<a class="permalink" href="index.html#PrePrepare.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.XXX_Merge">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10633:10684#L379">XXX_Merge</a>
+					<a class="permalink" href="index.html#PrePrepare.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#PrePrepare">PrePrepare</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.XXX_Size">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10733:10768#L382">XXX_Size</a>
+					<a class="permalink" href="index.html#PrePrepare.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PrePrepare.XXX_Unmarshal">func (*PrePrepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=10380:10430#L373">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#PrePrepare.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#PrePrepare">PrePrepare</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Prepare">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=11239:11882#L412">Prepare</a>
+				<a class="permalink" href="index.html#Prepare">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Prepare struct {
+<span id="Prepare.View"></span>    View                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=view,proto3&#34; json:&#34;view,omitempty&#34;`
+<span id="Prepare.Seq"></span>    Seq                  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=seq,proto3&#34; json:&#34;seq,omitempty&#34;`
+<span id="Prepare.Digest"></span>    Digest               <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,3,opt,name=digest,proto3&#34; json:&#34;digest,omitempty&#34;`
+<span id="Prepare.Assist"></span>    Assist               <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>     `protobuf:&#34;varint,4,opt,name=assist,proto3&#34; json:&#34;assist,omitempty&#34;`
+<span id="Prepare.Signature"></span>    Signature            []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,5,opt,name=signature,proto3&#34; json:&#34;signature,omitempty&#34;`
+<span id="Prepare.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Prepare.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Prepare.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Prepare.Descriptor">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12046:12090#L426">Descriptor</a>
+					<a class="permalink" href="index.html#Prepare.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Prepare">Prepare</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.GetAssist">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12963:12997#L468">GetAssist</a>
+					<a class="permalink" href="index.html#Prepare.GetAssist">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) GetAssist() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.GetDigest">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12874:12910#L461">GetDigest</a>
+					<a class="permalink" href="index.html#Prepare.GetDigest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) GetDigest() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.GetSeq">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12792:12825#L454">GetSeq</a>
+					<a class="permalink" href="index.html#Prepare.GetSeq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) GetSeq() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.GetSignature">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13053:13092#L475">GetSignature</a>
+					<a class="permalink" href="index.html#Prepare.GetSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) GetSignature() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.GetView">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12708:12742#L447">GetView</a>
+					<a class="permalink" href="index.html#Prepare.GetView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) GetView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.ProtoMessage">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12009:12039#L425">ProtoMessage</a>
+					<a class="permalink" href="index.html#Prepare.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Prepare">Prepare</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.Reset">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=11884:11909#L423">Reset</a>
+					<a class="permalink" href="index.html#Prepare.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.String">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=11937:11970#L424">String</a>
+					<a class="permalink" href="index.html#Prepare.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.XXX_DiscardUnknown">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12566:12604#L441">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Prepare.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.XXX_Marshal">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12254:12329#L432">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Prepare.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.XXX_Merge">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12395:12443#L435">XXX_Merge</a>
+					<a class="permalink" href="index.html#Prepare.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Prepare">Prepare</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.XXX_Size">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12489:12521#L438">XXX_Size</a>
+					<a class="permalink" href="index.html#Prepare.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prepare.XXX_Unmarshal">func (*Prepare) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=12154:12201#L429">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Prepare.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Prepare">Prepare</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Proposal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27935:28544#L968">Proposal</a>
+				<a class="permalink" href="index.html#Proposal">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Proposal struct {
+<span id="Proposal.Header"></span>    Header               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=header,proto3&#34; json:&#34;header,omitempty&#34;`
+<span id="Proposal.Payload"></span>    Payload              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=payload,proto3&#34; json:&#34;payload,omitempty&#34;`
+<span id="Proposal.Metadata"></span>    Metadata             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=metadata,proto3&#34; json:&#34;metadata,omitempty&#34;`
+<span id="Proposal.VerificationSequence"></span>    VerificationSequence <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,4,opt,name=verification_sequence,json=verificationSequence,proto3&#34; json:&#34;verification_sequence,omitempty&#34;`
+<span id="Proposal.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Proposal.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Proposal.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Proposal.Descriptor">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28712:28757#L981">Descriptor</a>
+					<a class="permalink" href="index.html#Proposal.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Proposal">Proposal</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.GetHeader">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29387:29424#L1002">GetHeader</a>
+					<a class="permalink" href="index.html#Proposal.GetHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) GetHeader() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.GetMetadata">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29571:29610#L1016">GetMetadata</a>
+					<a class="permalink" href="index.html#Proposal.GetMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) GetMetadata() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.GetPayload">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29478:29516#L1009">GetPayload</a>
+					<a class="permalink" href="index.html#Proposal.GetPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) GetPayload() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.GetVerificationSequence">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29666:29717#L1023">GetVerificationSequence</a>
+					<a class="permalink" href="index.html#Proposal.GetVerificationSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) GetVerificationSequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.ProtoMessage">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28674:28705#L980">ProtoMessage</a>
+					<a class="permalink" href="index.html#Proposal.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Proposal">Proposal</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.Reset">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28546:28572#L978">Reset</a>
+					<a class="permalink" href="index.html#Proposal.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.String">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28601:28635#L979">String</a>
+					<a class="permalink" href="index.html#Proposal.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.XXX_DiscardUnknown">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29242:29281#L996">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Proposal.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.XXX_Marshal">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28924:29000#L987">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Proposal.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.XXX_Merge">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29067:29116#L990">XXX_Merge</a>
+					<a class="permalink" href="index.html#Proposal.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Proposal">Proposal</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.XXX_Size">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29163:29196#L993">XXX_Size</a>
+					<a class="permalink" href="index.html#Proposal.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Proposal.XXX_Unmarshal">func (*Proposal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=28822:28870#L984">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Proposal.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Proposal">Proposal</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ProposedRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13149:13546#L482">ProposedRecord</a>
+				<a class="permalink" href="index.html#ProposedRecord">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ProposedRecord struct {
+<span id="ProposedRecord.PrePrepare"></span>    PrePrepare           *<a href="index.html#PrePrepare">PrePrepare</a> `protobuf:&#34;bytes,1,opt,name=pre_prepare,json=prePrepare,proto3&#34; json:&#34;pre_prepare,omitempty&#34;`
+<span id="ProposedRecord.Prepare"></span>    Prepare              *<a href="index.html#Prepare">Prepare</a>    `protobuf:&#34;bytes,2,opt,name=prepare,proto3&#34; json:&#34;prepare,omitempty&#34;`
+<span id="ProposedRecord.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}    `json:&#34;-&#34;`
+<span id="ProposedRecord.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>      `json:&#34;-&#34;`
+<span id="ProposedRecord.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>       `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ProposedRecord.Descriptor">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13738:13789#L493">Descriptor</a>
+					<a class="permalink" href="index.html#ProposedRecord.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ProposedRecord">ProposedRecord</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.GetPrePrepare">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14484:14536#L514">GetPrePrepare</a>
+					<a class="permalink" href="index.html#ProposedRecord.GetPrePrepare">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) GetPrePrepare() *<a href="index.html#PrePrepare">PrePrepare</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.GetPrepare">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14594:14640#L521">GetPrepare</a>
+					<a class="permalink" href="index.html#ProposedRecord.GetPrepare">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) GetPrepare() *<a href="index.html#Prepare">Prepare</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.ProtoMessage">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13694:13731#L492">ProtoMessage</a>
+					<a class="permalink" href="index.html#ProposedRecord.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ProposedRecord">ProposedRecord</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.Reset">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13548:13580#L490">Reset</a>
+					<a class="permalink" href="index.html#ProposedRecord.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.String">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13615:13655#L491">String</a>
+					<a class="permalink" href="index.html#ProposedRecord.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.XXX_DiscardUnknown">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14321:14366#L508">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ProposedRecord.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.XXX_Marshal">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13967:14049#L499">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ProposedRecord.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.XXX_Merge">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14122:14177#L502">XXX_Merge</a>
+					<a class="permalink" href="index.html#ProposedRecord.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ProposedRecord">ProposedRecord</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.XXX_Size">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=14230:14269#L505">XXX_Size</a>
+					<a class="permalink" href="index.html#ProposedRecord.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ProposedRecord.XXX_Unmarshal">func (*ProposedRecord) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=13853:13907#L496">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ProposedRecord.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ProposedRecord">ProposedRecord</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SavedMessage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31298:31676#L1076">SavedMessage</a>
+				<a class="permalink" href="index.html#SavedMessage">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SavedMessage struct {
+    <span class="comment">// Types that are valid to be assigned to Content:</span>
+    <span class="comment">//	*SavedMessage_ProposedRecord</span>
+    <span class="comment">//	*SavedMessage_Commit</span>
+<span id="SavedMessage.Content"></span>    Content              isSavedMessage_Content `protobuf_oneof:&#34;content&#34;`
+<span id="SavedMessage.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}               `json:&#34;-&#34;`
+<span id="SavedMessage.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                 `json:&#34;-&#34;`
+<span id="SavedMessage.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                  `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SavedMessage.Descriptor">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31860:31909#L1089">Descriptor</a>
+					<a class="permalink" href="index.html#SavedMessage.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SavedMessage">SavedMessage</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.GetCommit">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=33317:33360#L1140">GetCommit</a>
+					<a class="permalink" href="index.html#SavedMessage.GetCommit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) GetCommit() *<a href="index.html#Message">Message</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.GetContent">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=33034:33092#L1126">GetContent</a>
+					<a class="permalink" href="index.html#SavedMessage.GetContent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) GetContent() isSavedMessage_Content</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.GetProposedRecord">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=33147:33205#L1133">GetProposedRecord</a>
+					<a class="permalink" href="index.html#SavedMessage.GetProposedRecord">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) GetProposedRecord() *<a href="index.html#ProposedRecord">ProposedRecord</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.ProtoMessage">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31818:31853#L1088">ProtoMessage</a>
+					<a class="permalink" href="index.html#SavedMessage.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SavedMessage">SavedMessage</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.Reset">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31678:31708#L1086">Reset</a>
+					<a class="permalink" href="index.html#SavedMessage.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.String">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31741:31779#L1087">String</a>
+					<a class="permalink" href="index.html#SavedMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_DiscardUnknown">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32426:32469#L1104">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_Marshal">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32084:32164#L1095">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_Merge">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32235:32288#L1098">XXX_Merge</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SavedMessage">SavedMessage</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_OneofFuncs">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=33520:33725#L1148">XXX_OneofFuncs</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_OneofFuncs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SavedMessage">SavedMessage</a>) XXX_OneofFuncs() (func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>, b *<a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>, func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>, tag, wire <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b *<a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>), func(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>), []interface{})</pre>
+				<p>
+XXX_OneofFuncs is for the internal use of the proto package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_Size">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32339:32376#L1101">XXX_Size</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SavedMessage.XXX_Unmarshal">func (*SavedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31974:32026#L1092">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SavedMessage.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SavedMessage">SavedMessage</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SavedMessage_Commit">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32808:32910#L1118">SavedMessage_Commit</a>
+				<a class="permalink" href="index.html#SavedMessage_Commit">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SavedMessage_Commit struct {
+<span id="SavedMessage_Commit.Commit"></span>    Commit *<a href="index.html#Message">Message</a> `protobuf:&#34;bytes,2,opt,name=commit,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SavedMessage_ProposedRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=32652:32806#L1114">SavedMessage_ProposedRecord</a>
+				<a class="permalink" href="index.html#SavedMessage_ProposedRecord">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SavedMessage_ProposedRecord struct {
+<span id="SavedMessage_ProposedRecord.ProposedRecord"></span>    ProposedRecord *<a href="index.html#ProposedRecord">ProposedRecord</a> `protobuf:&#34;bytes,1,opt,name=proposed_record,json=proposedRecord,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Signature">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26369:26810#L914">Signature</a>
+				<a class="permalink" href="index.html#Signature">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signature struct {
+<span id="Signature.Signer"></span>    Signer               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=signer,proto3&#34; json:&#34;signer,omitempty&#34;`
+<span id="Signature.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="Signature.Msg"></span>    Msg                  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=msg,proto3&#34; json:&#34;msg,omitempty&#34;`
+<span id="Signature.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Signature.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Signature.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Signature.Descriptor">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26982:27028#L926">Descriptor</a>
+					<a class="permalink" href="index.html#Signature.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Signature">Signature</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetMsg">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27849:27884#L961">GetMsg</a>
+					<a class="permalink" href="index.html#Signature.GetMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetMsg() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetSigner">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27669:27707#L947">GetSigner</a>
+					<a class="permalink" href="index.html#Signature.GetSigner">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetSigner() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetValue">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27759:27796#L954">GetValue</a>
+					<a class="permalink" href="index.html#Signature.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.ProtoMessage">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26943:26975#L925">ProtoMessage</a>
+					<a class="permalink" href="index.html#Signature.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Signature">Signature</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.Reset">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26812:26839#L923">Reset</a>
+					<a class="permalink" href="index.html#Signature.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.String">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=26869:26904#L924">String</a>
+					<a class="permalink" href="index.html#Signature.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_DiscardUnknown">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27521:27561#L941">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Signature.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Marshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27197:27274#L932">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Signature.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Merge">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27342:27392#L935">XXX_Merge</a>
+					<a class="permalink" href="index.html#Signature.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Signature">Signature</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Size">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27440:27474#L938">XXX_Size</a>
+					<a class="permalink" href="index.html#Signature.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Unmarshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=27093:27142#L929">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Signature.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignedViewData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21998:22489#L776">SignedViewData</a>
+				<a class="permalink" href="index.html#SignedViewData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SignedViewData struct {
+<span id="SignedViewData.RawViewData"></span>    RawViewData          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=raw_view_data,json=rawViewData,proto3&#34; json:&#34;raw_view_data,omitempty&#34;`
+<span id="SignedViewData.Signer"></span>    Signer               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=signer,proto3&#34; json:&#34;signer,omitempty&#34;`
+<span id="SignedViewData.Signature"></span>    Signature            []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=signature,proto3&#34; json:&#34;signature,omitempty&#34;`
+<span id="SignedViewData.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SignedViewData.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SignedViewData.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SignedViewData.Descriptor">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22681:22732#L788">Descriptor</a>
+					<a class="permalink" href="index.html#SignedViewData.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SignedViewData">SignedViewData</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.GetRawViewData">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23427:23475#L809">GetRawViewData</a>
+					<a class="permalink" href="index.html#SignedViewData.GetRawViewData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) GetRawViewData() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.GetSignature">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23629:23675#L823">GetSignature</a>
+					<a class="permalink" href="index.html#SignedViewData.GetSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) GetSignature() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.GetSigner">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23534:23577#L816">GetSigner</a>
+					<a class="permalink" href="index.html#SignedViewData.GetSigner">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) GetSigner() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.ProtoMessage">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22637:22674#L787">ProtoMessage</a>
+					<a class="permalink" href="index.html#SignedViewData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SignedViewData">SignedViewData</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.Reset">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22491:22523#L785">Reset</a>
+					<a class="permalink" href="index.html#SignedViewData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.String">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22558:22598#L786">String</a>
+					<a class="permalink" href="index.html#SignedViewData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.XXX_DiscardUnknown">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23264:23309#L803">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SignedViewData.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.XXX_Marshal">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22910:22992#L794">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SignedViewData.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.XXX_Merge">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23065:23120#L797">XXX_Merge</a>
+					<a class="permalink" href="index.html#SignedViewData.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SignedViewData">SignedViewData</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.XXX_Size">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=23173:23212#L800">XXX_Size</a>
+					<a class="permalink" href="index.html#SignedViewData.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SignedViewData.XXX_Unmarshal">func (*SignedViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=22796:22850#L791">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SignedViewData.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedViewData">SignedViewData</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ViewChange">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18268:18639#L660">ViewChange</a>
+				<a class="permalink" href="index.html#ViewChange">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ViewChange struct {
+<span id="ViewChange.NextView"></span>    NextView             <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=next_view,json=nextView,proto3&#34; json:&#34;next_view,omitempty&#34;`
+<span id="ViewChange.Reason"></span>    Reason               <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=reason,proto3&#34; json:&#34;reason,omitempty&#34;`
+<span id="ViewChange.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ViewChange.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ViewChange.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ViewChange.Descriptor">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18815:18862#L671">Descriptor</a>
+					<a class="permalink" href="index.html#ViewChange.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewChange">ViewChange</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.GetNextView">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19513:19554#L692">GetNextView</a>
+					<a class="permalink" href="index.html#ViewChange.GetNextView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) GetNextView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.GetReason">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19608:19647#L699">GetReason</a>
+					<a class="permalink" href="index.html#ViewChange.GetReason">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) GetReason() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.ProtoMessage">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18775:18808#L670">ProtoMessage</a>
+					<a class="permalink" href="index.html#ViewChange.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewChange">ViewChange</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.Reset">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18641:18669#L668">Reset</a>
+					<a class="permalink" href="index.html#ViewChange.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.String">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18700:18736#L669">String</a>
+					<a class="permalink" href="index.html#ViewChange.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.XXX_DiscardUnknown">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19362:19403#L686">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ViewChange.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.XXX_Marshal">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19032:19110#L677">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ViewChange.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.XXX_Merge">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19179:19230#L680">XXX_Merge</a>
+					<a class="permalink" href="index.html#ViewChange.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ViewChange">ViewChange</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.XXX_Size">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19279:19314#L683">XXX_Size</a>
+					<a class="permalink" href="index.html#ViewChange.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewChange.XXX_Unmarshal">func (*ViewChange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=18926:18976#L674">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ViewChange.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewChange">ViewChange</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ViewData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=19700:20603#L706">ViewData</a>
+				<a class="permalink" href="index.html#ViewData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ViewData struct {
+<span id="ViewData.NextView"></span>    NextView               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>       `protobuf:&#34;varint,1,opt,name=next_view,json=nextView,proto3&#34; json:&#34;next_view,omitempty&#34;`
+<span id="ViewData.LastDecision"></span>    LastDecision           *<a href="index.html#Proposal">Proposal</a>    `protobuf:&#34;bytes,2,opt,name=last_decision,json=lastDecision,proto3&#34; json:&#34;last_decision,omitempty&#34;`
+<span id="ViewData.LastDecisionSignatures"></span>    LastDecisionSignatures []*<a href="index.html#Signature">Signature</a> `protobuf:&#34;bytes,3,rep,name=last_decision_signatures,json=lastDecisionSignatures,proto3&#34; json:&#34;last_decision_signatures,omitempty&#34;`
+<span id="ViewData.InFlightProposal"></span>    InFlightProposal       *<a href="index.html#Proposal">Proposal</a>    `protobuf:&#34;bytes,4,opt,name=in_flight_proposal,json=inFlightProposal,proto3&#34; json:&#34;in_flight_proposal,omitempty&#34;`
+<span id="ViewData.InFlightPrepared"></span>    InFlightPrepared       <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>         `protobuf:&#34;varint,5,opt,name=in_flight_prepared,json=inFlightPrepared,proto3&#34; json:&#34;in_flight_prepared,omitempty&#34;`
+<span id="ViewData.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral   struct{}     `json:&#34;-&#34;`
+<span id="ViewData.XXX_unrecognized"></span>    XXX_unrecognized       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>       `json:&#34;-&#34;`
+<span id="ViewData.XXX_sizecache"></span>    XXX_sizecache          <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>        `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ViewData.Descriptor">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20771:20816#L720">Descriptor</a>
+					<a class="permalink" href="index.html#ViewData.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewData">ViewData</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.GetInFlightPrepared">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21887:21932#L769">GetInFlightPrepared</a>
+					<a class="permalink" href="index.html#ViewData.GetInFlightPrepared">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) GetInFlightPrepared() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.GetInFlightProposal">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21773:21823#L762">GetInFlightProposal</a>
+					<a class="permalink" href="index.html#ViewData.GetInFlightProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) GetInFlightProposal() *<a href="index.html#Proposal">Proposal</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.GetLastDecision">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21538:21584#L748">GetLastDecision</a>
+					<a class="permalink" href="index.html#ViewData.GetLastDecision">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) GetLastDecision() *<a href="index.html#Proposal">Proposal</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.GetLastDecisionSignatures">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21644:21703#L755">GetLastDecisionSignatures</a>
+					<a class="permalink" href="index.html#ViewData.GetLastDecisionSignatures">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) GetLastDecisionSignatures() []*<a href="index.html#Signature">Signature</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.GetNextView">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21445:21484#L741">GetNextView</a>
+					<a class="permalink" href="index.html#ViewData.GetNextView">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) GetNextView() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.ProtoMessage">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20733:20764#L719">ProtoMessage</a>
+					<a class="permalink" href="index.html#ViewData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewData">ViewData</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.Reset">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20605:20631#L717">Reset</a>
+					<a class="permalink" href="index.html#ViewData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.String">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20660:20694#L718">String</a>
+					<a class="permalink" href="index.html#ViewData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.XXX_DiscardUnknown">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21300:21339#L735">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ViewData.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.XXX_Marshal">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20982:21058#L726">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ViewData.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.XXX_Merge">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21125:21174#L729">XXX_Merge</a>
+					<a class="permalink" href="index.html#ViewData.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ViewData">ViewData</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.XXX_Size">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=21221:21254#L732">XXX_Size</a>
+					<a class="permalink" href="index.html#ViewData.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewData.XXX_Unmarshal">func (*ViewData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=20880:20928#L723">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ViewData.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewData">ViewData</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ViewMetadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=29783:30189#L1030">ViewMetadata</a>
+				<a class="permalink" href="index.html#ViewMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ViewMetadata struct {
+<span id="ViewMetadata.ViewId"></span>    ViewId               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=view_id,json=viewId,proto3&#34; json:&#34;view_id,omitempty&#34;`
+<span id="ViewMetadata.LatestSequence"></span>    LatestSequence       <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=latest_sequence,json=latestSequence,proto3&#34; json:&#34;latest_sequence,omitempty&#34;`
+<span id="ViewMetadata.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ViewMetadata.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ViewMetadata.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ViewMetadata.Descriptor">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30373:30422#L1041">Descriptor</a>
+					<a class="permalink" href="index.html#ViewMetadata.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewMetadata">ViewMetadata</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.GetLatestSequence">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31189:31238#L1069">GetLatestSequence</a>
+					<a class="permalink" href="index.html#ViewMetadata.GetLatestSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) GetLatestSequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.GetViewId">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=31096:31137#L1062">GetViewId</a>
+					<a class="permalink" href="index.html#ViewMetadata.GetViewId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) GetViewId() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.ProtoMessage">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30331:30366#L1040">ProtoMessage</a>
+					<a class="permalink" href="index.html#ViewMetadata.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ViewMetadata">ViewMetadata</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.Reset">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30191:30221#L1038">Reset</a>
+					<a class="permalink" href="index.html#ViewMetadata.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.String">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30254:30292#L1039">String</a>
+					<a class="permalink" href="index.html#ViewMetadata.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.XXX_DiscardUnknown">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30939:30982#L1056">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ViewMetadata.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.XXX_Marshal">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30597:30677#L1047">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ViewMetadata.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.XXX_Merge">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30748:30801#L1050">XXX_Merge</a>
+					<a class="permalink" href="index.html#ViewMetadata.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ViewMetadata">ViewMetadata</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.XXX_Size">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30852:30889#L1053">XXX_Size</a>
+					<a class="permalink" href="index.html#ViewMetadata.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ViewMetadata.XXX_Unmarshal">func (*ViewMetadata) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/orderer/smartbftprotos/messages.pb.go?s=30487:30539#L1044">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ViewMetadata.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ViewMetadata">ViewMetadata</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

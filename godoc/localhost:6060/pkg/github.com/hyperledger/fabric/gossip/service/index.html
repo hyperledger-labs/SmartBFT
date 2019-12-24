@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>service - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package service
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/service"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#InitGossipService">func InitGossipService(peerIdentity []byte, metricsProvider metrics.Provider, endpoint string, s *grpc.Server, certs *gossipCommon.TLSCertificates, mcs api.MessageCryptoService, secAdv api.SecurityAdvisor, secureDialOpts api.PeerSecureDialOpts, bootPeers ...string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InitGossipServiceCustomDeliveryFactory">func InitGossipServiceCustomDeliveryFactory(peerIdentity []byte, metricsProvider metrics.Provider, endpoint string, s *grpc.Server, certs *gossipCommon.TLSCertificates, factory DeliveryServiceFactory, mcs api.MessageCryptoService, secAdv api.SecurityAdvisor, secureDialOpts api.PeerSecureDialOpts, bootPeers ...string) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ApplicationOrgs">type ApplicationOrgs</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigProcessor">type ConfigProcessor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DataStoreSupport">type DataStoreSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeliveryServiceFactory">type DeliveryServiceFactory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GossipService">type GossipService</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetGossipService">func GetGossipService() GossipService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererAddressConfig">type OrdererAddressConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Support">type Support</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/eventer.go">eventer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go">gossip_service.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="InitGossipService">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=4996:5278#L135">InitGossipService</a>
+				<a class="permalink" href="index.html#InitGossipService">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitGossipService(
+    peerIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>,
+    metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>,
+    endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>, s *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>,
+    certs *<a href="../common/index.html">gossipCommon</a>.<a href="../common/index.html#TLSCertificates">TLSCertificates</a>,
+    mcs <a href="../api/index.html">api</a>.<a href="../api/index.html#MessageCryptoService">MessageCryptoService</a>,
+    secAdv <a href="../api/index.html">api</a>.<a href="../api/index.html#SecurityAdvisor">SecurityAdvisor</a>,
+    secureDialOpts <a href="../api/index.html">api</a>.<a href="../api/index.html#PeerSecureDialOpts">PeerSecureDialOpts</a>,
+    bootPeers ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InitGossipService initialize gossip service
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitGossipServiceCustomDeliveryFactory">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=5948:6285#L165">InitGossipServiceCustomDeliveryFactory</a>
+				<a class="permalink" href="index.html#InitGossipServiceCustomDeliveryFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitGossipServiceCustomDeliveryFactory(
+    peerIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>,
+    metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>,
+    endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    s *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>,
+    certs *<a href="../common/index.html">gossipCommon</a>.<a href="../common/index.html#TLSCertificates">TLSCertificates</a>,
+    factory <a href="index.html#DeliveryServiceFactory">DeliveryServiceFactory</a>,
+    mcs <a href="../api/index.html">api</a>.<a href="../api/index.html#MessageCryptoService">MessageCryptoService</a>,
+    secAdv <a href="../api/index.html">api</a>.<a href="../api/index.html#SecurityAdvisor">SecurityAdvisor</a>,
+    secureDialOpts <a href="../api/index.html">api</a>.<a href="../api/index.html#PeerSecureDialOpts">PeerSecureDialOpts</a>,
+    bootPeers ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InitGossipServiceCustomDeliveryFactory initialize gossip service with customize delivery factory
+implementation, might be useful for testing and mocking purposes
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ApplicationOrgs">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/eventer.go?s=1090:1150#L30">ApplicationOrgs</a>
+				<a class="permalink" href="index.html#ApplicationOrgs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ApplicationOrgs defines a mapping from ApplicationOrg by ID.
+</p>
+
+			<pre>type ApplicationOrgs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#ApplicationOrg">ApplicationOrg</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/eventer.go?s=358:1024#L8">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config enumerates the configuration methods required by gossip
+</p>
+
+			<pre>type Config interface {
+    <span class="comment">// ChainID returns the chainID for this channel</span>
+    ChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// OrdererOrgs returns the organizations of the orderers</span>
+    OrdererOrgs() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// OrdererAddressesByOrgs returns a mapping from the organization ID</span>
+    <span class="comment">// to the endpoints of the orderers</span>
+    OrdererAddressesByOrgs() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// ApplicationOrgs returns a map of org ID to ApplicationOrgConfig</span>
+    ApplicationOrgs() <a href="index.html#ApplicationOrgs">ApplicationOrgs</a>
+
+    <span class="comment">// Sequence should return the sequence number of the current configuration</span>
+    Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// OrdererAddresses returns the list of valid orderer addresses to connect to to invoke Broadcast/Deliver</span>
+    OrdererAddresses() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigProcessor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/eventer.go?s=1195:1362#L33">ConfigProcessor</a>
+				<a class="permalink" href="index.html#ConfigProcessor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigProcessor receives config updates
+</p>
+
+			<pre>type ConfigProcessor interface {
+    <span class="comment">// ProcessConfig should be invoked whenever a channel&#39;s configuration is initialized or updated</span>
+    ProcessConfigUpdate(config <a href="index.html#Config">Config</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DataStoreSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=9021:9100#L252">DataStoreSupport</a>
+				<a class="permalink" href="index.html#DataStoreSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DataStoreSupport aggregates interfaces capable
+of handling either incoming blocks or private data
+</p>
+
+			<pre>type DataStoreSupport struct {
+    <a href="../../core/committer/index.html">committer</a>.<a href="../../core/committer/index.html#Committer">Committer</a>
+    <a href="../privdata/index.html">privdata2</a>.<a href="../privdata/index.html#TransientStore">TransientStore</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeliveryServiceFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=2283:2487#L49">DeliveryServiceFactory</a>
+				<a class="permalink" href="index.html#DeliveryServiceFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeliveryServiceFactory factory to create and initialize delivery service instance
+</p>
+
+			<pre>type DeliveryServiceFactory interface {
+    <span class="comment">// Returns an instance of delivery client</span>
+    Service(g <a href="index.html#GossipService">GossipService</a>, oac <a href="index.html#OrdererAddressConfig">OrdererAddressConfig</a>, msc <a href="../api/index.html">api</a>.<a href="../api/index.html#MessageCryptoService">MessageCryptoService</a>) (<a href="../../core/deliverservice/index.html">deliverclient</a>.<a href="../../core/deliverservice/index.html#DeliverService">DeliverService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GossipService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=1404:2196#L34">GossipService</a>
+				<a class="permalink" href="index.html#GossipService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GossipService encapsulates gossip and state capabilities into single interface
+</p>
+
+			<pre>type GossipService interface {
+    <a href="../gossip/index.html">gossip</a>.<a href="../gossip/index.html#Gossip">Gossip</a>
+
+    <span class="comment">// DistributePrivateData distributes private data to the peers in the collections</span>
+    <span class="comment">// according to policies induced by the PolicyStore and PolicyParser</span>
+    DistributePrivateData(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, privateData *<a href="../../protos/transientstore/index.html">transientstore</a>.<a href="../../protos/transientstore/index.html#TxPvtReadWriteSetWithConfigInfo">TxPvtReadWriteSetWithConfigInfo</a>, blkHt <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// NewConfigEventer creates a ConfigProcessor which the channelconfig.BundleSource can ultimately route config updates to</span>
+    NewConfigEventer() <a href="index.html#ConfigProcessor">ConfigProcessor</a>
+    <span class="comment">// InitializeChannel allocates the state provider and should be invoked once per channel per execution</span>
+    InitializeChannel(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, oac <a href="index.html#OrdererAddressConfig">OrdererAddressConfig</a>, support <a href="index.html#Support">Support</a>)
+    <span class="comment">// AddPayload appends message payload to for given chain</span>
+    AddPayload(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload *<a href="../../protos/gossip/index.html">gproto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetGossipService">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=7354:7391#L208">GetGossipService</a>
+					<a class="permalink" href="index.html#GetGossipService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetGossipService() <a href="index.html#GossipService">GossipService</a></pre>
+				<p>
+GetGossipService returns an instance of gossip service
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererAddressConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=3225:3404#L73">OrdererAddressConfig</a>
+				<a class="permalink" href="index.html#OrdererAddressConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererAddressConfig defines the addresses of the ordering service nodes
+</p>
+
+			<pre>type OrdererAddressConfig struct {
+<span id="OrdererAddressConfig.Addresses"></span>    Addresses        []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrdererAddressConfig.AddressesByOrg"></span>    AddressesByOrg   map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrdererAddressConfig.Organizations"></span>    Organizations    []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrdererAddressConfig.AddressOverrides"></span>    AddressOverrides map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../../core/comm/index.html">comm</a>.<a href="../../core/comm/index.html#OrdererEndpoint">OrdererEndpoint</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Support">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/service/gossip_service.go?s=8601:8915#L241">Support</a>
+				<a class="permalink" href="index.html#Support">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Support aggregates functionality of several
+interfaces required by gossip service
+</p>
+
+			<pre>type Support struct {
+<span id="Support.Validator"></span>    Validator            <a href="../../core/committer/txvalidator/index.html">txvalidator</a>.<a href="../../core/committer/txvalidator/index.html#Validator">Validator</a>
+<span id="Support.Committer"></span>    Committer            <a href="../../core/committer/index.html">committer</a>.<a href="../../core/committer/index.html#Committer">Committer</a>
+<span id="Support.Store"></span>    Store                <a href="../privdata/index.html">privdata2</a>.<a href="../privdata/index.html#TransientStore">TransientStore</a>
+<span id="Support.Cs"></span>    Cs                   <a href="../../core/common/privdata/index.html">privdata</a>.<a href="../../core/common/privdata/index.html#CollectionStore">CollectionStore</a>
+<span id="Support.IdDeserializeFactory"></span>    IdDeserializeFactory <a href="../privdata/index.html">privdata2</a>.<a href="../privdata/index.html#IdentityDeserializerFactory">IdentityDeserializerFactory</a>
+<span id="Support.CapabilityProvider"></span>    CapabilityProvider   <a href="../privdata/index.html">privdata2</a>.<a href="../privdata/index.html#CapabilityProvider">CapabilityProvider</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

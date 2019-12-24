@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>statedb - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package statedb
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ValidateRangeMetadata">func ValidateRangeMetadata(metadata map[string]interface{}) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BulkOptimizable">type BulkOptimizable</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CompositeKey">type CompositeKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IndexCapable">type IndexCapable</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResult">type QueryResult</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResultsIterator">type QueryResultsIterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ResultsIterator">type ResultsIterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UpdateBatch">type UpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUpdateBatch">func NewUpdateBatch() *UpdateBatch</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Delete">func (batch *UpdateBatch) Delete(ns string, key string, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Exists">func (batch *UpdateBatch) Exists(ns string, key string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Get">func (batch *UpdateBatch) Get(ns string, key string) *VersionedValue</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.GetRangeScanIterator">func (batch *UpdateBatch) GetRangeScanIterator(ns string, startKey string, endKey string) QueryResultsIterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.GetUpdatedNamespaces">func (batch *UpdateBatch) GetUpdatedNamespaces() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.GetUpdates">func (batch *UpdateBatch) GetUpdates(ns string) map[string]*VersionedValue</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Put">func (batch *UpdateBatch) Put(ns string, key string, value []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.PutValAndMetadata">func (batch *UpdateBatch) PutValAndMetadata(ns string, key string, value []byte, metadata []byte, version *version.Height)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Update">func (batch *UpdateBatch) Update(ns string, key string, vv *VersionedValue)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VersionedDB">type VersionedDB</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#VersionedDBProvider">type VersionedDBProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#VersionedKV">type VersionedKV</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#VersionedValue">type VersionedValue</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VersionedValue.IsDelete">func (vv *VersionedValue) IsDelete() bool</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go">statedb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ValidateRangeMetadata">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=10508:10573#L279">ValidateRangeMetadata</a>
+				<a class="permalink" href="index.html#ValidateRangeMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ValidateRangeMetadata(metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ValidateRangeMetadata validates the JSON containing attributes for the range query
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BulkOptimizable">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=4110:4283#L68">BulkOptimizable</a>
+				<a class="permalink" href="index.html#BulkOptimizable">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BulkOptimizable interface provides additional functions for
+databases capable of batch operations
+</p>
+
+			<pre>type BulkOptimizable interface {
+    LoadCommittedVersions(keys []*<a href="index.html#CompositeKey">CompositeKey</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    GetCachedVersion(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    ClearCachedVersions()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CompositeKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=4589:4653#L82">CompositeKey</a>
+				<a class="permalink" href="index.html#CompositeKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CompositeKey encloses Namespace and Key components
+</p>
+
+			<pre>type CompositeKey struct {
+<span id="CompositeKey.Namespace"></span>    Namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CompositeKey.Key"></span>    Key       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IndexCapable">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=4384:4533#L76">IndexCapable</a>
+				<a class="permalink" href="index.html#IndexCapable">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IndexCapable interface provides additional functions for
+databases capable of index operations
+</p>
+
+			<pre>type IndexCapable interface {
+    GetDBType() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    ProcessIndexesForChaincodeDeploy(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, fileEntries []*<a href="../../../../common/ccprovider/index.html">ccprovider</a>.<a href="../../../../common/ccprovider/index.html#TarFileEntry">TarFileEntry</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5456:5484#L118">QueryResult</a>
+				<a class="permalink" href="index.html#QueryResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResult - a general interface for supporting different types of query results. Actual types differ for different queries
+</p>
+
+			<pre>type QueryResult interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResultsIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5240:5326#L112">QueryResultsIterator</a>
+				<a class="permalink" href="index.html#QueryResultsIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResultsIterator adds GetBookmarkAndClose method
+</p>
+
+			<pre>type QueryResultsIterator interface {
+    <a href="index.html#ResultsIterator">ResultsIterator</a>
+    GetBookmarkAndClose() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ResultsIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5110:5182#L106">ResultsIterator</a>
+				<a class="permalink" href="index.html#ResultsIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ResultsIterator iterates over query results
+</p>
+
+			<pre>type ResultsIterator interface {
+    Next() (<a href="index.html#QueryResult">QueryResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5690:5748#L129">UpdateBatch</a>
+				<a class="permalink" href="index.html#UpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpdateBatch encloses the details of multiple `updates`
+</p>
+
+			<pre>type UpdateBatch struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5802:5836#L134">NewUpdateBatch</a>
+					<a class="permalink" href="index.html#NewUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewUpdateBatch() *<a href="index.html#UpdateBatch">UpdateBatch</a></pre>
+				<p>
+NewUpdateBatch constructs an instance of a Batch
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="UpdateBatch.Delete">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=6890:6970#L166">Delete</a>
+					<a class="permalink" href="index.html#UpdateBatch.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Delete(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Delete deletes a Key and associated value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Exists">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=7094:7154#L171">Exists</a>
+					<a class="permalink" href="index.html#UpdateBatch.Exists">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Exists(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Exists checks whether the given key exists in the batch
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Get">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5958:6026#L139">Get</a>
+					<a class="permalink" href="index.html#UpdateBatch.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Get(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#VersionedValue">VersionedValue</a></pre>
+				<p>
+Get returns the VersionedValue for the given namespace and key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.GetRangeScanIterator">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=8706:8816#L212">GetRangeScanIterator</a>
+					<a class="permalink" href="index.html#UpdateBatch.GetRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) GetRangeScanIterator(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#QueryResultsIterator">QueryResultsIterator</a></pre>
+				<p>
+GetRangeScanIterator returns an iterator that iterates over keys of a specific namespace in sorted order
+In other word this gives the same functionality over the contents in the `UpdateBatch` as
+`VersionedDB.GetStateRangeScanIterator()` method gives over the contents in the statedb
+This function can be used for querying the contents in the updateBatch before they are committed to the statedb.
+For instance, a validator implementation can used this to verify the validity of a range query of a transaction
+where the UpdateBatch represents the union of the modifications performed by the preceding valid transactions in the same block
+(Assuming Group commit approach where we commit all the updates caused by a block together).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.GetUpdatedNamespaces">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=7338:7395#L181">GetUpdatedNamespaces</a>
+					<a class="permalink" href="index.html#UpdateBatch.GetUpdatedNamespaces">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) GetUpdatedNamespaces() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetUpdatedNamespaces returns the names of the namespaces that are updated
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.GetUpdates">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=7794:7868#L197">GetUpdates</a>
+					<a class="permalink" href="index.html#UpdateBatch.GetUpdates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) GetUpdates(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>) map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#VersionedValue">VersionedValue</a></pre>
+				<p>
+GetUpdates returns all the updates for a namespace
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Put">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=6228:6319#L152">Put</a>
+					<a class="permalink" href="index.html#UpdateBatch.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Put(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+Put adds a key with value only. The metadata is assumed to be nil
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.PutValAndMetadata">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=6564:6686#L158">PutValAndMetadata</a>
+					<a class="permalink" href="index.html#UpdateBatch.PutValAndMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) PutValAndMetadata(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, version *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>)</pre>
+				<p>
+PutValAndMetadata adds a key with value and metadata
+TODO introducing a new function to limit the refactoring. Later in a separate CR, the &#39;Put&#39; function above should be removed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Update">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=7615:7690#L192">Update</a>
+					<a class="permalink" href="index.html#UpdateBatch.Update">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Update(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, vv *<a href="index.html#VersionedValue">VersionedValue</a>)</pre>
+				<p>
+Update updates the batch with a latest entry for a namespace and a key
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VersionedDB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=869:4006#L20">VersionedDB</a>
+				<a class="permalink" href="index.html#VersionedDB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VersionedDB lists methods that a db is supposed to implement
+</p>
+
+			<pre>type VersionedDB interface {
+    <span class="comment">// GetState gets the value for given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetVersion gets the version for given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    GetVersion(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateMultipleKeys gets the values for multiple keys in a single call</span>
+    GetStateMultipleKeys(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="index.html#VersionedValue">VersionedValue</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateRangeScanIterator returns an iterator that contains all the key-values between given key ranges.</span>
+    <span class="comment">// startKey is inclusive</span>
+    <span class="comment">// endKey is exclusive</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *VersionedKV</span>
+    GetStateRangeScanIterator(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateRangeScanIteratorWithMetadata returns an iterator that contains all the key-values between given key ranges.</span>
+    <span class="comment">// startKey is inclusive</span>
+    <span class="comment">// endKey is exclusive</span>
+    <span class="comment">// metadata is a map of additional query parameters</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *VersionedKV</span>
+    GetStateRangeScanIteratorWithMetadata(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteQuery executes the given query and returns an iterator that contains results of type *VersionedKV.</span>
+    ExecuteQuery(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteQueryWithMetadata executes the given query with associated query options and</span>
+    <span class="comment">// returns an iterator that contains results of type *VersionedKV.</span>
+    <span class="comment">// metadata is a map of additional query parameters</span>
+    ExecuteQueryWithMetadata(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ApplyUpdates applies the batch to the underlying db.</span>
+    <span class="comment">// height is the height of the highest transaction in the Batch that</span>
+    <span class="comment">// a state db implementation is expected to ues as a save point</span>
+    ApplyUpdates(batch *<a href="index.html#UpdateBatch">UpdateBatch</a>, height *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetLatestSavePoint returns the height of the highest transaction upto which</span>
+    <span class="comment">// the state db is consistent</span>
+    GetLatestSavePoint() (*<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ValidateKeyValue tests whether the key and value is supported by the db implementation.</span>
+    <span class="comment">// For instance, leveldb supports any bytes for the key while the couchdb supports only valid utf-8 string</span>
+    <span class="comment">// TODO make the function ValidateKeyValue return a specific error say ErrInvalidKeyValue</span>
+    <span class="comment">// However, as of now, the both implementations of this function (leveldb and couchdb) are deterministic in returing an error</span>
+    <span class="comment">// i.e., an error is returned only if the key-value are found to be invalid for the underlying db</span>
+    ValidateKeyValue(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// BytesKeySupported returns true if the implementation (underlying db) supports the any bytes to be used as key.</span>
+    <span class="comment">// For instance, leveldb supports any bytes for the key while the couchdb supports only valid utf-8 string</span>
+    BytesKeySupported() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    <span class="comment">// Open opens the db</span>
+    Open() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Close closes the db</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="VersionedDBProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=559:803#L12">VersionedDBProvider</a>
+				<a class="permalink" href="index.html#VersionedDBProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VersionedDBProvider provides an instance of an versioned DB
+</p>
+
+			<pre>type VersionedDBProvider interface {
+    <span class="comment">// GetDBHandle returns a handle to a VersionedDB</span>
+    GetDBHandle(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#VersionedDB">VersionedDB</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Close closes all the VersionedDB instances and releases any resources held by VersionedDBProvider</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="VersionedKV">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=5004:5061#L100">VersionedKV</a>
+				<a class="permalink" href="index.html#VersionedKV">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VersionedKV encloses key and corresponding VersionedValue
+</p>
+
+			<pre>type VersionedKV struct {
+    <a href="index.html#CompositeKey">CompositeKey</a>
+    <a href="index.html#VersionedValue">VersionedValue</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="VersionedValue">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=4714:4804#L88">VersionedValue</a>
+				<a class="permalink" href="index.html#VersionedValue">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VersionedValue encloses value and corresponding version
+</p>
+
+			<pre>type VersionedValue struct {
+<span id="VersionedValue.Value"></span>    Value    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="VersionedValue.Metadata"></span>    Metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="VersionedValue.Version"></span>    Version  *<a href="../version/index.html">version</a>.<a href="../version/index.html#Height">Height</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VersionedValue.IsDelete">func (*VersionedValue) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/statedb/statedb.go?s=4872:4913#L95">IsDelete</a>
+					<a class="permalink" href="index.html#VersionedValue.IsDelete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vv *<a href="index.html#VersionedValue">VersionedValue</a>) IsDelete() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsDelete returns true if this update indicates delete of a key
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="commontests/index.html">commontests</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="statecouchdb/index.html">statecouchdb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="statecouchdb/msgs/index.html">msgs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="stateleveldb/index.html">stateleveldb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="stateleveldb/msgs/index.html">msgs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

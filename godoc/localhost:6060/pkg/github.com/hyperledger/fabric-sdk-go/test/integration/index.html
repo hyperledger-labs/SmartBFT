@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>integration - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package integration
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/test/integration"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AddLocalEntityMapping">func AddLocalEntityMapping(configProvider core.ConfigProvider) core.ConfigProvider</a></dd>
+			
+				
+				<dd><a href="index.html#CleanupTestPath">func CleanupTestPath(t *testing.T, storePath string)</a></dd>
+			
+				
+				<dd><a href="index.html#CleanupUserData">func CleanupUserData(t *testing.T, sdk *fabsdk.FabricSDK)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateChannel">func CreateChannel(sdk *fabsdk.FabricSDK, req resmgmt.SaveChannelRequest) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateChannelAndUpdateAnchorPeers">func CreateChannelAndUpdateAnchorPeers(t *testing.T, sdk *fabsdk.FabricSDK, channelID string, channelConfigFile string, orgsContext []*OrgContext) error</a></dd>
+			
+				
+				<dd><a href="index.html#DiscoverLocalPeers">func DiscoverLocalPeers(ctxProvider contextAPI.ClientProvider, expectedPeers int) ([]fabAPI.Peer, error)</a></dd>
+			
+				
+				<dd><a href="index.html#EnsureChannelCreatedAndPeersJoined">func EnsureChannelCreatedAndPeersJoined(t *testing.T, sdk *fabsdk.FabricSDK, channelID string, channelTxFile string, orgsContext []*OrgContext) error</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCDefaultQueryArgs">func ExampleCCDefaultQueryArgs() [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCDefaultTxArgs">func ExampleCCDefaultTxArgs() [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCInitArgs">func ExampleCCInitArgs() [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCQueryArgs">func ExampleCCQueryArgs(key string) [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCTxArgs">func ExampleCCTxArgs(from, to, val string) [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCTxRandomSetArgs">func ExampleCCTxRandomSetArgs() [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCTxSetArgs">func ExampleCCTxSetArgs(key, value string) [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ExampleCCUpgradeArgs">func ExampleCCUpgradeArgs() [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#FilterTargetsJoinedChannel">func FilterTargetsJoinedChannel(sdk *fabsdk.FabricSDK, orgID string, channelID string, targets []string) ([]string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateExampleID">func GenerateExampleID(randomize bool) string</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateExamplePvtID">func GenerateExamplePvtID(randomize bool) string</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateRandomID">func GenerateRandomID() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetChannelConfigPath">func GetChannelConfigPath(filename string) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetConfigOverridesPath">func GetConfigOverridesPath(filename string) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetConfigPath">func GetConfigPath(filename string) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetCryptoConfigPath">func GetCryptoConfigPath(filename string) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetDeployPath">func GetDeployPath() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetKeyName">func GetKeyName(t *testing.T) string</a></dd>
+			
+				
+				<dd><a href="index.html#HasPeerJoinedChannel">func HasPeerJoinedChannel(client *resmgmt.Client, target string, channel string) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#InitializeChannel">func InitializeChannel(sdk *fabsdk.FabricSDK, orgID string, req resmgmt.SaveChannelRequest, targets []string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstallChaincode">func InstallChaincode(resMgmt *resmgmt.Client, ccPkg *resource.CCPackage, ccPath, ccName, ccVersion string, localPeers []fabAPI.Peer) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstallChaincodeWithOrgContexts">func InstallChaincodeWithOrgContexts(orgs []*OrgContext, ccPkg *resource.CCPackage, ccPath, ccID, ccVersion string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstallExampleChaincode">func InstallExampleChaincode(orgs []*OrgContext, ccID string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstallExamplePvtChaincode">func InstallExamplePvtChaincode(orgs []*OrgContext, ccID string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstantiateChaincode">func InstantiateChaincode(resMgmt *resmgmt.Client, channelID, ccName, ccPath, ccVersion string, ccPolicyStr string, args [][]byte, collConfigs ...*cb.CollectionConfig) (resmgmt.InstantiateCCResponse, error)</a></dd>
+			
+				
+				<dd><a href="index.html#InstantiateExampleChaincode">func InstantiateExampleChaincode(orgs []*OrgContext, channelID, ccID, ccPolicy string, collConfigs ...*cb.CollectionConfig) error</a></dd>
+			
+				
+				<dd><a href="index.html#InstantiateExamplePvtChaincode">func InstantiateExamplePvtChaincode(orgs []*OrgContext, channelID, ccID, ccPolicy string, collConfigs ...*cb.CollectionConfig) error</a></dd>
+			
+				
+				<dd><a href="index.html#IsDynamicDiscoverySupported">func IsDynamicDiscoverySupported() bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsJoinedChannel">func IsJoinedChannel(channelID string, resMgmtClient *resmgmt.Client, peer fabAPI.Peer) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#IsLocal">func IsLocal() bool</a></dd>
+			
+				
+				<dd><a href="index.html#JoinChannel">func JoinChannel(sdk *fabsdk.FabricSDK, name, orgID string, targets []string) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#JoinPeersToChannel">func JoinPeersToChannel(channelID string, orgsContext []*OrgContext) error</a></dd>
+			
+				
+				<dd><a href="index.html#OrgTargetPeers">func OrgTargetPeers(orgs []string, configBackend ...core.ConfigBackend) ([]string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#PrepareExampleCC">func PrepareExampleCC(sdk *fabsdk.FabricSDK, user fabsdk.ContextOption, orgName string, chaincodeID string) error</a></dd>
+			
+				
+				<dd><a href="index.html#ResetKeys">func ResetKeys(t *testing.T, ctx contextAPI.ChannelProvider, chaincodeID, value string, keys ...string)</a></dd>
+			
+				
+				<dd><a href="index.html#UpgradeChaincode">func UpgradeChaincode(resMgmt *resmgmt.Client, channelID, ccName, ccPath, ccVersion string, ccPolicyStr string, args [][]byte, collConfigs ...*cb.CollectionConfig) (resmgmt.UpgradeCCResponse, error)</a></dd>
+			
+				
+				<dd><a href="index.html#UpgradeExamplePvtChaincode">func UpgradeExamplePvtChaincode(orgs []*OrgContext, channelID, ccID, ccPolicy string, collConfigs ...*cb.CollectionConfig) error</a></dd>
+			
+				
+				<dd><a href="index.html#WaitForOrdererConfigUpdate">func WaitForOrdererConfigUpdate(t *testing.T, client *resmgmt.Client, channelID string, genesis bool, lastConfigBlock uint64) uint64</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BaseSetupImpl">type BaseSetupImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BaseSetupImpl.Initialize">func (setup *BaseSetupImpl) Initialize(sdk *fabsdk.FabricSDK) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OrgContext">type OrgContext</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SetupMultiOrgContext">func SetupMultiOrgContext(sdk *fabsdk.FabricSDK, org1Name string, org2Name string, org1AdminUser string, org2AdminUser string) ([]*OrgContext, error)</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go">base_test_setup.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/env.go">env.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go">prepare.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go">utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+Initial B values for ExampleCC
+</p>
+
+				<pre>const (
+    <span id="ExampleCCInitB">ExampleCCInitB</span>    = &#34;200&#34;
+    <span id="ExampleCCUpgradeB">ExampleCCUpgradeB</span> = &#34;400&#34;
+    <span id="AdminUser">AdminUser</span>         = &#34;Admin&#34;
+    <span id="OrdererOrgName">OrdererOrgName</span>    = &#34;OrdererOrg&#34;
+)</pre>
+			
+				
+				<pre>const (
+
+    <span class="comment">//ConfigPathSingleOrg single org version of &#39;configPath&#39; for testing discovery</span>
+    <span id="ConfigPathSingleOrg">ConfigPathSingleOrg</span> = &#34;${FABRIC_SDK_GO_PROJECT_PATH}/test/fixtures/config/config_e2e_single_org.yaml&#34;
+)</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+ConfigBackend contains config backend for integration tests
+</p>
+
+				<pre>var <span id="ConfigBackend">ConfigBackend</span> = fetchConfigBackend(configPath, entityMatcherLocal)</pre>
+			
+		
+		
+			
+			
+			<h2 id="AddLocalEntityMapping">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/env.go?s=1745:1827#L45">AddLocalEntityMapping</a>
+				<a class="permalink" href="index.html#AddLocalEntityMapping">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AddLocalEntityMapping(configProvider <a href="../../pkg/common/providers/core/index.html">core</a>.<a href="../../pkg/common/providers/core/index.html#ConfigProvider">ConfigProvider</a>) <a href="../../pkg/common/providers/core/index.html">core</a>.<a href="../../pkg/common/providers/core/index.html#ConfigProvider">ConfigProvider</a></pre>
+			<p>
+AddLocalEntityMapping adds local test entity mapping to config backend
+and returns updated config provider
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CleanupTestPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=7687:7739#L230">CleanupTestPath</a>
+				<a class="permalink" href="index.html#CleanupTestPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CleanupTestPath(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, storePath <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+CleanupTestPath removes the contents of a state store.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CleanupUserData">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=8002:8059#L241">CleanupUserData</a>
+				<a class="permalink" href="index.html#CleanupUserData">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CleanupUserData(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>)</pre>
+			<p>
+CleanupUserData removes user data.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=2879:2966#L90">CreateChannel</a>
+				<a class="permalink" href="index.html#CreateChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateChannel(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, req <a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#SaveChannelRequest">SaveChannelRequest</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+CreateChannel attempts to save the named channel.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateChannelAndUpdateAnchorPeers">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=7043:7195#L195">CreateChannelAndUpdateAnchorPeers</a>
+				<a class="permalink" href="index.html#CreateChannelAndUpdateAnchorPeers">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateChannelAndUpdateAnchorPeers(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channelConfigFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>, orgsContext []*<a href="index.html#OrgContext">OrgContext</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+CreateChannelAndUpdateAnchorPeers creates the channel and updates all of the anchor peers for all orgs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DiscoverLocalPeers">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=11997:12101#L330">DiscoverLocalPeers</a>
+				<a class="permalink" href="index.html#DiscoverLocalPeers">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DiscoverLocalPeers(ctxProvider <a href="../../pkg/common/providers/context/index.html">contextAPI</a>.<a href="../../pkg/common/providers/context/index.html#ClientProvider">ClientProvider</a>, expectedPeers <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="../../pkg/common/providers/fab/index.html">fabAPI</a>.<a href="../../pkg/common/providers/fab/index.html#Peer">Peer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+DiscoverLocalPeers queries the local peers for the given MSP context and returns all of the peers. If
+the number of peers does not match the expected number then an error is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="EnsureChannelCreatedAndPeersJoined">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=13007:13156#L356">EnsureChannelCreatedAndPeersJoined</a>
+				<a class="permalink" href="index.html#EnsureChannelCreatedAndPeersJoined">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func EnsureChannelCreatedAndPeersJoined(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channelTxFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>, orgsContext []*<a href="index.html#OrgContext">OrgContext</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+EnsureChannelCreatedAndPeersJoined creates a channel, joins all peers in the given orgs to the channel and updates the anchor peers of each org.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCDefaultQueryArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=2346:2387#L54">ExampleCCDefaultQueryArgs</a>
+				<a class="permalink" href="index.html#ExampleCCDefaultQueryArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCDefaultQueryArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCDefaultQueryArgs returns example cc query args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCDefaultTxArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=2806:2844#L69">ExampleCCDefaultTxArgs</a>
+				<a class="permalink" href="index.html#ExampleCCDefaultTxArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCDefaultTxArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCDefaultTxArgs returns example cc move funds args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCInitArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=3325:3358#L84">ExampleCCInitArgs</a>
+				<a class="permalink" href="index.html#ExampleCCInitArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCInitArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCInitArgs returns example cc initialization args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCQueryArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=2470:2514#L59">ExampleCCQueryArgs</a>
+				<a class="permalink" href="index.html#ExampleCCQueryArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCQueryArgs(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCQueryArgs returns example cc query args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCTxArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=2616:2667#L64">ExampleCCTxArgs</a>
+				<a class="permalink" href="index.html#ExampleCCTxArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCTxArgs(from, to, val <a href="http://localhost:6060/pkg/builtin/#string">string</a>) [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCTxArgs returns example cc query args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCTxRandomSetArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=2956:2996#L74">ExampleCCTxRandomSetArgs</a>
+				<a class="permalink" href="index.html#ExampleCCTxRandomSetArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCTxRandomSetArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCTxRandomSetArgs returns example cc set args with random key-value pairs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCTxSetArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=3149:3200#L79">ExampleCCTxSetArgs</a>
+				<a class="permalink" href="index.html#ExampleCCTxSetArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCTxSetArgs(key, value <a href="http://localhost:6060/pkg/builtin/#string">string</a>) [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCTxSetArgs sets the given key value in examplecc
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExampleCCUpgradeArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=3436:3472#L89">ExampleCCUpgradeArgs</a>
+				<a class="permalink" href="index.html#ExampleCCUpgradeArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExampleCCUpgradeArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ExampleCCUpgradeArgs returns example cc upgrade args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="FilterTargetsJoinedChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=2044:2166#L65">FilterTargetsJoinedChannel</a>
+				<a class="permalink" href="index.html#FilterTargetsJoinedChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func FilterTargetsJoinedChannel(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, orgID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, targets []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+FilterTargetsJoinedChannel filters targets to those that have joined the named channel.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateExampleID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=1505:1550#L43">GenerateExampleID</a>
+				<a class="permalink" href="index.html#GenerateExampleID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateExampleID(randomize <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GenerateExampleID supplies a chaincode name for example_cc
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateExamplePvtID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=1247:1295#L33">GenerateExamplePvtID</a>
+				<a class="permalink" href="index.html#GenerateExamplePvtID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateExamplePvtID(randomize <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GenerateExamplePvtID supplies a chaincode name for example_pvt_cc
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateRandomID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=918:948#L26">GenerateRandomID</a>
+				<a class="permalink" href="index.html#GenerateRandomID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateRandomID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GenerateRandomID generates random ID
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetChannelConfigPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=5715:5764#L162">GetChannelConfigPath</a>
+				<a class="permalink" href="index.html#GetChannelConfigPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChannelConfigPath(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetChannelConfigPath returns the path to the named channel config file
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetConfigOverridesPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=6171:6222#L173">GetConfigOverridesPath</a>
+				<a class="permalink" href="index.html#GetConfigOverridesPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetConfigOverridesPath(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetConfigOverridesPath returns the path to the named config override fixture file
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetConfigPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=5924:5966#L167">GetConfigPath</a>
+				<a class="permalink" href="index.html#GetConfigPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetConfigPath(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetConfigPath returns the path to the named config fixture file
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetCryptoConfigPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=6444:6492#L179">GetCryptoConfigPath</a>
+				<a class="permalink" href="index.html#GetCryptoConfigPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetCryptoConfigPath(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetCryptoConfigPath returns the path to the named crypto-config override fixture file
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetDeployPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=5510:5537#L156">GetDeployPath</a>
+				<a class="permalink" href="index.html#GetDeployPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetDeployPath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetDeployPath returns the path to the chaincode fixtures
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetKeyName">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=16120:16156#L446">GetKeyName</a>
+				<a class="permalink" href="index.html#GetKeyName">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetKeyName(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetKeyName creates random key name based on test name
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HasPeerJoinedChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=7135:7229#L214">HasPeerJoinedChannel</a>
+				<a class="permalink" href="index.html#HasPeerJoinedChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HasPeerJoinedChannel(client *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, target <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+HasPeerJoinedChannel checks whether the peer has already joined the channel.
+It returns true if it has, false otherwise, or an error
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitializeChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=1353:1468#L43">InitializeChannel</a>
+				<a class="permalink" href="index.html#InitializeChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitializeChannel(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, orgID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, req <a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#SaveChannelRequest">SaveChannelRequest</a>, targets []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InitializeChannel ...
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstallChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=9764:9903#L266">InstallChaincode</a>
+				<a class="permalink" href="index.html#InstallChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstallChaincode(resMgmt *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, ccPkg *<a href="../../pkg/fab/resource/index.html">resource</a>.<a href="../../pkg/fab/resource/index.html#CCPackage">CCPackage</a>, ccPath, ccName, ccVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, localPeers []<a href="../../pkg/common/providers/fab/index.html">fabAPI</a>.<a href="../../pkg/common/providers/fab/index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstallChaincode installs the given chaincode to the given peers
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstallChaincodeWithOrgContexts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=9319:9440#L255">InstallChaincodeWithOrgContexts</a>
+				<a class="permalink" href="index.html#InstallChaincodeWithOrgContexts">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstallChaincodeWithOrgContexts(orgs []*<a href="index.html#OrgContext">OrgContext</a>, ccPkg *<a href="../../pkg/fab/resource/index.html">resource</a>.<a href="../../pkg/fab/resource/index.html#CCPackage">CCPackage</a>, ccPath, ccID, ccVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstallChaincodeWithOrgContexts installs the given chaincode to orgs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstallExampleChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=3293:3360#L102">InstallExampleChaincode</a>
+				<a class="permalink" href="index.html#InstallExampleChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstallExampleChaincode(orgs []*<a href="index.html#OrgContext">OrgContext</a>, ccID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstallExampleChaincode installs the example chaincode to all peers in the given orgs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstallExamplePvtChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=3818:3888#L117">InstallExamplePvtChaincode</a>
+				<a class="permalink" href="index.html#InstallExamplePvtChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstallExamplePvtChaincode(orgs []*<a href="index.html#OrgContext">OrgContext</a>, ccID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstallExamplePvtChaincode installs the example pvt chaincode to all peers in the given orgs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstantiateChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=10423:10629#L287">InstantiateChaincode</a>
+				<a class="permalink" href="index.html#InstantiateChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstantiateChaincode(resMgmt *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, channelID, ccName, ccPath, ccVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccPolicyStr <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, collConfigs ...*<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>) (<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#InstantiateCCResponse">InstantiateCCResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+InstantiateChaincode instantiates the given chaincode to the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstantiateExampleChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=4339:4468#L132">InstantiateExampleChaincode</a>
+				<a class="permalink" href="index.html#InstantiateExampleChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstantiateExampleChaincode(orgs []*<a href="index.html#OrgContext">OrgContext</a>, channelID, ccID, ccPolicy <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collConfigs ...*<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstantiateExampleChaincode instantiates the example CC on the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InstantiateExamplePvtChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=4719:4851#L138">InstantiateExamplePvtChaincode</a>
+				<a class="permalink" href="index.html#InstantiateExamplePvtChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InstantiateExamplePvtChaincode(orgs []*<a href="index.html#OrgContext">OrgContext</a>, channelID, ccID, ccPolicy <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collConfigs ...*<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InstantiateExamplePvtChaincode instantiates the example pvt CC on the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsDynamicDiscoverySupported">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/env.go?s=3078:3117#L81">IsDynamicDiscoverySupported</a>
+				<a class="permalink" href="index.html#IsDynamicDiscoverySupported">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDynamicDiscoverySupported() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDynamicDiscoverySupported returns if fabric version on which tests are running supports dynamic discovery
+any version greater than v1.1 supports dynamic discovery
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsJoinedChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=3577:3678#L94">IsJoinedChannel</a>
+				<a class="permalink" href="index.html#IsJoinedChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsJoinedChannel(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, resMgmtClient *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, peer <a href="../../pkg/common/providers/fab/index.html">fabAPI</a>.<a href="../../pkg/common/providers/fab/index.html#Peer">Peer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+IsJoinedChannel returns true if the given peer has joined the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsLocal">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/env.go?s=1492:1511#L33">IsLocal</a>
+				<a class="permalink" href="index.html#IsLocal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsLocal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsLocal checks os argument and returns true if &#39;testLocal=true&#39; argument found
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="JoinChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=3621:3712#L110">JoinChannel</a>
+				<a class="permalink" href="index.html#JoinChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func JoinChannel(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, name, orgID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, targets []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+JoinChannel attempts to save the named channel.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="JoinPeersToChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=8788:8862#L239">JoinPeersToChannel</a>
+				<a class="permalink" href="index.html#JoinPeersToChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func JoinPeersToChannel(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, orgsContext []*<a href="index.html#OrgContext">OrgContext</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+JoinPeersToChannel joins all peers in all of the given orgs to the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="OrgTargetPeers">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=4401:4490#L131">OrgTargetPeers</a>
+				<a class="permalink" href="index.html#OrgTargetPeers">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func OrgTargetPeers(orgs []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, configBackend ...<a href="../../pkg/common/providers/core/index.html">core</a>.<a href="../../pkg/common/providers/core/index.html#ConfigBackend">ConfigBackend</a>) ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+OrgTargetPeers determines peer endpoints for orgs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PrepareExampleCC">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=1773:1886#L53">PrepareExampleCC</a>
+				<a class="permalink" href="index.html#PrepareExampleCC">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PrepareExampleCC(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, user <a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#ContextOption">ContextOption</a>, orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodeID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+PrepareExampleCC install and instantiate using resource management client
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetKeys">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=16286:16389#L451">ResetKeys</a>
+				<a class="permalink" href="index.html#ResetKeys">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetKeys(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, ctx <a href="../../pkg/common/providers/context/index.html">contextAPI</a>.<a href="../../pkg/common/providers/context/index.html#ChannelProvider">ChannelProvider</a>, chaincodeID, value <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+ResetKeys resets given set of keys in example cc to given value
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UpgradeChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=11160:11358#L308">UpgradeChaincode</a>
+				<a class="permalink" href="index.html#UpgradeChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UpgradeChaincode(resMgmt *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, channelID, ccName, ccPath, ccVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccPolicyStr <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, collConfigs ...*<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>) (<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#UpgradeCCResponse">UpgradeCCResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UpgradeChaincode upgrades the given chaincode on the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UpgradeExamplePvtChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/prepare.go?s=5113:5241#L144">UpgradeExamplePvtChaincode</a>
+				<a class="permalink" href="index.html#UpgradeExamplePvtChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UpgradeExamplePvtChaincode(orgs []*<a href="index.html#OrgContext">OrgContext</a>, channelID, ccID, ccPolicy <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collConfigs ...*<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+UpgradeExamplePvtChaincode upgrades the instantiated example pvt CC on the given channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WaitForOrdererConfigUpdate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=13827:13959#L377">WaitForOrdererConfigUpdate</a>
+				<a class="permalink" href="index.html#WaitForOrdererConfigUpdate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WaitForOrdererConfigUpdate(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, client *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, genesis <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, lastConfigBlock <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+			<p>
+WaitForOrdererConfigUpdate waits until the config block update has been committed.
+In Fabric 1.0 there is a bug that panics the orderer if more than one config update is added to the same block.
+This function may be invoked after each config update as a workaround.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BaseSetupImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=1363:1556#L26">BaseSetupImpl</a>
+				<a class="permalink" href="index.html#BaseSetupImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BaseSetupImpl implementation of BaseTestSetup
+</p>
+
+			<pre>type BaseSetupImpl struct {
+<span id="BaseSetupImpl.Identity"></span>    Identity          <a href="../../pkg/common/providers/msp/index.html">msp</a>.<a href="../../pkg/common/providers/msp/index.html#Identity">Identity</a>
+<span id="BaseSetupImpl.Targets"></span>    Targets           []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BaseSetupImpl.ConfigFile"></span>    ConfigFile        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BaseSetupImpl.OrgID"></span>    OrgID             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BaseSetupImpl.ChannelID"></span>    ChannelID         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BaseSetupImpl.ChannelConfigFile"></span>    ChannelConfigFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BaseSetupImpl.Initialize">func (*BaseSetupImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=3991:4058#L108">Initialize</a>
+					<a class="permalink" href="index.html#BaseSetupImpl.Initialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (setup *<a href="index.html#BaseSetupImpl">BaseSetupImpl</a>) Initialize(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Initialize reads configuration from file and sets up client and channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OrgContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/base_test_setup.go?s=6687:6935#L185">OrgContext</a>
+				<a class="permalink" href="index.html#OrgContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrgContext provides SDK client context for a given org
+</p>
+
+			<pre>type OrgContext struct {
+<span id="OrgContext.OrgID"></span>    OrgID                <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrgContext.CtxProvider"></span>    CtxProvider          <a href="../../pkg/common/providers/context/index.html">contextAPI</a>.<a href="../../pkg/common/providers/context/index.html#ClientProvider">ClientProvider</a>
+<span id="OrgContext.SigningIdentity"></span>    SigningIdentity      <a href="../../pkg/common/providers/msp/index.html">msp</a>.<a href="../../pkg/common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>
+<span id="OrgContext.ResMgmt"></span>    ResMgmt              *<a href="../../pkg/client/resmgmt/index.html">resmgmt</a>.<a href="../../pkg/client/resmgmt/index.html#Client">Client</a>
+<span id="OrgContext.Peers"></span>    Peers                []<a href="../../pkg/common/providers/fab/index.html">fabAPI</a>.<a href="../../pkg/common/providers/fab/index.html#Peer">Peer</a>
+<span id="OrgContext.AnchorPeerConfigFile"></span>    AnchorPeerConfigFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="SetupMultiOrgContext">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/integration/utils.go?s=5035:5184#L150">SetupMultiOrgContext</a>
+					<a class="permalink" href="index.html#SetupMultiOrgContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func SetupMultiOrgContext(sdk *<a href="../../pkg/fabsdk/index.html">fabsdk</a>.<a href="../../pkg/fabsdk/index.html#FabricSDK">FabricSDK</a>, org1Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, org2Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, org1AdminUser <a href="http://localhost:6060/pkg/builtin/#string">string</a>, org2AdminUser <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="index.html#OrgContext">OrgContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SetupMultiOrgContext creates an OrgContext for two organizations in the org channel.
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="e2e/index.html">e2e</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="e2e/orgs/index.html">orgs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="pkg/index.html">pkg</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="pkg/client/index.html">client</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="pkg/client/msp/index.html">msp</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="util/index.html">util</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="util/runner/index.html">runner</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>inquire - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package inquire
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/policies/inquire"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#CartesianProduct">func CartesianProduct(s1, s2 ComparablePrincipalSets) comparablePrincipalSetPairs</a></dd>
+			
+				
+				<dd><a href="index.html#NewInquireableSignaturePolicy">func NewInquireableSignaturePolicy(sigPol *common.SignaturePolicyEnvelope) policies.InquireablePolicy</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ComparablePrincipal">type ComparablePrincipal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewComparablePrincipal">func NewComparablePrincipal(principal *msp.MSPPrincipal) *ComparablePrincipal</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipal.IsA">func (cp *ComparablePrincipal) IsA(other *ComparablePrincipal) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipal.IsFound">func (cp *ComparablePrincipal) IsFound(set ...*ComparablePrincipal) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipal.ToOURole">func (cp *ComparablePrincipal) ToOURole() *ComparablePrincipal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipal.ToRole">func (cp *ComparablePrincipal) ToRole() *ComparablePrincipal</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ComparablePrincipalSet">type ComparablePrincipalSet</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewComparablePrincipalSet">func NewComparablePrincipalSet(set policies.PrincipalSet) ComparablePrincipalSet</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.Clone">func (cps ComparablePrincipalSet) Clone() ComparablePrincipalSet</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.Contains">func (cps ComparablePrincipalSet) Contains(s *ComparablePrincipal) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.IsContainedIn">func (cps ComparablePrincipalSet) IsContainedIn(set ComparablePrincipalSet) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.IsSubset">func (cps ComparablePrincipalSet) IsSubset(sets ComparablePrincipalSet) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.String">func (cps ComparablePrincipalSet) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSet.ToPrincipalSet">func (cps ComparablePrincipalSet) ToPrincipalSet() policies.PrincipalSet</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ComparablePrincipalSets">type ComparablePrincipalSets</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Merge">func Merge(s1, s2 ComparablePrincipalSets) ComparablePrincipalSets</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSets.ExcludeIndices">func (cps ComparablePrincipalSets) ExcludeIndices(mapping map[int][]int) ComparablePrincipalSets</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSets.OfMapping">func (cps ComparablePrincipalSets) OfMapping(mapping map[int][]int, sets2 ComparablePrincipalSets) comparablePrincipalSetPairs</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSets.Reduce">func (cps ComparablePrincipalSets) Reduce() ComparablePrincipalSets</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ComparablePrincipalSets.ToPrincipalSets">func (cps ComparablePrincipalSets) ToPrincipalSets() policies.PrincipalSets</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go">compare.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/inquire.go">inquire.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go">merge.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CartesianProduct">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=3224:3305#L65">CartesianProduct</a>
+				<a class="permalink" href="index.html#CartesianProduct">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CartesianProduct(s1, s2 <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) comparablePrincipalSetPairs</pre>
+			<p>
+CartesianProduct returns a comparablePrincipalSetPairs that is comprised of the combination
+of every possible pair of ComparablePrincipalSet such that the first element is in s1,
+and the second element is in s2.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewInquireableSignaturePolicy">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/inquire.go?s=620:721#L20">NewInquireableSignaturePolicy</a>
+				<a class="permalink" href="index.html#NewInquireableSignaturePolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewInquireableSignaturePolicy(sigPol *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignaturePolicyEnvelope">SignaturePolicyEnvelope</a>) <a href="../index.html">policies</a>.<a href="../index.html#InquireablePolicy">InquireablePolicy</a></pre>
+			<p>
+NewInquireableSignaturePolicy creates a signature policy that can be inquired,
+from a policy and a signature policy.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ComparablePrincipal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=348:487#L9">ComparablePrincipal</a>
+				<a class="permalink" href="index.html#ComparablePrincipal">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ComparablePrincipal defines an MSPPrincipal that can be compared to other principals
+</p>
+
+			<pre>type ComparablePrincipal struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewComparablePrincipal">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=612:689#L18">NewComparablePrincipal</a>
+					<a class="permalink" href="index.html#NewComparablePrincipal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewComparablePrincipal(principal *<a href="../../../protos/msp/index.html">msp</a>.<a href="../../../protos/msp/index.html#MSPPrincipal">MSPPrincipal</a>) *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a></pre>
+				<p>
+NewComparablePrincipal creates a ComparablePrincipal out of the given MSPPrincipal.
+Returns nil if a failure occurs.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ComparablePrincipal.IsA">func (*ComparablePrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=1971:2038#L55">IsA</a>
+					<a class="permalink" href="index.html#ComparablePrincipal.IsA">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) IsA(other *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsA determines whether all identities that satisfy this ComparablePrincipal
+also satisfy the other ComparablePrincipal.
+Example: if this ComparablePrincipal is a Peer role,
+and the other ComparablePrincipal is a Member role, then
+all identities that satisfy this ComparablePrincipal (are peers)
+also satisfy the other principal (are members).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipal.IsFound">func (*ComparablePrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=1450:1522#L40">IsFound</a>
+					<a class="permalink" href="index.html#ComparablePrincipal.IsFound">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) IsFound(set ...*<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsFound returns whether the ComparablePrincipal is found among the given set of ComparablePrincipals
+For the ComparablePrincipal x to be found, there needs to be some ComparablePrincipal y in the set
+such that x.IsA(y) will be true.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipal.ToOURole">func (*ComparablePrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=3167:3229#L94">ToOURole</a>
+					<a class="permalink" href="index.html#ComparablePrincipal.ToOURole">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) ToOURole() *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a></pre>
+				<p>
+ToOURole converts this ComparablePrincipal to OU principal, and returns nil on failure
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipal.ToRole">func (*ComparablePrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=3573:3633#L107">ToRole</a>
+					<a class="permalink" href="index.html#ComparablePrincipal.ToRole">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) ToRole() *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a></pre>
+				<p>
+ToRole converts this ComparablePrincipal to MSP Role, and returns nil if the conversion failed
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ComparablePrincipalSet">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=3934:3984#L120">ComparablePrincipalSet</a>
+				<a class="permalink" href="index.html#ComparablePrincipalSet">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ComparablePrincipalSet aggregates ComparablePrincipals
+</p>
+
+			<pre>type ComparablePrincipalSet []*<a href="index.html#ComparablePrincipal">ComparablePrincipal</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewComparablePrincipalSet">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=4870:4950#L153">NewComparablePrincipalSet</a>
+					<a class="permalink" href="index.html#NewComparablePrincipalSet">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewComparablePrincipalSet(set <a href="../index.html">policies</a>.<a href="../index.html#PrincipalSet">PrincipalSet</a>) <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a></pre>
+				<p>
+NewComparablePrincipalSet constructs a ComparablePrincipalSet out of the given PrincipalSet
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ComparablePrincipalSet.Clone">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=5192:5256#L166">Clone</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.Clone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) Clone() <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a></pre>
+				<p>
+Clone returns a copy of this ComparablePrincipalSet
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSet.Contains">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=7895:7966#L210">Contains</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.Contains">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) Contains(s *<a href="index.html#ComparablePrincipal">ComparablePrincipal</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Contains returns whether this ComparablePrincipalSet contains the given ComparablePrincipal.
+A ComparablePrincipalSet X contains a ComparablePrincipal y if
+there is a ComparablePrincipal x in X such that x.IsA(y).
+From here it follows that every signature set that satisfies X, also satisfies y.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSet.IsContainedIn">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=8685:8765#L225">IsContainedIn</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.IsContainedIn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) IsContainedIn(set <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsContainedIn returns whether this ComparablePrincipalSet is contained in the given ComparablePrincipalSet.
+More formally- a ComparablePrincipalSet X is said to be contained in ComparablePrincipalSet Y
+if for each ComparablePrincipalSet x in X there is a ComparablePrincipalSet y in Y such that y.IsA(x) is true.
+If a ComparablePrincipalSet X is contained by a ComparablePrincipalSet Y then if a signature set satisfies Y,
+it also satisfies X, because for each x in X there is a y in Y such that there exists a signature of a corresponding
+identity such that the identity satisfies y, and therefore satisfies x too.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSet.IsSubset">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=9790:9866#L264">IsSubset</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.IsSubset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) IsSubset(sets <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSubset returns whether this ComparablePrincipalSet is a subset of the given ComparablePrincipalSet
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSet.String">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=4316:4365#L132">String</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of this ComparablePrincipalSet
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSet.ToPrincipalSet">func (ComparablePrincipalSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/compare.go?s=4059:4131#L123">ToPrincipalSet</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSet.ToPrincipalSet">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a>) ToPrincipalSet() <a href="../index.html">policies</a>.<a href="../index.html#PrincipalSet">PrincipalSet</a></pre>
+				<p>
+ToPrincipalSet converts this ComparablePrincipalSet to a PrincipalSet
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ComparablePrincipalSets">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=236:289#L6">ComparablePrincipalSets</a>
+				<a class="permalink" href="index.html#ComparablePrincipalSets">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ComparablePrincipalSets aggregate ComparablePrincipalSets
+</p>
+
+			<pre>type ComparablePrincipalSets []<a href="index.html#ComparablePrincipalSet">ComparablePrincipalSet</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Merge">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=1183:1249#L25">Merge</a>
+					<a class="permalink" href="index.html#Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Merge(s1, s2 <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a></pre>
+				<p>
+Merge returns ComparablePrincipalSets that the underlying PrincipalSets consist of
+PrincipalSets that satisfy the endorsement policies that both ComparablePrincipalSets were derived of.
+More formally speaking, let EP1 and EP2 be endorsement policies, and
+P1 and P2 be the principal sets that each principal set p in P1 satisfies EP1,
+and each principal set p in P2 satisfies EP2.
+Denote as S1 and S2 the ComparablePrincipalSets derived from EP1 and EP2 respectively.
+Then, S = Merge(S1, S2) wields ComparablePrincipalSets
+such that every ComparablePrincipalSet s in S, satisfies both EP1 and EP2.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ComparablePrincipalSets.ExcludeIndices">func (ComparablePrincipalSets) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=7330:7426#L195">ExcludeIndices</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSets.ExcludeIndices">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) ExcludeIndices(mapping map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>][]<a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a></pre>
+				<p>
+ExcludeIndices returns a ComparablePrincipalSets without the given indices found in the keys
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSets.OfMapping">func (ComparablePrincipalSets) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=5714:5840#L135">OfMapping</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSets.OfMapping">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) OfMapping(mapping map[<a href="http://localhost:6060/pkg/builtin/#int">int</a>][]<a href="http://localhost:6060/pkg/builtin/#int">int</a>, sets2 <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) comparablePrincipalSetPairs</pre>
+				<p>
+OfMapping returns comparablePrincipalSetPairs comprising only of the indices found in the given keys
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSets.Reduce">func (ComparablePrincipalSets) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=6244:6311#L150">Reduce</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSets.Reduce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) Reduce() <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a></pre>
+				<p>
+Reduce returns the ComparablePrincipalSets in a form such that no element contains another element.
+Every element that contains some other element is omitted from the result.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ComparablePrincipalSets.ToPrincipalSets">func (ComparablePrincipalSets) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/policies/inquire/merge.go?s=367:442#L9">ToPrincipalSets</a>
+					<a class="permalink" href="index.html#ComparablePrincipalSets.ToPrincipalSets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cps <a href="index.html#ComparablePrincipalSets">ComparablePrincipalSets</a>) ToPrincipalSets() <a href="../index.html">policies</a>.<a href="../index.html#PrincipalSets">PrincipalSets</a></pre>
+				<p>
+ToPrincipalSets converts this ComparablePrincipalSets to a PrincipalSets
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

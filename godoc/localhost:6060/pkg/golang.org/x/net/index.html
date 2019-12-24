@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>/src/golang.org/x/net - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Directory /src/golang.org/x/net
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+
+
+
+
+	
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="bpf/index.html">bpf</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package bpf implements marshaling and unmarshaling of programs for the Berkeley Packet Filter virtual machine, and provides a Go implementation of the virtual machine.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="context/index.html">context</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package context defines the Context type, which carries deadlines, cancelation signals, and other request-scoped values across API boundaries and between processes.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="context/ctxhttp/index.html">ctxhttp</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package ctxhttp provides helper functions for performing context-aware HTTP requests.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="dict/index.html">dict</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package dict implements the Dictionary Server Protocol as defined in RFC 2229.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="dns/index.html">dns</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="dns/dnsmessage/index.html">dnsmessage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package dnsmessage provides a mostly RFC 1035 compliant implementation of DNS message packing and unpacking.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="html/index.html">html</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package html implements an HTML5-compliant tokenizer and parser.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="html/atom/index.html">atom</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package atom provides integer codes (also known as atoms) for a fixed set of frequently occurring HTML strings: tag names and attribute keys such as &#34;p&#34; and &#34;id&#34;.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="html/charset/index.html">charset</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package charset provides common text encodings for HTML documents.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="http/index.html">http</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http/httpguts/index.html">httpguts</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package httpguts provides functions implementing various details of the HTTP specification.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http/httpproxy/index.html">httpproxy</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package httpproxy provides support for HTTP proxy determination based on environment variables, as provided by net/http&#39;s ProxyFromEnvironment function.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="http2/index.html">http2</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package http2 implements the HTTP/2 protocol.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http2/h2c/index.html">h2c</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package h2c implements the unencrypted &#34;h2c&#34; form of HTTP/2.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http2/h2demo/index.html">h2demo</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http2/h2i/index.html">h2i</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The h2i command is an interactive HTTP/2 console.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="http2/hpack/index.html">hpack</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package hpack implements HPACK, a compression format for efficiently representing HTTP header fields in the context of HTTP/2.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="icmp/index.html">icmp</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package icmp provides basic functions for the manipulation of messages used in the Internet Control Message Protocols, ICMPv4 and ICMPv6.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="idna/index.html">idna</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package idna implements IDNA2008 using the compatibility processing defined by UTS (Unicode Technical Standard) #46, which defines a standard to deal with the transition from IDNA2003.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ipv4/index.html">ipv4</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package ipv4 implements IP-level socket options for the Internet Protocol version 4.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ipv6/index.html">ipv6</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package ipv6 implements IP-level socket options for the Internet Protocol version 6.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="lif/index.html">lif</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package lif provides basic functions for the manipulation of logical network interfaces and interface addresses on Solaris.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="nettest/index.html">nettest</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package nettest provides utilities for network testing.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="netutil/index.html">netutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package netutil provides network utility functions, complementing the more common ones in the net package.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="proxy/index.html">proxy</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package proxy provides support for a variety of protocols to proxy network data.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="publicsuffix/index.html">publicsuffix</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package publicsuffix provides a public suffix list based on data from https://publicsuffix.org/ A public suffix is one under which Internet users can directly register names.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="route/index.html">route</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package route provides basic functions for the manipulation of packet routing facilities on BSD variants.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="trace/index.html">trace</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package trace implements tracing of requests and long-lived objects.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="webdav/index.html">webdav</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package webdav provides a WebDAV server implementation.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="websocket/index.html">websocket</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package websocket implements a client and server for the WebSocket protocol as specified in RFC 6455.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="xsrftoken/index.html">xsrftoken</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package xsrftoken provides methods for generating and validating secure XSRF tokens.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

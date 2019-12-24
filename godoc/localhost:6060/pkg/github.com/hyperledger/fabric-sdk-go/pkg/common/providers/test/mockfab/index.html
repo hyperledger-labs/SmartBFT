@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mockfab - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mockfab
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package mockfab is a generated GoMock package.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#MockCertPool">type MockCertPool</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCertPool.Add">func (c *MockCertPool) Add(certs ...*x509.Certificate)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCertPool.Get">func (c *MockCertPool) Get() (*x509.CertPool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockEndpointConfig">type MockEndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BadTLSClientMockConfig">func BadTLSClientMockConfig(mockCtrl *gomock.Controller) *MockEndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CustomMockConfig">func CustomMockConfig(mockCtrl *gomock.Controller, certPool *x509.CertPool) *MockEndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultMockConfig">func DefaultMockConfig(mockCtrl *gomock.Controller) *MockEndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockEndpointConfig">func NewMockEndpointConfig(ctrl *gomock.Controller) *MockEndpointConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.ChannelConfig">func (m *MockEndpointConfig) ChannelConfig(arg0 string) *fab.ChannelEndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.ChannelOrderers">func (m *MockEndpointConfig) ChannelOrderers(arg0 string) []fab.OrdererConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.ChannelPeers">func (m *MockEndpointConfig) ChannelPeers(arg0 string) []fab.ChannelPeer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.CryptoConfigPath">func (m *MockEndpointConfig) CryptoConfigPath() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.EXPECT">func (m *MockEndpointConfig) EXPECT() *MockEndpointConfigMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.NetworkConfig">func (m *MockEndpointConfig) NetworkConfig() *fab.NetworkConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.NetworkPeers">func (m *MockEndpointConfig) NetworkPeers() []fab.NetworkPeer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.OrdererConfig">func (m *MockEndpointConfig) OrdererConfig(arg0 string) (*fab.OrdererConfig, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.OrderersConfig">func (m *MockEndpointConfig) OrderersConfig() []fab.OrdererConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.PeerConfig">func (m *MockEndpointConfig) PeerConfig(arg0 string) (*fab.PeerConfig, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.PeersConfig">func (m *MockEndpointConfig) PeersConfig(arg0 string) ([]fab.PeerConfig, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.TLSCACertPool">func (m *MockEndpointConfig) TLSCACertPool() fab.CertPool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.TLSClientCerts">func (m *MockEndpointConfig) TLSClientCerts() []tls.Certificate</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfig.Timeout">func (m *MockEndpointConfig) Timeout(arg0 fab.TimeoutType) time.Duration</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockEndpointConfigMockRecorder">type MockEndpointConfigMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.ChannelConfig">func (mr *MockEndpointConfigMockRecorder) ChannelConfig(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.ChannelOrderers">func (mr *MockEndpointConfigMockRecorder) ChannelOrderers(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.ChannelPeers">func (mr *MockEndpointConfigMockRecorder) ChannelPeers(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.CryptoConfigPath">func (mr *MockEndpointConfigMockRecorder) CryptoConfigPath() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.NetworkConfig">func (mr *MockEndpointConfigMockRecorder) NetworkConfig() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.NetworkPeers">func (mr *MockEndpointConfigMockRecorder) NetworkPeers() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.OrdererConfig">func (mr *MockEndpointConfigMockRecorder) OrdererConfig(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.OrderersConfig">func (mr *MockEndpointConfigMockRecorder) OrderersConfig() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.PeerConfig">func (mr *MockEndpointConfigMockRecorder) PeerConfig(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.PeersConfig">func (mr *MockEndpointConfigMockRecorder) PeersConfig(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.TLSCACertPool">func (mr *MockEndpointConfigMockRecorder) TLSCACertPool() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.TLSClientCerts">func (mr *MockEndpointConfigMockRecorder) TLSClientCerts() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndpointConfigMockRecorder.Timeout">func (mr *MockEndpointConfigMockRecorder) Timeout(arg0 interface{}) *gomock.Call</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProposalProcessor">type MockProposalProcessor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockProposalProcessor">func NewMockProposalProcessor(ctrl *gomock.Controller) *MockProposalProcessor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProposalProcessor.EXPECT">func (m *MockProposalProcessor) EXPECT() *MockProposalProcessorMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProposalProcessor.ProcessTransactionProposal">func (m *MockProposalProcessor) ProcessTransactionProposal(arg0 context.Context, arg1 fab.ProcessProposalRequest) (*fab.TransactionProposalResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProposalProcessorMockRecorder">type MockProposalProcessorMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProposalProcessorMockRecorder.ProcessTransactionProposal">func (mr *MockProposalProcessorMockRecorder) ProcessTransactionProposal(arg0, arg1 interface{}) *gomock.Call</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProviders">type MockProviders</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockProviders">func NewMockProviders(ctrl *gomock.Controller) *MockProviders</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.ChannelProvider">func (m *MockProviders) ChannelProvider() fab.ChannelProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.EXPECT">func (m *MockProviders) EXPECT() *MockProvidersMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.EndpointConfig">func (m *MockProviders) EndpointConfig() fab.EndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.GetMetrics">func (m *MockProviders) GetMetrics() *metrics.ClientMetrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.InfraProvider">func (m *MockProviders) InfraProvider() fab.InfraProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.LocalDiscoveryProvider">func (m *MockProviders) LocalDiscoveryProvider() fab.LocalDiscoveryProvider</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProvidersMockRecorder">type MockProvidersMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.ChannelProvider">func (mr *MockProvidersMockRecorder) ChannelProvider() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.EndpointConfig">func (mr *MockProvidersMockRecorder) EndpointConfig() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.GetMetrics">func (mr *MockProvidersMockRecorder) GetMetrics() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.InfraProvider">func (mr *MockProvidersMockRecorder) InfraProvider() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.LocalDiscoveryProvider">func (mr *MockProvidersMockRecorder) LocalDiscoveryProvider() *gomock.Call</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go">mockconfig.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go">mockfab.gen.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+ErrorMessage is a mock error message
+</p>
+
+				<pre>const <span id="ErrorMessage">ErrorMessage</span> = &#34;default error message&#34;</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+BadCert is a mock of a bad certificate
+</p>
+
+				<pre>var <span id="BadCert">BadCert</span> = &amp;<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>{<a href="http://localhost:6060/pkg/crypto/x509/#Certificate.Raw">Raw</a>: []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>{1, 2}}</pre>
+			
+				<p>
+CertPool is a mock of a *x509.CertPool
+</p>
+
+				<pre>var <span id="CertPool">CertPool</span> = <a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#NewCertPool">NewCertPool</a>()</pre>
+			
+				<p>
+GoodCert is a mock of a good certificate
+</p>
+
+				<pre>var <span id="GoodCert">GoodCert</span> = &amp;<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>{<a href="http://localhost:6060/pkg/crypto/x509/#Certificate.Raw">Raw</a>: []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>{0, 1, 2}}</pre>
+			
+				<p>
+TLSCert is a mock of a tls.Certificate{}
+</p>
+
+				<pre>var <span id="TLSCert">TLSCert</span> = <a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>{<a href="http://localhost:6060/pkg/crypto/tls/#Certificate.Certificate">Certificate</a>: [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>{{3}, {4}}}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="MockCertPool">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=2252:2321#L60">MockCertPool</a>
+				<a class="permalink" href="index.html#MockCertPool">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockCertPool for unit tests to mock CertPool
+</p>
+
+			<pre>type MockCertPool struct {
+<span id="MockCertPool.CertPool"></span>    CertPool *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#CertPool">CertPool</a>
+<span id="MockCertPool.Err"></span>    Err      <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockCertPool.Add">func (*MockCertPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=2506:2560#L71">Add</a>
+					<a class="permalink" href="index.html#MockCertPool.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCertPool">MockCertPool</a>) Add(certs ...*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>)</pre>
+				<p>
+Add mock impl of adding certs to cert pool queue
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCertPool.Get">func (*MockCertPool) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=2371:2423#L66">Get</a>
+					<a class="permalink" href="index.html#MockCertPool.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCertPool">MockCertPool</a>) Get() (*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#CertPool">CertPool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Get mock implementation of fab CertPool.Get()
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockEndpointConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=559:664#L9">MockEndpointConfig</a>
+				<a class="permalink" href="index.html#MockEndpointConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockEndpointConfig is a mock of EndpointConfig interface
+</p>
+
+			<pre>type MockEndpointConfig struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="BadTLSClientMockConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=1829:1905#L49">BadTLSClientMockConfig</a>
+					<a class="permalink" href="index.html#BadTLSClientMockConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func BadTLSClientMockConfig(mockCtrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a></pre>
+				<p>
+BadTLSClientMockConfig returns a mock config for testing with TLSClientCerts() that always returns an error
+</p>
+
+				
+				
+			
+				
+				<h3 id="CustomMockConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=1310:1405#L37">CustomMockConfig</a>
+					<a class="permalink" href="index.html#CustomMockConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func CustomMockConfig(mockCtrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>, certPool *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#CertPool">CertPool</a>) *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a></pre>
+				<p>
+CustomMockConfig returns a custom mock config with custom certpool for testing
+</p>
+
+				
+				
+			
+				
+				<h3 id="DefaultMockConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockconfig.go?s=844:915#L25">DefaultMockConfig</a>
+					<a class="permalink" href="index.html#DefaultMockConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func DefaultMockConfig(mockCtrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a></pre>
+				<p>
+DefaultMockConfig returns a default mock config for testing
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewMockEndpointConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=871:942#L20">NewMockEndpointConfig</a>
+					<a class="permalink" href="index.html#NewMockEndpointConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockEndpointConfig(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a></pre>
+				<p>
+NewMockEndpointConfig creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockEndpointConfig.ChannelConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=1262:1344#L32">ChannelConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) ChannelConfig(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#ChannelEndpointConfig">ChannelEndpointConfig</a></pre>
+				<p>
+ChannelConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.ChannelOrderers">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=1827:1904#L46">ChannelOrderers</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.ChannelOrderers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) ChannelOrderers(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#OrdererConfig">OrdererConfig</a></pre>
+				<p>
+ChannelOrderers mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.ChannelPeers">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=2389:2461#L60">ChannelPeers</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.ChannelPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) ChannelPeers(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#ChannelPeer">ChannelPeer</a></pre>
+				<p>
+ChannelPeers mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.CryptoConfigPath">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=2930:2984#L74">CryptoConfigPath</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.CryptoConfigPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) CryptoConfigPath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CryptoConfigPath mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.EXPECT">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=1133:1202#L27">EXPECT</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) EXPECT() *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.NetworkConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=3435:3498#L88">NetworkConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.NetworkConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) NetworkConfig() *<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#NetworkConfig">NetworkConfig</a></pre>
+				<p>
+NetworkConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.NetworkPeers">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=3942:4003#L102">NetworkPeers</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.NetworkPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) NetworkPeers() []<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#NetworkPeer">NetworkPeer</a></pre>
+				<p>
+NetworkPeers mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.OrdererConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=4441:4523#L116">OrdererConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.OrdererConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) OrdererConfig(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#OrdererConfig">OrdererConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+OrdererConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.OrderersConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=5029:5094#L131">OrderersConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.OrderersConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) OrderersConfig() []<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#OrdererConfig">OrdererConfig</a></pre>
+				<p>
+OrderersConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.PeerConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=5543:5619#L145">PeerConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.PeerConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) PeerConfig(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#PeerConfig">PeerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+PeerConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.PeersConfig">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=6101:6179#L160">PeersConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.PeersConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) PeersConfig(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#PeerConfig">PeerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+PeersConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.TLSCACertPool">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=6670:6727#L175">TLSCACertPool</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.TLSCACertPool">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) TLSCACertPool() <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#CertPool">CertPool</a></pre>
+				<p>
+TLSCACertPool mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.TLSClientCerts">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=7167:7230#L189">TLSClientCerts</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.TLSClientCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) TLSClientCerts() []<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a></pre>
+				<p>
+TLSClientCerts mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfig.Timeout">func (*MockEndpointConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=7674:7746#L203">Timeout</a>
+					<a class="permalink" href="index.html#MockEndpointConfig.Timeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndpointConfig">MockEndpointConfig</a>) Timeout(arg0 <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#TimeoutType">TimeoutType</a>) <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a></pre>
+				<p>
+Timeout mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockEndpointConfigMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=744:816#L15">MockEndpointConfigMockRecorder</a>
+				<a class="permalink" href="index.html#MockEndpointConfigMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockEndpointConfigMockRecorder is the mock recorder for MockEndpointConfig
+</p>
+
+			<pre>type MockEndpointConfigMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.ChannelConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=1537:1623#L40">ChannelConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) ChannelConfig(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ChannelConfig indicates an expected call of ChannelConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.ChannelOrderers">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=2096:2184#L54">ChannelOrderers</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.ChannelOrderers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) ChannelOrderers(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ChannelOrderers indicates an expected call of ChannelOrderers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.ChannelPeers">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=2642:2727#L68">ChannelPeers</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.ChannelPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) ChannelPeers(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ChannelPeers indicates an expected call of ChannelPeers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.CryptoConfigPath">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=3160:3233#L82">CryptoConfigPath</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.CryptoConfigPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) CryptoConfigPath() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CryptoConfigPath indicates an expected call of CryptoConfigPath
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.NetworkConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=3677:3747#L96">NetworkConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.NetworkConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) NetworkConfig() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+NetworkConfig indicates an expected call of NetworkConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.NetworkPeers">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=4178:4247#L110">NetworkPeers</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.NetworkPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) NetworkPeers() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+NetworkPeers indicates an expected call of NetworkPeers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.OrdererConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=4740:4826#L125">OrdererConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.OrdererConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) OrdererConfig(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+OrdererConfig indicates an expected call of OrdererConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.OrderersConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=5277:5348#L139">OrderersConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.OrderersConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) OrderersConfig() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+OrderersConfig indicates an expected call of OrderersConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.PeerConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=5824:5907#L154">PeerConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.PeerConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) PeerConfig(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+PeerConfig indicates an expected call of PeerConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.PeersConfig">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=6388:6472#L169">PeersConfig</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.PeersConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) PeersConfig(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+PeersConfig indicates an expected call of PeersConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.TLSCACertPool">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=6900:6970#L183">TLSCACertPool</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.TLSCACertPool">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) TLSCACertPool() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+TLSCACertPool indicates an expected call of TLSCACertPool
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.TLSClientCerts">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=7411:7482#L197">TLSClientCerts</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.TLSClientCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) TLSClientCerts() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+TLSClientCerts indicates an expected call of TLSClientCerts
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndpointConfigMockRecorder.Timeout">func (*MockEndpointConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=7908:7988#L211">Timeout</a>
+					<a class="permalink" href="index.html#MockEndpointConfigMockRecorder.Timeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockEndpointConfigMockRecorder">MockEndpointConfigMockRecorder</a>) Timeout(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Timeout indicates an expected call of Timeout
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProposalProcessor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=8209:8320#L217">MockProposalProcessor</a>
+				<a class="permalink" href="index.html#MockProposalProcessor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProposalProcessor is a mock of ProposalProcessor interface
+</p>
+
+			<pre>type MockProposalProcessor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockProposalProcessor">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=8542:8619#L228">NewMockProposalProcessor</a>
+					<a class="permalink" href="index.html#NewMockProposalProcessor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockProposalProcessor(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockProposalProcessor">MockProposalProcessor</a></pre>
+				<p>
+NewMockProposalProcessor creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockProposalProcessor.EXPECT">func (*MockProposalProcessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=8816:8891#L235">EXPECT</a>
+					<a class="permalink" href="index.html#MockProposalProcessor.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProposalProcessor">MockProposalProcessor</a>) EXPECT() *<a href="index.html#MockProposalProcessorMockRecorder">MockProposalProcessorMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProposalProcessor.ProcessTransactionProposal">func (*MockProposalProcessor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=8964:9119#L240">ProcessTransactionProposal</a>
+					<a class="permalink" href="index.html#MockProposalProcessor.ProcessTransactionProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProposalProcessor">MockProposalProcessor</a>) ProcessTransactionProposal(arg0 <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, arg1 <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#ProcessProposalRequest">ProcessProposalRequest</a>) (*<a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#TransactionProposalResponse">TransactionProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessTransactionProposal mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProposalProcessorMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=8406:8484#L223">MockProposalProcessorMockRecorder</a>
+				<a class="permalink" href="index.html#MockProposalProcessorMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProposalProcessorMockRecorder is the mock recorder for MockProposalProcessor
+</p>
+
+			<pre>type MockProposalProcessorMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockProposalProcessorMockRecorder.ProcessTransactionProposal">func (*MockProposalProcessorMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=9396:9504#L249">ProcessTransactionProposal</a>
+					<a class="permalink" href="index.html#MockProposalProcessorMockRecorder.ProcessTransactionProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProposalProcessorMockRecorder">MockProposalProcessorMockRecorder</a>) ProcessTransactionProposal(arg0, arg1 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ProcessTransactionProposal indicates an expected call of ProcessTransactionProposal
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProviders">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=9756:9851#L255">MockProviders</a>
+				<a class="permalink" href="index.html#MockProviders">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProviders is a mock of Providers interface
+</p>
+
+			<pre>type MockProviders struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockProviders">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=10033:10094#L266">NewMockProviders</a>
+					<a class="permalink" href="index.html#NewMockProviders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockProviders(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockProviders">MockProviders</a></pre>
+				<p>
+NewMockProviders creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockProviders.ChannelProvider">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=10396:10457#L278">ChannelProvider</a>
+					<a class="permalink" href="index.html#MockProviders.ChannelProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) ChannelProvider() <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#ChannelProvider">ChannelProvider</a></pre>
+				<p>
+ChannelProvider mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.EXPECT">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=10275:10334#L273">EXPECT</a>
+					<a class="permalink" href="index.html#MockProviders.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) EXPECT() *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.EndpointConfig">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=10906:10965#L292">EndpointConfig</a>
+					<a class="permalink" href="index.html#MockProviders.EndpointConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) EndpointConfig() <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#EndpointConfig">EndpointConfig</a></pre>
+				<p>
+EndpointConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.GetMetrics">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=11403:11462#L306">GetMetrics</a>
+					<a class="permalink" href="index.html#MockProviders.GetMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) GetMetrics() *<a href="../../../../fabsdk/metrics/index.html">metrics</a>.<a href="../../../../fabsdk/metrics/index.html#ClientMetrics">ClientMetrics</a></pre>
+				<p>
+GetMetrics mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.InfraProvider">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=11883:11940#L320">InfraProvider</a>
+					<a class="permalink" href="index.html#MockProviders.InfraProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) InfraProvider() <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#InfraProvider">InfraProvider</a></pre>
+				<p>
+InfraProvider mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.LocalDiscoveryProvider">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=12383:12458#L334">LocalDiscoveryProvider</a>
+					<a class="permalink" href="index.html#MockProviders.LocalDiscoveryProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) LocalDiscoveryProvider() <a href="../../fab/index.html">fab</a>.<a href="../../fab/index.html#LocalDiscoveryProvider">LocalDiscoveryProvider</a></pre>
+				<p>
+LocalDiscoveryProvider mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProvidersMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=9921:9983#L261">MockProvidersMockRecorder</a>
+				<a class="permalink" href="index.html#MockProvidersMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProvidersMockRecorder is the mock recorder for MockProviders
+</p>
+
+			<pre>type MockProvidersMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockProvidersMockRecorder.ChannelProvider">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=10643:10710#L286">ChannelProvider</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.ChannelProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) ChannelProvider() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+ChannelProvider indicates an expected call of ChannelProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.EndpointConfig">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=11147:11213#L300">EndpointConfig</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.EndpointConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) EndpointConfig() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+EndpointConfig indicates an expected call of EndpointConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.GetMetrics">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=11636:11698#L314">GetMetrics</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.GetMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) GetMetrics() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetMetrics indicates an expected call of GetMetrics
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.InfraProvider">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=12118:12183#L328">InfraProvider</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.InfraProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) InfraProvider() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+InfraProvider indicates an expected call of InfraProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.LocalDiscoveryProvider">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockfab/mockfab.gen.go?s=12672:12746#L342">LocalDiscoveryProvider</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.LocalDiscoveryProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) LocalDiscoveryProvider() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+LocalDiscoveryProvider indicates an expected call of LocalDiscoveryProvider
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

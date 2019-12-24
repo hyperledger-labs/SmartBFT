@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>bccsp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package bccsp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. 2016 All Rights Reserved.
+</p>
+<p>
+Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+</p>
+<pre><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+</pre>
+<p>
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</p>
+<p>
+Notice: This file has been modified for Hyperledger Fabric SDK Go usage.
+Please review third_party pinning scripts and patches for more details.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#AES128KeyGenOpts">type AES128KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES128KeyGenOpts.Algorithm">func (opts *AES128KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES128KeyGenOpts.Ephemeral">func (opts *AES128KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AES192KeyGenOpts">type AES192KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES192KeyGenOpts.Algorithm">func (opts *AES192KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES192KeyGenOpts.Ephemeral">func (opts *AES192KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AES256ImportKeyOpts">type AES256ImportKeyOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES256ImportKeyOpts.Algorithm">func (opts *AES256ImportKeyOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES256ImportKeyOpts.Ephemeral">func (opts *AES256ImportKeyOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AES256KeyGenOpts">type AES256KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES256KeyGenOpts.Algorithm">func (opts *AES256KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AES256KeyGenOpts.Ephemeral">func (opts *AES256KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AESCBCPKCS7ModeOpts">type AESCBCPKCS7ModeOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AESKeyGenOpts">type AESKeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AESKeyGenOpts.Algorithm">func (opts *AESKeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AESKeyGenOpts.Ephemeral">func (opts *AESKeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BCCSP">type BCCSP</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DecrypterOpts">type DecrypterOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ECDSAGoPublicKeyImportOpts">type ECDSAGoPublicKeyImportOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAGoPublicKeyImportOpts.Algorithm">func (opts *ECDSAGoPublicKeyImportOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAGoPublicKeyImportOpts.Ephemeral">func (opts *ECDSAGoPublicKeyImportOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAKeyGenOpts">type ECDSAKeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAKeyGenOpts.Algorithm">func (opts *ECDSAKeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAKeyGenOpts.Ephemeral">func (opts *ECDSAKeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAP256KeyGenOpts">type ECDSAP256KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAP256KeyGenOpts.Algorithm">func (opts *ECDSAP256KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAP256KeyGenOpts.Ephemeral">func (opts *ECDSAP256KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAP384KeyGenOpts">type ECDSAP384KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAP384KeyGenOpts.Algorithm">func (opts *ECDSAP384KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAP384KeyGenOpts.Ephemeral">func (opts *ECDSAP384KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAPKIXPublicKeyImportOpts">type ECDSAPKIXPublicKeyImportOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAPKIXPublicKeyImportOpts.Algorithm">func (opts *ECDSAPKIXPublicKeyImportOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAPKIXPublicKeyImportOpts.Ephemeral">func (opts *ECDSAPKIXPublicKeyImportOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAPrivateKeyImportOpts">type ECDSAPrivateKeyImportOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAPrivateKeyImportOpts.Algorithm">func (opts *ECDSAPrivateKeyImportOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAPrivateKeyImportOpts.Ephemeral">func (opts *ECDSAPrivateKeyImportOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECDSAReRandKeyOpts">type ECDSAReRandKeyOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAReRandKeyOpts.Algorithm">func (opts *ECDSAReRandKeyOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAReRandKeyOpts.Ephemeral">func (opts *ECDSAReRandKeyOpts) Ephemeral() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECDSAReRandKeyOpts.ExpansionValue">func (opts *ECDSAReRandKeyOpts) ExpansionValue() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EncrypterOpts">type EncrypterOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HMACDeriveKeyOpts">type HMACDeriveKeyOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACDeriveKeyOpts.Algorithm">func (opts *HMACDeriveKeyOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACDeriveKeyOpts.Argument">func (opts *HMACDeriveKeyOpts) Argument() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACDeriveKeyOpts.Ephemeral">func (opts *HMACDeriveKeyOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HMACImportKeyOpts">type HMACImportKeyOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACImportKeyOpts.Algorithm">func (opts *HMACImportKeyOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACImportKeyOpts.Ephemeral">func (opts *HMACImportKeyOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HMACTruncated256AESDeriveKeyOpts">type HMACTruncated256AESDeriveKeyOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACTruncated256AESDeriveKeyOpts.Algorithm">func (opts *HMACTruncated256AESDeriveKeyOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACTruncated256AESDeriveKeyOpts.Argument">func (opts *HMACTruncated256AESDeriveKeyOpts) Argument() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HMACTruncated256AESDeriveKeyOpts.Ephemeral">func (opts *HMACTruncated256AESDeriveKeyOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HashOpts">type HashOpts</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetHashOpt">func GetHashOpt(hashFunction string) (HashOpts, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Key">type Key</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KeyDerivOpts">type KeyDerivOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KeyGenOpts">type KeyGenOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KeyImportOpts">type KeyImportOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KeyStore">type KeyStore</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RSA1024KeyGenOpts">type RSA1024KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA1024KeyGenOpts.Algorithm">func (opts *RSA1024KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA1024KeyGenOpts.Ephemeral">func (opts *RSA1024KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RSA2048KeyGenOpts">type RSA2048KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA2048KeyGenOpts.Algorithm">func (opts *RSA2048KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA2048KeyGenOpts.Ephemeral">func (opts *RSA2048KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RSA3072KeyGenOpts">type RSA3072KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA3072KeyGenOpts.Algorithm">func (opts *RSA3072KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA3072KeyGenOpts.Ephemeral">func (opts *RSA3072KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RSA4096KeyGenOpts">type RSA4096KeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA4096KeyGenOpts.Algorithm">func (opts *RSA4096KeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSA4096KeyGenOpts.Ephemeral">func (opts *RSA4096KeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RSAGoPublicKeyImportOpts">type RSAGoPublicKeyImportOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSAGoPublicKeyImportOpts.Algorithm">func (opts *RSAGoPublicKeyImportOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSAGoPublicKeyImportOpts.Ephemeral">func (opts *RSAGoPublicKeyImportOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RSAKeyGenOpts">type RSAKeyGenOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSAKeyGenOpts.Algorithm">func (opts *RSAKeyGenOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RSAKeyGenOpts.Ephemeral">func (opts *RSAKeyGenOpts) Ephemeral() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SHA256Opts">type SHA256Opts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SHA256Opts.Algorithm">func (opts *SHA256Opts) Algorithm() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SHA384Opts">type SHA384Opts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SHA384Opts.Algorithm">func (opts *SHA384Opts) Algorithm() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SHA3_256Opts">type SHA3_256Opts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SHA3_256Opts.Algorithm">func (opts *SHA3_256Opts) Algorithm() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SHA3_384Opts">type SHA3_384Opts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SHA3_384Opts.Algorithm">func (opts *SHA3_384Opts) Algorithm() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SHAOpts">type SHAOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SHAOpts.Algorithm">func (opts *SHAOpts) Algorithm() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignerOpts">type SignerOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#X509PublicKeyImportOpts">type X509PublicKeyImportOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#X509PublicKeyImportOpts.Algorithm">func (opts *X509PublicKeyImportOpts) Algorithm() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#X509PublicKeyImportOpts.Ephemeral">func (opts *X509PublicKeyImportOpts) Ephemeral() bool</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go">aesopts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go">bccsp.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go">ecdsaopts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go">hashopts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/keystore.go">keystore.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go">rsaopts.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// ECDSA Elliptic Curve Digital Signature Algorithm (key gen, import, sign, verify),</span>
+    <span class="comment">// at default security level.</span>
+    <span class="comment">// Each BCCSP may or may not support default security level. If not supported than</span>
+    <span class="comment">// an error will be returned.</span>
+    <span id="ECDSA">ECDSA</span> = &#34;ECDSA&#34;
+
+    <span class="comment">// ECDSA Elliptic Curve Digital Signature Algorithm over P-256 curve</span>
+    <span id="ECDSAP256">ECDSAP256</span> = &#34;ECDSAP256&#34;
+
+    <span class="comment">// ECDSA Elliptic Curve Digital Signature Algorithm over P-384 curve</span>
+    <span id="ECDSAP384">ECDSAP384</span> = &#34;ECDSAP384&#34;
+
+    <span class="comment">// ECDSAReRand ECDSA key re-randomization</span>
+    <span id="ECDSAReRand">ECDSAReRand</span> = &#34;ECDSA_RERAND&#34;
+
+    <span class="comment">// RSA at the default security level.</span>
+    <span class="comment">// Each BCCSP may or may not support default security level. If not supported than</span>
+    <span class="comment">// an error will be returned.</span>
+    <span id="RSA">RSA</span> = &#34;RSA&#34;
+    <span class="comment">// RSA at 1024 bit security level.</span>
+    <span id="RSA1024">RSA1024</span> = &#34;RSA1024&#34;
+    <span class="comment">// RSA at 2048 bit security level.</span>
+    <span id="RSA2048">RSA2048</span> = &#34;RSA2048&#34;
+    <span class="comment">// RSA at 3072 bit security level.</span>
+    <span id="RSA3072">RSA3072</span> = &#34;RSA3072&#34;
+    <span class="comment">// RSA at 4096 bit security level.</span>
+    <span id="RSA4096">RSA4096</span> = &#34;RSA4096&#34;
+
+    <span class="comment">// AES Advanced Encryption Standard at the default security level.</span>
+    <span class="comment">// Each BCCSP may or may not support default security level. If not supported than</span>
+    <span class="comment">// an error will be returned.</span>
+    <span id="AES">AES</span> = &#34;AES&#34;
+    <span class="comment">// AES Advanced Encryption Standard at 128 bit security level</span>
+    <span id="AES128">AES128</span> = &#34;AES128&#34;
+    <span class="comment">// AES Advanced Encryption Standard at 192 bit security level</span>
+    <span id="AES192">AES192</span> = &#34;AES192&#34;
+    <span class="comment">// AES Advanced Encryption Standard at 256 bit security level</span>
+    <span id="AES256">AES256</span> = &#34;AES256&#34;
+
+    <span class="comment">// HMAC keyed-hash message authentication code</span>
+    <span id="HMAC">HMAC</span> = &#34;HMAC&#34;
+    <span class="comment">// HMACTruncated256 HMAC truncated at 256 bits.</span>
+    <span id="HMACTruncated256">HMACTruncated256</span> = &#34;HMAC_TRUNCATED_256&#34;
+
+    <span class="comment">// SHA Secure Hash Algorithm using default family.</span>
+    <span class="comment">// Each BCCSP may or may not support default security level. If not supported than</span>
+    <span class="comment">// an error will be returned.</span>
+    <span id="SHA">SHA</span> = &#34;SHA&#34;
+
+    <span class="comment">// SHA2 is an identifier for SHA2 hash family</span>
+    <span id="SHA2">SHA2</span> = &#34;SHA2&#34;
+    <span class="comment">// SHA3 is an identifier for SHA3 hash family</span>
+    <span id="SHA3">SHA3</span> = &#34;SHA3&#34;
+
+    <span class="comment">// SHA256</span>
+    <span id="SHA256">SHA256</span> = &#34;SHA256&#34;
+    <span class="comment">// SHA384</span>
+    <span id="SHA384">SHA384</span> = &#34;SHA384&#34;
+    <span class="comment">// SHA3_256</span>
+    <span id="SHA3_256">SHA3_256</span> = &#34;SHA3_256&#34;
+    <span class="comment">// SHA3_384</span>
+    <span id="SHA3_384">SHA3_384</span> = &#34;SHA3_384&#34;
+
+    <span class="comment">// X509Certificate Label for X509 certificate related operation</span>
+    <span id="X509Certificate">X509Certificate</span> = &#34;X509Certificate&#34;
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="AES128KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=838:886#L16">AES128KeyGenOpts</a>
+				<a class="permalink" href="index.html#AES128KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AES128KeyGenOpts contains options for AES key generation at 128 security level
+</p>
+
+			<pre>type AES128KeyGenOpts struct {
+<span id="AES128KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AES128KeyGenOpts.Algorithm">func (*AES128KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=963:1011#L21">Algorithm</a>
+					<a class="permalink" href="index.html#AES128KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES128KeyGenOpts">AES128KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AES128KeyGenOpts.Ephemeral">func (*AES128KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1122:1168#L27">Ephemeral</a>
+					<a class="permalink" href="index.html#AES128KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES128KeyGenOpts">AES128KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AES192KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1280:1328#L32">AES192KeyGenOpts</a>
+				<a class="permalink" href="index.html#AES192KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AES192KeyGenOpts contains options for AES key generation at 192  security level
+</p>
+
+			<pre>type AES192KeyGenOpts struct {
+<span id="AES192KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AES192KeyGenOpts.Algorithm">func (*AES192KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1405:1453#L37">Algorithm</a>
+					<a class="permalink" href="index.html#AES192KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES192KeyGenOpts">AES192KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AES192KeyGenOpts.Ephemeral">func (*AES192KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1564:1610#L43">Ephemeral</a>
+					<a class="permalink" href="index.html#AES192KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES192KeyGenOpts">AES192KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AES256ImportKeyOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7043:7094#L230">AES256ImportKeyOpts</a>
+				<a class="permalink" href="index.html#AES256ImportKeyOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AES256ImportKeyOpts contains options for importing AES 256 keys.
+</p>
+
+			<pre>type AES256ImportKeyOpts struct {
+<span id="AES256ImportKeyOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AES256ImportKeyOpts.Algorithm">func (*AES256ImportKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7172:7223#L235">Algorithm</a>
+					<a class="permalink" href="index.html#AES256ImportKeyOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES256ImportKeyOpts">AES256ImportKeyOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AES256ImportKeyOpts.Ephemeral">func (*AES256ImportKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7329:7378#L241">Ephemeral</a>
+					<a class="permalink" href="index.html#AES256ImportKeyOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES256ImportKeyOpts">AES256ImportKeyOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key generated has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AES256KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1721:1769#L48">AES256KeyGenOpts</a>
+				<a class="permalink" href="index.html#AES256KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AES256KeyGenOpts contains options for AES key generation at 256 security level
+</p>
+
+			<pre>type AES256KeyGenOpts struct {
+<span id="AES256KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AES256KeyGenOpts.Algorithm">func (*AES256KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=1846:1894#L53">Algorithm</a>
+					<a class="permalink" href="index.html#AES256KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES256KeyGenOpts">AES256KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AES256KeyGenOpts.Ephemeral">func (*AES256KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=2005:2051#L59">Ephemeral</a>
+					<a class="permalink" href="index.html#AES256KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AES256KeyGenOpts">AES256KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AESCBCPKCS7ModeOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/aesopts.go?s=2389:2746#L68">AESCBCPKCS7ModeOpts</a>
+				<a class="permalink" href="index.html#AESCBCPKCS7ModeOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AESCBCPKCS7ModeOpts contains options for AES encryption in CBC mode
+with PKCS7 padding.
+Notice that both IV and PRNG can be nil. In that case, the BCCSP implementation
+is supposed to sample the IV using a cryptographic secure PRNG.
+Notice also that either IV or PRNG can be different from nil.
+</p>
+
+			<pre>type AESCBCPKCS7ModeOpts struct {
+<span id="AESCBCPKCS7ModeOpts.IV"></span>    <span class="comment">// IV is the initialization vector to be used by the underlying cipher.</span>
+    <span class="comment">// The length of IV must be the same as the Block&#39;s block size.</span>
+    <span class="comment">// It is used only if different from nil.</span>
+    IV []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="AESCBCPKCS7ModeOpts.PRNG"></span>    <span class="comment">// PRNG is an instance of a PRNG to be used by the underlying cipher.</span>
+    <span class="comment">// It is used only if different from nil.</span>
+    PRNG <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AESKeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5376:5421#L169">AESKeyGenOpts</a>
+				<a class="permalink" href="index.html#AESKeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AESKeyGenOpts contains options for AES key generation at default security level
+</p>
+
+			<pre>type AESKeyGenOpts struct {
+<span id="AESKeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AESKeyGenOpts.Algorithm">func (*AESKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5498:5543#L174">Algorithm</a>
+					<a class="permalink" href="index.html#AESKeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AESKeyGenOpts">AESKeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AESKeyGenOpts.Ephemeral">func (*AESKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5651:5694#L180">Ephemeral</a>
+					<a class="permalink" href="index.html#AESKeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#AESKeyGenOpts">AESKeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BCCSP">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2940:4854#L94">BCCSP</a>
+				<a class="permalink" href="index.html#BCCSP">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSP is the blockchain cryptographic service provider that offers
+the implementation of cryptographic standards and algorithms.
+</p>
+
+			<pre>type BCCSP interface {
+
+    <span class="comment">// KeyGen generates a key using opts.</span>
+    KeyGen(opts <a href="index.html#KeyGenOpts">KeyGenOpts</a>) (k <a href="index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// KeyDeriv derives a key from k using opts.</span>
+    <span class="comment">// The opts argument should be appropriate for the primitive used.</span>
+    KeyDeriv(k <a href="index.html#Key">Key</a>, opts <a href="index.html#KeyDerivOpts">KeyDerivOpts</a>) (dk <a href="index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// KeyImport imports a key from its raw representation using opts.</span>
+    <span class="comment">// The opts argument should be appropriate for the primitive used.</span>
+    KeyImport(raw interface{}, opts <a href="index.html#KeyImportOpts">KeyImportOpts</a>) (k <a href="index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetKey returns the key this CSP associates to</span>
+    <span class="comment">// the Subject Key Identifier ski.</span>
+    GetKey(ski []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (k <a href="index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Hash hashes messages msg using options opts.</span>
+    <span class="comment">// If opts is nil, the default hash function will be used.</span>
+    Hash(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="index.html#HashOpts">HashOpts</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetHash returns and instance of hash.Hash using options opts.</span>
+    <span class="comment">// If opts is nil, the default hash function will be returned.</span>
+    GetHash(opts <a href="index.html#HashOpts">HashOpts</a>) (h <a href="http://localhost:6060/pkg/hash/">hash</a>.<a href="http://localhost:6060/pkg/hash/#Hash">Hash</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Sign signs digest using key k.</span>
+    <span class="comment">// The opts argument should be appropriate for the algorithm used.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Note that when a signature of a hash of a larger message is needed,</span>
+    <span class="comment">// the caller is responsible for hashing the larger message and passing</span>
+    <span class="comment">// the hash (as digest).</span>
+    Sign(k <a href="index.html#Key">Key</a>, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="index.html#SignerOpts">SignerOpts</a>) (signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Verify verifies signature against key k and digest</span>
+    <span class="comment">// The opts argument should be appropriate for the algorithm used.</span>
+    Verify(k <a href="index.html#Key">Key</a>, signature, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="index.html#SignerOpts">SignerOpts</a>) (valid <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Encrypt encrypts plaintext using key k.</span>
+    <span class="comment">// The opts argument should be appropriate for the algorithm used.</span>
+    Encrypt(k <a href="index.html#Key">Key</a>, plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="index.html#EncrypterOpts">EncrypterOpts</a>) (ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Decrypt decrypts ciphertext using key k.</span>
+    <span class="comment">// The opts argument should be appropriate for the algorithm used.</span>
+    Decrypt(k <a href="index.html#Key">Key</a>, ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="index.html#DecrypterOpts">DecrypterOpts</a>) (plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DecrypterOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2773:2803#L90">DecrypterOpts</a>
+				<a class="permalink" href="index.html#DecrypterOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DecrypterOpts contains options for decrypting with a CSP.
+</p>
+
+			<pre>type DecrypterOpts interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ECDSAGoPublicKeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4307:4365#L131">ECDSAGoPublicKeyImportOpts</a>
+				<a class="permalink" href="index.html#ECDSAGoPublicKeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAGoPublicKeyImportOpts contains options for ECDSA key importation from ecdsa.PublicKey
+</p>
+
+			<pre>type ECDSAGoPublicKeyImportOpts struct {
+<span id="ECDSAGoPublicKeyImportOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAGoPublicKeyImportOpts.Algorithm">func (*ECDSAGoPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4443:4501#L136">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAGoPublicKeyImportOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAGoPublicKeyImportOpts">ECDSAGoPublicKeyImportOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAGoPublicKeyImportOpts.Ephemeral">func (*ECDSAGoPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4611:4667#L142">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAGoPublicKeyImportOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAGoPublicKeyImportOpts">ECDSAGoPublicKeyImportOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAKeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=2866:2913#L82">ECDSAKeyGenOpts</a>
+				<a class="permalink" href="index.html#ECDSAKeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAKeyGenOpts contains options for ECDSA key generation.
+</p>
+
+			<pre>type ECDSAKeyGenOpts struct {
+<span id="ECDSAKeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAKeyGenOpts.Algorithm">func (*ECDSAKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=2990:3037#L87">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAKeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAKeyGenOpts">ECDSAKeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAKeyGenOpts.Ephemeral">func (*ECDSAKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3147:3192#L93">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAKeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAKeyGenOpts">ECDSAKeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAP256KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=826:877#L14">ECDSAP256KeyGenOpts</a>
+				<a class="permalink" href="index.html#ECDSAP256KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAP256KeyGenOpts contains options for ECDSA key generation with curve P-256.
+</p>
+
+			<pre>type ECDSAP256KeyGenOpts struct {
+<span id="ECDSAP256KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAP256KeyGenOpts.Algorithm">func (*ECDSAP256KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=954:1005#L19">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAP256KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAP256KeyGenOpts">ECDSAP256KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAP256KeyGenOpts.Ephemeral">func (*ECDSAP256KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=1119:1168#L25">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAP256KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAP256KeyGenOpts">ECDSAP256KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAP384KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=1280:1331#L30">ECDSAP384KeyGenOpts</a>
+				<a class="permalink" href="index.html#ECDSAP384KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAP384KeyGenOpts contains options for ECDSA key generation with curve P-384.
+</p>
+
+			<pre>type ECDSAP384KeyGenOpts struct {
+<span id="ECDSAP384KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAP384KeyGenOpts.Algorithm">func (*ECDSAP384KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=1408:1459#L35">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAP384KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAP384KeyGenOpts">ECDSAP384KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAP384KeyGenOpts.Ephemeral">func (*ECDSAP384KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/ecdsaopts.go?s=1573:1622#L41">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAP384KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAP384KeyGenOpts">ECDSAP384KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAPKIXPublicKeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3318:3378#L98">ECDSAPKIXPublicKeyImportOpts</a>
+				<a class="permalink" href="index.html#ECDSAPKIXPublicKeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAPKIXPublicKeyImportOpts contains options for ECDSA public key importation in PKIX format
+</p>
+
+			<pre>type ECDSAPKIXPublicKeyImportOpts struct {
+<span id="ECDSAPKIXPublicKeyImportOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAPKIXPublicKeyImportOpts.Algorithm">func (*ECDSAPKIXPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3456:3516#L103">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAPKIXPublicKeyImportOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAPKIXPublicKeyImportOpts">ECDSAPKIXPublicKeyImportOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAPKIXPublicKeyImportOpts.Ephemeral">func (*ECDSAPKIXPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3626:3684#L109">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAPKIXPublicKeyImportOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAPKIXPublicKeyImportOpts">ECDSAPKIXPublicKeyImportOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAPrivateKeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3827:3884#L115">ECDSAPrivateKeyImportOpts</a>
+				<a class="permalink" href="index.html#ECDSAPrivateKeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAPrivateKeyImportOpts contains options for ECDSA secret key importation in DER format
+or PKCS#8 format.
+</p>
+
+			<pre>type ECDSAPrivateKeyImportOpts struct {
+<span id="ECDSAPrivateKeyImportOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAPrivateKeyImportOpts.Algorithm">func (*ECDSAPrivateKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=3962:4019#L120">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAPrivateKeyImportOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAPrivateKeyImportOpts">ECDSAPrivateKeyImportOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAPrivateKeyImportOpts.Ephemeral">func (*ECDSAPrivateKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4129:4184#L126">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAPrivateKeyImportOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAPrivateKeyImportOpts">ECDSAPrivateKeyImportOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECDSAReRandKeyOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4767:4835#L147">ECDSAReRandKeyOpts</a>
+				<a class="permalink" href="index.html#ECDSAReRandKeyOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAReRandKeyOpts contains options for ECDSA key re-randomization.
+</p>
+
+			<pre>type ECDSAReRandKeyOpts struct {
+<span id="ECDSAReRandKeyOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ECDSAReRandKeyOpts.Expansion"></span>    Expansion []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ECDSAReRandKeyOpts.Algorithm">func (*ECDSAReRandKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=4912:4962#L153">Algorithm</a>
+					<a class="permalink" href="index.html#ECDSAReRandKeyOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAReRandKeyOpts">ECDSAReRandKeyOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key derivation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAReRandKeyOpts.Ephemeral">func (*ECDSAReRandKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5078:5126#L159">Ephemeral</a>
+					<a class="permalink" href="index.html#ECDSAReRandKeyOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAReRandKeyOpts">ECDSAReRandKeyOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ECDSAReRandKeyOpts.ExpansionValue">func (*ECDSAReRandKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5209:5264#L164">ExpansionValue</a>
+					<a class="permalink" href="index.html#ECDSAReRandKeyOpts.ExpansionValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#ECDSAReRandKeyOpts">ECDSAReRandKeyOpts</a>) ExpansionValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+ExpansionValue returns the re-randomization factor
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EncrypterOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2680:2710#L87">EncrypterOpts</a>
+				<a class="permalink" href="index.html#EncrypterOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EncrypterOpts contains options for encrypting with a CSP.
+</p>
+
+			<pre>type EncrypterOpts interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HMACDeriveKeyOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6468:6535#L208">HMACDeriveKeyOpts</a>
+				<a class="permalink" href="index.html#HMACDeriveKeyOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HMACDeriveKeyOpts contains options for HMAC key derivation.
+</p>
+
+			<pre>type HMACDeriveKeyOpts struct {
+<span id="HMACDeriveKeyOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="HMACDeriveKeyOpts.Arg"></span>    Arg       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HMACDeriveKeyOpts.Algorithm">func (*HMACDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6612:6661#L214">Algorithm</a>
+					<a class="permalink" href="index.html#HMACDeriveKeyOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACDeriveKeyOpts">HMACDeriveKeyOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key derivation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HMACDeriveKeyOpts.Argument">func (*HMACDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6904:6952#L225">Argument</a>
+					<a class="permalink" href="index.html#HMACDeriveKeyOpts.Argument">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACDeriveKeyOpts">HMACDeriveKeyOpts</a>) Argument() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Argument returns the argument to be passed to the HMAC
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HMACDeriveKeyOpts.Ephemeral">func (*HMACDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6770:6817#L220">Ephemeral</a>
+					<a class="permalink" href="index.html#HMACDeriveKeyOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACDeriveKeyOpts">HMACDeriveKeyOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HMACImportKeyOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7470:7519#L246">HMACImportKeyOpts</a>
+				<a class="permalink" href="index.html#HMACImportKeyOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HMACImportKeyOpts contains options for importing HMAC keys.
+</p>
+
+			<pre>type HMACImportKeyOpts struct {
+<span id="HMACImportKeyOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HMACImportKeyOpts.Algorithm">func (*HMACImportKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7597:7646#L251">Algorithm</a>
+					<a class="permalink" href="index.html#HMACImportKeyOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACImportKeyOpts">HMACImportKeyOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HMACImportKeyOpts.Ephemeral">func (*HMACImportKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7753:7800#L257">Ephemeral</a>
+					<a class="permalink" href="index.html#HMACImportKeyOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACImportKeyOpts">HMACImportKeyOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key generated has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HMACTruncated256AESDeriveKeyOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5826:5908#L186">HMACTruncated256AESDeriveKeyOpts</a>
+				<a class="permalink" href="index.html#HMACTruncated256AESDeriveKeyOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HMACTruncated256AESDeriveKeyOpts contains options for HMAC truncated
+at 256 bits key derivation.
+</p>
+
+			<pre>type HMACTruncated256AESDeriveKeyOpts struct {
+<span id="HMACTruncated256AESDeriveKeyOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="HMACTruncated256AESDeriveKeyOpts.Arg"></span>    Arg       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HMACTruncated256AESDeriveKeyOpts.Algorithm">func (*HMACTruncated256AESDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=5985:6049#L192">Algorithm</a>
+					<a class="permalink" href="index.html#HMACTruncated256AESDeriveKeyOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACTruncated256AESDeriveKeyOpts">HMACTruncated256AESDeriveKeyOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key derivation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HMACTruncated256AESDeriveKeyOpts.Argument">func (*HMACTruncated256AESDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6319:6382#L203">Argument</a>
+					<a class="permalink" href="index.html#HMACTruncated256AESDeriveKeyOpts.Argument">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACTruncated256AESDeriveKeyOpts">HMACTruncated256AESDeriveKeyOpts</a>) Argument() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Argument returns the argument to be passed to the HMAC
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HMACTruncated256AESDeriveKeyOpts.Ephemeral">func (*HMACTruncated256AESDeriveKeyOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=6170:6232#L198">Ephemeral</a>
+					<a class="permalink" href="index.html#HMACTruncated256AESDeriveKeyOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#HMACTruncated256AESDeriveKeyOpts">HMACTruncated256AESDeriveKeyOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HashOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2398:2512#L75">HashOpts</a>
+				<a class="permalink" href="index.html#HashOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HashOpts contains options for hashing with a CSP.
+</p>
+
+			<pre>type HashOpts interface {
+
+    <span class="comment">// Algorithm returns the hash algorithm identifier (to be used).</span>
+    Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetHashOpt">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1684:1738#L52">GetHashOpt</a>
+					<a class="permalink" href="index.html#GetHashOpt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetHashOpt(hashFunction <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#HashOpts">HashOpts</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetHashOpt returns the HashOpts corresponding to the passed hash function
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Key">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=811:1411#L19">Key</a>
+				<a class="permalink" href="index.html#Key">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Key represents a cryptographic key
+</p>
+
+			<pre>type Key interface {
+
+    <span class="comment">// Bytes converts this key to its byte representation,</span>
+    <span class="comment">// if this operation is allowed.</span>
+    Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// SKI returns the subject key identifier of this key.</span>
+    SKI() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// Symmetric returns true if this key is a symmetric key,</span>
+    <span class="comment">// false is this key is asymmetric</span>
+    Symmetric() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Private returns true if this key is a private key,</span>
+    <span class="comment">// false otherwise.</span>
+    Private() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// PublicKey returns the corresponding public key part of an asymmetric public/private key pair.</span>
+    <span class="comment">// This method returns an error in symmetric key schemes.</span>
+    PublicKey() (<a href="index.html#Key">Key</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KeyDerivOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=1778:2016#L53">KeyDerivOpts</a>
+				<a class="permalink" href="index.html#KeyDerivOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyDerivOpts contains options for key-derivation with a CSP.
+</p>
+
+			<pre>type KeyDerivOpts interface {
+
+    <span class="comment">// Algorithm returns the key derivation algorithm identifier (to be used).</span>
+    Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Ephemeral returns true if the key to derived has to be ephemeral,</span>
+    <span class="comment">// false otherwise.</span>
+    Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=1475:1712#L42">KeyGenOpts</a>
+				<a class="permalink" href="index.html#KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyGenOpts contains options for key-generation with a CSP.
+</p>
+
+			<pre>type KeyGenOpts interface {
+
+    <span class="comment">// Algorithm returns the key generation algorithm identifier (to be used).</span>
+    Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Ephemeral returns true if the key to generate has to be ephemeral,</span>
+    <span class="comment">// false otherwise.</span>
+    Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2104:2343#L64">KeyImportOpts</a>
+				<a class="permalink" href="index.html#KeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyImportOpts contains options for importing the raw material of a key with a CSP.
+</p>
+
+			<pre>type KeyImportOpts interface {
+
+    <span class="comment">// Algorithm returns the key importation algorithm identifier (to be used).</span>
+    Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Ephemeral returns true if the key generated has to be ephemeral,</span>
+    <span class="comment">// false otherwise.</span>
+    Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KeyStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/keystore.go?s=941:1349#L16">KeyStore</a>
+				<a class="permalink" href="index.html#KeyStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyStore represents a storage system for cryptographic keys.
+It allows to store and retrieve bccsp.Key objects.
+The KeyStore can be read only, in that case StoreKey will return
+an error.
+</p>
+
+			<pre>type KeyStore interface {
+
+    <span class="comment">// ReadOnly returns true if this KeyStore is read only, false otherwise.</span>
+    <span class="comment">// If ReadOnly is true then StoreKey will fail.</span>
+    ReadOnly() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// GetKey returns a key object whose SKI is the one passed.</span>
+    GetKey(ski []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (k <a href="index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// StoreKey stores the key k in this KeyStore.</span>
+    <span class="comment">// If this KeyStore is read only then the method will fail.</span>
+    StoreKey(k <a href="index.html#Key">Key</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RSA1024KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=822:871#L14">RSA1024KeyGenOpts</a>
+				<a class="permalink" href="index.html#RSA1024KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RSA1024KeyGenOpts contains options for RSA key generation at 1024 security.
+</p>
+
+			<pre>type RSA1024KeyGenOpts struct {
+<span id="RSA1024KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSA1024KeyGenOpts.Algorithm">func (*RSA1024KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=948:997#L19">Algorithm</a>
+					<a class="permalink" href="index.html#RSA1024KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA1024KeyGenOpts">RSA1024KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSA1024KeyGenOpts.Ephemeral">func (*RSA1024KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1109:1156#L25">Ephemeral</a>
+					<a class="permalink" href="index.html#RSA1024KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA1024KeyGenOpts">RSA1024KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RSA2048KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1264:1313#L30">RSA2048KeyGenOpts</a>
+				<a class="permalink" href="index.html#RSA2048KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RSA2048KeyGenOpts contains options for RSA key generation at 2048 security.
+</p>
+
+			<pre>type RSA2048KeyGenOpts struct {
+<span id="RSA2048KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSA2048KeyGenOpts.Algorithm">func (*RSA2048KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1390:1439#L35">Algorithm</a>
+					<a class="permalink" href="index.html#RSA2048KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA2048KeyGenOpts">RSA2048KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSA2048KeyGenOpts.Ephemeral">func (*RSA2048KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1551:1598#L41">Ephemeral</a>
+					<a class="permalink" href="index.html#RSA2048KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA2048KeyGenOpts">RSA2048KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RSA3072KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1706:1755#L46">RSA3072KeyGenOpts</a>
+				<a class="permalink" href="index.html#RSA3072KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RSA3072KeyGenOpts contains options for RSA key generation at 3072 security.
+</p>
+
+			<pre>type RSA3072KeyGenOpts struct {
+<span id="RSA3072KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSA3072KeyGenOpts.Algorithm">func (*RSA3072KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1832:1881#L51">Algorithm</a>
+					<a class="permalink" href="index.html#RSA3072KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA3072KeyGenOpts">RSA3072KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSA3072KeyGenOpts.Ephemeral">func (*RSA3072KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=1993:2040#L57">Ephemeral</a>
+					<a class="permalink" href="index.html#RSA3072KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA3072KeyGenOpts">RSA3072KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RSA4096KeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=2148:2197#L62">RSA4096KeyGenOpts</a>
+				<a class="permalink" href="index.html#RSA4096KeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RSA4096KeyGenOpts contains options for RSA key generation at 4096 security.
+</p>
+
+			<pre>type RSA4096KeyGenOpts struct {
+<span id="RSA4096KeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSA4096KeyGenOpts.Algorithm">func (*RSA4096KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=2274:2323#L67">Algorithm</a>
+					<a class="permalink" href="index.html#RSA4096KeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA4096KeyGenOpts">RSA4096KeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSA4096KeyGenOpts.Ephemeral">func (*RSA4096KeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/rsaopts.go?s=2435:2482#L73">Ephemeral</a>
+					<a class="permalink" href="index.html#RSA4096KeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSA4096KeyGenOpts">RSA4096KeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RSAGoPublicKeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8518:8574#L287">RSAGoPublicKeyImportOpts</a>
+				<a class="permalink" href="index.html#RSAGoPublicKeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECDSAGoPublicKeyImportOpts contains options for RSA key importation from rsa.PublicKey
+</p>
+
+			<pre>type RSAGoPublicKeyImportOpts struct {
+<span id="RSAGoPublicKeyImportOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSAGoPublicKeyImportOpts.Algorithm">func (*RSAGoPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8652:8708#L292">Algorithm</a>
+					<a class="permalink" href="index.html#RSAGoPublicKeyImportOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSAGoPublicKeyImportOpts">RSAGoPublicKeyImportOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSAGoPublicKeyImportOpts.Ephemeral">func (*RSAGoPublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8816:8870#L298">Ephemeral</a>
+					<a class="permalink" href="index.html#RSAGoPublicKeyImportOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSAGoPublicKeyImportOpts">RSAGoPublicKeyImportOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RSAKeyGenOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8081:8126#L271">RSAKeyGenOpts</a>
+				<a class="permalink" href="index.html#RSAKeyGenOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RSAKeyGenOpts contains options for RSA key generation.
+</p>
+
+			<pre>type RSAKeyGenOpts struct {
+<span id="RSAKeyGenOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RSAKeyGenOpts.Algorithm">func (*RSAKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8203:8248#L276">Algorithm</a>
+					<a class="permalink" href="index.html#RSAKeyGenOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSAKeyGenOpts">RSAKeyGenOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key generation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RSAKeyGenOpts.Ephemeral">func (*RSAKeyGenOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8356:8399#L282">Ephemeral</a>
+					<a class="permalink" href="index.html#RSAKeyGenOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#RSAKeyGenOpts">RSAKeyGenOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SHA256Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=809:835#L16">SHA256Opts</a>
+				<a class="permalink" href="index.html#SHA256Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SHA256Opts contains options relating to SHA-256.
+</p>
+
+			<pre>type SHA256Opts struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SHA256Opts.Algorithm">func (*SHA256Opts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=902:944#L20">Algorithm</a>
+					<a class="permalink" href="index.html#SHA256Opts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#SHA256Opts">SHA256Opts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the hash algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SHA384Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1017:1043#L25">SHA384Opts</a>
+				<a class="permalink" href="index.html#SHA384Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SHA384Opts contains options relating to SHA-384.
+</p>
+
+			<pre>type SHA384Opts struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SHA384Opts.Algorithm">func (*SHA384Opts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1110:1152#L29">Algorithm</a>
+					<a class="permalink" href="index.html#SHA384Opts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#SHA384Opts">SHA384Opts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the hash algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SHA3_256Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1228:1256#L34">SHA3_256Opts</a>
+				<a class="permalink" href="index.html#SHA3_256Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SHA3_256Opts contains options relating to SHA3-256.
+</p>
+
+			<pre>type SHA3_256Opts struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SHA3_256Opts.Algorithm">func (*SHA3_256Opts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1323:1367#L38">Algorithm</a>
+					<a class="permalink" href="index.html#SHA3_256Opts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#SHA3_256Opts">SHA3_256Opts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the hash algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SHA3_384Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1445:1473#L43">SHA3_384Opts</a>
+				<a class="permalink" href="index.html#SHA3_384Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SHA3_384Opts contains options relating to SHA3-384.
+</p>
+
+			<pre>type SHA3_384Opts struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SHA3_384Opts.Algorithm">func (*SHA3_384Opts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/hashopts.go?s=1540:1584#L47">Algorithm</a>
+					<a class="permalink" href="index.html#SHA3_384Opts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#SHA3_384Opts">SHA3_384Opts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the hash algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SHAOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7876:7899#L262">SHAOpts</a>
+				<a class="permalink" href="index.html#SHAOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SHAOpts contains options for computing SHA.
+</p>
+
+			<pre>type SHAOpts struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SHAOpts.Algorithm">func (*SHAOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=7966:8005#L266">Algorithm</a>
+					<a class="permalink" href="index.html#SHAOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#SHAOpts">SHAOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the hash algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignerOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/bccsp.go?s=2569:2617#L82">SignerOpts</a>
+				<a class="permalink" href="index.html#SignerOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignerOpts contains options for signing with a CSP.
+</p>
+
+			<pre>type SignerOpts interface {
+    <a href="http://localhost:6060/pkg/crypto/">crypto</a>.<a href="http://localhost:6060/pkg/crypto/#SignerOpts">SignerOpts</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="X509PublicKeyImportOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=8994:9049#L303">X509PublicKeyImportOpts</a>
+				<a class="permalink" href="index.html#X509PublicKeyImportOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+X509PublicKeyImportOpts contains options for importing public keys from an x509 certificate
+</p>
+
+			<pre>type X509PublicKeyImportOpts struct {
+<span id="X509PublicKeyImportOpts.Temporary"></span>    Temporary <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="X509PublicKeyImportOpts.Algorithm">func (*X509PublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=9127:9182#L308">Algorithm</a>
+					<a class="permalink" href="index.html#X509PublicKeyImportOpts.Algorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#X509PublicKeyImportOpts">X509PublicKeyImportOpts</a>) Algorithm() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Algorithm returns the key importation algorithm identifier (to be used).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="X509PublicKeyImportOpts.Ephemeral">func (*X509PublicKeyImportOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/opts.go?s=9302:9355#L314">Ephemeral</a>
+					<a class="permalink" href="index.html#X509PublicKeyImportOpts.Ephemeral">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (opts *<a href="index.html#X509PublicKeyImportOpts">X509PublicKeyImportOpts</a>) Ephemeral() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Ephemeral returns true if the key to generate has to be ephemeral,
+false otherwise.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

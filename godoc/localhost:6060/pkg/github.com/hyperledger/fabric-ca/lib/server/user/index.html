@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>user - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package user
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-ca/lib/server/user"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetAffiliation">func GetAffiliation(user Affilation) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetNewAttributes">func GetNewAttributes(modifyAttrs, newAttrs []api.Attribute) []api.Attribute</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Affilation">type Affilation</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DbTxResult">type DbTxResult</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Impl">type Impl</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetUserLessThanLevel">func GetUserLessThanLevel(tx userDB, level int) ([]*Impl, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(userRec *Record, db userDB) *Impl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetAffiliationPath">func (u *Impl) GetAffiliationPath() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetAttribute">func (u *Impl) GetAttribute(name string) (*api.Attribute, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetAttributes">func (u *Impl) GetAttributes(attrNames []string) ([]api.Attribute, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetFailedLoginAttempts">func (u *Impl) GetFailedLoginAttempts() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetLevel">func (u *Impl) GetLevel() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetMaxEnrollments">func (u *Impl) GetMaxEnrollments() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetName">func (u *Impl) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetPass">func (u *Impl) GetPass() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.GetType">func (u *Impl) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.IncrementIncorrectPasswordAttempts">func (u *Impl) IncrementIncorrectPasswordAttempts() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.IsRevoked">func (u *Impl) IsRevoked() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.Login">func (u *Impl) Login(pass string, caMaxEnrollments int) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.LoginComplete">func (u *Impl) LoginComplete() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.Migrate">func (u *Impl) Migrate(tx userDB) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.ModifyAttributes">func (u *Impl) ModifyAttributes(newAttrs []api.Attribute) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.ModifyAttributesTx">func (u *Impl) ModifyAttributesTx(tx userDB, newAttrs []api.Attribute) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.Revoke">func (u *Impl) Revoke() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.SetLevel">func (u *Impl) SetLevel(level int) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Impl.SetLevelTx">func (u *Impl) SetLevelTx(tx userDB, level int) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Info">type Info</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Record">type Record</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Registry">type Registry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#User">type User</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go">user.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetAffiliation">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=17407:17450#L547">GetAffiliation</a>
+				<a class="permalink" href="index.html#GetAffiliation">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetAffiliation(user <a href="index.html#Affilation">Affilation</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetAffiliation return a joined version version of the affiliation path with &#39;.&#39; as the seperator
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetNewAttributes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=14181:14257#L443">GetNewAttributes</a>
+				<a class="permalink" href="index.html#GetNewAttributes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetNewAttributes(modifyAttrs, newAttrs []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>) []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a></pre>
+			<p>
+GetNewAttributes updates existing attribute, or add attribute if it does not already exist
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Affilation">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=17245:17305#L542">Affilation</a>
+				<a class="permalink" href="index.html#Affilation">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Affilation is interface that defines functions needed to get a user&#39;s affiliation
+</p>
+
+			<pre>type Affilation interface {
+    GetAffiliationPath() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DbTxResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=471:550#L14">DbTxResult</a>
+				<a class="permalink" href="index.html#DbTxResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DbTxResult returns information on any affiliations and/or identities affected
+during a database transaction
+</p>
+
+			<pre>type DbTxResult struct {
+<span id="DbTxResult.Affiliations"></span>    Affiliations []<a href="../../spi/index.html">spi</a>.<a href="../../spi/index.html#Affiliation">Affiliation</a>
+<span id="DbTxResult.Identities"></span>    Identities   []<a href="index.html#User">User</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Impl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=4086:4172#L105">Impl</a>
+				<a class="permalink" href="index.html#Impl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Impl is the databases representation of a user
+</p>
+
+			<pre>type Impl struct {
+    <a href="index.html#Info">Info</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetUserLessThanLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=17653:17717#L553">GetUserLessThanLevel</a>
+					<a class="permalink" href="index.html#GetUserLessThanLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetUserLessThanLevel(tx userDB, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]*<a href="index.html#Impl">Impl</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetUserLessThanLevel returns all identities that are less than the level specified
+Otherwise, returns no users if requested level is zero
+</p>
+
+				
+				
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=4229:4271#L113">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(userRec *<a href="index.html#Record">Record</a>, db userDB) *<a href="index.html#Impl">Impl</a></pre>
+				<p>
+New creates a DBUser object from the DB user record
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Impl.GetAffiliationPath">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=10666:10710#L322">GetAffiliationPath</a>
+					<a class="permalink" href="index.html#Impl.GetAffiliationPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetAffiliationPath() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetAffiliationPath returns the complete path for the user&#39;s affiliation.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetAttribute">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=10850:10914#L328">GetAttribute</a>
+					<a class="permalink" href="index.html#Impl.GetAttribute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetAttribute(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAttribute returns the value for an attribute name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetAttributes">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=11169:11242#L338">GetAttributes</a>
+					<a class="permalink" href="index.html#Impl.GetAttributes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetAttributes(attrNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAttributes returns the requested attributes. Return all the user&#39;s
+attributes if nil is passed in
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetFailedLoginAttempts">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=16049:16092#L499">GetFailedLoginAttempts</a>
+					<a class="permalink" href="index.html#Impl.GetFailedLoginAttempts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetFailedLoginAttempts() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+GetFailedLoginAttempts returns the number of times the user has entered an incorrect password
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetLevel">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5377:5406#L162">GetLevel</a>
+					<a class="permalink" href="index.html#Impl.GetLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetLevel() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+GetLevel returns the level of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetMaxEnrollments">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5266:5304#L157">GetMaxEnrollments</a>
+					<a class="permalink" href="index.html#Impl.GetMaxEnrollments">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetMaxEnrollments() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+GetMaxEnrollments returns the max enrollments of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetName">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=4958:4989#L142">GetName</a>
+					<a class="permalink" href="index.html#Impl.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetName returns the enrollment ID of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetPass">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5061:5092#L147">GetPass</a>
+					<a class="permalink" href="index.html#Impl.GetPass">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetPass() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetPass returns the hashed password of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.GetType">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5153:5184#L152">GetType</a>
+					<a class="permalink" href="index.html#Impl.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) GetType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetType returns the type of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.IncrementIncorrectPasswordAttempts">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=15174:15231#L475">IncrementIncorrectPasswordAttempts</a>
+					<a class="permalink" href="index.html#Impl.IncrementIncorrectPasswordAttempts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) IncrementIncorrectPasswordAttempts() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+IncrementIncorrectPasswordAttempts updates the incorrect password count of user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.IsRevoked">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=12507:12538#L385">IsRevoked</a>
+					<a class="permalink" href="index.html#Impl.IsRevoked">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) IsRevoked() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsRevoked returns back true if user is revoked
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.Login">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=6498:6559#L208">Login</a>
+					<a class="permalink" href="index.html#Impl.Login">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) Login(pass <a href="http://localhost:6060/pkg/builtin/#string">string</a>, caMaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Login the user with a password
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.LoginComplete">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=9406:9442#L282">LoginComplete</a>
+					<a class="permalink" href="index.html#Impl.LoginComplete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) LoginComplete() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+LoginComplete completes the login process by incrementing the state of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.Migrate">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=16189:16228#L504">Migrate</a>
+					<a class="permalink" href="index.html#Impl.Migrate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) Migrate(tx userDB) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Migrate will migrate the user to the latest version
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.ModifyAttributes">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=12902:12965#L398">ModifyAttributes</a>
+					<a class="permalink" href="index.html#Impl.ModifyAttributes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) ModifyAttributes(newAttrs []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ModifyAttributes adds a new attribute, modifies existing attribute, or delete attribute
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.ModifyAttributesTx">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=12688:12764#L393">ModifyAttributesTx</a>
+					<a class="permalink" href="index.html#Impl.ModifyAttributesTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) ModifyAttributesTx(tx userDB, newAttrs []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ModifyAttributesTx adds a new attribute, modifies existing attribute, or delete attribute
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.Revoke">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=11676:11705#L358">Revoke</a>
+					<a class="permalink" href="index.html#Impl.Revoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) Revoke() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Revoke will revoke the user, setting the state of the user to be -1
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.SetLevel">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5467:5507#L167">SetLevel</a>
+					<a class="permalink" href="index.html#Impl.SetLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) SetLevel(level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetLevel sets the level of the user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Impl.SetLevelTx">func (*Impl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=5585:5638#L172">SetLevelTx</a>
+					<a class="permalink" href="index.html#Impl.SetLevelTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#Impl">Impl</a>) SetLevelTx(tx userDB, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetLevelTx sets the level of the user
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Info">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=3337:3678#L83">Info</a>
+				<a class="permalink" href="index.html#Info">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Info contains information about a user
+</p>
+
+			<pre>type Info struct {
+<span id="Info.Name"></span>    Name                      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Info.Pass"></span>    Pass                      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `mask:&#34;password&#34;`
+<span id="Info.Type"></span>    Type                      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Info.Affiliation"></span>    Affiliation               <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Info.Attributes"></span>    Attributes                []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>
+<span id="Info.State"></span>    State                     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Info.MaxEnrollments"></span>    MaxEnrollments            <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Info.Level"></span>    Level                     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Info.IncorrectPasswordAttempts"></span>    IncorrectPasswordAttempts <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Record">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=2809:3293#L70">Record</a>
+				<a class="permalink" href="index.html#Record">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Record defines the properties of a user
+</p>
+
+			<pre>type Record struct {
+<span id="Record.Name"></span>    Name                      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;id&#34;`
+<span id="Record.Pass"></span>    Pass                      []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `db:&#34;token&#34;`
+<span id="Record.Type"></span>    Type                      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;type&#34;`
+<span id="Record.Affiliation"></span>    Affiliation               <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;affiliation&#34;`
+<span id="Record.Attributes"></span>    Attributes                <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;attributes&#34;`
+<span id="Record.State"></span>    State                     <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;state&#34;`
+<span id="Record.MaxEnrollments"></span>    MaxEnrollments            <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;max_enrollments&#34;`
+<span id="Record.Level"></span>    Level                     <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;level&#34;`
+<span id="Record.IncorrectPasswordAttempts"></span>    IncorrectPasswordAttempts <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;incorrect_password_attempts&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Registry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=607:1338#L20">Registry</a>
+				<a class="permalink" href="index.html#Registry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Registry is the API for retreiving users and groups
+</p>
+
+			<pre>type Registry interface {
+    GetUser(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attrs []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    InsertUser(user *<a href="index.html#Info">Info</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    UpdateUser(user *<a href="index.html#Info">Info</a>, updatePass <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    DeleteUser(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../spi/index.html">spi</a>.<a href="../../spi/index.html#Affiliation">Affiliation</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAllAffiliations(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    InsertAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, prekey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    GetUserLessThanLevel(version <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetFilteredUsers(affiliation, types <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    DeleteAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, force, identityRemoval, isRegistrar <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ModifyAffiliation(oldAffiliation, newAffiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>, force, isRegistrar <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAffiliationTree(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="User">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/user/user.go?s=1370:2764#L36">User</a>
+				<a class="permalink" href="index.html#User">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+User is the SPI for a user
+</p>
+
+			<pre>type User interface {
+    <span class="comment">// Returns the enrollment ID of the user</span>
+    GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Return the type of the user</span>
+    GetType() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Return the max enrollments of the user</span>
+    GetMaxEnrollments() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// Login the user with a password</span>
+    Login(password <a href="http://localhost:6060/pkg/builtin/#string">string</a>, caMaxEnrollment <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Get the complete path for the user&#39;s affiliation.</span>
+    GetAffiliationPath() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// GetAttribute returns the value for an attribute name</span>
+    GetAttribute(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetAttributes returns the requested attributes</span>
+    GetAttributes(attrNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ModifyAttributes adds, removes, or deletes attribute</span>
+    ModifyAttributes(attrs []<a href="../../../api/index.html">api</a>.<a href="../../../api/index.html#Attribute">Attribute</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// LoginComplete completes the login process by incrementing the state of the user</span>
+    LoginComplete() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Revoke will revoke the user, setting the state of the user to be -1</span>
+    Revoke() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// IsRevoked returns back true if user is revoked</span>
+    IsRevoked() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    <span class="comment">// GetLevel returns the level of the user, level is used to verify if the user needs migration</span>
+    GetLevel() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// SetLevel sets the level of the user</span>
+    SetLevel(level <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// IncrementIncorrectPasswordAttempts updates the incorrect password count of user</span>
+    IncrementIncorrectPasswordAttempts() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetFailedLoginAttempts returns the number of times the user has entered an incorrect password</span>
+    GetFailedLoginAttempts() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

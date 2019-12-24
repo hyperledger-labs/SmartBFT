@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>hpack - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package hpack
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/net/http2/hpack"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package hpack implements HPACK, a compression format for
+efficiently representing HTTP header fields in the context of HTTP/2.
+</p>
+<p>
+See <a href="http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-09">http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-09</a>
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AppendHuffmanString">func AppendHuffmanString(dst []byte, s string) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#HuffmanDecode">func HuffmanDecode(w io.Writer, v []byte) (int, error)</a></dd>
+			
+				
+				<dd><a href="index.html#HuffmanDecodeToString">func HuffmanDecodeToString(v []byte) (string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#HuffmanEncodeLength">func HuffmanEncodeLength(s string) uint64</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Decoder">type Decoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDecoder">func NewDecoder(maxDynamicTableSize uint32, emitFunc func(f HeaderField)) *Decoder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.Close">func (d *Decoder) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.DecodeFull">func (d *Decoder) DecodeFull(p []byte) ([]HeaderField, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.EmitEnabled">func (d *Decoder) EmitEnabled() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetAllowedMaxDynamicTableSize">func (d *Decoder) SetAllowedMaxDynamicTableSize(v uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetEmitEnabled">func (d *Decoder) SetEmitEnabled(v bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetEmitFunc">func (d *Decoder) SetEmitFunc(emitFunc func(f HeaderField))</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetMaxDynamicTableSize">func (d *Decoder) SetMaxDynamicTableSize(v uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetMaxStringLength">func (d *Decoder) SetMaxStringLength(n int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.Write">func (d *Decoder) Write(p []byte) (n int, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DecodingError">type DecodingError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DecodingError.Error">func (de DecodingError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Encoder">type Encoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEncoder">func NewEncoder(w io.Writer) *Encoder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encoder.SetMaxDynamicTableSize">func (e *Encoder) SetMaxDynamicTableSize(v uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encoder.SetMaxDynamicTableSizeLimit">func (e *Encoder) SetMaxDynamicTableSizeLimit(v uint32)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encoder.WriteField">func (e *Encoder) WriteField(f HeaderField) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HeaderField">type HeaderField</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeaderField.IsPseudo">func (hf HeaderField) IsPseudo() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeaderField.Size">func (hf HeaderField) Size() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HeaderField.String">func (hf HeaderField) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidIndexError">type InvalidIndexError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidIndexError.Error">func (e InvalidIndexError) Error() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go">encode.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go">hpack.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/huffman.go">huffman.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/tables.go">tables.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+ErrInvalidHuffman is returned for errors found decoding
+Huffman-encoded strings.
+</p>
+
+				<pre>var <span id="ErrInvalidHuffman">ErrInvalidHuffman</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;hpack: invalid Huffman-encoded data&#34;)</pre>
+			
+				<p>
+ErrStringLength is returned by Decoder.Write when the max string length
+(as configured by Decoder.SetMaxStringLength) would be violated.
+</p>
+
+				<pre>var <span id="ErrStringLength">ErrStringLength</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;hpack: string too long&#34;)</pre>
+			
+		
+		
+			
+			
+			<h2 id="AppendHuffmanString">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/huffman.go?s=4017:4070#L150">AppendHuffmanString</a>
+				<a class="permalink" href="index.html#AppendHuffmanString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AppendHuffmanString(dst []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, s <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+AppendHuffmanString appends s, as encoded in Huffman codes, to dst
+and returns the extended buffer.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HuffmanDecode">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/huffman.go?s=497:551#L11">HuffmanDecode</a>
+				<a class="permalink" href="index.html#HuffmanDecode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HuffmanDecode(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, v []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+HuffmanDecode decodes the string in v and writes the expanded
+result to w, returning the number of bytes written to w and the
+Write call&#39;s return value. At most one Write call is made.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HuffmanDecodeToString">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/huffman.go?s=780:832#L22">HuffmanDecodeToString</a>
+				<a class="permalink" href="index.html#HuffmanDecodeToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HuffmanDecodeToString(v []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+HuffmanDecodeToString decodes the string in v.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HuffmanEncodeLength">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/huffman.go?s=4548:4589#L174">HuffmanEncodeLength</a>
+				<a class="permalink" href="index.html#HuffmanEncodeLength">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HuffmanEncodeLength(s <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+			<p>
+HuffmanEncodeLength returns the number of bytes required to encode
+s in Huffman codes. The result is round up to byte boundary.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Decoder">type <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=2509:3136#L69">Decoder</a>
+				<a class="permalink" href="index.html#Decoder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Decoder is the decoding context for incremental processing of
+header blocks.
+</p>
+
+			<pre>type Decoder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDecoder">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=3346:3428#L92">NewDecoder</a>
+					<a class="permalink" href="index.html#NewDecoder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDecoder(maxDynamicTableSize <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>, emitFunc func(f <a href="index.html#HeaderField">HeaderField</a>)) *<a href="index.html#Decoder">Decoder</a></pre>
+				<p>
+NewDecoder returns a new decoder with the provided maximum dynamic
+table size. The emitFunc will be called for each valid field
+parsed, in the same goroutine as calls to Write, before Write returns.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Decoder.Close">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=7568:7599#L225">Close</a>
+					<a class="permalink" href="index.html#Decoder.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close declares that the decoding is complete and resets the Decoder
+to be reused again for a new header block. If there is any remaining
+data in the decoder&#39;s buffer, Close returns an error.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.DecodeFull">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=7036:7097#L208">DecodeFull</a>
+					<a class="permalink" href="index.html#Decoder.DecodeFull">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) DecodeFull(p []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="index.html#HeaderField">HeaderField</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Decode decodes an entire block.
+</p>
+<p>
+TODO: remove this method and make it incremental later? This is
+easier for debugging now.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.EmitEnabled">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=4939:4975#L134">EmitEnabled</a>
+					<a class="permalink" href="index.html#Decoder.EmitEnabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) EmitEnabled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+EmitEnabled reports whether calls to the emitFunc provided to NewDecoder
+are currently enabled. The default is true.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetAllowedMaxDynamicTableSize">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=5367:5424#L146">SetAllowedMaxDynamicTableSize</a>
+					<a class="permalink" href="index.html#Decoder.SetAllowedMaxDynamicTableSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) SetAllowedMaxDynamicTableSize(v <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>)</pre>
+				<p>
+SetAllowedMaxDynamicTableSize sets the upper bound that the encoded
+stream (via dynamic table size updates) may set the maximum size
+to.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetEmitEnabled">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=4752:4792#L130">SetEmitEnabled</a>
+					<a class="permalink" href="index.html#Decoder.SetEmitEnabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) SetEmitEnabled(v <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+SetEmitEnabled controls whether the emitFunc provided to NewDecoder
+should be called. The default is true.
+</p>
+<p>
+This facility exists to let servers enforce MAX_HEADER_LIST_SIZE
+while still decoding and keeping in-sync with decoder state, but
+without doing unnecessary decompression or generating unnecessary
+garbage for header fields past the limit.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetEmitFunc">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=4302:4361#L119">SetEmitFunc</a>
+					<a class="permalink" href="index.html#Decoder.SetEmitFunc">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) SetEmitFunc(emitFunc func(f <a href="index.html#HeaderField">HeaderField</a>))</pre>
+				<p>
+SetEmitFunc changes the callback used when new header fields
+are decoded.
+It must be non-nil. It does not affect EmitEnabled.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetMaxDynamicTableSize">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=5141:5191#L139">SetMaxDynamicTableSize</a>
+					<a class="permalink" href="index.html#Decoder.SetMaxDynamicTableSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) SetMaxDynamicTableSize(v <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetMaxStringLength">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=4101:4144#L112">SetMaxStringLength</a>
+					<a class="permalink" href="index.html#Decoder.SetMaxStringLength">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) SetMaxStringLength(n <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				<p>
+SetMaxStringLength sets the maximum size of a HeaderField name or
+value string. If a string exceeds this length (even after any
+decompression), Write will return ErrStringLength.
+A value of 0 means unlimited and is the default from NewDecoder.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.Write">func (*Decoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=7743:7795#L234">Write</a>
+					<a class="permalink" href="index.html#Decoder.Write">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Decoder">Decoder</a>) Write(p []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DecodingError">type <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=494:534#L8">DecodingError</a>
+				<a class="permalink" href="index.html#DecodingError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DecodingError is something the spec defines as a decoding error.
+</p>
+
+			<pre>type DecodingError struct {
+<span id="DecodingError.Err"></span>    Err <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DecodingError.Error">func (DecodingError) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=536:574#L12">Error</a>
+					<a class="permalink" href="index.html#DecodingError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (de <a href="index.html#DecodingError">DecodingError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Encoder">type <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go?s=272:754#L6">Encoder</a>
+				<a class="permalink" href="index.html#Encoder">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Encoder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEncoder">func <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go?s=859:896#L25">NewEncoder</a>
+					<a class="permalink" href="index.html#NewEncoder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEncoder(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>) *<a href="index.html#Encoder">Encoder</a></pre>
+				<p>
+NewEncoder returns a new Encoder which performs HPACK encoding. An
+encoded data is written to w.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Encoder.SetMaxDynamicTableSize">func (*Encoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go?s=2942:2992#L98">SetMaxDynamicTableSize</a>
+					<a class="permalink" href="index.html#Encoder.SetMaxDynamicTableSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encoder">Encoder</a>) SetMaxDynamicTableSize(v <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>)</pre>
+				<p>
+SetMaxDynamicTableSize changes the dynamic header table size to v.
+The actual size is bounded by the value passed to
+SetMaxDynamicTableSizeLimit.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Encoder.SetMaxDynamicTableSizeLimit">func (*Encoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go?s=3600:3655#L116">SetMaxDynamicTableSizeLimit</a>
+					<a class="permalink" href="index.html#Encoder.SetMaxDynamicTableSizeLimit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encoder">Encoder</a>) SetMaxDynamicTableSizeLimit(v <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>)</pre>
+				<p>
+SetMaxDynamicTableSizeLimit changes the maximum value that can be
+specified in SetMaxDynamicTableSize to v. By default, it is set to
+4096, which is the same size of the default dynamic header table
+size described in HPACK specification. If the current maximum
+dynamic header table size is strictly greater than v, &#34;Header Table
+Size Update&#34; will be done in the next WriteField call and the
+maximum dynamic header table size is truncated to v.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Encoder.WriteField">func (*Encoder) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/encode.go?s=1321:1370#L40">WriteField</a>
+					<a class="permalink" href="index.html#Encoder.WriteField">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encoder">Encoder</a>) WriteField(f <a href="index.html#HeaderField">HeaderField</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+WriteField encodes f into a single Write to e&#39;s underlying Writer.
+This function may also produce bytes for &#34;Header Table Size Update&#34;
+if necessary. If produced, it is done before encoding f.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HeaderField">type <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=1028:1164#L26">HeaderField</a>
+				<a class="permalink" href="index.html#HeaderField">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A HeaderField is a name-value pair. Both the name and value are
+treated as opaque sequences of octets.
+</p>
+
+			<pre>type HeaderField struct {
+<span id="HeaderField.Name"></span>    Name, Value <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="HeaderField.Sensitive"></span>    <span class="comment">// Sensitive means that this header field should never be</span>
+    <span class="comment">// indexed.</span>
+    Sensitive <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HeaderField.IsPseudo">func (HeaderField) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=1373:1410#L38">IsPseudo</a>
+					<a class="permalink" href="index.html#HeaderField.IsPseudo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (hf <a href="index.html#HeaderField">HeaderField</a>) IsPseudo() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsPseudo reports whether the header field is an http2 pseudo header.
+That is, it reports whether it starts with a colon.
+It is not otherwise guaranteed to be a valid pseudo header field,
+though.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HeaderField.Size">func (HeaderField) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=1709:1744#L51">Size</a>
+					<a class="permalink" href="index.html#HeaderField.Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (hf <a href="index.html#HeaderField">HeaderField</a>) Size() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+Size returns the size of an entry per RFC 7541 section 4.1.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HeaderField.String">func (HeaderField) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=1463:1500#L42">String</a>
+					<a class="permalink" href="index.html#HeaderField.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (hf <a href="index.html#HeaderField">HeaderField</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidIndexError">type <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=773:799#L18">InvalidIndexError</a>
+				<a class="permalink" href="index.html#InvalidIndexError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An InvalidIndexError is returned when an encoder references a table
+entry before the static table or after the end of the dynamic table.
+</p>
+
+			<pre>type InvalidIndexError <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidIndexError.Error">func (InvalidIndexError) <a href="http://localhost:6060/src/golang.org/x/net/http2/hpack/hpack.go?s=801:842#L20">Error</a>
+					<a class="permalink" href="index.html#InvalidIndexError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e <a href="index.html#InvalidIndexError">InvalidIndexError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

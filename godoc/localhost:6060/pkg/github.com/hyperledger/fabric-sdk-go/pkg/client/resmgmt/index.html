@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>resmgmt - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package resmgmt
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package resmgmt enables creation and update of resources on a Fabric network.
+It allows administrators to create and/or update channnels, and for peers to join channels.
+Administrators can also perform chaincode related operations on a peer, such as
+installing, instantiating, and upgrading chaincode.
+</p>
+<pre>Basic Flow:
+1) Prepare client context
+2) Create resource managememt client
+3) Create new channel
+4) Peer(s) join channel
+5) Install chaincode onto peer(s) filesystem
+6) Instantiate chaincode on channel
+7) Query peer for channels, installed/instantiated chaincodes etc.
+</pre>
+
+				<div id="example_" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create new resource management client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+<span class="comment">// Read channel configuration</span>
+channelConfigPath := filepath.Join(metadata.GetProjectPath(), metadata.ChannelConfigPath, channelConfigFile)
+r, err := os.Open(channelConfigPath)
+if err != nil {
+    fmt.Printf(&#34;failed to open channel config: %s\n&#34;, err)
+}
+defer r.Close()
+
+<span class="comment">// Create new channel &#39;mychannel&#39;</span>
+_, err = c.SaveChannel(SaveChannelRequest{ChannelID: &#34;mychannel&#34;, ChannelConfig: r})
+if err != nil {
+    fmt.Printf(&#34;failed to save channel: %s\n&#34;, err)
+}
+
+peer := mockPeer()
+
+<span class="comment">// Peer joins channel &#39;mychannel&#39;</span>
+err = c.JoinChannel(&#34;mychannel&#34;, WithTargets(peer))
+if err != nil {
+    fmt.Printf(&#34;failed to join channel: %s\n&#34;, err)
+}
+
+<span class="comment">// Install example chaincode to peer</span>
+installReq := InstallCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v0&#34;, Path: &#34;path&#34;, Package: &amp;resource.CCPackage{Type: 1, Code: []byte(&#34;bytes&#34;)}}
+_, err = c.InstallCC(installReq, WithTargets(peer))
+if err != nil {
+    fmt.Printf(&#34;failed to install chaincode: %s\n&#34;, err)
+}
+
+<span class="comment">// Instantiate example chaincode on channel &#39;mychannel&#39;</span>
+ccPolicy := cauthdsl.SignedByMspMember(&#34;Org1MSP&#34;)
+instantiateReq := InstantiateCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v0&#34;, Path: &#34;path&#34;, Policy: ccPolicy}
+_, err = c.InstantiateCC(&#34;mychannel&#34;, instantiateReq, WithTargets(peer))
+if err != nil {
+    fmt.Printf(&#34;failed to install chaincode: %s\n&#34;, err)
+}
+
+fmt.Println(&#34;Network setup completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Network setup completed
+</pre>
+			
+		
+	</div>
+</div>
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#MarshalConfigSignature">func MarshalConfigSignature(signature *common.ConfigSignature) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#UnmarshalConfigSignature">func UnmarshalConfigSignature(reader io.Reader) (*common.ConfigSignature, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(ctxProvider context.ClientProvider, opts ...ClientOption) (*Client, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.CreateConfigSignature">func (rc *Client) CreateConfigSignature(signer msp.SigningIdentity, channelConfigPath string) (*common.ConfigSignature, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.CreateConfigSignatureData">func (rc *Client) CreateConfigSignatureData(signer msp.SigningIdentity, channelConfigPath string) (signatureHeaderData resource.ConfigSignatureData, e error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.InstallCC">func (rc *Client) InstallCC(req InstallCCRequest, options ...RequestOption) ([]InstallCCResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.InstantiateCC">func (rc *Client) InstantiateCC(channelID string, req InstantiateCCRequest, options ...RequestOption) (InstantiateCCResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.JoinChannel">func (rc *Client) JoinChannel(channelID string, options ...RequestOption) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryChannels">func (rc *Client) QueryChannels(options ...RequestOption) (*pb.ChannelQueryResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryCollectionsConfig">func (rc *Client) QueryCollectionsConfig(channelID string, chaincodeName string, options ...RequestOption) (*common.CollectionConfigPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryConfigFromOrderer">func (rc *Client) QueryConfigFromOrderer(channelID string, options ...RequestOption) (fab.ChannelCfg, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryInstalledChaincodes">func (rc *Client) QueryInstalledChaincodes(options ...RequestOption) (*pb.ChaincodeQueryResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryInstantiatedChaincodes">func (rc *Client) QueryInstantiatedChaincodes(channelID string, options ...RequestOption) (*pb.ChaincodeQueryResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.SaveChannel">func (rc *Client) SaveChannel(req SaveChannelRequest, options ...RequestOption) (SaveChannelResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.UpgradeCC">func (rc *Client) UpgradeCC(channelID string, req UpgradeCCRequest, options ...RequestOption) (UpgradeCCResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClientOption">type ClientOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithDefaultTargetFilter">func WithDefaultTargetFilter(filter fab.TargetFilter) ClientOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InstallCCRequest">type InstallCCRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InstallCCResponse">type InstallCCResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InstantiateCCRequest">type InstantiateCCRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InstantiateCCResponse">type InstantiateCCResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestOption">type RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithConfigSignatures">func WithConfigSignatures(signatures ...*common.ConfigSignature) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithOrderer">func WithOrderer(orderer fab.Orderer) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithOrdererEndpoint">func WithOrdererEndpoint(key string) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithParentContext">func WithParentContext(parentContext reqContext.Context) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithRetry">func WithRetry(retryOpt retry.Opts) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargetEndpoints">func WithTargetEndpoints(keys ...string) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargetFilter">func WithTargetFilter(targetFilter fab.TargetFilter) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargets">func WithTargets(targets ...fab.Peer) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTimeout">func WithTimeout(timeoutType fab.TimeoutType, timeout time.Duration) RequestOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SaveChannelRequest">type SaveChannelRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SaveChannelResponse">type SaveChannelResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UpgradeCCRequest">type UpgradeCCRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UpgradeCCResponse">type UpgradeCCResponse</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_">Package</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_InstallCC">Client.InstallCC</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_InstantiateCC">Client.InstantiateCC</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_JoinChannel">Client.JoinChannel</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryChannels">Client.QueryChannels</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryInstalledChaincodes">Client.QueryInstalledChaincodes</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryInstantiatedChaincodes">Client.QueryInstantiatedChaincodes</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_SaveChannel">Client.SaveChannel</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_SaveChannel_withOrdererEndpoint">Client.SaveChannel (WithOrdererEndpoint)</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_UpgradeCC">Client.UpgradeCC</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_New">New</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithDefaultTargetFilter">WithDefaultTargetFilter</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithParentContext">WithParentContext</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithTargetFilter">WithTargetFilter</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithTargets">WithTargets</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/lscc.go">lscc.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go">resmgmt.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+Define chaincode proposal types
+</p>
+
+				<pre>const (
+    <span id="InstantiateChaincode">InstantiateChaincode</span> chaincodeProposalType = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="UpgradeChaincode">UpgradeChaincode</span>
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="MarshalConfigSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=35886:35964#L1068">MarshalConfigSignature</a>
+				<a class="permalink" href="index.html#MarshalConfigSignature">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MarshalConfigSignature(signature *<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigSignature">ConfigSignature</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MarshalConfigSignature marshals 1 ConfigSignature for the given client concatenated as []byte
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalConfigSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=36208:36288#L1077">UnmarshalConfigSignature</a>
+				<a class="permalink" href="index.html#UnmarshalConfigSignature">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalConfigSignature(reader <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigSignature">ConfigSignature</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalConfigSignature reads 1 ConfigSignature as []byte from reader and unmarshals it
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=4554:4684#L119">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client enables managing resources in Fabric network.
+</p>
+
+			<pre>type Client struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=5311:5394#L147">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(ctxProvider <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#ClientProvider">ClientProvider</a>, opts ...<a href="index.html#ClientOption">ClientOption</a>) (*<a href="index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New returns a resource management client instance.
+</p>
+
+				<div id="example_New" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+if c != nil {
+    fmt.Println(&#34;resource management client created&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">resource management client created
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+				
+				<h3 id="Client.CreateConfigSignature">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=34266:34392#L1029">CreateConfigSignature</a>
+					<a class="permalink" href="index.html#Client.CreateConfigSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) CreateConfigSignature(signer <a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, channelConfigPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigSignature">ConfigSignature</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateConfigSignature creates a signature for the given client, custom signers and chConfig from channelConfigPath argument
+</p>
+<pre>return ConfigSignature will be signed internally by the SDK. It can be passed to WithConfigSignatures() option
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.CreateConfigSignatureData">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=35385:35542#L1053">CreateConfigSignatureData</a>
+					<a class="permalink" href="index.html#Client.CreateConfigSignatureData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) CreateConfigSignatureData(signer <a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, channelConfigPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (signatureHeaderData <a href="../../fab/resource/index.html">resource</a>.<a href="../../fab/resource/index.html#ConfigSignatureData">ConfigSignatureData</a>, e <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateConfigSignatureData will prepare a SignatureHeader and the full signing []byte (signingBytes) to be used for signing a Channel Config
+</p>
+<pre>	Once SigningBytes have been signed externally (signing signatureHeaderData.SigningBytes using an external tool like OpenSSL), do the following:
+ 1. create a common.ConfigSignature{} instance
+ 2. assign its SignatureHeader field with the returned field &#39;signatureHeaderData.signatureHeader&#39;
+ 3. assign its Signature field with the generated signature of &#39;signatureHeaderData.signingBytes&#39; from the external tool
+ Then use WithConfigSignatures() option to pass this new instance for channel updates
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.InstallCC">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=11395:11499#L353">InstallCC</a>
+					<a class="permalink" href="index.html#Client.InstallCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) InstallCC(req <a href="index.html#InstallCCRequest">InstallCCRequest</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) ([]<a href="index.html#InstallCCResponse">InstallCCResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InstallCC allows administrators to install chaincode onto the filesystem of a peer.
+If peer(s) are not specified in options it will default to all peers that belong to admin&#39;s MSP.
+</p>
+<pre>Parameters:
+req holds info about mandatory chaincode name, path, version and policy
+options holds optional request options
+
+Returns:
+install chaincode proposal responses from peer(s)
+</pre>
+
+				
+				<div id="example_Client_InstallCC" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+req := InstallCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v0&#34;, Path: &#34;path&#34;, Package: &amp;resource.CCPackage{Type: 1, Code: []byte(&#34;bytes&#34;)}}
+responses, err := c.InstallCC(req, WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to install chaincode: %s\n&#34;, err)
+}
+
+if len(responses) &gt; 0 {
+    fmt.Println(&#34;Chaincode installed&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Chaincode installed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.InstantiateCC">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=16228:16360#L478">InstantiateCC</a>
+					<a class="permalink" href="index.html#Client.InstantiateCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) InstantiateCC(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, req <a href="index.html#InstantiateCCRequest">InstantiateCCRequest</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (<a href="index.html#InstantiateCCResponse">InstantiateCCResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InstantiateCC instantiates chaincode with optional custom options (specific peers, filtered peers, timeout). If peer(s) are not specified
+in options it will default to all channel peers.
+</p>
+<pre>Parameters:
+channel is manadatory channel name
+req holds info about mandatory chaincode name, path, version and policy
+options holds optional request options
+
+Returns:
+instantiate chaincode response with transaction ID
+</pre>
+
+				
+				<div id="example_Client_InstantiateCC" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+ccPolicy := cauthdsl.SignedByMspMember(&#34;Org1MSP&#34;)
+req := InstantiateCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v0&#34;, Path: &#34;path&#34;, Policy: ccPolicy}
+
+resp, err := c.InstantiateCC(&#34;mychannel&#34;, req)
+if err != nil {
+    fmt.Printf(&#34;failed to install chaincode: %s\n&#34;, err)
+}
+
+if resp.TransactionID == &#34;&#34; {
+    fmt.Println(&#34;Failed to instantiate chaincode&#34;)
+}
+
+fmt.Println(&#34;Chaincode instantiated&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Chaincode instantiated
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.JoinChannel">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=6420:6499#L189">JoinChannel</a>
+					<a class="permalink" href="index.html#Client.JoinChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) JoinChannel(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+JoinChannel allows for peers to join existing channel with optional custom options (specific peers, filtered peers). If peer(s) are not specified in options it will default to all peers that belong to client&#39;s MSP.
+</p>
+<pre>Parameters:
+channel is manadatory channel name
+options holds optional request options
+
+Returns:
+an error if join fails
+</pre>
+
+				
+				<div id="example_Client_JoinChannel" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+err = c.JoinChannel(&#34;mychannel&#34;, WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to join channel: %s\n&#34;, err)
+}
+
+fmt.Println(&#34;Joined channel&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Joined channel
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryChannels">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=22912:23003#L690">QueryChannels</a>
+					<a class="permalink" href="index.html#Client.QueryChannels">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) QueryChannels(options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ChannelQueryResponse">ChannelQueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryChannels queries the names of all the channels that a peer has joined.
+</p>
+<pre>Parameters:
+options hold optional request options
+Note: One target(peer) has to be specified using either WithTargetURLs or WithTargets request option
+
+Returns:
+all channels that peer has joined
+</pre>
+
+				
+				<div id="example_Client_QueryChannels" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+response, err := c.QueryChannels(WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to query channels: %s\n&#34;, err)
+}
+
+if response != nil {
+    fmt.Println(&#34;Retrieved channels&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved channels
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryCollectionsConfig">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=20441:20588#L607">QueryCollectionsConfig</a>
+					<a class="permalink" href="index.html#Client.QueryCollectionsConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) QueryCollectionsConfig(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfigPackage">CollectionConfigPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryCollectionsConfig queries the collections config on a peer for specific channel. If peer is not specified in options it will query random peer on this channel.
+Parameters:
+channel is mandatory channel name
+chaincode is mandatory chaincode name
+options hold optional request options
+</p>
+<p>
+Returns:
+list of collections config
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.QueryConfigFromOrderer">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=38755:38863#L1165">QueryConfigFromOrderer</a>
+					<a class="permalink" href="index.html#Client.QueryConfigFromOrderer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) QueryConfigFromOrderer(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryConfigFromOrderer config returns channel configuration from orderer. If orderer is not provided using options it will be defaulted to channel orderer (if configured) or random orderer from configuration.
+</p>
+<pre>Parameters:
+channelID is mandatory channel ID
+options holds optional request options
+
+Returns:
+channel configuration
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.QueryInstalledChaincodes">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=18000:18104#L522">QueryInstalledChaincodes</a>
+					<a class="permalink" href="index.html#Client.QueryInstalledChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) QueryInstalledChaincodes(options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ChaincodeQueryResponse">ChaincodeQueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryInstalledChaincodes queries the installed chaincodes on a peer.
+</p>
+<pre>Parameters:
+options hold optional request options
+Note: One target(peer) has to be specified using either WithTargetURLs or WithTargets request option
+
+Returns:
+list of installed chaincodes on specified peer
+</pre>
+
+				
+				<div id="example_Client_QueryInstalledChaincodes" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+response, err := c.QueryInstalledChaincodes(WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to query installed chaincodes: %s\n&#34;, err)
+}
+
+if response != nil {
+    fmt.Println(&#34;Retrieved installed chaincodes&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved installed chaincodes
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryInstantiatedChaincodes">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=18798:18923#L546">QueryInstantiatedChaincodes</a>
+					<a class="permalink" href="index.html#Client.QueryInstantiatedChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) QueryInstantiatedChaincodes(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ChaincodeQueryResponse">ChaincodeQueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryInstantiatedChaincodes queries the instantiated chaincodes on a peer for specific channel. If peer is not specified in options it will query random peer on this channel.
+</p>
+<pre>Parameters:
+channel is manadatory channel name
+options hold optional request options
+
+Returns:
+list of instantiated chaincodes
+</pre>
+
+				
+				<div id="example_Client_QueryInstantiatedChaincodes" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+response, err := c.QueryInstantiatedChaincodes(&#34;mychannel&#34;, WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to query instantiated chaincodes: %s\n&#34;, err)
+}
+
+if response != nil {
+    fmt.Println(&#34;Retrieved instantiated chaincodes&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved instantiated chaincodes
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.SaveChannel">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=30292:30400#L903">SaveChannel</a>
+					<a class="permalink" href="index.html#Client.SaveChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) SaveChannel(req <a href="index.html#SaveChannelRequest">SaveChannelRequest</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (<a href="index.html#SaveChannelResponse">SaveChannelResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SaveChannel creates or updates channel.
+</p>
+<pre> Parameters:
+ req holds info about mandatory channel name and configuration
+ options holds optional request options
+ if options have signatures (WithConfigSignatures() or 1 or more WithConfigSignature() calls), then SaveChannel will
+    use these signatures instead of creating ones for the SigningIdentities found in req.
+	   Make sure that req.ChannelConfigPath/req.ChannelConfig have the channel config matching these signatures.
+
+ Returns:
+ save channel response with transaction ID
+</pre>
+
+				
+				<div id="example_Client_SaveChannel" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Printf(&#34;failed to create client: %s\n&#34;, err)
+}
+
+channelConfigPath := filepath.Join(metadata.GetProjectPath(), metadata.ChannelConfigPath, channelConfigFile)
+r, err := os.Open(channelConfigPath)
+if err != nil {
+    fmt.Printf(&#34;failed to open channel config: %s\n&#34;, err)
+}
+defer r.Close()
+
+resp, err := c.SaveChannel(SaveChannelRequest{ChannelID: &#34;mychannel&#34;, ChannelConfig: r})
+if err != nil {
+    fmt.Printf(&#34;failed to save channel: %s\n&#34;, err)
+}
+
+if resp.TransactionID == &#34;&#34; {
+    fmt.Println(&#34;Failed to save channel&#34;)
+}
+
+fmt.Println(&#34;Saved channel&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Saved channel
+</pre>
+			
+		
+	</div>
+</div>
+<div id="example_Client_SaveChannel_withOrdererEndpoint" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example (WithOrdererEndpoint)</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example (WithOrdererEndpoint)</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Printf(&#34;failed to create client: %s\n&#34;, err)
+}
+
+channelConfigPath := filepath.Join(metadata.GetProjectPath(), metadata.ChannelConfigPath, channelConfigFile)
+r, err := os.Open(channelConfigPath)
+if err != nil {
+    fmt.Printf(&#34;failed to open channel config: %s\n&#34;, err)
+}
+defer r.Close()
+
+resp, err := c.SaveChannel(SaveChannelRequest{ChannelID: &#34;mychannel&#34;, ChannelConfig: r}, WithOrdererEndpoint(&#34;example.com&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to save channel: %s\n&#34;, err)
+}
+
+if resp.TransactionID == &#34;&#34; {
+    fmt.Println(&#34;Failed to save channel&#34;)
+}
+
+fmt.Println(&#34;Saved channel&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Saved channel
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.UpgradeCC">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=17179:17299#L501">UpgradeCC</a>
+					<a class="permalink" href="index.html#Client.UpgradeCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#Client">Client</a>) UpgradeCC(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, req <a href="index.html#UpgradeCCRequest">UpgradeCCRequest</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (<a href="index.html#UpgradeCCResponse">UpgradeCCResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+UpgradeCC upgrades chaincode with optional custom options (specific peers, filtered peers, timeout). If peer(s) are not specified in options
+it will default to all channel peers.
+</p>
+<pre>Parameters:
+channel is manadatory channel name
+req holds info about mandatory chaincode name, path, version and policy
+options holds optional request options
+
+Returns:
+upgrade chaincode response with transaction ID
+</pre>
+
+				
+				<div id="example_Client_UpgradeCC" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+ccPolicy := cauthdsl.SignedByMspMember(&#34;Org1MSP&#34;)
+req := UpgradeCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v1&#34;, Path: &#34;path&#34;, Policy: ccPolicy}
+
+resp, err := c.UpgradeCC(&#34;mychannel&#34;, req, WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to upgrade chaincode: %s\n&#34;, err)
+}
+
+if resp.TransactionID == &#34;&#34; {
+    fmt.Println(&#34;Failed to upgrade chaincode&#34;)
+}
+
+fmt.Println(&#34;Chaincode upgraded&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Chaincode upgraded
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+		
+			
+			
+			<h2 id="ClientOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=4994:5031#L136">ClientOption</a>
+				<a class="permalink" href="index.html#ClientOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientOption describes a functional parameter for the New constructor
+</p>
+
+			<pre>type ClientOption func(*<a href="index.html#Client">Client</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithDefaultTargetFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=5113:5179#L139">WithDefaultTargetFilter</a>
+					<a class="permalink" href="index.html#WithDefaultTargetFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithDefaultTargetFilter(filter <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TargetFilter">TargetFilter</a>) <a href="index.html#ClientOption">ClientOption</a></pre>
+				<p>
+WithDefaultTargetFilter option to configure default target filter per client
+</p>
+
+				<div id="example_WithDefaultTargetFilter" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+c, err := New(ctx, WithDefaultTargetFilter(&amp;urlTargetFilter{url: &#34;example.com&#34;}))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+if c != nil {
+    fmt.Println(&#34;resource management client created with url target filter&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">resource management client created with url target filter
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+		
+			
+			
+			<h2 id="InstallCCRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=2022:2131#L44">InstallCCRequest</a>
+				<a class="permalink" href="index.html#InstallCCRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstallCCRequest contains install chaincode request parameters
+</p>
+
+			<pre>type InstallCCRequest struct {
+<span id="InstallCCRequest.Name"></span>    Name    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstallCCRequest.Path"></span>    Path    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstallCCRequest.Version"></span>    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstallCCRequest.Package"></span>    Package *<a href="../../fab/resource/index.html">resource</a>.<a href="../../fab/resource/index.html#CCPackage">CCPackage</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InstallCCResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=2197:2274#L52">InstallCCResponse</a>
+				<a class="permalink" href="index.html#InstallCCResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstallCCResponse contains install chaincode response status
+</p>
+
+			<pre>type InstallCCResponse struct {
+<span id="InstallCCResponse.Target"></span>    Target <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstallCCResponse.Status"></span>    Status <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+<span id="InstallCCResponse.Info"></span>    Info   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InstantiateCCRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=2350:2547#L59">InstantiateCCRequest</a>
+				<a class="permalink" href="index.html#InstantiateCCRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstantiateCCRequest contains instantiate chaincode request parameters
+</p>
+
+			<pre>type InstantiateCCRequest struct {
+<span id="InstantiateCCRequest.Name"></span>    Name       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstantiateCCRequest.Path"></span>    Path       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstantiateCCRequest.Version"></span>    Version    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="InstantiateCCRequest.Args"></span>    Args       [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="InstantiateCCRequest.Policy"></span>    Policy     *<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#SignaturePolicyEnvelope">SignaturePolicyEnvelope</a>
+<span id="InstantiateCCRequest.CollConfig"></span>    CollConfig []*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InstantiateCCResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=2629:2699#L69">InstantiateCCResponse</a>
+				<a class="permalink" href="index.html#InstantiateCCResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstantiateCCResponse contains response parameters for instantiate chaincode
+</p>
+
+			<pre>type InstantiateCCResponse struct {
+<span id="InstantiateCCResponse.TransactionID"></span>    TransactionID <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TransactionID">TransactionID</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RequestOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=4376:4447#L114">RequestOption</a>
+				<a class="permalink" href="index.html#RequestOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RequestOption func for each Opts argument
+</p>
+
+			<pre>type RequestOption func(ctx <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#Client">Client</a>, opts *requestOptions) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithConfigSignatures">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=3280:3358#L105">WithConfigSignatures</a>
+					<a class="permalink" href="index.html#WithConfigSignatures">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithConfigSignatures(signatures ...*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigSignature">ConfigSignature</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithConfigSignatures allows to provide pre defined signatures for resmgmt client&#39;s SaveChannel call
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithOrderer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=3016:3067#L97">WithOrderer</a>
+					<a class="permalink" href="index.html#WithOrderer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithOrderer(orderer <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Orderer">Orderer</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithOrderer allows an orderer to be specified for the request.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithOrdererEndpoint">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=2470:2520#L78">WithOrdererEndpoint</a>
+					<a class="permalink" href="index.html#WithOrdererEndpoint">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithOrdererEndpoint(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithOrdererEndpoint allows an orderer to be specified for the request.
+The orderer will be looked-up based on the key argument.
+key argument can be a name or url
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithParentContext">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=4391:4461#L128">WithParentContext</a>
+					<a class="permalink" href="index.html#WithParentContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithParentContext(parentContext <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithParentContext encapsulates grpc parent context.
+</p>
+
+				<div id="example_WithParentContext" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+clientContext, err := mockClientProvider()()
+if err != nil {
+    fmt.Println(&#34;failed to return client context&#34;)
+    return
+}
+
+<span class="comment">// get parent context and cancel</span>
+parentContext, cancel := sdkCtx.NewRequest(clientContext, sdkCtx.WithTimeout(20*time.Second))
+defer cancel()
+
+channels, err := c.QueryChannels(WithParentContext(parentContext), WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to query for blockchain info: %s\n&#34;, err)
+}
+
+if channels != nil {
+    fmt.Println(&#34;Retrieved channels that peer belongs to&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved channels that peer belongs to
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithRetry">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=4610:4659#L136">WithRetry</a>
+					<a class="permalink" href="index.html#WithRetry">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithRetry(retryOpt <a href="../../common/errors/retry/index.html">retry</a>.<a href="../../common/errors/retry/index.html#Opts">Opts</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithRetry sets retry options.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithTargetEndpoints">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=1066:1120#L31">WithTargetEndpoints</a>
+					<a class="permalink" href="index.html#WithTargetEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargetEndpoints(keys ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargetEndpoints allows overriding of the target peers for the request.
+Targets are specified by name or URL, and the SDK will create the underlying peer
+objects.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithTargetFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=1665:1731#L56">WithTargetFilter</a>
+					<a class="permalink" href="index.html#WithTargetFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargetFilter(targetFilter <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TargetFilter">TargetFilter</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargetFilter enables a target filter for the request.
+</p>
+
+				<div id="example_WithTargetFilter" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+ccPolicy := cauthdsl.SignedByMspMember(&#34;Org1MSP&#34;)
+req := InstantiateCCRequest{Name: &#34;ExampleCC&#34;, Version: &#34;v0&#34;, Path: &#34;path&#34;, Policy: ccPolicy}
+
+resp, err := c.InstantiateCC(&#34;mychannel&#34;, req, WithTargetFilter(&amp;urlTargetFilter{url: &#34;http://peer1.com&#34;}))
+if err != nil {
+    fmt.Printf(&#34;failed to install chaincode: %s\n&#34;, err)
+}
+
+if resp.TransactionID == &#34;&#34; {
+    fmt.Println(&#34;Failed to instantiate chaincode&#34;)
+}
+
+fmt.Println(&#34;Chaincode instantiated&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Chaincode instantiated
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithTargets">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=611:662#L13">WithTargets</a>
+					<a class="permalink" href="index.html#WithTargets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargets(targets ...<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Peer">Peer</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargets allows overriding of the target peers for the request.
+</p>
+
+				<div id="example_WithTargets" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+response, err := c.QueryChannels(WithTargets(mockPeer()))
+if err != nil {
+    fmt.Printf(&#34;failed to query channels: %s\n&#34;, err)
+}
+
+if response != nil {
+    fmt.Println(&#34;Retrieved channels&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved channels
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithTimeout">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/opts.go?s=2014:2096#L65">WithTimeout</a>
+					<a class="permalink" href="index.html#WithTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTimeout(timeoutType <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TimeoutType">TimeoutType</a>, timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTimeout encapsulates key value pairs of timeout type, timeout duration to Options
+if not provided, default timeout configuration from config will be used
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="SaveChannelRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=3870:4191#L101">SaveChannelRequest</a>
+				<a class="permalink" href="index.html#SaveChannelRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SaveChannelRequest holds parameters for save channel request
+</p>
+
+			<pre>type SaveChannelRequest struct {
+<span id="SaveChannelRequest.ChannelID"></span>    ChannelID         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SaveChannelRequest.ChannelConfig"></span>    ChannelConfig     <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>             <span class="comment">// ChannelConfig data source</span>
+<span id="SaveChannelRequest.ChannelConfigPath"></span>    ChannelConfigPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>                <span class="comment">// Convenience option to use the named file as ChannelConfig reader</span>
+<span id="SaveChannelRequest.SigningIdentities"></span>    SigningIdentities []<a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a> <span class="comment">// Users that sign channel configuration</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SaveChannelResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=4262:4330#L109">SaveChannelResponse</a>
+				<a class="permalink" href="index.html#SaveChannelResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SaveChannelResponse contains response parameters for save channel
+</p>
+
+			<pre>type SaveChannelResponse struct {
+<span id="SaveChannelResponse.TransactionID"></span>    TransactionID <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TransactionID">TransactionID</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UpgradeCCRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=2767:2960#L74">UpgradeCCRequest</a>
+				<a class="permalink" href="index.html#UpgradeCCRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpgradeCCRequest contains upgrade chaincode request parameters
+</p>
+
+			<pre>type UpgradeCCRequest struct {
+<span id="UpgradeCCRequest.Name"></span>    Name       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="UpgradeCCRequest.Path"></span>    Path       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="UpgradeCCRequest.Version"></span>    Version    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="UpgradeCCRequest.Args"></span>    Args       [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="UpgradeCCRequest.Policy"></span>    Policy     *<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#SignaturePolicyEnvelope">SignaturePolicyEnvelope</a>
+<span id="UpgradeCCRequest.CollConfig"></span>    CollConfig []*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#CollectionConfig">CollectionConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UpgradeCCResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt/resmgmt.go?s=3034:3100#L84">UpgradeCCResponse</a>
+				<a class="permalink" href="index.html#UpgradeCCResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpgradeCCResponse contains response parameters for upgrade chaincode
+</p>
+
+			<pre>type UpgradeCCResponse struct {
+<span id="UpgradeCCResponse.TransactionID"></span>    TransactionID <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TransactionID">TransactionID</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

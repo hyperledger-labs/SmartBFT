@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>present - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package present
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/present"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+The present file format
+</p>
+<p>
+Present files have the following format.  The first non-blank non-comment
+line is the title, so the header looks like
+</p>
+<pre>Title of document
+Subtitle of document
+15:04 2 Jan 2006
+Tags: foo, bar, baz
+&lt;blank line&gt;
+Author Name
+Job title, Company
+joe@example.com
+<a href="http://url/">http://url/</a>
+@twitter_name
+</pre>
+<p>
+The subtitle, date, and tags lines are optional.
+</p>
+<p>
+The date line may be written without a time:
+</p>
+<pre>2 Jan 2006
+</pre>
+<p>
+In this case, the time will be interpreted as 10am UTC on that date.
+</p>
+<p>
+The tags line is a comma-separated list of tags that may be used to categorize
+the document.
+</p>
+<p>
+The author section may contain a mixture of text, twitter names, and links.
+For slide presentations, only the plain text lines will be displayed on the
+first slide.
+</p>
+<p>
+Multiple presenters may be specified, separated by a blank line.
+</p>
+<p>
+After that come slides/sections, each after a blank line:
+</p>
+<pre>* Title of slide or section (must have asterisk)
+
+Some Text
+
+** Subsection
+
+- bullets
+- more bullets
+- a bullet with
+
+*** Sub-subsection
+
+Some More text
+
+  Preformatted text
+  is indented (however you like)
+
+Further Text, including invocations like:
+
+.code x.go /^func main/,/^}/
+.play y.go
+.image image.jpg
+.background image.jpg
+.iframe <a href="http://foo">http://foo</a>
+.link <a href="http://foo">http://foo</a> label
+.html file.html
+.caption _Gopher_ by [[<a href="https://www.instagram.com/reneefrench/][Ren">https://www.instagram.com/reneefrench/][Ren</a>ée French]]
+
+Again, more text
+</pre>
+<p>
+Blank lines are OK (not mandatory) after the title and after the
+text.  Text, bullets, and .code etc. are all optional; title is
+not.
+</p>
+<p>
+Lines starting with # in column 1 are commentary.
+</p>
+<p>
+Fonts:
+</p>
+<p>
+Within the input for plain text or lists, text bracketed by font
+markers will be presented in italic, bold, or program font.
+Marker characters are _ (italic), * (bold) and ` (program font).
+An opening marker must be preceded by a space or punctuation
+character or else be at start of a line; similarly, a closing
+marker must be followed by a space or punctuation character or
+else be at the end of a line. Unmatched markers appear as plain text.
+There must be no spaces between markers. Within marked text,
+a single marker character becomes a space and a doubled single
+marker quotes the marker character.
+</p>
+<pre>_italic_
+*bold*
+`program`
+Markup—_especially_italic_text_—can easily be overused.
+_Why_use_scoped__ptr_? Use plain ***ptr* instead.
+</pre>
+<p>
+Inline links:
+</p>
+<p>
+Links can be included in any text with the form [[url][label]], or
+[[url]] to use the URL itself as the label.
+</p>
+<p>
+Functions:
+</p>
+<p>
+A number of template functions are available through invocations
+in the input text. Each such invocation contains a period as the
+first character on the line, followed immediately by the name of
+the function, followed by any arguments. A typical invocation might
+be
+</p>
+<pre>.play demo.go /^func show/,/^}/
+</pre>
+<p>
+(except that the &#34;.play&#34; must be at the beginning of the line and
+not be indented like this.)
+</p>
+<p>
+Here follows a description of the functions:
+</p>
+<p>
+code:
+</p>
+<p>
+Injects program source into the output by extracting code from files
+and injecting them as HTML-escaped &lt;pre&gt; blocks.  The argument is
+a file name followed by an optional address that specifies what
+section of the file to display. The address syntax is similar in
+its simplest form to that of ed, but comes from sam and is more
+general. See
+</p>
+<pre><a href="https://plan9.io/sys/doc/sam/sam.html">https://plan9.io/sys/doc/sam/sam.html</a> Table II
+</pre>
+<p>
+for full details. The displayed block is always rounded out to a
+full line at both ends.
+</p>
+<p>
+If no pattern is present, the entire file is displayed.
+</p>
+<p>
+Any line in the program that ends with the four characters
+</p>
+<pre>OMIT
+</pre>
+<p>
+is deleted from the source before inclusion, making it easy
+to write things like
+</p>
+<pre>.code test.go /START OMIT/,/END OMIT/
+</pre>
+<p>
+to find snippets like this
+</p>
+<pre>tedious_code = boring_function()
+// START OMIT
+interesting_code = fascinating_function()
+// END OMIT
+</pre>
+<p>
+and see only this:
+</p>
+<pre>interesting_code = fascinating_function()
+</pre>
+<p>
+Also, inside the displayed text a line that ends
+</p>
+<pre>// HL
+</pre>
+<p>
+will be highlighted in the display. A highlighting mark may have a
+suffix word, such as
+</p>
+<pre>// HLxxx
+</pre>
+<p>
+Such highlights are enabled only if the code invocation ends with
+&#34;HL&#34; followed by the word:
+</p>
+<pre>.code test.go /^type Foo/,/^}/ HLxxx
+</pre>
+<p>
+The .code function may take one or more flags immediately preceding
+the filename. This command shows test.go in an editable text area:
+</p>
+<pre>.code -edit test.go
+</pre>
+<p>
+This command shows test.go with line numbers:
+</p>
+<pre>.code -numbers test.go
+</pre>
+<p>
+play:
+</p>
+<p>
+The function &#34;play&#34; is the same as &#34;code&#34; but puts a button
+on the displayed source so the program can be run from the browser.
+Although only the selected text is shown, all the source is included
+in the HTML output so it can be presented to the compiler.
+</p>
+<p>
+link:
+</p>
+<p>
+Create a hyperlink. The syntax is 1 or 2 space-separated arguments.
+The first argument is always the HTTP URL.  If there is a second
+argument, it is the text label to display for this link.
+</p>
+<pre>.link <a href="http://golang.org">http://golang.org</a> golang.org
+</pre>
+<p>
+image:
+</p>
+<p>
+The template uses the function &#34;image&#34; to inject picture files.
+</p>
+<p>
+The syntax is simple: 1 or 3 space-separated arguments.
+The first argument is always the file name.
+If there are more arguments, they are the height and width;
+both must be present, or substituted with an underscore.
+Replacing a dimension argument with the underscore parameter
+preserves the aspect ratio of the image when scaling.
+</p>
+<pre>.image images/betsy.jpg 100 200
+
+.image images/janet.jpg _ 300
+</pre>
+<p>
+video:
+</p>
+<p>
+The template uses the function &#34;video&#34; to inject video files.
+</p>
+<p>
+The syntax is simple: 2 or 4 space-separated arguments.
+The first argument is always the file name.
+The second argument is always the file content-type.
+If there are more arguments, they are the height and width;
+both must be present, or substituted with an underscore.
+Replacing a dimension argument with the underscore parameter
+preserves the aspect ratio of the video when scaling.
+</p>
+<pre>.video videos/evangeline.mp4 video/mp4 400 600
+
+.video videos/mabel.ogg video/ogg 500 _
+</pre>
+<p>
+background:
+</p>
+<p>
+The template uses the function &#34;background&#34; to set the background image for
+a slide.  The only argument is the file name of the image.
+</p>
+<pre>.background images/susan.jpg
+</pre>
+<p>
+caption:
+</p>
+<p>
+The template uses the function &#34;caption&#34; to inject figure captions.
+</p>
+<p>
+The text after &#34;.caption&#34; is embedded in a figcaption element after
+processing styling and links as in standard text lines.
+</p>
+<pre>.caption _Gopher_ by [[<a href="http://www.reneefrench.com][Ren">http://www.reneefrench.com][Ren</a>ée French]]
+</pre>
+<p>
+iframe:
+</p>
+<p>
+The function &#34;iframe&#34; injects iframes (pages inside pages).
+Its syntax is the same as that of image.
+</p>
+<p>
+html:
+</p>
+<p>
+The function html includes the contents of the specified file as
+unescaped HTML. This is useful for including custom HTML elements
+that cannot be created using only the slide format.
+It is your responsibility to make sure the included HTML is valid and safe.
+</p>
+<pre>.html file.html
+</pre>
+<p>
+Presenter notes:
+</p>
+<p>
+Presenter notes may be enabled by appending the &#34;-notes&#34; flag when you run
+your &#34;present&#34; binary.
+</p>
+<p>
+This will allow you to open a second window by pressing &#39;N&#39; from your browser
+displaying your slides. The second window is completely synced with your main
+window, except that presenter notes are only visible on the second window.
+</p>
+<p>
+Lines that begin with &#34;: &#34; are treated as presenter notes.
+</p>
+<pre>* Title of slide
+
+Some Text
+
+: Presenter notes (first paragraph)
+: Presenter notes (subsequent paragraph(s))
+</pre>
+<p>
+Notes may appear anywhere within the slide text. For example:
+</p>
+<pre>* Title of slide
+
+: Presenter notes (first paragraph)
+
+Some Text
+
+: Presenter notes (subsequent paragraph(s))
+</pre>
+<p>
+This has the same result as the example above.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Register">func Register(name string, parser ParseFunc)</a></dd>
+			
+				
+				<dd><a href="index.html#Style">func Style(s string) template.HTML</a></dd>
+			
+				
+				<dd><a href="index.html#Template">func Template() *template.Template</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Author">type Author</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Author.TextElem">func (p *Author) TextElem() (elems []Elem)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Caption">type Caption</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Caption.TemplateName">func (c Caption) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Code">type Code</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Code.TemplateName">func (c Code) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Context">type Context</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Context.Parse">func (ctx *Context) Parse(r io.Reader, name string, mode ParseMode) (*Doc, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Doc">type Doc</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parse">func Parse(r io.Reader, name string, mode ParseMode) (*Doc, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Doc.Render">func (d *Doc) Render(w io.Writer, t *template.Template) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Elem">type Elem</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HTML">type HTML</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HTML.TemplateName">func (s HTML) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Iframe">type Iframe</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Iframe.TemplateName">func (i Iframe) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Image">type Image</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Image.TemplateName">func (i Image) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Lines">type Lines</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Link">type Link</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Link.TemplateName">func (l Link) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#List">type List</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#List.TemplateName">func (l List) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ParseFunc">type ParseFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ParseMode">type ParseMode</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Section">type Section</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.FormattedNumber">func (s Section) FormattedNumber() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.HTMLAttributes">func (s Section) HTMLAttributes() template.HTMLAttr</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.Level">func (s Section) Level() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.Render">func (s *Section) Render(w io.Writer, t *template.Template) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.Sections">func (s Section) Sections() (sections []Section)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Section.TemplateName">func (s Section) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Text">type Text</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Text.TemplateName">func (t Text) TemplateName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Video">type Video</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Video.TemplateName">func (v Video) TemplateName() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Style">Style</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/args.go">args.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/caption.go">caption.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/code.go">code.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/doc.go">doc.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/html.go">html.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/iframe.go">iframe.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/image.go">image.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/link.go">link.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go">parse.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/style.go">style.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/present/video.go">video.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+NotesEnabled specifies whether presenter notes should be displayed in the
+present user interface.
+</p>
+
+				<pre>var <span id="NotesEnabled">NotesEnabled</span> = <a href="http://localhost:6060/pkg/builtin/#false">false</a></pre>
+			
+				<p>
+PlayEnabled specifies whether runnable playground snippets should be
+displayed in the present user interface.
+</p>
+
+				<pre>var <span id="PlayEnabled">PlayEnabled</span> = <a href="http://localhost:6060/pkg/builtin/#false">false</a></pre>
+			
+		
+		
+			
+			
+			<h2 id="Register">func <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=1469:1513#L50">Register</a>
+				<a class="permalink" href="index.html#Register">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Register(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, parser <a href="index.html#ParseFunc">ParseFunc</a>)</pre>
+			<p>
+Register binds the named action, which does not begin with a period, to the
+specified parser to be invoked when the name, with a period, appears in the
+present input text.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Style">func <a href="http://localhost:6060/src/golang.org/x/tools/present/style.go?s=725:759#L25">Style</a>
+				<a class="permalink" href="index.html#Style">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Style(s <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#HTML">HTML</a></pre>
+			<p>
+Style returns s with HTML entities escaped and font indicators turned into
+HTML font tags.
+</p>
+
+			<div id="example_Style" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">const s = &#34;*Gophers* are _clearly_ &gt; *cats*!&#34;
+fmt.Println(Style(s))
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">&lt;b&gt;Gophers&lt;/b&gt; are &lt;i&gt;clearly&lt;/i&gt; &amp;gt; &lt;b&gt;cats&lt;/b&gt;!
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+
+		
+			
+			
+			<h2 id="Template">func <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=491:525#L20">Template</a>
+				<a class="permalink" href="index.html#Template">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Template() *<a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#Template">Template</a></pre>
+			<p>
+Template returns an empty template with the action functions in its FuncMap.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Author">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=1911:1946#L69">Author</a>
+				<a class="permalink" href="index.html#Author">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Author represents the person who wrote and/or is presenting the document.
+</p>
+
+			<pre>type Author struct {
+<span id="Author.Elem"></span>    Elem []<a href="index.html#Elem">Elem</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Author.TextElem">func (*Author) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=2115:2157#L76">TextElem</a>
+					<a class="permalink" href="index.html#Author.TextElem">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Author">Author</a>) TextElem() (elems []<a href="index.html#Elem">Elem</a>)</pre>
+				<p>
+TextElem returns the first text elements of the author details.
+This is used to display the author&#39; name, job title, and company
+without the contact details.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Caption">type <a href="http://localhost:6060/src/golang.org/x/tools/present/caption.go?s=247:283#L3">Caption</a>
+				<a class="permalink" href="index.html#Caption">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Caption struct {
+<span id="Caption.Text"></span>    Text <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Caption.TemplateName">func (Caption) <a href="http://localhost:6060/src/golang.org/x/tools/present/caption.go?s=285:323#L7">TemplateName</a>
+					<a class="permalink" href="index.html#Caption.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Caption">Caption</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Code">type <a href="http://localhost:6060/src/golang.org/x/tools/present/code.go?s=867:1084#L26">Code</a>
+				<a class="permalink" href="index.html#Code">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Code struct {
+<span id="Code.Text"></span>    Text     <a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#HTML">HTML</a>
+<span id="Code.Play"></span>    Play     <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   <span class="comment">// runnable code</span>
+<span id="Code.Edit"></span>    Edit     <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   <span class="comment">// editable code</span>
+<span id="Code.FileName"></span>    FileName <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// file name</span>
+<span id="Code.Ext"></span>    Ext      <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// file extension</span>
+<span id="Code.Raw"></span>    Raw      []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// content of the file</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Code.TemplateName">func (Code) <a href="http://localhost:6060/src/golang.org/x/tools/present/code.go?s=1086:1121#L35">TemplateName</a>
+					<a class="permalink" href="index.html#Code.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Code">Code</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Context">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=6013:6156#L253">Context</a>
+				<a class="permalink" href="index.html#Context">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Context specifies the supporting context for parsing a presentation.
+</p>
+
+			<pre>type Context struct {
+<span id="Context.ReadFile"></span>    <span class="comment">// ReadFile reads the file named by filename and returns the contents.</span>
+    ReadFile func(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Context.Parse">func (*Context) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=6351:6432#L267">Parse</a>
+					<a class="permalink" href="index.html#Context.Parse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ctx *<a href="index.html#Context">Context</a>) Parse(r <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, mode <a href="index.html#ParseMode">ParseMode</a>) (*<a href="index.html#Doc">Doc</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Parse parses a document from r.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Doc">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=1668:1832#L58">Doc</a>
+				<a class="permalink" href="index.html#Doc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Doc represents an entire document.
+</p>
+
+			<pre>type Doc struct {
+<span id="Doc.Title"></span>    Title      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Doc.Subtitle"></span>    Subtitle   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Doc.Time"></span>    Time       <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Doc.Authors"></span>    Authors    []<a href="index.html#Author">Author</a>
+<span id="Doc.TitleNotes"></span>    TitleNotes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Doc.Sections"></span>    Sections   []<a href="index.html#Section">Section</a>
+<span id="Doc.Tags"></span>    Tags       []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Parse">func <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=7200:7266#L305">Parse</a>
+					<a class="permalink" href="index.html#Parse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Parse(r <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, mode <a href="index.html#ParseMode">ParseMode</a>) (*<a href="index.html#Doc">Doc</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Parse parses a document from r. Parse reads assets used by the presentation
+from the file system using ioutil.ReadFile.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Doc.Render">func (*Doc) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=644:705#L25">Render</a>
+					<a class="permalink" href="index.html#Doc.Render">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Doc">Doc</a>) Render(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, t *<a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#Template">Template</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Render renders the doc to the given writer using the provided template.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Elem">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=3807:3853#L144">Elem</a>
+				<a class="permalink" href="index.html#Elem">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Elem defines the interface for a present element. That is, something that
+can provide the name of the template used to render the element.
+</p>
+
+			<pre>type Elem interface {
+    TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HTML">type <a href="http://localhost:6060/src/golang.org/x/tools/present/html.go?s=472:507#L17">HTML</a>
+				<a class="permalink" href="index.html#HTML">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type HTML struct {
+    <a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#HTML">HTML</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HTML.TemplateName">func (HTML) <a href="http://localhost:6060/src/golang.org/x/tools/present/html.go?s=509:544#L21">TemplateName</a>
+					<a class="permalink" href="index.html#HTML.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#HTML">HTML</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Iframe">type <a href="http://localhost:6060/src/golang.org/x/tools/present/iframe.go?s=257:318#L6">Iframe</a>
+				<a class="permalink" href="index.html#Iframe">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Iframe struct {
+<span id="Iframe.URL"></span>    URL    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Iframe.Width"></span>    Width  <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Iframe.Height"></span>    Height <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Iframe.TemplateName">func (Iframe) <a href="http://localhost:6060/src/golang.org/x/tools/present/iframe.go?s=320:357#L12">TemplateName</a>
+					<a class="permalink" href="index.html#Iframe.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i <a href="index.html#Iframe">Iframe</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Image">type <a href="http://localhost:6060/src/golang.org/x/tools/present/image.go?s=255:315#L6">Image</a>
+				<a class="permalink" href="index.html#Image">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Image struct {
+<span id="Image.URL"></span>    URL    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Image.Width"></span>    Width  <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Image.Height"></span>    Height <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Image.TemplateName">func (Image) <a href="http://localhost:6060/src/golang.org/x/tools/present/image.go?s=317:353#L12">TemplateName</a>
+					<a class="permalink" href="index.html#Image.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i <a href="index.html#Image">Image</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Lines">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=5117:5223#L201">Lines</a>
+				<a class="permalink" href="index.html#Lines">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Lines is a helper for parsing line-based input.
+</p>
+
+			<pre>type Lines struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Link">type <a href="http://localhost:6060/src/golang.org/x/tools/present/link.go?s=271:321#L8">Link</a>
+				<a class="permalink" href="index.html#Link">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Link struct {
+<span id="Link.URL"></span>    URL   *<a href="http://localhost:6060/pkg/net/url/">url</a>.<a href="http://localhost:6060/pkg/net/url/#URL">URL</a>
+<span id="Link.Label"></span>    Label <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Link.TemplateName">func (Link) <a href="http://localhost:6060/src/golang.org/x/tools/present/link.go?s=323:358#L13">TemplateName</a>
+					<a class="permalink" href="index.html#Link.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Link">Link</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="List">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=4972:5009#L194">List</a>
+				<a class="permalink" href="index.html#List">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+List represents a bulleted list.
+</p>
+
+			<pre>type List struct {
+<span id="List.Bullet"></span>    Bullet []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="List.TemplateName">func (List) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=5011:5046#L198">TemplateName</a>
+					<a class="permalink" href="index.html#List.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#List">List</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ParseFunc">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=1188:1286#L45">ParseFunc</a>
+				<a class="permalink" href="index.html#ParseFunc">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ParseFunc func(ctx *<a href="index.html#Context">Context</a>, fileName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, lineNumber <a href="http://localhost:6060/pkg/builtin/#int">int</a>, inputLine <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Elem">Elem</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ParseMode">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=6212:6230#L259">ParseMode</a>
+				<a class="permalink" href="index.html#ParseMode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ParseMode represents flags for the Parse function.
+</p>
+
+			<pre>type ParseMode <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// If set, parse only the title and subtitle.</span>
+    <span id="TitlesOnly">TitlesOnly</span> <a href="index.html#ParseMode">ParseMode</a> = 1
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Section">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=2398:2522#L88">Section</a>
+				<a class="permalink" href="index.html#Section">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Section represents a section of a document (such as a presentation slide)
+comprising a title and a list of elements.
+</p>
+
+			<pre>type Section struct {
+<span id="Section.Number"></span>    Number  []<a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Section.Title"></span>    Title   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Section.Elem"></span>    Elem    []<a href="index.html#Elem">Elem</a>
+<span id="Section.Notes"></span>    Notes   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Section.Classes"></span>    Classes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Section.Styles"></span>    Styles  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Section.FormattedNumber">func (Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=3453:3494#L132">FormattedNumber</a>
+					<a class="permalink" href="index.html#Section.FormattedNumber">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Section">Section</a>) FormattedNumber() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+FormattedNumber returns a string containing the concatenation of the
+numbers identifying a Section.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Section.HTMLAttributes">func (Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=2558:2609#L98">HTMLAttributes</a>
+					<a class="permalink" href="index.html#Section.HTMLAttributes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Section">Section</a>) HTMLAttributes() <a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#HTMLAttr">HTMLAttr</a></pre>
+				<p>
+HTMLAttributes for the section
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Section.Level">func (Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=3287:3315#L126">Level</a>
+					<a class="permalink" href="index.html#Section.Level">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Section">Section</a>) Level() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Level returns the level of the given section.
+The document title is level 1, main section 2, etc.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Section.Render">func (*Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=968:1033#L36">Render</a>
+					<a class="permalink" href="index.html#Section.Render">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Section">Section</a>) Render(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, t *<a href="http://localhost:6060/pkg/html/template/">template</a>.<a href="http://localhost:6060/pkg/html/template/#Template">Template</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Render renders the section to the given writer using the provided template.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Section.Sections">func (Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=3008:3056#L115">Sections</a>
+					<a class="permalink" href="index.html#Section.Sections">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Section">Section</a>) Sections() (sections []<a href="index.html#Section">Section</a>)</pre>
+				<p>
+Sections contained within the section.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Section.TemplateName">func (Section) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=3601:3639#L140">TemplateName</a>
+					<a class="permalink" href="index.html#Section.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Section">Section</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Text">type <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=4831:4879#L186">Text</a>
+				<a class="permalink" href="index.html#Text">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Text represents an optionally preformatted paragraph.
+</p>
+
+			<pre>type Text struct {
+<span id="Text.Lines"></span>    Lines []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Text.Pre"></span>    Pre   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Text.TemplateName">func (Text) <a href="http://localhost:6060/src/golang.org/x/tools/present/parse.go?s=4881:4916#L191">TemplateName</a>
+					<a class="permalink" href="index.html#Text.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#Text">Text</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Video">type <a href="http://localhost:6060/src/golang.org/x/tools/present/video.go?s=255:346#L6">Video</a>
+				<a class="permalink" href="index.html#Video">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Video struct {
+<span id="Video.URL"></span>    URL        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Video.SourceType"></span>    SourceType <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Video.Width"></span>    Width      <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Video.Height"></span>    Height     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Video.TemplateName">func (Video) <a href="http://localhost:6060/src/golang.org/x/tools/present/video.go?s=348:384#L13">TemplateName</a>
+					<a class="permalink" href="index.html#Video.TemplateName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v <a href="index.html#Video">Video</a>) TemplateName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

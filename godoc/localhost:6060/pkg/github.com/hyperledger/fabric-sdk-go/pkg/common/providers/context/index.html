@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>context - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package context
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Channel">type Channel</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelProvider">type ChannelProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientProvider">type ClientProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Local">type Local</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LocalProvider">type LocalProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Providers">type Providers</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go">context.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Channel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=782:873#L22">Channel</a>
+				<a class="permalink" href="index.html#Channel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Channel supplies the configuration for channel context client
+</p>
+
+			<pre>type Channel interface {
+    <a href="index.html#Client">Client</a>
+    ChannelService() <a href="../fab/index.html">fab</a>.<a href="../fab/index.html#ChannelService">ChannelService</a>
+    ChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=1098:1142#L35">ChannelProvider</a>
+				<a class="permalink" href="index.html#ChannelProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelProvider returns channel client context
+</p>
+
+			<pre>type ChannelProvider func() (<a href="index.html#Channel">Channel</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=405:434#L6">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client supplies the configuration and signing identity to client objects.
+</p>
+
+			<pre>type Client <a href="../fab/index.html">fab</a>.<a href="../fab/index.html#ClientContext">ClientContext</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClientProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=916:958#L29">ClientProvider</a>
+				<a class="permalink" href="index.html#ClientProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientProvider returns client context
+</p>
+
+			<pre>type ClientProvider func() (<a href="index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Local">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=637:715#L16">Local</a>
+				<a class="permalink" href="index.html#Local">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Local supplies the configuration for a local context client
+</p>
+
+			<pre>type Local interface {
+    <a href="index.html#Client">Client</a>
+    LocalDiscoveryService() <a href="../fab/index.html">fab</a>.<a href="../fab/index.html#DiscoveryService">DiscoveryService</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LocalProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=1006:1046#L32">LocalProvider</a>
+				<a class="permalink" href="index.html#LocalProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LocalProvider returns local client context
+</p>
+
+			<pre>type LocalProvider func() (<a href="index.html#Local">Local</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Providers">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context/context.go?s=498:572#L9">Providers</a>
+				<a class="permalink" href="index.html#Providers">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Providers represents the SDK configured providers context.
+</p>
+
+			<pre>type Providers interface {
+    <a href="../core/index.html">core</a>.<a href="../core/index.html#Providers">Providers</a>
+    <a href="../msp/index.html">msp</a>.<a href="../msp/index.html#Providers">Providers</a>
+    <a href="../fab/index.html">fab</a>.<a href="../fab/index.html#Providers">Providers</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

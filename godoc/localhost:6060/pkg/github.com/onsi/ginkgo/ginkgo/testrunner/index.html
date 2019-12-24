@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>testrunner - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package testrunner
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/onsi/ginkgo/ginkgo/testrunner"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#RunResult">type RunResult</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FailingRunResult">func FailingRunResult() RunResult</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PassingRunResult">func PassingRunResult() RunResult</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RunResult.Merge">func (r RunResult) Merge(o RunResult) RunResult</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TestRunner">type TestRunner</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(suite testsuite.TestSuite, numCPU int, parallelStream bool, timeout time.Duration, goOpts map[string]interface{}, additionalArgs []string) *TestRunner</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TestRunner.BuildArgs">func (t *TestRunner) BuildArgs(path string) []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TestRunner.CleanUp">func (t *TestRunner) CleanUp()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TestRunner.Compile">func (t *TestRunner) Compile() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TestRunner.CompileTo">func (t *TestRunner) CompileTo(path string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TestRunner.Run">func (t *TestRunner) Run() RunResult</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/build_args.go">build_args.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/log_writer.go">log_writer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/run_result.go">run_result.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go">test_runner.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const <span id="CoverProfileSuffix">CoverProfileSuffix</span> = &#34;.coverprofile&#34;</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="RunResult">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/run_result.go?s=20:99#L1">RunResult</a>
+				<a class="permalink" href="index.html#RunResult">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RunResult struct {
+<span id="RunResult.Passed"></span>    Passed               <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="RunResult.HasProgrammaticFocus"></span>    HasProgrammaticFocus <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="FailingRunResult">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/run_result.go?s=223:256#L5">FailingRunResult</a>
+					<a class="permalink" href="index.html#FailingRunResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func FailingRunResult() <a href="index.html#RunResult">RunResult</a></pre>
+				
+				
+				
+			
+				
+				<h3 id="PassingRunResult">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/run_result.go?s=101:134#L1">PassingRunResult</a>
+					<a class="permalink" href="index.html#PassingRunResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func PassingRunResult() <a href="index.html#RunResult">RunResult</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="RunResult.Merge">func (RunResult) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/run_result.go?s=346:393#L12">Merge</a>
+					<a class="permalink" href="index.html#RunResult.Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#RunResult">RunResult</a>) Merge(o <a href="index.html#RunResult">RunResult</a>) <a href="index.html#RunResult">RunResult</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TestRunner">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=422:722#L14">TestRunner</a>
+				<a class="permalink" href="index.html#TestRunner">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TestRunner struct {
+<span id="TestRunner.Suite"></span>    Suite <a href="../testsuite/index.html">testsuite</a>.<a href="../testsuite/index.html#TestSuite">TestSuite</a>
+
+<span id="TestRunner.CoverageFile"></span>    CoverageFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=724:883#L30">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(suite <a href="../testsuite/index.html">testsuite</a>.<a href="../testsuite/index.html#TestSuite">TestSuite</a>, numCPU <a href="http://localhost:6060/pkg/builtin/#int">int</a>, parallelStream <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, goOpts map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}, additionalArgs []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#TestRunner">TestRunner</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="TestRunner.BuildArgs">func (*TestRunner) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=1507:1559#L56">BuildArgs</a>
+					<a class="permalink" href="index.html#TestRunner.BuildArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TestRunner">TestRunner</a>) BuildArgs(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TestRunner.CleanUp">func (*TestRunner) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=5194:5224#L235">CleanUp</a>
+					<a class="permalink" href="index.html#TestRunner.CleanUp">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TestRunner">TestRunner</a>) CleanUp()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TestRunner.Compile">func (*TestRunner) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=1420:1456#L52">Compile</a>
+					<a class="permalink" href="index.html#TestRunner.Compile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TestRunner">TestRunner</a>) Compile() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TestRunner.CompileTo">func (*TestRunner) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=2791:2840#L122">CompileTo</a>
+					<a class="permalink" href="index.html#TestRunner.CompileTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TestRunner">TestRunner</a>) CompileTo(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TestRunner.Run">func (*TestRunner) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/ginkgo/testrunner/test_runner.go?s=4891:4927#L219">Run</a>
+					<a class="permalink" href="index.html#TestRunner.Run">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TestRunner">TestRunner</a>) Run() <a href="index.html#RunResult">RunResult</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

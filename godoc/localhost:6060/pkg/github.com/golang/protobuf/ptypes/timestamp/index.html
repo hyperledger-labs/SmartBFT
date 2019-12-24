@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>timestamp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package timestamp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/golang/protobuf/ptypes/timestamp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Timestamp">type Timestamp</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.Descriptor">func (*Timestamp) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.GetNanos">func (m *Timestamp) GetNanos() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.GetSeconds">func (m *Timestamp) GetSeconds() int64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.ProtoMessage">func (*Timestamp) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.Reset">func (m *Timestamp) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.String">func (m *Timestamp) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_DiscardUnknown">func (m *Timestamp) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_Marshal">func (m *Timestamp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_Merge">func (m *Timestamp) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_Size">func (m *Timestamp) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_Unmarshal">func (m *Timestamp) XXX_Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Timestamp.XXX_WellKnownType">func (*Timestamp) XXX_WellKnownType() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go">timestamp.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Timestamp">type <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=4296:5008#L93">Timestamp</a>
+				<a class="permalink" href="index.html#Timestamp">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Timestamp represents a point in time independent of any time zone
+or calendar, represented as seconds and fractions of seconds at
+nanosecond resolution in UTC Epoch time. It is encoded using the
+Proleptic Gregorian Calendar which extends the Gregorian calendar
+backwards to year one. It is encoded assuming all minutes are 60
+seconds long, i.e. leap seconds are &#34;smeared&#34; so that no leap second
+table is needed for interpretation. Range is from
+0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.
+By restricting to that range, we ensure that we can convert to
+and from  RFC 3339 date strings.
+See [<a href="https://www.ietf.org/rfc/rfc3339.txt](https://www.ietf.org/rfc/rfc3339.txt)">https://www.ietf.org/rfc/rfc3339.txt](https://www.ietf.org/rfc/rfc3339.txt)</a>.
+</p>
+<p>
+# Examples
+</p>
+<p>
+Example 1: Compute Timestamp from POSIX `time()`.
+</p>
+<pre>Timestamp timestamp;
+timestamp.set_seconds(time(NULL));
+timestamp.set_nanos(0);
+</pre>
+<p>
+Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+</p>
+<pre>struct timeval tv;
+gettimeofday(&amp;tv, NULL);
+
+Timestamp timestamp;
+timestamp.set_seconds(tv.tv_sec);
+timestamp.set_nanos(tv.tv_usec * 1000);
+</pre>
+<p>
+Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+</p>
+<pre>FILETIME ft;
+GetSystemTimeAsFileTime(&amp;ft);
+UINT64 ticks = (((UINT64)ft.dwHighDateTime) &lt;&lt; 32) | ft.dwLowDateTime;
+
+// A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+// is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+Timestamp timestamp;
+timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+</pre>
+<p>
+Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+</p>
+<pre>long millis = System.currentTimeMillis();
+
+Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+    .setNanos((int) ((millis % 1000) * 1000000)).build();
+</pre>
+<p>
+Example 5: Compute Timestamp from current time in Python.
+</p>
+<pre>timestamp = Timestamp()
+timestamp.GetCurrentTime()
+</pre>
+<p>
+# JSON Mapping
+</p>
+<p>
+In JSON format, the Timestamp type is encoded as a string in the
+[RFC 3339](<a href="https://www.ietf.org/rfc/rfc3339.txt">https://www.ietf.org/rfc/rfc3339.txt</a>) format. That is, the
+format is &#34;{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z&#34;
+where {year} is always expressed using four digits while {month}, {day},
+{hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+are optional. The &#34;Z&#34; suffix indicates the timezone (&#34;UTC&#34;); the timezone
+is required. A proto3 JSON serializer should always use UTC (as indicated by
+&#34;Z&#34;) when printing the Timestamp type and a proto3 JSON parser should be
+able to accept both UTC and other timezones (as indicated by an offset).
+</p>
+<p>
+For example, &#34;2017-01-15T01:30:15.01Z&#34; encodes 15.01 seconds past
+01:30 UTC on January 15, 2017.
+</p>
+<p>
+In JavaScript, one can convert a Date object to this format using the
+standard [toISOString()](<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString]">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString]</a>
+method. In Python, a standard `datetime.datetime` object can be converted
+to this format using [`strftime`](<a href="https://docs.python.org/2/library/time.html#time.strftime">https://docs.python.org/2/library/time.html#time.strftime</a>)
+with the time format spec &#39;%Y-%m-%dT%H:%M:%S.%fZ&#39;. Likewise, in Java, one
+can use the Joda Time&#39;s [`ISODateTimeFormat.dateTime()`](
+<a href="http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime--">http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime--</a>
+) to obtain a formatter capable of generating timestamps in this format.
+</p>
+
+			<pre>type Timestamp struct {
+    <span class="comment">// Represents seconds of UTC time since Unix epoch</span>
+    <span class="comment">// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to</span>
+    <span class="comment">// 9999-12-31T23:59:59Z inclusive.</span>
+<span id="Timestamp.Seconds"></span>    Seconds <a href="http://localhost:6060/pkg/builtin/#int64">int64</a> `protobuf:&#34;varint,1,opt,name=seconds,proto3&#34; json:&#34;seconds,omitempty&#34;`
+    <span class="comment">// Non-negative fractions of a second at nanosecond resolution. Negative</span>
+    <span class="comment">// second values with fractions must still have non-negative nanos values</span>
+    <span class="comment">// that count forward in time. Must be from 0 to 999,999,999</span>
+    <span class="comment">// inclusive.</span>
+<span id="Timestamp.Nanos"></span>    Nanos                <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `protobuf:&#34;varint,2,opt,name=nanos,proto3&#34; json:&#34;nanos,omitempty&#34;`
+<span id="Timestamp.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Timestamp.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Timestamp.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Timestamp.Descriptor">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5180:5226#L111">Descriptor</a>
+					<a class="permalink" href="index.html#Timestamp.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Timestamp">Timestamp</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.GetNanos">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=6014:6050#L142">GetNanos</a>
+					<a class="permalink" href="index.html#Timestamp.GetNanos">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) GetNanos() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.GetSeconds">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5923:5961#L135">GetSeconds</a>
+					<a class="permalink" href="index.html#Timestamp.GetSeconds">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) GetSeconds() <a href="http://localhost:6060/pkg/builtin/#int64">int64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.ProtoMessage">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5141:5173#L110">ProtoMessage</a>
+					<a class="permalink" href="index.html#Timestamp.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Timestamp">Timestamp</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.Reset">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5010:5037#L108">Reset</a>
+					<a class="permalink" href="index.html#Timestamp.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.String">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5067:5102#L109">String</a>
+					<a class="permalink" href="index.html#Timestamp.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_DiscardUnknown">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5775:5815#L129">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_Marshal">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5455:5532#L120">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_Merge">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5600:5648#L123">XXX_Merge</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_Size">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5694:5728#L126">XXX_Size</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_Unmarshal">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5351:5400#L117">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Timestamp">Timestamp</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Timestamp.XXX_WellKnownType">func (*Timestamp) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp/timestamp.pb.go?s=5282:5326#L115">XXX_WellKnownType</a>
+					<a class="permalink" href="index.html#Timestamp.XXX_WellKnownType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Timestamp">Timestamp</a>) XXX_WellKnownType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

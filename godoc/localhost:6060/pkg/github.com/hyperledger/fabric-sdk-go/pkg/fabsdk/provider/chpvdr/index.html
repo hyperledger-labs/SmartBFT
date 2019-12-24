@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>chpvdr - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package chpvdr
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ChannelProvider">type ChannelProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(config fab.EndpointConfig, opts ...options.Opt) (*ChannelProvider, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.ChannelService">func (cp *ChannelProvider) ChannelService(ctx fab.ClientContext, channelID string) (fab.ChannelService, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.Close">func (cp *ChannelProvider) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.CloseContext">func (cp *ChannelProvider) CloseContext(ctx fab.ClientContext)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.Initialize">func (cp *ChannelProvider) Initialize(providers context.Providers) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelService">type ChannelService</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.ChannelConfig">func (cs *ChannelService) ChannelConfig() (fab.ChannelCfg, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.Config">func (cs *ChannelService) Config() (fab.ChannelConfig, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.Discovery">func (cs *ChannelService) Discovery() (fab.DiscoveryService, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.EventService">func (cs *ChannelService) EventService(opts ...options.Opt) (fab.EventService, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.Membership">func (cs *ChannelService) Membership() (fab.ChannelMembership, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.Selection">func (cs *ChannelService) Selection() (fab.SelectionService, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelService.Transactor">func (cs *ChannelService) Transactor(reqCtx reqContext.Context) (fab.Transactor, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EventClientRef">type EventClientRef</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEventClientRef">func NewEventClientRef(idleTimeout time.Duration, evtClientProvider eventClientProvider) *EventClientRef</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.Close">func (ref *EventClientRef) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.Closed">func (ref *EventClientRef) Closed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.RegisterBlockEvent">func (ref *EventClientRef) RegisterBlockEvent(filter ...fab.BlockFilter) (fab.Registration, &lt;-chan *fab.BlockEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.RegisterChaincodeEvent">func (ref *EventClientRef) RegisterChaincodeEvent(ccID, eventFilter string) (fab.Registration, &lt;-chan *fab.CCEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.RegisterFilteredBlockEvent">func (ref *EventClientRef) RegisterFilteredBlockEvent() (fab.Registration, &lt;-chan *fab.FilteredBlockEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.RegisterTxStatusEvent">func (ref *EventClientRef) RegisterTxStatusEvent(txID string) (fab.Registration, &lt;-chan *fab.TxStatusEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EventClientRef.Unregister">func (ref *EventClientRef) Unregister(reg fab.Registration)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/cachekey.go">cachekey.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go">chprovider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/contextcache.go">contextcache.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go">eventserviceref.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ChannelProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=861:961#L17">ChannelProvider</a>
+				<a class="permalink" href="index.html#ChannelProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelProvider keeps context across ChannelService instances.
+</p>
+<p>
+TODO: add listener for channel config changes. Upon channel config change,
+underlying channel services need to recreate their channel clients.
+</p>
+
+			<pre>type ChannelProvider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=1015:1097#L23">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(config <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>, opts ...<a href="../../../common/options/index.html">options</a>.<a href="../../../common/options/index.html#Opt">Opt</a>) (*<a href="index.html#ChannelProvider">ChannelProvider</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New creates a ChannelProvider based on a context
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChannelProvider.ChannelService">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=1973:2083#L58">ChannelService</a>
+					<a class="permalink" href="index.html#ChannelProvider.ChannelService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) ChannelService(ctx <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ClientContext">ClientContext</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChannelService">ChannelService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ChannelService creates a ChannelService for an identity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.Close">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=1533:1567#L42">Close</a>
+					<a class="permalink" href="index.html#ChannelProvider.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) Close()</pre>
+				<p>
+Close frees resources and caches.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.CloseContext">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=1662:1724#L47">CloseContext</a>
+					<a class="permalink" href="index.html#ChannelProvider.CloseContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) CloseContext(ctx <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+CloseContext frees resources and caches for the given context.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.Initialize">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=1374:1446#L36">Initialize</a>
+					<a class="permalink" href="index.html#ChannelProvider.Initialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) Initialize(providers <a href="../../../common/providers/context/index.html">context</a>.<a href="../../../common/providers/context/index.html#Providers">Providers</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Initialize sets the provider context
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=2566:2693#L80">ChannelService</a>
+				<a class="permalink" href="index.html#ChannelService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelService provides Channel clients and maintains contexts for them.
+the identity context is used
+</p>
+
+			<pre>type ChannelService struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChannelService.ChannelConfig">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=3369:3434#L104">ChannelConfig</a>
+					<a class="permalink" href="index.html#ChannelService.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) ChannelConfig() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ChannelConfig returns the channel config for this channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.Config">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=2746:2807#L88">Config</a>
+					<a class="permalink" href="index.html#ChannelService.Config">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) Config() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChannelConfig">ChannelConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Config returns the Config for the named channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.Discovery">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=3801:3868#L118">Discovery</a>
+					<a class="permalink" href="index.html#ChannelService.Discovery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) Discovery() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#DiscoveryService">DiscoveryService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Discovery returns a DiscoveryService for the given channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.EventService">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=2890:2975#L93">EventService</a>
+					<a class="permalink" href="index.html#ChannelService.EventService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) EventService(opts ...<a href="../../../common/options/index.html">options</a>.<a href="../../../common/options/index.html#Opt">Opt</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#EventService">EventService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EventService returns the EventService.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.Membership">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=3184:3253#L99">Membership</a>
+					<a class="permalink" href="index.html#ChannelService.Membership">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) Membership() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChannelMembership">ChannelMembership</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Membership returns and caches a channel member identifier
+A membership reference is returned that refreshes with the configured interval
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.Selection">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=3991:4058#L123">Selection</a>
+					<a class="permalink" href="index.html#ChannelService.Selection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) Selection() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#SelectionService">SelectionService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Selection returns a SelectionService for the given channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelService.Transactor">func (*ChannelService) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/chprovider.go?s=3529:3616#L109">Transactor</a>
+					<a class="permalink" href="index.html#ChannelService.Transactor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelService">ChannelService</a>) Transactor(reqCtx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Transactor">Transactor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Transactor returns the transactor
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EventClientRef">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=807:950#L19">EventClientRef</a>
+				<a class="permalink" href="index.html#EventClientRef">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EventClientRef holds a reference to the event client and manages its lifecycle.
+When the idle timeout has been reached then the event client is closed. The next time
+the event client ref is accessed, a new event client is created.
+The EventClientRef implements all of the functions of fab.EventService, so the
+EventClientRef may be used wherever an EventService is required.
+</p>
+
+			<pre>type EventClientRef struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEventClientRef">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=1002:1106#L27">NewEventClientRef</a>
+					<a class="permalink" href="index.html#NewEventClientRef">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEventClientRef(idleTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, evtClientProvider eventClientProvider) *<a href="index.html#EventClientRef">EventClientRef</a></pre>
+				<p>
+NewEventClientRef returns a new EventClientRef
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="EventClientRef.Close">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=1450:1484#L46">Close</a>
+					<a class="permalink" href="index.html#EventClientRef.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) Close()</pre>
+				<p>
+Close immediately closes the connection.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.Closed">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=1688:1728#L57">Closed</a>
+					<a class="permalink" href="index.html#EventClientRef.Closed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) Closed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Closed returns true if the event client is closed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.RegisterBlockEvent">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=1827:1949#L62">RegisterBlockEvent</a>
+					<a class="permalink" href="index.html#EventClientRef.RegisterBlockEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) RegisterBlockEvent(filter ...<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#BlockFilter">BlockFilter</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Registration">Registration</a>, &lt;-chan *<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#BlockEvent">BlockEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RegisterBlockEvent registers for block events.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.RegisterChaincodeEvent">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=2430:2552#L80">RegisterChaincodeEvent</a>
+					<a class="permalink" href="index.html#EventClientRef.RegisterChaincodeEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) RegisterChaincodeEvent(ccID, eventFilter <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Registration">Registration</a>, &lt;-chan *<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#CCEvent">CCEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RegisterChaincodeEvent registers for chaincode events.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.RegisterFilteredBlockEvent">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=2138:2251#L71">RegisterFilteredBlockEvent</a>
+					<a class="permalink" href="index.html#EventClientRef.RegisterFilteredBlockEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) RegisterFilteredBlockEvent() (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Registration">Registration</a>, &lt;-chan *<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#FilteredBlockEvent">FilteredBlockEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RegisterFilteredBlockEvent registers for filtered block events.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.RegisterTxStatusEvent">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=2752:2866#L89">RegisterTxStatusEvent</a>
+					<a class="permalink" href="index.html#EventClientRef.RegisterTxStatusEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) RegisterTxStatusEvent(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Registration">Registration</a>, &lt;-chan *<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TxStatusEvent">TxStatusEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RegisterTxStatusEvent registers for transaction status events.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EventClientRef.Unregister">func (*EventClientRef) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fabsdk/provider/chpvdr/eventserviceref.go?s=3061:3120#L98">Unregister</a>
+					<a class="permalink" href="index.html#EventClientRef.Unregister">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ref *<a href="index.html#EventClientRef">EventClientRef</a>) Unregister(reg <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Registration">Registration</a>)</pre>
+				<p>
+Unregister removes the given registration and closes the event channel.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

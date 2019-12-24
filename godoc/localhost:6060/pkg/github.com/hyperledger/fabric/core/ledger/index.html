@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ledger - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ledger
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#BlockAndPvtData">type BlockAndPvtData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockPvtData">type BlockPvtData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeLifecycleDetails">type ChaincodeLifecycleDetails</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeLifecycleInfo">type ChaincodeLifecycleInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CollConfigNotDefinedError">type CollConfigNotDefinedError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollConfigNotDefinedError.Error">func (e *CollConfigNotDefinedError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CollectionConfigInfo">type CollectionConfigInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CommitOptions">type CommitOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigHistoryRetriever">type ConfigHistoryRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeployedChaincodeInfo">type DeployedChaincodeInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeployedChaincodeInfoProvider">type DeployedChaincodeInfoProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ErrCollectionConfigNotYetAvailable">type ErrCollectionConfigNotYetAvailable</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ErrCollectionConfigNotYetAvailable.Error">func (e *ErrCollectionConfigNotYetAvailable) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HealthCheckRegistry">type HealthCheckRegistry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HistoryQueryExecutor">type HistoryQueryExecutor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Initializer">type Initializer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InvalidCollNameError">type InvalidCollNameError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidCollNameError.Error">func (e *InvalidCollNameError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MembershipInfoProvider">type MembershipInfoProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MissingBlockPvtdataInfo">type MissingBlockPvtdataInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MissingCollectionPvtDataInfo">type MissingCollectionPvtDataInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MissingPvtData">type MissingPvtData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MissingPvtDataInfo">type MissingPvtDataInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MissingPvtDataInfo.Add">func (missingPvtDataInfo MissingPvtDataInfo) Add(blkNum, txNum uint64, ns, coll string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MissingPvtDataTracker">type MissingPvtDataTracker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NotFoundInIndexErr">type NotFoundInIndexErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NotFoundInIndexErr.Error">func (NotFoundInIndexErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerLedger">type PeerLedger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerLedgerProvider">type PeerLedgerProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtCollFilter">type PvtCollFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtNsCollFilter">type PvtNsCollFilter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPvtNsCollFilter">func NewPvtNsCollFilter() PvtNsCollFilter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PvtNsCollFilter.Add">func (filter PvtNsCollFilter) Add(ns string, coll string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PvtNsCollFilter.Has">func (filter PvtNsCollFilter) Has(ns string, coll string) bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PvtdataHashMismatch">type PvtdataHashMismatch</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryExecutor">type QueryExecutor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResultsIterator">type QueryResultsIterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SimpleQueryExecutor">type SimpleQueryExecutor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StateListener">type StateListener</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StateUpdateTrigger">type StateUpdateTrigger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StateUpdates">type StateUpdates</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxMissingPvtDataMap">type TxMissingPvtDataMap</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxMissingPvtDataMap.Add">func (txMissingPvtData TxMissingPvtDataMap) Add(txNum uint64, ns, coll string, isEligible bool)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxPvtData">type TxPvtData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxPvtData.Has">func (pvtdata *TxPvtData) Has(ns string, coll string) bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxPvtDataMap">type TxPvtDataMap</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxSimulationResults">type TxSimulationResults</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSimulationResults.ContainsPvtWrites">func (txSim *TxSimulationResults) ContainsPvtWrites() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSimulationResults.GetPubSimulationBytes">func (txSim *TxSimulationResults) GetPubSimulationBytes() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxSimulationResults.GetPvtSimulationBytes">func (txSim *TxSimulationResults) GetPvtSimulationBytes() ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxSimulator">type TxSimulator</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go">ledger_interface.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="BlockAndPvtData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=16196:16322#L244">BlockAndPvtData</a>
+				<a class="permalink" href="index.html#BlockAndPvtData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockAndPvtData encapsulates the block and a map that contains the tuples &lt;seqInBlock, *TxPvtData&gt;
+The map is expected to contain the entries only for the transactions that has associated pvt data
+</p>
+
+			<pre>type BlockAndPvtData struct {
+<span id="BlockAndPvtData.Block"></span>    Block          *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>
+<span id="BlockAndPvtData.PvtData"></span>    PvtData        <a href="index.html#TxPvtDataMap">TxPvtDataMap</a>
+<span id="BlockAndPvtData.MissingPvtData"></span>    MissingPvtData <a href="index.html#TxMissingPvtDataMap">TxMissingPvtDataMap</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockPvtData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=16378:16448#L251">BlockPvtData</a>
+				<a class="permalink" href="index.html#BlockPvtData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockPvtData contains the private data for a block
+</p>
+
+			<pre>type BlockPvtData struct {
+<span id="BlockPvtData.BlockNum"></span>    BlockNum  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="BlockPvtData.WriteSets"></span>    WriteSets <a href="index.html#TxPvtDataMap">TxPvtDataMap</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeLifecycleDetails">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=25304:25752#L487">ChaincodeLifecycleDetails</a>
+				<a class="permalink" href="index.html#ChaincodeLifecycleDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeLifecycleDetails captures the finer details of chaincode lifecycle event
+</p>
+
+			<pre>type ChaincodeLifecycleDetails struct {
+<span id="ChaincodeLifecycleDetails.Updated"></span>    Updated <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// true, if an existing chaincode is updated (false for newly deployed chaincodes).</span>
+    <span class="comment">// Following attributes are meaningful only if &#39;Updated&#39; is true</span>
+<span id="ChaincodeLifecycleDetails.HashChanged"></span>    HashChanged        <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>     <span class="comment">// true, if the chaincode code package is changed</span>
+<span id="ChaincodeLifecycleDetails.CollectionsUpdated"></span>    CollectionsUpdated []<a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// names of the collections that are either added or updated</span>
+<span id="ChaincodeLifecycleDetails.CollectionsRemoved"></span>    CollectionsRemoved []<a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// names of the collections that are removed</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeLifecycleInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=25020:25217#L480">ChaincodeLifecycleInfo</a>
+				<a class="permalink" href="index.html#ChaincodeLifecycleInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeLifecycleInfo captures the update info of a chaincode
+</p>
+
+			<pre>type ChaincodeLifecycleInfo struct {
+<span id="ChaincodeLifecycleInfo.Name"></span>    Name    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeLifecycleInfo.Deleted"></span>    Deleted <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ChaincodeLifecycleInfo.Details"></span>    Details *<a href="index.html#ChaincodeLifecycleDetails">ChaincodeLifecycleDetails</a> <span class="comment">// Can contain finer details about lifecycle event that can be used for certain optimization</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CollConfigNotDefinedError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23221:23273#L435">CollConfigNotDefinedError</a>
+				<a class="permalink" href="index.html#CollConfigNotDefinedError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CollConfigNotDefinedError is returned whenever an operation
+is requested on a collection whose config has not been defined
+</p>
+
+			<pre>type CollConfigNotDefinedError struct {
+<span id="CollConfigNotDefinedError.Ns"></span>    Ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollConfigNotDefinedError.Error">func (*CollConfigNotDefinedError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23275:23325#L439">Error</a>
+					<a class="permalink" href="index.html#CollConfigNotDefinedError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#CollConfigNotDefinedError">CollConfigNotDefinedError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CollectionConfigInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21761:21876#L391">CollectionConfigInfo</a>
+				<a class="permalink" href="index.html#CollectionConfigInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CollectionConfigInfo encapsulates a collection config for a chaincode and its committing block number
+</p>
+
+			<pre>type CollectionConfigInfo struct {
+<span id="CollectionConfigInfo.CollectionConfig"></span>    CollectionConfig   *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#CollectionConfigPackage">CollectionConfigPackage</a>
+<span id="CollectionConfigInfo.CommittingBlockNum"></span>    CommittingBlockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CommitOptions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=16790:16848#L262">CommitOptions</a>
+				<a class="permalink" href="index.html#CommitOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommitOptions encapsulates options associated with a block commit.
+</p>
+
+			<pre>type CommitOptions struct {
+<span id="CommitOptions.FetchPvtDataFromLedger"></span>    FetchPvtDataFromLedger <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigHistoryRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=20678:20912#L369">ConfigHistoryRetriever</a>
+				<a class="permalink" href="index.html#ConfigHistoryRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigHistoryRetriever allow retrieving history of collection configs
+</p>
+
+			<pre>type ConfigHistoryRetriever interface {
+    CollectionConfigAt(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CollectionConfigInfo">CollectionConfigInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    MostRecentCollectionConfigBelow(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CollectionConfigInfo">CollectionConfigInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeployedChaincodeInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=24778:24952#L472">DeployedChaincodeInfo</a>
+				<a class="permalink" href="index.html#DeployedChaincodeInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeployedChaincodeInfo encapsulates chaincode information from the deployed chaincodes
+</p>
+
+			<pre>type DeployedChaincodeInfo struct {
+<span id="DeployedChaincodeInfo.Name"></span>    Name                <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="DeployedChaincodeInfo.Hash"></span>    Hash                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="DeployedChaincodeInfo.Version"></span>    Version             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="DeployedChaincodeInfo.CollectionConfigPkg"></span>    CollectionConfigPkg *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#CollectionConfigPackage">CollectionConfigPackage</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeployedChaincodeInfoProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=24307:24687#L464">DeployedChaincodeInfoProvider</a>
+				<a class="permalink" href="index.html#DeployedChaincodeInfoProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeployedChaincodeInfoProvider is a dependency that is used by ledger to build collection config history
+LSCC module is expected to provide an implementation fo this dependencys
+</p>
+
+			<pre>type DeployedChaincodeInfoProvider interface {
+    Namespaces() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    UpdatedChaincodes(stateUpdates map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]*<a href="../../protos/ledger/rwset/kvrwset/index.html">kvrwset</a>.<a href="../../protos/ledger/rwset/kvrwset/index.html#KVWrite">KVWrite</a>) ([]*<a href="index.html#ChaincodeLifecycleInfo">ChaincodeLifecycleInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ChaincodeInfo(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>) (*<a href="index.html#DeployedChaincodeInfo">DeployedChaincodeInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CollectionInfo(chaincodeName, collectionName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#StaticCollectionConfig">StaticCollectionConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ErrCollectionConfigNotYetAvailable">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=22721:22829#L417">ErrCollectionConfigNotYetAvailable</a>
+				<a class="permalink" href="index.html#ErrCollectionConfigNotYetAvailable">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ErrCollectionConfigNotYetAvailable is an error which is returned from the function
+ConfigHistoryRetriever.CollectionConfigAt() if the latest block number committed
+is lower than the block number specified in the request.
+</p>
+
+			<pre>type ErrCollectionConfigNotYetAvailable struct {
+<span id="ErrCollectionConfigNotYetAvailable.MaxBlockNumCommitted"></span>    MaxBlockNumCommitted <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="ErrCollectionConfigNotYetAvailable.Msg"></span>    Msg                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ErrCollectionConfigNotYetAvailable.Error">func (*ErrCollectionConfigNotYetAvailable) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=22831:22890#L422">Error</a>
+					<a class="permalink" href="index.html#ErrCollectionConfigNotYetAvailable.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#ErrCollectionConfigNotYetAvailable">ErrCollectionConfigNotYetAvailable</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HealthCheckRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=26554:26646#L507">HealthCheckRegistry</a>
+				<a class="permalink" href="index.html#HealthCheckRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type HealthCheckRegistry interface {
+    RegisterChecker(<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-lib-go/healthz/">healthz</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-lib-go/healthz/#HealthChecker">HealthChecker</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HistoryQueryExecutor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=11567:11878#L167">HistoryQueryExecutor</a>
+				<a class="permalink" href="index.html#HistoryQueryExecutor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HistoryQueryExecutor executes the history queries
+</p>
+
+			<pre>type HistoryQueryExecutor interface {
+    <span class="comment">// GetHistoryForKey retrieves the history of values for a key.</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KeyModification which is defined in protos/ledger/queryresult.</span>
+    GetHistoryForKey(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Initializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=583:871#L13">Initializer</a>
+				<a class="permalink" href="index.html#Initializer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Initializer encapsulates dependencies for PeerLedgerProvider
+</p>
+
+			<pre>type Initializer struct {
+<span id="Initializer.StateListeners"></span>    StateListeners                []<a href="index.html#StateListener">StateListener</a>
+<span id="Initializer.DeployedChaincodeInfoProvider"></span>    DeployedChaincodeInfoProvider <a href="index.html#DeployedChaincodeInfoProvider">DeployedChaincodeInfoProvider</a>
+<span id="Initializer.MembershipInfoProvider"></span>    MembershipInfoProvider        <a href="index.html#MembershipInfoProvider">MembershipInfoProvider</a>
+<span id="Initializer.MetricsProvider"></span>    MetricsProvider               <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>
+<span id="Initializer.HealthCheckRegistry"></span>    HealthCheckRegistry           <a href="index.html#HealthCheckRegistry">HealthCheckRegistry</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InvalidCollNameError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23596:23649#L445">InvalidCollNameError</a>
+				<a class="permalink" href="index.html#InvalidCollNameError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidCollNameError is returned whenever an operation
+is requested on a collection whose name is invalid
+</p>
+
+			<pre>type InvalidCollNameError struct {
+<span id="InvalidCollNameError.Ns"></span>    Ns, Coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidCollNameError.Error">func (*InvalidCollNameError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23651:23696#L449">Error</a>
+					<a class="permalink" href="index.html#InvalidCollNameError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#InvalidCollNameError">InvalidCollNameError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MembershipInfoProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=25951:26176#L497">MembershipInfoProvider</a>
+				<a class="permalink" href="index.html#MembershipInfoProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MembershipInfoProvider is a dependency that is used by ledger to determine whether the current peer is
+a member of a collection. Gossip module is expected to provide the dependency to ledger
+</p>
+
+			<pre>type MembershipInfoProvider interface {
+    <span class="comment">// AmMemberOf checks whether the current peer is a member of the given collection</span>
+    AmMemberOf(channelName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collectionPolicyConfig *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#CollectionPolicyConfig">CollectionPolicyConfig</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MissingBlockPvtdataInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21391:21462#L383">MissingBlockPvtdataInfo</a>
+				<a class="permalink" href="index.html#MissingBlockPvtdataInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingBlockPvtdataInfo is a map of transaction number (within the block) to MissingCollectionPvtDataInfo
+</p>
+
+			<pre>type MissingBlockPvtdataInfo map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="index.html#MissingCollectionPvtDataInfo">MissingCollectionPvtDataInfo</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MissingCollectionPvtDataInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21580:21654#L386">MissingCollectionPvtDataInfo</a>
+				<a class="permalink" href="index.html#MissingCollectionPvtDataInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingCollectionPvtDataInfo includes the name of the chaincode and collection for which private data is missing
+</p>
+
+			<pre>type MissingCollectionPvtDataInfo struct {
+<span id="MissingCollectionPvtDataInfo.Namespace"></span>    Namespace, Collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MissingPvtData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=15774:15859#L232">MissingPvtData</a>
+				<a class="permalink" href="index.html#MissingPvtData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingPvtData contains a namespace and collection for
+which the pvtData is not present. It also denotes
+whether the missing pvtData is eligible (i.e., whether
+the peer is member of the [namespace, collection]
+</p>
+
+			<pre>type MissingPvtData struct {
+<span id="MissingPvtData.Namespace"></span>    Namespace  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MissingPvtData.Collection"></span>    Collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MissingPvtData.IsEligible"></span>    IsEligible <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MissingPvtDataInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21222:21280#L380">MissingPvtDataInfo</a>
+				<a class="permalink" href="index.html#MissingPvtDataInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingPvtDataInfo is a map of block number to MissingBlockPvtdataInfo
+</p>
+
+			<pre>type MissingPvtDataInfo map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]<a href="index.html#MissingBlockPvtdataInfo">MissingBlockPvtdataInfo</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MissingPvtDataInfo.Add">func (MissingPvtDataInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21941:22028#L397">Add</a>
+					<a class="permalink" href="index.html#MissingPvtDataInfo.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (missingPvtDataInfo <a href="index.html#MissingPvtDataInfo">MissingPvtDataInfo</a>) Add(blkNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Add adds a missing data entry to the MissingPvtDataInfo Map
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MissingPvtDataTracker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=21021:21146#L375">MissingPvtDataTracker</a>
+				<a class="permalink" href="index.html#MissingPvtDataTracker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingPvtDataTracker allows getting information about the private data that is not missing on the peer
+</p>
+
+			<pre>type MissingPvtDataTracker interface {
+    GetMissingPvtDataInfoForMostRecentBlocks(maxBlocks <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="index.html#MissingPvtDataInfo">MissingPvtDataInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NotFoundInIndexErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=22979:23009#L427">NotFoundInIndexErr</a>
+				<a class="permalink" href="index.html#NotFoundInIndexErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NotFoundInIndexErr is used to indicate missing entry in the index
+</p>
+
+			<pre>type NotFoundInIndexErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NotFoundInIndexErr.Error">func (NotFoundInIndexErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23011:23051#L429">Error</a>
+					<a class="permalink" href="index.html#NotFoundInIndexErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#NotFoundInIndexErr">NotFoundInIndexErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerLedger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=1771:5628#L40">PeerLedger</a>
+				<a class="permalink" href="index.html#PeerLedger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerLedger differs from the OrdererLedger in that PeerLedger locally maintain a bitmask
+that tells apart valid transactions from invalid ones
+</p>
+
+			<pre>type PeerLedger interface {
+    <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#Ledger">Ledger</a>
+    <span class="comment">// GetTransactionByID retrieves a transaction by id</span>
+    GetTransactionByID(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../protos/peer/index.html">peer</a>.<a href="../../protos/peer/index.html#ProcessedTransaction">ProcessedTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetBlockByHash returns a block given it&#39;s hash</span>
+    GetBlockByHash(blockHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetBlockByTxID returns a block which contains a transaction</span>
+    GetBlockByTxID(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetTxValidationCodeByTxID returns reason code of transaction validation</span>
+    GetTxValidationCodeByTxID(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../protos/peer/index.html">peer</a>.<a href="../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// NewTxSimulator gives handle to a transaction simulator.</span>
+    <span class="comment">// A client can obtain more than one &#39;TxSimulator&#39;s for parallel execution.</span>
+    <span class="comment">// Any snapshoting/synchronization should be performed at the implementation level if required</span>
+    NewTxSimulator(txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#TxSimulator">TxSimulator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// NewQueryExecutor gives handle to a query executor.</span>
+    <span class="comment">// A client can obtain more than one &#39;QueryExecutor&#39;s for parallel execution.</span>
+    <span class="comment">// Any synchronization should be performed at the implementation level if required</span>
+    NewQueryExecutor() (<a href="index.html#QueryExecutor">QueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// NewHistoryQueryExecutor gives handle to a history query executor.</span>
+    <span class="comment">// A client can obtain more than one &#39;HistoryQueryExecutor&#39;s for parallel execution.</span>
+    <span class="comment">// Any synchronization should be performed at the implementation level if required</span>
+    NewHistoryQueryExecutor() (<a href="index.html#HistoryQueryExecutor">HistoryQueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPvtDataAndBlockByNum returns the block and the corresponding pvt data.</span>
+    <span class="comment">// The pvt data is filtered by the list of &#39;ns/collections&#39; supplied</span>
+    <span class="comment">// A nil filter does not filter any results and causes retrieving all the pvt data for the given blockNum</span>
+    GetPvtDataAndBlockByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="index.html#PvtNsCollFilter">PvtNsCollFilter</a>) (*<a href="index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPvtDataByNum returns only the pvt data  corresponding to the given block number</span>
+    <span class="comment">// The pvt data is filtered by the list of &#39;ns/collections&#39; supplied in the filter</span>
+    <span class="comment">// A nil filter does not filter any results and causes retrieving all the pvt data for the given blockNum</span>
+    GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// CommitWithPvtData commits the block and the corresponding pvt data in an atomic operation</span>
+    CommitWithPvtData(blockAndPvtdata *<a href="index.html#BlockAndPvtData">BlockAndPvtData</a>, commitOpts *<a href="index.html#CommitOptions">CommitOptions</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Purge removes private read-writes set generated by endorsers at block height lesser than</span>
+    <span class="comment">// a given maxBlockNumToRetain. In other words, Purge only retains private read-write sets</span>
+    <span class="comment">// that were generated at block height of maxBlockNumToRetain or higher.</span>
+    PurgePrivateData(maxBlockNumToRetain <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// PrivateDataMinBlockNum returns the lowest retained endorsement block height</span>
+    PrivateDataMinBlockNum() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">//Prune prunes the blocks/transactions that satisfy the given policy</span>
+    Prune(policy <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#PrunePolicy">PrunePolicy</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetConfigHistoryRetriever returns the ConfigHistoryRetriever</span>
+    GetConfigHistoryRetriever() (<a href="index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// CommitPvtDataOfOldBlocks commits the private data corresponding to already committed block</span>
+    <span class="comment">// If hashes for some of the private data supplied in this function does not match</span>
+    <span class="comment">// the corresponding hash present in the block, the unmatched private data is not</span>
+    <span class="comment">// committed and instead the mismatch inforation is returned back</span>
+    CommitPvtDataOfOldBlocks(blockPvtData []*<a href="index.html#BlockPvtData">BlockPvtData</a>) ([]*<a href="index.html#PvtdataHashMismatch">PvtdataHashMismatch</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetMissingPvtDataTracker return the MissingPvtDataTracker</span>
+    GetMissingPvtDataTracker() (<a href="index.html#MissingPvtDataTracker">MissingPvtDataTracker</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// DoesPvtDataInfoExist returns true when</span>
+    <span class="comment">// (1) the ledger has pvtdata associated with the given block number (or)</span>
+    <span class="comment">// (2) a few or all pvtdata associated with the given block number is missing but the</span>
+    <span class="comment">//     missing info is recorded in the ledger (or)</span>
+    <span class="comment">// (3) the block is committed and does not contain any pvtData.</span>
+    DoesPvtDataInfoExist(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerLedgerProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=931:1621#L22">PeerLedgerProvider</a>
+				<a class="permalink" href="index.html#PeerLedgerProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerLedgerProvider provides handle to ledger instances
+</p>
+
+			<pre>type PeerLedgerProvider interface {
+    Initialize(initializer *<a href="index.html#Initializer">Initializer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Create creates a new ledger with the given genesis block.</span>
+    <span class="comment">// This function guarantees that the creation of ledger and committing the genesis block would an atomic action</span>
+    <span class="comment">// The chain id retrieved from the genesis block is treated as a ledger id</span>
+    Create(genesisBlock *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>) (<a href="index.html#PeerLedger">PeerLedger</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Open opens an already created ledger</span>
+    Open(ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#PeerLedger">PeerLedger</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Exists tells whether the ledger with given id exists</span>
+    Exists(ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// List lists the ids of the existing ledgers</span>
+    List() ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Close closes the PeerLedgerProvider</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PvtCollFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=16949:16983#L267">PvtCollFilter</a>
+				<a class="permalink" href="index.html#PvtCollFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtCollFilter represents the set of the collection names (as keys of the map with value &#39;true&#39;)
+</p>
+
+			<pre>type PvtCollFilter map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PvtNsCollFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=17051:17096#L270">PvtNsCollFilter</a>
+				<a class="permalink" href="index.html#PvtNsCollFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtNsCollFilter specifies the tuple &lt;namespace, PvtCollFilter&gt;
+</p>
+
+			<pre>type PvtNsCollFilter map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#PvtCollFilter">PvtCollFilter</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPvtNsCollFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=17156:17197#L273">NewPvtNsCollFilter</a>
+					<a class="permalink" href="index.html#NewPvtNsCollFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPvtNsCollFilter() <a href="index.html#PvtNsCollFilter">PvtNsCollFilter</a></pre>
+				<p>
+NewPvtNsCollFilter constructs an empty PvtNsCollFilter
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PvtNsCollFilter.Add">func (PvtNsCollFilter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=17717:17774#L295">Add</a>
+					<a class="permalink" href="index.html#PvtNsCollFilter.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (filter <a href="index.html#PvtNsCollFilter">PvtNsCollFilter</a>) Add(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Add adds a namespace-collection tuple to the filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PvtNsCollFilter.Has">func (PvtNsCollFilter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=17990:18052#L305">Has</a>
+					<a class="permalink" href="index.html#PvtNsCollFilter.Has">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (filter <a href="index.html#PvtNsCollFilter">PvtNsCollFilter</a>) Has(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Has returns true if the filter has the entry for tuple namespace-collection
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PvtdataHashMismatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=23997:24122#L456">PvtdataHashMismatch</a>
+				<a class="permalink" href="index.html#PvtdataHashMismatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtdataHashMismatch is used when the hash of private write-set
+does not match the corresponding hash present in the block
+See function `PeerLedger.CommitPvtData` for the usages
+</p>
+
+			<pre>type PvtdataHashMismatch struct {
+<span id="PvtdataHashMismatch.BlockNum"></span>    BlockNum, TxNum       <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="PvtdataHashMismatch.Namespace"></span>    Namespace, Collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PvtdataHashMismatch.ExpectedHash"></span>    ExpectedHash          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryExecutor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=6919:11512#L114">QueryExecutor</a>
+				<a class="permalink" href="index.html#QueryExecutor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryExecutor executes the queries
+Get* methods are for supporting KV-based data model. ExecuteQuery method is for supporting a rich datamodel and query support
+</p>
+<p>
+ExecuteQuery method in the case of a rich data model is expected to support queries on
+latest state, historical state and on the intersection of state and transactions
+</p>
+
+			<pre>type QueryExecutor interface {
+    <a href="index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>
+    <span class="comment">// GetStateMetadata returns the metadata for given namespace and key</span>
+    GetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateMultipleKeys gets the values for multiple keys in a single call</span>
+    GetStateMultipleKeys(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateRangeScanIteratorWithMetadata returns an iterator that contains all the key-values between given key ranges.</span>
+    <span class="comment">// startKey is included in the results and endKey is excluded. An empty startKey refers to the first available key</span>
+    <span class="comment">// and an empty endKey refers to the last available key. For scanning all the keys, both the startKey and the endKey</span>
+    <span class="comment">// can be supplied as empty strings. However, a full scan should be used judiciously for performance reasons.</span>
+    <span class="comment">// metadata is a map of additional query parameters</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    GetStateRangeScanIteratorWithMetadata(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteQuery executes the given query and returns an iterator that contains results of type specific to the underlying data store.</span>
+    <span class="comment">// Only used for state databases that support query</span>
+    <span class="comment">// For a chaincode, the namespace corresponds to the chaincodeId</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    ExecuteQuery(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteQueryWithMetadata executes the given query and returns an iterator that contains results of type specific to the underlying data store.</span>
+    <span class="comment">// metadata is a map of additional query parameters</span>
+    <span class="comment">// Only used for state databases that support query</span>
+    <span class="comment">// For a chaincode, the namespace corresponds to the chaincodeId</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    ExecuteQueryWithMetadata(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateData gets the value of a private data item identified by a tuple &lt;namespace, collection, key&gt;</span>
+    GetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateDataHash gets the hash of the value of a private data item identified by a tuple &lt;namespace, collection, key&gt;</span>
+    <span class="comment">// Function `GetPrivateData` is only meaningful when it is invoked on a peer that is authorized to have the private data</span>
+    <span class="comment">// for the collection &lt;namespace, collection&gt;. However, the function `GetPrivateDataHash` can be invoked on any peer</span>
+    <span class="comment">// to get the hash of the current value</span>
+    GetPrivateDataHash(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateDataMetadata gets the metadata of a private data item identified by a tuple &lt;namespace, collection, key&gt;</span>
+    GetPrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateDataMetadataByHash gets the metadata of a private data item identified by a tuple &lt;namespace, collection, keyhash&gt;</span>
+    GetPrivateDataMetadataByHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyhash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateDataMultipleKeys gets the values for the multiple private data items in a single call</span>
+    GetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetPrivateDataRangeScanIterator returns an iterator that contains all the key-values between given key ranges.</span>
+    <span class="comment">// startKey is included in the results and endKey is excluded. An empty startKey refers to the first available key</span>
+    <span class="comment">// and an empty endKey refers to the last available key. For scanning all the keys, both the startKey and the endKey</span>
+    <span class="comment">// can be supplied as empty strings. However, a full scan shuold be used judiciously for performance reasons.</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteQuery executes the given query and returns an iterator that contains results of type specific to the underlying data store.</span>
+    <span class="comment">// Only used for state databases that support query</span>
+    <span class="comment">// For a chaincode, the namespace corresponds to the chaincodeId</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    ExecuteQueryOnPrivateData(namespace, collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Done releases resources occupied by the QueryExecutor</span>
+    Done()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResultsIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=15093:15290#L213">QueryResultsIterator</a>
+				<a class="permalink" href="index.html#QueryResultsIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResultsIterator - an iterator for query result set
+</p>
+
+			<pre>type QueryResultsIterator interface {
+    <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>
+    <span class="comment">// GetBookmarkAndClose returns a paging bookmark and releases resources occupied by the iterator</span>
+    GetBookmarkAndClose() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SimpleQueryExecutor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=5682:6573#L98">SimpleQueryExecutor</a>
+				<a class="permalink" href="index.html#SimpleQueryExecutor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SimpleQueryExecutor encapsulates basic functions
+</p>
+
+			<pre>type SimpleQueryExecutor interface {
+    <span class="comment">// GetState gets the value for given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetStateRangeScanIterator returns an iterator that contains all the key-values between given key ranges.</span>
+    <span class="comment">// startKey is included in the results and endKey is excluded. An empty startKey refers to the first available key</span>
+    <span class="comment">// and an empty endKey refers to the last available key. For scanning all the keys, both the startKey and the endKey</span>
+    <span class="comment">// can be supplied as empty strings. However, a full scan should be used judiciously for performance reasons.</span>
+    <span class="comment">// The returned ResultsIterator contains results of type *KV which is defined in protos/ledger/queryresult.</span>
+    GetStateRangeScanIterator(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StateListener">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=19985:20142#L350">StateListener</a>
+				<a class="permalink" href="index.html#StateListener">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateListener allows a custom code for performing additional stuff upon state change
+for a perticular namespace against which the listener is registered.
+This helps to perform custom tasks other than the state updates.
+A ledger implemetation is expected to invoke Function `HandleStateUpdates` once per block and
+the `stateUpdates` parameter passed to the function captures the state changes caused by the block
+for the namespace. The actual data type of stateUpdates depends on the data model enabled.
+For instance, for KV data model, the actual type would be proto message
+`github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset.KVWrite`
+Function `HandleStateUpdates` is expected to be invoked before block is committed and if this
+function returns an error, the ledger implementation is expected to halt block commit operation
+and result in a panic
+</p>
+
+			<pre>type StateListener interface {
+    InterestedInNamespaces() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    HandleStateUpdates(trigger *<a href="index.html#StateUpdateTrigger">StateUpdateTrigger</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    StateCommitDone(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StateUpdateTrigger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=20248:20494#L357">StateUpdateTrigger</a>
+				<a class="permalink" href="index.html#StateUpdateTrigger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateUpdateTrigger encapsulates the information and helper tools that may be used by a StateListener
+</p>
+
+			<pre>type StateUpdateTrigger struct {
+<span id="StateUpdateTrigger.LedgerID"></span>    LedgerID                    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="StateUpdateTrigger.StateUpdates"></span>    StateUpdates                <a href="index.html#StateUpdates">StateUpdates</a>
+<span id="StateUpdateTrigger.CommittingBlockNum"></span>    CommittingBlockNum          <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="StateUpdateTrigger.CommittedStateQueryExecutor"></span>    CommittedStateQueryExecutor <a href="index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>
+<span id="StateUpdateTrigger.PostCommitQueryExecutor"></span>    PostCommitQueryExecutor     <a href="index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StateUpdates">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=20563:20603#L366">StateUpdates</a>
+				<a class="permalink" href="index.html#StateUpdates">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateUpdates is the generic type to represent the state updates
+</p>
+
+			<pre>type StateUpdates map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxMissingPvtDataMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=15938:15991#L240">TxMissingPvtDataMap</a>
+				<a class="permalink" href="index.html#TxMissingPvtDataMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxMissingPvtDataMap is a map from txNum to the list of
+missing pvtData
+</p>
+
+			<pre>type TxMissingPvtDataMap map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="index.html#MissingPvtData">MissingPvtData</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TxMissingPvtDataMap.Add">func (TxMissingPvtDataMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=16521:16616#L257">Add</a>
+					<a class="permalink" href="index.html#TxMissingPvtDataMap.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txMissingPvtData <a href="index.html#TxMissingPvtDataMap">TxMissingPvtDataMap</a>) Add(txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, ns, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>, isEligible <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Add adds a given missing private data in the MissingPrivateDataList
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxPvtData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=15377:15458#L220">TxPvtData</a>
+				<a class="permalink" href="index.html#TxPvtData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxPvtData encapsulates the transaction number and pvt write-set for a transaction
+</p>
+
+			<pre>type TxPvtData struct {
+<span id="TxPvtData.SeqInBlock"></span>    SeqInBlock <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="TxPvtData.WriteSet"></span>    WriteSet   *<a href="../../protos/ledger/rwset/index.html">rwset</a>.<a href="../../protos/ledger/rwset/index.html#TxPvtReadWriteSet">TxPvtReadWriteSet</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TxPvtData.Has">func (*TxPvtData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=17320:17378#L278">Has</a>
+					<a class="permalink" href="index.html#TxPvtData.Has">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pvtdata *<a href="index.html#TxPvtData">TxPvtData</a>) Has(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Has returns true if the pvtdata includes the data for collection &lt;ns,coll&gt;
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxPvtDataMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=15511:15550#L226">TxPvtDataMap</a>
+				<a class="permalink" href="index.html#TxPvtDataMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxPvtDataMap is a map from txNum to the pvtData
+</p>
+
+			<pre>type TxPvtDataMap map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="index.html#TxPvtData">TxPvtData</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxSimulationResults">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=18211:18337#L314">TxSimulationResults</a>
+				<a class="permalink" href="index.html#TxSimulationResults">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxSimulationResults captures the details of the simulation results
+</p>
+
+			<pre>type TxSimulationResults struct {
+<span id="TxSimulationResults.PubSimulationResults"></span>    PubSimulationResults *<a href="../../protos/ledger/rwset/index.html">rwset</a>.<a href="../../protos/ledger/rwset/index.html#TxReadWriteSet">TxReadWriteSet</a>
+<span id="TxSimulationResults.PvtSimulationResults"></span>    PvtSimulationResults *<a href="../../protos/ledger/rwset/index.html">rwset</a>.<a href="../../protos/ledger/rwset/index.html#TxPvtReadWriteSet">TxPvtReadWriteSet</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TxSimulationResults.ContainsPvtWrites">func (*TxSimulationResults) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=18895:18953#L333">ContainsPvtWrites</a>
+					<a class="permalink" href="index.html#TxSimulationResults.ContainsPvtWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txSim *<a href="index.html#TxSimulationResults">TxSimulationResults</a>) ContainsPvtWrites() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ContainsPvtWrites returns true if the simulation results include the private writes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxSimulationResults.GetPubSimulationBytes">func (*TxSimulationResults) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=18417:18490#L320">GetPubSimulationBytes</a>
+					<a class="permalink" href="index.html#TxSimulationResults.GetPubSimulationBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txSim *<a href="index.html#TxSimulationResults">TxSimulationResults</a>) GetPubSimulationBytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPubSimulationBytes returns the serialized bytes of public readwrite set
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxSimulationResults.GetPvtSimulationBytes">func (*TxSimulationResults) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=18625:18698#L325">GetPvtSimulationBytes</a>
+					<a class="permalink" href="index.html#TxSimulationResults.GetPvtSimulationBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txSim *<a href="index.html#TxSimulationResults">TxSimulationResults</a>) GetPvtSimulationBytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtSimulationBytes returns the serialized bytes of private readwrite set
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxSimulator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledger_interface.go?s=12111:15032#L175">TxSimulator</a>
+				<a class="permalink" href="index.html#TxSimulator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxSimulator simulates a transaction on a consistent snapshot of the &#39;as recent state as possible&#39;
+Set* methods are for supporting KV-based data model. ExecuteUpdate method is for supporting a rich datamodel and query support
+</p>
+
+			<pre>type TxSimulator interface {
+    <a href="index.html#QueryExecutor">QueryExecutor</a>
+    <span class="comment">// SetState sets the given value for the given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    SetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// DeleteState deletes the given namespace and key</span>
+    DeleteState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SetMultipleKeys sets the values for multiple keys in a single call</span>
+    SetStateMultipleKeys(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SetStateMetadata sets the metadata associated with an existing key-tuple &lt;namespace, key&gt;</span>
+    SetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// DeleteStateMetadata deletes the metadata (if any) associated with an existing key-tuple &lt;namespace, key&gt;</span>
+    DeleteStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// ExecuteUpdate for supporting rich data model (see comments on QueryExecutor above)</span>
+    ExecuteUpdate(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SetPrivateData sets the given value to a key in the private data state represented by the tuple &lt;namespace, collection, key&gt;</span>
+    SetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SetPrivateDataMultipleKeys sets the values for multiple keys in the private data space in a single call</span>
+    SetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// DeletePrivateData deletes the given tuple &lt;namespace, collection, key&gt; from private data</span>
+    DeletePrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// SetPrivateDataMetadata sets the metadata associated with an existing key-tuple &lt;namespace, collection, key&gt;</span>
+    SetPrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// DeletePrivateDataMetadata deletes the metadata associated with an existing key-tuple &lt;namespace, collection, key&gt;</span>
+    DeletePrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetTxSimulationResults encapsulates the results of the transaction simulation.</span>
+    <span class="comment">// This should contain enough detail for</span>
+    <span class="comment">// - The update in the state that would be caused if the transaction is to be committed</span>
+    <span class="comment">// - The environment in which the transaction is executed so as to be able to decide the validity of the environment</span>
+    <span class="comment">//   (at a later time on a different peer) during committing the transactions</span>
+    <span class="comment">// Different ledger implementation (or configurations of a single implementation) may want to represent the above two pieces</span>
+    <span class="comment">// of information in different way in order to support different data-models or optimize the information representations.</span>
+    <span class="comment">// Returned type &#39;TxSimulationResults&#39; contains the simulation results for both the public data and the private data.</span>
+    <span class="comment">// The public data simulation results are expected to be used as in V1 while the private data simulation results are expected</span>
+    <span class="comment">// to be used by the gossip to disseminate this to the other endorsers (in phase-2 of sidedb)</span>
+    GetTxSimulationResults() (*<a href="index.html#TxSimulationResults">TxSimulationResults</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="cceventmgmt/index.html">cceventmgmt</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="confighistory/index.html">confighistory</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="customtx/index.html">customtx</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="kvledger/index.html">kvledger</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="kvledger/bookkeeping/index.html">bookkeeping</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="kvledger/history/index.html">history</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/history/historydb/index.html">historydb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/history/historydb/historyleveldb/index.html">historyleveldb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 80px;">
+						<a href="kvledger/history/historydb/historyleveldb/fakes/index.html">fakes</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="kvledger/tests/index.html">tests</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="kvledger/txmgmt/index.html">txmgmt</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/privacyenabledstate/index.html">privacyenabledstate</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/pvtstatepurgemgmt/index.html">pvtstatepurgemgmt</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/queryutil/index.html">queryutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/queryutil/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/rwsetutil/index.html">rwsetutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/statedb/index.html">statedb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/statedb/commontests/index.html">commontests</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/statedb/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/statedb/statecouchdb/index.html">statecouchdb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 80px;">
+						<a href="kvledger/txmgmt/statedb/statecouchdb/msgs/index.html">msgs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/statedb/stateleveldb/index.html">stateleveldb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 80px;">
+						<a href="kvledger/txmgmt/statedb/stateleveldb/msgs/index.html">msgs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/storageutil/index.html">storageutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/txmgr/index.html">txmgr</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/txmgr/lockbasedtxmgr/index.html">lockbasedtxmgr</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/validator/index.html">validator</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/validator/statebasedval/index.html">statebasedval</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 60px;">
+						<a href="kvledger/txmgmt/validator/valimpl/index.html">valimpl</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="kvledger/txmgmt/version/index.html">version</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ledgerconfig/index.html">ledgerconfig</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ledgermgmt/index.html">ledgermgmt</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ledgerstorage/index.html">ledgerstorage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="pvtdatapolicy/index.html">pvtdatapolicy</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="pvtdatapolicy/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="pvtdatapolicy/testutil/index.html">testutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="pvtdatastorage/index.html">pvtdatastorage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="testutil/index.html">testutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="util/index.html">util</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="util/couchdb/index.html">couchdb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

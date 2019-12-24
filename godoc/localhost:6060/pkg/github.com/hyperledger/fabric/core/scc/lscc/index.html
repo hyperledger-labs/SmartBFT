@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>lscc - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package lscc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/scc/lscc"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#ChaincodeMismatchErr">type ChaincodeMismatchErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeMismatchErr.Error">func (f ChaincodeMismatchErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CollectionsConfigUpgradesNotAllowed">type CollectionsConfigUpgradesNotAllowed</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionsConfigUpgradesNotAllowed.Error">func (f CollectionsConfigUpgradesNotAllowed) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DeployedCCInfoProvider">type DeployedCCInfoProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeployedCCInfoProvider.ChaincodeInfo">func (p *DeployedCCInfoProvider) ChaincodeInfo(chaincodeName string, qe ledger.SimpleQueryExecutor) (*ledger.DeployedChaincodeInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeployedCCInfoProvider.CollectionInfo">func (p *DeployedCCInfoProvider) CollectionInfo(chaincodeName, collectionName string, qe ledger.SimpleQueryExecutor) (*common.StaticCollectionConfig, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeployedCCInfoProvider.Namespaces">func (p *DeployedCCInfoProvider) Namespaces() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeployedCCInfoProvider.UpdatedChaincodes">func (p *DeployedCCInfoProvider) UpdatedChaincodes(stateUpdates map[string][]*kvrwset.KVWrite) ([]*ledger.ChaincodeLifecycleInfo, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ExistsErr">type ExistsErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExistsErr.Error">func (t ExistsErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FilesystemSupport">type FilesystemSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdenticalVersionErr">type IdenticalVersionErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdenticalVersionErr.Error">func (f IdenticalVersionErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InstantiationPolicyMissing">type InstantiationPolicyMissing</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InstantiationPolicyMissing.Error">func (f InstantiationPolicyMissing) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidArgsLenErr">type InvalidArgsLenErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidArgsLenErr.Error">func (i InvalidArgsLenErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidCCOnFSError">type InvalidCCOnFSError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidCCOnFSError.Error">func (f InvalidCCOnFSError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidChaincodeNameErr">type InvalidChaincodeNameErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidChaincodeNameErr.Error">func (f InvalidChaincodeNameErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidChannelNameErr">type InvalidChannelNameErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidChannelNameErr.Error">func (f InvalidChannelNameErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidDeploymentSpecErr">type InvalidDeploymentSpecErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidDeploymentSpecErr.Error">func (f InvalidDeploymentSpecErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidFunctionErr">type InvalidFunctionErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidFunctionErr.Error">func (f InvalidFunctionErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidStatedbArtifactsErr">type InvalidStatedbArtifactsErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidStatedbArtifactsErr.Error">func (f InvalidStatedbArtifactsErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InvalidVersionErr">type InvalidVersionErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InvalidVersionErr.Error">func (f InvalidVersionErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LifeCycleSysCC">type LifeCycleSysCC</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(sccp sysccprovider.SystemChaincodeProvider, ACLProvider aclmgmt.ACLProvider, platformRegistry *platforms.Registry) *LifeCycleSysCC</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Chaincode">func (lscc *LifeCycleSysCC) Chaincode() shim.Chaincode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.ChaincodeContainerInfo">func (lscc *LifeCycleSysCC) ChaincodeContainerInfo(chaincodeName string, qe ledger.QueryExecutor) (*ccprovider.ChaincodeContainerInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.ChaincodeDefinition">func (lscc *LifeCycleSysCC) ChaincodeDefinition(chaincodeName string, qe ledger.QueryExecutor) (ccprovider.ChaincodeDefinition, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Enabled">func (lscc *LifeCycleSysCC) Enabled() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Init">func (lscc *LifeCycleSysCC) Init(stub shim.ChaincodeStubInterface) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.InitArgs">func (lscc *LifeCycleSysCC) InitArgs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.InvokableCC2CC">func (lscc *LifeCycleSysCC) InvokableCC2CC() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.InvokableExternal">func (lscc *LifeCycleSysCC) InvokableExternal() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Invoke">func (lscc *LifeCycleSysCC) Invoke(stub shim.ChaincodeStubInterface) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Name">func (lscc *LifeCycleSysCC) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LifeCycleSysCC.Path">func (lscc *LifeCycleSysCC) Path() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MarshallErr">type MarshallErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MarshallErr.Error">func (m MarshallErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NotFoundErr">type NotFoundErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NotFoundErr.Error">func (t NotFoundErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PrivateChannelDataNotAvailable">type PrivateChannelDataNotAvailable</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrivateChannelDataNotAvailable.Error">func (f PrivateChannelDataNotAvailable) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TXNotFoundErr">type TXNotFoundErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TXNotFoundErr.Error">func (t TXNotFoundErr) Error() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go">deployedcc_infoprovider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go">errors.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go">lscc.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/support.go">support.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+
+    <span class="comment">// INSTALL install command</span>
+    <span id="INSTALL">INSTALL</span> = &#34;install&#34;
+
+    <span class="comment">// DEPLOY deploy command</span>
+    <span id="DEPLOY">DEPLOY</span> = &#34;deploy&#34;
+
+    <span class="comment">// UPGRADE upgrade chaincode</span>
+    <span id="UPGRADE">UPGRADE</span> = &#34;upgrade&#34;
+
+    <span class="comment">// CCEXISTS get chaincode</span>
+    <span id="CCEXISTS">CCEXISTS</span> = &#34;getid&#34;
+
+    <span class="comment">// CHAINCODEEXISTS get chaincode alias</span>
+    <span id="CHAINCODEEXISTS">CHAINCODEEXISTS</span> = &#34;ChaincodeExists&#34;
+
+    <span class="comment">// GETDEPSPEC get ChaincodeDeploymentSpec</span>
+    <span id="GETDEPSPEC">GETDEPSPEC</span> = &#34;getdepspec&#34;
+
+    <span class="comment">// GETDEPLOYMENTSPEC get ChaincodeDeploymentSpec alias</span>
+    <span id="GETDEPLOYMENTSPEC">GETDEPLOYMENTSPEC</span> = &#34;GetDeploymentSpec&#34;
+
+    <span class="comment">// GETCCDATA get ChaincodeData</span>
+    <span id="GETCCDATA">GETCCDATA</span> = &#34;getccdata&#34;
+
+    <span class="comment">// GETCHAINCODEDATA get ChaincodeData alias</span>
+    <span id="GETCHAINCODEDATA">GETCHAINCODEDATA</span> = &#34;GetChaincodeData&#34;
+
+    <span class="comment">// GETCHAINCODES gets the instantiated chaincodes on a channel</span>
+    <span id="GETCHAINCODES">GETCHAINCODES</span> = &#34;getchaincodes&#34;
+
+    <span class="comment">// GETCHAINCODESALIAS gets the instantiated chaincodes on a channel</span>
+    <span id="GETCHAINCODESALIAS">GETCHAINCODESALIAS</span> = &#34;GetChaincodes&#34;
+
+    <span class="comment">// GETINSTALLEDCHAINCODES gets the installed chaincodes on a peer</span>
+    <span id="GETINSTALLEDCHAINCODES">GETINSTALLEDCHAINCODES</span> = &#34;getinstalledchaincodes&#34;
+
+    <span class="comment">// GETINSTALLEDCHAINCODESALIAS gets the installed chaincodes on a peer</span>
+    <span id="GETINSTALLEDCHAINCODESALIAS">GETINSTALLEDCHAINCODESALIAS</span> = &#34;GetInstalledChaincodes&#34;
+
+    <span class="comment">// GETCOLLECTIONSCONFIG gets the collections config for a chaincode</span>
+    <span id="GETCOLLECTIONSCONFIG">GETCOLLECTIONSCONFIG</span> = &#34;GetCollectionsConfig&#34;
+
+    <span class="comment">// GETCOLLECTIONSCONFIGALIAS gets the collections config for a chaincode</span>
+    <span id="GETCOLLECTIONSCONFIGALIAS">GETCOLLECTIONSCONFIGALIAS</span> = &#34;getcollectionsconfig&#34;
+)</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span id="ChaincodeNameRegExp">ChaincodeNameRegExp</span>    = <a href="http://localhost:6060/pkg/regexp/">regexp</a>.<a href="http://localhost:6060/pkg/regexp/#MustCompile">MustCompile</a>(&#34;^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$&#34;)
+    <span id="ChaincodeVersionRegExp">ChaincodeVersionRegExp</span> = <a href="http://localhost:6060/pkg/regexp/">regexp</a>.<a href="http://localhost:6060/pkg/regexp/#MustCompile">MustCompile</a>(&#34;^[A-Za-z0-9_.+-]+$&#34;)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="ChaincodeMismatchErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2338:2370#L72">ChaincodeMismatchErr</a>
+				<a class="permalink" href="index.html#ChaincodeMismatchErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeMismatchErr chaincode name from two places don&#39;t match
+</p>
+
+			<pre>type ChaincodeMismatchErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChaincodeMismatchErr.Error">func (ChaincodeMismatchErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2372:2416#L74">Error</a>
+					<a class="permalink" href="index.html#ChaincodeMismatchErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#ChaincodeMismatchErr">ChaincodeMismatchErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CollectionsConfigUpgradesNotAllowed">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3435:3482#L107">CollectionsConfigUpgradesNotAllowed</a>
+				<a class="permalink" href="index.html#CollectionsConfigUpgradesNotAllowed">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CollectionsConfigUpgradesNotAllowed when V1_2 capability is not enabled
+</p>
+
+			<pre>type CollectionsConfigUpgradesNotAllowed <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollectionsConfigUpgradesNotAllowed.Error">func (CollectionsConfigUpgradesNotAllowed) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3484:3543#L109">Error</a>
+					<a class="permalink" href="index.html#CollectionsConfigUpgradesNotAllowed.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#CollectionsConfigUpgradesNotAllowed">CollectionsConfigUpgradesNotAllowed</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DeployedCCInfoProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go?s=555:593#L14">DeployedCCInfoProvider</a>
+				<a class="permalink" href="index.html#DeployedCCInfoProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeployedCCInfoProvider implements ineterface ledger.DeployedChaincodeInfoProvider
+</p>
+
+			<pre>type DeployedCCInfoProvider struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DeployedCCInfoProvider.ChaincodeInfo">func (*DeployedCCInfoProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go?s=1941:2079#L51">ChaincodeInfo</a>
+					<a class="permalink" href="index.html#DeployedCCInfoProvider.ChaincodeInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DeployedCCInfoProvider">DeployedCCInfoProvider</a>) ChaincodeInfo(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>) (*<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#DeployedChaincodeInfo">DeployedChaincodeInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ChaincodeInfo implements function in interface ledger.DeployedChaincodeInfoProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeployedCCInfoProvider.CollectionInfo">func (*DeployedCCInfoProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go?s=2819:2975#L73">CollectionInfo</a>
+					<a class="permalink" href="index.html#DeployedCCInfoProvider.CollectionInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DeployedCCInfoProvider">DeployedCCInfoProvider</a>) CollectionInfo(chaincodeName, collectionName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#SimpleQueryExecutor">SimpleQueryExecutor</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#StaticCollectionConfig">StaticCollectionConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CollectionInfo implements function in interface ledger.DeployedChaincodeInfoProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeployedCCInfoProvider.Namespaces">func (*DeployedCCInfoProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go?s=679:733#L18">Namespaces</a>
+					<a class="permalink" href="index.html#DeployedCCInfoProvider.Namespaces">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DeployedCCInfoProvider">DeployedCCInfoProvider</a>) Namespaces() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Namespaces implements function in interface ledger.DeployedChaincodeInfoProvider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeployedCCInfoProvider.UpdatedChaincodes">func (*DeployedCCInfoProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/deployedcc_infoprovider.go?s=862:998#L23">UpdatedChaincodes</a>
+					<a class="permalink" href="index.html#DeployedCCInfoProvider.UpdatedChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DeployedCCInfoProvider">DeployedCCInfoProvider</a>) UpdatedChaincodes(stateUpdates map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]*<a href="../../../protos/ledger/rwset/kvrwset/index.html">kvrwset</a>.<a href="../../../protos/ledger/rwset/kvrwset/index.html#KVWrite">KVWrite</a>) ([]*<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#ChaincodeLifecycleInfo">ChaincodeLifecycleInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+UpdatedChaincodes implements function in interface ledger.DeployedChaincodeInfoProvider
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ExistsErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=927:948#L30">ExistsErr</a>
+				<a class="permalink" href="index.html#ExistsErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ExistsErr chaincode exists error
+</p>
+
+			<pre>type ExistsErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ExistsErr.Error">func (ExistsErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=950:983#L32">Error</a>
+					<a class="permalink" href="index.html#ExistsErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#ExistsErr">ExistsErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FilesystemSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=3197:4289#L91">FilesystemSupport</a>
+				<a class="permalink" href="index.html#FilesystemSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FilesystemSupport contains functions that LSCC requires to execute its tasks
+</p>
+
+			<pre>type FilesystemSupport interface {
+    <span class="comment">// PutChaincodeToLocalStorage stores the supplied chaincode</span>
+    <span class="comment">// package to local storage (i.e. the file system)</span>
+    PutChaincodeToLocalStorage(<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#CCPackage">CCPackage</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetChaincodeFromLocalStorage retrieves the chaincode package</span>
+    <span class="comment">// for the requested chaincode, specified by name and version</span>
+    GetChaincodeFromLocalStorage(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetChaincodesFromLocalStorage returns an array of all chaincode</span>
+    <span class="comment">// data that have previously been persisted to local storage</span>
+    GetChaincodesFromLocalStorage() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeQueryResponse">ChaincodeQueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetInstantiationPolicy returns the instantiation policy for the</span>
+    <span class="comment">// supplied chaincode (or the channel&#39;s default if none was specified)</span>
+    GetInstantiationPolicy(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccpack <a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#CCPackage">CCPackage</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// CheckInstantiationPolicy checks whether the supplied signed proposal</span>
+    <span class="comment">// complies with the supplied instantiation policy</span>
+    CheckInstantiationPolicy(signedProposal *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>, chainName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, instantiationPolicy []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdenticalVersionErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2726:2757#L86">IdenticalVersionErr</a>
+				<a class="permalink" href="index.html#IdenticalVersionErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdenticalVersionErr trying to upgrade to same version of Chaincode
+</p>
+
+			<pre>type IdenticalVersionErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IdenticalVersionErr.Error">func (IdenticalVersionErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2759:2802#L88">Error</a>
+					<a class="permalink" href="index.html#IdenticalVersionErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#IdenticalVersionErr">IdenticalVersionErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InstantiationPolicyMissing">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3225:3263#L100">InstantiationPolicyMissing</a>
+				<a class="permalink" href="index.html#InstantiationPolicyMissing">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstantiationPolicyMissing when no existing instantiation policy is found when upgrading CC
+</p>
+
+			<pre>type InstantiationPolicyMissing <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InstantiationPolicyMissing.Error">func (InstantiationPolicyMissing) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3265:3315#L102">Error</a>
+					<a class="permalink" href="index.html#InstantiationPolicyMissing.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InstantiationPolicyMissing">InstantiationPolicyMissing</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidArgsLenErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=351:377#L9">InvalidArgsLenErr</a>
+				<a class="permalink" href="index.html#InvalidArgsLenErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidArgsLenErr invalid arguments length error
+</p>
+
+			<pre>type InvalidArgsLenErr <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidArgsLenErr.Error">func (InvalidArgsLenErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=379:420#L11">Error</a>
+					<a class="permalink" href="index.html#InvalidArgsLenErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i <a href="index.html#InvalidArgsLenErr">InvalidArgsLenErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidCCOnFSError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2982:3012#L93">InvalidCCOnFSError</a>
+				<a class="permalink" href="index.html#InvalidCCOnFSError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidCCOnFSError error due to mismatch between fingerprint on lscc and installed CC
+</p>
+
+			<pre>type InvalidCCOnFSError <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidCCOnFSError.Error">func (InvalidCCOnFSError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3014:3056#L95">Error</a>
+					<a class="permalink" href="index.html#InvalidCCOnFSError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidCCOnFSError">InvalidCCOnFSError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidChaincodeNameErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1509:1544#L51">InvalidChaincodeNameErr</a>
+				<a class="permalink" href="index.html#InvalidChaincodeNameErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidChaincodeNameErr invalid chaincode name error
+</p>
+
+			<pre>type InvalidChaincodeNameErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidChaincodeNameErr.Error">func (InvalidChaincodeNameErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1546:1593#L53">Error</a>
+					<a class="permalink" href="index.html#InvalidChaincodeNameErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidChaincodeNameErr">InvalidChaincodeNameErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidChannelNameErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1309:1342#L44">InvalidChannelNameErr</a>
+				<a class="permalink" href="index.html#InvalidChannelNameErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidChannelNameErr invalid channel name error
+</p>
+
+			<pre>type InvalidChannelNameErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidChannelNameErr.Error">func (InvalidChannelNameErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1344:1389#L46">Error</a>
+					<a class="permalink" href="index.html#InvalidChannelNameErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidChannelNameErr">InvalidChannelNameErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidDeploymentSpecErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=738:774#L23">InvalidDeploymentSpecErr</a>
+				<a class="permalink" href="index.html#InvalidDeploymentSpecErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidDeploymentSpecErr invalid chaincode deployment spec error
+</p>
+
+			<pre>type InvalidDeploymentSpecErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidDeploymentSpecErr.Error">func (InvalidDeploymentSpecErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=776:824#L25">Error</a>
+					<a class="permalink" href="index.html#InvalidDeploymentSpecErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidDeploymentSpecErr">InvalidDeploymentSpecErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidFunctionErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=157:187#L2">InvalidFunctionErr</a>
+				<a class="permalink" href="index.html#InvalidFunctionErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidFunctionErr invalid function error
+</p>
+
+			<pre>type InvalidFunctionErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidFunctionErr.Error">func (InvalidFunctionErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=189:231#L4">Error</a>
+					<a class="permalink" href="index.html#InvalidFunctionErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidFunctionErr">InvalidFunctionErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidStatedbArtifactsErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2106:2144#L65">InvalidStatedbArtifactsErr</a>
+				<a class="permalink" href="index.html#InvalidStatedbArtifactsErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidStatedbArtifactsErr invalid state database artifacts error
+</p>
+
+			<pre>type InvalidStatedbArtifactsErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidStatedbArtifactsErr.Error">func (InvalidStatedbArtifactsErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2146:2196#L67">Error</a>
+					<a class="permalink" href="index.html#InvalidStatedbArtifactsErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidStatedbArtifactsErr">InvalidStatedbArtifactsErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidVersionErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1804:1833#L58">InvalidVersionErr</a>
+				<a class="permalink" href="index.html#InvalidVersionErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InvalidVersionErr invalid version error
+</p>
+
+			<pre>type InvalidVersionErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidVersionErr.Error">func (InvalidVersionErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1835:1876#L60">Error</a>
+					<a class="permalink" href="index.html#InvalidVersionErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#InvalidVersionErr">InvalidVersionErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LifeCycleSysCC">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=4404:4938#L116">LifeCycleSysCC</a>
+				<a class="permalink" href="index.html#LifeCycleSysCC">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LifeCycleSysCC implements chaincode lifecycle and policies around it
+</p>
+
+			<pre>type LifeCycleSysCC struct {
+    <span class="comment">// aclProvider is responsible for access control evaluation</span>
+<span id="LifeCycleSysCC.ACLProvider"></span>    ACLProvider <a href="../../aclmgmt/index.html">aclmgmt</a>.<a href="../../aclmgmt/index.html#ACLProvider">ACLProvider</a>
+
+<span id="LifeCycleSysCC.SCCProvider"></span>    <span class="comment">// SCCProvider is the interface which is passed into system chaincodes</span>
+    <span class="comment">// to access other parts of the system</span>
+    SCCProvider <a href="../../common/sysccprovider/index.html">sysccprovider</a>.<a href="../../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>
+
+<span id="LifeCycleSysCC.PolicyChecker"></span>    <span class="comment">// PolicyChecker is the interface used to perform</span>
+    <span class="comment">// access control</span>
+    PolicyChecker <a href="../../policy/index.html">policy</a>.<a href="../../policy/index.html#PolicyChecker">PolicyChecker</a>
+
+<span id="LifeCycleSysCC.Support"></span>    <span class="comment">// Support provides the implementation of several</span>
+    <span class="comment">// static functions</span>
+    Support <a href="index.html#FilesystemSupport">FilesystemSupport</a>
+
+<span id="LifeCycleSysCC.PlatformRegistry"></span>    PlatformRegistry *<a href="../../chaincode/platforms/index.html">platforms</a>.<a href="../../chaincode/platforms/index.html#Registry">Registry</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5031:5170#L137">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(sccp <a href="../../common/sysccprovider/index.html">sysccprovider</a>.<a href="../../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>, ACLProvider <a href="../../aclmgmt/index.html">aclmgmt</a>.<a href="../../aclmgmt/index.html#ACLProvider">ACLProvider</a>, platformRegistry *<a href="../../chaincode/platforms/index.html">platforms</a>.<a href="../../chaincode/platforms/index.html#Registry">Registry</a>) *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a></pre>
+				<p>
+New creates a new instance of the LSCC
+Typically there is only one of these per peer
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="LifeCycleSysCC.Chaincode">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5647:5701#L150">Chaincode</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Chaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Chaincode() <a href="../../chaincode/shim/index.html">shim</a>.<a href="../../chaincode/shim/index.html#Chaincode">Chaincode</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.ChaincodeContainerInfo">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5932:6073#L155">ChaincodeContainerInfo</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.ChaincodeContainerInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) ChaincodeContainerInfo(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryExecutor">QueryExecutor</a>) (*<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.ChaincodeDefinition">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=6802:6936#L176">ChaincodeDefinition</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.ChaincodeDefinition">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) ChaincodeDefinition(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.Enabled">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5860:5902#L153">Enabled</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Enabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Enabled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.Init">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=26705:26783#L773">Init</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Init">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Init(stub <a href="../../chaincode/shim/index.html">shim</a>.<a href="../../chaincode/shim/index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Init is mostly useless for SCC
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.InitArgs">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5577:5624#L149">InitArgs</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.InitArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) InitArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.InvokableCC2CC">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5789:5838#L152">InvokableCC2CC</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.InvokableCC2CC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) InvokableCC2CC() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.InvokableExternal">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5718:5770#L151">InvokableExternal</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.InvokableExternal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) InvokableExternal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.Invoke">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=27151:27231#L782">Invoke</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Invoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Invoke(stub <a href="../../chaincode/shim/index.html">shim</a>.<a href="../../chaincode/shim/index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Invoke implements lifecycle functions &#34;deploy&#34;, &#34;start&#34;, &#34;stop&#34;, &#34;upgrade&#34;.
+Deploy&#39;s arguments -  {[]byte(&#34;deploy&#34;), []byte(&lt;chainname&gt;), &lt;unmarshalled pb.ChaincodeDeploymentSpec&gt;}
+</p>
+<p>
+Invoke also implements some query-like functions
+Get chaincode arguments -  {[]byte(&#34;getid&#34;), []byte(&lt;chainname&gt;), []byte(&lt;chaincodename&gt;)}
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.Name">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5392:5433#L147">Name</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LifeCycleSysCC.Path">func (*LifeCycleSysCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/lscc.go?s=5465:5506#L148">Path</a>
+					<a class="permalink" href="index.html#LifeCycleSysCC.Path">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lscc *<a href="index.html#LifeCycleSysCC">LifeCycleSysCC</a>) Path() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MarshallErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2529:2552#L79">MarshallErr</a>
+				<a class="permalink" href="index.html#MarshallErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MarshallErr error marshaling/unmarshalling
+</p>
+
+			<pre>type MarshallErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MarshallErr.Error">func (MarshallErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=2554:2589#L81">Error</a>
+					<a class="permalink" href="index.html#MarshallErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m <a href="index.html#MarshallErr">MarshallErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NotFoundErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1118:1141#L37">NotFoundErr</a>
+				<a class="permalink" href="index.html#NotFoundErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NotFoundErr chaincode not registered with LSCC error
+</p>
+
+			<pre>type NotFoundErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NotFoundErr.Error">func (NotFoundErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=1143:1178#L39">Error</a>
+					<a class="permalink" href="index.html#NotFoundErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#NotFoundErr">NotFoundErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PrivateChannelDataNotAvailable">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3709:3751#L114">PrivateChannelDataNotAvailable</a>
+				<a class="permalink" href="index.html#PrivateChannelDataNotAvailable">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrivateChannelDataNotAvailable when V1_2 or later capability is not enabled
+</p>
+
+			<pre>type PrivateChannelDataNotAvailable <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PrivateChannelDataNotAvailable.Error">func (PrivateChannelDataNotAvailable) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=3753:3807#L116">Error</a>
+					<a class="permalink" href="index.html#PrivateChannelDataNotAvailable.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f <a href="index.html#PrivateChannelDataNotAvailable">PrivateChannelDataNotAvailable</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TXNotFoundErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=541:566#L16">TXNotFoundErr</a>
+				<a class="permalink" href="index.html#TXNotFoundErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TXNotFoundErr transaction not found error
+</p>
+
+			<pre>type TXNotFoundErr <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TXNotFoundErr.Error">func (TXNotFoundErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/scc/lscc/errors.go?s=568:605#L18">Error</a>
+					<a class="permalink" href="index.html#TXNotFoundErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#TXNotFoundErr">TXNotFoundErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>context - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package context
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/context"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#NewRequest">func NewRequest(client context.Client, options ...ReqContextOptions) (reqContext.Context, reqContext.CancelFunc)</a></dd>
+			
+				
+				<dd><a href="index.html#RequestClientContext">func RequestClientContext(ctx reqContext.Context) (context.Client, bool)</a></dd>
+			
+				
+				<dd><a href="index.html#RequestCommManager">func RequestCommManager(ctx reqContext.Context) (fab.CommManager, bool)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Channel">type Channel</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChannel">func NewChannel(clientProvider context.ClientProvider, channelID string) (*Channel, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.ChannelID">func (c *Channel) ChannelID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.ChannelService">func (c *Channel) ChannelService() fab.ChannelService</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.Providers">func (c *Channel) Providers() context.Client</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Local">type Local</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLocal">func NewLocal(clientProvider context.ClientProvider) (*Local, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Local.LocalDiscoveryService">func (c *Local) LocalDiscoveryService() fab.DiscoveryService</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider(params ...SDKContextParams) *Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.ChannelProvider">func (c *Provider) ChannelProvider() fab.ChannelProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.CryptoSuite">func (c *Provider) CryptoSuite() core.CryptoSuite</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.EndpointConfig">func (c *Provider) EndpointConfig() fab.EndpointConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.GetMetrics">func (c *Provider) GetMetrics() *metrics.ClientMetrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.IdentityConfig">func (c *Provider) IdentityConfig() msp.IdentityConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.IdentityManager">func (c *Provider) IdentityManager(orgName string) (msp.IdentityManager, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.InfraProvider">func (c *Provider) InfraProvider() fab.InfraProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.LocalDiscoveryProvider">func (c *Provider) LocalDiscoveryProvider() fab.LocalDiscoveryProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.SigningManager">func (c *Provider) SigningManager() core.SigningManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.UserStore">func (c *Provider) UserStore() msp.UserStore</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ReqContextOptions">type ReqContextOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithParent">func WithParent(context reqContext.Context) ReqContextOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTimeout">func WithTimeout(timeout time.Duration) ReqContextOptions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTimeoutType">func WithTimeoutType(timeoutType fab.TimeoutType) ReqContextOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SDKContextParams">type SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithChannelProvider">func WithChannelProvider(channelProvider fab.ChannelProvider) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithClientMetrics">func WithClientMetrics(cm *metrics.ClientMetrics) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCryptoSuite">func WithCryptoSuite(cryptoSuite core.CryptoSuite) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCryptoSuiteConfig">func WithCryptoSuiteConfig(cryptoSuiteConfig core.CryptoSuiteConfig) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithEndpointConfig">func WithEndpointConfig(endpointConfig fab.EndpointConfig) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithIdentityConfig">func WithIdentityConfig(identityConfig msp.IdentityConfig) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithIdentityManagerProvider">func WithIdentityManagerProvider(provider msp.IdentityManagerProvider) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithInfraProvider">func WithInfraProvider(infraProvider fab.InfraProvider) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithLocalDiscoveryProvider">func WithLocalDiscoveryProvider(discoveryProvider fab.LocalDiscoveryProvider) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithSigningManager">func WithSigningManager(signingManager core.SigningManager) SDKContextParams</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithUserStore">func WithUserStore(userStore msp.UserStore) SDKContextParams</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go">context.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+ReqContextTimeoutOverrides key for grpc context value of timeout overrides
+</p>
+
+				<pre>var <span id="ReqContextTimeoutOverrides">ReqContextTimeoutOverrides</span> = reqContextKey(&#34;timeout-overrides&#34;)</pre>
+			
+		
+		
+			
+			
+			<h2 id="NewRequest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=9388:9500#L314">NewRequest</a>
+				<a class="permalink" href="index.html#NewRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewRequest(client <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Client">Client</a>, options ...<a href="index.html#ReqContextOptions">ReqContextOptions</a>) (<a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#CancelFunc">CancelFunc</a>)</pre>
+			<p>
+NewRequest creates a request-scoped context.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RequestClientContext">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=10755:10827#L351">RequestClientContext</a>
+				<a class="permalink" href="index.html#RequestClientContext">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RequestClientContext(ctx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+RequestClientContext extracts the Client Context from the request-scoped context.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RequestCommManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=10498:10569#L345">RequestCommManager</a>
+				<a class="permalink" href="index.html#RequestCommManager">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RequestCommManager(ctx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#CommManager">CommManager</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+RequestCommManager extracts the CommManager from the request-scoped context.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Channel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=1118:1254#L33">Channel</a>
+				<a class="permalink" href="index.html#Channel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Channel supplies the configuration for channel context client
+</p>
+
+			<pre>type Channel struct {
+    <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Client">Client</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=7454:7544#L250">NewChannel</a>
+					<a class="permalink" href="index.html#NewChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChannel(clientProvider <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#ClientProvider">ClientProvider</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#Channel">Channel</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewChannel creates new channel context client
+Not be used by end developers, fabsdk package use only
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Channel.ChannelID">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=1507:1543#L51">ChannelID</a>
+					<a class="permalink" href="index.html#Channel.ChannelID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Channel">Channel</a>) ChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ChannelID returns channel id
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Channel.ChannelService">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=1392:1445#L46">ChannelService</a>
+					<a class="permalink" href="index.html#Channel.ChannelService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Channel">Channel</a>) ChannelService() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#ChannelService">ChannelService</a></pre>
+				<p>
+ChannelService returns channel service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Channel.Providers">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=1291:1335#L41">Providers</a>
+					<a class="permalink" href="index.html#Channel.Providers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Channel">Channel</a>) Providers() <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Client">Client</a></pre>
+				<p>
+Providers returns core providers
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=591:653#L14">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client supplies the configuration and signing identity to client objects.
+</p>
+
+			<pre>type Client struct {
+    <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Providers">Providers</a>
+    <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Local">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=832:906#L22">Local</a>
+				<a class="permalink" href="index.html#Local">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Local supplies the configuration and signing identity to
+clients that will be invoking the peer outside of a channel
+context using an identity in the peer&#39;s local MSP.
+</p>
+
+			<pre>type Local struct {
+    <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#Client">Client</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLocal">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=6507:6575#L217">NewLocal</a>
+					<a class="permalink" href="index.html#NewLocal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLocal(clientProvider <a href="../common/providers/context/index.html">context</a>.<a href="../common/providers/context/index.html#ClientProvider">ClientProvider</a>) (*<a href="index.html#Local">Local</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewLocal returns a new local context
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Local.LocalDiscoveryService">func (*Local) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=963:1023#L28">LocalDiscoveryService</a>
+					<a class="permalink" href="index.html#Local.LocalDiscoveryService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Local">Local</a>) LocalDiscoveryService() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#DiscoveryService">DiscoveryService</a></pre>
+				<p>
+LocalDiscoveryService returns core discovery service
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=1618:2134#L56">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider implementation of Providers interface
+</p>
+
+			<pre>type Provider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=6127:6181#L202">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider(params ...<a href="index.html#SDKContextParams">SDKContextParams</a>) *<a href="index.html#Provider">Provider</a></pre>
+				<p>
+NewProvider creates new context client provider
+Not be used by end developers, fabsdk package use only
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Provider.ChannelProvider">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3037:3093#L101">ChannelProvider</a>
+					<a class="permalink" href="index.html#Provider.ChannelProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) ChannelProvider() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#ChannelProvider">ChannelProvider</a></pre>
+				<p>
+ChannelProvider provides channel services.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.CryptoSuite">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2186:2235#L71">CryptoSuite</a>
+					<a class="permalink" href="index.html#Provider.CryptoSuite">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) CryptoSuite() <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#CryptoSuite">CryptoSuite</a></pre>
+				<p>
+CryptoSuite returns the BCCSP provider of sdk.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.EndpointConfig">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3320:3374#L111">EndpointConfig</a>
+					<a class="permalink" href="index.html#Provider.EndpointConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) EndpointConfig() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a></pre>
+				<p>
+EndpointConfig returns end point network config
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.GetMetrics">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3458:3512#L116">GetMetrics</a>
+					<a class="permalink" href="index.html#Provider.GetMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) GetMetrics() *<a href="../fabsdk/metrics/index.html">metrics</a>.<a href="../fabsdk/metrics/index.html#ClientMetrics">ClientMetrics</a></pre>
+				<p>
+GetMetrics will return the SDK&#39;s metrics instance
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.IdentityConfig">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2734:2788#L91">IdentityConfig</a>
+					<a class="permalink" href="index.html#Provider.IdentityConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) IdentityConfig() <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a></pre>
+				<p>
+IdentityConfig returns the Identity config
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.IdentityManager">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2324:2402#L76">IdentityManager</a>
+					<a class="permalink" href="index.html#Provider.IdentityManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) IdentityManager(orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityManager">IdentityManager</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+IdentityManager returns identity manager for organization
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.InfraProvider">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3188:3240#L106">InfraProvider</a>
+					<a class="permalink" href="index.html#Provider.InfraProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) InfraProvider() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#InfraProvider">InfraProvider</a></pre>
+				<p>
+InfraProvider provides fabric objects such as peer and user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.LocalDiscoveryProvider">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2882:2952#L96">LocalDiscoveryProvider</a>
+					<a class="permalink" href="index.html#Provider.LocalDiscoveryProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) LocalDiscoveryProvider() <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#LocalDiscoveryProvider">LocalDiscoveryProvider</a></pre>
+				<p>
+LocalDiscoveryProvider returns the local discovery provider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.SigningManager">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2500:2555#L81">SigningManager</a>
+					<a class="permalink" href="index.html#Provider.SigningManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) SigningManager() <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#SigningManager">SigningManager</a></pre>
+				<p>
+SigningManager returns signing manager
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.UserStore">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=2619:2663#L86">UserStore</a>
+					<a class="permalink" href="index.html#Provider.UserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Provider">Provider</a>) UserStore() <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserStore">UserStore</a></pre>
+				<p>
+UserStore returns state store
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ReqContextOptions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=9155:9208#L305">ReqContextOptions</a>
+				<a class="permalink" href="index.html#ReqContextOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReqContextOptions parameter for creating requestContext
+</p>
+
+			<pre>type ReqContextOptions func(opts *requestContextOpts)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithParent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=8957:9018#L298">WithParent</a>
+					<a class="permalink" href="index.html#WithParent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithParent(context <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="index.html#ReqContextOptions">ReqContextOptions</a></pre>
+				<p>
+WithParent sets existing reqContext as a parent ReqContext
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithTimeout">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=8766:8823#L291">WithTimeout</a>
+					<a class="permalink" href="index.html#WithTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTimeout(timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="index.html#ReqContextOptions">ReqContextOptions</a></pre>
+				<p>
+WithTimeout sets timeout time duration to request context
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithTimeoutType">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=8558:8625#L284">WithTimeoutType</a>
+					<a class="permalink" href="index.html#WithTimeoutType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTimeoutType(timeoutType <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#TimeoutType">TimeoutType</a>) <a href="index.html#ReqContextOptions">ReqContextOptions</a></pre>
+				<p>
+WithTimeoutType sets timeout by type defined in config to request context
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="SDKContextParams">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3595:3637#L121">SDKContextParams</a>
+				<a class="permalink" href="index.html#SDKContextParams">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SDKContextParams parameter for creating FabContext
+</p>
+
+			<pre>type SDKContextParams func(opts *<a href="index.html#Provider">Provider</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithChannelProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=5673:5751#L187">WithChannelProvider</a>
+					<a class="permalink" href="index.html#WithChannelProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithChannelProvider(channelProvider <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#ChannelProvider">ChannelProvider</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithChannelProvider sets channelProvider to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithClientMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=5889:5955#L194">WithClientMetrics</a>
+					<a class="permalink" href="index.html#WithClientMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithClientMetrics(cm *<a href="../fabsdk/metrics/index.html">metrics</a>.<a href="../fabsdk/metrics/index.html#ClientMetrics">ClientMetrics</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithClientMetrics sets clientMetrics to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithCryptoSuite">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=4569:4636#L152">WithCryptoSuite</a>
+					<a class="permalink" href="index.html#WithCryptoSuite">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCryptoSuite(cryptoSuite <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithCryptoSuite sets cryptosuite parameter to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithCryptoSuiteConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3712:3797#L124">WithCryptoSuiteConfig</a>
+					<a class="permalink" href="index.html#WithCryptoSuiteConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCryptoSuiteConfig(cryptoSuiteConfig <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#CryptoSuiteConfig">CryptoSuiteConfig</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithCryptoSuiteConfig sets core cryptoSuite config to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithEndpointConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=3954:4029#L131">WithEndpointConfig</a>
+					<a class="permalink" href="index.html#WithEndpointConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithEndpointConfig(endpointConfig <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithEndpointConfig sets fab endpoint network config to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithIdentityConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=4172:4247#L138">WithIdentityConfig</a>
+					<a class="permalink" href="index.html#WithIdentityConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithIdentityConfig(identityConfig <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithIdentityConfig sets msp identity config to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithIdentityManagerProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=5241:5328#L173">WithIdentityManagerProvider</a>
+					<a class="permalink" href="index.html#WithIdentityManagerProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithIdentityManagerProvider(provider <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityManagerProvider">IdentityManagerProvider</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithIdentityManagerProvider sets IdentityManagerProvider maps to context
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithInfraProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=5463:5535#L180">WithInfraProvider</a>
+					<a class="permalink" href="index.html#WithInfraProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithInfraProvider(infraProvider <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#InfraProvider">InfraProvider</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithInfraProvider sets infraProvider maps to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithLocalDiscoveryProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=4770:4864#L159">WithLocalDiscoveryProvider</a>
+					<a class="permalink" href="index.html#WithLocalDiscoveryProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithLocalDiscoveryProvider(discoveryProvider <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#LocalDiscoveryProvider">LocalDiscoveryProvider</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithLocalDiscoveryProvider sets the local discovery provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithSigningManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=5013:5089#L166">WithSigningManager</a>
+					<a class="permalink" href="index.html#WithSigningManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithSigningManager(signingManager <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#SigningManager">SigningManager</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithSigningManager sets signingManager to Context Provider
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithUserStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/context/context.go?s=4377:4437#L145">WithUserStore</a>
+					<a class="permalink" href="index.html#WithUserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithUserStore(userStore <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserStore">UserStore</a>) <a href="index.html#SDKContextParams">SDKContextParams</a></pre>
+				<p>
+WithUserStore sets user store to Context Provider
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

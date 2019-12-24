@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>types - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package types
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/onsi/ginkgo/types"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CodeLocation">type CodeLocation</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodeLocation.String">func (codeLocation CodeLocation) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FlagType">type FlagType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RemoteAfterSuiteData">type RemoteAfterSuiteData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RemoteBeforeSuiteData">type RemoteBeforeSuiteData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RemoteBeforeSuiteData.ToJSON">func (r RemoteBeforeSuiteData) ToJSON() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RemoteBeforeSuiteState">type RemoteBeforeSuiteState</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SetupSummary">type SetupSummary</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SpecComponentType">type SpecComponentType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SpecFailure">type SpecFailure</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SpecMeasurement">type SpecMeasurement</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecMeasurement.PrecisionFmt">func (s SpecMeasurement) PrecisionFmt() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SpecState">type SpecState</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecState.IsFailure">func (state SpecState) IsFailure() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SpecSummary">type SpecSummary</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.Failed">func (s SpecSummary) Failed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.HasFailureState">func (s SpecSummary) HasFailureState() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.Panicked">func (s SpecSummary) Panicked() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.Passed">func (s SpecSummary) Passed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.Pending">func (s SpecSummary) Pending() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.Skipped">func (s SpecSummary) Skipped() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SpecSummary.TimedOut">func (s SpecSummary) TimedOut() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SuiteSummary">type SuiteSummary</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/code_location.go">code_location.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/synchronization.go">synchronization.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go">types.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const <span id="GINKGO_FOCUS_EXIT_CODE">GINKGO_FOCUS_EXIT_CODE</span> = 197</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="CodeLocation">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/code_location.go?s=34:128#L1">CodeLocation</a>
+				<a class="permalink" href="index.html#CodeLocation">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CodeLocation struct {
+<span id="CodeLocation.FileName"></span>    FileName       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CodeLocation.LineNumber"></span>    LineNumber     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="CodeLocation.FullStackTrace"></span>    FullStackTrace <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CodeLocation.String">func (CodeLocation) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/code_location.go?s=130:178#L3">String</a>
+					<a class="permalink" href="index.html#CodeLocation.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (codeLocation <a href="index.html#CodeLocation">CodeLocation</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FlagType">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=3494:3512#L158">FlagType</a>
+				<a class="permalink" href="index.html#FlagType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FlagType <a href="http://localhost:6060/pkg/builtin/#uint">uint</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="FlagTypeNone">FlagTypeNone</span> <a href="index.html#FlagType">FlagType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="FlagTypeFocused">FlagTypeFocused</span>
+    <span id="FlagTypePending">FlagTypePending</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RemoteAfterSuiteData">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/synchronization.go?s=452:501#L18">RemoteAfterSuiteData</a>
+				<a class="permalink" href="index.html#RemoteAfterSuiteData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RemoteAfterSuiteData struct {
+<span id="RemoteAfterSuiteData.CanRun"></span>    CanRun <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RemoteBeforeSuiteData">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/synchronization.go?s=276:357#L8">RemoteBeforeSuiteData</a>
+				<a class="permalink" href="index.html#RemoteBeforeSuiteData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RemoteBeforeSuiteData struct {
+<span id="RemoteBeforeSuiteData.Data"></span>    Data  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="RemoteBeforeSuiteData.State"></span>    State <a href="index.html#RemoteBeforeSuiteState">RemoteBeforeSuiteState</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RemoteBeforeSuiteData.ToJSON">func (RemoteBeforeSuiteData) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/synchronization.go?s=359:405#L13">ToJSON</a>
+					<a class="permalink" href="index.html#RemoteBeforeSuiteData.ToJSON">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#RemoteBeforeSuiteData">RemoteBeforeSuiteData</a>) ToJSON() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RemoteBeforeSuiteState">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/synchronization.go?s=44:75#L1">RemoteBeforeSuiteState</a>
+				<a class="permalink" href="index.html#RemoteBeforeSuiteState">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RemoteBeforeSuiteState <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="RemoteBeforeSuiteStateInvalid">RemoteBeforeSuiteStateInvalid</span> <a href="index.html#RemoteBeforeSuiteState">RemoteBeforeSuiteState</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+
+    <span id="RemoteBeforeSuiteStatePending">RemoteBeforeSuiteStatePending</span>
+    <span id="RemoteBeforeSuiteStatePassed">RemoteBeforeSuiteStatePassed</span>
+    <span id="RemoteBeforeSuiteStateFailed">RemoteBeforeSuiteStateFailed</span>
+    <span id="RemoteBeforeSuiteStateDisappeared">RemoteBeforeSuiteStateDisappeared</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SetupSummary">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1974:2174#L74">SetupSummary</a>
+				<a class="permalink" href="index.html#SetupSummary">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SetupSummary struct {
+<span id="SetupSummary.ComponentType"></span>    ComponentType <a href="index.html#SpecComponentType">SpecComponentType</a>
+<span id="SetupSummary.CodeLocation"></span>    CodeLocation  <a href="index.html#CodeLocation">CodeLocation</a>
+
+<span id="SetupSummary.State"></span>    State   <a href="index.html#SpecState">SpecState</a>
+<span id="SetupSummary.RunTime"></span>    RunTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="SetupSummary.Failure"></span>    Failure <a href="index.html#SpecFailure">SpecFailure</a>
+
+<span id="SetupSummary.CapturedOutput"></span>    CapturedOutput <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SetupSummary.SuiteID"></span>    SuiteID        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SpecComponentType">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=3146:3173#L142">SpecComponentType</a>
+				<a class="permalink" href="index.html#SpecComponentType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SpecComponentType <a href="http://localhost:6060/pkg/builtin/#uint">uint</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="SpecComponentTypeInvalid">SpecComponentTypeInvalid</span> <a href="index.html#SpecComponentType">SpecComponentType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+
+    <span id="SpecComponentTypeContainer">SpecComponentTypeContainer</span>
+    <span id="SpecComponentTypeBeforeSuite">SpecComponentTypeBeforeSuite</span>
+    <span id="SpecComponentTypeAfterSuite">SpecComponentTypeAfterSuite</span>
+    <span id="SpecComponentTypeBeforeEach">SpecComponentTypeBeforeEach</span>
+    <span id="SpecComponentTypeJustBeforeEach">SpecComponentTypeJustBeforeEach</span>
+    <span id="SpecComponentTypeJustAfterEach">SpecComponentTypeJustAfterEach</span>
+    <span id="SpecComponentTypeAfterEach">SpecComponentTypeAfterEach</span>
+    <span id="SpecComponentTypeIt">SpecComponentTypeIt</span>
+    <span id="SpecComponentTypeMeasure">SpecComponentTypeMeasure</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SpecFailure">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=2176:2383#L86">SpecFailure</a>
+				<a class="permalink" href="index.html#SpecFailure">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SpecFailure struct {
+<span id="SpecFailure.Message"></span>    Message        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecFailure.Location"></span>    Location       <a href="index.html#CodeLocation">CodeLocation</a>
+<span id="SpecFailure.ForwardedPanic"></span>    ForwardedPanic <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="SpecFailure.ComponentIndex"></span>    ComponentIndex        <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SpecFailure.ComponentType"></span>    ComponentType         <a href="index.html#SpecComponentType">SpecComponentType</a>
+<span id="SpecFailure.ComponentCodeLocation"></span>    ComponentCodeLocation <a href="index.html#CodeLocation">CodeLocation</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SpecMeasurement">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=2385:2677#L96">SpecMeasurement</a>
+				<a class="permalink" href="index.html#SpecMeasurement">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SpecMeasurement struct {
+<span id="SpecMeasurement.Name"></span>    Name  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecMeasurement.Info"></span>    Info  interface{}
+<span id="SpecMeasurement.Order"></span>    Order <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+<span id="SpecMeasurement.Results"></span>    Results []<a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+
+<span id="SpecMeasurement.Smallest"></span>    Smallest     <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+<span id="SpecMeasurement.Largest"></span>    Largest      <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+<span id="SpecMeasurement.Average"></span>    Average      <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+<span id="SpecMeasurement.StdDeviation"></span>    StdDeviation <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+
+<span id="SpecMeasurement.SmallestLabel"></span>    SmallestLabel <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecMeasurement.LargestLabel"></span>    LargestLabel  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecMeasurement.AverageLabel"></span>    AverageLabel  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecMeasurement.Units"></span>    Units         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecMeasurement.Precision"></span>    Precision     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SpecMeasurement.PrecisionFmt">func (SpecMeasurement) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=2679:2725#L115">PrecisionFmt</a>
+					<a class="permalink" href="index.html#SpecMeasurement.PrecisionFmt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecMeasurement">SpecMeasurement</a>) PrecisionFmt() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SpecState">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=2832:2851#L125">SpecState</a>
+				<a class="permalink" href="index.html#SpecState">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SpecState <a href="http://localhost:6060/pkg/builtin/#uint">uint</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="SpecStateInvalid">SpecStateInvalid</span> <a href="index.html#SpecState">SpecState</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+
+    <span id="SpecStatePending">SpecStatePending</span>
+    <span id="SpecStateSkipped">SpecStateSkipped</span>
+    <span id="SpecStatePassed">SpecStatePassed</span>
+    <span id="SpecStateFailed">SpecStateFailed</span>
+    <span id="SpecStatePanicked">SpecStatePanicked</span>
+    <span id="SpecStateTimedOut">SpecStateTimedOut</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SpecState.IsFailure">func (SpecState) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=3008:3047#L138">IsFailure</a>
+					<a class="permalink" href="index.html#SpecState.IsFailure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (state <a href="index.html#SpecState">SpecState</a>) IsFailure() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SpecSummary">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1111:1433#L31">SpecSummary</a>
+				<a class="permalink" href="index.html#SpecSummary">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SpecSummary struct {
+<span id="SpecSummary.ComponentTexts"></span>    ComponentTexts         []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecSummary.ComponentCodeLocations"></span>    ComponentCodeLocations []<a href="index.html#CodeLocation">CodeLocation</a>
+
+<span id="SpecSummary.State"></span>    State           <a href="index.html#SpecState">SpecState</a>
+<span id="SpecSummary.RunTime"></span>    RunTime         <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="SpecSummary.Failure"></span>    Failure         <a href="index.html#SpecFailure">SpecFailure</a>
+<span id="SpecSummary.IsMeasurement"></span>    IsMeasurement   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="SpecSummary.NumberOfSamples"></span>    NumberOfSamples <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SpecSummary.Measurements"></span>    Measurements    map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#SpecMeasurement">SpecMeasurement</a>
+
+<span id="SpecSummary.CapturedOutput"></span>    CapturedOutput <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SpecSummary.SuiteID"></span>    SuiteID        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SpecSummary.Failed">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1670:1704#L58">Failed</a>
+					<a class="permalink" href="index.html#SpecSummary.Failed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) Failed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.HasFailureState">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1435:1478#L46">HasFailureState</a>
+					<a class="permalink" href="index.html#SpecSummary.HasFailureState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) HasFailureState() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.Panicked">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1591:1627#L54">Panicked</a>
+					<a class="permalink" href="index.html#SpecSummary.Panicked">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) Panicked() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.Passed">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1745:1779#L62">Passed</a>
+					<a class="permalink" href="index.html#SpecSummary.Passed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) Passed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.Pending">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1897:1932#L70">Pending</a>
+					<a class="permalink" href="index.html#SpecSummary.Pending">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) Pending() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.Skipped">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1820:1855#L66">Skipped</a>
+					<a class="permalink" href="index.html#SpecSummary.Skipped">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) Skipped() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SpecSummary.TimedOut">func (SpecSummary) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=1512:1548#L50">TimedOut</a>
+					<a class="permalink" href="index.html#SpecSummary.TimedOut">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#SpecSummary">SpecSummary</a>) TimedOut() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SuiteSummary">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/types/types.go?s=576:1109#L13">SuiteSummary</a>
+				<a class="permalink" href="index.html#SuiteSummary">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SuiteSummary represents the a summary of the test suite and is passed to both
+Reporter.SpecSuiteWillBegin
+Reporter.SpecSuiteDidEnd
+</p>
+<p>
+this is unfortunate as these two methods should receive different objects.  When running in parallel
+each node does not deterministically know how many specs it will end up running.
+</p>
+<p>
+Unfortunately making such a change would break backward compatibility.
+</p>
+<p>
+Until Ginkgo 2.0 comes out we will continue to reuse this struct but populate unkown fields
+with -1.
+</p>
+
+			<pre>type SuiteSummary struct {
+<span id="SuiteSummary.SuiteDescription"></span>    SuiteDescription <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SuiteSummary.SuiteSucceeded"></span>    SuiteSucceeded   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="SuiteSummary.SuiteID"></span>    SuiteID          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="SuiteSummary.NumberOfSpecsBeforeParallelization"></span>    NumberOfSpecsBeforeParallelization <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfTotalSpecs"></span>    NumberOfTotalSpecs                 <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfSpecsThatWillBeRun"></span>    NumberOfSpecsThatWillBeRun         <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfPendingSpecs"></span>    NumberOfPendingSpecs               <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfSkippedSpecs"></span>    NumberOfSkippedSpecs               <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfPassedSpecs"></span>    NumberOfPassedSpecs                <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.NumberOfFailedSpecs"></span>    NumberOfFailedSpecs                <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// Flaked specs are those that failed initially, but then passed on a</span>
+    <span class="comment">// subsequent try.</span>
+<span id="SuiteSummary.NumberOfFlakedSpecs"></span>    NumberOfFlakedSpecs <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="SuiteSummary.RunTime"></span>    RunTime             <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

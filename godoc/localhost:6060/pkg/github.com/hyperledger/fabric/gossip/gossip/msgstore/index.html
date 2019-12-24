@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msgstore - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msgstore
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/gossip/msgstore"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#Noop">func Noop(_ interface{})</a></dd>
+			
+			
+				
+				<dd><a href="index.html#MessageStore">type MessageStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMessageStore">func NewMessageStore(pol common.MessageReplacingPolicy, trigger invalidationTrigger) MessageStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMessageStoreExpirable">func NewMessageStoreExpirable(pol common.MessageReplacingPolicy, trigger invalidationTrigger, msgTTL time.Duration, externalLock func(), externalUnlock func(), externalExpire func(interface{})) MessageStore</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/msgstore/msgs.go">msgs.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="Noop">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/msgstore/msgs.go?s=252:276#L9">Noop</a>
+				<a class="permalink" href="index.html#Noop">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Noop(_ interface{})</pre>
+			<p>
+Noop is a function that doesn&#39;t do anything
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="MessageStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/msgstore/msgs.go?s=2450:3056#L68">MessageStore</a>
+				<a class="permalink" href="index.html#MessageStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MessageStore adds messages to an internal buffer.
+When a message is received, it might:
+</p>
+<pre>- Be added to the buffer
+- Discarded because of some message already in the buffer (invalidated)
+- Make a message already in the buffer to be discarded (invalidates)
+</pre>
+<p>
+When a message is invalidated, the invalidationTrigger is invoked on that message.
+</p>
+
+			<pre>type MessageStore interface {
+    <span class="comment">// add adds a message to the store</span>
+    <span class="comment">// returns true or false whether the message was added to the store</span>
+    Add(msg interface{}) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Checks if message is valid for insertion to store</span>
+    <span class="comment">// returns true or false whether the message can be added to the store</span>
+    CheckValid(msg interface{}) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// size returns the amount of messages in the store</span>
+    Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// get returns all messages in the store</span>
+    Get() []interface{}
+
+    <span class="comment">// Stop all associated go routines</span>
+    Stop()
+
+    <span class="comment">// Purge purges all messages that are accepted by</span>
+    <span class="comment">// the given predicate</span>
+    Purge(func(interface{}) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMessageStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/msgstore/msgs.go?s=738:835#L20">NewMessageStore</a>
+					<a class="permalink" href="index.html#NewMessageStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMessageStore(pol <a href="../../common/index.html">common</a>.<a href="../../common/index.html#MessageReplacingPolicy">MessageReplacingPolicy</a>, trigger invalidationTrigger) <a href="index.html#MessageStore">MessageStore</a></pre>
+				<p>
+NewMessageStore returns a new MessageStore with the message replacing
+policy and invalidation trigger passed.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewMessageStoreExpirable">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/msgstore/msgs.go?s=1192:1398#L27">NewMessageStoreExpirable</a>
+					<a class="permalink" href="index.html#NewMessageStoreExpirable">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMessageStoreExpirable(pol <a href="../../common/index.html">common</a>.<a href="../../common/index.html#MessageReplacingPolicy">MessageReplacingPolicy</a>, trigger invalidationTrigger, msgTTL <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, externalLock func(), externalUnlock func(), externalExpire func(interface{})) <a href="index.html#MessageStore">MessageStore</a></pre>
+				<p>
+NewMessageStoreExpirable returns a new MessageStore with the message replacing
+policy and invalidation trigger passed. It supports old message expiration after msgTTL, during expiration first external
+lock taken, expiration callback invoked and external lock released. Callback and external lock can be nil.
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

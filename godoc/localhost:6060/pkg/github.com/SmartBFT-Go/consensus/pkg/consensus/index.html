@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>consensus - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package consensus
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/SmartBFT-Go/consensus/pkg/consensus"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Configuration">type Configuration</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Configuration.Validate">func (c Configuration) Validate() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Consensus">type Consensus</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.Complain">func (c *Consensus) Complain(viewNum uint64, stopView bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.Deliver">func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.HandleMessage">func (c *Consensus) HandleMessage(sender uint64, m *protos.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.HandleRequest">func (c *Consensus) HandleRequest(sender uint64, req []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.Start">func (c *Consensus) Start() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.Stop">func (c *Consensus) Stop()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.SubmitRequest">func (c *Consensus) SubmitRequest(req []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consensus.ValidateConfiguration">func (c *Consensus) ValidateConfiguration() error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go">consensus.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or &#34;Region&#34;), but
+possibly on different availability zones within the geography. It is assumed that the typical latency between nodes,
+and between clients to nodes, is approximately 10ms.
+Set the SelfID.
+</p>
+
+				<pre>var <span id="DefaultConfig">DefaultConfig</span> = <a href="index.html#Configuration">Configuration</a>{
+    <a href="index.html#Configuration.RequestBatchMaxCount">RequestBatchMaxCount</a>:      100,
+    <a href="index.html#Configuration.RequestBatchMaxBytes">RequestBatchMaxBytes</a>:      10 * 1024 * 1024,
+    <a href="index.html#Configuration.RequestBatchMaxInterval">RequestBatchMaxInterval</a>:   50 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>,
+    <a href="index.html#Configuration.IncomingMessageBufferSize">IncomingMessageBufferSize</a>: 200,
+    <a href="index.html#Configuration.RequestPoolSize">RequestPoolSize</a>:           400,
+    <a href="index.html#Configuration.RequestForwardTimeout">RequestForwardTimeout</a>:     2 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+    <a href="index.html#Configuration.RequestComplainTimeout">RequestComplainTimeout</a>:    20 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+    <a href="index.html#Configuration.RequestAutoRemoveTimeout">RequestAutoRemoveTimeout</a>:  3 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>,
+    <a href="index.html#Configuration.ViewChangeResendInterval">ViewChangeResendInterval</a>:  5 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+    <a href="index.html#Configuration.ViewChangeTimeout">ViewChangeTimeout</a>:         20 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+    <a href="index.html#Configuration.LeaderHeartbeatTimeout">LeaderHeartbeatTimeout</a>:    <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>,
+    <a href="index.html#Configuration.LeaderHeartbeatCount">LeaderHeartbeatCount</a>:      10,
+    <a href="index.html#Configuration.CollectTimeout">CollectTimeout</a>:            <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+    <a href="index.html#Configuration.SyncOnStart">SyncOnStart</a>:               <a href="http://localhost:6060/pkg/builtin/#false">false</a>,
+    <a href="index.html#Configuration.SpeedUpViewChange">SpeedUpViewChange</a>:         <a href="http://localhost:6060/pkg/builtin/#false">false</a>,
+}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Configuration">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/config.go?s=247:3592#L5">Configuration</a>
+				<a class="permalink" href="index.html#Configuration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Configuration defines the parameters needed in order to create an instance of Consensus.
+</p>
+
+			<pre>type Configuration struct {
+<span id="Configuration.SelfID"></span>    <span class="comment">// SelfID is the identifier of the node.</span>
+    SelfID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="Configuration.RequestBatchMaxCount"></span>    <span class="comment">// RequestBatchMaxCount is the maximal number of requests in a batch.</span>
+    <span class="comment">// A request batch that reaches this count is proposed immediately.</span>
+    RequestBatchMaxCount <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Configuration.RequestBatchMaxBytes"></span>    <span class="comment">// RequestBatchMaxBytes is the maximal total size of requests in a batch, in bytes.</span>
+    <span class="comment">// This is also the maximal size of a request. A request batch that reaches this size is proposed immediately.</span>
+    RequestBatchMaxBytes <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Configuration.RequestBatchMaxInterval"></span>    <span class="comment">// RequestBatchMaxInterval is the maximal time interval a request batch is waiting before it is proposed.</span>
+    <span class="comment">// A request batch is accumulating requests until RequestBatchMaxInterval had elapsed from the time the batch was</span>
+    <span class="comment">// first created (i.e. the time the first request was added to it), or until it is of count RequestBatchMaxCount,</span>
+    <span class="comment">// or total size RequestBatchMaxBytes, which ever happens first.</span>
+    RequestBatchMaxInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+
+<span id="Configuration.IncomingMessageBufferSize"></span>    <span class="comment">// IncomingMessageBufferSize is the size of the buffer holding incoming messages before they are processed.</span>
+    IncomingMessageBufferSize <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Configuration.RequestPoolSize"></span>    <span class="comment">// RequestPoolSize is the number of pending requests retained by the node.</span>
+    <span class="comment">// The RequestPoolSize is recommended to be at least double (x2) the RequestBatchMaxCount.</span>
+    RequestPoolSize <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="Configuration.RequestForwardTimeout"></span>    <span class="comment">// RequestForwardTimeout is started from the moment a request is submitted, and defines the interval after which a</span>
+    <span class="comment">// request is forwarded to the leader.</span>
+    RequestForwardTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.RequestComplainTimeout"></span>    <span class="comment">// RequestComplainTimeout is started when RequestForwardTimeout expires, and defines the interval after which the</span>
+    <span class="comment">// node complains about the view leader.</span>
+    RequestComplainTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.RequestAutoRemoveTimeout"></span>    <span class="comment">// RequestAutoRemoveTimeout is started when RequestComplainTimeout expires, and defines the interval after which</span>
+    <span class="comment">// a request is removed (dropped) from the request pool.</span>
+    RequestAutoRemoveTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+
+<span id="Configuration.ViewChangeResendInterval"></span>    <span class="comment">// ViewChangeResendInterval defined the interval in which the ViewChange message is resent.</span>
+    ViewChangeResendInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.ViewChangeTimeout"></span>    <span class="comment">// ViewChangeTimeout is started when a node first receives a quorum of ViewChange messages, and defines the</span>
+    <span class="comment">// interval after which the node will try to initiate a view change with a higher view number.</span>
+    ViewChangeTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+
+<span id="Configuration.LeaderHeartbeatTimeout"></span>    <span class="comment">// LeaderHeartbeatTimeout is the interval after which, if nodes do not receive a &#34;sign of life&#34; from the leader,</span>
+    <span class="comment">// they complain on the current leader and try to initiate a view change. A sign of life is either a heartbeat</span>
+    <span class="comment">// or a message from the leader.</span>
+    LeaderHeartbeatTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.LeaderHeartbeatCount"></span>    <span class="comment">// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.</span>
+    <span class="comment">// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.</span>
+    LeaderHeartbeatCount <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="Configuration.CollectTimeout"></span>    <span class="comment">// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,</span>
+    <span class="comment">// stops collecting information about view metadata from remote nodes.</span>
+    CollectTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+
+<span id="Configuration.SyncOnStart"></span>    <span class="comment">// SyncOnStart is a flag indicating whether a sync is required on startup.</span>
+    SyncOnStart <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="Configuration.SpeedUpViewChange"></span>    <span class="comment">// SpeedUpViewChange is a flag indicating whether a node waits for only f+1 view change messages to join</span>
+    <span class="comment">// the view change (hence speeds up the view change process), or it waits for a quorum before joining.</span>
+    <span class="comment">// Waiting only for f+1 is considered less safe.</span>
+    SpeedUpViewChange <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Configuration.Validate">func (Configuration) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/config.go?s=4552:4591#L86">Validate</a>
+					<a class="permalink" href="index.html#Configuration.Validate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Configuration">Configuration</a>) Validate() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Consensus">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=596:1369#L13">Consensus</a>
+				<a class="permalink" href="index.html#Consensus">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Consensus submits requests to be total ordered,
+and delivers to the application proposals by invoking Deliver() on it.
+The proposals contain batches of requests assembled together by the Assembler.
+</p>
+
+			<pre>type Consensus struct {
+<span id="Consensus.Config"></span>    Config            <a href="index.html#Configuration">Configuration</a>
+<span id="Consensus.Application"></span>    Application       <a href="../api/index.html">bft</a>.<a href="../api/index.html#Application">Application</a>
+<span id="Consensus.Assembler"></span>    Assembler         <a href="../api/index.html">bft</a>.<a href="../api/index.html#Assembler">Assembler</a>
+<span id="Consensus.WAL"></span>    WAL               <a href="../api/index.html">bft</a>.<a href="../api/index.html#WriteAheadLog">WriteAheadLog</a>
+<span id="Consensus.WALInitialContent"></span>    WALInitialContent [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Consensus.Comm"></span>    Comm              <a href="../api/index.html">bft</a>.<a href="../api/index.html#Comm">Comm</a>
+<span id="Consensus.Signer"></span>    Signer            <a href="../api/index.html">bft</a>.<a href="../api/index.html#Signer">Signer</a>
+<span id="Consensus.Verifier"></span>    Verifier          <a href="../api/index.html">bft</a>.<a href="../api/index.html#Verifier">Verifier</a>
+<span id="Consensus.RequestInspector"></span>    RequestInspector  <a href="../api/index.html">bft</a>.<a href="../api/index.html#RequestInspector">RequestInspector</a>
+<span id="Consensus.Synchronizer"></span>    Synchronizer      <a href="../api/index.html">bft</a>.<a href="../api/index.html#Synchronizer">Synchronizer</a>
+<span id="Consensus.Logger"></span>    Logger            <a href="../api/index.html">bft</a>.<a href="../api/index.html#Logger">Logger</a>
+<span id="Consensus.Metadata"></span>    Metadata          <a href="../../smartbftprotos/index.html">protos</a>.<a href="../../smartbftprotos/index.html#ViewMetadata">ViewMetadata</a>
+<span id="Consensus.LastProposal"></span>    LastProposal      <a href="../types/index.html">types</a>.<a href="../types/index.html#Proposal">Proposal</a>
+<span id="Consensus.LastSignatures"></span>    LastSignatures    []<a href="../types/index.html">types</a>.<a href="../types/index.html#Signature">Signature</a>
+<span id="Consensus.Scheduler"></span>    Scheduler         &lt;-chan <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Consensus.ViewChangerTicker"></span>    ViewChangerTicker &lt;-chan <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Consensus.Complain">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=1371:1430#L39">Complain</a>
+					<a class="permalink" href="index.html#Consensus.Complain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) Complain(viewNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, stopView <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.Deliver">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=1486:1568#L43">Deliver</a>
+					<a class="permalink" href="index.html#Consensus.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) Deliver(proposal <a href="../types/index.html">types</a>.<a href="../types/index.html#Proposal">Proposal</a>, signatures []<a href="../types/index.html">types</a>.<a href="../types/index.html#Signature">Signature</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.HandleMessage">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=6513:6580#L193">HandleMessage</a>
+					<a class="permalink" href="index.html#Consensus.HandleMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) HandleMessage(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, m *<a href="../../smartbftprotos/index.html">protos</a>.<a href="../../smartbftprotos/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.HandleRequest">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=6627:6687#L197">HandleRequest</a>
+					<a class="permalink" href="index.html#Consensus.HandleRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) HandleRequest(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.Start">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=1619:1652#L47">Start</a>
+					<a class="permalink" href="index.html#Consensus.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) Start() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.Stop">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=6418:6444#L187">Stop</a>
+					<a class="permalink" href="index.html#Consensus.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) Stop()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.SubmitRequest">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=6734:6785#L201">SubmitRequest</a>
+					<a class="permalink" href="index.html#Consensus.SubmitRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) SubmitRequest(req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consensus.ValidateConfiguration">func (*Consensus) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/pkg/consensus/consensus.go?s=7425:7474#L223">ValidateConfiguration</a>
+					<a class="permalink" href="index.html#Consensus.ValidateConfiguration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consensus">Consensus</a>) ValidateConfiguration() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

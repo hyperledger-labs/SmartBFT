@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>queryresult - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package queryresult
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/protos/ledger/queryresult"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#KV">type KV</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.Descriptor">func (*KV) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.GetKey">func (m *KV) GetKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.GetNamespace">func (m *KV) GetNamespace() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.GetValue">func (m *KV) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.ProtoMessage">func (*KV) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.Reset">func (m *KV) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.String">func (m *KV) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.XXX_DiscardUnknown">func (m *KV) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.XXX_Marshal">func (m *KV) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.XXX_Merge">func (dst *KV) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.XXX_Size">func (m *KV) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KV.XXX_Unmarshal">func (m *KV) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyModification">type KeyModification</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.Descriptor">func (*KeyModification) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.GetIsDelete">func (m *KeyModification) GetIsDelete() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.GetTimestamp">func (m *KeyModification) GetTimestamp() *timestamp.Timestamp</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.GetTxId">func (m *KeyModification) GetTxId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.GetValue">func (m *KeyModification) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.ProtoMessage">func (*KeyModification) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.Reset">func (m *KeyModification) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.String">func (m *KeyModification) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.XXX_DiscardUnknown">func (m *KeyModification) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.XXX_Marshal">func (m *KeyModification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.XXX_Merge">func (dst *KeyModification) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.XXX_Size">func (m *KeyModification) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyModification.XXX_Unmarshal">func (m *KeyModification) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go">kv_query_result.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="KV">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=864:1303#L18">KV</a>
+				<a class="permalink" href="index.html#KV">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KV -- QueryResult for range/execute query. Holds a key and corresponding value.
+</p>
+
+			<pre>type KV struct {
+<span id="KV.Namespace"></span>    Namespace            <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=namespace,proto3&#34; json:&#34;namespace,omitempty&#34;`
+<span id="KV.Key"></span>    Key                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`
+<span id="KV.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="KV.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KV.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KV.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KV.Descriptor">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1447:1486#L30">Descriptor</a>
+					<a class="permalink" href="index.html#KV.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KV">KV</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.GetKey">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=2146:2174#L58">GetKey</a>
+					<a class="permalink" href="index.html#KV.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) GetKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.GetNamespace">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=2056:2090#L51">GetNamespace</a>
+					<a class="permalink" href="index.html#KV.GetNamespace">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) GetNamespace() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.GetValue">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=2224:2254#L65">GetValue</a>
+					<a class="permalink" href="index.html#KV.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.ProtoMessage">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1415:1440#L29">ProtoMessage</a>
+					<a class="permalink" href="index.html#KV.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KV">KV</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.Reset">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1305:1325#L27">Reset</a>
+					<a class="permalink" href="index.html#KV.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.String">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1348:1376#L28">String</a>
+					<a class="permalink" href="index.html#KV.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.XXX_DiscardUnknown">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1929:1962#L45">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KV.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.XXX_Marshal">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1647:1717#L36">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KV.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.XXX_Merge">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1778:1821#L39">XXX_Merge</a>
+					<a class="permalink" href="index.html#KV.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KV">KV</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.XXX_Size">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1862:1889#L42">XXX_Size</a>
+					<a class="permalink" href="index.html#KV.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KV.XXX_Unmarshal">func (*KV) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=1557:1599#L33">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KV.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KV">KV</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyModification">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=2460:3130#L74">KeyModification</a>
+				<a class="permalink" href="index.html#KeyModification">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyModification -- QueryResult for history query. Holds a transaction ID, value,
+timestamp, and delete marker which resulted from a history query.
+</p>
+
+			<pre>type KeyModification struct {
+<span id="KeyModification.TxId"></span>    TxId                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>               `protobuf:&#34;bytes,1,opt,name=tx_id,json=txId,proto3&#34; json:&#34;tx_id,omitempty&#34;`
+<span id="KeyModification.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>               `protobuf:&#34;bytes,2,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="KeyModification.Timestamp"></span>    Timestamp            *<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a> `protobuf:&#34;bytes,3,opt,name=timestamp,proto3&#34; json:&#34;timestamp,omitempty&#34;`
+<span id="KeyModification.IsDelete"></span>    IsDelete             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>                 `protobuf:&#34;varint,4,opt,name=is_delete,json=isDelete,proto3&#34; json:&#34;is_delete,omitempty&#34;`
+<span id="KeyModification.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}             `json:&#34;-&#34;`
+<span id="KeyModification.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>               `json:&#34;-&#34;`
+<span id="KeyModification.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyModification.Descriptor">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3326:3378#L87">Descriptor</a>
+					<a class="permalink" href="index.html#KeyModification.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KeyModification">KeyModification</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.GetIsDelete">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=4398:4442#L129">GetIsDelete</a>
+					<a class="permalink" href="index.html#KeyModification.GetIsDelete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) GetIsDelete() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.GetTimestamp">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=4280:4341#L122">GetTimestamp</a>
+					<a class="permalink" href="index.html#KeyModification.GetTimestamp">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) GetTimestamp() *<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.GetTxId">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=4091:4133#L108">GetTxId</a>
+					<a class="permalink" href="index.html#KeyModification.GetTxId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) GetTxId() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.GetValue">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=4184:4227#L115">GetValue</a>
+					<a class="permalink" href="index.html#KeyModification.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.ProtoMessage">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3281:3319#L86">ProtoMessage</a>
+					<a class="permalink" href="index.html#KeyModification.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KeyModification">KeyModification</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.Reset">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3132:3165#L84">Reset</a>
+					<a class="permalink" href="index.html#KeyModification.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.String">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3201:3242#L85">String</a>
+					<a class="permalink" href="index.html#KeyModification.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.XXX_DiscardUnknown">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3925:3971#L102">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KeyModification.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.XXX_Marshal">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3565:3648#L93">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KeyModification.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.XXX_Merge">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3722:3778#L96">XXX_Merge</a>
+					<a class="permalink" href="index.html#KeyModification.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KeyModification">KeyModification</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.XXX_Size">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3832:3872#L99">XXX_Size</a>
+					<a class="permalink" href="index.html#KeyModification.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyModification.XXX_Unmarshal">func (*KeyModification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/queryresult/kv_query_result.pb.go?s=3449:3504#L90">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KeyModification.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyModification">KeyModification</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

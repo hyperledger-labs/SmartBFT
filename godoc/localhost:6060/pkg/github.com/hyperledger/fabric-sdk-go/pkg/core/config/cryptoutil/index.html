@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>cryptoutil - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package cryptoutil
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetPrivateKeyFromCert">func GetPrivateKeyFromCert(cert []byte, cs core.CryptoSuite) (core.Key, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetPublicKeyFromCert">func GetPublicKeyFromCert(cert []byte, cs core.CryptoSuite) (core.Key, error)</a></dd>
+			
+				
+				<dd><a href="index.html#X509KeyPair">func X509KeyPair(certPEMBlock []byte, pk core.Key, cs core.CryptoSuite) (tls.Certificate, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#PrivateKey">type PrivateKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrivateKey.Public">func (priv *PrivateKey) Public() crypto.PublicKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PrivateKey.Sign">func (priv *PrivateKey) Sign(rand io.Reader, msg []byte, opts crypto.SignerOpts) ([]byte, error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go">cryptoutils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetPrivateKeyFromCert">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=631:709#L18">GetPrivateKeyFromCert</a>
+				<a class="permalink" href="index.html#GetPrivateKeyFromCert">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPrivateKeyFromCert(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, cs <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>) (<a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#Key">Key</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetPrivateKeyFromCert will return private key represented by SKI in cert&#39;s public key
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPublicKeyFromCert">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=1380:1457#L44">GetPublicKeyFromCert</a>
+				<a class="permalink" href="index.html#GetPublicKeyFromCert">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPublicKeyFromCert(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, cs <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>) (<a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#Key">Key</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetPublicKeyFromCert will return public key the from cert
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="X509KeyPair">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=2043:2139#L66">X509KeyPair</a>
+				<a class="permalink" href="index.html#X509KeyPair">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func X509KeyPair(certPEMBlock []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, pk <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#Key">Key</a>, cs <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>) (<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+X509KeyPair will return cer/key pair used for mutual TLS
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="PrivateKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=3188:3296#L107">PrivateKey</a>
+				<a class="permalink" href="index.html#PrivateKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrivateKey is signer implementation for golang client TLS
+</p>
+
+			<pre>type PrivateKey struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PrivateKey.Public">func (*PrivateKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=3360:3409#L114">Public</a>
+					<a class="permalink" href="index.html#PrivateKey.Public">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (priv *<a href="index.html#PrivateKey">PrivateKey</a>) Public() <a href="http://localhost:6060/pkg/crypto/">crypto</a>.<a href="http://localhost:6060/pkg/crypto/#PublicKey">PublicKey</a></pre>
+				<p>
+Public returns the public key corresponding to private key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PrivateKey.Sign">func (*PrivateKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/cryptoutil/cryptoutils.go?s=3711:3807#L122">Sign</a>
+					<a class="permalink" href="index.html#PrivateKey.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (priv *<a href="index.html#PrivateKey">PrivateKey</a>) Sign(rand <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="http://localhost:6060/pkg/crypto/">crypto</a>.<a href="http://localhost:6060/pkg/crypto/#SignerOpts">SignerOpts</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign signs msg with priv, reading randomness from rand. If opts is a
+*PSSOptions then the PSS algorithm will be used, otherwise PKCS#1 v1.5 will
+be used. This method is intended to support keys where the private part is
+kept in, for example, a hardware module.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

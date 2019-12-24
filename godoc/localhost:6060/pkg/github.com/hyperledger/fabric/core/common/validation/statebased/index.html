@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>statebased - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package statebased
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/common/validation/statebased"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#KeyLevelValidationParameterManager">type KeyLevelValidationParameterManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KeyLevelValidationParameterManagerImpl">type KeyLevelValidationParameterManagerImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidationParameterManagerImpl.ExtractValidationParameterDependency">func (m *KeyLevelValidationParameterManagerImpl) ExtractValidationParameterDependency(blockNum, txNum uint64, rwsetBytes []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidationParameterManagerImpl.GetValidationParameterForKey">func (m *KeyLevelValidationParameterManagerImpl) GetValidationParameterForKey(cc, coll, key string, blockNum, txNum uint64) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidationParameterManagerImpl.SetTxValidationResult">func (m *KeyLevelValidationParameterManagerImpl) SetTxValidationResult(ns string, blockNum, txNum uint64, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyLevelValidator">type KeyLevelValidator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewKeyLevelValidator">func NewKeyLevelValidator(policySupport validation.PolicyEvaluator, vpmgr KeyLevelValidationParameterManager) *KeyLevelValidator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidator.PostValidate">func (klv *KeyLevelValidator) PostValidate(cc string, blockNum, txNum uint64, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidator.PreValidate">func (klv *KeyLevelValidator) PreValidate(txNum uint64, block *common.Block)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyLevelValidator.Validate">func (klv *KeyLevelValidator) Validate(cc string, blockNum, txNum uint64, rwsetBytes, prp, ccEP []byte, endorsements []*peer.Endorsement) commonerrors.TxValidationError</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ValidationParameterUpdatedError">type ValidationParameterUpdatedError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ValidationParameterUpdatedError.Error">func (f *ValidationParameterUpdatedError) Error() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go">validator_keylevel.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanager.go">vpmanager.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanagerimpl.go">vpmanagerimpl.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="KeyLevelValidationParameterManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanager.go?s=1301:3110#L26">KeyLevelValidationParameterManager</a>
+				<a class="permalink" href="index.html#KeyLevelValidationParameterManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyLevelValidationParameterManager is used by validation plugins in order
+to retrieve validation parameters for individual KVS keys.
+The functions are supposed to be called in the following order:
+1) the validation plugin called to validate a certain tx calls ExtractValidationParameterDependency
+</p>
+<pre>in order for the manager to be able to determine whether validation parameters from the ledger
+can be used or whether they are being updated by a transaction in this block.
+</pre>
+<p>
+2) the validation plugin issues 0 or more calls to GetValidationParameterForKey.
+3) the validation plugin determines the validation code for the tx and calls SetTxValidationCode.
+</p>
+
+			<pre>type KeyLevelValidationParameterManager interface {
+    <span class="comment">// GetValidationParameterForKey returns the validation parameter for the</span>
+    <span class="comment">// supplied KVS key identified by (cc, coll, key) at the specified block</span>
+    <span class="comment">// height h. The function returns the validation parameter and no error in case of</span>
+    <span class="comment">// success, or nil and an error otherwise. One particular error that may be</span>
+    <span class="comment">// returned is ValidationParameterUpdatedErr, which is returned in case the</span>
+    <span class="comment">// validation parameters for the given KVS key have been changed by a transaction</span>
+    <span class="comment">// with txNum smaller than the one supplied by the caller. This protects from a</span>
+    <span class="comment">// scenario where a transaction changing validation parameters is marked as valid</span>
+    <span class="comment">// by VSCC and is later invalidated by the committer for other reasons (e.g. MVCC</span>
+    <span class="comment">// conflicts).  This function may be blocking until sufficient information has</span>
+    <span class="comment">// been passed (by calling ApplyRWSetUpdates and ApplyValidatedRWSetUpdates) for</span>
+    <span class="comment">// all txes with txNum smaller than the one supplied by the caller.</span>
+    GetValidationParameterForKey(cc, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// ExtractValidationParameterDependency is used to determine which validation parameters are</span>
+    <span class="comment">// updated by transaction at height `blockNum, txNum`. This is needed</span>
+    <span class="comment">// to determine which txes have dependencies for specific validation parameters and will</span>
+    <span class="comment">// determine whether GetValidationParameterForKey may block.</span>
+    ExtractValidationParameterDependency(blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, rwset []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+
+    <span class="comment">// SetTxValidationResult sets the validation result for transaction at height</span>
+    <span class="comment">// `blockNum, txNum` for the specified chaincode `cc`.</span>
+    <span class="comment">// This is used to determine whether the dependencies set by</span>
+    <span class="comment">// ExtractValidationParameterDependency matter or not.</span>
+    SetTxValidationResult(cc <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KeyLevelValidationParameterManagerImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanagerimpl.go?s=7398:7524#L226">KeyLevelValidationParameterManagerImpl</a>
+				<a class="permalink" href="index.html#KeyLevelValidationParameterManagerImpl">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KeyLevelValidationParameterManagerImpl struct {
+<span id="KeyLevelValidationParameterManagerImpl.StateFetcher"></span>    StateFetcher <a href="../../../handlers/validation/api/state/index.html">validation</a>.<a href="../../../handlers/validation/api/state/index.html#StateFetcher">StateFetcher</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyLevelValidationParameterManagerImpl.ExtractValidationParameterDependency">func (*KeyLevelValidationParameterManagerImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanagerimpl.go?s=7826:7954#L236">ExtractValidationParameterDependency</a>
+					<a class="permalink" href="index.html#KeyLevelValidationParameterManagerImpl.ExtractValidationParameterDependency">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyLevelValidationParameterManagerImpl">KeyLevelValidationParameterManagerImpl</a>) ExtractValidationParameterDependency(blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, rwsetBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+ExtractValidationParameterDependency implements the method of
+the same name of the KeyLevelValidationParameterManager interface
+Note that this function doesn&#39;t take any namespace argument. This is
+because we want to inspect all namespaces for which this transaction
+modifies metadata.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="KeyLevelValidationParameterManagerImpl.GetValidationParameterForKey">func (*KeyLevelValidationParameterManagerImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanagerimpl.go?s=9471:9610#L274">GetValidationParameterForKey</a>
+					<a class="permalink" href="index.html#KeyLevelValidationParameterManagerImpl.GetValidationParameterForKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyLevelValidationParameterManagerImpl">KeyLevelValidationParameterManagerImpl</a>) GetValidationParameterForKey(cc, coll, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetValidationParameterForKey implements the method of
+the same name of the KeyLevelValidationParameterManager interface
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="KeyLevelValidationParameterManagerImpl.SetTxValidationResult">func (*KeyLevelValidationParameterManagerImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanagerimpl.go?s=11347:11463#L326">SetTxValidationResult</a>
+					<a class="permalink" href="index.html#KeyLevelValidationParameterManagerImpl.SetTxValidationResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyLevelValidationParameterManagerImpl">KeyLevelValidationParameterManagerImpl</a>) SetTxValidationResult(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SetTxValidationCode implements the method of the same name of
+the KeyLevelValidationParameterManager interface. Note that
+this function receives a namespace argument so that it records
+the validation result for this transaction and for this chaincode.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyLevelValidator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go?s=4629:4785#L109">KeyLevelValidator</a>
+				<a class="permalink" href="index.html#KeyLevelValidator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyLevelValidator implements per-key level ep validation
+</p>
+
+			<pre>type KeyLevelValidator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewKeyLevelValidator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go?s=4787:4915#L115">NewKeyLevelValidator</a>
+					<a class="permalink" href="index.html#NewKeyLevelValidator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewKeyLevelValidator(policySupport <a href="../../../handlers/validation/api/policies/index.html">validation</a>.<a href="../../../handlers/validation/api/policies/index.html#PolicyEvaluator">PolicyEvaluator</a>, vpmgr <a href="index.html#KeyLevelValidationParameterManager">KeyLevelValidationParameterManager</a>) *<a href="index.html#KeyLevelValidator">KeyLevelValidator</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="KeyLevelValidator.PostValidate">func (*KeyLevelValidator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go?s=10373:10461#L272">PostValidate</a>
+					<a class="permalink" href="index.html#KeyLevelValidator.PostValidate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (klv *<a href="index.html#KeyLevelValidator">KeyLevelValidator</a>) PostValidate(cc <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PostValidate implements the function of the StateBasedValidator interface
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="KeyLevelValidator.PreValidate">func (*KeyLevelValidator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go?s=6605:6681#L164">PreValidate</a>
+					<a class="permalink" href="index.html#KeyLevelValidator.PreValidate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (klv *<a href="index.html#KeyLevelValidator">KeyLevelValidator</a>) PreValidate(txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, block *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#Block">Block</a>)</pre>
+				<p>
+PreValidate implements the function of the StateBasedValidator interface
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="KeyLevelValidator.Validate">func (*KeyLevelValidator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/validator_keylevel.go?s=7197:7365#L183">Validate</a>
+					<a class="permalink" href="index.html#KeyLevelValidator.Validate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (klv *<a href="index.html#KeyLevelValidator">KeyLevelValidator</a>) Validate(cc <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum, txNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, rwsetBytes, prp, ccEP []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, endorsements []*<a href="../../../../protos/peer/index.html">peer</a>.<a href="../../../../protos/peer/index.html#Endorsement">Endorsement</a>) <a href="../../../../common/errors/index.html">commonerrors</a>.<a href="../../../../common/errors/index.html#TxValidationError">TxValidationError</a></pre>
+				<p>
+Validate implements the function of the StateBasedValidator interface
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ValidationParameterUpdatedError">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanager.go?s=269:391#L6">ValidationParameterUpdatedError</a>
+				<a class="permalink" href="index.html#ValidationParameterUpdatedError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ValidationParameterUpdatedErr is returned whenever
+Validation Parameters for a key could not be
+supplied because they are being updated
+</p>
+
+			<pre>type ValidationParameterUpdatedError struct {
+<span id="ValidationParameterUpdatedError.CC"></span>    CC     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ValidationParameterUpdatedError.Coll"></span>    Coll   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ValidationParameterUpdatedError.Key"></span>    Key    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ValidationParameterUpdatedError.Height"></span>    Height <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="ValidationParameterUpdatedError.Txnum"></span>    Txnum  <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ValidationParameterUpdatedError.Error">func (*ValidationParameterUpdatedError) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/validation/statebased/vpmanager.go?s=393:449#L14">Error</a>
+					<a class="permalink" href="index.html#ValidationParameterUpdatedError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#ValidationParameterUpdatedError">ValidationParameterUpdatedError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>modlog - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package modlog
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetLevel">func GetLevel(module string) api.Level</a></dd>
+			
+				
+				<dd><a href="index.html#HideCallerInfo">func HideCallerInfo(module string, level api.Level)</a></dd>
+			
+				
+				<dd><a href="index.html#InitLogger">func InitLogger(l api.LoggerProvider)</a></dd>
+			
+				
+				<dd><a href="index.html#IsEnabledFor">func IsEnabledFor(module string, level api.Level) bool</a></dd>
+			
+				
+				<dd><a href="index.html#LoggerProvider">func LoggerProvider() api.LoggerProvider</a></dd>
+			
+				
+				<dd><a href="index.html#SetLevel">func SetLevel(module string, level api.Level)</a></dd>
+			
+				
+				<dd><a href="index.html#ShowCallerInfo">func ShowCallerInfo(module string, level api.Level)</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyBasicLogging">func VerifyBasicLogging(t *testing.T, level api.Level, loggerFunc fn, loggerFuncf fnf, buf *bytes.Buffer, verifyCustom bool, moduleName string)</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyCriticalLoggings">func VerifyCriticalLoggings(t *testing.T, level api.Level, loggerFunc fn, loggerFuncf fnf, buf fmt.Stringer)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Log">type Log</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.ChangeOutput">func (l *Log) ChangeOutput(output io.Writer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Debug">func (l *Log) Debug(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Debugf">func (l *Log) Debugf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Debugln">func (l *Log) Debugln(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Error">func (l *Log) Error(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Errorf">func (l *Log) Errorf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Errorln">func (l *Log) Errorln(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Fatal">func (l *Log) Fatal(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Fatalf">func (l *Log) Fatalf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Fatalln">func (l *Log) Fatalln(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Info">func (l *Log) Info(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Infof">func (l *Log) Infof(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Infoln">func (l *Log) Infoln(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Panic">func (l *Log) Panic(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Panicf">func (l *Log) Panicf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Panicln">func (l *Log) Panicln(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Print">func (l *Log) Print(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Printf">func (l *Log) Printf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Println">func (l *Log) Println(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Warn">func (l *Log) Warn(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Warnf">func (l *Log) Warnf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Log.Warnln">func (l *Log) Warnln(args ...interface{})</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.GetLogger">func (p *Provider) GetLogger(module string) api.Logger</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go">modlog.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/testVerifyUtils.go">testVerifyUtils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=2002:2040#L76">GetLevel</a>
+				<a class="permalink" href="index.html#GetLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLevel(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a></pre>
+			<p>
+GetLevel - getting log level for given module
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HideCallerInfo">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=2632:2683#L97">HideCallerInfo</a>
+				<a class="permalink" href="index.html#HideCallerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HideCallerInfo(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+			<p>
+HideCallerInfo - Do not show caller info in log lines for given log level
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=1204:1241#L40">InitLogger</a>
+				<a class="permalink" href="index.html#InitLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitLogger(l <a href="../api/index.html">api</a>.<a href="../api/index.html#LoggerProvider">LoggerProvider</a>)</pre>
+			<p>
+InitLogger sets custom logger which will be used over deflogger.
+It is required to call this function before making any loggings.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsEnabledFor">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=2196:2250#L83">IsEnabledFor</a>
+				<a class="permalink" href="index.html#IsEnabledFor">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsEnabledFor(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsEnabledFor - Check if given log level is enabled for given module
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="LoggerProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=1004:1044#L34">LoggerProvider</a>
+				<a class="permalink" href="index.html#LoggerProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LoggerProvider() <a href="../api/index.html">api</a>.<a href="../api/index.html#LoggerProvider">LoggerProvider</a></pre>
+			<p>
+LoggerProvider returns logging provider for SDK logger
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=1825:1870#L69">SetLevel</a>
+				<a class="permalink" href="index.html#SetLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetLevel(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+			<p>
+SetLevel - setting log level for given module
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ShowCallerInfo">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=2416:2467#L90">ShowCallerInfo</a>
+				<a class="permalink" href="index.html#ShowCallerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ShowCallerInfo(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>)</pre>
+			<p>
+ShowCallerInfo - Show caller info in log lines for given log level
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyBasicLogging">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/testVerifyUtils.go?s=2206:2349#L52">VerifyBasicLogging</a>
+				<a class="permalink" href="index.html#VerifyBasicLogging">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyBasicLogging(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>, loggerFunc fn, loggerFuncf fnf, buf *<a href="http://localhost:6060/pkg/bytes/">bytes</a>.<a href="http://localhost:6060/pkg/bytes/#Buffer">Buffer</a>, verifyCustom <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, moduleName <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+VerifyBasicLogging utility func which does job calling and verifying basic log level functions - DEBUG, INFO, ERROR, WARNING
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyCriticalLoggings">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/testVerifyUtils.go?s=988:1096#L22">VerifyCriticalLoggings</a>
+				<a class="permalink" href="index.html#VerifyCriticalLoggings">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyCriticalLoggings(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, level <a href="../api/index.html">api</a>.<a href="../api/index.html#Level">Level</a>, loggerFunc fn, loggerFuncf fnf, buf <a href="http://localhost:6060/pkg/fmt/">fmt</a>.<a href="http://localhost:6060/pkg/fmt/#Stringer">Stringer</a>)</pre>
+			<p>
+VerifyCriticalLoggings utility func which does job calling and verifying CRITICAL log level functions - PANIC
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Log">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=1399:1533#L48">Log</a>
+				<a class="permalink" href="index.html#Log">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Log is a standard SDK logger implementation
+</p>
+
+			<pre>type Log struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Log.ChangeOutput">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=9688:9732#L378">ChangeOutput</a>
+					<a class="permalink" href="index.html#Log.ChangeOutput">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) ChangeOutput(output <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>)</pre>
+				<p>
+ChangeOutput for changing output destination for the logger.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Debug">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=5768:5808#L211">Debug</a>
+					<a class="permalink" href="index.html#Log.Debug">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Debug(args ...interface{})</pre>
+				<p>
+Debug calls go log.Output.
+Arguments are handled in the manner of fmt.Print.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Debugf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=6084:6140#L225">Debugf</a>
+					<a class="permalink" href="index.html#Log.Debugf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Debugf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Debugf calls go log.Output.
+Arguments are handled in the manner of fmt.Printf.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Debugln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=6436:6478#L239">Debugln</a>
+					<a class="permalink" href="index.html#Log.Debugln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Debugln(args ...interface{})</pre>
+				<p>
+Debugln calls go log.Output.
+Arguments are handled in the manner of fmt.Println.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Error">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=8720:8760#L337">Error</a>
+					<a class="permalink" href="index.html#Log.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Error(args ...interface{})</pre>
+				<p>
+Error calls go log.Output.
+Arguments are handled in the manner of fmt.Print.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Errorf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=9036:9092#L351">Errorf</a>
+					<a class="permalink" href="index.html#Log.Errorf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Errorf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Errorf calls go log.Output.
+Arguments are handled in the manner of fmt.Printf.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Errorln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=9388:9430#L365">Errorln</a>
+					<a class="permalink" href="index.html#Log.Errorln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Errorln(args ...interface{})</pre>
+				<p>
+Errorln calls go log.Output.
+Arguments are handled in the manner of fmt.Println.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Fatal">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=3170:3210#L114">Fatal</a>
+					<a class="permalink" href="index.html#Log.Fatal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Fatal(args ...interface{})</pre>
+				<p>
+Fatal is CRITICAL log followed by a call to os.Exit(1).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Fatalf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=3468:3524#L125">Fatalf</a>
+					<a class="permalink" href="index.html#Log.Fatalf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Fatalf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Fatalf is CRITICAL log formatted followed by a call to os.Exit(1).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Fatalln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=3803:3845#L136">Fatalln</a>
+					<a class="permalink" href="index.html#Log.Fatalln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Fatalln(args ...interface{})</pre>
+				<p>
+Fatalln is CRITICAL log ln followed by a call to os.Exit(1).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Info">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=6755:6794#L253">Info</a>
+					<a class="permalink" href="index.html#Log.Info">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Info(args ...interface{})</pre>
+				<p>
+Info calls go log.Output.
+Arguments are handled in the manner of fmt.Print.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Infof">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=7066:7121#L267">Infof</a>
+					<a class="permalink" href="index.html#Log.Infof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Infof(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Infof calls go log.Output.
+Arguments are handled in the manner of fmt.Printf.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Infoln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=7413:7454#L281">Infoln</a>
+					<a class="permalink" href="index.html#Log.Infoln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Infoln(args ...interface{})</pre>
+				<p>
+Infoln calls go log.Output.
+Arguments are handled in the manner of fmt.Println.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Panic">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=4094:4134#L147">Panic</a>
+					<a class="permalink" href="index.html#Log.Panic">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Panic(args ...interface{})</pre>
+				<p>
+Panic is CRITICAL log followed by a call to panic()
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Panicf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=4388:4444#L158">Panicf</a>
+					<a class="permalink" href="index.html#Log.Panicf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Panicf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Panicf is CRITICAL log formatted followed by a call to panic()
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Panicln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=4719:4761#L169">Panicln</a>
+					<a class="permalink" href="index.html#Log.Panicln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Panicln(args ...interface{})</pre>
+				<p>
+Panicln is CRITICAL log ln followed by a call to panic()
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Print">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=5038:5078#L181">Print</a>
+					<a class="permalink" href="index.html#Log.Print">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Print(args ...interface{})</pre>
+				<p>
+Print calls go log.Output.
+Arguments are handled in the manner of fmt.Print.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Printf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=5268:5324#L191">Printf</a>
+					<a class="permalink" href="index.html#Log.Printf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Printf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Printf calls go log.Output.
+Arguments are handled in the manner of fmt.Printf.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Println">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=5534:5576#L201">Println</a>
+					<a class="permalink" href="index.html#Log.Println">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Println(args ...interface{})</pre>
+				<p>
+Println calls go log.Output.
+Arguments are handled in the manner of fmt.Println.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Warn">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=7728:7767#L295">Warn</a>
+					<a class="permalink" href="index.html#Log.Warn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Warn(args ...interface{})</pre>
+				<p>
+Warn calls go log.Output.
+Arguments are handled in the manner of fmt.Print.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Warnf">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=8045:8100#L309">Warnf</a>
+					<a class="permalink" href="index.html#Log.Warnf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Warnf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Warnf calls go log.Output.
+Arguments are handled in the manner of fmt.Printf.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Log.Warnln">func (*Log) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=8398:8439#L323">Warnln</a>
+					<a class="permalink" href="index.html#Log.Warnln">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Log">Log</a>) Warnln(args ...interface{})</pre>
+				<p>
+Warnln calls go log.Output.
+Arguments are handled in the manner of fmt.Println.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=654:678#L24">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider is the default logger implementation
+</p>
+
+			<pre>type Provider struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Provider.GetLogger">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/logging/modlog/modlog.go?s=726:780#L28">GetLogger</a>
+					<a class="permalink" href="index.html#Provider.GetLogger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) GetLogger(module <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../api/index.html">api</a>.<a href="../api/index.html#Logger">Logger</a></pre>
+				<p>
+GetLogger returns SDK logger implementation
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

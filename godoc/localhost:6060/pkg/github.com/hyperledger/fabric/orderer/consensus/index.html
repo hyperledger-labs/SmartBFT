@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>consensus - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package consensus
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/consensus"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Chain">type Chain</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Consenter">type Consenter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConsenterSupport">type ConsenterSupport</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/consensus.go">consensus.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Chain">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/consensus.go?s=1750:3588#L24">Chain</a>
+				<a class="permalink" href="index.html#Chain">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Chain defines a way to inject messages for ordering.
+Note, that in order to allow flexibility in the implementation, it is the responsibility of the implementer
+to take the ordered messages, send them through the blockcutter.Receiver supplied via HandleChain to cut blocks,
+and ultimately write the ledger also supplied via HandleChain.  This design allows for two primary flows
+1. Messages are ordered into a stream, the stream is cut into blocks, the blocks are committed (solo, kafka)
+2. Messages are cut into blocks, the blocks are ordered, then the blocks are committed (sbft)
+</p>
+
+			<pre>type Chain interface {
+    <span class="comment">// Order accepts a message which has been processed at a given configSeq.</span>
+    <span class="comment">// If the configSeq advances, it is the responsibility of the consenter</span>
+    <span class="comment">// to revalidate and potentially discard the message</span>
+    <span class="comment">// The consenter may return an error, indicating the message was not accepted</span>
+    Order(env *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Configure accepts a message which reconfigures the channel and will</span>
+    <span class="comment">// trigger an update to the configSeq if committed.  The configuration must have</span>
+    <span class="comment">// been triggered by a ConfigUpdate message. If the config sequence advances,</span>
+    <span class="comment">// it is the responsibility of the consenter to recompute the resulting config,</span>
+    <span class="comment">// discarding the message if the reconfiguration is no longer valid.</span>
+    <span class="comment">// The consenter may return an error, indicating the message was not accepted</span>
+    Configure(config *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>, configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// WaitReady blocks waiting for consenter to be ready for accepting new messages.</span>
+    <span class="comment">// This is useful when consenter needs to temporarily block ingress messages so</span>
+    <span class="comment">// that in-flight messages can be consumed. It could return error if consenter is</span>
+    <span class="comment">// in erroneous states. If this blocking behavior is not desired, consenter could</span>
+    <span class="comment">// simply return nil.</span>
+    WaitReady() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Errored returns a channel which will close when an error has occurred.</span>
+    <span class="comment">// This is especially useful for the Deliver client, who must terminate waiting</span>
+    <span class="comment">// clients when the consenter is not up to date.</span>
+    Errored() &lt;-chan struct{}
+
+    <span class="comment">// Start should allocate whatever resources are needed for staying up to date with the chain.</span>
+    <span class="comment">// Typically, this involves creating a thread which reads from the ordering source, passes those</span>
+    <span class="comment">// messages to a block cutter, and writes the resulting blocks to the ledger.</span>
+    Start()
+
+    <span class="comment">// Halt frees the resources which were allocated for this Chain.</span>
+    Halt()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Consenter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/consensus.go?s=446:1148#L8">Consenter</a>
+				<a class="permalink" href="index.html#Consenter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Consenter defines the backing ordering mechanism.
+</p>
+
+			<pre>type Consenter interface {
+    <span class="comment">// HandleChain should create and return a reference to a Chain for the given set of resources.</span>
+    <span class="comment">// It will only be invoked for a given chain once per process.  In general, errors will be treated</span>
+    <span class="comment">// as irrecoverable and cause system shutdown.  See the description of Chain for more details</span>
+    <span class="comment">// The second argument to HandleChain is a pointer to the metadata stored on the `ORDERER` slot of</span>
+    <span class="comment">// the last block committed to the ledger of this Chain. For a new chain, or one which is migrated,</span>
+    <span class="comment">// this metadata will be nil (or contain a zero-length Value), as there is no prior metadata to report.</span>
+    HandleChain(support <a href="index.html#ConsenterSupport">ConsenterSupport</a>, metadata *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Metadata">Metadata</a>) (<a href="index.html#Chain">Chain</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConsenterSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/consensus.go?s=3757:5465#L63">ConsenterSupport</a>
+				<a class="permalink" href="index.html#ConsenterSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConsenterSupport provides the resources available to a Consenter implementation.
+</p>
+
+			<pre>type ConsenterSupport interface {
+    <a href="../../common/crypto/index.html">crypto</a>.<a href="../../common/crypto/index.html#LocalSigner">LocalSigner</a>
+    <a href="../common/msgprocessor/index.html">msgprocessor</a>.<a href="../common/msgprocessor/index.html#Processor">Processor</a>
+
+    <span class="comment">// VerifyBlockSignature verifies a signature of a block with a given optional</span>
+    <span class="comment">// configuration (can be nil).</span>
+    VerifyBlockSignature([]*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#SignedData">SignedData</a>, *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// BlockCutter returns the block cutting helper for this channel.</span>
+    BlockCutter() <a href="../common/blockcutter/index.html">blockcutter</a>.<a href="../common/blockcutter/index.html#Receiver">Receiver</a>
+
+    <span class="comment">// SharedConfig provides the shared config from the channel&#39;s current config block.</span>
+    SharedConfig() <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Orderer">Orderer</a>
+
+    <span class="comment">// ChannelConfig provides the channel config from the channel&#39;s current config block.</span>
+    ChannelConfig() <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Channel">Channel</a>
+
+    <span class="comment">// CreateNextBlock takes a list of messages and creates the next block based on the block with highest block number committed to the ledger</span>
+    <span class="comment">// Note that either WriteBlock or WriteConfigBlock must be called before invoking this method a second time.</span>
+    CreateNextBlock(messages []*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>
+
+    <span class="comment">// Block returns a block with the given number,</span>
+    <span class="comment">// or nil if such a block doesn&#39;t exist.</span>
+    Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>
+
+    <span class="comment">// WriteBlock commits a block to the ledger.</span>
+    WriteBlock(block *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+
+    <span class="comment">// WriteConfigBlock commits a block to the ledger, and applies the config update inside.</span>
+    WriteConfigBlock(block *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+
+    <span class="comment">// Sequence returns the current config squence.</span>
+    Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// ChainID returns the channel ID this support is associated with.</span>
+    ChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Height returns the number of blocks in the chain this channel is associated with.</span>
+    Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// Append appends a new block to the ledger in its raw form,</span>
+    <span class="comment">// unlike WriteBlock that also mutates its metadata.</span>
+    Append(block *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="etcdraft/index.html">etcdraft</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="etcdraft/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="inactive/index.html">inactive</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="kafka/index.html">kafka</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="kafka/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="smartbft/index.html">smartbft</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="smartbft/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="solo/index.html">solo</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

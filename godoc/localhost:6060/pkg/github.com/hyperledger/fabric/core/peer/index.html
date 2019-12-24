@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>peer - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package peer
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/peer"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CacheConfiguration">func CacheConfiguration() (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#CreateChainFromBlock">func CreateChainFromBlock(cb *common.Block, ccp ccprovider.ChaincodeProvider, sccp sysccprovider.SystemChaincodeProvider) error</a></dd>
+			
+				
+				<dd><a href="index.html#GetChannelConfig">func GetChannelConfig(cid string) channelconfig.Resources</a></dd>
+			
+				
+				<dd><a href="index.html#GetChannelsInfo">func GetChannelsInfo() []*pb.ChannelInfo</a></dd>
+			
+				
+				<dd><a href="index.html#GetClientCertificate">func GetClientCertificate() (tls.Certificate, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetCurrConfigBlock">func GetCurrConfigBlock(cid string) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#GetLedger">func GetLedger(cid string) ledger.PeerLedger</a></dd>
+			
+				
+				<dd><a href="index.html#GetLocalAddress">func GetLocalAddress() (string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetLocalIP">func GetLocalIP() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetMSPIDs">func GetMSPIDs(cid string) []string</a></dd>
+			
+				
+				<dd><a href="index.html#GetOrdererAddressOverrides">func GetOrdererAddressOverrides() (map[string]*comm.OrdererEndpoint, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetPeerEndpoint">func GetPeerEndpoint() (*pb.PeerEndpoint, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetPolicyManager">func GetPolicyManager(cid string) policies.Manager</a></dd>
+			
+				
+				<dd><a href="index.html#GetServerConfig">func GetServerConfig() (comm.ServerConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetServerRootCAs">func GetServerRootCAs() ([][]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetStableChannelConfig">func GetStableChannelConfig(cid string) channelconfig.Resources</a></dd>
+			
+				
+				<dd><a href="index.html#InitChain">func InitChain(cid string)</a></dd>
+			
+				
+				<dd><a href="index.html#Initialize">func Initialize(init func(string), ccp ccprovider.ChaincodeProvider, sccp sysccprovider.SystemChaincodeProvider, pm txvalidator.PluginMapper, pr *platforms.Registry, deployedCCInfoProvider ledger.DeployedChaincodeInfoProvider, membershipProvider ledger.MembershipInfoProvider, metricsProvider metrics.Provider)</a></dd>
+			
+				
+				<dd><a href="index.html#MockCreateChain">func MockCreateChain(cid string) error</a></dd>
+			
+				
+				<dd><a href="index.html#MockInitialize">func MockInitialize()</a></dd>
+			
+				
+				<dd><a href="index.html#MockSetMSPIDGetter">func MockSetMSPIDGetter(mspIDGetter func(string) []string)</a></dd>
+			
+				
+				<dd><a href="index.html#NewChannelPolicyManagerGetter">func NewChannelPolicyManagerGetter() policies.ChannelPolicyManagerGetter</a></dd>
+			
+				
+				<dd><a href="index.html#NewConfigSupport">func NewConfigSupport() cc.Manager</a></dd>
+			
+				
+				<dd><a href="index.html#NewDeliverEventsServer">func NewDeliverEventsServer(mutualTLS bool, policyCheckerProvider PolicyCheckerProvider, chainManager deliver.ChainManager, metricsProvider metrics.Provider) peer.DeliverServer</a></dd>
+			
+				
+				<dd><a href="index.html#NewPeerServer">func NewPeerServer(listenAddress string, serverConfig comm.ServerConfig) (*comm.GRPCServer, error)</a></dd>
+			
+				
+				<dd><a href="index.html#SetCurrConfigBlock">func SetCurrConfigBlock(block *common.Block, cid string) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CollectionSupport">type CollectionSupport</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionSupport.GetIdentityDeserializer">func (*CollectionSupport) GetIdentityDeserializer(chainID string) msp.IdentityDeserializer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionSupport.GetQueryExecutorForLedger">func (cs *CollectionSupport) GetQueryExecutorForLedger(cid string) (ledger.QueryExecutor, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DeliverChainManager">type DeliverChainManager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverChainManager.GetChain">func (DeliverChainManager) GetChain(chainID string) deliver.Chain</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Operations">type Operations</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererEndpoint">type OrdererEndpoint</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererOrg">type OrdererOrg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PolicyCheckerProvider">type PolicyCheckerProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Support">type Support</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SupportFactory">type SupportFactory</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/configtx_processor.go">configtx_processor.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/configtx_util.go">configtx_util.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/deliverevents.go">deliverevents.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/mock_helpers.go">mock_helpers.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go">peer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer_impl.go">peer_impl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/support.go">support.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="ConfigTxProcessors">ConfigTxProcessors</span> = <a href="../ledger/customtx/index.html">customtx</a>.<a href="../ledger/customtx/index.html#Processors">Processors</a>{
+    <a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#HeaderType_CONFIG">HeaderType_CONFIG</a>:            configTxProcessor,
+    <a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#HeaderType_TOKEN_TRANSACTION">HeaderType_TOKEN_TRANSACTION</a>: tokenTxProcessor,
+}</pre>
+			
+				
+				<pre>var <span id="TransientStoreFactory">TransientStoreFactory</span> = &amp;storeProvider{stores: <a href="http://localhost:6060/pkg/builtin/#make">make</a>(map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../transientstore/index.html">transientstore</a>.<a href="../transientstore/index.html#Store">Store</a>)}</pre>
+			
+		
+		
+			
+			
+			<h2 id="CacheConfiguration">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=1744:1781#L41">CacheConfiguration</a>
+				<a class="permalink" href="index.html#CacheConfiguration">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CacheConfiguration() (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+CacheConfiguration computes and caches commonly-used constants and
+computed constants as package variables. Routines which were previously
+global have been embedded here to preserve the original abstraction.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateChainFromBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=15375:15502#L502">CreateChainFromBlock</a>
+				<a class="permalink" href="index.html#CreateChainFromBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateChainFromBlock(cb *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>, sccp <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+CreateChainFromBlock creates a new chain from config block
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetChannelConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=16617:16674#L540">GetChannelConfig</a>
+				<a class="permalink" href="index.html#GetChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChannelConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Resources">Resources</a></pre>
+			<p>
+GetChannelConfig returns the channel configuration of the chain with channel ID. Note that this
+call returns nil if chain cid has not been created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetChannelsInfo">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=22780:22820#L740">GetChannelsInfo</a>
+				<a class="permalink" href="index.html#GetChannelsInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChannelsInfo() []*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChannelInfo">ChannelInfo</a></pre>
+			<p>
+GetChannelsInfo returns an array with information about all channels for
+this peer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetClientCertificate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=7073:7125#L196">GetClientCertificate</a>
+				<a class="permalink" href="index.html#GetClientCertificate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetClientCertificate() (<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetClientCertificate returns the TLS certificate to use for gRPC client
+connections
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetCurrConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=17255:17304#L562">GetCurrConfigBlock</a>
+				<a class="permalink" href="index.html#GetCurrConfigBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetCurrConfigBlock(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+GetCurrConfigBlock returns the cached config block of the specified chain.
+Note that this call returns nil if chain cid has not been created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLedger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=15932:15976#L518">GetLedger</a>
+				<a class="permalink" href="index.html#GetLedger">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLedger(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PeerLedger">PeerLedger</a></pre>
+			<p>
+GetLedger returns the ledger of the chain with chain ID. Note that this
+call returns nil if chain cid has not been created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLocalAddress">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=3813:3851#L102">GetLocalAddress</a>
+				<a class="permalink" href="index.html#GetLocalAddress">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLocalAddress() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetLocalAddress returns the peer.address property
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLocalIP">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=22335:22359#L722">GetLocalIP</a>
+				<a class="permalink" href="index.html#GetLocalIP">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLocalIP() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetLocalIP returns the non loopback local IP of the host
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetMSPIDs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=21364:21399#L679">GetMSPIDs</a>
+				<a class="permalink" href="index.html#GetMSPIDs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetMSPIDs(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetMSPIDs returns the ID of each application MSP defined on this chain
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetOrdererAddressOverrides">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=9099:9174#L261">GetOrdererAddressOverrides</a>
+				<a class="permalink" href="index.html#GetOrdererAddressOverrides">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetOrdererAddressOverrides() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../comm/index.html">comm</a>.<a href="../comm/index.html#OrdererEndpoint">OrdererEndpoint</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GetPeerEndpoint">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=4016:4064#L110">GetPeerEndpoint</a>
+				<a class="permalink" href="index.html#GetPeerEndpoint">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPeerEndpoint() (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#PeerEndpoint">PeerEndpoint</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetPeerEndpoint returns peerEndpoint from cached configuration
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPolicyManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=16930:16980#L551">GetPolicyManager</a>
+				<a class="permalink" href="index.html#GetPolicyManager">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPolicyManager(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/policies/index.html">policies</a>.<a href="../../common/policies/index.html#Manager">Manager</a></pre>
+			<p>
+GetPolicyManager returns the policy manager of the chain with chain ID. Note that this
+call returns nil if chain cid has not been created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetServerConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=4233:4282#L118">GetServerConfig</a>
+				<a class="permalink" href="index.html#GetServerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetServerConfig() (<a href="../comm/index.html">comm</a>.<a href="../comm/index.html#ServerConfig">ServerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetServerConfig returns the gRPC server configuration for the peer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetServerRootCAs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=6308:6349#L172">GetServerRootCAs</a>
+				<a class="permalink" href="index.html#GetServerRootCAs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetServerRootCAs() ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetServerRootCAs returns the root certificates which will be trusted for
+gRPC client connections to peers and orderers.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetStableChannelConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=16261:16324#L529">GetStableChannelConfig</a>
+				<a class="permalink" href="index.html#GetStableChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetStableChannelConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Resources">Resources</a></pre>
+			<p>
+GetStableChannelConfig returns the stable channel configuration of the chain with channel ID.
+Note that this call returns nil if chain cid has not been created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitChain">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=9252:9278#L280">InitChain</a>
+				<a class="permalink" href="index.html#InitChain">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitChain(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+InitChain takes care to initialize chain after peer joined, for example deploys system CCs
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Initialize">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=7121:7433#L231">Initialize</a>
+				<a class="permalink" href="index.html#Initialize">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Initialize(init func(<a href="http://localhost:6060/pkg/builtin/#string">string</a>), ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>, sccp <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>,
+    pm <a href="../committer/txvalidator/index.html">txvalidator</a>.<a href="../committer/txvalidator/index.html#PluginMapper">PluginMapper</a>, pr *<a href="../chaincode/platforms/index.html">platforms</a>.<a href="../chaincode/platforms/index.html#Registry">Registry</a>, deployedCCInfoProvider <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#DeployedChaincodeInfoProvider">DeployedChaincodeInfoProvider</a>,
+    membershipProvider <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#MembershipInfoProvider">MembershipInfoProvider</a>, metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>)</pre>
+			<p>
+Initialize sets up any chains that the peer has from the persistence. This
+function should be called at the start up when the ledger and gossip
+ready
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MockCreateChain">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/mock_helpers.go?s=858:896#L21">MockCreateChain</a>
+				<a class="permalink" href="index.html#MockCreateChain">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MockCreateChain(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+MockCreateChain used for creating a ledger for a chain for tests
+without having to join
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MockInitialize">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/mock_helpers.go?s=530:551#L9">MockInitialize</a>
+				<a class="permalink" href="index.html#MockInitialize">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MockInitialize()</pre>
+			<p>
+MockInitialize resets chains for test env
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MockSetMSPIDGetter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=6686:6744#L220">MockSetMSPIDGetter</a>
+				<a class="permalink" href="index.html#MockSetMSPIDGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MockSetMSPIDGetter(mspIDGetter func(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="NewChannelPolicyManagerGetter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=23283:23355#L757">NewChannelPolicyManagerGetter</a>
+				<a class="permalink" href="index.html#NewChannelPolicyManagerGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewChannelPolicyManagerGetter() <a href="../../common/policies/index.html">policies</a>.<a href="../../common/policies/index.html#ChannelPolicyManagerGetter">ChannelPolicyManagerGetter</a></pre>
+			<p>
+NewChannelPolicyManagerGetter returns a new instance of ChannelPolicyManagerGetter
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewConfigSupport">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=25777:25811#L832">NewConfigSupport</a>
+				<a class="permalink" href="index.html#NewConfigSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewConfigSupport() <a href="../../common/config/index.html">cc</a>.<a href="../../common/config/index.html#Manager">Manager</a></pre>
+			<p>
+NewConfigSupport returns
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewDeliverEventsServer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/deliverevents.go?s=4331:4507#L122">NewDeliverEventsServer</a>
+				<a class="permalink" href="index.html#NewDeliverEventsServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewDeliverEventsServer(mutualTLS <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, policyCheckerProvider <a href="index.html#PolicyCheckerProvider">PolicyCheckerProvider</a>, chainManager <a href="../../common/deliver/index.html">deliver</a>.<a href="../../common/deliver/index.html#ChainManager">ChainManager</a>, metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>) <a href="../../protos/peer/index.html">peer</a>.<a href="../../protos/peer/index.html#DeliverServer">DeliverServer</a></pre>
+			<p>
+NewDeliverEventsServer creates a peer.Deliver server to deliver block and
+filtered block events
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewPeerServer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=23727:23825#L770">NewPeerServer</a>
+				<a class="permalink" href="index.html#NewPeerServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewPeerServer(listenAddress <a href="http://localhost:6060/pkg/builtin/#string">string</a>, serverConfig <a href="../comm/index.html">comm</a>.<a href="../comm/index.html#ServerConfig">ServerConfig</a>) (*<a href="../comm/index.html">comm</a>.<a href="../comm/index.html#GRPCServer">GRPCServer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewPeerServer creates an instance of comm.GRPCServer
+This server is used for peer communications
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetCurrConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=22021:22083#L711">SetCurrConfigBlock</a>
+				<a class="permalink" href="index.html#SetCurrConfigBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetCurrConfigBlock(block *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+SetCurrConfigBlock sets the current config block of the specified channel
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CollectionSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=24662:24714#L789">CollectionSupport</a>
+				<a class="permalink" href="index.html#CollectionSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TODO: Remove CollectionSupport and respective methonds on them.
+CollectionSupport is created per chain and is passed to the simple
+collection store and the gossip. As it is created per chain, there
+is no need to pass the channelID for both GetQueryExecutorForLedger()
+and GetIdentityDeserializer(). Note that the cid passed to
+GetQueryExecutorForLedger is never used. Instead, we can directly
+pass the ledger.PeerLedger and msp.IdentityDeserializer to the
+simpleCollectionStore and pass only the msp.IdentityDeserializer to
+the gossip in createChain() -- FAB-13037
+</p>
+
+			<pre>type CollectionSupport struct {
+    <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PeerLedger">PeerLedger</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollectionSupport.GetIdentityDeserializer">func (*CollectionSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=24848:24938#L797">GetIdentityDeserializer</a>
+					<a class="permalink" href="index.html#CollectionSupport.GetIdentityDeserializer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CollectionSupport">CollectionSupport</a>) GetIdentityDeserializer(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#IdentityDeserializer">IdentityDeserializer</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollectionSupport.GetQueryExecutorForLedger">func (*CollectionSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=24716:24812#L793">GetQueryExecutorForLedger</a>
+					<a class="permalink" href="index.html#CollectionSupport.GetQueryExecutorForLedger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#CollectionSupport">CollectionSupport</a>) GetQueryExecutorForLedger(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DeliverChainManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=25119:25154#L806">DeliverChainManager</a>
+				<a class="permalink" href="index.html#DeliverChainManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeliverChainManager provides access to a channel for performing deliver
+</p>
+
+			<pre>type DeliverChainManager struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DeliverChainManager.GetChain">func (DeliverChainManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=25156:25221#L809">GetChain</a>
+					<a class="permalink" href="index.html#DeliverChainManager.GetChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#DeliverChainManager">DeliverChainManager</a>) GetChain(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/deliver/index.html">deliver</a>.<a href="../../common/deliver/index.html#Chain">Chain</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Operations">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer_impl.go?s=850:1590#L15">Operations</a>
+				<a class="permalink" href="index.html#Operations">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Operations exposes an interface to the package level functions that operated
+on singletons in the package. This is a step towards moving from package
+level data for the peer to instance level data.
+</p>
+
+			<pre>type Operations interface {
+    CreateChainFromBlock(cb *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>, sccp <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    GetChannelConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Resources">Resources</a>
+    GetChannelsInfo() []*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChannelInfo">ChannelInfo</a>
+    GetCurrConfigBlock(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>
+    GetLedger(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PeerLedger">PeerLedger</a>
+    GetMSPIDs(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    GetPolicyManager(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/policies/index.html">policies</a>.<a href="../../common/policies/index.html#Manager">Manager</a>
+    InitChain(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+    Initialize(init func(<a href="http://localhost:6060/pkg/builtin/#string">string</a>), ccp <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a>, sccp <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>, pm <a href="../committer/txvalidator/index.html">txvalidator</a>.<a href="../committer/txvalidator/index.html#PluginMapper">PluginMapper</a>, pr *<a href="../chaincode/platforms/index.html">platforms</a>.<a href="../chaincode/platforms/index.html#Registry">Registry</a>, deployedCCInfoProvider <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#DeployedChaincodeInfoProvider">DeployedChaincodeInfoProvider</a>, membershipProvider <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#MembershipInfoProvider">MembershipInfoProvider</a>, metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>)
+}</pre>
+
+			
+
+			
+				<p>
+Default provides in implementation of the Peer interface that provides
+access to the package level state.
+</p>
+
+				<pre>var <span id="Default">Default</span> <a href="index.html#Operations">Operations</a> = &amp;peerImpl{
+    createChainFromBlock: <a href="index.html#CreateChainFromBlock">CreateChainFromBlock</a>,
+    getChannelConfig:     <a href="index.html#GetChannelConfig">GetChannelConfig</a>,
+    getChannelsInfo:      <a href="index.html#GetChannelsInfo">GetChannelsInfo</a>,
+    getCurrConfigBlock:   <a href="index.html#GetCurrConfigBlock">GetCurrConfigBlock</a>,
+    getLedger:            <a href="index.html#GetLedger">GetLedger</a>,
+    getMSPIDs:            <a href="index.html#GetMSPIDs">GetMSPIDs</a>,
+    getPolicyManager:     <a href="index.html#GetPolicyManager">GetPolicyManager</a>,
+    initChain:            <a href="index.html#InitChain">InitChain</a>,
+    initialize:           <a href="index.html#Initialize">Initialize</a>,
+}</pre>
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererEndpoint">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/config.go?s=9034:9097#L256">OrdererEndpoint</a>
+				<a class="permalink" href="index.html#OrdererEndpoint">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type OrdererEndpoint struct {
+<span id="OrdererEndpoint.Address"></span>    Address <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrdererEndpoint.PEMs"></span>    PEMs    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererOrg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/peer.go?s=2488:2613#L59">OrdererOrg</a>
+				<a class="permalink" href="index.html#OrdererOrg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererOrg stores the per org orderer config.
+</p>
+
+			<pre>type OrdererOrg interface {
+    <a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Org">Org</a>
+
+    <span class="comment">// Endpoints returns the endpoints of orderer nodes.</span>
+    Endpoints() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PolicyCheckerProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/deliverevents.go?s=770:848#L20">PolicyCheckerProvider</a>
+				<a class="permalink" href="index.html#PolicyCheckerProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PolicyCheckerProvider provides the corresponding policy checker for a
+given resource name
+</p>
+
+			<pre>type PolicyCheckerProvider func(resourceName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/deliver/index.html">deliver</a>.<a href="../../common/deliver/index.html#PolicyCheckerFunc">PolicyCheckerFunc</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Support">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/support.go?s=430:656#L12">Support</a>
+				<a class="permalink" href="index.html#Support">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Support gives access to peer resources and avoids calls to static methods
+</p>
+
+			<pre>type Support interface {
+    <span class="comment">// GetApplicationConfig returns the configtxapplication.SharedConfig for the channel</span>
+    <span class="comment">// and whether the Application config exists</span>
+    GetApplicationConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+}</pre>
+
+			
+
+			
+				
+				<pre>var <span id="DefaultSupport">DefaultSupport</span> <a href="index.html#Support">Support</a> = &amp;supportImpl{operations: <a href="index.html#Default">Default</a>}</pre>
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SupportFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/peer/support.go?s=253:351#L6">SupportFactory</a>
+				<a class="permalink" href="index.html#SupportFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SupportFactory is a factory of Support interfaces
+</p>
+
+			<pre>type SupportFactory interface {
+    <span class="comment">// NewSupport returns a Support interface</span>
+    NewSupport() <a href="index.html#Support">Support</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

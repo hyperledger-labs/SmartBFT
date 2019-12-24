@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>txvalidator - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package txvalidator
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/committer/txvalidator"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Context">type Context</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Context.String">func (c Context) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MapBasedPluginMapper">type MapBasedPluginMapper</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MapBasedPluginMapper.PluginFactoryByName">func (m MapBasedPluginMapper) PluginFactoryByName(name PluginName) validation.PluginFactory</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PluginMapper">type PluginMapper</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PluginName">type PluginName</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PluginValidator">type PluginValidator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPluginValidator">func NewPluginValidator(pm PluginMapper, qec QueryExecutorCreator, deserializer msp.IdentityDeserializer, capabilities Capabilities) *PluginValidator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PluginValidator.ValidateWithPlugin">func (pv *PluginValidator) ValidateWithPlugin(ctx *Context) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PolicyEvaluator">type PolicyEvaluator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PolicyEvaluator.DeserializeIdentity">func (id *PolicyEvaluator) DeserializeIdentity(serializedIdentity []byte) (Identity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PolicyEvaluator.Evaluate">func (id *PolicyEvaluator) Evaluate(policyBytes []byte, signatureSet []*common.SignedData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#QueryExecutorCreator">type QueryExecutorCreator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ResultsIteratorImpl">type ResultsIteratorImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResultsIteratorImpl.Next">func (it *ResultsIteratorImpl) Next() (QueryResult, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SerializedPolicy">type SerializedPolicy</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedPolicy.Bytes">func (sp SerializedPolicy) Bytes() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StateFetcherImpl">type StateFetcherImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StateFetcherImpl.FetchState">func (sf *StateFetcherImpl) FetchState() (State, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StateImpl">type StateImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StateImpl.GetStateRangeScanIterator">func (s *StateImpl) GetStateRangeScanIterator(namespace string, startKey string, endKey string) (ResultsIterator, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Support">type Support</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxValidator">type TxValidator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTxValidator">func NewTxValidator(chainID string, support Support, sccp sysccprovider.SystemChaincodeProvider, pm PluginMapper) *TxValidator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidator.Validate">func (v *TxValidator) Validate(block *common.Block) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Validator">type Validator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#VsccValidatorImpl">type VsccValidatorImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VsccValidatorImpl.GetInfoForValidate">func (v *VsccValidatorImpl) GetInfoForValidate(chdr *common.ChannelHeader, ccID string) (*sysccprovider.ChaincodeInstance, *sysccprovider.ChaincodeInstance, []byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VsccValidatorImpl.VSCCValidateTx">func (v *VsccValidatorImpl) VSCCValidateTx(seq int, payload *common.Payload, envBytes []byte, block *common.Block) (error, peer.TxValidationCode)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VsccValidatorImpl.VSCCValidateTxForCC">func (v *VsccValidatorImpl) VSCCValidateTxForCC(ctx *Context) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go">plugin_validator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go">validator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/vscc_validator.go">vscc_validator.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Context">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=1875:2046#L42">Context</a>
+				<a class="permalink" href="index.html#Context">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Context defines information about a transaction
+that is being validated
+</p>
+
+			<pre>type Context struct {
+<span id="Context.Seq"></span>    Seq       <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Context.Envelope"></span>    Envelope  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Context.TxID"></span>    TxID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.Channel"></span>    Channel   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.VSCCName"></span>    VSCCName  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.Policy"></span>    Policy    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Context.Namespace"></span>    Namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.Block"></span>    Block     *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Context.String">func (Context) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=2106:2138#L54">String</a>
+					<a class="permalink" href="index.html#Context.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Context">Context</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of this Context
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MapBasedPluginMapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=762:823#L16">MapBasedPluginMapper</a>
+				<a class="permalink" href="index.html#MapBasedPluginMapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MapBasedPluginMapper maps plugin names to their corresponding factories
+</p>
+
+			<pre>type MapBasedPluginMapper map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../handlers/validation/api/index.html">validation</a>.<a href="../../handlers/validation/api/index.html#PluginFactory">PluginFactory</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MapBasedPluginMapper.PluginFactoryByName">func (MapBasedPluginMapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=920:1011#L19">PluginFactoryByName</a>
+					<a class="permalink" href="index.html#MapBasedPluginMapper.PluginFactoryByName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m <a href="index.html#MapBasedPluginMapper">MapBasedPluginMapper</a>) PluginFactoryByName(name <a href="index.html#PluginName">PluginName</a>) <a href="../../handlers/validation/api/index.html">validation</a>.<a href="../../handlers/validation/api/index.html#PluginFactory">PluginFactory</a></pre>
+				<p>
+PluginFactoryByName returns a plugin factory for the given plugin name, or nil if not found
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PluginMapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=1469:1563#L29">PluginMapper</a>
+				<a class="permalink" href="index.html#PluginMapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginMapper maps plugin names to their corresponding factory instance.
+Returns nil if the name isn&#39;t associated to any plugin.
+</p>
+
+			<pre>type PluginMapper interface {
+    PluginFactoryByName(name <a href="index.html#PluginName">PluginName</a>) <a href="../../handlers/validation/api/index.html">validation</a>.<a href="../../handlers/validation/api/index.html#PluginFactory">PluginFactory</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PluginName">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=4797:4819#L125">PluginName</a>
+				<a class="permalink" href="index.html#PluginName">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginName defines the name of the plugin as it appears in the configuration
+</p>
+
+			<pre>type PluginName <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PluginValidator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=2392:2579#L59">PluginValidator</a>
+				<a class="permalink" href="index.html#PluginValidator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginValidator values transactions with validation plugins
+</p>
+
+			<pre>type PluginValidator struct {
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#Mutex">Mutex</a>
+
+    <a href="index.html#PluginMapper">PluginMapper</a>
+    <a href="index.html#QueryExecutorCreator">QueryExecutorCreator</a>
+    <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#IdentityDeserializer">IdentityDeserializer</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPluginValidator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=2856:3005#L72">NewPluginValidator</a>
+					<a class="permalink" href="index.html#NewPluginValidator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPluginValidator(pm <a href="index.html#PluginMapper">PluginMapper</a>, qec <a href="index.html#QueryExecutorCreator">QueryExecutorCreator</a>, deserializer <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#IdentityDeserializer">IdentityDeserializer</a>, capabilities <a href="index.html#Capabilities">Capabilities</a>) *<a href="index.html#PluginValidator">PluginValidator</a></pre>
+				<p>
+NewPluginValidator creates a new PluginValidator
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PluginValidator.ValidateWithPlugin">func (*PluginValidator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=3237:3302#L82">ValidateWithPlugin</a>
+					<a class="permalink" href="index.html#PluginValidator.ValidateWithPlugin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pv *<a href="index.html#PluginValidator">PluginValidator</a>) ValidateWithPlugin(ctx *<a href="index.html#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PolicyEvaluator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=5916:5973#L167">PolicyEvaluator</a>
+				<a class="permalink" href="index.html#PolicyEvaluator">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PolicyEvaluator struct {
+    <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#IdentityDeserializer">IdentityDeserializer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PolicyEvaluator.DeserializeIdentity">func (*PolicyEvaluator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=6425:6516#L182">DeserializeIdentity</a>
+					<a class="permalink" href="index.html#PolicyEvaluator.DeserializeIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (id *<a href="index.html#PolicyEvaluator">PolicyEvaluator</a>) DeserializeIdentity(serializedIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Identity">Identity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeserializeIdentity unmarshals the given identity to msp.Identity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PolicyEvaluator.Evaluate">func (*PolicyEvaluator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=6079:6175#L172">Evaluate</a>
+					<a class="permalink" href="index.html#PolicyEvaluator.Evaluate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (id *<a href="index.html#PolicyEvaluator">PolicyEvaluator</a>) Evaluate(policyBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, signatureSet []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Evaluate takes a set of SignedData and evaluates whether this set of signatures satisfies the policy
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="QueryExecutorCreator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=1706:1795#L36">QueryExecutorCreator</a>
+				<a class="permalink" href="index.html#QueryExecutorCreator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryExecutorCreator creates new query executors
+</p>
+
+			<pre>type QueryExecutorCreator interface {
+    NewQueryExecutor() (<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryExecutor">QueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ResultsIteratorImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7492:7552#L226">ResultsIteratorImpl</a>
+				<a class="permalink" href="index.html#ResultsIteratorImpl">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ResultsIteratorImpl struct {
+    <a href="../../../common/ledger/index.html">ledger2</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ResultsIteratorImpl.Next">func (*ResultsIteratorImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7554:7612#L230">Next</a>
+					<a class="permalink" href="index.html#ResultsIteratorImpl.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (it *<a href="index.html#ResultsIteratorImpl">ResultsIteratorImpl</a>) Next() (<a href="index.html#QueryResult">QueryResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SerializedPolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7699:7727#L235">SerializedPolicy</a>
+				<a class="permalink" href="index.html#SerializedPolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SerializedPolicy defines a marshaled policy
+</p>
+
+			<pre>type SerializedPolicy []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SerializedPolicy.Bytes">func (SerializedPolicy) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7779:7820#L238">Bytes</a>
+					<a class="permalink" href="index.html#SerializedPolicy.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sp <a href="index.html#SerializedPolicy">SerializedPolicy</a>) Bytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Bytes returns te bytes of the SerializedPolicy
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StateFetcherImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=6924:6978#L202">StateFetcherImpl</a>
+				<a class="permalink" href="index.html#StateFetcherImpl">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type StateFetcherImpl struct {
+    <a href="index.html#QueryExecutorCreator">QueryExecutorCreator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StateFetcherImpl.FetchState">func (*StateFetcherImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=6980:7035#L206">FetchState</a>
+					<a class="permalink" href="index.html#StateFetcherImpl.FetchState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sf *<a href="index.html#StateFetcherImpl">StateFetcherImpl</a>) FetchState() (<a href="index.html#State">State</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StateImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7141:7188#L214">StateImpl</a>
+				<a class="permalink" href="index.html#StateImpl">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type StateImpl struct {
+    <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryExecutor">QueryExecutor</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StateImpl.GetStateRangeScanIterator">func (*StateImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/plugin_validator.go?s=7190:7310#L218">GetStateRangeScanIterator</a>
+					<a class="permalink" href="index.html#StateImpl.GetStateRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#StateImpl">StateImpl</a>) GetStateRangeScanIterator(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Support">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go?s=1055:1815#L24">Support</a>
+				<a class="permalink" href="index.html#Support">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Support provides all of the needed to evaluate the VSCC
+</p>
+
+			<pre>type Support interface {
+    <span class="comment">// Acquire implements semaphore-like acquire semantics</span>
+    Acquire(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, n <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Release implements semaphore-like release semantics</span>
+    Release(n <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>)
+
+    <span class="comment">// Ledger returns the ledger associated with this validator</span>
+    Ledger() <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#PeerLedger">PeerLedger</a>
+
+    <span class="comment">// MSPManager returns the MSP manager for this channel</span>
+    MSPManager() <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#MSPManager">MSPManager</a>
+
+    <span class="comment">// Apply attempts to apply a configtx to become the new config</span>
+    Apply(configtx *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetMSPIDs returns the IDs for the application MSPs</span>
+    <span class="comment">// that have been defined in the channel</span>
+    GetMSPIDs(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Capabilities defines the capabilities for the application portion of this channel</span>
+    Capabilities() <a href="../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../common/channelconfig/index.html#ApplicationCapabilities">ApplicationCapabilities</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxValidator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go?s=2450:2533#L65">TxValidator</a>
+				<a class="permalink" href="index.html#TxValidator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+implementation of Validator interface, keeps
+reference to the ledger to enable tx simulation
+and execution of vscc
+</p>
+
+			<pre>type TxValidator struct {
+<span id="TxValidator.ChainID"></span>    ChainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxValidator.Support"></span>    Support <a href="index.html#Support">Support</a>
+<span id="TxValidator.Vscc"></span>    Vscc    vsccValidator
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTxValidator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go?s=3012:3138#L89">NewTxValidator</a>
+					<a class="permalink" href="index.html#NewTxValidator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTxValidator(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, support <a href="index.html#Support">Support</a>, sccp <a href="../../common/sysccprovider/index.html">sysccprovider</a>.<a href="../../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>, pm <a href="index.html#PluginMapper">PluginMapper</a>) *<a href="index.html#TxValidator">TxValidator</a></pre>
+				<p>
+NewTxValidator creates new transactions validator
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TxValidator.Validate">func (*TxValidator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go?s=4820:4877#L123">Validate</a>
+					<a class="permalink" href="index.html#TxValidator.Validate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TxValidator">TxValidator</a>) Validate(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Validate performs the validation of a block. The validation
+of each transaction in the block is performed in parallel.
+The approach is as follows: the committer thread starts the
+tx validation function in a goroutine (using a semaphore to cap
+the number of concurrent validating goroutines). The committer
+thread then reads results of validation (in orderer of completion
+of the goroutines) from the results channel. The goroutines
+perform the validation of the txs in the block and enqueue the
+validation result in the results channel. A few note-worthy facts:
+1) to keep the approach simple, the committer thread enqueues
+</p>
+<pre>all transactions in the block and then moves on to reading the
+results.
+</pre>
+<p>
+2) for parallel validation to work, it is important that the
+</p>
+<pre>validation function does not change the state of the system.
+Otherwise the order in which validation is perform matters
+and we have to resort to sequential validation (or some locking).
+This is currently true, because the only function that affects
+state is when a config transaction is received, but they are
+guaranteed to be alone in the block. If/when this assumption
+is violated, this code must be changed.
+</pre>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Validator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/validator.go?s=1986:2051#L51">Validator</a>
+				<a class="permalink" href="index.html#Validator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Validator interface which defines API to validate block transactions
+and return the bit array mask indicating invalid transactions which
+didn&#39;t pass validation.
+</p>
+
+			<pre>type Validator interface {
+    Validate(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="VsccValidatorImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/vscc_validator.go?s=877:1048#L21">VsccValidatorImpl</a>
+				<a class="permalink" href="index.html#VsccValidatorImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VsccValidatorImpl is the implementation used to call
+the vscc chaincode and validate block transactions
+</p>
+
+			<pre>type VsccValidatorImpl struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VsccValidatorImpl.GetInfoForValidate">func (*VsccValidatorImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/vscc_validator.go?s=12057:12228#L315">GetInfoForValidate</a>
+					<a class="permalink" href="index.html#VsccValidatorImpl.GetInfoForValidate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#VsccValidatorImpl">VsccValidatorImpl</a>) GetInfoForValidate(chdr *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ChannelHeader">ChannelHeader</a>, ccID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../common/sysccprovider/index.html">sysccprovider</a>.<a href="../../common/sysccprovider/index.html#ChaincodeInstance">ChaincodeInstance</a>, *<a href="../../common/sysccprovider/index.html">sysccprovider</a>.<a href="../../common/sysccprovider/index.html#ChaincodeInstance">ChaincodeInstance</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetInfoForValidate gets the ChaincodeInstance(with latest version) of tx, vscc and policy from lscc
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="VsccValidatorImpl.VSCCValidateTx">func (*VsccValidatorImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/vscc_validator.go?s=1461:1606#L39">VSCCValidateTx</a>
+					<a class="permalink" href="index.html#VsccValidatorImpl.VSCCValidateTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#VsccValidatorImpl">VsccValidatorImpl</a>) VSCCValidateTx(seq <a href="http://localhost:6060/pkg/builtin/#int">int</a>, payload *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Payload">Payload</a>, envBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) (<a href="http://localhost:6060/pkg/builtin/#error">error</a>, <a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>)</pre>
+				<p>
+VSCCValidateTx executes vscc validation for transaction
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="VsccValidatorImpl.VSCCValidateTxForCC">func (*VsccValidatorImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/txvalidator/vscc_validator.go?s=10312:10379#L260">VSCCValidateTxForCC</a>
+					<a class="permalink" href="index.html#VsccValidatorImpl.VSCCValidateTxForCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#VsccValidatorImpl">VsccValidatorImpl</a>) VSCCValidateTxForCC(ctx *<a href="index.html#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

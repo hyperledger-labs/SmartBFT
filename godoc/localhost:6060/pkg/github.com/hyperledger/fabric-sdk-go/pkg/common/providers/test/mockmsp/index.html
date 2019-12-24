@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mockmsp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mockmsp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package mockmsp is a generated GoMock package.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#MockIdentityConfig">type MockIdentityConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockIdentityConfig">func NewMockIdentityConfig(ctrl *gomock.Controller) *MockIdentityConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CAClientCert">func (m *MockIdentityConfig) CAClientCert(arg0 string) ([]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CAClientKey">func (m *MockIdentityConfig) CAClientKey(arg0 string) ([]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CAConfig">func (m *MockIdentityConfig) CAConfig(arg0 string) (*msp.CAConfig, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CAKeyStorePath">func (m *MockIdentityConfig) CAKeyStorePath() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CAServerCerts">func (m *MockIdentityConfig) CAServerCerts(arg0 string) ([][]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.Client">func (m *MockIdentityConfig) Client() *msp.ClientConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.CredentialStorePath">func (m *MockIdentityConfig) CredentialStorePath() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfig.EXPECT">func (m *MockIdentityConfig) EXPECT() *MockIdentityConfigMockRecorder</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockIdentityConfigMockRecorder">type MockIdentityConfigMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CAClientCert">func (mr *MockIdentityConfigMockRecorder) CAClientCert(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CAClientKey">func (mr *MockIdentityConfigMockRecorder) CAClientKey(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CAConfig">func (mr *MockIdentityConfigMockRecorder) CAConfig(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CAKeyStorePath">func (mr *MockIdentityConfigMockRecorder) CAKeyStorePath() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CAServerCerts">func (mr *MockIdentityConfigMockRecorder) CAServerCerts(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.Client">func (mr *MockIdentityConfigMockRecorder) Client() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityConfigMockRecorder.CredentialStorePath">func (mr *MockIdentityConfigMockRecorder) CredentialStorePath() *gomock.Call</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockIdentityManager">type MockIdentityManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockIdentityManager">func NewMockIdentityManager(ctrl *gomock.Controller) *MockIdentityManager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityManager.CreateSigningIdentity">func (m *MockIdentityManager) CreateSigningIdentity(arg0 ...msp.SigningIdentityOption) (msp.SigningIdentity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityManager.EXPECT">func (m *MockIdentityManager) EXPECT() *MockIdentityManagerMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityManager.GetSigningIdentity">func (m *MockIdentityManager) GetSigningIdentity(arg0 string) (msp.SigningIdentity, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockIdentityManagerMockRecorder">type MockIdentityManagerMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityManagerMockRecorder.CreateSigningIdentity">func (mr *MockIdentityManagerMockRecorder) CreateSigningIdentity(arg0 ...interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockIdentityManagerMockRecorder.GetSigningIdentity">func (mr *MockIdentityManagerMockRecorder) GetSigningIdentity(arg0 interface{}) *gomock.Call</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProviders">type MockProviders</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockProviders">func NewMockProviders(ctrl *gomock.Controller) *MockProviders</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.EXPECT">func (m *MockProviders) EXPECT() *MockProvidersMockRecorder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.IdentityConfig">func (m *MockProviders) IdentityConfig() msp.IdentityConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.IdentityManager">func (m *MockProviders) IdentityManager(arg0 string) (msp.IdentityManager, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProviders.UserStore">func (m *MockProviders) UserStore() msp.UserStore</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockProvidersMockRecorder">type MockProvidersMockRecorder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.IdentityConfig">func (mr *MockProvidersMockRecorder) IdentityConfig() *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.IdentityManager">func (mr *MockProvidersMockRecorder) IdentityManager(arg0 interface{}) *gomock.Call</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockProvidersMockRecorder.UserStore">func (mr *MockProvidersMockRecorder) UserStore() *gomock.Call</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go">mockmsp.gen.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="MockIdentityConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=440:545#L5">MockIdentityConfig</a>
+				<a class="permalink" href="index.html#MockIdentityConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockIdentityConfig is a mock of IdentityConfig interface
+</p>
+
+			<pre>type MockIdentityConfig struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockIdentityConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=752:823#L16">NewMockIdentityConfig</a>
+					<a class="permalink" href="index.html#NewMockIdentityConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockIdentityConfig(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a></pre>
+				<p>
+NewMockIdentityConfig creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockIdentityConfig.CAClientCert">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=1142:1211#L28">CAClientCert</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CAClientCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CAClientCert(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAClientCert mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.CAClientKey">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=1696:1764#L43">CAClientKey</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CAClientKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CAClientKey(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAClientKey mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.CAConfig">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=2240:2312#L58">CAConfig</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CAConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CAConfig(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#CAConfig">CAConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.CAKeyStorePath">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=2783:2835#L73">CAKeyStorePath</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CAKeyStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CAKeyStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CAKeyStorePath mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.CAServerCerts">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=3274:3346#L87">CAServerCerts</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CAServerCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CAServerCerts(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAServerCerts mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.Client">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=3834:3889#L102">Client</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.Client">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) Client() *<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#ClientConfig">ClientConfig</a></pre>
+				<p>
+Client mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.CredentialStorePath">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=4297:4354#L116">CredentialStorePath</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.CredentialStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) CredentialStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CredentialStorePath mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfig.EXPECT">func (*MockIdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=1014:1083#L23">EXPECT</a>
+					<a class="permalink" href="index.html#MockIdentityConfig.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityConfig">MockIdentityConfig</a>) EXPECT() *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockIdentityConfigMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=625:697#L11">MockIdentityConfigMockRecorder</a>
+				<a class="permalink" href="index.html#MockIdentityConfigMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockIdentityConfigMockRecorder is the mock recorder for MockIdentityConfig
+</p>
+
+			<pre>type MockIdentityConfigMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CAClientCert">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=1413:1498#L37">CAClientCert</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CAClientCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CAClientCert(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CAClientCert indicates an expected call of CAClientCert
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CAClientKey">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=1963:2047#L52">CAClientKey</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CAClientKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CAClientKey(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CAClientKey indicates an expected call of CAClientKey
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CAConfig">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=2509:2590#L67">CAConfig</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CAConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CAConfig(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CAConfig indicates an expected call of CAConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CAKeyStorePath">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=3005:3076#L81">CAKeyStorePath</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CAKeyStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CAKeyStorePath() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CAKeyStorePath indicates an expected call of CAKeyStorePath
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CAServerCerts">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=3553:3639#L96">CAServerCerts</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CAServerCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CAServerCerts(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CAServerCerts indicates an expected call of CAServerCerts
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.Client">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=4046:4109#L110">Client</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.Client">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) Client() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+Client indicates an expected call of Client
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityConfigMockRecorder.CredentialStorePath">func (*MockIdentityConfigMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=4539:4615#L124">CredentialStorePath</a>
+					<a class="permalink" href="index.html#MockIdentityConfigMockRecorder.CredentialStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityConfigMockRecorder">MockIdentityConfigMockRecorder</a>) CredentialStorePath() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CredentialStorePath indicates an expected call of CredentialStorePath
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockIdentityManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=4850:4957#L130">MockIdentityManager</a>
+				<a class="permalink" href="index.html#MockIdentityManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockIdentityManager is a mock of IdentityManager interface
+</p>
+
+			<pre>type MockIdentityManager struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockIdentityManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=5169:5242#L141">NewMockIdentityManager</a>
+					<a class="permalink" href="index.html#NewMockIdentityManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockIdentityManager(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockIdentityManager">MockIdentityManager</a></pre>
+				<p>
+NewMockIdentityManager creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockIdentityManager.CreateSigningIdentity">func (*MockIdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=5574:5689#L153">CreateSigningIdentity</a>
+					<a class="permalink" href="index.html#MockIdentityManager.CreateSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityManager">MockIdentityManager</a>) CreateSigningIdentity(arg0 ...<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentityOption">SigningIdentityOption</a>) (<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateSigningIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityManager.EXPECT">func (*MockIdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=5435:5506#L148">EXPECT</a>
+					<a class="permalink" href="index.html#MockIdentityManager.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityManager">MockIdentityManager</a>) EXPECT() *<a href="index.html#MockIdentityManagerMockRecorder">MockIdentityManagerMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityManager.GetSigningIdentity">func (*MockIdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=6351:6441#L172">GetSigningIdentity</a>
+					<a class="permalink" href="index.html#MockIdentityManager.GetSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockIdentityManager">MockIdentityManager</a>) GetSigningIdentity(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSigningIdentity mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockIdentityManagerMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=5039:5113#L136">MockIdentityManagerMockRecorder</a>
+				<a class="permalink" href="index.html#MockIdentityManagerMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockIdentityManagerMockRecorder is the mock recorder for MockIdentityManager
+</p>
+
+			<pre>type MockIdentityManagerMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockIdentityManagerMockRecorder.CreateSigningIdentity">func (*MockIdentityManagerMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=6026:6124#L166">CreateSigningIdentity</a>
+					<a class="permalink" href="index.html#MockIdentityManagerMockRecorder.CreateSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityManagerMockRecorder">MockIdentityManagerMockRecorder</a>) CreateSigningIdentity(arg0 ...interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+CreateSigningIdentity indicates an expected call of CreateSigningIdentity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockIdentityManagerMockRecorder.GetSigningIdentity">func (*MockIdentityManagerMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=6675:6767#L181">GetSigningIdentity</a>
+					<a class="permalink" href="index.html#MockIdentityManagerMockRecorder.GetSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockIdentityManagerMockRecorder">MockIdentityManagerMockRecorder</a>) GetSigningIdentity(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+GetSigningIdentity indicates an expected call of GetSigningIdentity
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProviders">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=6995:7090#L187">MockProviders</a>
+				<a class="permalink" href="index.html#MockProviders">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProviders is a mock of Providers interface
+</p>
+
+			<pre>type MockProviders struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockProviders">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=7272:7333#L198">NewMockProviders</a>
+					<a class="permalink" href="index.html#NewMockProviders">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockProviders(ctrl *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Controller">Controller</a>) *<a href="index.html#MockProviders">MockProviders</a></pre>
+				<p>
+NewMockProviders creates a new mock instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockProviders.EXPECT">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=7514:7573#L205">EXPECT</a>
+					<a class="permalink" href="index.html#MockProviders.EXPECT">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) EXPECT() *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a></pre>
+				<p>
+EXPECT returns an object that allows the caller to indicate expected use
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.IdentityConfig">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=7634:7693#L210">IdentityConfig</a>
+					<a class="permalink" href="index.html#MockProviders.IdentityConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) IdentityConfig() <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#IdentityConfig">IdentityConfig</a></pre>
+				<p>
+IdentityConfig mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.IdentityManager">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=8136:8216#L224">IdentityManager</a>
+					<a class="permalink" href="index.html#MockProviders.IdentityManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) IdentityManager(arg0 <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#IdentityManager">IdentityManager</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+IdentityManager mocks base method
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProviders.UserStore">func (*MockProviders) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=8720:8769#L239">UserStore</a>
+					<a class="permalink" href="index.html#MockProviders.UserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockProviders">MockProviders</a>) UserStore() <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#UserStore">UserStore</a></pre>
+				<p>
+UserStore mocks base method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockProvidersMockRecorder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=7160:7222#L193">MockProvidersMockRecorder</a>
+				<a class="permalink" href="index.html#MockProvidersMockRecorder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockProvidersMockRecorder is the mock recorder for MockProviders
+</p>
+
+			<pre>type MockProvidersMockRecorder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockProvidersMockRecorder.IdentityConfig">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=7875:7941#L218">IdentityConfig</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.IdentityConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) IdentityConfig() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+IdentityConfig indicates an expected call of IdentityConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.IdentityManager">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=8440:8523#L233">IdentityManager</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.IdentityManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) IdentityManager(arg0 interface{}) *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+IdentityManager indicates an expected call of IdentityManager
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockProvidersMockRecorder.UserStore">func (*MockProvidersMockRecorder) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/test/mockmsp/mockmsp.gen.go?s=8931:8992#L247">UserStore</a>
+					<a class="permalink" href="index.html#MockProvidersMockRecorder.UserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mr *<a href="index.html#MockProvidersMockRecorder">MockProvidersMockRecorder</a>) UserStore() *<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/">gomock</a>.<a href="http://localhost:6060/pkg/github.com/golang/mock/gomock/#Call">Call</a></pre>
+				<p>
+UserStore indicates an expected call of UserStore
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

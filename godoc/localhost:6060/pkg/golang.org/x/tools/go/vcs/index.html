@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>vcs - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package vcs
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/vcs"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package vcs exposes functions for resolving import paths
+and using version control systems, which can be used to
+implement behavior similar to the standard &#34;go get&#34; command.
+</p>
+<p>
+This package is a copy of internal code in package cmd/go/internal/get,
+modified to make the identifiers exported. It&#39;s provided here
+for developers who want to write tools with similar semantics.
+It needs to be manually kept in sync with upstream when changes are
+made to cmd/go/internal/get; see <a href="https://golang.org/issue/11490">https://golang.org/issue/11490</a>.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Cmd">type Cmd</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ByCmd">func ByCmd(cmd string) *Cmd</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FromDir">func FromDir(dir, srcRoot string) (vcs *Cmd, root string, err error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.Create">func (v *Cmd) Create(dir, repo string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.CreateAtRev">func (v *Cmd) CreateAtRev(dir, repo, rev string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.Download">func (v *Cmd) Download(dir string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.Log">func (v *Cmd) Log(dir, logTemplate string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.LogAtRev">func (v *Cmd) LogAtRev(dir, rev, logTemplate string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.Ping">func (v *Cmd) Ping(scheme, repo string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.String">func (v *Cmd) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.TagSync">func (v *Cmd) TagSync(dir, tag string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cmd.Tags">func (v *Cmd) Tags(dir string) ([]string, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RepoRoot">type RepoRoot</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RepoRootForImportDynamic">func RepoRootForImportDynamic(importPath string, verbose bool) (*RepoRoot, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RepoRootForImportPath">func RepoRootForImportPath(importPath string, verbose bool) (*RepoRoot, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RepoRootForImportPathStatic">func RepoRootForImportPathStatic(importPath, scheme string) (*RepoRoot, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TagCmd">type TagCmd</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/discovery.go">discovery.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/env.go">env.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/http.go">http.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go">vcs.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+ShowCmd controls whether VCS commands are printed.
+</p>
+
+				<pre>var <span id="ShowCmd">ShowCmd</span> <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			
+				<p>
+Verbose enables verbose operation logging.
+</p>
+
+				<pre>var <span id="Verbose">Verbose</span> <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Cmd">type <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=1115:1705#L30">Cmd</a>
+				<a class="permalink" href="index.html#Cmd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Cmd describes how to use a version control system
+like Mercurial, Git, or Subversion.
+</p>
+
+			<pre>type Cmd struct {
+<span id="Cmd.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cmd.Cmd"></span>    Cmd  <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// name of binary to invoke command</span>
+
+<span id="Cmd.CreateCmd"></span>    CreateCmd   <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// command to download a fresh copy of a repository</span>
+<span id="Cmd.DownloadCmd"></span>    DownloadCmd <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// command to download updates into an existing repository</span>
+
+<span id="Cmd.TagCmd"></span>    TagCmd         []<a href="index.html#TagCmd">TagCmd</a> <span class="comment">// commands to list tags</span>
+<span id="Cmd.TagLookupCmd"></span>    TagLookupCmd   []<a href="index.html#TagCmd">TagCmd</a> <span class="comment">// commands to lookup tags before running tagSyncCmd</span>
+<span id="Cmd.TagSyncCmd"></span>    TagSyncCmd     <a href="http://localhost:6060/pkg/builtin/#string">string</a>   <span class="comment">// command to sync to specific tag</span>
+<span id="Cmd.TagSyncDefault"></span>    TagSyncDefault <a href="http://localhost:6060/pkg/builtin/#string">string</a>   <span class="comment">// command to sync to default tag</span>
+
+<span id="Cmd.LogCmd"></span>    LogCmd <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// command to list repository changelogs in an XML format</span>
+
+<span id="Cmd.Scheme"></span>    Scheme  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cmd.PingCmd"></span>    PingCmd <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="ByCmd">func <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=2125:2152#L65">ByCmd</a>
+					<a class="permalink" href="index.html#ByCmd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ByCmd(cmd <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Cmd">Cmd</a></pre>
+				<p>
+ByCmd returns the version control system for the given
+command name (hg, git, svn, bzr).
+</p>
+
+				
+				
+			
+				
+				<h3 id="FromDir">func <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=10252:10320#L340">FromDir</a>
+					<a class="permalink" href="index.html#FromDir">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func FromDir(dir, srcRoot <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (vcs *<a href="index.html#Cmd">Cmd</a>, root <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+FromDir inspects dir and its parents to determine the
+version control system and code repository to use.
+On return, root is the import path
+corresponding to the root of the repository.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Cmd.Create">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=6728:6772#L235">Create</a>
+					<a class="permalink" href="index.html#Cmd.Create">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) Create(dir, repo <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Create creates a new copy of repo in dir.
+The parent of dir must exist; dir must not.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.CreateAtRev">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=6990:7044#L242">CreateAtRev</a>
+					<a class="permalink" href="index.html#Cmd.CreateAtRev">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) CreateAtRev(dir, repo, rev <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CreateAtRev creates a new copy of repo in dir at revision rev.
+The parent of dir must exist; dir must not.
+rev must be a valid revision in repo.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.Download">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=7266:7306#L251">Download</a>
+					<a class="permalink" href="index.html#Cmd.Download">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) Download(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Download downloads any new changes for the repo in dir.
+dir must be a valid VCS repo compatible with v.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.Log">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=8629:8687#L301">Log</a>
+					<a class="permalink" href="index.html#Cmd.Log">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) Log(dir, logTemplate <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Log logs the changes for the repo in dir.
+dir must be a valid VCS repo compatible with v.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.LogAtRev">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=9060:9128#L313">LogAtRev</a>
+					<a class="permalink" href="index.html#Cmd.LogAtRev">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) LogAtRev(dir, rev, logTemplate <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LogAtRev logs the change for repo in dir at the rev revision.
+dir must be a valid VCS repo compatible with v.
+rev must be a valid revision for the repo in dir.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.Ping">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=6512:6557#L229">Ping</a>
+					<a class="permalink" href="index.html#Cmd.Ping">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) Ping(scheme, repo <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Ping pings the repo to determine if scheme used is valid.
+This repo must be pingable with this scheme and VCS.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.String">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=4422:4451#L159">String</a>
+					<a class="permalink" href="index.html#Cmd.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Cmd.TagSync">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=8019:8063#L275">TagSync</a>
+					<a class="permalink" href="index.html#Cmd.TagSync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) TagSync(dir, tag <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+TagSync syncs the repo in dir to the named tag, which is either a
+tag returned by Tags or the empty string (the default tag).
+dir must be a valid VCS repo compatible with v and the tag must exist.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cmd.Tags">func (*Cmd) <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=7461:7509#L257">Tags</a>
+					<a class="permalink" href="index.html#Cmd.Tags">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Cmd">Cmd</a>) Tags(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Tags returns the list of available tags for the repo in dir.
+dir must be a valid VCS repo compatible with v.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RepoRoot">type <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=11826:12015#L391">RepoRoot</a>
+				<a class="permalink" href="index.html#RepoRoot">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RepoRoot represents a version control system, a repo, and a root of
+where to put it on disk.
+</p>
+
+			<pre>type RepoRoot struct {
+<span id="RepoRoot.VCS"></span>    VCS *<a href="index.html#Cmd">Cmd</a>
+
+<span id="RepoRoot.Repo"></span>    <span class="comment">// Repo is the repository URL, including scheme.</span>
+    Repo <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="RepoRoot.Root"></span>    <span class="comment">// Root is the import path corresponding to the root of the</span>
+    <span class="comment">// repository.</span>
+    Root <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="RepoRootForImportDynamic">func <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=15019:15100#L504">RepoRootForImportDynamic</a>
+					<a class="permalink" href="index.html#RepoRootForImportDynamic">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func RepoRootForImportDynamic(importPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, verbose <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#RepoRoot">RepoRoot</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RepoRootForImportDynamic finds a *RepoRoot for a custom domain that&#39;s not
+statically known by RepoRootForImportPathStatic.
+</p>
+<p>
+This handles custom import paths like &#34;name.tld/pkg/foo&#34; or just &#34;name.tld&#34;.
+</p>
+
+				
+				
+			
+				
+				<h3 id="RepoRootForImportPath">func <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=12134:12212#L404">RepoRootForImportPath</a>
+					<a class="permalink" href="index.html#RepoRootForImportPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func RepoRootForImportPath(importPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, verbose <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#RepoRoot">RepoRoot</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RepoRootForImportPath analyzes importPath to determine the
+version control system, and code repository to use.
+</p>
+
+				
+				
+			
+				
+				<h3 id="RepoRootForImportPathStatic">func <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=13292:13370#L437">RepoRootForImportPathStatic</a>
+					<a class="permalink" href="index.html#RepoRootForImportPathStatic">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func RepoRootForImportPathStatic(importPath, scheme <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#RepoRoot">RepoRoot</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RepoRootForImportPathStatic attempts to map importPath to a
+RepoRoot using the commonly-used VCS hosting sites in vcsPaths
+(github.com/user/dir), or from a fully-qualified importPath already
+containing its VCS type (foo.com/repo.git/dir)
+</p>
+<p>
+If scheme is non-empty, that scheme is forced.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="TagCmd">type <a href="http://localhost:6060/src/golang.org/x/tools/go/vcs/vcs.go?s=1803:1917#L50">TagCmd</a>
+				<a class="permalink" href="index.html#TagCmd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A TagCmd describes a command to list available tags
+that can be passed to Cmd.TagSyncCmd.
+</p>
+
+			<pre>type TagCmd struct {
+<span id="TagCmd.Cmd"></span>    Cmd     <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// command to list tags</span>
+<span id="TagCmd.Pattern"></span>    Pattern <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// regexp to extract tags from list</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

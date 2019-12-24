@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>committer - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package committer
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/committer"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Committer">type Committer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigBlockEventer">type ConfigBlockEventer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LedgerCommitter">type LedgerCommitter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLedgerCommitter">func NewLedgerCommitter(ledger PeerLedgerSupport) *LedgerCommitter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLedgerCommitterReactive">func NewLedgerCommitterReactive(ledger PeerLedgerSupport, eventer ConfigBlockEventer) *LedgerCommitter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerCommitter.CommitWithPvtData">func (lc *LedgerCommitter) CommitWithPvtData(blockAndPvtData *ledger.BlockAndPvtData, commitOpts *ledger.CommitOptions) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerCommitter.DoesPvtDataInfoExistInLedger">func (lc *LedgerCommitter) DoesPvtDataInfoExistInLedger(blockNum uint64) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerCommitter.GetBlocks">func (lc *LedgerCommitter) GetBlocks(blockSeqs []uint64) []*common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerCommitter.GetPvtDataAndBlockByNum">func (lc *LedgerCommitter) GetPvtDataAndBlockByNum(seqNum uint64) (*ledger.BlockAndPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerCommitter.LedgerHeight">func (lc *LedgerCommitter) LedgerHeight() (uint64, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerLedgerSupport">type PeerLedgerSupport</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer.go">committer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go">committer_impl.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Committer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer.go?s=1034:2770#L21">Committer</a>
+				<a class="permalink" href="index.html#Committer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Committer is the interface supported by committers
+The only committer is noopssinglechain committer.
+The interface is intentionally sparse with the sole
+aim of &#34;leave-everything-to-the-committer-for-now&#34;.
+As we solidify the bootstrap process and as we add
+more support (such as Gossip) this interface will
+change
+</p>
+
+			<pre>type Committer interface {
+
+    <span class="comment">// CommitWithPvtData block and private data into the ledger</span>
+    CommitWithPvtData(blockAndPvtData *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, commitOpts *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#CommitOptions">CommitOptions</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetPvtDataAndBlockByNum retrieves block with private data with given</span>
+    <span class="comment">// sequence number</span>
+    GetPvtDataAndBlockByNum(seqNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPvtDataByNum returns a slice of the private data from the ledger</span>
+    <span class="comment">// for given block and based on the filter which indicates a map of</span>
+    <span class="comment">// collections and namespaces of private data to retrieve</span>
+    GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Get recent block sequence number</span>
+    LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// DoesPvtDataInfoExistInLedger returns true if the ledger has pvtdata info</span>
+    <span class="comment">// about a given block number.</span>
+    DoesPvtDataInfoExistInLedger(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Gets blocks with sequence numbers provided in the slice</span>
+    GetBlocks(blockSeqs []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) []*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>
+
+    <span class="comment">// GetConfigHistoryRetriever returns the ConfigHistoryRetriever</span>
+    GetConfigHistoryRetriever() (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// CommitPvtDataOfOldBlocks commits the private data corresponding to already committed block</span>
+    <span class="comment">// If hashes for some of the private data supplied in this function does not match</span>
+    <span class="comment">// the corresponding hash present in the block, the unmatched private data is not</span>
+    <span class="comment">// committed and instead the mismatch inforation is returned back</span>
+    CommitPvtDataOfOldBlocks(blockPvtData []*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockPvtData">BlockPvtData</a>) ([]*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PvtdataHashMismatch">PvtdataHashMismatch</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetMissingPvtDataTracker return the MissingPvtDataTracker</span>
+    GetMissingPvtDataTracker() (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#MissingPvtDataTracker">MissingPvtDataTracker</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Closes committing service</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigBlockEventer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=1829:1884#L48">ConfigBlockEventer</a>
+				<a class="permalink" href="index.html#ConfigBlockEventer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigBlockEventer callback function proto type to define action
+upon arrival on new configuaration update block
+</p>
+
+			<pre>type ConfigBlockEventer func(block *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LedgerCommitter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=1630:1708#L41">LedgerCommitter</a>
+				<a class="permalink" href="index.html#LedgerCommitter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerCommitter is the implementation of  Committer interface
+it keeps the reference to the ledger to commit blocks and retrieve
+chain information
+</p>
+
+			<pre>type LedgerCommitter struct {
+    <a href="index.html#PeerLedgerSupport">PeerLedgerSupport</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLedgerCommitter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=2050:2116#L52">NewLedgerCommitter</a>
+					<a class="permalink" href="index.html#NewLedgerCommitter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLedgerCommitter(ledger <a href="index.html#PeerLedgerSupport">PeerLedgerSupport</a>) *<a href="index.html#LedgerCommitter">LedgerCommitter</a></pre>
+				<p>
+NewLedgerCommitter is a factory function to create an instance of the committer
+which passes incoming blocks via validation and commits them into the ledger.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewLedgerCommitterReactive">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=2458:2560#L59">NewLedgerCommitterReactive</a>
+					<a class="permalink" href="index.html#NewLedgerCommitterReactive">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLedgerCommitterReactive(ledger <a href="index.html#PeerLedgerSupport">PeerLedgerSupport</a>, eventer <a href="index.html#ConfigBlockEventer">ConfigBlockEventer</a>) *<a href="index.html#LedgerCommitter">LedgerCommitter</a></pre>
+				<p>
+NewLedgerCommitterReactive is a factory function to create an instance of the committer
+same as way as NewLedgerCommitter, while also provides an option to specify callback to
+be called upon new configuration block arrival and commit event
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="LedgerCommitter.CommitWithPvtData">func (*LedgerCommitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=3158:3283#L77">CommitWithPvtData</a>
+					<a class="permalink" href="index.html#LedgerCommitter.CommitWithPvtData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LedgerCommitter">LedgerCommitter</a>) CommitWithPvtData(blockAndPvtData *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, commitOpts *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#CommitOptions">CommitOptions</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CommitWithPvtData commits blocks atomically with private data
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LedgerCommitter.DoesPvtDataInfoExistInLedger">func (*LedgerCommitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=4285:4371#L111">DoesPvtDataInfoExistInLedger</a>
+					<a class="permalink" href="index.html#LedgerCommitter.DoesPvtDataInfoExistInLedger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LedgerCommitter">LedgerCommitter</a>) DoesPvtDataInfoExistInLedger(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DoesPvtDataInfoExistInLedger returns true if the ledger has pvtdata info
+about a given block number.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LedgerCommitter.GetBlocks">func (*LedgerCommitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=4500:4572#L116">GetBlocks</a>
+					<a class="permalink" href="index.html#LedgerCommitter.GetBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LedgerCommitter">LedgerCommitter</a>) GetBlocks(blockSeqs []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) []*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+GetBlocks used to retrieve blocks with sequence numbers provided in the slice
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LedgerCommitter.GetPvtDataAndBlockByNum">func (*LedgerCommitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=3670:3768#L93">GetPvtDataAndBlockByNum</a>
+					<a class="permalink" href="index.html#LedgerCommitter.GetPvtDataAndBlockByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LedgerCommitter">LedgerCommitter</a>) GetPvtDataAndBlockByNum(seqNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataAndBlockByNum retrieves private data and block for given sequence number
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LedgerCommitter.LedgerHeight">func (*LedgerCommitter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=3905:3962#L98">LedgerHeight</a>
+					<a class="permalink" href="index.html#LedgerCommitter.LedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LedgerCommitter">LedgerCommitter</a>) LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LedgerHeight returns recently committed block sequence number
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerLedgerSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/committer/committer_impl.go?s=715:1472#L16">PeerLedgerSupport</a>
+				<a class="permalink" href="index.html#PeerLedgerSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerLedgerSupport abstract out the API&#39;s of ledger.PeerLedger interface
+required to implement LedgerCommitter
+</p>
+
+			<pre>type PeerLedgerSupport interface {
+    GetPvtDataAndBlockByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) (*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    CommitWithPvtData(blockAndPvtdata *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, commitOpts *<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#CommitOptions">CommitOptions</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    CommitPvtDataOfOldBlocks(blockPvtData []*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#BlockPvtData">BlockPvtData</a>) ([]*<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PvtdataHashMismatch">PvtdataHashMismatch</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    GetBlockchainInfo() (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#BlockchainInfo">BlockchainInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    DoesPvtDataInfoExist(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    GetBlockByNumber(blockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    GetConfigHistoryRetriever() (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    GetMissingPvtDataTracker() (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#MissingPvtDataTracker">MissingPvtDataTracker</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="txvalidator/index.html">txvalidator</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="txvalidator/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/msp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#GetIdemixMspConfig">func GetIdemixMspConfig(dir string, ID string) (*msp.MSPConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetLocalMspConfig">func GetLocalMspConfig(dir string, bccspConfig *factory.FactoryOpts, ID string) (*msp.MSPConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetLocalMspConfigWithType">func GetLocalMspConfigWithType(dir string, bccspConfig *factory.FactoryOpts, ID, mspType string) (*msp.MSPConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetRoleMaskFromIdemixRole">func GetRoleMaskFromIdemixRole(role Role) int</a></dd>
+			
+				
+				<dd><a href="index.html#GetVerifyingMspConfig">func GetVerifyingMspConfig(dir, ID, mspType string) (*msp.MSPConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewSerializedIdentity">func NewSerializedIdentity(mspID string, certPEM []byte) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ProviderTypeToString">func ProviderTypeToString(id ProviderType) string</a></dd>
+			
+				
+				<dd><a href="index.html#SetupBCCSPKeystoreConfig">func SetupBCCSPKeystoreConfig(bccspConfig *factory.FactoryOpts, keystoreDir string) *factory.FactoryOpts</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BCCSPNewOpts">type BCCSPNewOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Configuration">type Configuration</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdemixNewOpts">type IdemixNewOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Identity">type Identity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityDeserializer">type IdentityDeserializer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityIdentifier">type IdentityIdentifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MSP">type MSP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(opts NewOpts) (MSP, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MSPManager">type MSPManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMSPManager">func NewMSPManager() MSPManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MSPVersion">type MSPVersion</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NewBaseOpts">type NewBaseOpts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewBaseOpts.GetVersion">func (o *NewBaseOpts) GetVersion() MSPVersion</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NewOpts">type NewOpts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NodeOUs">type NodeOUs</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OUIdentifier">type OUIdentifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrganizationalUnitIdentifiersConfiguration">type OrganizationalUnitIdentifiersConfiguration</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProviderType">type ProviderType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Role">type Role</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SigningIdentity">type SigningIdentity</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/cert.go">cert.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go">configbuilder.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go">factory.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/idemix_roles.go">idemix_roles.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/idemixmsp.go">idemixmsp.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/identities.go">identities.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go">msp.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/mspimpl.go">mspimpl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/mspimplsetup.go">mspimplsetup.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/mspimplvalidate.go">mspimplvalidate.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/mspmgrimpl.go">mspmgrimpl.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="IdemixConfigDirMsp">IdemixConfigDirMsp</span>                  = &#34;msp&#34;
+    <span id="IdemixConfigDirUser">IdemixConfigDirUser</span>                 = &#34;user&#34;
+    <span id="IdemixConfigFileIssuerPublicKey">IdemixConfigFileIssuerPublicKey</span>     = &#34;IssuerPublicKey&#34;
+    <span id="IdemixConfigFileRevocationPublicKey">IdemixConfigFileRevocationPublicKey</span> = &#34;RevocationPublicKey&#34;
+    <span id="IdemixConfigFileSigner">IdemixConfigFileSigner</span>              = &#34;SignerConfig&#34;
+)</pre>
+			
+				
+				<pre>const (
+    <span id="MSPv1_0">MSPv1_0</span> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="MSPv1_1">MSPv1_1</span>
+    <span id="MSPv1_3">MSPv1_3</span>
+    <span id="MSPv1_4_3">MSPv1_4_3</span>
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// AttributeIndexOU contains the index of the OU attribute in the idemix credential attributes</span>
+    <span id="AttributeIndexOU">AttributeIndexOU</span> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+
+    <span class="comment">// AttributeIndexRole contains the index of the Role attribute in the idemix credential attributes</span>
+    <span id="AttributeIndexRole">AttributeIndexRole</span>
+
+    <span class="comment">// AttributeIndexEnrollmentId contains the index of the Enrollment ID attribute in the idemix credential attributes</span>
+    <span id="AttributeIndexEnrollmentId">AttributeIndexEnrollmentId</span>
+
+    <span class="comment">// AttributeIndexRevocationHandle contains the index of the Revocation Handle attribute in the idemix credential attributes</span>
+    <span id="AttributeIndexRevocationHandle">AttributeIndexRevocationHandle</span>
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// AttributeNameOU is the attribute name of the Organization Unit attribute</span>
+    <span id="AttributeNameOU">AttributeNameOU</span> = &#34;OU&#34;
+
+    <span class="comment">// AttributeNameRole is the attribute name of the Role attribute</span>
+    <span id="AttributeNameRole">AttributeNameRole</span> = &#34;Role&#34;
+
+    <span class="comment">// AttributeNameEnrollmentId is the attribute name of the Enrollment ID attribute</span>
+    <span id="AttributeNameEnrollmentId">AttributeNameEnrollmentId</span> = &#34;EnrollmentID&#34;
+
+    <span class="comment">// AttributeNameRevocationHandle is the attribute name of the revocation handle attribute</span>
+    <span id="AttributeNameRevocationHandle">AttributeNameRevocationHandle</span> = &#34;RevocationHandle&#34;
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="GetIdemixMspConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=14094:14164#L377">GetIdemixMspConfig</a>
+				<a class="permalink" href="index.html#GetIdemixMspConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetIdemixMspConfig(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPConfig">MSPConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetIdemixMspConfig returns the configuration for the Idemix MSP
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLocalMspConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=5359:5462#L161">GetLocalMspConfig</a>
+				<a class="permalink" href="index.html#GetLocalMspConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLocalMspConfig(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bccspConfig *<a href="../bccsp/factory/index.html">factory</a>.<a href="../bccsp/factory/index.html#FactoryOpts">FactoryOpts</a>, ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPConfig">MSPConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GetLocalMspConfigWithType">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=4982:5102#L150">GetLocalMspConfigWithType</a>
+				<a class="permalink" href="index.html#GetLocalMspConfigWithType">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLocalMspConfigWithType(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bccspConfig *<a href="../bccsp/factory/index.html">factory</a>.<a href="../bccsp/factory/index.html#FactoryOpts">FactoryOpts</a>, ID, mspType <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPConfig">MSPConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetLocalMspConfigWithType returns a local MSP
+configuration for the MSP in the specified
+directory, with the specified ID and type
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRoleMaskFromIdemixRole">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/idemix_roles.go?s=1154:1199#L42">GetRoleMaskFromIdemixRole</a>
+				<a class="permalink" href="index.html#GetRoleMaskFromIdemixRole">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRoleMaskFromIdemixRole(role <a href="index.html#Role">Role</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+			<p>
+GetRoleMaskFromIdemixRole return a bitmask for one role
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetVerifyingMspConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=6347:6422#L188">GetVerifyingMspConfig</a>
+				<a class="permalink" href="index.html#GetVerifyingMspConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetVerifyingMspConfig(dir, ID, mspType <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPConfig">MSPConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetVerifyingMspConfig returns an MSP config given directory, ID and type
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewSerializedIdentity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/identities.go?s=3542:3614#L120">NewSerializedIdentity</a>
+				<a class="permalink" href="index.html#NewSerializedIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewSerializedIdentity(mspID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, certPEM []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewSerializedIdentity returns a serialized identity
+having as content the passed mspID and x509 certificate in PEM format.
+This method does not check the validity of certificate nor
+any consistency of the mspID with it.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ProviderTypeToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=7910:7959#L205">ProviderTypeToString</a>
+				<a class="permalink" href="index.html#ProviderTypeToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ProviderTypeToString(id <a href="index.html#ProviderType">ProviderType</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+ProviderTypeToString returns a string that represents the ProviderType integer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetupBCCSPKeystoreConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=4211:4315#L126">SetupBCCSPKeystoreConfig</a>
+				<a class="permalink" href="index.html#SetupBCCSPKeystoreConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetupBCCSPKeystoreConfig(bccspConfig *<a href="../bccsp/factory/index.html">factory</a>.<a href="../bccsp/factory/index.html#FactoryOpts">FactoryOpts</a>, keystoreDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../bccsp/factory/index.html">factory</a>.<a href="../bccsp/factory/index.html#FactoryOpts">FactoryOpts</a></pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BCCSPNewOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=616:657#L28">BCCSPNewOpts</a>
+				<a class="permalink" href="index.html#BCCSPNewOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSPNewOpts contains the options to instantiate a new BCCSP-based (X509) MSP
+</p>
+
+			<pre>type BCCSPNewOpts struct {
+    <a href="index.html#NewBaseOpts">NewBaseOpts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Configuration">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=2023:2480#L42">Configuration</a>
+				<a class="permalink" href="index.html#Configuration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Configuration represents the accessory configuration an MSP can be equipped with.
+By default, this configuration is stored in a yaml file
+</p>
+
+			<pre>type Configuration struct {
+<span id="Configuration.OrganizationalUnitIdentifiers"></span>    <span class="comment">// OrganizationalUnitIdentifiers is a list of OUs. If this is set, the MSP</span>
+    <span class="comment">// will consider an identity valid only it contains at least one of these OUs</span>
+    OrganizationalUnitIdentifiers []*<a href="index.html#OrganizationalUnitIdentifiersConfiguration">OrganizationalUnitIdentifiersConfiguration</a> `yaml:&#34;OrganizationalUnitIdentifiers,omitempty&#34;`
+<span id="Configuration.NodeOUs"></span>    <span class="comment">// NodeOUs enables the MSP to tell apart clients, peers and orderers based</span>
+    <span class="comment">// on the identity&#39;s OU.</span>
+    NodeOUs *<a href="index.html#NodeOUs">NodeOUs</a> `yaml:&#34;NodeOUs,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdemixNewOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=735:777#L33">IdemixNewOpts</a>
+				<a class="permalink" href="index.html#IdemixNewOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdemixNewOpts contains the options to instantiate a new Idemix-based MSP
+</p>
+
+			<pre>type IdemixNewOpts struct {
+    <a href="index.html#NewBaseOpts">NewBaseOpts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Identity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=4547:6556#L108">Identity</a>
+				<a class="permalink" href="index.html#Identity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Identity interface defining operations associated to a &#34;certificate&#34;.
+That is, the public part of the identity could be thought to be a certificate,
+and offers solely signature verification capabilities. This is to be used
+at the peer side when verifying certificates that transactions are signed
+with, and verifying signatures that correspond to these certificates.///
+</p>
+
+			<pre>type Identity interface {
+
+    <span class="comment">// ExpiresAt returns the time at which the Identity expires.</span>
+    <span class="comment">// If the returned time is the zero value, it implies</span>
+    <span class="comment">// the Identity does not expire, or that its expiration</span>
+    <span class="comment">// time is unknown</span>
+    ExpiresAt() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+
+    <span class="comment">// GetIdentifier returns the identifier of that identity</span>
+    GetIdentifier() *<a href="index.html#IdentityIdentifier">IdentityIdentifier</a>
+
+    <span class="comment">// GetMSPIdentifier returns the MSP Id for this instance</span>
+    GetMSPIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Validate uses the rules that govern this identity to validate it.</span>
+    <span class="comment">// E.g., if it is a fabric TCert implemented as identity, validate</span>
+    <span class="comment">// will check the TCert signature against the assumed root certificate</span>
+    <span class="comment">// authority.</span>
+    Validate() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetOrganizationalUnits returns zero or more organization units or</span>
+    <span class="comment">// divisions this identity is related to as long as this is public</span>
+    <span class="comment">// information. Certain MSP implementations may use attributes</span>
+    <span class="comment">// that are publicly associated to this identity, or the identifier of</span>
+    <span class="comment">// the root certificate authority that has provided signatures on this</span>
+    <span class="comment">// certificate.</span>
+    <span class="comment">// Examples:</span>
+    <span class="comment">//  - if the identity is an x.509 certificate, this function returns one</span>
+    <span class="comment">//    or more string which is encoded in the Subject&#39;s Distinguished Name</span>
+    <span class="comment">//    of the type OU</span>
+    <span class="comment">// TODO: For X.509 based identities, check if we need a dedicated type</span>
+    <span class="comment">//       for OU where the Certificate OU is properly namespaced by the</span>
+    <span class="comment">//       signer&#39;s identity</span>
+    GetOrganizationalUnits() []*<a href="index.html#OUIdentifier">OUIdentifier</a>
+
+    <span class="comment">// Anonymous returns true if this is an anonymous identity, false otherwise</span>
+    Anonymous() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Verify a signature over some message using this identity as reference</span>
+    Verify(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Serialize converts an identity to bytes</span>
+    Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// SatisfiesPrincipal checks whether this instance matches</span>
+    <span class="comment">// the description supplied in MSPPrincipal. The check may</span>
+    <span class="comment">// involve a byte-by-byte comparison (if the principal is</span>
+    <span class="comment">// a serialized identity) or may require MSP validation</span>
+    SatisfiesPrincipal(principal *<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPPrincipal">MSPPrincipal</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityDeserializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=228:686#L6">IdentityDeserializer</a>
+				<a class="permalink" href="index.html#IdentityDeserializer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityDeserializer is implemented by both MSPManger and MSP
+</p>
+
+			<pre>type IdentityDeserializer interface {
+    <span class="comment">// DeserializeIdentity deserializes an identity.</span>
+    <span class="comment">// Deserialization will fail if the identity is associated to</span>
+    <span class="comment">// an msp that is different from this one that is performing</span>
+    <span class="comment">// the deserialization.</span>
+    DeserializeIdentity(serializedIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Identity">Identity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// IsWellFormed checks if the given identity can be deserialized into its provider-specific form</span>
+    IsWellFormed(identity *<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#SerializedIdentity">SerializedIdentity</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityIdentifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=7160:7339#L177">IdentityIdentifier</a>
+				<a class="permalink" href="index.html#IdentityIdentifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityIdentifier is a holder for the identifier of a specific
+identity, naturally namespaced, by its provider identifier.
+</p>
+
+			<pre>type IdentityIdentifier struct {
+
+    <span class="comment">// The identifier of the associated membership service provider</span>
+<span id="IdentityIdentifier.Mspid"></span>    Mspid <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identifier for an identity within a provider</span>
+<span id="IdentityIdentifier.Id"></span>    Id <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MSP">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=2279:3618#L50">MSP</a>
+				<a class="permalink" href="index.html#MSP">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSP is the minimal Membership Service Provider Interface to be implemented
+to accommodate peer functionality
+</p>
+
+			<pre>type MSP interface {
+
+    <span class="comment">// IdentityDeserializer interface needs to be implemented by MSP</span>
+    <a href="index.html#IdentityDeserializer">IdentityDeserializer</a>
+
+    <span class="comment">// Setup the MSP instance according to configuration information</span>
+    Setup(config *<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPConfig">MSPConfig</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetVersion returns the version of this MSP</span>
+    GetVersion() <a href="index.html#MSPVersion">MSPVersion</a>
+
+    <span class="comment">// GetType returns the provider type</span>
+    GetType() <a href="index.html#ProviderType">ProviderType</a>
+
+    <span class="comment">// GetIdentifier returns the provider identifier</span>
+    GetIdentifier() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetSigningIdentity returns a signing identity corresponding to the provided identifier</span>
+    GetSigningIdentity(identifier *<a href="index.html#IdentityIdentifier">IdentityIdentifier</a>) (<a href="index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetDefaultSigningIdentity returns the default signing identity</span>
+    GetDefaultSigningIdentity() (<a href="index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTLSRootCerts returns the TLS root certificates for this MSP</span>
+    GetTLSRootCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// GetTLSIntermediateCerts returns the TLS intermediate root certificates for this MSP</span>
+    GetTLSIntermediateCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// Validate checks whether the supplied identity is valid</span>
+    Validate(id <a href="index.html#Identity">Identity</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// SatisfiesPrincipal checks whether the identity matches</span>
+    <span class="comment">// the description supplied in MSPPrincipal. The check may</span>
+    <span class="comment">// involve a byte-by-byte comparison (if the principal is</span>
+    <span class="comment">// a serialized identity) or may require MSP validation</span>
+    SatisfiesPrincipal(id <a href="index.html#Identity">Identity</a>, principal *<a href="../protos/msp/index.html">msp</a>.<a href="../protos/msp/index.html#MSPPrincipal">MSPPrincipal</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=841:876#L38">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(opts <a href="index.html#NewOpts">NewOpts</a>) (<a href="index.html#MSP">MSP</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New create a new MSP instance depending on the passed Opts
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MSPManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=1841:2162#L36">MSPManager</a>
+				<a class="permalink" href="index.html#MSPManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSPManager is an interface defining a manager of one or more MSPs. This
+essentially acts as a mediator to MSP calls and routes MSP related calls
+to the appropriate MSP.
+This object is immutable, it is initialized once and never changed.
+</p>
+
+			<pre>type MSPManager interface {
+
+    <span class="comment">// IdentityDeserializer interface needs to be implemented by MSPManager</span>
+    <a href="index.html#IdentityDeserializer">IdentityDeserializer</a>
+
+    <span class="comment">// Setup the MSP manager instance according to configuration information</span>
+    Setup(msps []<a href="index.html#MSP">MSP</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetMSPs Provides a list of Membership Service providers</span>
+    GetMSPs() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#MSP">MSP</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMSPManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/mspmgrimpl.go?s=1207:1238#L32">NewMSPManager</a>
+					<a class="permalink" href="index.html#NewMSPManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMSPManager() <a href="index.html#MSPManager">MSPManager</a></pre>
+				<p>
+NewMSPManager returns a new MSP manager instance;
+note that this instance is not initialized until
+the Setup method is called
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MSPVersion">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=135:154#L3">MSPVersion</a>
+				<a class="permalink" href="index.html#MSPVersion">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MSPVersion <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NewBaseOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=417:464#L19">NewBaseOpts</a>
+				<a class="permalink" href="index.html#NewBaseOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NewBaseOpts is the default base type for all MSP instantiation Opts
+</p>
+
+			<pre>type NewBaseOpts struct {
+<span id="NewBaseOpts.Version"></span>    Version <a href="index.html#MSPVersion">MSPVersion</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NewBaseOpts.GetVersion">func (*NewBaseOpts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=466:511#L23">GetVersion</a>
+					<a class="permalink" href="index.html#NewBaseOpts.GetVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#NewBaseOpts">NewBaseOpts</a>) GetVersion() <a href="index.html#MSPVersion">MSPVersion</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NewOpts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/factory.go?s=233:344#L13">NewOpts</a>
+				<a class="permalink" href="index.html#NewOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NewOpts represent
+</p>
+
+			<pre>type NewOpts interface {
+    <span class="comment">// GetVersion returns the MSP&#39;s version to be instantiated</span>
+    GetVersion() <a href="index.html#MSPVersion">MSPVersion</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NodeOUs">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=1121:1877#L27">NodeOUs</a>
+				<a class="permalink" href="index.html#NodeOUs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NodeOUs contains information on how to tell apart clients, peers and orderers
+based on OUs. If the check is enforced, by setting Enabled to true,
+the MSP will consider an identity valid if it is an identity of a client, a peer or
+an orderer. An identity should have only one of these special OUs.
+</p>
+
+			<pre>type NodeOUs struct {
+<span id="NodeOUs.Enable"></span>    <span class="comment">// Enable activates the OU enforcement</span>
+    Enable <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;Enable,omitempty&#34;`
+<span id="NodeOUs.ClientOUIdentifier"></span>    <span class="comment">// ClientOUIdentifier specifies how to recognize clients by OU</span>
+    ClientOUIdentifier *<a href="index.html#OrganizationalUnitIdentifiersConfiguration">OrganizationalUnitIdentifiersConfiguration</a> `yaml:&#34;ClientOUIdentifier,omitempty&#34;`
+<span id="NodeOUs.PeerOUIdentifier"></span>    <span class="comment">// PeerOUIdentifier specifies how to recognize peers by OU</span>
+    PeerOUIdentifier *<a href="index.html#OrganizationalUnitIdentifiersConfiguration">OrganizationalUnitIdentifiersConfiguration</a> `yaml:&#34;PeerOUIdentifier,omitempty&#34;`
+<span id="NodeOUs.AdminOUIdentifier"></span>    <span class="comment">// AdminOUIdentifier specifies how to recognize admins by OU</span>
+    AdminOUIdentifier *<a href="index.html#OrganizationalUnitIdentifiersConfiguration">OrganizationalUnitIdentifiersConfiguration</a> `yaml:&#34;AdminOUIdentifier,omitempty&#34;`
+<span id="NodeOUs.OrdererOUIdentifier"></span>    <span class="comment">// OrdererOUIdentifier specifies how to recognize admins by OU</span>
+    OrdererOUIdentifier *<a href="index.html#OrganizationalUnitIdentifiersConfiguration">OrganizationalUnitIdentifiersConfiguration</a> `yaml:&#34;OrdererOUIdentifier,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OUIdentifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=3716:4029#L91">OUIdentifier</a>
+				<a class="permalink" href="index.html#OUIdentifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OUIdentifier represents an organizational unit and
+its related chain of trust identifier.
+</p>
+
+			<pre>type OUIdentifier struct {
+<span id="OUIdentifier.CertifiersIdentifier"></span>    <span class="comment">// CertifiersIdentifier is the hash of certificates chain of trust</span>
+    <span class="comment">// related to this organizational unit</span>
+    CertifiersIdentifier []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// OrganizationUnitIdentifier defines the organizational unit under the</span>
+    <span class="comment">// MSP identified with MSPIdentifier</span>
+<span id="OUIdentifier.OrganizationalUnitIdentifier"></span>    OrganizationalUnitIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrganizationalUnitIdentifiersConfiguration">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/configbuilder.go?s=495:810#L16">OrganizationalUnitIdentifiersConfiguration</a>
+				<a class="permalink" href="index.html#OrganizationalUnitIdentifiersConfiguration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrganizationalUnitIdentifiersConfiguration is used to represent an OU
+and an associated trusted certificate
+</p>
+
+			<pre>type OrganizationalUnitIdentifiersConfiguration struct {
+<span id="OrganizationalUnitIdentifiersConfiguration.Certificate"></span>    <span class="comment">// Certificate is the path to a root or intermediate certificate</span>
+    Certificate <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;Certificate,omitempty&#34;`
+<span id="OrganizationalUnitIdentifiersConfiguration.OrganizationalUnitIdentifier"></span>    <span class="comment">// OrganizationalUnitIdentifier is the name of the OU</span>
+    OrganizationalUnitIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;OrganizationalUnitIdentifier,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProviderType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=7400:7421#L187">ProviderType</a>
+				<a class="permalink" href="index.html#ProviderType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProviderType indicates the type of an identity provider
+</p>
+
+			<pre>type ProviderType <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				<p>
+The ProviderType of a member relative to the member API
+</p>
+
+				<pre>const (
+    <span id="FABRIC">FABRIC</span> <a href="index.html#ProviderType">ProviderType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a> <span class="comment">// MSP is of FABRIC type</span>
+    <span id="IDEMIX">IDEMIX</span>                     <span class="comment">// MSP is of IDEMIX type</span>
+    <span id="OTHER">OTHER</span>                      <span class="comment">// MSP is of OTHER TYPE</span>
+
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Role">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/idemix_roles.go?s=189:204#L3">Role</a>
+				<a class="permalink" href="index.html#Role">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Role : Represents a IdemixRole
+</p>
+
+			<pre>type Role <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				<p>
+The expected roles are 4; We can combine them using a bitmask
+</p>
+
+				<pre>const (
+    <span id="MEMBER">MEMBER</span> <a href="index.html#Role">Role</a> = 1
+    <span id="ADMIN">ADMIN</span>  <a href="index.html#Role">Role</a> = 2
+    <span id="CLIENT">CLIENT</span> <a href="index.html#Role">Role</a> = 4
+    <span id="PEER">PEER</span>   <a href="index.html#Role">Role</a> = 8
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SigningIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/msp/msp.go?s=6813:7028#L163">SigningIdentity</a>
+				<a class="permalink" href="index.html#SigningIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SigningIdentity is an extension of Identity to cover signing capabilities.
+E.g., signing identity should be requested in the case of a client who wishes
+to sign transactions, or fabric endorser who wishes to sign proposal
+processing outcomes.
+</p>
+
+			<pre>type SigningIdentity interface {
+
+    <span class="comment">// Extends Identity</span>
+    <a href="index.html#Identity">Identity</a>
+
+    <span class="comment">// Sign the message</span>
+    Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPublicVersion returns the public parts of this identity</span>
+    GetPublicVersion() <a href="index.html#Identity">Identity</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="cache/index.html">cache</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mgmt/index.html">mgmt</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="mgmt/testtools/index.html">testtools</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

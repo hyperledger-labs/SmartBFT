@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ccprovider - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ccprovider
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/mocks/ccprovider"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ExecuteChaincodeResultProvider">type ExecuteChaincodeResultProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MockCcProviderFactory">type MockCcProviderFactory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCcProviderFactory.NewChaincodeProvider">func (c *MockCcProviderFactory) NewChaincodeProvider() ccprovider.ChaincodeProvider</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockCcProviderImpl">type MockCcProviderImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCcProviderImpl.Execute">func (c *MockCcProviderImpl) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, spec *peer.ChaincodeInput) (*peer.Response, *peer.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCcProviderImpl.ExecuteLegacyInit">func (c *MockCcProviderImpl) ExecuteLegacyInit(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, spec *peer.ChaincodeDeploymentSpec) (*peer.Response, *peer.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCcProviderImpl.Stop">func (c *MockCcProviderImpl) Stop(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockChaincodeDefinition">type MockChaincodeDefinition</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockChaincodeDefinition.CCName">func (m *MockChaincodeDefinition) CCName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockChaincodeDefinition.CCVersion">func (m *MockChaincodeDefinition) CCVersion() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockChaincodeDefinition.Endorsement">func (m *MockChaincodeDefinition) Endorsement() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockChaincodeDefinition.Hash">func (m *MockChaincodeDefinition) Hash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockChaincodeDefinition.Validation">func (m *MockChaincodeDefinition) Validation() (string, []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockTxSim">type MockTxSim</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.DeletePrivateData">func (m *MockTxSim) DeletePrivateData(namespace, collection, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.DeletePrivateDataMetadata">func (m *MockTxSim) DeletePrivateDataMetadata(namespace, collection, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.DeleteState">func (m *MockTxSim) DeleteState(namespace string, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.DeleteStateMetadata">func (m *MockTxSim) DeleteStateMetadata(namespace, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.Done">func (m *MockTxSim) Done()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.ExecuteQuery">func (m *MockTxSim) ExecuteQuery(namespace, query string) (commonledger.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.ExecuteQueryOnPrivateData">func (m *MockTxSim) ExecuteQueryOnPrivateData(namespace, collection, query string) (commonledger.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.ExecuteQueryWithMetadata">func (m *MockTxSim) ExecuteQueryWithMetadata(namespace, query string, metadata map[string]interface{}) (ledger.QueryResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.ExecuteUpdate">func (m *MockTxSim) ExecuteUpdate(query string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateData">func (m *MockTxSim) GetPrivateData(namespace, collection, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateDataHash">func (m *MockTxSim) GetPrivateDataHash(namespace, collection, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateDataMetadata">func (m *MockTxSim) GetPrivateDataMetadata(namespace, collection, key string) (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateDataMetadataByHash">func (m *MockTxSim) GetPrivateDataMetadataByHash(namespace, collection string, keyhash []byte) (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateDataMultipleKeys">func (m *MockTxSim) GetPrivateDataMultipleKeys(namespace, collection string, keys []string) ([][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetPrivateDataRangeScanIterator">func (m *MockTxSim) GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey string) (commonledger.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetState">func (m *MockTxSim) GetState(namespace string, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetStateMetadata">func (m *MockTxSim) GetStateMetadata(namespace, key string) (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetStateMultipleKeys">func (m *MockTxSim) GetStateMultipleKeys(namespace string, keys []string) ([][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetStateRangeScanIterator">func (m *MockTxSim) GetStateRangeScanIterator(namespace string, startKey string, endKey string) (commonledger.ResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetStateRangeScanIteratorWithMetadata">func (m *MockTxSim) GetStateRangeScanIteratorWithMetadata(namespace string, startKey, endKey string, metadata map[string]interface{}) (ledger.QueryResultsIterator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.GetTxSimulationResults">func (m *MockTxSim) GetTxSimulationResults() (*ledger.TxSimulationResults, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetPrivateData">func (m *MockTxSim) SetPrivateData(namespace, collection, key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetPrivateDataMetadata">func (m *MockTxSim) SetPrivateDataMetadata(namespace, collection, key string, metadata map[string][]byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetPrivateDataMultipleKeys">func (m *MockTxSim) SetPrivateDataMultipleKeys(namespace, collection string, kvs map[string][]byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetState">func (m *MockTxSim) SetState(namespace string, key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetStateMetadata">func (m *MockTxSim) SetStateMetadata(namespace, key string, metadata map[string][]byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockTxSim.SetStateMultipleKeys">func (m *MockTxSim) SetStateMultipleKeys(namespace string, kvs map[string][]byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go">ccprovider.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ExecuteChaincodeResultProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=328:449#L6">ExecuteChaincodeResultProvider</a>
+				<a class="permalink" href="index.html#ExecuteChaincodeResultProvider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ExecuteChaincodeResultProvider interface {
+    ExecuteChaincodeResult() (*<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#Response">Response</a>, *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MockCcProviderFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=572:663#L12">MockCcProviderFactory</a>
+				<a class="permalink" href="index.html#MockCcProviderFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockCcProviderFactory is a factory that returns
+mock implementations of the ccprovider.ChaincodeProvider interface
+</p>
+
+			<pre>type MockCcProviderFactory struct {
+<span id="MockCcProviderFactory.ExecuteResultProvider"></span>    ExecuteResultProvider <a href="index.html#ExecuteChaincodeResultProvider">ExecuteChaincodeResultProvider</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockCcProviderFactory.NewChaincodeProvider">func (*MockCcProviderFactory) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=765:848#L17">NewChaincodeProvider</a>
+					<a class="permalink" href="index.html#MockCcProviderFactory.NewChaincodeProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCcProviderFactory">MockCcProviderFactory</a>) NewChaincodeProvider() <a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#ChaincodeProvider">ChaincodeProvider</a></pre>
+				<p>
+NewChaincodeProvider returns a mock implementation of the ccprovider.ChaincodeProvider interface
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockCcProviderImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1003:1135#L22">MockCcProviderImpl</a>
+				<a class="permalink" href="index.html#MockCcProviderImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+mockCcProviderImpl is a mock implementation of the chaincode provider
+</p>
+
+			<pre>type MockCcProviderImpl struct {
+<span id="MockCcProviderImpl.ExecuteResultProvider"></span>    ExecuteResultProvider    <a href="index.html#ExecuteChaincodeResultProvider">ExecuteChaincodeResultProvider</a>
+<span id="MockCcProviderImpl.ExecuteChaincodeResponse"></span>    ExecuteChaincodeResponse *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#Response">Response</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockCcProviderImpl.Execute">func (*MockCcProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=4739:4917#L144">Execute</a>
+					<a class="permalink" href="index.html#MockCcProviderImpl.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCcProviderImpl">MockCcProviderImpl</a>) Execute(txParams *<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#CCContext">CCContext</a>, spec *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#Response">Response</a>, *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Execute executes the chaincode given context and spec invocation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCcProviderImpl.ExecuteLegacyInit">func (*MockCcProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=4433:4630#L139">ExecuteLegacyInit</a>
+					<a class="permalink" href="index.html#MockCcProviderImpl.ExecuteLegacyInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCcProviderImpl">MockCcProviderImpl</a>) ExecuteLegacyInit(txParams *<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#CCContext">CCContext</a>, spec *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#Response">Response</a>, *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ExecuteInit executes the chaincode given context and spec deploy
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCcProviderImpl.Stop">func (*MockCcProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5020:5100#L149">Stop</a>
+					<a class="permalink" href="index.html#MockCcProviderImpl.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#MockCcProviderImpl">MockCcProviderImpl</a>) Stop(ccci *<a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Stop stops the chaincode given context and deployment spec
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockChaincodeDefinition">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5118:5301#L153">MockChaincodeDefinition</a>
+				<a class="permalink" href="index.html#MockChaincodeDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockChaincodeDefinition struct {
+<span id="MockChaincodeDefinition.NameRv"></span>    NameRv          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockChaincodeDefinition.VersionRv"></span>    VersionRv       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockChaincodeDefinition.EndorsementStr"></span>    EndorsementStr  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockChaincodeDefinition.ValidationStr"></span>    ValidationStr   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockChaincodeDefinition.ValidationBytes"></span>    ValidationBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="MockChaincodeDefinition.HashRv"></span>    HashRv          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockChaincodeDefinition.CCName">func (*MockChaincodeDefinition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5303:5352#L162">CCName</a>
+					<a class="permalink" href="index.html#MockChaincodeDefinition.CCName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockChaincodeDefinition">MockChaincodeDefinition</a>) CCName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockChaincodeDefinition.CCVersion">func (*MockChaincodeDefinition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5445:5497#L170">CCVersion</a>
+					<a class="permalink" href="index.html#MockChaincodeDefinition.CCVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockChaincodeDefinition">MockChaincodeDefinition</a>) CCVersion() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockChaincodeDefinition.Endorsement">func (*MockChaincodeDefinition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5635:5689#L178">Endorsement</a>
+					<a class="permalink" href="index.html#MockChaincodeDefinition.Endorsement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockChaincodeDefinition">MockChaincodeDefinition</a>) Endorsement() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockChaincodeDefinition.Hash">func (*MockChaincodeDefinition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5375:5422#L166">Hash</a>
+					<a class="permalink" href="index.html#MockChaincodeDefinition.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockChaincodeDefinition">MockChaincodeDefinition</a>) Hash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockChaincodeDefinition.Validation">func (*MockChaincodeDefinition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=5523:5586#L174">Validation</a>
+					<a class="permalink" href="index.html#MockChaincodeDefinition.Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockChaincodeDefinition">MockChaincodeDefinition</a>) Validation() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockTxSim">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1137:1216#L27">MockTxSim</a>
+				<a class="permalink" href="index.html#MockTxSim">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockTxSim struct {
+<span id="MockTxSim.GetTxSimulationResultsRv"></span>    GetTxSimulationResultsRv *<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#TxSimulationResults">TxSimulationResults</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockTxSim.DeletePrivateData">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2574:2652#L78">DeletePrivateData</a>
+					<a class="permalink" href="index.html#MockTxSim.DeletePrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) DeletePrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.DeletePrivateDataMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=4261:4347#L134">DeletePrivateDataMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.DeletePrivateDataMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) DeletePrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.DeleteState">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2186:2253#L62">DeleteState</a>
+					<a class="permalink" href="index.html#MockTxSim.DeleteState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) DeleteState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.DeleteStateMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=4046:4114#L126">DeleteStateMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.DeleteStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) DeleteStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.Done">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2058:2084#L55">Done</a>
+					<a class="permalink" href="index.html#MockTxSim.Done">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) Done()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.ExecuteQuery">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1778:1873#L47">ExecuteQuery</a>
+					<a class="permalink" href="index.html#MockTxSim.ExecuteQuery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) ExecuteQuery(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/ledger/index.html">commonledger</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.ExecuteQueryOnPrivateData">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2670:2790#L82">ExecuteQueryOnPrivateData</a>
+					<a class="permalink" href="index.html#MockTxSim.ExecuteQueryOnPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) ExecuteQueryOnPrivateData(namespace, collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/ledger/index.html">commonledger</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.ExecuteQueryWithMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1896:2035#L51">ExecuteQueryWithMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.ExecuteQueryWithMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) ExecuteQueryWithMetadata(namespace, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.ExecuteUpdate">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2376:2429#L70">ExecuteUpdate</a>
+					<a class="permalink" href="index.html#MockTxSim.ExecuteUpdate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) ExecuteUpdate(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateData">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2813:2898#L86">GetPrivateData</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateDataHash">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2921:3010#L90">GetPrivateDataHash</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateDataHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateDataHash(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateDataMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3664:3768#L114">GetPrivateDataMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateDataMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateDataMetadataByHash">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3791:3912#L118">GetPrivateDataMetadataByHash</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateDataMetadataByHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateDataMetadataByHash(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keyhash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateDataMultipleKeys">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3033:3142#L94">GetPrivateDataMultipleKeys</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateDataMultipleKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetPrivateDataRangeScanIterator">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3165:3302#L98">GetPrivateDataRangeScanIterator</a>
+					<a class="permalink" href="index.html#MockTxSim.GetPrivateDataRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetPrivateDataRangeScanIterator(namespace, collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/ledger/index.html">commonledger</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetState">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1218:1292#L31">GetState</a>
+					<a class="permalink" href="index.html#MockTxSim.GetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetStateMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3555:3641#L110">GetStateMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.GetStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetStateMultipleKeys">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1315:1406#L35">GetStateMultipleKeys</a>
+					<a class="permalink" href="index.html#MockTxSim.GetStateMultipleKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetStateMultipleKeys(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetStateRangeScanIterator">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1429:1562#L39">GetStateRangeScanIterator</a>
+					<a class="permalink" href="index.html#MockTxSim.GetStateRangeScanIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetStateRangeScanIterator(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../../common/ledger/index.html">commonledger</a>.<a href="../../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetStateRangeScanIteratorWithMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=1585:1755#L43">GetStateRangeScanIteratorWithMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.GetStateRangeScanIteratorWithMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetStateRangeScanIteratorWithMetadata(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#QueryResultsIterator">QueryResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.GetTxSimulationResults">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2447:2528#L74">GetTxSimulationResults</a>
+					<a class="permalink" href="index.html#MockTxSim.GetTxSimulationResults">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) GetTxSimulationResults() (*<a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#TxSimulationResults">TxSimulationResults</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetPrivateData">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3325:3414#L102">SetPrivateData</a>
+					<a class="permalink" href="index.html#MockTxSim.SetPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetPrivateData(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetPrivateDataMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=4132:4243#L130">SetPrivateDataMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.SetPrivateDataMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetPrivateDataMetadata(namespace, collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetPrivateDataMultipleKeys">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3432:3537#L106">SetPrivateDataMultipleKeys</a>
+					<a class="permalink" href="index.html#MockTxSim.SetPrivateDataMultipleKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetPrivateDataMultipleKeys(namespace, collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetState">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2090:2168#L58">SetState</a>
+					<a class="permalink" href="index.html#MockTxSim.SetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetStateMetadata">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=3935:4028#L122">SetStateMetadata</a>
+					<a class="permalink" href="index.html#MockTxSim.SetStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetStateMetadata(namespace, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metadata map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockTxSim.SetStateMultipleKeys">func (*MockTxSim) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/mocks/ccprovider/ccprovider.go?s=2271:2358#L66">SetStateMultipleKeys</a>
+					<a class="permalink" href="index.html#MockTxSim.SetStateMultipleKeys">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockTxSim">MockTxSim</a>) SetStateMultipleKeys(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>comm - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package comm
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fab/comm"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#MSPID">func MSPID(cfg fab.EndpointConfig, org string) (string, bool)</a></dd>
+			
+				
+				<dd><a href="index.html#NetworkPeerConfig">func NetworkPeerConfig(cfg fab.EndpointConfig, key string) (*fab.NetworkPeer, error)</a></dd>
+			
+				
+				<dd><a href="index.html#OptsFromPeerConfig">func OptsFromPeerConfig(peerCfg *fab.PeerConfig) []options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#SearchPeerConfigFromURL">func SearchPeerConfigFromURL(cfg fab.EndpointConfig, url string) (*fab.PeerConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#WithCertificate">func WithCertificate(value *x509.Certificate) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithConnectTimeout">func WithConnectTimeout(value time.Duration) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithFailFast">func WithFailFast(value bool) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithHostOverride">func WithHostOverride(value string) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithInsecure">func WithInsecure() options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithKeepAliveParams">func WithKeepAliveParams(value keepalive.ClientParameters) options.Opt</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CachingConnector">type CachingConnector</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCachingConnector">func NewCachingConnector(sweepTime time.Duration, idleTime time.Duration) *CachingConnector</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CachingConnector.Close">func (cc *CachingConnector) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CachingConnector.DialContext">func (cc *CachingConnector) DialContext(ctx context.Context, target string, opts ...grpc.DialOption) (*grpc.ClientConn, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CachingConnector.ReleaseConn">func (cc *CachingConnector) ReleaseConn(conn *grpc.ClientConn)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#GRPCConnection">type GRPCConnection</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConnection">func NewConnection(ctx fabcontext.Client, url string, opts ...options.Opt) (*GRPCConnection, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GRPCConnection.ClientConn">func (c *GRPCConnection) ClientConn() *grpc.ClientConn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GRPCConnection.Close">func (c *GRPCConnection) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GRPCConnection.Closed">func (c *GRPCConnection) Closed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GRPCConnection.Context">func (c *GRPCConnection) Context() fabcontext.Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GRPCConnection.TLSCertHash">func (c *GRPCConnection) TLSCertHash() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockCommManager">type MockCommManager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCommManager.DialContext">func (m *MockCommManager) DialContext(ctx context.Context, target string, opts ...grpc.DialOption) (*grpc.ClientConn, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockCommManager.ReleaseConn">func (m *MockCommManager) ReleaseConn(conn *grpc.ClientConn)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockInfraProvider">type MockInfraProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockInfraProvider">func NewMockInfraProvider() *MockInfraProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockInfraProvider.CommManager">func (f *MockInfraProvider) CommManager() fab.CommManager</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StreamConnection">type StreamConnection</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewStreamConnection">func NewStreamConnection(ctx fabcontext.Client, chConfig fab.ChannelCfg, streamProvider StreamProvider, url string, opts ...options.Opt) (*StreamConnection, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StreamConnection.ChannelConfig">func (c *StreamConnection) ChannelConfig() fab.ChannelCfg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StreamConnection.Close">func (c *StreamConnection) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StreamConnection.Stream">func (c *StreamConnection) Stream() grpc.ClientStream</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StreamProvider">type StreamProvider</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go">connection.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go">connectionopts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go">connector.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go">mocks.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/network.go">network.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go">streamconnection.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="MSPID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/network.go?s=1510:1571#L53">MSPID</a>
+				<a class="permalink" href="index.html#MSPID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MSPID(cfg <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>, org <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+MSPID returns the MSP ID for the requested organization
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NetworkPeerConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/network.go?s=313:397#L7">NetworkPeerConfig</a>
+				<a class="permalink" href="index.html#NetworkPeerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NetworkPeerConfig(cfg <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#NetworkPeer">NetworkPeer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NetworkPeerConfig fetches the peer configuration based on a key (name or URL).
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="OptsFromPeerConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=3546:3608#L139">OptsFromPeerConfig</a>
+				<a class="permalink" href="index.html#OptsFromPeerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func OptsFromPeerConfig(peerCfg *<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#PeerConfig">PeerConfig</a>) []<a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+OptsFromPeerConfig returns a set of connection options from the given peer config
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SearchPeerConfigFromURL">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/network.go?s=905:994#L33">SearchPeerConfigFromURL</a>
+				<a class="permalink" href="index.html#SearchPeerConfigFromURL">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SearchPeerConfigFromURL(cfg <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>, url <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#PeerConfig">PeerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SearchPeerConfigFromURL searches for the peer configuration based on a URL.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithCertificate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=988:1045#L35">WithCertificate</a>
+				<a class="permalink" href="index.html#WithCertificate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithCertificate(value *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>) <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithCertificate sets the X509 certificate used for the TLS connection
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithConnectTimeout">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=1697:1753#L62">WithConnectTimeout</a>
+				<a class="permalink" href="index.html#WithConnectTimeout">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithConnectTimeout(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithConnectTimeout sets the GRPC connection timeout
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithFailFast">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=1482:1523#L53">WithFailFast</a>
+				<a class="permalink" href="index.html#WithFailFast">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithFailFast(value <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithFailFast sets the GRPC fail-fast parameter
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithHostOverride">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=741:788#L26">WithHostOverride</a>
+				<a class="permalink" href="index.html#WithHostOverride">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithHostOverride(value <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithHostOverride sets the host name that will be used to resolve the TLS certificate
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithInsecure">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=2002:2033#L72">WithInsecure</a>
+				<a class="permalink" href="index.html#WithInsecure">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithInsecure() <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithInsecure indicates to fall back to an insecure connection if the
+connection URL does not specify a protocol
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithKeepAliveParams">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connectionopts.go?s=1229:1299#L44">WithKeepAliveParams</a>
+				<a class="permalink" href="index.html#WithKeepAliveParams">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithKeepAliveParams(value <a href="http://localhost:6060/pkg/google.golang.org/grpc/keepalive/">keepalive</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/keepalive/#ClientParameters">ClientParameters</a>) <a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithKeepAliveParams sets the GRPC keep-alive parameters
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CachingConnector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go?s=967:1473#L22">CachingConnector</a>
+				<a class="permalink" href="index.html#CachingConnector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CachingConnector provides the ability to cache GRPC connections.
+It provides a GRPC compatible Context Dialer interface via the &#34;DialContext&#34; method.
+Connections provided by this component are monitored for becoming idle or entering shutdown state.
+When connections has its usages closed for longer than &#34;idleTime&#34;, the connection is closed and removed
+from the connection cache. Callers must release connections by calling the &#34;ReleaseConn&#34; method.
+The Close method will flush all remaining open connections. This component should be considered
+unusable after calling Close.
+</p>
+<p>
+This component has been designed to be safe for concurrency.
+</p>
+
+			<pre>type CachingConnector struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCachingConnector">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go?s=1693:1784#L46">NewCachingConnector</a>
+					<a class="permalink" href="index.html#NewCachingConnector">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCachingConnector(sweepTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, idleTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) *<a href="index.html#CachingConnector">CachingConnector</a></pre>
+				<p>
+NewCachingConnector creates a GRPC connection cache. The cache is governed by
+sweepTime and idleTime.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CachingConnector.Close">func (*CachingConnector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go?s=2461:2496#L66">Close</a>
+					<a class="permalink" href="index.html#CachingConnector.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#CachingConnector">CachingConnector</a>) Close()</pre>
+				<p>
+Close cleans up cached connections.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CachingConnector.DialContext">func (*CachingConnector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go?s=3389:3515#L103">DialContext</a>
+					<a class="permalink" href="index.html#CachingConnector.DialContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#CachingConnector">CachingConnector</a>) DialContext(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, target <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#DialOption">DialOption</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DialContext is a wrapper for grpc.DialContext where connections are cached.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CachingConnector.ReleaseConn">func (*CachingConnector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connector.go?s=4097:4159#L129">ReleaseConn</a>
+					<a class="permalink" href="index.html#CachingConnector.ReleaseConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#CachingConnector">CachingConnector</a>) ReleaseConn(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>)</pre>
+				<p>
+ReleaseConn notifies the cache that the connection is no longer in use.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="GRPCConnection">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=1002:1161#L26">GRPCConnection</a>
+				<a class="permalink" href="index.html#GRPCConnection">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GRPCConnection manages the GRPC connection and client stream
+</p>
+
+			<pre>type GRPCConnection struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConnection">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=1205:1304#L35">NewConnection</a>
+					<a class="permalink" href="index.html#NewConnection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConnection(ctx <a href="../../common/providers/context/index.html">fabcontext</a>.<a href="../../common/providers/context/index.html#Client">Client</a>, url <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a>) (*<a href="index.html#GRPCConnection">GRPCConnection</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewConnection creates a new connection
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="GRPCConnection.ClientConn">func (*GRPCConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=2262:2316#L75">ClientConn</a>
+					<a class="permalink" href="index.html#GRPCConnection.ClientConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#GRPCConnection">GRPCConnection</a>) ClientConn() *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a></pre>
+				<p>
+ClientConn returns the underlying GRPC connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GRPCConnection.Close">func (*GRPCConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=2368:2400#L80">Close</a>
+					<a class="permalink" href="index.html#GRPCConnection.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#GRPCConnection">GRPCConnection</a>) Close()</pre>
+				<p>
+Close closes the connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GRPCConnection.Closed">func (*GRPCConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=2661:2699#L93">Closed</a>
+					<a class="permalink" href="index.html#GRPCConnection.Closed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#GRPCConnection">GRPCConnection</a>) Closed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Closed returns true if the connection has been closed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GRPCConnection.Context">func (*GRPCConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=3035:3087#L107">Context</a>
+					<a class="permalink" href="index.html#GRPCConnection.Context">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#GRPCConnection">GRPCConnection</a>) Context() <a href="../../common/providers/context/index.html">fabcontext</a>.<a href="../../common/providers/context/index.html#Client">Client</a></pre>
+				<p>
+Context returns the context of the client establishing the connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GRPCConnection.TLSCertHash">func (*GRPCConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/connection.go?s=2889:2934#L102">TLSCertHash</a>
+					<a class="permalink" href="index.html#GRPCConnection.TLSCertHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#GRPCConnection">GRPCConnection</a>) TLSCertHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+TLSCertHash returns the hash of the TLS cert
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockCommManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=369:400#L9">MockCommManager</a>
+				<a class="permalink" href="index.html#MockCommManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockCommManager is a non-caching comm manager used
+for unit testing
+</p>
+
+			<pre>type MockCommManager struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockCommManager.DialContext">func (*MockCommManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=438:562#L13">DialContext</a>
+					<a class="permalink" href="index.html#MockCommManager.DialContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCommManager">MockCommManager</a>) DialContext(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, target <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#DialOption">DialOption</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DialContext creates a connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockCommManager.ReleaseConn">func (*MockCommManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=652:712#L18">ReleaseConn</a>
+					<a class="permalink" href="index.html#MockCommManager.ReleaseConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockCommManager">MockCommManager</a>) ReleaseConn(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>)</pre>
+				<p>
+ReleaseConn closes the connection
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockInfraProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=892:953#L26">MockInfraProvider</a>
+				<a class="permalink" href="index.html#MockInfraProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockInfraProvider overrides the comm manager to return
+the MockCommManager
+</p>
+
+			<pre>type MockInfraProvider struct {
+    <a href="../mocks/index.html">fabmocks</a>.<a href="../mocks/index.html#MockInfraProvider">MockInfraProvider</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockInfraProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=1010:1056#L31">NewMockInfraProvider</a>
+					<a class="permalink" href="index.html#NewMockInfraProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockInfraProvider() *<a href="index.html#MockInfraProvider">MockInfraProvider</a></pre>
+				<p>
+NewMockInfraProvider return a new MockInfraProvider
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockInfraProvider.CommManager">func (*MockInfraProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/mocks.go?s=1134:1191#L36">CommManager</a>
+					<a class="permalink" href="index.html#MockInfraProvider.CommManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#MockInfraProvider">MockInfraProvider</a>) CommManager() <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#CommManager">CommManager</a></pre>
+				<p>
+CommManager returns the MockCommManager
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StreamConnection">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=712:835#L17">StreamConnection</a>
+				<a class="permalink" href="index.html#StreamConnection">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StreamConnection manages the GRPC connection and client stream
+</p>
+
+			<pre>type StreamConnection struct {
+    *<a href="index.html#GRPCConnection">GRPCConnection</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewStreamConnection">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=897:1060#L25">NewStreamConnection</a>
+					<a class="permalink" href="index.html#NewStreamConnection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewStreamConnection(ctx <a href="../../common/providers/context/index.html">fabcontext</a>.<a href="../../common/providers/context/index.html#Client">Client</a>, chConfig <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, streamProvider <a href="index.html#StreamProvider">StreamProvider</a>, url <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="../../common/options/index.html">options</a>.<a href="../../common/options/index.html#Opt">Opt</a>) (*<a href="index.html#StreamConnection">StreamConnection</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewStreamConnection creates a new connection with stream
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="StreamConnection.ChannelConfig">func (*StreamConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=2119:2176#L67">ChannelConfig</a>
+					<a class="permalink" href="index.html#StreamConnection.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#StreamConnection">StreamConnection</a>) ChannelConfig() <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a></pre>
+				<p>
+ChannelConfig returns the channel configuration
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StreamConnection.Close">func (*StreamConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=2232:2266#L72">Close</a>
+					<a class="permalink" href="index.html#StreamConnection.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#StreamConnection">StreamConnection</a>) Close()</pre>
+				<p>
+Close closes the connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StreamConnection.Stream">func (*StreamConnection) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=2540:2593#L89">Stream</a>
+					<a class="permalink" href="index.html#StreamConnection.Stream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#StreamConnection">StreamConnection</a>) Stream() <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a></pre>
+				<p>
+Stream returns the GRPC stream
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StreamProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/comm/streamconnection.go?s=570:644#L14">StreamProvider</a>
+				<a class="permalink" href="index.html#StreamProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StreamProvider creates a GRPC stream
+</p>
+
+			<pre>type StreamProvider func(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>) (<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

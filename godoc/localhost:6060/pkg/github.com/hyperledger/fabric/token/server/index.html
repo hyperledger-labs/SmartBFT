@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>server - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package server
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/token/server"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#UnmarshalCommand">func UnmarshalCommand(raw []byte) (*token.Command, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ACLProvider">type ACLProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ACLResources">type ACLResources</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CapabilityChecker">type CapabilityChecker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Issuer">type Issuer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Manager">type Manager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Manager.GetIssuer">func (manager *Manager) GetIssuer(channel string, privateCredential, publicCredential []byte) (Issuer, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Manager.GetTransactor">func (manager *Manager) GetTransactor(channel string, privateCredential, publicCredential []byte) (Transactor, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Marshaler">type Marshaler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerLedgerManager">type PeerLedgerManager</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerLedgerManager.GetLedgerReader">func (*PeerLedgerManager) GetLedgerReader(channel string) (ledger.LedgerReader, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PolicyBasedAccessControl">type PolicyBasedAccessControl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PolicyBasedAccessControl.Check">func (ac *PolicyBasedAccessControl) Check(sc *token.SignedCommand, c *token.Command) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PolicyChecker">type PolicyChecker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Prover">type Prover</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProver">func NewProver(policyChecker PolicyChecker, signingIdentity SignerIdentity) (*Prover, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.ListUnspentTokens">func (s *Prover) ListUnspentTokens(ctxt context.Context, header *token.Header, listRequest *token.ListRequest) (*token.CommandResponse_UnspentTokens, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.MarshalErrorResponse">func (s *Prover) MarshalErrorResponse(command []byte, e error) (*token.SignedCommandResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.ProcessCommand">func (s *Prover) ProcessCommand(ctx context.Context, sc *token.SignedCommand) (*token.SignedCommandResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestApprove">func (s *Prover) RequestApprove(ctx context.Context, header *token.Header, request *token.ApproveRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestExpectation">func (s *Prover) RequestExpectation(ctx context.Context, header *token.Header, request *token.ExpectationRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestImport">func (s *Prover) RequestImport(ctx context.Context, header *token.Header, requestImport *token.ImportRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestRedeem">func (s *Prover) RequestRedeem(ctx context.Context, header *token.Header, request *token.RedeemRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestTransfer">func (s *Prover) RequestTransfer(ctx context.Context, header *token.Header, request *token.TransferRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.RequestTransferFrom">func (s *Prover) RequestTransferFrom(ctx context.Context, header *token.Header, request *token.TransferRequest) (*token.CommandResponse_TokenTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Prover.ValidateHeader">func (s *Prover) ValidateHeader(header *token.Header) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ResponseMarshaler">type ResponseMarshaler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewResponseMarshaler">func NewResponseMarshaler(signerID SignerIdentity) (*ResponseMarshaler, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResponseMarshaler.MarshalCommandResponse">func (s *ResponseMarshaler) MarshalCommandResponse(command []byte, responsePayload interface{}) (*token.SignedCommandResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignerIdentity">type SignerIdentity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TMSManager">type TMSManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TimeFunc">type TimeFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TokenCapabilityChecker">type TokenCapabilityChecker</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TokenCapabilityChecker.FabToken">func (c *TokenCapabilityChecker) FabToken(channelId string) (bool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Transactor">type Transactor</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/accesscontrol.go">accesscontrol.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/capability_checker.go">capability_checker.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/ledgermanager.go">ledgermanager.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/manager.go">manager.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go">marshal.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/msp.go">msp.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go">prover.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/tms.go">tms.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="UnmarshalCommand">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go?s=364:421#L10">UnmarshalCommand</a>
+				<a class="permalink" href="index.html#UnmarshalCommand">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalCommand(raw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Command">Command</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalCommand unmarshal token.Command messages
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ACLProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/accesscontrol.go?s=321:616#L7">ACLProvider</a>
+				<a class="permalink" href="index.html#ACLProvider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ACLProvider interface {
+    <span class="comment">// CheckACL checks access control for the resource for the given channel.</span>
+    <span class="comment">// idinfo is an object such as []*common.SignedData from which</span>
+    <span class="comment">// an id can be extracted for testing against a policy</span>
+    CheckACL(resName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, idinfo interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ACLResources">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/accesscontrol.go?s=618:715#L14">ACLResources</a>
+				<a class="permalink" href="index.html#ACLResources">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ACLResources struct {
+<span id="ACLResources.IssueTokens"></span>    IssueTokens    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ACLResources.TransferTokens"></span>    TransferTokens <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ACLResources.ListTokens"></span>    ListTokens     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CapabilityChecker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/capability_checker.go?s=377:455#L6">CapabilityChecker</a>
+				<a class="permalink" href="index.html#CapabilityChecker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CapabilityChecker is used to check whether or not a channel supports token functions.
+</p>
+
+			<pre>type CapabilityChecker interface {
+    FabToken(channelId <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Issuer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/tms.go?s=276:681#L5">Issuer</a>
+				<a class="permalink" href="index.html#Issuer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Issuer creates token import requests.
+</p>
+
+			<pre>type Issuer interface {
+    <span class="comment">// Issue creates an import request transaction.</span>
+    RequestImport(tokensToIssue []*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenToIssue">TokenToIssue</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestExpectation allows indirect import based on the expectation.</span>
+    <span class="comment">// It creates a token transaction with the outputs as specified in the expectation.</span>
+    RequestExpectation(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ExpectationRequest">ExpectationRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Manager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/manager.go?s=367:426#L7">Manager</a>
+				<a class="permalink" href="index.html#Manager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Manager implements  token/server/TMSManager interface
+TODO: it will be updated after lscc-baased tms configuration is available
+</p>
+
+			<pre>type Manager struct {
+<span id="Manager.LedgerManager"></span>    LedgerManager <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#LedgerManager">LedgerManager</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Manager.GetIssuer">func (*Manager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/manager.go?s=596:705#L14">GetIssuer</a>
+					<a class="permalink" href="index.html#Manager.GetIssuer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (manager *<a href="index.html#Manager">Manager</a>) GetIssuer(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, privateCredential, publicCredential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Issuer">Issuer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+For now it returns a plain issuer.
+After lscc-based tms configuration is available, it will be updated
+to return an issuer configured for the specific channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Manager.GetTransactor">func (*Manager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/manager.go?s=882:999#L20">GetTransactor</a>
+					<a class="permalink" href="index.html#Manager.GetTransactor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (manager *<a href="index.html#Manager">Manager</a>) GetTransactor(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, privateCredential, publicCredential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Transactor">Transactor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTransactor returns a Transactor bound to the passed channel and whose credential
+is the tuple (privateCredential, publicCredential).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Marshaler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=656:791#L17">Marshaler</a>
+				<a class="permalink" href="index.html#Marshaler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Marshaler is responsible for marshaling and signging command responses.
+</p>
+
+			<pre>type Marshaler interface {
+    MarshalCommandResponse(command []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, responsePayload interface{}) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommandResponse">SignedCommandResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerLedgerManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/ledgermanager.go?s=323:356#L7">PeerLedgerManager</a>
+				<a class="permalink" href="index.html#PeerLedgerManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerLedgerManager implements the LedgerManager interface
+by using the peer infrastructure
+</p>
+
+			<pre>type PeerLedgerManager struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PeerLedgerManager.GetLedgerReader">func (*PeerLedgerManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/ledgermanager.go?s=358:444#L10">GetLedgerReader</a>
+					<a class="permalink" href="index.html#PeerLedgerManager.GetLedgerReader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#PeerLedgerManager">PeerLedgerManager</a>) GetLedgerReader(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#LedgerReader">LedgerReader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PolicyBasedAccessControl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/accesscontrol.go?s=796:890#L21">PolicyBasedAccessControl</a>
+				<a class="permalink" href="index.html#PolicyBasedAccessControl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PolicyBasedAccessControl implements token command access control functions.
+</p>
+
+			<pre>type PolicyBasedAccessControl struct {
+<span id="PolicyBasedAccessControl.ACLProvider"></span>    ACLProvider  <a href="index.html#ACLProvider">ACLProvider</a>
+<span id="PolicyBasedAccessControl.ACLResources"></span>    ACLResources *<a href="index.html#ACLResources">ACLResources</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PolicyBasedAccessControl.Check">func (*PolicyBasedAccessControl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/accesscontrol.go?s=892:982#L26">Check</a>
+					<a class="permalink" href="index.html#PolicyBasedAccessControl.Check">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ac *<a href="index.html#PolicyBasedAccessControl">PolicyBasedAccessControl</a>) Check(sc *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommand">SignedCommand</a>, c *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Command">Command</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PolicyChecker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=406:494#L10">PolicyChecker</a>
+				<a class="permalink" href="index.html#PolicyChecker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PolicyChecker is responsible for performing policy based access control
+checks related to token commands.
+</p>
+
+			<pre>type PolicyChecker interface {
+    Check(sc *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommand">SignedCommand</a>, c *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Command">Command</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Prover">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=853:1004#L22">Prover</a>
+				<a class="permalink" href="index.html#Prover">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Provider is responslble for processing token commands.
+</p>
+
+			<pre>type Prover struct {
+<span id="Prover.CapabilityChecker"></span>    CapabilityChecker <a href="index.html#CapabilityChecker">CapabilityChecker</a>
+<span id="Prover.Marshaler"></span>    Marshaler         <a href="index.html#Marshaler">Marshaler</a>
+<span id="Prover.PolicyChecker"></span>    PolicyChecker     <a href="index.html#PolicyChecker">PolicyChecker</a>
+<span id="Prover.TMSManager"></span>    TMSManager        <a href="index.html#TMSManager">TMSManager</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProver">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=1036:1128#L30">NewProver</a>
+					<a class="permalink" href="index.html#NewProver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProver(policyChecker <a href="index.html#PolicyChecker">PolicyChecker</a>, signingIdentity <a href="index.html#SignerIdentity">SignerIdentity</a>) (*<a href="index.html#Prover">Prover</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewProver creates a Prover
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Prover.ListUnspentTokens">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=4847:5003#L144">ListUnspentTokens</a>
+					<a class="permalink" href="index.html#Prover.ListUnspentTokens">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) ListUnspentTokens(ctxt <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, listRequest *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ListRequest">ListRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_UnspentTokens">CommandResponse_UnspentTokens</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.MarshalErrorResponse">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=8327:8427#L250">MarshalErrorResponse</a>
+					<a class="permalink" href="index.html#Prover.MarshalErrorResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) MarshalErrorResponse(command []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, e <a href="http://localhost:6060/pkg/builtin/#error">error</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommandResponse">SignedCommandResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.ProcessCommand">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=1400:1515#L45">ProcessCommand</a>
+					<a class="permalink" href="index.html#Prover.ProcessCommand">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) ProcessCommand(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, sc *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommand">SignedCommand</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommandResponse">SignedCommandResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestApprove">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=5330:5484#L159">RequestApprove</a>
+					<a class="permalink" href="index.html#Prover.RequestApprove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestApprove(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ApproveRequest">ApproveRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestExpectation">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=6500:6662#L191">RequestExpectation</a>
+					<a class="permalink" href="index.html#Prover.RequestExpectation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestExpectation(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ExpectationRequest">ExpectationRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RequestExpectation gets an issuer or transactor and creates a token transaction response
+for import, transfer or redemption.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestImport">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=3313:3471#L100">RequestImport</a>
+					<a class="permalink" href="index.html#Prover.RequestImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestImport(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, requestImport *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ImportRequest">ImportRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestRedeem">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=4336:4488#L129">RequestRedeem</a>
+					<a class="permalink" href="index.html#Prover.RequestRedeem">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestRedeem(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#RedeemRequest">RedeemRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestTransfer">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=3819:3975#L114">RequestTransfer</a>
+					<a class="permalink" href="index.html#Prover.RequestTransfer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestTransfer(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.RequestTransferFrom">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=5844:6004#L174">RequestTransferFrom</a>
+					<a class="permalink" href="index.html#Prover.RequestTransferFrom">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) RequestTransferFrom(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>, request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#CommandResponse_TokenTransaction">CommandResponse_TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Prover.ValidateHeader">func (*Prover) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/prover.go?s=7915:7974#L230">ValidateHeader</a>
+					<a class="permalink" href="index.html#Prover.ValidateHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Prover">Prover</a>) ValidateHeader(header *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#Header">Header</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ResponseMarshaler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go?s=644:727#L23">ResponseMarshaler</a>
+				<a class="permalink" href="index.html#ResponseMarshaler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ResponseMarshaler produces token.SignedCommandResponse
+</p>
+
+			<pre>type ResponseMarshaler struct {
+<span id="ResponseMarshaler.Signer"></span>    Signer  <a href="index.html#Signer">Signer</a>
+<span id="ResponseMarshaler.Creator"></span>    Creator []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ResponseMarshaler.Time"></span>    Time    <a href="index.html#TimeFunc">TimeFunc</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewResponseMarshaler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go?s=729:807#L29">NewResponseMarshaler</a>
+					<a class="permalink" href="index.html#NewResponseMarshaler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewResponseMarshaler(signerID <a href="index.html#SignerIdentity">SignerIdentity</a>) (*<a href="index.html#ResponseMarshaler">ResponseMarshaler</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="ResponseMarshaler.MarshalCommandResponse">func (*ResponseMarshaler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go?s=988:1121#L42">MarshalCommandResponse</a>
+					<a class="permalink" href="index.html#ResponseMarshaler.MarshalCommandResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#ResponseMarshaler">ResponseMarshaler</a>) MarshalCommandResponse(command []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, responsePayload interface{}) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#SignedCommandResponse">SignedCommandResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/msp.go?s=199:311#L1">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signer interface {
+    <span class="comment">// Sign signs the given payload and returns a signature</span>
+    Sign([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignerIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/msp.go?s=390:589#L6">SignerIdentity</a>
+				<a class="permalink" href="index.html#SignerIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignerIdentity signs messages and serializes its public identity to bytes
+</p>
+
+			<pre>type SignerIdentity interface {
+    <a href="index.html#Signer">Signer</a>
+
+    <span class="comment">// Serialize returns a byte representation of this identity which is used to verify</span>
+    <span class="comment">// messages signed by this SignerIdentity</span>
+    Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TMSManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/tms.go?s=2520:3013#L51">TMSManager</a>
+				<a class="permalink" href="index.html#TMSManager">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TMSManager interface {
+    <span class="comment">// GetIssuer returns an Issuer bound to the passed channel and whose credential</span>
+    <span class="comment">// is the tuple (privateCredential, publicCredential).</span>
+    GetIssuer(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, privateCredential, publicCredential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Issuer">Issuer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTransactor returns a Transactor bound to the passed channel and whose credential</span>
+    <span class="comment">// is the tuple (privateCredential, publicCredential).</span>
+    GetTransactor(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, privateCredential, publicCredential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Transactor">Transactor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TimeFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/marshal.go?s=554:584#L20">TimeFunc</a>
+				<a class="permalink" href="index.html#TimeFunc">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TimeFunc func() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TokenCapabilityChecker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/capability_checker.go?s=522:585#L11">TokenCapabilityChecker</a>
+				<a class="permalink" href="index.html#TokenCapabilityChecker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TokenCapabilityChecker implements CapabilityChecker interface
+</p>
+
+			<pre>type TokenCapabilityChecker struct {
+<span id="TokenCapabilityChecker.PeerOps"></span>    PeerOps <a href="../../core/peer/index.html">peer</a>.<a href="../../core/peer/index.html#Operations">Operations</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TokenCapabilityChecker.FabToken">func (*TokenCapabilityChecker) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/capability_checker.go?s=587:660#L15">FabToken</a>
+					<a class="permalink" href="index.html#TokenCapabilityChecker.FabToken">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#TokenCapabilityChecker">TokenCapabilityChecker</a>) FabToken(channelId <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Transactor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/token/server/tms.go?s=818:2431#L17">Transactor</a>
+				<a class="permalink" href="index.html#Transactor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Transactor allows to operate on issued tokens
+</p>
+
+			<pre>type Transactor interface {
+    <span class="comment">// RequestTransfer Create data associated to the transfer of a token assuming</span>
+    <span class="comment">// an application-level identity. The inTokens bytes are the identifiers</span>
+    <span class="comment">// of the outputs, the details of which need to be looked up from the ledger.</span>
+    RequestTransfer(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestRedeem allows the redemption of the tokens in the input tokenIds</span>
+    <span class="comment">// It queries the ledger to read detail for each token id.</span>
+    <span class="comment">// It creates a token transaction with an output for redeemed tokens and</span>
+    <span class="comment">// possibly another output to transfer the remaining tokens, if any, to the creator</span>
+    RequestRedeem(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#RedeemRequest">RedeemRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// ListTokens returns a slice of unspent tokens owned by this transactor</span>
+    ListTokens() (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#UnspentTokens">UnspentTokens</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestApprove creates a token transaction that includes the data necessary</span>
+    <span class="comment">// for approve</span>
+    RequestApprove(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ApproveRequest">ApproveRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestTransferFrom creates a token transaction that includes the data necessary</span>
+    <span class="comment">// for transferring the tokens of a third party that previsouly delegated the transfer</span>
+    <span class="comment">// via an approve request</span>
+    RequestTransferFrom(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TransferRequest">TransferRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RequestExpectation allows indirect transfer based on the expectation.</span>
+    <span class="comment">// It creates a token transaction with the outputs as specified in the expectation.</span>
+    RequestExpectation(request *<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#ExpectationRequest">ExpectationRequest</a>) (*<a href="../../protos/token/index.html">token</a>.<a href="../../protos/token/index.html#TokenTransaction">TokenTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Done releases any resources held by this transactor</span>
+    Done()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

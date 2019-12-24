@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>discovery - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package discovery
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/discovery/cmd"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#AddCommands">func AddCommands(cli CommandRegistrar)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ClientStub">type ClientStub</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ClientStub.Send">func (stub *ClientStub) Send(server string, conf common.Config, req *discovery.Request) (ServiceResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CommandRegistrar">type CommandRegistrar</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigCmd">type ConfigCmd</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConfigCmd">func NewConfigCmd(stub Stub, parser ResponseParser) *ConfigCmd</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigCmd.Execute">func (pc *ConfigCmd) Execute(conf common.Config) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigCmd.SetChannel">func (pc *ConfigCmd) SetChannel(channel *string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigCmd.SetServer">func (pc *ConfigCmd) SetServer(server *string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConfigResponseParser">type ConfigResponseParser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigResponseParser.ParseResponse">func (parser *ConfigResponseParser) ParseResponse(channel string, res ServiceResponse) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EndorserResponseParser">type EndorserResponseParser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorserResponseParser.ParseResponse">func (parser *EndorserResponseParser) ParseResponse(channel string, res ServiceResponse) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EndorsersCmd">type EndorsersCmd</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorsersCmd">func NewEndorsersCmd(stub Stub, parser ResponseParser) *EndorsersCmd</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsersCmd.Execute">func (pc *EndorsersCmd) Execute(conf common.Config) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsersCmd.SetChaincodes">func (pc *EndorsersCmd) SetChaincodes(chaincodes *[]string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsersCmd.SetChannel">func (pc *EndorsersCmd) SetChannel(channel *string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsersCmd.SetCollections">func (pc *EndorsersCmd) SetCollections(collections *map[string]string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsersCmd.SetServer">func (pc *EndorsersCmd) SetServer(server *string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerCmd">type PeerCmd</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPeerCmd">func NewPeerCmd(stub Stub, parser ResponseParser) *PeerCmd</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerCmd.Execute">func (pc *PeerCmd) Execute(conf common.Config) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerCmd.SetChannel">func (pc *PeerCmd) SetChannel(channel *string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerCmd.SetServer">func (pc *PeerCmd) SetServer(server *string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerResponseParser">type PeerResponseParser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerResponseParser.ParseResponse">func (parser *PeerResponseParser) ParseResponse(channel string, res ServiceResponse) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RawStub">type RawStub</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RawStub.Send">func (stub *RawStub) Send(server string, conf common.Config, req *discovery.Request) (ServiceResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ResponseParser">type ResponseParser</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ServiceResponse">type ServiceResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Stub">type Stub</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/cmd.go">cmd.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go">endorsers.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go">peers.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go">stub.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="PeersCommand">PeersCommand</span>     = &#34;peers&#34;
+    <span id="ConfigCommand">ConfigCommand</span>    = &#34;config&#34;
+    <span id="EndorsersCommand">EndorsersCommand</span> = &#34;endorsers&#34;
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="AddCommands">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/cmd.go?s=1477:1515#L48">AddCommands</a>
+				<a class="permalink" href="index.html#AddCommands">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AddCommands(cli <a href="index.html#CommandRegistrar">CommandRegistrar</a>)</pre>
+			<p>
+AddCommands registers the discovery commands to the given CommandRegistrar
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ClientStub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go?s=1350:1376#L38">ClientStub</a>
+				<a class="permalink" href="index.html#ClientStub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientStub is a stub that communicates with the discovery service
+using the discovery client implementation
+</p>
+
+			<pre>type ClientStub struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClientStub.Send">func (*ClientStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go?s=1429:1541#L42">Send</a>
+					<a class="permalink" href="index.html#ClientStub.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ClientStub">ClientStub</a>) Send(server <a href="http://localhost:6060/pkg/builtin/#string">string</a>, conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>, req *<a href="../client/index.html">discovery</a>.<a href="../client/index.html#Request">Request</a>) (<a href="index.html#ServiceResponse">ServiceResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Send sends the request, and receives a response
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CommandRegistrar">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/cmd.go?s=1234:1397#L42">CommandRegistrar</a>
+				<a class="permalink" href="index.html#CommandRegistrar">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommandRegistrar registers commands
+</p>
+
+			<pre>type CommandRegistrar interface {
+    <span class="comment">// Command adds a new top-level command to the CLI</span>
+    Command(name, help <a href="http://localhost:6060/pkg/builtin/#string">string</a>, onCommand <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#CLICommand">CLICommand</a>) *kingpin.<a href="index.html#CmdClause">CmdClause</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigCmd">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=495:592#L18">ConfigCmd</a>
+				<a class="permalink" href="index.html#ConfigCmd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigCmd executes a command that retrieves config
+</p>
+
+			<pre>type ConfigCmd struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConfigCmd">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=316:378#L10">NewConfigCmd</a>
+					<a class="permalink" href="index.html#NewConfigCmd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConfigCmd(stub <a href="index.html#Stub">Stub</a>, parser <a href="index.html#ResponseParser">ResponseParser</a>) *<a href="index.html#ConfigCmd">ConfigCmd</a></pre>
+				<p>
+NewConfigCmd creates a new ConfigCmd
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ConfigCmd.Execute">func (*ConfigCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=868:922#L36">Execute</a>
+					<a class="permalink" href="index.html#ConfigCmd.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#ConfigCmd">ConfigCmd</a>) Execute(conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Execute executes the command
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConfigCmd.SetChannel">func (*ConfigCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=760:808#L31">SetChannel</a>
+					<a class="permalink" href="index.html#ConfigCmd.SetChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#ConfigCmd">ConfigCmd</a>) SetChannel(channel *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetChannel sets the channel of the ConfigCmd
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConfigCmd.SetServer">func (*ConfigCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=640:686#L26">SetServer</a>
+					<a class="permalink" href="index.html#ConfigCmd.SetServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#ConfigCmd">ConfigCmd</a>) SetServer(server *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetServer sets the server of the ConfigCmd
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConfigResponseParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=1396:1443#L56">ConfigResponseParser</a>
+				<a class="permalink" href="index.html#ConfigResponseParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigResponseParser parses config responses
+</p>
+
+			<pre>type ConfigResponseParser struct {
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConfigResponseParser.ParseResponse">func (*ConfigResponseParser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/config.go?s=1510:1602#L61">ParseResponse</a>
+					<a class="permalink" href="index.html#ConfigResponseParser.ParseResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (parser *<a href="index.html#ConfigResponseParser">ConfigResponseParser</a>) ParseResponse(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, res <a href="index.html#ServiceResponse">ServiceResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ParseResponse parses the given response for the given channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EndorserResponseParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=2549:2598#L98">EndorserResponseParser</a>
+				<a class="permalink" href="index.html#EndorserResponseParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndorserResponseParser parses endorsement responses from the peer
+</p>
+
+			<pre>type EndorserResponseParser struct {
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="EndorserResponseParser.ParseResponse">func (*EndorserResponseParser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=2665:2759#L103">ParseResponse</a>
+					<a class="permalink" href="index.html#EndorserResponseParser.ParseResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (parser *<a href="index.html#EndorserResponseParser">EndorserResponseParser</a>) ParseResponse(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, res <a href="index.html#ServiceResponse">ServiceResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ParseResponse parses the given response for the given channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EndorsersCmd">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=750:921#L24">EndorsersCmd</a>
+				<a class="permalink" href="index.html#EndorsersCmd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndorsersCmd executes a command that retrieves endorsers for a chaincode invocation chain
+</p>
+
+			<pre>type EndorsersCmd struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEndorsersCmd">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=523:591#L16">NewEndorsersCmd</a>
+					<a class="permalink" href="index.html#NewEndorsersCmd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorsersCmd(stub <a href="index.html#Stub">Stub</a>, parser <a href="index.html#ResponseParser">ResponseParser</a>) *<a href="index.html#EndorsersCmd">EndorsersCmd</a></pre>
+				<p>
+NewEndorsersCmd creates a new EndorsersCmd
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="EndorsersCmd.Execute">func (*EndorsersCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=1499:1556#L54">Execute</a>
+					<a class="permalink" href="index.html#EndorsersCmd.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#EndorsersCmd">EndorsersCmd</a>) Execute(conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Execute executes the command
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EndorsersCmd.SetChaincodes">func (*EndorsersCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=1160:1219#L39">SetChaincodes</a>
+					<a class="permalink" href="index.html#EndorsersCmd.SetChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#EndorsersCmd">EndorsersCmd</a>) SetChaincodes(chaincodes *[]<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetChaincodes sets the chaincodes to be the given chaincodes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EndorsersCmd.SetChannel">func (*EndorsersCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=1388:1439#L49">SetChannel</a>
+					<a class="permalink" href="index.html#EndorsersCmd.SetChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#EndorsersCmd">EndorsersCmd</a>) SetChannel(channel *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetChannel sets the channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EndorsersCmd.SetCollections">func (*EndorsersCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=990:1060#L34">SetCollections</a>
+					<a class="permalink" href="index.html#EndorsersCmd.SetCollections">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#EndorsersCmd">EndorsersCmd</a>) SetCollections(collections *map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetCollections sets the collections to be the given collections
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EndorsersCmd.SetServer">func (*EndorsersCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/endorsers.go?s=1282:1331#L44">SetServer</a>
+					<a class="permalink" href="index.html#EndorsersCmd.SetServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#EndorsersCmd">EndorsersCmd</a>) SetServer(server *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetServer sets the server
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerCmd">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=598:693#L20">PeerCmd</a>
+				<a class="permalink" href="index.html#PeerCmd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerCmd executes channelPeer listing command
+</p>
+
+			<pre>type PeerCmd struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPeerCmd">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=431:489#L12">NewPeerCmd</a>
+					<a class="permalink" href="index.html#NewPeerCmd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPeerCmd(stub <a href="index.html#Stub">Stub</a>, parser <a href="index.html#ResponseParser">ResponseParser</a>) *<a href="index.html#PeerCmd">PeerCmd</a></pre>
+				<p>
+NewPeerCmd creates a new PeerCmd with the given Stub and ResponseParser
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PeerCmd.Execute">func (*PeerCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=961:1013#L38">Execute</a>
+					<a class="permalink" href="index.html#PeerCmd.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerCmd">PeerCmd</a>) Execute(conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Execute executes the command
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerCmd.SetChannel">func (*PeerCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=855:901#L33">SetChannel</a>
+					<a class="permalink" href="index.html#PeerCmd.SetChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerCmd">PeerCmd</a>) SetChannel(channel *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetChannel sets the channel of the PeerCmd
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerCmd.SetServer">func (*PeerCmd) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=739:783#L28">SetServer</a>
+					<a class="permalink" href="index.html#PeerCmd.SetServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerCmd">PeerCmd</a>) SetServer(server *<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetServer sets the server of the PeerCmd
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerResponseParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=1532:1577#L66">PeerResponseParser</a>
+				<a class="permalink" href="index.html#PeerResponseParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerResponseParser parses a channelPeer response
+</p>
+
+			<pre>type PeerResponseParser struct {
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PeerResponseParser.ParseResponse">func (*PeerResponseParser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/peers.go?s=1646:1736#L71">ParseResponse</a>
+					<a class="permalink" href="index.html#PeerResponseParser.ParseResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (parser *<a href="index.html#PeerResponseParser">PeerResponseParser</a>) ParseResponse(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, res <a href="index.html#ServiceResponse">ServiceResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ParseResponse parses the given response about the given channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RawStub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go?s=2246:2269#L70">RawStub</a>
+				<a class="permalink" href="index.html#RawStub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RawStub is a stub that communicates with the discovery service
+without any intermediary.
+</p>
+
+			<pre>type RawStub struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RawStub.Send">func (*RawStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go?s=2322:2431#L74">Send</a>
+					<a class="permalink" href="index.html#RawStub.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#RawStub">RawStub</a>) Send(server <a href="http://localhost:6060/pkg/builtin/#string">string</a>, conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>, req *<a href="../client/index.html">discovery</a>.<a href="../client/index.html#Request">Request</a>) (<a href="index.html#ServiceResponse">ServiceResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Send sends the request, and receives a response
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ResponseParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/cmd.go?s=929:1108#L34">ResponseParser</a>
+				<a class="permalink" href="index.html#ResponseParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ResponseParser parses responses sent from the server
+</p>
+
+			<pre>type ResponseParser interface {
+    <span class="comment">// ParseResponse parses the response and uses the given output when emitting data</span>
+    ParseResponse(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, response <a href="index.html#ServiceResponse">ServiceResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ServiceResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/stub.go?s=794:1119#L16">ServiceResponse</a>
+				<a class="permalink" href="index.html#ServiceResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ServiceResponse represents a response sent from the discovery service
+</p>
+
+			<pre>type ServiceResponse interface {
+    <span class="comment">// ForChannel returns a ChannelResponse in the context of a given channel</span>
+    ForChannel(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../client/index.html">discovery</a>.<a href="../client/index.html#ChannelResponse">ChannelResponse</a>
+
+    <span class="comment">// ForLocal returns a LocalResponse in the context of no channel</span>
+    ForLocal() <a href="../client/index.html">discovery</a>.<a href="../client/index.html#LocalResponse">LocalResponse</a>
+
+    <span class="comment">// Raw returns the raw response from the server</span>
+    Raw() *<a href="index.html#Response">Response</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Stub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/cmd/cmd.go?s=623:788#L26">Stub</a>
+				<a class="permalink" href="index.html#Stub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Stub represents the remote discovery service
+</p>
+
+			<pre>type Stub interface {
+    <span class="comment">// Send sends the request, and receives a response</span>
+    Send(server <a href="http://localhost:6060/pkg/builtin/#string">string</a>, conf <a href="../../cmd/common/index.html">common</a>.<a href="../../cmd/common/index.html#Config">Config</a>, req *<a href="../client/index.html">discovery</a>.<a href="../client/index.html#Request">Request</a>) (<a href="index.html#ServiceResponse">ServiceResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

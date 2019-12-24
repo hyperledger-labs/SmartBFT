@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>config - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package config
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/mocks/config"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Channel">type Channel</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.BlockDataHashingStructureWidth">func (scm *Channel) BlockDataHashingStructureWidth() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.Capabilities">func (scm *Channel) Capabilities() channelconfig.ChannelCapabilities</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.HashingAlgorithm">func (scm *Channel) HashingAlgorithm() func([]byte) []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Channel.OrdererAddresses">func (scm *Channel) OrdererAddresses() []string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelCapabilities">type ChannelCapabilities</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCapabilities.ConsensusTypeMigration">func (cc *ChannelCapabilities) ConsensusTypeMigration() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCapabilities.MSPVersion">func (cc *ChannelCapabilities) MSPVersion() msp.MSPVersion</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCapabilities.OrgSpecificOrdererEndpoints">func (cc *ChannelCapabilities) OrgSpecificOrdererEndpoints() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelCapabilities.Supported">func (cc *ChannelCapabilities) Supported() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockApplication">type MockApplication</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplication.APIPolicyMapper">func (m *MockApplication) APIPolicyMapper() channelconfig.PolicyMapper</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplication.Capabilities">func (m *MockApplication) Capabilities() channelconfig.ApplicationCapabilities</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplication.Organizations">func (m *MockApplication) Organizations() map[string]channelconfig.ApplicationOrg</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplication.PolicyRefForAPI">func (m *MockApplication) PolicyRefForAPI(apiName string) string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockApplicationCapabilities">type MockApplicationCapabilities</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.ACLs">func (mac *MockApplicationCapabilities) ACLs() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.CollectionUpgrade">func (mac *MockApplicationCapabilities) CollectionUpgrade() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.FabToken">func (mac *MockApplicationCapabilities) FabToken() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.ForbidDuplicateTXIdInBlock">func (mac *MockApplicationCapabilities) ForbidDuplicateTXIdInBlock() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.KeyLevelEndorsement">func (mac *MockApplicationCapabilities) KeyLevelEndorsement() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.MetadataLifecycle">func (mac *MockApplicationCapabilities) MetadataLifecycle() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.PrivateChannelData">func (mac *MockApplicationCapabilities) PrivateChannelData() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.StorePvtDataOfInvalidTx">func (mac *MockApplicationCapabilities) StorePvtDataOfInvalidTx() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.Supported">func (mac *MockApplicationCapabilities) Supported() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.V1_1Validation">func (mac *MockApplicationCapabilities) V1_1Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.V1_2Validation">func (mac *MockApplicationCapabilities) V1_2Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockApplicationCapabilities.V1_3Validation">func (mac *MockApplicationCapabilities) V1_3Validation() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Orderer">type Orderer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.BatchSize">func (o *Orderer) BatchSize() *ab.BatchSize</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.BatchTimeout">func (o *Orderer) BatchTimeout() time.Duration</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Capabilities">func (o *Orderer) Capabilities() channelconfig.OrdererCapabilities</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.ConsensusMetadata">func (o *Orderer) ConsensusMetadata() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.ConsensusState">func (o *Orderer) ConsensusState() ab.ConsensusType_State</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.ConsensusType">func (o *Orderer) ConsensusType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.KafkaBrokers">func (o *Orderer) KafkaBrokers() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.MaxChannelsCount">func (o *Orderer) MaxChannelsCount() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Orderer.Organizations">func (o *Orderer) Organizations() map[string]channelconfig.OrdererOrg</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OrdererCapabilities">type OrdererCapabilities</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererCapabilities.ConsensusTypeMigration">func (oc *OrdererCapabilities) ConsensusTypeMigration() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererCapabilities.ExpirationCheck">func (oc *OrdererCapabilities) ExpirationCheck() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererCapabilities.PredictableChannelTemplate">func (oc *OrdererCapabilities) PredictableChannelTemplate() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererCapabilities.Resubmission">func (oc *OrdererCapabilities) Resubmission() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererCapabilities.Supported">func (oc *OrdererCapabilities) Supported() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Resources">type Resources</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.ApplicationConfig">func (r *Resources) ApplicationConfig() (channelconfig.Application, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.ChannelConfig">func (r *Resources) ChannelConfig() channelconfig.Channel</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.ConfigtxValidator">func (r *Resources) ConfigtxValidator() configtx.Validator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.ConsortiumsConfig">func (r *Resources) ConsortiumsConfig() (channelconfig.Consortiums, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.MSPManager">func (r *Resources) MSPManager() msp.MSPManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.OrdererConfig">func (r *Resources) OrdererConfig() (channelconfig.Orderer, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.PolicyManager">func (r *Resources) PolicyManager() policies.Manager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resources.ValidateNew">func (r *Resources) ValidateNew(res channelconfig.Resources) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go">application.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go">channel.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go">orderer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go">resources.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Channel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=927:1429#L20">Channel</a>
+				<a class="permalink" href="index.html#Channel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Channel is a mock implementation of config.Channel
+</p>
+
+			<pre>type Channel struct {
+<span id="Channel.HashingAlgorithmVal"></span>    <span class="comment">// HashingAlgorithmVal is returned as the result of HashingAlgorithm() if set</span>
+    HashingAlgorithmVal func([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Channel.BlockDataHashingStructureWidthVal"></span>    <span class="comment">// BlockDataHashingStructureWidthVal is returned as the result of BlockDataHashingStructureWidth()</span>
+    BlockDataHashingStructureWidthVal <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+<span id="Channel.OrdererAddressesVal"></span>    <span class="comment">// OrdererAddressesVal is returned as the result of OrdererAddresses()</span>
+    OrdererAddressesVal []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Channel.CapabilitiesVal"></span>    <span class="comment">// CapabilitiesVal is returned as the result of Capabilities()</span>
+    CapabilitiesVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#ChannelCapabilities">ChannelCapabilities</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Channel.BlockDataHashingStructureWidth">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=1771:1830#L40">BlockDataHashingStructureWidth</a>
+					<a class="permalink" href="index.html#Channel.BlockDataHashingStructureWidth">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scm *<a href="index.html#Channel">Channel</a>) BlockDataHashingStructureWidth() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				<p>
+BlockDataHashingStructureWidth returns the BlockDataHashingStructureWidthVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Channel.Capabilities">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2059:2127#L50">Capabilities</a>
+					<a class="permalink" href="index.html#Channel.Capabilities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scm *<a href="index.html#Channel">Channel</a>) Capabilities() <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#ChannelCapabilities">ChannelCapabilities</a></pre>
+				<p>
+Capabilities returns CapabilitiesVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Channel.HashingAlgorithm">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=1529:1587#L32">HashingAlgorithm</a>
+					<a class="permalink" href="index.html#Channel.HashingAlgorithm">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scm *<a href="index.html#Channel">Channel</a>) HashingAlgorithm() func([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+HashingAlgorithm returns the HashingAlgorithmVal if set, otherwise a fake simple hash function
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Channel.OrdererAddresses">func (*Channel) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=1934:1981#L45">OrdererAddresses</a>
+					<a class="permalink" href="index.html#Channel.OrdererAddresses">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scm *<a href="index.html#Channel">Channel</a>) OrdererAddresses() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+OrdererAddresses returns the OrdererAddressesVal
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelCapabilities">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2238:2447#L55">ChannelCapabilities</a>
+				<a class="permalink" href="index.html#ChannelCapabilities">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelCapabilities mocks the channelconfig.ChannelCapabilities interface
+</p>
+
+			<pre>type ChannelCapabilities struct {
+<span id="ChannelCapabilities.SupportedErr"></span>    <span class="comment">// SupportedErr is returned by Supported()</span>
+    SupportedErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="ChannelCapabilities.MSPVersionVal"></span>    <span class="comment">// MSPVersionVal is returned by MSPVersion()</span>
+    MSPVersionVal <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#MSPVersion">MSPVersion</a>
+
+<span id="ChannelCapabilities.ConsensusTypeMigrationVal"></span>    ConsensusTypeMigrationVal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChannelCapabilities.ConsensusTypeMigration">func (*ChannelCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2944:3004#L82">ConsensusTypeMigration</a>
+					<a class="permalink" href="index.html#ChannelCapabilities.ConsensusTypeMigration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#ChannelCapabilities">ChannelCapabilities</a>) ConsensusTypeMigration() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ConsensusTypeMigration returns ConsensusTypeMigrationVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCapabilities.MSPVersion">func (*ChannelCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2795:2853#L77">MSPVersion</a>
+					<a class="permalink" href="index.html#ChannelCapabilities.MSPVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#ChannelCapabilities">ChannelCapabilities</a>) MSPVersion() <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#MSPVersion">MSPVersion</a></pre>
+				<p>
+MSPVersion returns MSPVersionVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelCapabilities.OrgSpecificOrdererEndpoints">func (*ChannelCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2449:2514#L65">OrgSpecificOrdererEndpoints</a>
+					<a class="permalink" href="index.html#ChannelCapabilities.OrgSpecificOrdererEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#ChannelCapabilities">ChannelCapabilities</a>) OrgSpecificOrdererEndpoints() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelCapabilities.Supported">func (*ChannelCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/channel.go?s=2681:2729#L72">Supported</a>
+					<a class="permalink" href="index.html#ChannelCapabilities.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cc *<a href="index.html#ChannelCapabilities">ChannelCapabilities</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported returns SupportedErr
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockApplication">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=172:291#L3">MockApplication</a>
+				<a class="permalink" href="index.html#MockApplication">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockApplication struct {
+<span id="MockApplication.CapabilitiesRv"></span>    CapabilitiesRv <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#ApplicationCapabilities">ApplicationCapabilities</a>
+<span id="MockApplication.Acls"></span>    Acls           map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockApplication.APIPolicyMapper">func (*MockApplication) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=677:747#L24">APIPolicyMapper</a>
+					<a class="permalink" href="index.html#MockApplication.APIPolicyMapper">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockApplication">MockApplication</a>) APIPolicyMapper() <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#PolicyMapper">PolicyMapper</a></pre>
+				<p>
+Returns the mock which itself is a provider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockApplication.Capabilities">func (*MockApplication) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=392:470#L12">Capabilities</a>
+					<a class="permalink" href="index.html#MockApplication.Capabilities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockApplication">MockApplication</a>) Capabilities() <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#ApplicationCapabilities">ApplicationCapabilities</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplication.Organizations">func (*MockApplication) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=293:374#L8">Organizations</a>
+					<a class="permalink" href="index.html#MockApplication.Organizations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockApplication">MockApplication</a>) Organizations() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#ApplicationOrg">ApplicationOrg</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplication.PolicyRefForAPI">func (*MockApplication) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=501:565#L16">PolicyRefForAPI</a>
+					<a class="permalink" href="index.html#MockApplication.PolicyRefForAPI">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockApplication">MockApplication</a>) PolicyRefForAPI(apiName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockApplicationCapabilities">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=763:1227#L28">MockApplicationCapabilities</a>
+				<a class="permalink" href="index.html#MockApplicationCapabilities">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockApplicationCapabilities struct {
+<span id="MockApplicationCapabilities.SupportedRv"></span>    SupportedRv                  <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+<span id="MockApplicationCapabilities.ForbidDuplicateTXIdInBlockRv"></span>    ForbidDuplicateTXIdInBlockRv <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.ACLsRv"></span>    ACLsRv                       <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.PrivateChannelDataRv"></span>    PrivateChannelDataRv         <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.CollectionUpgradeRv"></span>    CollectionUpgradeRv          <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.V1_1ValidationRv"></span>    V1_1ValidationRv             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.V1_2ValidationRv"></span>    V1_2ValidationRv             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.MetadataLifecycleRv"></span>    MetadataLifecycleRv          <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.KeyLevelEndorsementRv"></span>    KeyLevelEndorsementRv        <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.V1_3ValidationRv"></span>    V1_3ValidationRv             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.FabTokenRv"></span>    FabTokenRv                   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockApplicationCapabilities.StorePvtDataOfInvalidTxRv"></span>    StorePvtDataOfInvalidTxRv    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockApplicationCapabilities.ACLs">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1436:1487#L51">ACLs</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.ACLs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) ACLs() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.CollectionUpgrade">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1616:1680#L59">CollectionUpgrade</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.CollectionUpgrade">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) CollectionUpgrade() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.FabToken">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=2214:2269#L83">FabToken</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.FabToken">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) FabToken() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.ForbidDuplicateTXIdInBlock">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1316:1389#L47">ForbidDuplicateTXIdInBlock</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.ForbidDuplicateTXIdInBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) ForbidDuplicateTXIdInBlock() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.KeyLevelEndorsement">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=2012:2078#L75">KeyLevelEndorsement</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.KeyLevelEndorsement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) KeyLevelEndorsement() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.MetadataLifecycle">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1910:1974#L71">MetadataLifecycle</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.MetadataLifecycle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) MetadataLifecycle() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.PrivateChannelData">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1512:1577#L55">PrivateChannelData</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.PrivateChannelData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) PrivateChannelData() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.StorePvtDataOfInvalidTx">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=2298:2368#L87">StorePvtDataOfInvalidTx</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.StorePvtDataOfInvalidTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) StorePvtDataOfInvalidTx() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.Supported">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1229:1286#L43">Supported</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.V1_1Validation">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1718:1779#L63">V1_1Validation</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.V1_1Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) V1_1Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.V1_2Validation">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=1814:1875#L67">V1_2Validation</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.V1_2Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) V1_2Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockApplicationCapabilities.V1_3Validation">func (*MockApplicationCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/application.go?s=2118:2179#L79">V1_3Validation</a>
+					<a class="permalink" href="index.html#MockApplicationCapabilities.V1_3Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mac *<a href="index.html#MockApplicationCapabilities">MockApplicationCapabilities</a>) V1_3Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Orderer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=293:1234#L7">Orderer</a>
+				<a class="permalink" href="index.html#Orderer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Orderer is a mock implementation of channelconfig.Orderer
+</p>
+
+			<pre>type Orderer struct {
+<span id="Orderer.ConsensusTypeVal"></span>    <span class="comment">// ConsensusTypeVal is returned as the result of ConsensusType()</span>
+    ConsensusTypeVal <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Orderer.ConsensusMetadataVal"></span>    <span class="comment">// ConsensusMetadataVal is returned as the result of ConsensusMetadata()</span>
+    ConsensusMetadataVal []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Orderer.ConsensusTypeStateVal"></span>    <span class="comment">// ConsensusTypeStateVal is returned as the result of ConsensusState()</span>
+    ConsensusTypeStateVal <a href="../../../protos/orderer/index.html">ab</a>.<a href="../../../protos/orderer/index.html#ConsensusType_State">ConsensusType_State</a>
+
+<span id="Orderer.BatchSizeVal"></span>    <span class="comment">// BatchSizeVal is returned as the result of BatchSize()</span>
+    BatchSizeVal *<a href="../../../protos/orderer/index.html">ab</a>.<a href="../../../protos/orderer/index.html#BatchSize">BatchSize</a>
+<span id="Orderer.BatchTimeoutVal"></span>    <span class="comment">// BatchTimeoutVal is returned as the result of BatchTimeout()</span>
+    BatchTimeoutVal <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Orderer.KafkaBrokersVal"></span>    <span class="comment">// KafkaBrokersVal is returned as the result of KafkaBrokers()</span>
+    KafkaBrokersVal []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Orderer.MaxChannelsCountVal"></span>    <span class="comment">// MaxChannelsCountVal is returns as the result of MaxChannelsCount()</span>
+    MaxChannelsCountVal <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Orderer.OrganizationsVal"></span>    <span class="comment">// OrganizationsVal is returned as the result of Organizations()</span>
+    OrganizationsVal map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#OrdererOrg">OrdererOrg</a>
+<span id="Orderer.CapabilitiesVal"></span>    <span class="comment">// CapabilitiesVal is returned as the result of Capabilities()</span>
+    CapabilitiesVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#OrdererCapabilities">OrdererCapabilities</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Orderer.BatchSize">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1675:1718#L45">BatchSize</a>
+					<a class="permalink" href="index.html#Orderer.BatchSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) BatchSize() *<a href="../../../protos/orderer/index.html">ab</a>.<a href="../../../protos/orderer/index.html#BatchSize">BatchSize</a></pre>
+				<p>
+BatchSize returns the BatchSizeVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.BatchTimeout">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1791:1837#L50">BatchTimeout</a>
+					<a class="permalink" href="index.html#Orderer.BatchTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) BatchTimeout() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a></pre>
+				<p>
+BatchTimeout returns the BatchTimeoutVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Capabilities">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=2301:2367#L70">Capabilities</a>
+					<a class="permalink" href="index.html#Orderer.Capabilities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Capabilities() <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#OrdererCapabilities">OrdererCapabilities</a></pre>
+				<p>
+Capabilities returns CapabilitiesVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.ConsensusMetadata">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1409:1453#L35">ConsensusMetadata</a>
+					<a class="permalink" href="index.html#Orderer.ConsensusMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) ConsensusMetadata() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+ConsensusMetadata returns the ConsensusMetadataVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.ConsensusState">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1542:1599#L40">ConsensusState</a>
+					<a class="permalink" href="index.html#Orderer.ConsensusState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) ConsensusState() <a href="../../../protos/orderer/index.html">ab</a>.<a href="../../../protos/orderer/index.html#ConsensusType_State">ConsensusType_State</a></pre>
+				<p>
+ConsensusState returns the ConsensusTypeStateVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.ConsensusType">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1282:1322#L30">ConsensusType</a>
+					<a class="permalink" href="index.html#Orderer.ConsensusType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) ConsensusType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ConsensusType returns the ConsensusTypeVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.KafkaBrokers">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=1913:1954#L55">KafkaBrokers</a>
+					<a class="permalink" href="index.html#Orderer.KafkaBrokers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) KafkaBrokers() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+KafkaBrokers returns the KafkaBrokersVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.MaxChannelsCount">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=2038:2081#L60">MaxChannelsCount</a>
+					<a class="permalink" href="index.html#Orderer.MaxChannelsCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) MaxChannelsCount() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+MaxChannelsCount returns the MaxChannelsCountVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Orderer.Organizations">func (*Orderer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=2159:2228#L65">Organizations</a>
+					<a class="permalink" href="index.html#Orderer.Organizations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Orderer">Orderer</a>) Organizations() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#OrdererOrg">OrdererOrg</a></pre>
+				<p>
+Organizations returns OrganizationsVal
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OrdererCapabilities">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=2476:2868#L75">OrdererCapabilities</a>
+				<a class="permalink" href="index.html#OrdererCapabilities">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererCapabilities mocks the channelconfig.OrdererCapabilities interface
+</p>
+
+			<pre>type OrdererCapabilities struct {
+<span id="OrdererCapabilities.SupportedErr"></span>    <span class="comment">// SupportedErr is returned by Supported()</span>
+    SupportedErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="OrdererCapabilities.PredictableChannelTemplateVal"></span>    <span class="comment">// PredictableChannelTemplateVal is returned by PredictableChannelTemplate()</span>
+    PredictableChannelTemplateVal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="OrdererCapabilities.ResubmissionVal"></span>    <span class="comment">// ResubmissionVal is returned by Resubmission()</span>
+    ResubmissionVal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="OrdererCapabilities.ExpirationVal"></span>    <span class="comment">// ExpirationVal is returned by ExpirationCheck()</span>
+    ExpirationVal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="OrdererCapabilities.ConsensusTypeMigrationVal"></span>    ConsensusTypeMigrationVal <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="OrdererCapabilities.ConsensusTypeMigration">func (*OrdererCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=3572:3632#L113">ConsensusTypeMigration</a>
+					<a class="permalink" href="index.html#OrdererCapabilities.ConsensusTypeMigration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererCapabilities">OrdererCapabilities</a>) ConsensusTypeMigration() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ConsensusTypeMigration checks whether the orderer permits a consensus-type migration.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererCapabilities.ExpirationCheck">func (*OrdererCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=3399:3452#L108">ExpirationCheck</a>
+					<a class="permalink" href="index.html#OrdererCapabilities.ExpirationCheck">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererCapabilities">OrdererCapabilities</a>) ExpirationCheck() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ExpirationCheck specifies whether the orderer checks for identity expiration checks
+when validating messages
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererCapabilities.PredictableChannelTemplate">func (*OrdererCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=3050:3114#L97">PredictableChannelTemplate</a>
+					<a class="permalink" href="index.html#OrdererCapabilities.PredictableChannelTemplate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererCapabilities">OrdererCapabilities</a>) PredictableChannelTemplate() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+PredictableChannelTemplate returns PredictableChannelTemplateVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererCapabilities.Resubmission">func (*OrdererCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=3201:3251#L102">Resubmission</a>
+					<a class="permalink" href="index.html#OrdererCapabilities.Resubmission">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererCapabilities">OrdererCapabilities</a>) Resubmission() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Resubmission returns ResubmissionVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererCapabilities.Supported">func (*OrdererCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/orderer.go?s=2904:2952#L92">Supported</a>
+					<a class="permalink" href="index.html#OrdererCapabilities.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererCapabilities">OrdererCapabilities</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported returns SupportedErr
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Resources">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=307:1181#L6">Resources</a>
+				<a class="permalink" href="index.html#Resources">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Resources struct {
+<span id="Resources.ConfigtxValidatorVal"></span>    <span class="comment">// ConfigtxValidatorVal is returned as the result of ConfigtxValidator</span>
+    ConfigtxValidatorVal <a href="../../configtx/index.html">configtx</a>.<a href="../../configtx/index.html#Validator">Validator</a>
+
+<span id="Resources.PolicyManagerVal"></span>    <span class="comment">// PolicyManagerVal is returned as the result of PolicyManager()</span>
+    PolicyManagerVal <a href="../../policies/index.html">policies</a>.<a href="../../policies/index.html#Manager">Manager</a>
+
+<span id="Resources.ChannelConfigVal"></span>    <span class="comment">// ChannelConfigVal is returned as the result of ChannelConfig()</span>
+    ChannelConfigVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Channel">Channel</a>
+
+<span id="Resources.OrdererConfigVal"></span>    <span class="comment">// OrdererConfigVal is returned as the result of OrdererConfig()</span>
+    OrdererConfigVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Orderer">Orderer</a>
+
+<span id="Resources.ApplicationConfigVal"></span>    <span class="comment">// ApplicationConfigVal is returned as the result of ApplicationConfig()</span>
+    ApplicationConfigVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Application">Application</a>
+
+<span id="Resources.ConsortiumsConfigVal"></span>    <span class="comment">// ConsortiumsConfigVal is returned as the result of ConsortiumsConfig()</span>
+    ConsortiumsConfigVal <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Consortiums">Consortiums</a>
+
+<span id="Resources.MSPManagerVal"></span>    <span class="comment">// MSPManagerVal is returned as the result of MSPManager()</span>
+    MSPManagerVal <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#MSPManager">MSPManager</a>
+
+<span id="Resources.ValidateNewErr"></span>    <span class="comment">// ValidateNewErr is returned as the result of ValidateNew</span>
+    ValidateNewErr <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Resources.ApplicationConfig">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1758:1831#L53">ApplicationConfig</a>
+					<a class="permalink" href="index.html#Resources.ApplicationConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) ApplicationConfig() (<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Returns the ApplicationConfigVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.ChannelConfig">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1475:1532#L43">ChannelConfig</a>
+					<a class="permalink" href="index.html#Resources.ChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) ChannelConfig() <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Channel">Channel</a></pre>
+				<p>
+Returns the ChannelConfigVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.ConfigtxValidator">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1231:1289#L33">ConfigtxValidator</a>
+					<a class="permalink" href="index.html#Resources.ConfigtxValidator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) ConfigtxValidator() <a href="../../configtx/index.html">configtx</a>.<a href="../../configtx/index.html#Validator">Validator</a></pre>
+				<p>
+ConfigtxMangaer returns ConfigtxValidatorVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.ConsortiumsConfig">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1899:1972#L57">ConsortiumsConfig</a>
+					<a class="permalink" href="index.html#Resources.ConsortiumsConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) ConsortiumsConfig() (<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Consortiums">Consortiums</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Resources.MSPManager">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=2069:2116#L62">MSPManager</a>
+					<a class="permalink" href="index.html#Resources.MSPManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) MSPManager() <a href="../../../msp/index.html">msp</a>.<a href="../../../msp/index.html#MSPManager">MSPManager</a></pre>
+				<p>
+Returns the MSPManagerVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.OrdererConfig">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1597:1662#L48">OrdererConfig</a>
+					<a class="permalink" href="index.html#Resources.OrdererConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) OrdererConfig() (<a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Orderer">Orderer</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Returns the OrdererConfigVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.PolicyManager">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=1358:1410#L38">PolicyManager</a>
+					<a class="permalink" href="index.html#Resources.PolicyManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) PolicyManager() <a href="../../policies/index.html">policies</a>.<a href="../../policies/index.html#Manager">Manager</a></pre>
+				<p>
+Returns the PolicyManagerVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Resources.ValidateNew">func (*Resources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/config/resources.go?s=2184:2250#L67">ValidateNew</a>
+					<a class="permalink" href="index.html#Resources.ValidateNew">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resources">Resources</a>) ValidateNew(res <a href="../../channelconfig/index.html">channelconfig</a>.<a href="../../channelconfig/index.html#Resources">Resources</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ValidateNew returns ValidateNewErr
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

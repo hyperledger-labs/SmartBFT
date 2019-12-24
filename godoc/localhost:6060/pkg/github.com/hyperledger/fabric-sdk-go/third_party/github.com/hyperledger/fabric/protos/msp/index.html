@@ -1,0 +1,4128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#CombinedPrincipal">type CombinedPrincipal</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.Descriptor">func (*CombinedPrincipal) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.GetPrincipals">func (m *CombinedPrincipal) GetPrincipals() []*MSPPrincipal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.ProtoMessage">func (*CombinedPrincipal) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.Reset">func (m *CombinedPrincipal) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.String">func (m *CombinedPrincipal) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.XXX_DiscardUnknown">func (m *CombinedPrincipal) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.XXX_Marshal">func (m *CombinedPrincipal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.XXX_Merge">func (dst *CombinedPrincipal) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.XXX_Size">func (m *CombinedPrincipal) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CombinedPrincipal.XXX_Unmarshal">func (m *CombinedPrincipal) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FabricCryptoConfig">type FabricCryptoConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.Descriptor">func (*FabricCryptoConfig) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.GetIdentityIdentifierHashFunction">func (m *FabricCryptoConfig) GetIdentityIdentifierHashFunction() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.GetSignatureHashFamily">func (m *FabricCryptoConfig) GetSignatureHashFamily() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.ProtoMessage">func (*FabricCryptoConfig) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.Reset">func (m *FabricCryptoConfig) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.String">func (m *FabricCryptoConfig) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.XXX_DiscardUnknown">func (m *FabricCryptoConfig) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.XXX_Marshal">func (m *FabricCryptoConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.XXX_Merge">func (dst *FabricCryptoConfig) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.XXX_Size">func (m *FabricCryptoConfig) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricCryptoConfig.XXX_Unmarshal">func (m *FabricCryptoConfig) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FabricMSPConfig">type FabricMSPConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.Descriptor">func (*FabricMSPConfig) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetAdmins">func (m *FabricMSPConfig) GetAdmins() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetCryptoConfig">func (m *FabricMSPConfig) GetCryptoConfig() *FabricCryptoConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetFabricNodeOus">func (m *FabricMSPConfig) GetFabricNodeOus() *FabricNodeOUs</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetIntermediateCerts">func (m *FabricMSPConfig) GetIntermediateCerts() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetName">func (m *FabricMSPConfig) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetOrganizationalUnitIdentifiers">func (m *FabricMSPConfig) GetOrganizationalUnitIdentifiers() []*FabricOUIdentifier</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetRevocationList">func (m *FabricMSPConfig) GetRevocationList() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetRootCerts">func (m *FabricMSPConfig) GetRootCerts() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetSigningIdentity">func (m *FabricMSPConfig) GetSigningIdentity() *SigningIdentityInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetTlsIntermediateCerts">func (m *FabricMSPConfig) GetTlsIntermediateCerts() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.GetTlsRootCerts">func (m *FabricMSPConfig) GetTlsRootCerts() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.ProtoMessage">func (*FabricMSPConfig) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.Reset">func (m *FabricMSPConfig) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.String">func (m *FabricMSPConfig) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.XXX_DiscardUnknown">func (m *FabricMSPConfig) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.XXX_Marshal">func (m *FabricMSPConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.XXX_Merge">func (dst *FabricMSPConfig) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.XXX_Size">func (m *FabricMSPConfig) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricMSPConfig.XXX_Unmarshal">func (m *FabricMSPConfig) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FabricNodeOUs">type FabricNodeOUs</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.Descriptor">func (*FabricNodeOUs) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.GetClientOuIdentifier">func (m *FabricNodeOUs) GetClientOuIdentifier() *FabricOUIdentifier</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.GetEnable">func (m *FabricNodeOUs) GetEnable() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.GetPeerOuIdentifier">func (m *FabricNodeOUs) GetPeerOuIdentifier() *FabricOUIdentifier</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.ProtoMessage">func (*FabricNodeOUs) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.Reset">func (m *FabricNodeOUs) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.String">func (m *FabricNodeOUs) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.XXX_DiscardUnknown">func (m *FabricNodeOUs) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.XXX_Marshal">func (m *FabricNodeOUs) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.XXX_Merge">func (dst *FabricNodeOUs) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.XXX_Size">func (m *FabricNodeOUs) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricNodeOUs.XXX_Unmarshal">func (m *FabricNodeOUs) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FabricOUIdentifier">type FabricOUIdentifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.Descriptor">func (*FabricOUIdentifier) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.GetCertificate">func (m *FabricOUIdentifier) GetCertificate() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.GetOrganizationalUnitIdentifier">func (m *FabricOUIdentifier) GetOrganizationalUnitIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.ProtoMessage">func (*FabricOUIdentifier) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.Reset">func (m *FabricOUIdentifier) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.String">func (m *FabricOUIdentifier) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.XXX_DiscardUnknown">func (m *FabricOUIdentifier) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.XXX_Marshal">func (m *FabricOUIdentifier) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.XXX_Merge">func (dst *FabricOUIdentifier) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.XXX_Size">func (m *FabricOUIdentifier) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricOUIdentifier.XXX_Unmarshal">func (m *FabricOUIdentifier) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IdemixMSPConfig">type IdemixMSPConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.Descriptor">func (*IdemixMSPConfig) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.GetEpoch">func (m *IdemixMSPConfig) GetEpoch() int64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.GetIpk">func (m *IdemixMSPConfig) GetIpk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.GetName">func (m *IdemixMSPConfig) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.GetRevocationPk">func (m *IdemixMSPConfig) GetRevocationPk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.GetSigner">func (m *IdemixMSPConfig) GetSigner() *IdemixMSPSignerConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.ProtoMessage">func (*IdemixMSPConfig) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.Reset">func (m *IdemixMSPConfig) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.String">func (m *IdemixMSPConfig) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.XXX_DiscardUnknown">func (m *IdemixMSPConfig) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.XXX_Marshal">func (m *IdemixMSPConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.XXX_Merge">func (dst *IdemixMSPConfig) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.XXX_Size">func (m *IdemixMSPConfig) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPConfig.XXX_Unmarshal">func (m *IdemixMSPConfig) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IdemixMSPSignerConfig">type IdemixMSPSignerConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.Descriptor">func (*IdemixMSPSignerConfig) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetCred">func (m *IdemixMSPSignerConfig) GetCred() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetCredentialRevocationInformation">func (m *IdemixMSPSignerConfig) GetCredentialRevocationInformation() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetEnrollmentId">func (m *IdemixMSPSignerConfig) GetEnrollmentId() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetOrganizationalUnitIdentifier">func (m *IdemixMSPSignerConfig) GetOrganizationalUnitIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetRole">func (m *IdemixMSPSignerConfig) GetRole() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.GetSk">func (m *IdemixMSPSignerConfig) GetSk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.ProtoMessage">func (*IdemixMSPSignerConfig) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.Reset">func (m *IdemixMSPSignerConfig) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.String">func (m *IdemixMSPSignerConfig) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.XXX_DiscardUnknown">func (m *IdemixMSPSignerConfig) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.XXX_Marshal">func (m *IdemixMSPSignerConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.XXX_Merge">func (dst *IdemixMSPSignerConfig) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.XXX_Size">func (m *IdemixMSPSignerConfig) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdemixMSPSignerConfig.XXX_Unmarshal">func (m *IdemixMSPSignerConfig) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyInfo">type KeyInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.Descriptor">func (*KeyInfo) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.GetKeyIdentifier">func (m *KeyInfo) GetKeyIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.GetKeyMaterial">func (m *KeyInfo) GetKeyMaterial() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.ProtoMessage">func (*KeyInfo) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.Reset">func (m *KeyInfo) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.String">func (m *KeyInfo) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.XXX_DiscardUnknown">func (m *KeyInfo) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.XXX_Marshal">func (m *KeyInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.XXX_Merge">func (dst *KeyInfo) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.XXX_Size">func (m *KeyInfo) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyInfo.XXX_Unmarshal">func (m *KeyInfo) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPConfig">type MSPConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.Descriptor">func (*MSPConfig) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.GetConfig">func (m *MSPConfig) GetConfig() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.GetType">func (m *MSPConfig) GetType() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.ProtoMessage">func (*MSPConfig) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.Reset">func (m *MSPConfig) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.String">func (m *MSPConfig) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.XXX_DiscardUnknown">func (m *MSPConfig) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.XXX_Marshal">func (m *MSPConfig) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.XXX_Merge">func (dst *MSPConfig) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.XXX_Size">func (m *MSPConfig) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPConfig.XXX_Unmarshal">func (m *MSPConfig) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPIdentityAnonymity">type MSPIdentityAnonymity</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.Descriptor">func (*MSPIdentityAnonymity) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.GetAnonymityType">func (m *MSPIdentityAnonymity) GetAnonymityType() MSPIdentityAnonymity_MSPIdentityAnonymityType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.ProtoMessage">func (*MSPIdentityAnonymity) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.Reset">func (m *MSPIdentityAnonymity) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.String">func (m *MSPIdentityAnonymity) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.XXX_DiscardUnknown">func (m *MSPIdentityAnonymity) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.XXX_Marshal">func (m *MSPIdentityAnonymity) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.XXX_Merge">func (dst *MSPIdentityAnonymity) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.XXX_Size">func (m *MSPIdentityAnonymity) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity.XXX_Unmarshal">func (m *MSPIdentityAnonymity) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">type MSPIdentityAnonymity_MSPIdentityAnonymityType</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType.EnumDescriptor">func (MSPIdentityAnonymity_MSPIdentityAnonymityType) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType.String">func (x MSPIdentityAnonymity_MSPIdentityAnonymityType) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPPrincipal">type MSPPrincipal</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.Descriptor">func (*MSPPrincipal) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.GetPrincipal">func (m *MSPPrincipal) GetPrincipal() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.GetPrincipalClassification">func (m *MSPPrincipal) GetPrincipalClassification() MSPPrincipal_Classification</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.ProtoMessage">func (*MSPPrincipal) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.Reset">func (m *MSPPrincipal) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.String">func (m *MSPPrincipal) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.XXX_DiscardUnknown">func (m *MSPPrincipal) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.XXX_Marshal">func (m *MSPPrincipal) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.XXX_Merge">func (dst *MSPPrincipal) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.XXX_Size">func (m *MSPPrincipal) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal.XXX_Unmarshal">func (m *MSPPrincipal) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPPrincipal_Classification">type MSPPrincipal_Classification</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal_Classification.EnumDescriptor">func (MSPPrincipal_Classification) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPPrincipal_Classification.String">func (x MSPPrincipal_Classification) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPRole">type MSPRole</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.Descriptor">func (*MSPRole) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.GetMspIdentifier">func (m *MSPRole) GetMspIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.GetRole">func (m *MSPRole) GetRole() MSPRole_MSPRoleType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.ProtoMessage">func (*MSPRole) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.Reset">func (m *MSPRole) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.String">func (m *MSPRole) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.XXX_DiscardUnknown">func (m *MSPRole) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.XXX_Marshal">func (m *MSPRole) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.XXX_Merge">func (dst *MSPRole) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.XXX_Size">func (m *MSPRole) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole.XXX_Unmarshal">func (m *MSPRole) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MSPRole_MSPRoleType">type MSPRole_MSPRoleType</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole_MSPRoleType.EnumDescriptor">func (MSPRole_MSPRoleType) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MSPRole_MSPRoleType.String">func (x MSPRole_MSPRoleType) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OrganizationUnit">type OrganizationUnit</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.Descriptor">func (*OrganizationUnit) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.GetCertifiersIdentifier">func (m *OrganizationUnit) GetCertifiersIdentifier() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.GetMspIdentifier">func (m *OrganizationUnit) GetMspIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.GetOrganizationalUnitIdentifier">func (m *OrganizationUnit) GetOrganizationalUnitIdentifier() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.ProtoMessage">func (*OrganizationUnit) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.Reset">func (m *OrganizationUnit) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.String">func (m *OrganizationUnit) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.XXX_DiscardUnknown">func (m *OrganizationUnit) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.XXX_Marshal">func (m *OrganizationUnit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.XXX_Merge">func (dst *OrganizationUnit) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.XXX_Size">func (m *OrganizationUnit) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrganizationUnit.XXX_Unmarshal">func (m *OrganizationUnit) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SerializedIdemixIdentity">type SerializedIdemixIdentity</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.Descriptor">func (*SerializedIdemixIdentity) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.GetNymX">func (m *SerializedIdemixIdentity) GetNymX() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.GetNymY">func (m *SerializedIdemixIdentity) GetNymY() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.GetOu">func (m *SerializedIdemixIdentity) GetOu() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.GetProof">func (m *SerializedIdemixIdentity) GetProof() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.GetRole">func (m *SerializedIdemixIdentity) GetRole() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.ProtoMessage">func (*SerializedIdemixIdentity) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.Reset">func (m *SerializedIdemixIdentity) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.String">func (m *SerializedIdemixIdentity) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.XXX_DiscardUnknown">func (m *SerializedIdemixIdentity) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.XXX_Marshal">func (m *SerializedIdemixIdentity) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.XXX_Merge">func (dst *SerializedIdemixIdentity) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.XXX_Size">func (m *SerializedIdemixIdentity) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdemixIdentity.XXX_Unmarshal">func (m *SerializedIdemixIdentity) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SerializedIdentity">type SerializedIdentity</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.Descriptor">func (*SerializedIdentity) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.GetIdBytes">func (m *SerializedIdentity) GetIdBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.GetMspid">func (m *SerializedIdentity) GetMspid() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.ProtoMessage">func (*SerializedIdentity) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.Reset">func (m *SerializedIdentity) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.String">func (m *SerializedIdentity) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.XXX_DiscardUnknown">func (m *SerializedIdentity) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.XXX_Marshal">func (m *SerializedIdentity) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.XXX_Merge">func (dst *SerializedIdentity) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.XXX_Size">func (m *SerializedIdentity) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SerializedIdentity.XXX_Unmarshal">func (m *SerializedIdentity) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SigningIdentityInfo">type SigningIdentityInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.Descriptor">func (*SigningIdentityInfo) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.GetPrivateSigner">func (m *SigningIdentityInfo) GetPrivateSigner() *KeyInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.GetPublicSigner">func (m *SigningIdentityInfo) GetPublicSigner() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.ProtoMessage">func (*SigningIdentityInfo) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.Reset">func (m *SigningIdentityInfo) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.String">func (m *SigningIdentityInfo) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.XXX_DiscardUnknown">func (m *SigningIdentityInfo) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.XXX_Marshal">func (m *SigningIdentityInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.XXX_Merge">func (dst *SigningIdentityInfo) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.XXX_Size">func (m *SigningIdentityInfo) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SigningIdentityInfo.XXX_Unmarshal">func (m *SigningIdentityInfo) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go">identities.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go">msp_config.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go">msp_principal.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="MSPIdentityAnonymity_MSPIdentityAnonymityType_name">MSPIdentityAnonymity_MSPIdentityAnonymityType_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;NOMINAL&#34;,
+    1: &#34;ANONYMOUS&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="MSPIdentityAnonymity_MSPIdentityAnonymityType_value">MSPIdentityAnonymity_MSPIdentityAnonymityType_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;NOMINAL&#34;:   0,
+    &#34;ANONYMOUS&#34;: 1,
+}</pre>
+			
+				
+				<pre>var <span id="MSPPrincipal_Classification_name">MSPPrincipal_Classification_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;ROLE&#34;,
+    1: &#34;ORGANIZATION_UNIT&#34;,
+    2: &#34;IDENTITY&#34;,
+    3: &#34;ANONYMITY&#34;,
+    4: &#34;COMBINED&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="MSPPrincipal_Classification_value">MSPPrincipal_Classification_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;ROLE&#34;:              0,
+    &#34;ORGANIZATION_UNIT&#34;: 1,
+    &#34;IDENTITY&#34;:          2,
+    &#34;ANONYMITY&#34;:         3,
+    &#34;COMBINED&#34;:          4,
+}</pre>
+			
+				
+				<pre>var <span id="MSPRole_MSPRoleType_name">MSPRole_MSPRoleType_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;MEMBER&#34;,
+    1: &#34;ADMIN&#34;,
+    2: &#34;CLIENT&#34;,
+    3: &#34;PEER&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="MSPRole_MSPRoleType_value">MSPRole_MSPRoleType_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;MEMBER&#34;: 0,
+    &#34;ADMIN&#34;:  1,
+    &#34;CLIENT&#34;: 2,
+    &#34;PEER&#34;:   3,
+}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="CombinedPrincipal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=13475:13813#L342">CombinedPrincipal</a>
+				<a class="permalink" href="index.html#CombinedPrincipal">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CombinedPrincipal governs the organization of the Principal
+field of a policy principal when principal_classification has
+indicated that a combined form of principals is required
+</p>
+
+			<pre>type CombinedPrincipal struct {
+<span id="CombinedPrincipal.Principals"></span>    <span class="comment">// Principals refer to combined principals</span>
+    Principals           []*<a href="index.html#MSPPrincipal">MSPPrincipal</a> `protobuf:&#34;bytes,1,rep,name=principals,proto3&#34; json:&#34;principals,omitempty&#34;`
+<span id="CombinedPrincipal.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}        `json:&#34;-&#34;`
+<span id="CombinedPrincipal.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `json:&#34;-&#34;`
+<span id="CombinedPrincipal.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>           `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CombinedPrincipal.Descriptor">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14017:14071#L353">Descriptor</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.GetPrincipals">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14804:14863#L374">GetPrincipals</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.GetPrincipals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) GetPrincipals() []*<a href="index.html#MSPPrincipal">MSPPrincipal</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.ProtoMessage">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=13970:14010#L352">ProtoMessage</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.Reset">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=13815:13850#L350">Reset</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.String">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=13888:13931#L351">String</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.XXX_DiscardUnknown">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14632:14680#L368">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.XXX_Marshal">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14260:14345#L359">XXX_Marshal</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.XXX_Merge">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14421:14479#L362">XXX_Merge</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.XXX_Size">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14535:14577#L365">XXX_Size</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CombinedPrincipal.XXX_Unmarshal">func (*CombinedPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=14140:14197#L356">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#CombinedPrincipal.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CombinedPrincipal">CombinedPrincipal</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FabricCryptoConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=8727:9657#L228">FabricCryptoConfig</a>
+				<a class="permalink" href="index.html#FabricCryptoConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricCryptoConfig contains configuration parameters
+for the cryptographic algorithms used by the MSP
+this configuration refers to
+</p>
+
+			<pre>type FabricCryptoConfig struct {
+<span id="FabricCryptoConfig.SignatureHashFamily"></span>    <span class="comment">// SignatureHashFamily is a string representing the hash family to be used</span>
+    <span class="comment">// during sign and verify operations.</span>
+    <span class="comment">// Allowed values are &#34;SHA2&#34; and &#34;SHA3&#34;.</span>
+    SignatureHashFamily <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=signature_hash_family,json=signatureHashFamily,proto3&#34; json:&#34;signature_hash_family,omitempty&#34;`
+<span id="FabricCryptoConfig.IdentityIdentifierHashFunction"></span>    <span class="comment">// IdentityIdentifierHashFunction is a string representing the hash function</span>
+    <span class="comment">// to be used during the computation of the identity identifier of an MSP identity.</span>
+    <span class="comment">// Allowed values are &#34;SHA256&#34;, &#34;SHA384&#34; and &#34;SHA3_256&#34;, &#34;SHA3_384&#34;.</span>
+    IdentityIdentifierHashFunction <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=identity_identifier_hash_function,json=identityIdentifierHashFunction,proto3&#34; json:&#34;identity_identifier_hash_function,omitempty&#34;`
+<span id="FabricCryptoConfig.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral           struct{} `json:&#34;-&#34;`
+<span id="FabricCryptoConfig.XXX_unrecognized"></span>    XXX_unrecognized               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="FabricCryptoConfig.XXX_sizecache"></span>    XXX_sizecache                  <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FabricCryptoConfig.Descriptor">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=9865:9920#L245">Descriptor</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.GetIdentityIdentifierHashFunction">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10787:10858#L273">GetIdentityIdentifierHashFunction</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.GetIdentityIdentifierHashFunction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) GetIdentityIdentifierHashFunction() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.GetSignatureHashFamily">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10661:10721#L266">GetSignatureHashFamily</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.GetSignatureHashFamily">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) GetSignatureHashFamily() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.ProtoMessage">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=9817:9858#L244">ProtoMessage</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.Reset">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=9659:9695#L242">Reset</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.String">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=9734:9778#L243">String</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.XXX_DiscardUnknown">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10486:10535#L260">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.XXX_Marshal">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10108:10194#L251">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.XXX_Merge">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10271:10330#L254">XXX_Merge</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.XXX_Size">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=10387:10430#L257">XXX_Size</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricCryptoConfig.XXX_Unmarshal">func (*FabricCryptoConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=9986:10044#L248">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FabricCryptoConfig.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FabricMSPConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=3003:6322#L75">FabricMSPConfig</a>
+				<a class="permalink" href="index.html#FabricMSPConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricMSPConfig collects all the configuration information for
+a Fabric MSP.
+Here we assume a default certificate validation policy, where
+any certificate signed by any of the listed rootCA certs would
+be considered as valid under this MSP.
+This MSP may or may not come with a signing identity. If it does,
+it can also issue signing identities. If it does not, it can only
+be used to validate and verify certificates.
+</p>
+
+			<pre>type FabricMSPConfig struct {
+<span id="FabricMSPConfig.Name"></span>    <span class="comment">// Name holds the identifier of the MSP; MSP identifier</span>
+    <span class="comment">// is chosen by the application that governs this MSP.</span>
+    <span class="comment">// For example, and assuming the default implementation of MSP,</span>
+    <span class="comment">// that is X.509-based and considers a single Issuer,</span>
+    <span class="comment">// this can refer to the Subject OU field or the Issuer OU field.</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// List of root certificates trusted by this MSP</span>
+    <span class="comment">// they are used upon certificate validation (see</span>
+    <span class="comment">// comment for IntermediateCerts below)</span>
+<span id="FabricMSPConfig.RootCerts"></span>    RootCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,rep,name=root_certs,json=rootCerts,proto3&#34; json:&#34;root_certs,omitempty&#34;`
+    <span class="comment">// List of intermediate certificates trusted by this MSP;</span>
+    <span class="comment">// they are used upon certificate validation as follows:</span>
+    <span class="comment">// validation attempts to build a path from the certificate</span>
+    <span class="comment">// to be validated (which is at one end of the path) and</span>
+    <span class="comment">// one of the certs in the RootCerts field (which is at</span>
+    <span class="comment">// the other end of the path). If the path is longer than</span>
+    <span class="comment">// 2, certificates in the middle are searched within the</span>
+<span id="FabricMSPConfig.IntermediateCerts"></span>    <span class="comment">// IntermediateCerts pool</span>
+    IntermediateCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,rep,name=intermediate_certs,json=intermediateCerts,proto3&#34; json:&#34;intermediate_certs,omitempty&#34;`
+    <span class="comment">// Identity denoting the administrator of this MSP</span>
+<span id="FabricMSPConfig.Admins"></span>    Admins [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,4,rep,name=admins,proto3&#34; json:&#34;admins,omitempty&#34;`
+    <span class="comment">// Identity revocation list</span>
+<span id="FabricMSPConfig.RevocationList"></span>    RevocationList [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,5,rep,name=revocation_list,json=revocationList,proto3&#34; json:&#34;revocation_list,omitempty&#34;`
+<span id="FabricMSPConfig.SigningIdentity"></span>    <span class="comment">// SigningIdentity holds information on the signing identity</span>
+    <span class="comment">// this peer is to use, and which is to be imported by the</span>
+    <span class="comment">// MSP defined before</span>
+    SigningIdentity *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a> `protobuf:&#34;bytes,6,opt,name=signing_identity,json=signingIdentity,proto3&#34; json:&#34;signing_identity,omitempty&#34;`
+<span id="FabricMSPConfig.OrganizationalUnitIdentifiers"></span>    <span class="comment">// OrganizationalUnitIdentifiers holds one or more</span>
+    <span class="comment">// fabric organizational unit identifiers that belong to</span>
+    <span class="comment">// this MSP configuration</span>
+    OrganizationalUnitIdentifiers []*<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a> `protobuf:&#34;bytes,7,rep,name=organizational_unit_identifiers,json=organizationalUnitIdentifiers,proto3&#34; json:&#34;organizational_unit_identifiers,omitempty&#34;`
+    <span class="comment">// FabricCryptoConfig contains the configuration parameters</span>
+    <span class="comment">// for the cryptographic algorithms used by this MSP</span>
+<span id="FabricMSPConfig.CryptoConfig"></span>    CryptoConfig *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a> `protobuf:&#34;bytes,8,opt,name=crypto_config,json=cryptoConfig,proto3&#34; json:&#34;crypto_config,omitempty&#34;`
+    <span class="comment">// List of TLS root certificates trusted by this MSP.</span>
+    <span class="comment">// They are returned by GetTLSRootCerts.</span>
+<span id="FabricMSPConfig.TlsRootCerts"></span>    TlsRootCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,9,rep,name=tls_root_certs,json=tlsRootCerts,proto3&#34; json:&#34;tls_root_certs,omitempty&#34;`
+    <span class="comment">// List of TLS intermediate certificates trusted by this MSP;</span>
+    <span class="comment">// They are returned by GetTLSIntermediateCerts.</span>
+<span id="FabricMSPConfig.TlsIntermediateCerts"></span>    TlsIntermediateCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,10,rep,name=tls_intermediate_certs,json=tlsIntermediateCerts,proto3&#34; json:&#34;tls_intermediate_certs,omitempty&#34;`
+    <span class="comment">// fabric_node_ous contains the configuration to distinguish clients from peers from orderers</span>
+    <span class="comment">// based on the OUs.</span>
+<span id="FabricMSPConfig.FabricNodeOus"></span>    FabricNodeOus        *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a> `protobuf:&#34;bytes,11,opt,name=fabric_node_ous,json=fabricNodeOus,proto3&#34; json:&#34;fabric_node_ous,omitempty&#34;`
+<span id="FabricMSPConfig.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}       `json:&#34;-&#34;`
+<span id="FabricMSPConfig.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>         `json:&#34;-&#34;`
+<span id="FabricMSPConfig.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>          `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FabricMSPConfig.Descriptor">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6518:6570#L127">Descriptor</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetAdmins">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7599:7645#L169">GetAdmins</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetAdmins">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetAdmins() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetCryptoConfig">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=8104:8167#L197">GetCryptoConfig</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetCryptoConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetCryptoConfig() *<a href="index.html#FabricCryptoConfig">FabricCryptoConfig</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetFabricNodeOus">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=8467:8526#L218">GetFabricNodeOus</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetFabricNodeOus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetFabricNodeOus() *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetIntermediateCerts">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7477:7534#L162">GetIntermediateCerts</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetIntermediateCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetIntermediateCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetName">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7278:7320#L148">GetName</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetOrganizationalUnitIdentifiers">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7945:8027#L190">GetOrganizationalUnitIdentifiers</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetOrganizationalUnitIdentifiers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetOrganizationalUnitIdentifiers() []*<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetRevocationList">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7699:7753#L176">GetRevocationList</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetRevocationList">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetRevocationList() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetRootCerts">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7371:7420#L155">GetRootCerts</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetRootCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetRootCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetSigningIdentity">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7815:7882#L183">GetSigningIdentity</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetSigningIdentity() *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetTlsIntermediateCerts">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=8339:8399#L211">GetTlsIntermediateCerts</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetTlsIntermediateCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetTlsIntermediateCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.GetTlsRootCerts">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=8227:8279#L204">GetTlsRootCerts</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.GetTlsRootCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) GetTlsRootCerts() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.ProtoMessage">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6473:6511#L126">ProtoMessage</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.Reset">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6324:6357#L124">Reset</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.String">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6393:6434#L125">String</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.XXX_DiscardUnknown">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7112:7158#L142">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.XXX_Marshal">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6752:6835#L133">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.XXX_Merge">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6909:6965#L136">XXX_Merge</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.XXX_Size">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=7019:7059#L139">XXX_Size</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricMSPConfig.XXX_Unmarshal">func (*FabricMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=6636:6691#L130">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FabricMSPConfig.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricMSPConfig">FabricMSPConfig</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FabricNodeOUs">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=23281:24038#L611">FabricNodeOUs</a>
+				<a class="permalink" href="index.html#FabricNodeOUs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricNodeOUs contains configuration to tell apart clients from peers from orderers
+based on OUs. If NodeOUs recognition is enabled then an msp identity
+that does not contain any of the specified OU will be considered invalid.
+</p>
+
+			<pre>type FabricNodeOUs struct {
+    <span class="comment">// If true then an msp identity that does not contain any of the specified OU will be considered invalid.</span>
+<span id="FabricNodeOUs.Enable"></span>    Enable <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `protobuf:&#34;varint,1,opt,name=enable,proto3&#34; json:&#34;enable,omitempty&#34;`
+    <span class="comment">// OU Identifier of the clients</span>
+<span id="FabricNodeOUs.ClientOuIdentifier"></span>    ClientOuIdentifier *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a> `protobuf:&#34;bytes,2,opt,name=client_ou_identifier,json=clientOuIdentifier,proto3&#34; json:&#34;client_ou_identifier,omitempty&#34;`
+    <span class="comment">// OU Identifier of the peers</span>
+<span id="FabricNodeOUs.PeerOuIdentifier"></span>    PeerOuIdentifier     *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a> `protobuf:&#34;bytes,3,opt,name=peer_ou_identifier,json=peerOuIdentifier,proto3&#34; json:&#34;peer_ou_identifier,omitempty&#34;`
+<span id="FabricNodeOUs.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}            `json:&#34;-&#34;`
+<span id="FabricNodeOUs.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `json:&#34;-&#34;`
+<span id="FabricNodeOUs.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>               `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FabricNodeOUs.Descriptor">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24226:24276#L626">Descriptor</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.GetClientOuIdentifier">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=25058:25125#L654">GetClientOuIdentifier</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.GetClientOuIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) GetClientOuIdentifier() *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.GetEnable">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24962:25002#L647">GetEnable</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.GetEnable">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) GetEnable() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.GetPeerOuIdentifier">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=25191:25256#L661">GetPeerOuIdentifier</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.GetPeerOuIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) GetPeerOuIdentifier() *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.ProtoMessage">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24183:24219#L625">ProtoMessage</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.Reset">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24040:24071#L623">Reset</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.String">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24105:24144#L624">String</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.XXX_DiscardUnknown">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24802:24846#L641">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.XXX_Marshal">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24454:24535#L632">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.XXX_Merge">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24607:24661#L635">XXX_Merge</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.XXX_Size">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24713:24751#L638">XXX_Size</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricNodeOUs.XXX_Unmarshal">func (*FabricNodeOUs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=24342:24395#L629">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FabricNodeOUs.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricNodeOUs">FabricNodeOUs</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FabricOUIdentifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20761:21786#L553">FabricOUIdentifier</a>
+				<a class="permalink" href="index.html#FabricOUIdentifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricOUIdentifier represents an organizational unit and
+its related chain of trust identifier.
+</p>
+
+			<pre>type FabricOUIdentifier struct {
+<span id="FabricOUIdentifier.Certificate"></span>    <span class="comment">// Certificate represents the second certificate in a certification chain.</span>
+    <span class="comment">// (Notice that the first certificate in a certification chain is supposed</span>
+    <span class="comment">// to be the certificate of an identity).</span>
+    <span class="comment">// It must correspond to the certificate of root or intermediate CA</span>
+    <span class="comment">// recognized by the MSP this message belongs to.</span>
+    <span class="comment">// Starting from this certificate, a certification chain is computed</span>
+    <span class="comment">// and bound to the OrganizationUnitIdentifier specified</span>
+    Certificate []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=certificate,proto3&#34; json:&#34;certificate,omitempty&#34;`
+    <span class="comment">// OrganizationUnitIdentifier defines the organizational unit under the</span>
+    <span class="comment">// MSP identified with MSPIdentifier</span>
+<span id="FabricOUIdentifier.OrganizationalUnitIdentifier"></span>    OrganizationalUnitIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=organizational_unit_identifier,json=organizationalUnitIdentifier,proto3&#34; json:&#34;organizational_unit_identifier,omitempty&#34;`
+<span id="FabricOUIdentifier.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral         struct{} `json:&#34;-&#34;`
+<span id="FabricOUIdentifier.XXX_unrecognized"></span>    XXX_unrecognized             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="FabricOUIdentifier.XXX_sizecache"></span>    XXX_sizecache                <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FabricOUIdentifier.Descriptor">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=21994:22049#L573">Descriptor</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.GetCertificate">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22790:22842#L594">GetCertificate</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.GetCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) GetCertificate() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.GetOrganizationalUnitIdentifier">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22901:22970#L601">GetOrganizationalUnitIdentifier</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.GetOrganizationalUnitIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) GetOrganizationalUnitIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.ProtoMessage">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=21946:21987#L572">ProtoMessage</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.Reset">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=21788:21824#L570">Reset</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.String">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=21863:21907#L571">String</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.XXX_DiscardUnknown">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22615:22664#L588">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.XXX_Marshal">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22237:22323#L579">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.XXX_Merge">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22400:22459#L582">XXX_Merge</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.XXX_Size">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22516:22559#L585">XXX_Size</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricOUIdentifier.XXX_Unmarshal">func (*FabricOUIdentifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=22115:22173#L576">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FabricOUIdentifier.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FabricOUIdentifier">FabricOUIdentifier</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IdemixMSPConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=11019:11955#L282">IdemixMSPConfig</a>
+				<a class="permalink" href="index.html#IdemixMSPConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdemixMSPConfig collects all the configuration information for
+an Idemix MSP.
+</p>
+
+			<pre>type IdemixMSPConfig struct {
+<span id="IdemixMSPConfig.Name"></span>    <span class="comment">// Name holds the identifier of the MSP</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+    <span class="comment">// ipk represents the (serialized) issuer public key</span>
+<span id="IdemixMSPConfig.Ipk"></span>    Ipk []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=ipk,proto3&#34; json:&#34;ipk,omitempty&#34;`
+    <span class="comment">// signer may contain crypto material to configure a default signer</span>
+<span id="IdemixMSPConfig.Signer"></span>    Signer *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a> `protobuf:&#34;bytes,3,opt,name=signer,proto3&#34; json:&#34;signer,omitempty&#34;`
+    <span class="comment">// revocation_pk is the public key used for revocation of credentials</span>
+<span id="IdemixMSPConfig.RevocationPk"></span>    RevocationPk []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,4,opt,name=revocation_pk,json=revocationPk,proto3&#34; json:&#34;revocation_pk,omitempty&#34;`
+    <span class="comment">// epoch represents the current epoch (time interval) used for revocation</span>
+<span id="IdemixMSPConfig.Epoch"></span>    Epoch                <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>    `protobuf:&#34;varint,5,opt,name=epoch,proto3&#34; json:&#34;epoch,omitempty&#34;`
+<span id="IdemixMSPConfig.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="IdemixMSPConfig.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="IdemixMSPConfig.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IdemixMSPConfig.Descriptor">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12151:12203#L301">Descriptor</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.GetEpoch">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=13320:13362#L350">GetEpoch</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.GetEpoch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) GetEpoch() <a href="http://localhost:6060/pkg/builtin/#int64">int64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.GetIpk">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=13004:13045#L329">GetIpk</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.GetIpk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) GetIpk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.GetName">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12911:12953#L322">GetName</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.GetRevocationPk">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=13210:13260#L343">GetRevocationPk</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.GetRevocationPk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) GetRevocationPk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.GetSigner">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=13096:13156#L336">GetSigner</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.GetSigner">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) GetSigner() *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.ProtoMessage">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12106:12144#L300">ProtoMessage</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.Reset">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=11957:11990#L298">Reset</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.String">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12026:12067#L299">String</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.XXX_DiscardUnknown">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12745:12791#L316">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.XXX_Marshal">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12385:12468#L307">XXX_Marshal</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.XXX_Merge">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12542:12598#L310">XXX_Merge</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.XXX_Size">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12652:12692#L313">XXX_Size</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPConfig.XXX_Unmarshal">func (*IdemixMSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=12269:12324#L304">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#IdemixMSPConfig.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPConfig">IdemixMSPConfig</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IdemixMSPSignerConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=13504:14911#L358">IdemixMSPSignerConfig</a>
+				<a class="permalink" href="index.html#IdemixMSPSignerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdemixMSPSIgnerConfig contains the crypto material to set up an idemix signing identity
+</p>
+
+			<pre>type IdemixMSPSignerConfig struct {
+    <span class="comment">// cred represents the serialized idemix credential of the default signer</span>
+<span id="IdemixMSPSignerConfig.Cred"></span>    Cred []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=cred,proto3&#34; json:&#34;cred,omitempty&#34;`
+    <span class="comment">// sk is the secret key of the default signer, corresponding to credential Cred</span>
+<span id="IdemixMSPSignerConfig.Sk"></span>    Sk []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=sk,proto3&#34; json:&#34;sk,omitempty&#34;`
+    <span class="comment">// organizational_unit_identifier defines the organizational unit the default signer is in</span>
+<span id="IdemixMSPSignerConfig.OrganizationalUnitIdentifier"></span>    OrganizationalUnitIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=organizational_unit_identifier,json=organizationalUnitIdentifier,proto3&#34; json:&#34;organizational_unit_identifier,omitempty&#34;`
+    <span class="comment">// role defines whether the default signer is admin, peer, member or client</span>
+<span id="IdemixMSPSignerConfig.Role"></span>    Role <a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,4,opt,name=role,proto3&#34; json:&#34;role,omitempty&#34;`
+    <span class="comment">// enrollment_id contains the enrollment id of this signer</span>
+<span id="IdemixMSPSignerConfig.EnrollmentId"></span>    EnrollmentId <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,5,opt,name=enrollment_id,json=enrollmentId,proto3&#34; json:&#34;enrollment_id,omitempty&#34;`
+    <span class="comment">// credential_revocation_information contains a serialized CredentialRevocationInformation</span>
+<span id="IdemixMSPSignerConfig.CredentialRevocationInformation"></span>    CredentialRevocationInformation []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,6,opt,name=credential_revocation_information,json=credentialRevocationInformation,proto3&#34; json:&#34;credential_revocation_information,omitempty&#34;`
+<span id="IdemixMSPSignerConfig.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral            struct{} `json:&#34;-&#34;`
+<span id="IdemixMSPSignerConfig.XXX_unrecognized"></span>    XXX_unrecognized                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="IdemixMSPSignerConfig.XXX_sizecache"></span>    XXX_sizecache                   <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IdemixMSPSignerConfig.Descriptor">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15131:15189#L379">Descriptor</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetCred">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15963:16011#L400">GetCred</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetCred">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetCred() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetCredentialRevocationInformation">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16518:16593#L435">GetCredentialRevocationInformation</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetCredentialRevocationInformation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetCredentialRevocationInformation() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetEnrollmentId">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16403:16459#L428">GetEnrollmentId</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetEnrollmentId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetEnrollmentId() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetOrganizationalUnitIdentifier">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16159:16231#L414">GetOrganizationalUnitIdentifier</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetOrganizationalUnitIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetOrganizationalUnitIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetRole">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16306:16353#L421">GetRole</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetRole">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetRole() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.GetSk">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16063:16109#L407">GetSk</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.GetSk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) GetSk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.ProtoMessage">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15080:15124#L378">ProtoMessage</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.Reset">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=14913:14952#L376">Reset</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.String">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=14994:15041#L377">String</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.XXX_DiscardUnknown">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15779:15831#L394">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.XXX_Marshal">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15383:15472#L385">XXX_Marshal</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.XXX_Merge">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15552:15614#L388">XXX_Merge</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.XXX_Size">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15674:15720#L391">XXX_Size</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IdemixMSPSignerConfig.XXX_Unmarshal">func (*IdemixMSPSignerConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=15255:15316#L382">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#IdemixMSPSignerConfig.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IdemixMSPSignerConfig">IdemixMSPSignerConfig</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18947:19628#L500">KeyInfo</a>
+				<a class="permalink" href="index.html#KeyInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KeyInfo represents a (secret) key that is either already stored
+in the bccsp/keystore or key material to be imported to the
+bccsp key-store. In later versions it may contain also a
+keystore identifier
+</p>
+
+			<pre>type KeyInfo struct {
+    <span class="comment">// Identifier of the key inside the default keystore; this for</span>
+    <span class="comment">// the case of Software BCCSP as well as the HSM BCCSP would be</span>
+    <span class="comment">// the SKI of the key</span>
+<span id="KeyInfo.KeyIdentifier"></span>    KeyIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=key_identifier,json=keyIdentifier,proto3&#34; json:&#34;key_identifier,omitempty&#34;`
+<span id="KeyInfo.KeyMaterial"></span>    <span class="comment">// KeyMaterial (optional) for the key to be imported; this is</span>
+    <span class="comment">// properly encoded key bytes, prefixed by the type of the key</span>
+    KeyMaterial          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=key_material,json=keyMaterial,proto3&#34; json:&#34;key_material,omitempty&#34;`
+<span id="KeyInfo.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KeyInfo.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KeyInfo.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyInfo.Descriptor">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=19792:19836#L516">Descriptor</a>
+					<a class="permalink" href="index.html#KeyInfo.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KeyInfo">KeyInfo</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.GetKeyIdentifier">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20456:20499#L537">GetKeyIdentifier</a>
+					<a class="permalink" href="index.html#KeyInfo.GetKeyIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) GetKeyIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.GetKeyMaterial">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20559:20600#L544">GetKeyMaterial</a>
+					<a class="permalink" href="index.html#KeyInfo.GetKeyMaterial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) GetKeyMaterial() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.ProtoMessage">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=19755:19785#L515">ProtoMessage</a>
+					<a class="permalink" href="index.html#KeyInfo.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KeyInfo">KeyInfo</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.Reset">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=19630:19655#L513">Reset</a>
+					<a class="permalink" href="index.html#KeyInfo.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.String">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=19683:19716#L514">String</a>
+					<a class="permalink" href="index.html#KeyInfo.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.XXX_DiscardUnknown">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20314:20352#L531">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KeyInfo.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.XXX_Marshal">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20002:20077#L522">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KeyInfo.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.XXX_Merge">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20143:20191#L525">XXX_Merge</a>
+					<a class="permalink" href="index.html#KeyInfo.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KeyInfo">KeyInfo</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.XXX_Size">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=20237:20269#L528">XXX_Size</a>
+					<a class="permalink" href="index.html#KeyInfo.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KeyInfo.XXX_Unmarshal">func (*KeyInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=19902:19949#L519">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KeyInfo.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KeyInfo">KeyInfo</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1033:1524#L18">MSPConfig</a>
+				<a class="permalink" href="index.html#MSPConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSPConfig collects all the configuration information for
+an MSP. The Config field should be unmarshalled in a way
+that depends on the Type
+</p>
+
+			<pre>type MSPConfig struct {
+<span id="MSPConfig.Type"></span>    <span class="comment">// Type holds the type of the MSP; the default one would</span>
+    <span class="comment">// be of type FABRIC implementing an X.509 based provider</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,1,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+<span id="MSPConfig.Config"></span>    <span class="comment">// Config is MSP dependent configuration info</span>
+    Config               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=config,proto3&#34; json:&#34;config,omitempty&#34;`
+<span id="MSPConfig.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="MSPConfig.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="MSPConfig.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPConfig.Descriptor">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1696:1742#L32">Descriptor</a>
+					<a class="permalink" href="index.html#MSPConfig.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPConfig">MSPConfig</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.GetConfig">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=2469:2507#L60">GetConfig</a>
+					<a class="permalink" href="index.html#MSPConfig.GetConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) GetConfig() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.GetType">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=2384:2419#L53">GetType</a>
+					<a class="permalink" href="index.html#MSPConfig.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) GetType() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.ProtoMessage">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1657:1689#L31">ProtoMessage</a>
+					<a class="permalink" href="index.html#MSPConfig.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPConfig">MSPConfig</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.Reset">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1526:1553#L29">Reset</a>
+					<a class="permalink" href="index.html#MSPConfig.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.String">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1583:1618#L30">String</a>
+					<a class="permalink" href="index.html#MSPConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.XXX_DiscardUnknown">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=2236:2276#L47">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#MSPConfig.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.XXX_Marshal">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1912:1989#L38">XXX_Marshal</a>
+					<a class="permalink" href="index.html#MSPConfig.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.XXX_Merge">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=2057:2107#L41">XXX_Merge</a>
+					<a class="permalink" href="index.html#MSPConfig.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#MSPConfig">MSPConfig</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.XXX_Size">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=2155:2189#L44">XXX_Size</a>
+					<a class="permalink" href="index.html#MSPConfig.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPConfig.XXX_Unmarshal">func (*MSPConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=1808:1857#L35">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#MSPConfig.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPConfig">MSPConfig</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPIdentityAnonymity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=11564:12067#L301">MSPIdentityAnonymity</a>
+				<a class="permalink" href="index.html#MSPIdentityAnonymity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSPIdentityAnonymity can be used to enforce an identity to be anonymous or nominal.
+</p>
+
+			<pre>type MSPIdentityAnonymity struct {
+<span id="MSPIdentityAnonymity.AnonymityType"></span>    AnonymityType        <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a> `protobuf:&#34;varint,1,opt,name=anonymity_type,json=anonymityType,proto3,enum=common.MSPIdentityAnonymity_MSPIdentityAnonymityType&#34; json:&#34;anonymity_type,omitempty&#34;`
+<span id="MSPIdentityAnonymity.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}                                      `json:&#34;-&#34;`
+<span id="MSPIdentityAnonymity.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                                        `json:&#34;-&#34;`
+<span id="MSPIdentityAnonymity.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                                         `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPIdentityAnonymity.Descriptor">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12283:12340#L311">Descriptor</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.GetAnonymityType">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=13106:13201#L332">GetAnonymityType</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.GetAnonymityType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) GetAnonymityType() <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.ProtoMessage">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12233:12276#L310">ProtoMessage</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.Reset">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12069:12107#L308">Reset</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.String">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12148:12194#L309">String</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.XXX_DiscardUnknown">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12925:12976#L326">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.XXX_Marshal">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12535:12623#L317">XXX_Marshal</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.XXX_Merge">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12702:12763#L320">XXX_Merge</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.XXX_Size">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12822:12867#L323">XXX_Size</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity.XXX_Unmarshal">func (*MSPIdentityAnonymity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=12409:12469#L314">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPIdentityAnonymity">MSPIdentityAnonymity</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPIdentityAnonymity_MSPIdentityAnonymityType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=2738:2794#L83">MSPIdentityAnonymity_MSPIdentityAnonymityType</a>
+				<a class="permalink" href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MSPIdentityAnonymity_MSPIdentityAnonymityType <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="MSPIdentityAnonymity_NOMINAL">MSPIdentityAnonymity_NOMINAL</span>   <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a> = 0
+    <span id="MSPIdentityAnonymity_ANONYMOUS">MSPIdentityAnonymity_ANONYMOUS</span> <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a> = 1
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPIdentityAnonymity_MSPIdentityAnonymityType.EnumDescriptor">func (MSPIdentityAnonymity_MSPIdentityAnonymityType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=3353:3438#L102">EnumDescriptor</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPIdentityAnonymity_MSPIdentityAnonymityType.String">func (MSPIdentityAnonymity_MSPIdentityAnonymityType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=3193:3263#L99">String</a>
+					<a class="permalink" href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#MSPIdentityAnonymity_MSPIdentityAnonymityType">MSPIdentityAnonymity_MSPIdentityAnonymityType</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPPrincipal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=4617:5935#L124">MSPPrincipal</a>
+				<a class="permalink" href="index.html#MSPPrincipal">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSPPrincipal aims to represent an MSP-centric set of identities.
+In particular, this structure allows for definition of
+</p>
+<pre>- a group of identities that are member of the same MSP
+- a group of identities that are member of the same organization unit
+  in the same MSP
+- a group of identities that are administering a specific MSP
+- a specific identity
+</pre>
+<p>
+Expressing these groups is done given two fields of the fields below
+</p>
+<pre>- Classification, that defines the type of classification of identities
+  in an MSP this principal would be defined on; Classification can take
+  three values:
+   (i)  ByMSPRole: that represents a classification of identities within
+        MSP based on one of the two pre-defined MSP rules, &#34;member&#34; and &#34;admin&#34;
+   (ii) ByOrganizationUnit: that represents a classification of identities
+        within MSP based on the organization unit an identity belongs to
+   (iii)ByIdentity that denotes that MSPPrincipal is mapped to a single
+        identity/certificate; this would mean that the Principal bytes
+        message
+</pre>
+
+			<pre>type MSPPrincipal struct {
+    <span class="comment">// Classification describes the way that one should process</span>
+<span id="MSPPrincipal.Principal"></span>    <span class="comment">// Principal. An Classification value of &#34;ByOrganizationUnit&#34; reflects</span>
+    <span class="comment">// that &#34;Principal&#34; contains the name of an organization this MSP</span>
+    <span class="comment">// handles. A Classification value &#34;ByIdentity&#34; means that</span>
+    <span class="comment">// &#34;Principal&#34; contains a specific identity. Default value</span>
+    <span class="comment">// denotes that Principal contains one of the groups by</span>
+    <span class="comment">// default supported by all MSPs (&#34;admin&#34; or &#34;member&#34;).</span>
+<span id="MSPPrincipal.PrincipalClassification"></span>    PrincipalClassification <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> `protobuf:&#34;varint,1,opt,name=principal_classification,json=principalClassification,proto3,enum=common.MSPPrincipal_Classification&#34; json:&#34;principal_classification,omitempty&#34;`
+    <span class="comment">// Principal completes the policy principal definition. For the default</span>
+    <span class="comment">// principal types, Principal can be either &#34;Admin&#34; or &#34;Member&#34;.</span>
+    <span class="comment">// For the ByOrganizationUnit/ByIdentity values of Classification,</span>
+    <span class="comment">// PolicyPrincipal acquires its value from an organization unit or</span>
+    <span class="comment">// identity, respectively.</span>
+    <span class="comment">// For the Combined Classification type, the Principal is a marshalled</span>
+    <span class="comment">// CombinedPrincipal.</span>
+    Principal            []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=principal,proto3&#34; json:&#34;principal,omitempty&#34;`
+<span id="MSPPrincipal.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="MSPPrincipal.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="MSPPrincipal.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPPrincipal.Descriptor">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6119:6168#L149">Descriptor</a>
+					<a class="permalink" href="index.html#MSPPrincipal.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPPrincipal">MSPPrincipal</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.GetPrincipal">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=7010:7054#L177">GetPrincipal</a>
+					<a class="permalink" href="index.html#MSPPrincipal.GetPrincipal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) GetPrincipal() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.GetPrincipalClassification">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6846:6925#L170">GetPrincipalClassification</a>
+					<a class="permalink" href="index.html#MSPPrincipal.GetPrincipalClassification">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) GetPrincipalClassification() <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.ProtoMessage">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6077:6112#L148">ProtoMessage</a>
+					<a class="permalink" href="index.html#MSPPrincipal.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPPrincipal">MSPPrincipal</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.Reset">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=5937:5967#L146">Reset</a>
+					<a class="permalink" href="index.html#MSPPrincipal.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.String">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6000:6038#L147">String</a>
+					<a class="permalink" href="index.html#MSPPrincipal.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.XXX_DiscardUnknown">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6689:6732#L164">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#MSPPrincipal.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.XXX_Marshal">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6347:6427#L155">XXX_Marshal</a>
+					<a class="permalink" href="index.html#MSPPrincipal.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.XXX_Merge">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6498:6551#L158">XXX_Merge</a>
+					<a class="permalink" href="index.html#MSPPrincipal.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.XXX_Size">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6602:6639#L161">XXX_Size</a>
+					<a class="permalink" href="index.html#MSPPrincipal.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal.XXX_Unmarshal">func (*MSPPrincipal) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=6237:6289#L152">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#MSPPrincipal.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPPrincipal">MSPPrincipal</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPPrincipal_Classification">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=888:926#L15">MSPPrincipal_Classification</a>
+				<a class="permalink" href="index.html#MSPPrincipal_Classification">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MSPPrincipal_Classification <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="MSPPrincipal_ROLE">MSPPrincipal_ROLE</span> <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> = 0
+    <span class="comment">// one of a member of MSP network, and the one of an</span>
+    <span class="comment">// administrator of an MSP network</span>
+    <span id="MSPPrincipal_ORGANIZATION_UNIT">MSPPrincipal_ORGANIZATION_UNIT</span> <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> = 1
+    <span class="comment">// groupping of entities, per MSP affiliation</span>
+    <span class="comment">// E.g., this can well be represented by an MSP&#39;s</span>
+    <span class="comment">// Organization unit</span>
+    <span id="MSPPrincipal_IDENTITY">MSPPrincipal_IDENTITY</span> <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> = 2
+    <span class="comment">// identity</span>
+    <span id="MSPPrincipal_ANONYMITY">MSPPrincipal_ANONYMITY</span> <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> = 3
+    <span class="comment">// an identity to be anonymous or nominal.</span>
+    <span id="MSPPrincipal_COMBINED">MSPPrincipal_COMBINED</span> <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a> = 4
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPPrincipal_Classification.EnumDescriptor">func (MSPPrincipal_Classification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=1942:2009#L50">EnumDescriptor</a>
+					<a class="permalink" href="index.html#MSPPrincipal_Classification.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPPrincipal_Classification.String">func (MSPPrincipal_Classification) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=1818:1870#L47">String</a>
+					<a class="permalink" href="index.html#MSPPrincipal_Classification.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#MSPPrincipal_Classification">MSPPrincipal_Classification</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPRole">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=9759:10433#L250">MSPRole</a>
+				<a class="permalink" href="index.html#MSPRole">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MSPRole governs the organization of the Principal
+field of an MSPPrincipal when it aims to define one of the
+two dedicated roles within an MSP: Admin and Members.
+</p>
+
+			<pre>type MSPRole struct {
+    <span class="comment">// MSPIdentifier represents the identifier of the MSP this principal</span>
+    <span class="comment">// refers to</span>
+<span id="MSPRole.MspIdentifier"></span>    MspIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=msp_identifier,json=mspIdentifier,proto3&#34; json:&#34;msp_identifier,omitempty&#34;`
+    <span class="comment">// MSPRoleType defines which of the available, pre-defined MSP-roles</span>
+    <span class="comment">// an identiy should posess inside the MSP with identifier MSPidentifier</span>
+<span id="MSPRole.Role"></span>    Role                 <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a> `protobuf:&#34;varint,2,opt,name=role,proto3,enum=common.MSPRole_MSPRoleType&#34; json:&#34;role,omitempty&#34;`
+<span id="MSPRole.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}            `json:&#34;-&#34;`
+<span id="MSPRole.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `json:&#34;-&#34;`
+<span id="MSPRole.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>               `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPRole.Descriptor">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10597:10641#L265">Descriptor</a>
+					<a class="permalink" href="index.html#MSPRole.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPRole">MSPRole</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.GetMspIdentifier">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=11264:11307#L286">GetMspIdentifier</a>
+					<a class="permalink" href="index.html#MSPRole.GetMspIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) GetMspIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.GetRole">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=11367:11414#L293">GetRole</a>
+					<a class="permalink" href="index.html#MSPRole.GetRole">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) GetRole() <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.ProtoMessage">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10560:10590#L264">ProtoMessage</a>
+					<a class="permalink" href="index.html#MSPRole.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#MSPRole">MSPRole</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.Reset">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10435:10460#L262">Reset</a>
+					<a class="permalink" href="index.html#MSPRole.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.String">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10488:10521#L263">String</a>
+					<a class="permalink" href="index.html#MSPRole.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.XXX_DiscardUnknown">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=11122:11160#L280">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#MSPRole.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.XXX_Marshal">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10810:10885#L271">XXX_Marshal</a>
+					<a class="permalink" href="index.html#MSPRole.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.XXX_Merge">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10951:10999#L274">XXX_Merge</a>
+					<a class="permalink" href="index.html#MSPRole.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#MSPRole">MSPRole</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.XXX_Size">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=11045:11077#L277">XXX_Size</a>
+					<a class="permalink" href="index.html#MSPRole.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole.XXX_Unmarshal">func (*MSPRole) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=10710:10757#L268">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#MSPRole.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MSPRole">MSPRole</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MSPRole_MSPRoleType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=2082:2112#L54">MSPRole_MSPRoleType</a>
+				<a class="permalink" href="index.html#MSPRole_MSPRoleType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MSPRole_MSPRoleType <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="MSPRole_MEMBER">MSPRole_MEMBER</span> <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a> = 0
+    <span id="MSPRole_ADMIN">MSPRole_ADMIN</span>  <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a> = 1
+    <span id="MSPRole_CLIENT">MSPRole_CLIENT</span> <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a> = 2
+    <span id="MSPRole_PEER">MSPRole_PEER</span>   <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a> = 3
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MSPRole_MSPRoleType.EnumDescriptor">func (MSPRole_MSPRoleType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=2606:2665#L79">EnumDescriptor</a>
+					<a class="permalink" href="index.html#MSPRole_MSPRoleType.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MSPRole_MSPRoleType.String">func (MSPRole_MSPRoleType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=2498:2542#L76">String</a>
+					<a class="permalink" href="index.html#MSPRole_MSPRoleType.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#MSPRole_MSPRoleType">MSPRole_MSPRoleType</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OrganizationUnit">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=7295:8231#L187">OrganizationUnit</a>
+				<a class="permalink" href="index.html#OrganizationUnit">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrganizationUnit governs the organization of the Principal
+field of a policy principal when a specific organization unity members
+are to be defined within a policy principal.
+</p>
+
+			<pre>type OrganizationUnit struct {
+    <span class="comment">// MSPIdentifier represents the identifier of the MSP this organization unit</span>
+    <span class="comment">// refers to</span>
+<span id="OrganizationUnit.MspIdentifier"></span>    MspIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=msp_identifier,json=mspIdentifier,proto3&#34; json:&#34;msp_identifier,omitempty&#34;`
+    <span class="comment">// OrganizationUnitIdentifier defines the organizational unit under the</span>
+    <span class="comment">// MSP identified with MSPIdentifier</span>
+<span id="OrganizationUnit.OrganizationalUnitIdentifier"></span>    OrganizationalUnitIdentifier <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=organizational_unit_identifier,json=organizationalUnitIdentifier,proto3&#34; json:&#34;organizational_unit_identifier,omitempty&#34;`
+<span id="OrganizationUnit.CertifiersIdentifier"></span>    <span class="comment">// CertifiersIdentifier is the hash of certificates chain of trust</span>
+    <span class="comment">// related to this organizational unit</span>
+    CertifiersIdentifier []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=certifiers_identifier,json=certifiersIdentifier,proto3&#34; json:&#34;certifiers_identifier,omitempty&#34;`
+<span id="OrganizationUnit.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="OrganizationUnit.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="OrganizationUnit.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="OrganizationUnit.Descriptor">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8431:8484#L205">Descriptor</a>
+					<a class="permalink" href="index.html#OrganizationUnit.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#OrganizationUnit">OrganizationUnit</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.GetCertifiersIdentifier">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=9460:9519#L240">GetCertifiersIdentifier</a>
+					<a class="permalink" href="index.html#OrganizationUnit.GetCertifiersIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) GetCertifiersIdentifier() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.GetMspIdentifier">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=9206:9258#L226">GetMspIdentifier</a>
+					<a class="permalink" href="index.html#OrganizationUnit.GetMspIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) GetMspIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.GetOrganizationalUnitIdentifier">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=9318:9385#L233">GetOrganizationalUnitIdentifier</a>
+					<a class="permalink" href="index.html#OrganizationUnit.GetOrganizationalUnitIdentifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) GetOrganizationalUnitIdentifier() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.ProtoMessage">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8385:8424#L204">ProtoMessage</a>
+					<a class="permalink" href="index.html#OrganizationUnit.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#OrganizationUnit">OrganizationUnit</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.Reset">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8233:8267#L202">Reset</a>
+					<a class="permalink" href="index.html#OrganizationUnit.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.String">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8304:8346#L203">String</a>
+					<a class="permalink" href="index.html#OrganizationUnit.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.XXX_DiscardUnknown">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=9037:9084#L220">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#OrganizationUnit.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.XXX_Marshal">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8671:8755#L211">XXX_Marshal</a>
+					<a class="permalink" href="index.html#OrganizationUnit.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.XXX_Merge">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8830:8887#L214">XXX_Merge</a>
+					<a class="permalink" href="index.html#OrganizationUnit.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.XXX_Size">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8942:8983#L217">XXX_Size</a>
+					<a class="permalink" href="index.html#OrganizationUnit.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="OrganizationUnit.XXX_Unmarshal">func (*OrganizationUnit) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_principal.pb.go?s=8553:8609#L208">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#OrganizationUnit.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#OrganizationUnit">OrganizationUnit</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SerializedIdemixIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2932:4152#L70">SerializedIdemixIdentity</a>
+				<a class="permalink" href="index.html#SerializedIdemixIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+This struct represents an Idemix Identity
+to be used to serialize it and deserialize it.
+The IdemixMSP will first serialize an idemix identity to bytes using
+this proto, and then uses these bytes as id_bytes in SerializedIdentity
+</p>
+
+			<pre>type SerializedIdemixIdentity struct {
+    <span class="comment">// nym_x is the X-component of the pseudonym elliptic curve point.</span>
+    <span class="comment">// It is a []byte representation of an amcl.BIG</span>
+    <span class="comment">// The pseudonym can be seen as a public key of the identity, it is used to verify signatures.</span>
+<span id="SerializedIdemixIdentity.NymX"></span>    NymX []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=nym_x,json=nymX,proto3&#34; json:&#34;nym_x,omitempty&#34;`
+    <span class="comment">// nym_y is the Y-component of the pseudonym elliptic curve point.</span>
+    <span class="comment">// It is a []byte representation of an amcl.BIG</span>
+    <span class="comment">// The pseudonym can be seen as a public key of the identity, it is used to verify signatures.</span>
+<span id="SerializedIdemixIdentity.NymY"></span>    NymY []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=nym_y,json=nymY,proto3&#34; json:&#34;nym_y,omitempty&#34;`
+    <span class="comment">// ou contains the organizational unit of the idemix identity</span>
+<span id="SerializedIdemixIdentity.Ou"></span>    Ou []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,opt,name=ou,proto3&#34; json:&#34;ou,omitempty&#34;`
+    <span class="comment">// role contains the role of this identity (e.g., ADMIN or MEMBER)</span>
+<span id="SerializedIdemixIdentity.Role"></span>    Role []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,4,opt,name=role,proto3&#34; json:&#34;role,omitempty&#34;`
+    <span class="comment">// proof contains the cryptographic evidence that this identity is valid</span>
+<span id="SerializedIdemixIdentity.Proof"></span>    Proof                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,5,opt,name=proof,proto3&#34; json:&#34;proof,omitempty&#34;`
+<span id="SerializedIdemixIdentity.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SerializedIdemixIdentity.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SerializedIdemixIdentity.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SerializedIdemixIdentity.Descriptor">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4384:4445#L93">Descriptor</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.GetNymX">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5252:5303#L114">GetNymX</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.GetNymX">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) GetNymX() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.GetNymY">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5355:5406#L121">GetNymY</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.GetNymY">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) GetNymY() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.GetOu">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5458:5507#L128">GetOu</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.GetOu">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) GetOu() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.GetProof">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5660:5712#L142">GetProof</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.GetProof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) GetProof() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.GetRole">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5557:5608#L135">GetRole</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.GetRole">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) GetRole() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.ProtoMessage">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4330:4377#L92">ProtoMessage</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.Reset">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4154:4196#L90">Reset</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.String">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4241:4291#L91">String</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.XXX_DiscardUnknown">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=5059:5114#L108">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.XXX_Marshal">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4645:4737#L99">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.XXX_Merge">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4820:4885#L102">XXX_Merge</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.XXX_Size">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4948:4997#L105">XXX_Size</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdemixIdentity.XXX_Unmarshal">func (*SerializedIdemixIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=4511:4575#L96">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SerializedIdemixIdentity.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdemixIdentity">SerializedIdemixIdentity</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SerializedIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1001:1485#L18">SerializedIdentity</a>
+				<a class="permalink" href="index.html#SerializedIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+This struct represents an Identity
+(with its MSP identifier) to be used
+to serialize it and deserialize it
+</p>
+
+			<pre>type SerializedIdentity struct {
+    <span class="comment">// The identifier of the associated membership service provider</span>
+<span id="SerializedIdentity.Mspid"></span>    Mspid <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=mspid,proto3&#34; json:&#34;mspid,omitempty&#34;`
+    <span class="comment">// the Identity, serialized according to the rules of its MPS</span>
+<span id="SerializedIdentity.IdBytes"></span>    IdBytes              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=id_bytes,json=idBytes,proto3&#34; json:&#34;id_bytes,omitempty&#34;`
+<span id="SerializedIdentity.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SerializedIdentity.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SerializedIdentity.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SerializedIdentity.Descriptor">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1693:1748#L31">Descriptor</a>
+					<a class="permalink" href="index.html#SerializedIdentity.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SerializedIdentity">SerializedIdentity</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.GetIdBytes">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2587:2635#L59">GetIdBytes</a>
+					<a class="permalink" href="index.html#SerializedIdentity.GetIdBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) GetIdBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.GetMspid">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2489:2535#L52">GetMspid</a>
+					<a class="permalink" href="index.html#SerializedIdentity.GetMspid">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) GetMspid() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.ProtoMessage">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1645:1686#L30">ProtoMessage</a>
+					<a class="permalink" href="index.html#SerializedIdentity.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SerializedIdentity">SerializedIdentity</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.Reset">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1487:1523#L28">Reset</a>
+					<a class="permalink" href="index.html#SerializedIdentity.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.String">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1562:1606#L29">String</a>
+					<a class="permalink" href="index.html#SerializedIdentity.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.XXX_DiscardUnknown">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2314:2363#L46">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SerializedIdentity.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.XXX_Marshal">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1936:2022#L37">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SerializedIdentity.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.XXX_Merge">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2099:2158#L40">XXX_Merge</a>
+					<a class="permalink" href="index.html#SerializedIdentity.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.XXX_Size">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=2215:2258#L43">XXX_Size</a>
+					<a class="permalink" href="index.html#SerializedIdentity.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SerializedIdentity.XXX_Unmarshal">func (*SerializedIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/identities.pb.go?s=1814:1872#L34">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SerializedIdentity.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SerializedIdentity">SerializedIdentity</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SigningIdentityInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=16821:17482#L445">SigningIdentityInfo</a>
+				<a class="permalink" href="index.html#SigningIdentityInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SigningIdentityInfo represents the configuration information
+related to the signing identity the peer is to use for generating
+endorsements
+</p>
+
+			<pre>type SigningIdentityInfo struct {
+<span id="SigningIdentityInfo.PublicSigner"></span>    <span class="comment">// PublicSigner carries the public information of the signing</span>
+    <span class="comment">// identity. For an X.509 provider this would be represented by</span>
+    <span class="comment">// an X.509 certificate</span>
+    PublicSigner []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=public_signer,json=publicSigner,proto3&#34; json:&#34;public_signer,omitempty&#34;`
+<span id="SigningIdentityInfo.PrivateSigner"></span>    <span class="comment">// PrivateSigner denotes a reference to the private key of the</span>
+    <span class="comment">// peer&#39;s signing identity</span>
+    PrivateSigner        *<a href="index.html#KeyInfo">KeyInfo</a> `protobuf:&#34;bytes,2,opt,name=private_signer,json=privateSigner,proto3&#34; json:&#34;private_signer,omitempty&#34;`
+<span id="SigningIdentityInfo.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SigningIdentityInfo.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SigningIdentityInfo.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SigningIdentityInfo.Descriptor">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17694:17750#L461">Descriptor</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.GetPrivateSigner">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18616:18673#L489">GetPrivateSigner</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.GetPrivateSigner">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) GetPrivateSigner() *<a href="index.html#KeyInfo">KeyInfo</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.GetPublicSigner">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18502:18556#L482">GetPublicSigner</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.GetPublicSigner">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) GetPublicSigner() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.ProtoMessage">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17645:17687#L460">ProtoMessage</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.Reset">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17484:17521#L458">Reset</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.String">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17561:17606#L459">String</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.XXX_DiscardUnknown">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18324:18374#L476">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.XXX_Marshal">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17940:18027#L467">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.XXX_Merge">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18105:18165#L470">XXX_Merge</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.XXX_Size">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=18223:18267#L473">XXX_Size</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SigningIdentityInfo.XXX_Unmarshal">func (*SigningIdentityInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp/msp_config.pb.go?s=17816:17875#L464">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SigningIdentityInfo.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SigningIdentityInfo">SigningIdentityInfo</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

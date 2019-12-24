@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>dispatcher - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package dispatcher
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#NewBlockEvent">func NewBlockEvent(block *cb.Block, sourceURL string) *fab.BlockEvent</a></dd>
+			
+				
+				<dd><a href="index.html#NewChaincodeEvent">func NewChaincodeEvent(chaincodeID, eventName, txID string, payload []byte, blockNum uint64, sourceURL string) *fab.CCEvent</a></dd>
+			
+				
+				<dd><a href="index.html#NewFilteredBlockEvent">func NewFilteredBlockEvent(fblock *pb.FilteredBlock, sourceURL string) *fab.FilteredBlockEvent</a></dd>
+			
+				
+				<dd><a href="index.html#NewTxStatusEvent">func NewTxStatusEvent(txID string, txValidationCode pb.TxValidationCode, blockNum uint64, sourceURL string) *fab.TxStatusEvent</a></dd>
+			
+				
+				<dd><a href="index.html#WithEventConsumerBufferSize">func WithEventConsumerBufferSize(value uint) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithEventConsumerTimeout">func WithEventConsumerTimeout(value time.Duration) options.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithSnapshot">func WithSnapshot(value fab.EventSnapshot) options.Opt</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BlockReg">type BlockReg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeReg">type ChaincodeReg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Dispatcher">type Dispatcher</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(opts ...options.Opt) *Dispatcher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.EventCh">func (ed *Dispatcher) EventCh() (chan&lt;- interface{}, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleBlock">func (ed *Dispatcher) HandleBlock(block *cb.Block, sourceURL string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleFilteredBlock">func (ed *Dispatcher) HandleFilteredBlock(fblock *pb.FilteredBlock, sourceURL string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleStopAndTransferEvent">func (ed *Dispatcher) HandleStopAndTransferEvent(e Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleStopEvent">func (ed *Dispatcher) HandleStopEvent(e Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.HandleTransferEvent">func (ed *Dispatcher) HandleTransferEvent(e Event)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.LastBlockNum">func (ed *Dispatcher) LastBlockNum() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.RegisterHandler">func (ed *Dispatcher) RegisterHandler(t interface{}, h Handler)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.RegisterHandlers">func (ed *Dispatcher) RegisterHandlers()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.SetEventConsumerBufferSize">func (p *Dispatcher) SetEventConsumerBufferSize(value uint)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.SetEventConsumerTimeout">func (p *Dispatcher) SetEventConsumerTimeout(value time.Duration)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.SetSnapshot">func (p *Dispatcher) SetSnapshot(value fab.EventSnapshot) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.Start">func (ed *Dispatcher) Start() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.UpdateLastBlockInfoOnly">func (ed *Dispatcher) UpdateLastBlockInfoOnly()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Event">type Event</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FilteredBlockReg">type FilteredBlockReg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HandlerRegistry">type HandlerRegistry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegisterBlockEvent">type RegisterBlockEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterBlockEvent">func NewRegisterBlockEvent(filter fab.BlockFilter, eventch chan&lt;- *fab.BlockEvent, respch chan&lt;- fab.Registration, errCh chan&lt;- error) *RegisterBlockEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegisterChaincodeEvent">type RegisterChaincodeEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterChaincodeEvent">func NewRegisterChaincodeEvent(ccID, eventFilter string, eventch chan&lt;- *fab.CCEvent, respch chan&lt;- fab.Registration, errCh chan&lt;- error) *RegisterChaincodeEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegisterEvent">type RegisterEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterEvent">func NewRegisterEvent(respch chan&lt;- fab.Registration, errCh chan&lt;- error) RegisterEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegisterFilteredBlockEvent">type RegisterFilteredBlockEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterFilteredBlockEvent">func NewRegisterFilteredBlockEvent(eventch chan&lt;- *fab.FilteredBlockEvent, respch chan&lt;- fab.Registration, errCh chan&lt;- error) *RegisterFilteredBlockEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegisterTxStatusEvent">type RegisterTxStatusEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegisterTxStatusEvent">func NewRegisterTxStatusEvent(txID string, eventch chan&lt;- *fab.TxStatusEvent, respch chan&lt;- fab.Registration, errCh chan&lt;- error) *RegisterTxStatusEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegistrationInfo">type RegistrationInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegistrationInfoEvent">type RegistrationInfoEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegistrationInfoEvent">func NewRegistrationInfoEvent(regInfoCh chan&lt;- *RegistrationInfo) *RegistrationInfoEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StopAndTransferEvent">type StopAndTransferEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewStopAndTransferEvent">func NewStopAndTransferEvent(snapshotch chan&lt;- fab.EventSnapshot, errch chan&lt;- error) *StopAndTransferEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StopEvent">type StopEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewStopEvent">func NewStopEvent(errch chan&lt;- error) *StopEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransferEvent">type TransferEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTransferEvent">func NewTransferEvent(snapshotch chan&lt;- fab.EventSnapshot, errch chan&lt;- error) *TransferEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxStatusReg">type TxStatusReg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UnregisterEvent">type UnregisterEvent</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUnregisterEvent">func NewUnregisterEvent(reg fab.Registration) *UnregisterEvent</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go">dispatcher.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go">events.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/registrations.go">registrations.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="NewBlockEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=4172:4241#L129">NewBlockEvent</a>
+				<a class="permalink" href="index.html#NewBlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewBlockEvent(block *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#BlockEvent">BlockEvent</a></pre>
+			<p>
+NewBlockEvent creates a new BlockEvent
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewChaincodeEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=4616:4739#L145">NewChaincodeEvent</a>
+				<a class="permalink" href="index.html#NewChaincodeEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewChaincodeEvent(chaincodeID, eventName, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#CCEvent">CCEvent</a></pre>
+			<p>
+NewChaincodeEvent creates a new ChaincodeEvent
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewFilteredBlockEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=4377:4471#L137">NewFilteredBlockEvent</a>
+				<a class="permalink" href="index.html#NewFilteredBlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewFilteredBlockEvent(fblock *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#FilteredBlock">FilteredBlock</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#FilteredBlockEvent">FilteredBlockEvent</a></pre>
+			<p>
+NewFilteredBlockEvent creates a new FilteredBlockEvent
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewTxStatusEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=4968:5094#L157">NewTxStatusEvent</a>
+				<a class="permalink" href="index.html#NewTxStatusEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewTxStatusEvent(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txValidationCode <a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#TxValidationCode">TxValidationCode</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#TxStatusEvent">TxStatusEvent</a></pre>
+			<p>
+NewTxStatusEvent creates a new TxStatusEvent
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithEventConsumerBufferSize">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=877:933#L25">WithEventConsumerBufferSize</a>
+				<a class="permalink" href="index.html#WithEventConsumerBufferSize">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithEventConsumerBufferSize(value <a href="http://localhost:6060/pkg/builtin/#uint">uint</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithEventConsumerBufferSize sets the size of the registered consumer&#39;s event channel.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithEventConsumerTimeout">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=1364:1426#L37">WithEventConsumerTimeout</a>
+				<a class="permalink" href="index.html#WithEventConsumerTimeout">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithEventConsumerTimeout(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithEventConsumerTimeout is the timeout when sending events to a registered consumer.
+If &lt; 0, if buffer full, unblocks immediately and does not send.
+If 0, if buffer full, will block and guarantee the event will be sent out.
+If &gt; 0, if buffer full, blocks util timeout.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithSnapshot">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=1629:1683#L46">WithSnapshot</a>
+				<a class="permalink" href="index.html#WithSnapshot">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithSnapshot(value <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>) <a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithSnapshot sets the given TxStatus registrations.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BlockReg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/registrations.go?s=273:354#L7">BlockReg</a>
+				<a class="permalink" href="index.html#BlockReg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockReg contains the data for a block registration
+</p>
+
+			<pre>type BlockReg struct {
+<span id="BlockReg.Filter"></span>    Filter  <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#BlockFilter">BlockFilter</a>
+<span id="BlockReg.Eventch"></span>    Eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#BlockEvent">BlockEvent</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeReg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/registrations.go?s=565:694#L18">ChaincodeReg</a>
+				<a class="permalink" href="index.html#ChaincodeReg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeReg contains the data for a chaincode registration
+</p>
+
+			<pre>type ChaincodeReg struct {
+<span id="ChaincodeReg.ChaincodeID"></span>    ChaincodeID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeReg.EventFilter"></span>    EventFilter <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeReg.EventRegExp"></span>    EventRegExp *<a href="http://localhost:6060/pkg/regexp/">regexp</a>.<a href="http://localhost:6060/pkg/regexp/#Regexp">Regexp</a>
+<span id="ChaincodeReg.Eventch"></span>    Eventch     chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#CCEvent">CCEvent</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Dispatcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=1648:2091#L36">Dispatcher</a>
+				<a class="permalink" href="index.html#Dispatcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Dispatcher is responsible for handling all events, including connection and registration events originating from the client,
+and events originating from the channel event service. All events are processed in a single Go routine
+in order to avoid any race conditions and to ensure that events are processed in the order in which they are received.
+This also avoids the need for synchronization.
+The lastBlockNum member MUST be first to ensure it stays 64-bit aligned on 32-bit machines.
+</p>
+
+			<pre>type Dispatcher struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=2126:2167#L50">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(opts ...<a href="../../../../common/options/index.html">options</a>.<a href="../../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Dispatcher">Dispatcher</a></pre>
+				<p>
+New creates a new Dispatcher.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Dispatcher.EventCh">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=3636:3695#L85">EventCh</a>
+					<a class="permalink" href="index.html#Dispatcher.EventCh">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) EventCh() (chan&lt;- interface{}, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EventCh returns the channel to which events may be posted
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleBlock">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=14722:14790#L420">HandleBlock</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleBlock(block *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+HandleBlock handles a block event
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleFilteredBlock">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=15265:15350#L439">HandleFilteredBlock</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleFilteredBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleFilteredBlock(fblock *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#FilteredBlock">FilteredBlock</a>, sourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+HandleFilteredBlock handles a filtered block event
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleStopAndTransferEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=10061:10118#L270">HandleStopAndTransferEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleStopAndTransferEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleStopAndTransferEvent(e <a href="index.html#Event">Event</a>)</pre>
+				<p>
+HandleStopAndTransferEvent stops the dispatcher and transfers all event registrations
+into a EventSnapshot.
+The Dispatcher is no longer usable.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleStopEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=9075:9121#L240">HandleStopEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleStopEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleStopEvent(e <a href="index.html#Event">Event</a>)</pre>
+				<p>
+HandleStopEvent stops the dispatcher and unregisters all event registration.
+The Dispatcher is no longer usable.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.HandleTransferEvent">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=9678:9728#L258">HandleTransferEvent</a>
+					<a class="permalink" href="index.html#Dispatcher.HandleTransferEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) HandleTransferEvent(e <a href="index.html#Event">Event</a>)</pre>
+				<p>
+HandleTransferEvent transfers all event registrations into a EventSnapshot.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.LastBlockNum">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=5171:5214#L139">LastBlockNum</a>
+					<a class="permalink" href="index.html#Dispatcher.LastBlockNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) LastBlockNum() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+LastBlockNum returns the block number of the last block for which an event was received.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.RegisterHandler">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=22171:22234#L634">RegisterHandler</a>
+					<a class="permalink" href="index.html#Dispatcher.RegisterHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) RegisterHandler(t interface{}, h <a href="index.html#Handler">Handler</a>)</pre>
+				<p>
+RegisterHandler registers an event handler
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.RegisterHandlers">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=2694:2734#L68">RegisterHandlers</a>
+					<a class="permalink" href="index.html#Dispatcher.RegisterHandlers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) RegisterHandlers()</pre>
+				<p>
+RegisterHandlers registers all of the handlers by event type
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.SetEventConsumerBufferSize">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=2074:2129#L65">SetEventConsumerBufferSize</a>
+					<a class="permalink" href="index.html#Dispatcher.SetEventConsumerBufferSize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Dispatcher">Dispatcher</a>) SetEventConsumerBufferSize(value <a href="http://localhost:6060/pkg/builtin/#uint">uint</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.SetEventConsumerTimeout">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=2223:2284#L70">SetEventConsumerTimeout</a>
+					<a class="permalink" href="index.html#Dispatcher.SetEventConsumerTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Dispatcher">Dispatcher</a>) SetEventConsumerTimeout(value <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.SetSnapshot">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/opts.go?s=2451:2510#L79">SetSnapshot</a>
+					<a class="permalink" href="index.html#Dispatcher.SetSnapshot">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Dispatcher">Dispatcher</a>) SetSnapshot(value <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.Start">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=4012:4047#L95">Start</a>
+					<a class="permalink" href="index.html#Dispatcher.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) Start() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Start starts dispatching events as they arrive. All events are processed in
+a single Go routine in order to avoid any race conditions
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.UpdateLastBlockInfoOnly">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=22618:22665#L645">UpdateLastBlockInfoOnly</a>
+					<a class="permalink" href="index.html#Dispatcher.UpdateLastBlockInfoOnly">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ed *<a href="index.html#Dispatcher">Dispatcher</a>) UpdateLastBlockInfoOnly()</pre>
+				<p>
+UpdateLastBlockInfoOnly sets is next event should only be used for updating last block info.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Event">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=538:560#L7">Event</a>
+				<a class="permalink" href="index.html#Event">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Event is an event that&#39;s sent to the dispatcher. This includes client registration
+requests or events that come from an event producer.
+</p>
+
+			<pre>type Event interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FilteredBlockReg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/registrations.go?s=428:500#L13">FilteredBlockReg</a>
+				<a class="permalink" href="index.html#FilteredBlockReg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FilteredBlockReg contains the data for a filtered block registration
+</p>
+
+			<pre>type FilteredBlockReg struct {
+<span id="FilteredBlockReg.Eventch"></span>    Eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#FilteredBlockEvent">FilteredBlockEvent</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=1010:1034#L26">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler is the handler for a given event type.
+</p>
+
+			<pre>type Handler func(<a href="index.html#Event">Event</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HandlerRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/dispatcher.go?s=1100:1145#L29">HandlerRegistry</a>
+				<a class="permalink" href="index.html#HandlerRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HandlerRegistry contains the handlers for each type of event
+</p>
+
+			<pre>type HandlerRegistry map[<a href="http://localhost:6060/pkg/reflect/">reflect</a>.<a href="http://localhost:6060/pkg/reflect/#Type">Type</a>]<a href="index.html#Handler">Handler</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RegisterBlockEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1245:1309#L35">RegisterBlockEvent</a>
+				<a class="permalink" href="index.html#RegisterBlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterBlockEvent registers for block events
+</p>
+
+			<pre>type RegisterBlockEvent struct {
+    <a href="index.html#RegisterEvent">RegisterEvent</a>
+<span id="RegisterBlockEvent.Reg"></span>    Reg *<a href="index.html#BlockReg">BlockReg</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterBlockEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=2300:2454#L78">NewRegisterBlockEvent</a>
+					<a class="permalink" href="index.html#NewRegisterBlockEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterBlockEvent(filter <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#BlockFilter">BlockFilter</a>, eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#BlockEvent">BlockEvent</a>, respch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#RegisterBlockEvent">RegisterBlockEvent</a></pre>
+				<p>
+NewRegisterBlockEvent creates a new RegisterBlockEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RegisterChaincodeEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1516:1588#L47">RegisterChaincodeEvent</a>
+				<a class="permalink" href="index.html#RegisterChaincodeEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterChaincodeEvent registers for chaincode events
+</p>
+
+			<pre>type RegisterChaincodeEvent struct {
+    <a href="index.html#RegisterEvent">RegisterEvent</a>
+<span id="RegisterChaincodeEvent.Reg"></span>    Reg *<a href="index.html#ChaincodeReg">ChaincodeReg</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterChaincodeEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=3207:3368#L101">NewRegisterChaincodeEvent</a>
+					<a class="permalink" href="index.html#NewRegisterChaincodeEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterChaincodeEvent(ccID, eventFilter <a href="http://localhost:6060/pkg/builtin/#string">string</a>, eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#CCEvent">CCEvent</a>, respch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#RegisterChaincodeEvent">RegisterChaincodeEvent</a></pre>
+				<p>
+NewRegisterChaincodeEvent creates a new RegisterChaincodeEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RegisterEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=620:700#L10">RegisterEvent</a>
+				<a class="permalink" href="index.html#RegisterEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterEvent is the base for all registration events.
+</p>
+
+			<pre>type RegisterEvent struct {
+<span id="RegisterEvent.RegCh"></span>    RegCh chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>
+<span id="RegisterEvent.ErrCh"></span>    ErrCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=3978:4065#L121">NewRegisterEvent</a>
+					<a class="permalink" href="index.html#NewRegisterEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterEvent(respch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) <a href="index.html#RegisterEvent">RegisterEvent</a></pre>
+				<p>
+NewRegisterEvent creates a new RgisterEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RegisterFilteredBlockEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1377:1457#L41">RegisterFilteredBlockEvent</a>
+				<a class="permalink" href="index.html#RegisterFilteredBlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterFilteredBlockEvent registers for filtered block events
+</p>
+
+			<pre>type RegisterFilteredBlockEvent struct {
+    <a href="index.html#RegisterEvent">RegisterEvent</a>
+<span id="RegisterFilteredBlockEvent.Reg"></span>    Reg *<a href="index.html#FilteredBlockReg">FilteredBlockReg</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterFilteredBlockEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=2676:2830#L86">NewRegisterFilteredBlockEvent</a>
+					<a class="permalink" href="index.html#NewRegisterFilteredBlockEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterFilteredBlockEvent(eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#FilteredBlockEvent">FilteredBlockEvent</a>, respch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#RegisterFilteredBlockEvent">RegisterFilteredBlockEvent</a></pre>
+				<p>
+NewRegisterFilteredBlockEvent creates a new RegisterFilterBlockEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RegisterTxStatusEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1655:1725#L53">RegisterTxStatusEvent</a>
+				<a class="permalink" href="index.html#RegisterTxStatusEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegisterTxStatusEvent registers for transaction status events
+</p>
+
+			<pre>type RegisterTxStatusEvent struct {
+    <a href="index.html#RegisterEvent">RegisterEvent</a>
+<span id="RegisterTxStatusEvent.Reg"></span>    Reg *<a href="index.html#TxStatusReg">TxStatusReg</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegisterTxStatusEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=3627:3779#L113">NewRegisterTxStatusEvent</a>
+					<a class="permalink" href="index.html#NewRegisterTxStatusEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegisterTxStatusEvent(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#TxStatusEvent">TxStatusEvent</a>, respch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>, errCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#RegisterTxStatusEvent">RegisterTxStatusEvent</a></pre>
+				<p>
+NewRegisterTxStatusEvent creates a new RegisterTxStatusEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RegistrationInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1899:2106#L64">RegistrationInfo</a>
+				<a class="permalink" href="index.html#RegistrationInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegistrationInfo contains counts of the current event registrations
+</p>
+
+			<pre>type RegistrationInfo struct {
+<span id="RegistrationInfo.TotalRegistrations"></span>    TotalRegistrations            <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="RegistrationInfo.NumBlockRegistrations"></span>    NumBlockRegistrations         <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="RegistrationInfo.NumFilteredBlockRegistrations"></span>    NumFilteredBlockRegistrations <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="RegistrationInfo.NumCCRegistrations"></span>    NumCCRegistrations            <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="RegistrationInfo.NumTxStatusRegistrations"></span>    NumTxStatusRegistrations      <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RegistrationInfoEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=2167:2240#L73">RegistrationInfoEvent</a>
+				<a class="permalink" href="index.html#RegistrationInfoEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegistrationInfoEvent requests registration information
+</p>
+
+			<pre>type RegistrationInfoEvent struct {
+<span id="RegistrationInfoEvent.RegInfoCh"></span>    RegInfoCh chan&lt;- *<a href="index.html#RegistrationInfo">RegistrationInfo</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegistrationInfoEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=5930:6018#L190">NewRegistrationInfoEvent</a>
+					<a class="permalink" href="index.html#NewRegistrationInfoEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegistrationInfoEvent(regInfoCh chan&lt;- *<a href="index.html#RegistrationInfo">RegistrationInfo</a>) *<a href="index.html#RegistrationInfoEvent">RegistrationInfoEvent</a></pre>
+				<p>
+NewRegistrationInfoEvent returns a new RegistrationInfoEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="StopAndTransferEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1096:1194#L29">StopAndTransferEvent</a>
+				<a class="permalink" href="index.html#StopAndTransferEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StopAndTransferEvent tells the dispatcher to stop processing and transfer all
+registrations into a snapshot
+</p>
+
+			<pre>type StopAndTransferEvent struct {
+<span id="StopAndTransferEvent.SnapshotCh"></span>    SnapshotCh chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>
+<span id="StopAndTransferEvent.ErrCh"></span>    ErrCh      chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewStopAndTransferEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=5672:5779#L182">NewStopAndTransferEvent</a>
+					<a class="permalink" href="index.html#NewStopAndTransferEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewStopAndTransferEvent(snapshotch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>, errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#StopAndTransferEvent">StopAndTransferEvent</a></pre>
+				<p>
+NewStopAndTransferEvent creates a new StopAndTransferEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="StopEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=755:800#L16">StopEvent</a>
+				<a class="permalink" href="index.html#StopEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StopEvent tells the dispatcher to stop processing
+</p>
+
+			<pre>type StopEvent struct {
+<span id="StopEvent.ErrCh"></span>    ErrCh chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewStopEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=5296:5344#L167">NewStopEvent</a>
+					<a class="permalink" href="index.html#NewStopEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewStopEvent(errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#StopEvent">StopEvent</a></pre>
+				<p>
+NewStopEvent creates a new StopEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="TransferEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=889:980#L22">TransferEvent</a>
+				<a class="permalink" href="index.html#TransferEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransferEvent tells the dispatcher to transfer all
+registrations into a snapshot
+</p>
+
+			<pre>type TransferEvent struct {
+<span id="TransferEvent.SnapshotCh"></span>    SnapshotCh chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>
+<span id="TransferEvent.ErrCh"></span>    ErrCh      chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTransferEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=5437:5530#L174">NewTransferEvent</a>
+					<a class="permalink" href="index.html#NewTransferEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTransferEvent(snapshotch chan&lt;- <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#EventSnapshot">EventSnapshot</a>, errch chan&lt;- <a href="http://localhost:6060/pkg/builtin/#error">error</a>) *<a href="index.html#TransferEvent">TransferEvent</a></pre>
+				<p>
+NewTransferEvent creates a new TransferEvent
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="TxStatusReg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/registrations.go?s=767:845#L26">TxStatusReg</a>
+				<a class="permalink" href="index.html#TxStatusReg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxStatusReg contains the data for a transaction status registration
+</p>
+
+			<pre>type TxStatusReg struct {
+<span id="TxStatusReg.TxID"></span>    TxID    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxStatusReg.Eventch"></span>    Eventch chan&lt;- *<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#TxStatusEvent">TxStatusEvent</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UnregisterEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=1773:1826#L59">UnregisterEvent</a>
+				<a class="permalink" href="index.html#UnregisterEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UnregisterEvent unregisters a registration
+</p>
+
+			<pre>type UnregisterEvent struct {
+<span id="UnregisterEvent.Reg"></span>    Reg <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewUnregisterEvent">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/fab/events/service/dispatcher/events.go?s=3032:3094#L94">NewUnregisterEvent</a>
+					<a class="permalink" href="index.html#NewUnregisterEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewUnregisterEvent(reg <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Registration">Registration</a>) *<a href="index.html#UnregisterEvent">UnregisterEvent</a></pre>
+				<p>
+NewUnregisterEvent creates a new UnregisterEvent
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>options - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package options
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#WithPeerFilter">func WithPeerFilter(value PeerFilter) copts.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithPeerSorter">func WithPeerSorter(value PeerSorter) copts.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithPrioritySelector">func WithPrioritySelector(value PrioritySelector) copts.Opt</a></dd>
+			
+				
+				<dd><a href="index.html#WithRetryOpts">func WithRetryOpts(value retry.Opts) copts.Opt</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Params">type Params</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewParams">func NewParams(opts []copts.Opt) *Params</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Params.SetPeerFilter">func (p *Params) SetPeerFilter(value PeerFilter)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Params.SetPeerSorter">func (p *Params) SetPeerSorter(value PeerSorter)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Params.SetRetryOpts">func (p *Params) SetRetryOpts(value retry.Opts)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerFilter">type PeerFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerSorter">type PeerSorter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PrioritySelector">type PrioritySelector</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go">opts.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="WithPeerFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=1329:1376#L38">WithPeerFilter</a>
+				<a class="permalink" href="index.html#WithPeerFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithPeerFilter(value <a href="index.html#PeerFilter">PeerFilter</a>) <a href="../../../../common/options/index.html">copts</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithPeerFilter sets a peer filter which provides per-request filtering of peers
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithPeerSorter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=1642:1689#L49">WithPeerSorter</a>
+				<a class="permalink" href="index.html#WithPeerSorter">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithPeerSorter(value <a href="index.html#PeerSorter">PeerSorter</a>) <a href="../../../../common/options/index.html">copts</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithPeerSorter sets a peer sorter function which provides per-request
+sorting of peers
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithPrioritySelector">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=1922:1981#L59">WithPrioritySelector</a>
+				<a class="permalink" href="index.html#WithPrioritySelector">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithPrioritySelector(value <a href="index.html#PrioritySelector">PrioritySelector</a>) <a href="../../../../common/options/index.html">copts</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithPrioritySelector sets a priority selector function which provides per-request
+prioritization of peers
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WithRetryOpts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=2123:2169#L66">WithRetryOpts</a>
+				<a class="permalink" href="index.html#WithRetryOpts">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WithRetryOpts(value <a href="../../../../common/errors/retry/index.html">retry</a>.<a href="../../../../common/errors/retry/index.html#Opts">Opts</a>) <a href="../../../../common/options/index.html">copts</a>.<a href="../../../../common/options/index.html#Opt">Opt</a></pre>
+			<p>
+WithRetryOpts sets the retry options
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Params">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=978:1069#L24">Params</a>
+				<a class="permalink" href="index.html#Params">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Params defines the parameters of a selection service request
+</p>
+
+			<pre>type Params struct {
+<span id="Params.PeerFilter"></span>    PeerFilter <a href="index.html#PeerFilter">PeerFilter</a>
+<span id="Params.PeerSorter"></span>    PeerSorter <a href="index.html#PeerSorter">PeerSorter</a>
+<span id="Params.RetryOpts"></span>    RetryOpts  <a href="../../../../common/errors/retry/index.html">retry</a>.<a href="../../../../common/errors/retry/index.html#Opts">Opts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewParams">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=1137:1177#L31">NewParams</a>
+					<a class="permalink" href="index.html#NewParams">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewParams(opts []<a href="../../../../common/options/index.html">copts</a>.<a href="../../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Params">Params</a></pre>
+				<p>
+NewParams creates new parameters based on the provided options
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Params.SetPeerFilter">func (*Params) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=2396:2444#L79">SetPeerFilter</a>
+					<a class="permalink" href="index.html#Params.SetPeerFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Params">Params</a>) SetPeerFilter(value <a href="index.html#PeerFilter">PeerFilter</a>)</pre>
+				<p>
+SetPeerFilter sets the peer filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Params.SetPeerSorter">func (*Params) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=2628:2676#L89">SetPeerSorter</a>
+					<a class="permalink" href="index.html#Params.SetPeerSorter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Params">Params</a>) SetPeerSorter(value <a href="index.html#PeerSorter">PeerSorter</a>)</pre>
+				<p>
+SetPeerSorter sets the priority selector
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Params.SetRetryOpts">func (*Params) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=2857:2904#L99">SetRetryOpts</a>
+					<a class="permalink" href="index.html#Params.SetRetryOpts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Params">Params</a>) SetRetryOpts(value <a href="../../../../common/errors/retry/index.html">retry</a>.<a href="../../../../common/errors/retry/index.html#Opts">Opts</a>)</pre>
+				<p>
+SetRetryOpts sets the priority selector
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=484:524#L11">PeerFilter</a>
+				<a class="permalink" href="index.html#PeerFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerFilter filters out unwanted peers
+</p>
+
+			<pre>type PeerFilter func(peer <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerSorter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=556:605#L14">PeerSorter</a>
+				<a class="permalink" href="index.html#PeerSorter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerSorter sorts the peers
+</p>
+
+			<pre>type PeerSorter func(peers []<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Peer">Peer</a>) []<a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Peer">Peer</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PrioritySelector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/common/selection/options/opts.go?s=859:912#L21">PrioritySelector</a>
+				<a class="permalink" href="index.html#PrioritySelector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrioritySelector determines how likely a peer is to be
+selected over another peer.
+A positive return value means peer1 is selected;
+negative return value means the peer2 is selected;
+zero return value means their priorities are the same
+</p>
+
+			<pre>type PrioritySelector func(peer1, peer2 <a href="../../../../common/providers/fab/index.html">fab</a>.<a href="../../../../common/providers/fab/index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

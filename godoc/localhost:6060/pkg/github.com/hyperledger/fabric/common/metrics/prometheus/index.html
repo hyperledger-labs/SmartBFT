@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>prometheus - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package prometheus
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/metrics/prometheus"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Counter">type Counter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Counter.With">func (c *Counter) With(labelValues ...string) metrics.Counter</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Gauge">type Gauge</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Gauge.With">func (g *Gauge) With(labelValues ...string) metrics.Gauge</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Histogram">type Histogram</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Histogram.With">func (h *Histogram) With(labelValues ...string) metrics.Histogram</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.NewCounter">func (p *Provider) NewCounter(o metrics.CounterOpts) metrics.Counter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.NewGauge">func (p *Provider) NewGauge(o metrics.GaugeOpts) metrics.Gauge</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.NewHistogram">func (p *Provider) NewHistogram(o metrics.HistogramOpts) metrics.Histogram</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go">provider.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Counter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1210:1251#L51">Counter</a>
+				<a class="permalink" href="index.html#Counter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Counter struct{ <a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/">kitmetrics</a>.<a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/#Counter">Counter</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Counter.With">func (*Counter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1253:1314#L53">With</a>
+					<a class="permalink" href="index.html#Counter.With">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Counter">Counter</a>) With(labelValues ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Counter">Counter</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Gauge">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1378:1415#L57">Gauge</a>
+				<a class="permalink" href="index.html#Gauge">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Gauge struct{ <a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/">kitmetrics</a>.<a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/#Gauge">Gauge</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Gauge.With">func (*Gauge) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1417:1474#L59">With</a>
+					<a class="permalink" href="index.html#Gauge.With">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Gauge">Gauge</a>) With(labelValues ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Gauge">Gauge</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Histogram">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1532:1577#L63">Histogram</a>
+				<a class="permalink" href="index.html#Histogram">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Histogram struct{ <a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/">kitmetrics</a>.<a href="http://localhost:6060/pkg/github.com/go-kit/kit/metrics/#Histogram">Histogram</a> }
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Histogram.With">func (*Histogram) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=1579:1644#L65">With</a>
+					<a class="permalink" href="index.html#Histogram.With">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Histogram">Histogram</a>) With(labelValues ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Histogram">Histogram</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=308:330#L6">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Provider struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Provider.NewCounter">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=332:400#L8">NewCounter</a>
+					<a class="permalink" href="index.html#Provider.NewCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) NewCounter(o <a href="../index.html">metrics</a>.<a href="../index.html#CounterOpts">CounterOpts</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Counter">Counter</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Provider.NewGauge">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=616:678#L22">NewGauge</a>
+					<a class="permalink" href="index.html#Provider.NewGauge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) NewGauge(o <a href="../index.html">metrics</a>.<a href="../index.html#GaugeOpts">GaugeOpts</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Gauge">Gauge</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Provider.NewHistogram">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/metrics/prometheus/provider.go?s=886:960#L36">NewHistogram</a>
+					<a class="permalink" href="index.html#Provider.NewHistogram">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) NewHistogram(o <a href="../index.html">metrics</a>.<a href="../index.html#HistogramOpts">HistogramOpts</a>) <a href="../index.html">metrics</a>.<a href="../index.html#Histogram">Histogram</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

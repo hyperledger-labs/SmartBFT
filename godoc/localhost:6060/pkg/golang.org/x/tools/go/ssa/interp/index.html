@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>interp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package interp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/ssa/interp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package ssa/interp defines an interpreter for the SSA
+representation of Go programs.
+</p>
+<p>
+This interpreter is provided as an adjunct for testing the SSA
+construction algorithm.  Its purpose is to provide a minimal
+metacircular implementation of the dynamic semantics of each SSA
+instruction.  It is not, and will never be, a production-quality Go
+interpreter.
+</p>
+<p>
+The following is a partial list of Go features that are currently
+unsupported or incomplete in the interpreter.
+</p>
+<p>
+* Unsafe operations, including all uses of unsafe.Pointer, are
+impossible to support given the &#34;boxed&#34; value representation we
+have chosen.
+</p>
+<p>
+* The reflect package is only partially implemented.
+</p>
+<p>
+* The &#34;testing&#34; package is no longer supported because it
+depends on low-level details that change too often.
+</p>
+<p>
+* &#34;sync/atomic&#34; operations are not atomic due to the &#34;boxed&#34; value
+representation: it is not possible to read, modify and write an
+interface value atomically. As a consequence, Mutexes are currently
+broken.
+</p>
+<p>
+* recover is only partially implemented.  Also, the interpreter
+makes no attempt to distinguish target panics from interpreter
+crashes.
+</p>
+<p>
+* map iteration is asymptotically inefficient.
+</p>
+<p>
+* the sizes of the int, uint and uintptr types in the target
+program are assumed to be the same as those of the interpreter
+itself.
+</p>
+<p>
+* all values occupy space, even those of types defined by the spec
+to have zero size, e.g. struct{}.  This can cause asymptotic
+performance degradation.
+</p>
+<p>
+* os.Exit is implemented using panic, causing deferred functions to
+run.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Interpret">func Interpret(mainpkg *ssa.Package, mode Mode, sizes types.Sizes, filename string, args []string) (exitCode int)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Mode">type Mode</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/external.go">external.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/interp.go">interp.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/map.go">map.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/ops.go">ops.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/reflect.go">reflect.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/value.go">value.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+If CapturedOutput is non-nil, all writes by the interpreted program
+to file descriptors 1 and 2 will also be written to CapturedOutput.
+</p>
+<p>
+(The $GOROOT/test system requires that the test be considered a
+failure if &#34;BUG&#34; appears in the combined stdout/stderr output, even
+if it exits zero.  This is a global variable shared by all
+interpreters in the same process.)
+</p>
+
+				<pre>var <span id="CapturedOutput">CapturedOutput</span> *<a href="http://localhost:6060/pkg/bytes/">bytes</a>.<a href="http://localhost:6060/pkg/bytes/#Buffer">Buffer</a></pre>
+			
+		
+		
+			
+			
+			<h2 id="Interpret">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/interp.go?s=17706:17819#L633">Interpret</a>
+				<a class="permalink" href="index.html#Interpret">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Interpret(mainpkg *<a href="../index.html">ssa</a>.<a href="../index.html#Package">Package</a>, mode <a href="index.html#Mode">Mode</a>, sizes <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Sizes">Sizes</a>, filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (exitCode <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+			<p>
+Interpret interprets the Go program whose main package is mainpkg.
+mode specifies various interpreter options.  filename and args are
+the initial values of os.Args for the target program.  sizes is the
+effective type-sizing function for this program.
+</p>
+<p>
+Interpret returns the exit code of the program: 2 for panic (like
+gc does), or the argument to os.Exit for normal termination.
+</p>
+<p>
+The SSA program must include the &#34;runtime&#34; package.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Mode">type <a href="http://localhost:6060/src/golang.org/x/tools/go/ssa/interp/interp.go?s=2117:2131#L60">Mode</a>
+				<a class="permalink" href="index.html#Mode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Mode is a bitmask of options affecting the interpreter.
+</p>
+
+			<pre>type Mode <a href="http://localhost:6060/pkg/builtin/#uint">uint</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="DisableRecover">DisableRecover</span> <a href="index.html#Mode">Mode</a> = 1 &lt;&lt; <a href="http://localhost:6060/pkg/builtin/#iota">iota</a> <span class="comment">// Disable recover() in target programs; show interpreter crash instead.</span>
+    <span id="EnableTracing">EnableTracing</span>                   <span class="comment">// Print a trace of all instructions as they are interpreted.</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

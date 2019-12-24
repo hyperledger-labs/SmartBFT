@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>testpb - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package testpb
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/grpcmetrics/testpb"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#RegisterEchoServiceServer">func RegisterEchoServiceServer(s *grpc.Server, srv EchoServiceServer)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#EchoServiceClient">type EchoServiceClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEchoServiceClient">func NewEchoServiceClient(cc *grpc.ClientConn) EchoServiceClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EchoServiceServer">type EchoServiceServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EchoService_EchoStreamClient">type EchoService_EchoStreamClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EchoService_EchoStreamServer">type EchoService_EchoStreamServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Message">type Message</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Descriptor">func (*Message) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetMessage">func (m *Message) GetMessage() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GetSequence">func (m *Message) GetSequence() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.ProtoMessage">func (*Message) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Reset">func (m *Message) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.String">func (m *Message) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_DiscardUnknown">func (m *Message) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Marshal">func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Merge">func (dst *Message) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Size">func (m *Message) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.XXX_Unmarshal">func (m *Message) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go">echo.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="RegisterEchoServiceServer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=4330:4399#L139">RegisterEchoServiceServer</a>
+				<a class="permalink" href="index.html#RegisterEchoServiceServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterEchoServiceServer(s *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>, srv <a href="index.html#EchoServiceServer">EchoServiceServer</a>)</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="EchoServiceClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=2698:2913#L80">EchoServiceClient</a>
+				<a class="permalink" href="index.html#EchoServiceClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EchoServiceClient is the client API for EchoService service.
+</p>
+<p>
+For semantics around ctx use and closing/ending streaming RPCs, please refer to <a href="https://godoc.org/google.golang.org/grpc#ClientConn.NewStream">https://godoc.org/google.golang.org/grpc#ClientConn.NewStream</a>.
+</p>
+
+			<pre>type EchoServiceClient interface {
+    Echo(ctx <a href="../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../golang.org/x/net/context/index.html#Context">Context</a>, in *<a href="index.html#Message">Message</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (*<a href="index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    EchoStream(ctx <a href="../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../golang.org/x/net/context/index.html#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="index.html#EchoService_EchoStreamClient">EchoService_EchoStreamClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEchoServiceClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=2971:3035#L89">NewEchoServiceClient</a>
+					<a class="permalink" href="index.html#NewEchoServiceClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEchoServiceClient(cc *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>) <a href="index.html#EchoServiceClient">EchoServiceClient</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="EchoServiceServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=4193:4328#L134">EchoServiceServer</a>
+				<a class="permalink" href="index.html#EchoServiceServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EchoServiceServer is the server API for EchoService service.
+</p>
+
+			<pre>type EchoServiceServer interface {
+    Echo(<a href="../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../golang.org/x/net/context/index.html#Context">Context</a>, *<a href="index.html#Message">Message</a>) (*<a href="index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    EchoStream(<a href="index.html#EchoService_EchoStreamServer">EchoService_EchoStreamServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EchoService_EchoStreamClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=3675:3789#L111">EchoService_EchoStreamClient</a>
+				<a class="permalink" href="index.html#EchoService_EchoStreamClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type EchoService_EchoStreamClient interface {
+    Send(*<a href="index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EchoService_EchoStreamServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=5222:5336#L165">EchoService_EchoStreamServer</a>
+				<a class="permalink" href="index.html#EchoService_EchoStreamServer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type EchoService_EchoStreamServer interface {
+    Send(*<a href="index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ServerStream">ServerStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Message">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=757:1111#L19">Message</a>
+				<a class="permalink" href="index.html#Message">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Message struct {
+<span id="Message.Message"></span>    Message              <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=message,proto3&#34; json:&#34;message,omitempty&#34;`
+<span id="Message.Sequence"></span>    Sequence             <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `protobuf:&#34;varint,2,opt,name=sequence,proto3&#34; json:&#34;sequence,omitempty&#34;`
+<span id="Message.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Message.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Message.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Message.Descriptor">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1275:1319#L30">Descriptor</a>
+					<a class="permalink" href="index.html#Message.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Message">Message</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetMessage">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1933:1970#L51">GetMessage</a>
+					<a class="permalink" href="index.html#Message.GetMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetMessage() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.GetSequence">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=2024:2061#L58">GetSequence</a>
+					<a class="permalink" href="index.html#Message.GetSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GetSequence() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.ProtoMessage">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1238:1268#L29">ProtoMessage</a>
+					<a class="permalink" href="index.html#Message.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Message">Message</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.Reset">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1113:1138#L27">Reset</a>
+					<a class="permalink" href="index.html#Message.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.String">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1166:1199#L28">String</a>
+					<a class="permalink" href="index.html#Message.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_DiscardUnknown">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1791:1829#L45">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Message.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Marshal">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1479:1554#L36">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Message.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Merge">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1620:1668#L39">XXX_Merge</a>
+					<a class="permalink" href="index.html#Message.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Message">Message</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Size">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1714:1746#L42">XXX_Size</a>
+					<a class="permalink" href="index.html#Message.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Message.XXX_Unmarshal">func (*Message) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/grpcmetrics/testpb/echo.pb.go?s=1379:1426#L33">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Message.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

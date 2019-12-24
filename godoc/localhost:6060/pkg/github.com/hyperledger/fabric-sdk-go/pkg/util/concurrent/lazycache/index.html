@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>lazycache - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package lazycache
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Cache">type Cache</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(name string, initializer EntryInitializer, opts ...options.Opt) *Cache</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewWithData">func NewWithData(name string, initializer EntryInitializerWithData, opts ...options.Opt) *Cache</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.Close">func (c *Cache) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.Delete">func (c *Cache) Delete(key Key)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.DeleteAll">func (c *Cache) DeleteAll()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.Get">func (c *Cache) Get(key Key, data ...interface{}) (interface{}, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.IsClosed">func (c *Cache) IsClosed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.MustGet">func (c *Cache) MustGet(key Key) interface{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cache.Name">func (c *Cache) Name() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EntryInitializer">type EntryInitializer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EntryInitializerWithData">type EntryInitializerWithData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Key">type Key</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StringKey">type StringKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewStringKey">func NewStringKey(key string) *StringKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StringKey.String">func (k *StringKey) String() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Cache_Get">Cache.Get</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Cache_Get_expiring">Cache.Get (Expiring)</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Cache_Get_expiringWithData">Cache.Get (ExpiringWithData)</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Cache_MustGet">Cache.MustGet</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/keys.go">keys.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go">lazycache.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/refoptcheck.go">refoptcheck.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Cache">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=1456:1627#L41">Cache</a>
+				<a class="permalink" href="index.html#Cache">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Cache implements a lazy initializing cache. A cache entry is created
+the first time a value is accessed (via Get or MustGet) by invoking
+the provided Initializer. If the Initializer returns an error then the
+entry will not be added.
+</p>
+
+			<pre>type Cache struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=2056:2135#L56">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, initializer <a href="index.html#EntryInitializer">EntryInitializer</a>, opts ...<a href="../../../common/options/index.html">options</a>.<a href="../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Cache">Cache</a></pre>
+				<p>
+New creates a new lazy cache.
+- name is the name of the cache and is only used for debugging purpose
+- initializer is invoked the first time an entry is being cached
+- opts are options for the cache. If any lazyref option is passed then a lazy reference
+</p>
+<pre>is created for each of the cache entries to hold the actual value. This makes it possible
+to have expiring values and values that proactively refresh.
+</pre>
+
+				
+				
+			
+				
+				<h3 id="NewWithData">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=2785:2880#L72">NewWithData</a>
+					<a class="permalink" href="index.html#NewWithData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewWithData(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, initializer <a href="index.html#EntryInitializerWithData">EntryInitializerWithData</a>, opts ...<a href="../../../common/options/index.html">options</a>.<a href="../../../common/options/index.html#Opt">Opt</a>) *<a href="index.html#Cache">Cache</a></pre>
+				<p>
+NewWithData creates a new lazy cache. The provided initializer accepts optional data that
+is passed in from Get().
+- name is the name of the cache and is only used for debugging purpose
+- initializer is invoked the first time an entry is being cached
+- opts are options for the cache. If any lazyref option is passed then a lazy reference
+</p>
+<pre>is created for each of the cache entries to hold the actual value. This makes it possible
+to have expiring values and values that proactively refresh.
+</pre>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Cache.Close">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=5095:5118#L153">Close</a>
+					<a class="permalink" href="index.html#Cache.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) Close()</pre>
+				<p>
+Close does the following:
+- calls Close on all values that implement a Close() function
+- deletes all entries from the cache
+- prevents further calls to the cache
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cache.Delete">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=5916:5947#L186">Delete</a>
+					<a class="permalink" href="index.html#Cache.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) Delete(key <a href="index.html#Key">Key</a>)</pre>
+				<p>
+Delete does the following:
+- calls Close on all values that implement a Close() function
+- deletes key from the cache
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cache.DeleteAll">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=5538:5565#L170">DeleteAll</a>
+					<a class="permalink" href="index.html#Cache.DeleteAll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) DeleteAll()</pre>
+				<p>
+DeleteAll does the following:
+- calls Close on all values that implement a Close() function
+- deletes all entries from the cache
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cache.Get">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=3436:3506#L94">Get</a>
+					<a class="permalink" href="index.html#Cache.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) Get(key <a href="index.html#Key">Key</a>, data ...interface{}) (interface{}, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Get returns the value for the given key. If the
+key doesn&#39;t exist then the initializer is invoked
+to create the value, and the key is inserted. If the
+initializer returns an error then the key is removed
+from the cache.
+</p>
+
+				
+				<div id="example_Cache_Get" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">
+cache := New(&#34;Example_Cache&#34;, func(key Key) (interface{}, error) {
+    if key.String() == &#34;error&#34; {
+        return nil, fmt.Errorf(&#34;some error&#34;)
+    }
+    return fmt.Sprintf(&#34;Value_for_key_%s&#34;, key), nil
+})
+defer cache.Close()
+
+value, err := cache.Get(NewStringKey(&#34;Key1&#34;))
+if err != nil {
+    fmt.Printf(&#34;Error returned: %s\n&#34;, err)
+}
+fmt.Println(value)
+
+value, err = cache.Get(NewStringKey(&#34;error&#34;))
+if err != nil {
+    fmt.Printf(&#34;Error returned: %s\n&#34;, err)
+}
+fmt.Println(value)
+</pre>
+			
+		
+	</div>
+</div>
+<div id="example_Cache_Get_expiring" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example (Expiring)</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example (Expiring)</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">
+cache := New(&#34;Example_Expiring_Cache&#34;,
+    func(key Key) (interface{}, error) {
+        if key.String() == &#34;error&#34; {
+            return nil, fmt.Errorf(&#34;some error&#34;)
+        }
+        return fmt.Sprintf(&#34;Value_for_key_%s&#34;, key), nil
+    },
+    lazyref.WithAbsoluteExpiration(time.Second),
+    lazyref.WithFinalizer(func(expiredValue interface{}) {
+        fmt.Printf(&#34;Expired value: %s\n&#34;, expiredValue)
+    }),
+)
+defer cache.Close()
+
+value, err := cache.Get(NewStringKey(&#34;Key1&#34;))
+if err != nil {
+    fmt.Printf(&#34;Error returned: %s\n&#34;, err)
+} else {
+    fmt.Print(value)
+}
+
+_, err = cache.Get(NewStringKey(&#34;error&#34;))
+if err != nil {
+    fmt.Printf(&#34;Error returned: %s\n&#34;, err)
+}
+</pre>
+			
+		
+	</div>
+</div>
+<div id="example_Cache_Get_expiringWithData" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example (ExpiringWithData)</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example (ExpiringWithData)</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">
+cache := NewWithData(&#34;Example_Expiring_Cache&#34;,
+    func(key Key, data interface{}) (interface{}, error) {
+        return fmt.Sprintf(&#34;Value_for_%s_%d&#34;, key, data.(int)), nil
+    },
+    lazyref.WithAbsoluteExpiration(20*time.Millisecond),
+)
+defer cache.Close()
+
+for i := 0; i &lt; 5; i++ {
+    value, err := cache.Get(NewStringKey(&#34;Key&#34;), i)
+    if err != nil {
+        fmt.Printf(&#34;Error returned: %s&#34;, err)
+    } else {
+        fmt.Print(value)
+    }
+    time.Sleep(15 * time.Millisecond)
+}
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Cache.IsClosed">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=5322:5353#L163">IsClosed</a>
+					<a class="permalink" href="index.html#Cache.IsClosed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) IsClosed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsClosed reeturns true if the cache has been closed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cache.MustGet">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=4753:4797#L141">MustGet</a>
+					<a class="permalink" href="index.html#Cache.MustGet">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) MustGet(key <a href="index.html#Key">Key</a>) interface{}</pre>
+				<p>
+MustGet returns the value for the given key. If the key doesn&#39;t
+exist then the initializer is invoked to create the value and the
+key is inserted. If an error is returned during initialization of the
+value then this function will panic.
+</p>
+
+				
+				<div id="example_Cache_MustGet" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">cache := New(&#34;Example_Cache&#34;, func(key Key) (interface{}, error) {
+    return fmt.Sprintf(&#34;Value_for_key_%s&#34;, key), nil
+})
+defer cache.Close()
+
+key := NewStringKey(&#34;Key1&#34;)
+
+fmt.Println(cache.MustGet(key))
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Value_for_key_Key1
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Cache.Name">func (*Cache) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=3151:3180#L85">Name</a>
+					<a class="permalink" href="index.html#Cache.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cache">Cache</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Name returns the name of the cache (useful for debugging)
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EntryInitializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=644:700#L19">EntryInitializer</a>
+				<a class="permalink" href="index.html#EntryInitializer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EntryInitializer creates a cache value for the given key
+</p>
+
+			<pre>type EntryInitializer func(key <a href="index.html#Key">Key</a>) (interface{}, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EntryInitializerWithData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=997:1079#L25">EntryInitializerWithData</a>
+				<a class="permalink" href="index.html#EntryInitializerWithData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EntryInitializerWithData creates a cache value for the given key and the
+additional data passed in from Get(). With expiring cache entries, the
+initializer is called with the same key, but the latest data is passed from
+the Get() call that triggered the data to be cached/re-cached.
+</p>
+
+			<pre>type EntryInitializerWithData func(key <a href="index.html#Key">Key</a>, data interface{}) (interface{}, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Key">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/lazycache.go?s=543:582#L14">Key</a>
+				<a class="permalink" href="index.html#Key">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Key holds the string key for the cache entry
+</p>
+
+			<pre>type Key interface {
+    String() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StringKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/keys.go?s=164:201#L1">StringKey</a>
+				<a class="permalink" href="index.html#StringKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StringKey is a simple string cache key
+</p>
+
+			<pre>type StringKey struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewStringKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/keys.go?s=243:283#L5">NewStringKey</a>
+					<a class="permalink" href="index.html#NewStringKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewStringKey(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#StringKey">StringKey</a></pre>
+				<p>
+NewStringKey returns a new StringKey
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="StringKey.String">func (*StringKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/util/concurrent/lazycache/keys.go?s=356:391#L10">String</a>
+					<a class="permalink" href="index.html#StringKey.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (k *<a href="index.html#StringKey">StringKey</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns the key as a string
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

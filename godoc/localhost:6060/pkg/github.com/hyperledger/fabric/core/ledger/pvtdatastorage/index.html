@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>pvtdatastorage - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package pvtdatastorage
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/pvtdatastorage"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CollElgInfo">type CollElgInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.Descriptor">func (*CollElgInfo) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.GetNsCollMap">func (m *CollElgInfo) GetNsCollMap() map[string]*CollNames</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.ProtoMessage">func (*CollElgInfo) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.Reset">func (m *CollElgInfo) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.String">func (m *CollElgInfo) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.XXX_DiscardUnknown">func (m *CollElgInfo) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.XXX_Marshal">func (m *CollElgInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.XXX_Merge">func (dst *CollElgInfo) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.XXX_Size">func (m *CollElgInfo) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollElgInfo.XXX_Unmarshal">func (m *CollElgInfo) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CollNames">type CollNames</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.Descriptor">func (*CollNames) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.GetEntries">func (m *CollNames) GetEntries() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.ProtoMessage">func (*CollNames) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.Reset">func (m *CollNames) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.String">func (m *CollNames) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.XXX_DiscardUnknown">func (m *CollNames) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.XXX_Marshal">func (m *CollNames) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.XXX_Merge">func (dst *CollNames) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.XXX_Size">func (m *CollNames) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollNames.XXX_Unmarshal">func (m *CollNames) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Collections">type Collections</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.Descriptor">func (*Collections) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.GetMap">func (m *Collections) GetMap() map[string]*TxNums</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.GetMissingDataMap">func (m *Collections) GetMissingDataMap() map[string]bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.ProtoMessage">func (*Collections) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.Reset">func (m *Collections) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.String">func (m *Collections) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.XXX_DiscardUnknown">func (m *Collections) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.XXX_Marshal">func (m *Collections) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.XXX_Merge">func (dst *Collections) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.XXX_Size">func (m *Collections) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Collections.XXX_Unmarshal">func (m *Collections) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ErrIllegalArgs">type ErrIllegalArgs</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ErrIllegalArgs.Error">func (err *ErrIllegalArgs) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ErrIllegalCall">type ErrIllegalCall</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ErrIllegalCall.Error">func (err *ErrIllegalCall) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ErrOutOfRange">type ErrOutOfRange</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ErrOutOfRange.Error">func (err *ErrOutOfRange) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ExpiryData">type ExpiryData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.Descriptor">func (*ExpiryData) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.GetMap">func (m *ExpiryData) GetMap() map[string]*Collections</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.ProtoMessage">func (*ExpiryData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.Reset">func (m *ExpiryData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.String">func (m *ExpiryData) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.XXX_DiscardUnknown">func (m *ExpiryData) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.XXX_Marshal">func (m *ExpiryData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.XXX_Merge">func (dst *ExpiryData) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.XXX_Size">func (m *ExpiryData) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExpiryData.XXX_Unmarshal">func (m *ExpiryData) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider() Provider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Store">type Store</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StoreEnv">type StoreEnv</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTestStoreEnv">func NewTestStoreEnv(t *testing.T, ledgerid string, btlPolicy pvtdatapolicy.BTLPolicy) *StoreEnv</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StoreEnv.Cleanup">func (env *StoreEnv) Cleanup()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StoreEnv.CloseAndReopen">func (env *StoreEnv) CloseAndReopen()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxNums">type TxNums</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.Descriptor">func (*TxNums) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.GetList">func (m *TxNums) GetList() []uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.ProtoMessage">func (*TxNums) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.Reset">func (m *TxNums) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.String">func (m *TxNums) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.XXX_DiscardUnknown">func (m *TxNums) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.XXX_Marshal">func (m *TxNums) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.XXX_Merge">func (dst *TxNums) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.XXX_Size">func (m *TxNums) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxNums.XXX_Unmarshal">func (m *TxNums) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/helper.go">helper.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/kv_encoding.go">kv_encoding.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go">persistent_msgs.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs_helper.go">persistent_msgs_helper.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go">store.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store_impl.go">store_impl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/test_exports.go">test_exports.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/v11.go">v11.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CollElgInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5067:5465#L141">CollElgInfo</a>
+				<a class="permalink" href="index.html#CollElgInfo">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CollElgInfo struct {
+<span id="CollElgInfo.NsCollMap"></span>    NsCollMap            map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#CollNames">CollNames</a> `protobuf:&#34;bytes,1,rep,name=nsCollMap,proto3&#34; json:&#34;nsCollMap,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="CollElgInfo.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}              `json:&#34;-&#34;`
+<span id="CollElgInfo.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                `json:&#34;-&#34;`
+<span id="CollElgInfo.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                 `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollElgInfo.Descriptor">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5645:5693#L151">Descriptor</a>
+					<a class="permalink" href="index.html#CollElgInfo.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CollElgInfo">CollElgInfo</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.GetNsCollMap">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6362:6420#L172">GetNsCollMap</a>
+					<a class="permalink" href="index.html#CollElgInfo.GetNsCollMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) GetNsCollMap() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#CollNames">CollNames</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.ProtoMessage">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5604:5638#L150">ProtoMessage</a>
+					<a class="permalink" href="index.html#CollElgInfo.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CollElgInfo">CollElgInfo</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.Reset">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5467:5496#L148">Reset</a>
+					<a class="permalink" href="index.html#CollElgInfo.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.String">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5528:5565#L149">String</a>
+					<a class="permalink" href="index.html#CollElgInfo.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.XXX_DiscardUnknown">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6208:6250#L166">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CollElgInfo.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.XXX_Marshal">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5872:5951#L157">XXX_Marshal</a>
+					<a class="permalink" href="index.html#CollElgInfo.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.XXX_Merge">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6021:6073#L160">XXX_Merge</a>
+					<a class="permalink" href="index.html#CollElgInfo.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CollElgInfo">CollElgInfo</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.XXX_Size">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6123:6159#L163">XXX_Size</a>
+					<a class="permalink" href="index.html#CollElgInfo.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollElgInfo.XXX_Unmarshal">func (*CollElgInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=5764:5815#L154">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#CollElgInfo.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollElgInfo">CollElgInfo</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CollNames">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6477:6729#L179">CollNames</a>
+				<a class="permalink" href="index.html#CollNames">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CollNames struct {
+<span id="CollNames.Entries"></span>    Entries              []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,rep,name=entries,proto3&#34; json:&#34;entries,omitempty&#34;`
+<span id="CollNames.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="CollNames.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="CollNames.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollNames.Descriptor">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6901:6947#L189">Descriptor</a>
+					<a class="permalink" href="index.html#CollNames.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CollNames">CollNames</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.GetEntries">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7594:7635#L210">GetEntries</a>
+					<a class="permalink" href="index.html#CollNames.GetEntries">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) GetEntries() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.ProtoMessage">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6862:6894#L188">ProtoMessage</a>
+					<a class="permalink" href="index.html#CollNames.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CollNames">CollNames</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.Reset">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6731:6758#L186">Reset</a>
+					<a class="permalink" href="index.html#CollNames.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.String">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=6788:6823#L187">String</a>
+					<a class="permalink" href="index.html#CollNames.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.XXX_DiscardUnknown">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7446:7486#L204">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CollNames.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.XXX_Marshal">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7122:7199#L195">XXX_Marshal</a>
+					<a class="permalink" href="index.html#CollNames.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.XXX_Merge">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7267:7317#L198">XXX_Merge</a>
+					<a class="permalink" href="index.html#CollNames.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CollNames">CollNames</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.XXX_Size">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7365:7399#L201">XXX_Size</a>
+					<a class="permalink" href="index.html#CollNames.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CollNames.XXX_Unmarshal">func (*CollNames) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=7018:7067#L192">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#CollNames.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CollNames">CollNames</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Collections">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=2086:2796#L53">Collections</a>
+				<a class="permalink" href="index.html#Collections">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Collections struct {
+    <span class="comment">// for pvt data, there would be an</span>
+    <span class="comment">// entry in TxNums</span>
+<span id="Collections.Map"></span>    Map map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#TxNums">TxNums</a> `protobuf:&#34;bytes,1,rep,name=map,proto3&#34; json:&#34;map,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+    <span class="comment">// for any number of missing pvt data of a collection,</span>
+    <span class="comment">// there would be an entry in the map</span>
+<span id="Collections.MissingDataMap"></span>    MissingDataMap       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `protobuf:&#34;bytes,2,rep,name=missingDataMap,proto3&#34; json:&#34;missingDataMap,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;varint,2,opt,name=value,proto3&#34;`
+<span id="Collections.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}        `json:&#34;-&#34;`
+<span id="Collections.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>          `json:&#34;-&#34;`
+<span id="Collections.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>           `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Collections.Descriptor">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=2976:3024#L68">Descriptor</a>
+					<a class="permalink" href="index.html#Collections.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Collections">Collections</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.GetMap">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3693:3742#L89">GetMap</a>
+					<a class="permalink" href="index.html#Collections.GetMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) GetMap() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#TxNums">TxNums</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.GetMissingDataMap">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3793:3850#L96">GetMissingDataMap</a>
+					<a class="permalink" href="index.html#Collections.GetMissingDataMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) GetMissingDataMap() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.ProtoMessage">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=2935:2969#L67">ProtoMessage</a>
+					<a class="permalink" href="index.html#Collections.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Collections">Collections</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.Reset">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=2798:2827#L65">Reset</a>
+					<a class="permalink" href="index.html#Collections.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.String">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=2859:2896#L66">String</a>
+					<a class="permalink" href="index.html#Collections.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.XXX_DiscardUnknown">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3539:3581#L83">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Collections.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.XXX_Marshal">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3203:3282#L74">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Collections.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.XXX_Merge">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3352:3404#L77">XXX_Merge</a>
+					<a class="permalink" href="index.html#Collections.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Collections">Collections</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.XXX_Size">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3454:3490#L80">XXX_Size</a>
+					<a class="permalink" href="index.html#Collections.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Collections.XXX_Unmarshal">func (*Collections) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3095:3146#L71">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Collections.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Collections">Collections</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ErrIllegalArgs">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=5832:5874#L89">ErrIllegalArgs</a>
+				<a class="permalink" href="index.html#ErrIllegalArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ErrIllegalArgs is to be thrown by a store impl if the args passed are not allowed
+</p>
+
+			<pre>type ErrIllegalArgs struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ErrIllegalArgs.Error">func (*ErrIllegalArgs) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=5876:5917#L93">Error</a>
+					<a class="permalink" href="index.html#ErrIllegalArgs.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (err *<a href="index.html#ErrIllegalArgs">ErrIllegalArgs</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ErrIllegalCall">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=5640:5682#L80">ErrIllegalCall</a>
+				<a class="permalink" href="index.html#ErrIllegalCall">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ErrIllegalCall is to be thrown by a store impl if the store does not expect a call to Prepare/Commit/Rollback/InitLastCommittedBlock
+</p>
+
+			<pre>type ErrIllegalCall struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ErrIllegalCall.Error">func (*ErrIllegalCall) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=5684:5725#L84">Error</a>
+					<a class="permalink" href="index.html#ErrIllegalCall.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (err *<a href="index.html#ErrIllegalCall">ErrIllegalCall</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ErrOutOfRange">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=6027:6068#L98">ErrOutOfRange</a>
+				<a class="permalink" href="index.html#ErrOutOfRange">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ErrOutOfRange is to be thrown for the request for the data that is not yet committed
+</p>
+
+			<pre>type ErrOutOfRange struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ErrOutOfRange.Error">func (*ErrOutOfRange) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=6070:6110#L102">Error</a>
+					<a class="permalink" href="index.html#ErrOutOfRange.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (err *<a href="index.html#ErrOutOfRange">ErrOutOfRange</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ExpiryData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=708:1101#L15">ExpiryData</a>
+				<a class="permalink" href="index.html#ExpiryData">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ExpiryData struct {
+<span id="ExpiryData.Map"></span>    Map                  map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#Collections">Collections</a> `protobuf:&#34;bytes,1,rep,name=map,proto3&#34; json:&#34;map,omitempty&#34; protobuf_key:&#34;bytes,1,opt,name=key,proto3&#34; protobuf_val:&#34;bytes,2,opt,name=value,proto3&#34;`
+<span id="ExpiryData.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}                `json:&#34;-&#34;`
+<span id="ExpiryData.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                  `json:&#34;-&#34;`
+<span id="ExpiryData.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                   `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ExpiryData.Descriptor">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1277:1324#L25">Descriptor</a>
+					<a class="permalink" href="index.html#ExpiryData.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ExpiryData">ExpiryData</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.GetMap">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1982:2035#L46">GetMap</a>
+					<a class="permalink" href="index.html#ExpiryData.GetMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) GetMap() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#Collections">Collections</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.ProtoMessage">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1237:1270#L24">ProtoMessage</a>
+					<a class="permalink" href="index.html#ExpiryData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ExpiryData">ExpiryData</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.Reset">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1103:1131#L22">Reset</a>
+					<a class="permalink" href="index.html#ExpiryData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.String">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1162:1198#L23">String</a>
+					<a class="permalink" href="index.html#ExpiryData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.XXX_DiscardUnknown">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1831:1872#L40">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ExpiryData.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.XXX_Marshal">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1501:1579#L31">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ExpiryData.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.XXX_Merge">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1648:1699#L34">XXX_Merge</a>
+					<a class="permalink" href="index.html#ExpiryData.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ExpiryData">ExpiryData</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.XXX_Size">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1748:1783#L37">XXX_Size</a>
+					<a class="permalink" href="index.html#ExpiryData.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExpiryData.XXX_Unmarshal">func (*ExpiryData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=1395:1445#L28">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ExpiryData.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ExpiryData">ExpiryData</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=329:402#L6">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider provides handle to specific &#39;Store&#39; that in turn manages
+private write sets for a ledger
+</p>
+
+			<pre>type Provider interface {
+    OpenStore(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Store">Store</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store_impl.go?s=2747:2774#L99">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider() <a href="index.html#Provider">Provider</a></pre>
+				<p>
+NewProvider instantiates a StoreProvider
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Store">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/store.go?s=1184:5502#L21">Store</a>
+				<a class="permalink" href="index.html#Store">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Store manages the permanent storage of private write sets for a ledger
+Beacsue the pvt data is supposed to be in sync with the blocks in the
+ledger, both should logically happen in an atomic operation. In order
+to accomplish this, an implementation of this store should provide
+support for a two-phase like commit/rollback capability.
+The expected use is such that - first the private data will be given to
+this store (via `Prepare` funtion) and then the block is appended to the block storage.
+Finally, one of the functions `Commit` or `Rollback` is invoked on this store based
+on whether the block was written successfully or not. The store implementation
+is expected to survive a server crash between the call to `Prepare` and `Commit`/`Rollback`
+</p>
+
+			<pre>type Store interface {
+    <span class="comment">// Init initializes the store. This function is expected to be invoked before using the store</span>
+    Init(btlPolicy <a href="../pvtdatapolicy/index.html">pvtdatapolicy</a>.<a href="../pvtdatapolicy/index.html#BTLPolicy">BTLPolicy</a>)
+    <span class="comment">// InitLastCommittedBlockHeight sets the last commited block height into the pvt data store</span>
+    <span class="comment">// This function is used in a special case where the peer is started up with the blockchain</span>
+    <span class="comment">// from an earlier version of a peer when the pvt data feature (and hence this store) was not</span>
+    <span class="comment">// available. This function is expected to be called only this situation and hence is</span>
+    <span class="comment">// expected to throw an error if the store is not empty. On a successful return from this</span>
+    <span class="comment">// fucntion the state of the store is expected to be same as of calling the prepare/commit</span>
+    <span class="comment">// function for block `0` through `blockNum` with no pvt data</span>
+    InitLastCommittedBlock(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetPvtDataByBlockNum returns only the pvt data  corresponding to the given block number</span>
+    <span class="comment">// The pvt data is filtered by the list of &#39;ns/collections&#39; supplied in the filter</span>
+    <span class="comment">// A nil filter does not filter any results</span>
+    GetPvtDataByBlockNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../index.html">ledger</a>.<a href="../index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetMissingPvtDataInfoForMostRecentBlocks returns the missing private data information for the</span>
+    <span class="comment">// most recent `maxBlock` blocks which miss at least a private data of a eligible collection.</span>
+    GetMissingPvtDataInfoForMostRecentBlocks(maxBlock <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../index.html">ledger</a>.<a href="../index.html#MissingPvtDataInfo">MissingPvtDataInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Prepare prepares the Store for commiting the pvt data and storing both eligible and ineligible</span>
+    <span class="comment">// missing private data --- `eligible` denotes that the missing private data belongs to a collection</span>
+    <span class="comment">// for which this peer is a member; `ineligible` denotes that the missing private data belong to a</span>
+    <span class="comment">// collection for which this peer is not a member.</span>
+    <span class="comment">// This call does not commit the pvt data and store missing private data. Subsequently, the caller</span>
+    <span class="comment">// is expected to call either `Commit` or `Rollback` function. Return from this should ensure</span>
+    <span class="comment">// that enough preparation is done such that `Commit` function invoked afterwards can commit the</span>
+    <span class="comment">// data and the store is capable of surviving a crash between this function call and the next</span>
+    <span class="comment">// invoke to the `Commit`</span>
+    Prepare(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, pvtData []*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>, missingPvtData <a href="../index.html">ledger</a>.<a href="../index.html#TxMissingPvtDataMap">TxMissingPvtDataMap</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Commit commits the pvt data passed in the previous invoke to the `Prepare` function</span>
+    Commit() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Rollback rolls back the pvt data passed in the previous invoke to the `Prepare` function</span>
+    Rollback() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// ProcessCollsEligibilityEnabled notifies the store when the peer becomes eligible to recieve data for an</span>
+    <span class="comment">// existing collection. Parameter &#39;committingBlk&#39; refers to the block number that contains the corresponding</span>
+    <span class="comment">// collection upgrade transaction and the parameter &#39;nsCollMap&#39; contains the collections for which the peer</span>
+    <span class="comment">// is now eligible to recieve pvt data</span>
+    ProcessCollsEligibilityEnabled(committingBlk <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, nsCollMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// CommitPvtDataOfOldBlocks commits the pvtData (i.e., previously missing data) of old blocks.</span>
+    <span class="comment">// The parameter `blocksPvtData` refers a list of old block&#39;s pvtdata which are missing in the pvtstore.</span>
+    <span class="comment">// This call stores an additional entry called `lastUpdatedOldBlocksList` which keeps the exact list</span>
+    <span class="comment">// of updated blocks. This list would be used during recovery process. Once the stateDB is updated with</span>
+    <span class="comment">// these pvtData, the `lastUpdatedOldBlocksList` must be removed. During the peer startup,</span>
+    <span class="comment">// if the `lastUpdatedOldBlocksList` exists, stateDB needs to be updated with the appropriate pvtData.</span>
+    CommitPvtDataOfOldBlocks(blocksPvtData map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// GetLastUpdatedOldBlocksPvtData returns the pvtdata of blocks listed in `lastUpdatedOldBlocksList`</span>
+    GetLastUpdatedOldBlocksPvtData() (map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ResetLastUpdatedOldBlocksList removes the `lastUpdatedOldBlocksList` entry from the store</span>
+    ResetLastUpdatedOldBlocksList() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// IsEmpty returns true if the store does not have any block committed yet</span>
+    IsEmpty() (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// LastCommittedBlockHeight returns the height of the last committed block</span>
+    LastCommittedBlockHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// HasPendingBatch returns if the store has a pending batch</span>
+    HasPendingBatch() (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Shutdown stops the store</span>
+    Shutdown()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StoreEnv">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/test_exports.go?s=342:518#L9">StoreEnv</a>
+				<a class="permalink" href="index.html#StoreEnv">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StoreEnv provides the  store env for testing
+</p>
+
+			<pre>type StoreEnv struct {
+<span id="StoreEnv.TestStoreProvider"></span>    TestStoreProvider <a href="index.html#Provider">Provider</a>
+<span id="StoreEnv.TestStore"></span>    TestStore         <a href="index.html#Store">Store</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTestStoreEnv">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/test_exports.go?s=572:668#L18">NewTestStoreEnv</a>
+					<a class="permalink" href="index.html#NewTestStoreEnv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTestStoreEnv(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, ledgerid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, btlPolicy <a href="../pvtdatapolicy/index.html">pvtdatapolicy</a>.<a href="../pvtdatapolicy/index.html#BTLPolicy">BTLPolicy</a>) *<a href="index.html#StoreEnv">StoreEnv</a></pre>
+				<p>
+NewTestStoreEnv construct a StoreEnv for testing
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="StoreEnv.Cleanup">func (*StoreEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/test_exports.go?s=1294:1324#L39">Cleanup</a>
+					<a class="permalink" href="index.html#StoreEnv.Cleanup">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#StoreEnv">StoreEnv</a>) Cleanup()</pre>
+				<p>
+Cleanup cleansup the  store env after testing
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StoreEnv.CloseAndReopen">func (*StoreEnv) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/test_exports.go?s=986:1023#L29">CloseAndReopen</a>
+					<a class="permalink" href="index.html#StoreEnv.CloseAndReopen">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (env *<a href="index.html#StoreEnv">StoreEnv</a>) CloseAndReopen()</pre>
+				<p>
+CloseAndReopen closes and opens the store provider
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxNums">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=3912:4163#L103">TxNums</a>
+				<a class="permalink" href="index.html#TxNums">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TxNums struct {
+<span id="TxNums.List"></span>    List                 []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a> `protobuf:&#34;varint,1,rep,packed,name=list,proto3&#34; json:&#34;list,omitempty&#34;`
+<span id="TxNums.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="TxNums.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="TxNums.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TxNums.Descriptor">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4323:4366#L113">Descriptor</a>
+					<a class="permalink" href="index.html#TxNums.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#TxNums">TxNums</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.GetList">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4980:5015#L134">GetList</a>
+					<a class="permalink" href="index.html#TxNums.GetList">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) GetList() []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.ProtoMessage">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4287:4316#L112">ProtoMessage</a>
+					<a class="permalink" href="index.html#TxNums.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#TxNums">TxNums</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.Reset">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4165:4189#L110">Reset</a>
+					<a class="permalink" href="index.html#TxNums.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.String">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4216:4248#L111">String</a>
+					<a class="permalink" href="index.html#TxNums.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.XXX_DiscardUnknown">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4841:4878#L128">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#TxNums.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.XXX_Marshal">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4535:4609#L119">XXX_Marshal</a>
+					<a class="permalink" href="index.html#TxNums.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.XXX_Merge">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4674:4721#L122">XXX_Merge</a>
+					<a class="permalink" href="index.html#TxNums.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#TxNums">TxNums</a>) XXX_Merge(src <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.XXX_Size">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4766:4797#L125">XXX_Size</a>
+					<a class="permalink" href="index.html#TxNums.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TxNums.XXX_Unmarshal">func (*TxNums) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/pvtdatastorage/persistent_msgs.pb.go?s=4437:4483#L116">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#TxNums.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#TxNums">TxNums</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

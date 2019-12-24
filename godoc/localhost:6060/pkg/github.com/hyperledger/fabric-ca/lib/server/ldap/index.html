@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ldap - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ldap
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-ca/lib/server/ldap"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#AttrConfig">type AttrConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewClient">func NewClient(cfg *Config, csp bccsp.BCCSP) (*Client, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.DeleteAffiliation">func (lc *Client) DeleteAffiliation(name string, force, identityRemoval, isRegistrar bool) (*causer.DbTxResult, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.DeleteUser">func (lc *Client) DeleteUser(id string) (causer.User, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAffiliation">func (lc *Client) GetAffiliation(name string) (spi.Affiliation, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAffiliationTree">func (lc *Client) GetAffiliationTree(name string) (*causer.DbTxResult, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAllAffiliations">func (lc *Client) GetAllAffiliations(name string) (*sqlx.Rows, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetFilteredUsers">func (lc *Client) GetFilteredUsers(affiliation, types string) (*sqlx.Rows, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetRootAffiliation">func (lc *Client) GetRootAffiliation() (spi.Affiliation, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetUser">func (lc *Client) GetUser(username string, attrNames []string) (causer.User, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetUserLessThanLevel">func (lc *Client) GetUserLessThanLevel(version int) ([]causer.User, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.InsertAffiliation">func (lc *Client) InsertAffiliation(name string, prekey string, version int) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.InsertUser">func (lc *Client) InsertUser(user *causer.Info) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.ModifyAffiliation">func (lc *Client) ModifyAffiliation(oldAffiliation, newAffiliation string, force, isRegistrar bool) (*causer.DbTxResult, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.UpdateUser">func (lc *Client) UpdateUser(user *causer.Info, updatePass bool) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Config.String">func (c Config) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NameVal">type NameVal</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go">client.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="AttrConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=1307:1623#L36">AttrConfig</a>
+				<a class="permalink" href="index.html#AttrConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AttrConfig is attribute configuration information
+</p>
+
+			<pre>type AttrConfig struct {
+<span id="AttrConfig.Names"></span>    Names      []<a href="http://localhost:6060/pkg/builtin/#string">string</a>             `help:&#34;The names of LDAP attributes to request on an LDAP search&#34;`
+<span id="AttrConfig.Converters"></span>    Converters []<a href="index.html#NameVal">NameVal</a>            <span class="comment">// Used to convert an LDAP entry into a fabric-ca-server attribute</span>
+<span id="AttrConfig.Maps"></span>    Maps       map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="index.html#NameVal">NameVal</a> <span class="comment">// Use to map an LDAP response to fabric-ca-server names</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=4074:4647#L137">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client is an LDAP client
+</p>
+
+			<pre>type Client struct {
+<span id="Client.Host"></span>    Host          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Client.Port"></span>    Port          <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Client.UseSSL"></span>    UseSSL        <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Client.AdminDN"></span>    AdminDN       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Client.AdminPassword"></span>    AdminPassword <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Client.Base"></span>    Base          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Client.UserFilter"></span>    UserFilter    <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// e.g. &#34;(uid=%s)&#34;</span>
+<span id="Client.GroupFilter"></span>    GroupFilter   <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// e.g. &#34;(memberUid=%s)&#34;</span>
+
+<span id="Client.AdminConn"></span>    AdminConn *<a href="http://localhost:6060/pkg/gopkg.in/ldap.v2/">ldap</a>.<a href="http://localhost:6060/pkg/gopkg.in/ldap.v2/#Conn">Conn</a>
+<span id="Client.TLS"></span>    TLS       *<a href="../../tls/index.html">ctls</a>.<a href="../../tls/index.html#ClientTLSConfig">ClientTLSConfig</a>
+<span id="Client.CSP"></span>    CSP       <a href="../../../../fabric/bccsp/index.html">bccsp</a>.<a href="../../../../fabric/bccsp/index.html#BCCSP">BCCSP</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=1940:2001#L56">NewClient</a>
+					<a class="permalink" href="index.html#NewClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewClient(cfg *<a href="index.html#Config">Config</a>, csp <a href="../../../../fabric/bccsp/index.html">bccsp</a>.<a href="../../../../fabric/bccsp/index.html#BCCSP">BCCSP</a>) (*<a href="index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewClient creates an LDAP client
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Client.DeleteAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7740:7858#L263">DeleteAffiliation</a>
+					<a class="permalink" href="index.html#Client.DeleteAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) DeleteAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, force, identityRemoval, isRegistrar <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="../user/index.html">causer</a>.<a href="../user/index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeleteAffiliation deletes an affiliation group
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.DeleteUser">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=6944:7004#L238">DeleteUser</a>
+					<a class="permalink" href="index.html#Client.DeleteUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) DeleteUser(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../user/index.html">causer</a>.<a href="../user/index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeleteUser deletes a user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7086:7156#L243">GetAffiliation</a>
+					<a class="permalink" href="index.html#Client.GetAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../spi/index.html">spi</a>.<a href="../../spi/index.html#Affiliation">Affiliation</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAffiliation returns an affiliation group
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetAffiliationTree">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=8637:8714#L283">GetAffiliationTree</a>
+					<a class="permalink" href="index.html#Client.GetAffiliationTree">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetAffiliationTree(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../user/index.html">causer</a>.<a href="../user/index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAffiliationTree returns the requested affiliations and all affiliations below it
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetAllAffiliations">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7272:7341#L248">GetAllAffiliations</a>
+					<a class="permalink" href="index.html#Client.GetAllAffiliations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetAllAffiliations(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllAffiliations gets affiliation and any sub affiliation from the database
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetFilteredUsers">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=8434:8515#L278">GetFilteredUsers</a>
+					<a class="permalink" href="index.html#Client.GetFilteredUsers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetFilteredUsers(affiliation, types <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetFilteredUsers returns all identities that fall under the affiliation and types
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetRootAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7433:7496#L253">GetRootAffiliation</a>
+					<a class="permalink" href="index.html#Client.GetRootAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetRootAffiliation() (<a href="../../spi/index.html">spi</a>.<a href="../../spi/index.html#Affiliation">Affiliation</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetRootAffiliation returns the root affiliation group
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetUser">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=4753:4836#L156">GetUser</a>
+					<a class="permalink" href="index.html#Client.GetUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetUser(username <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attrNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../user/index.html">causer</a>.<a href="../user/index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetUser returns a user object for username and attribute values
+for the requested attribute names
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetUserLessThanLevel">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=8240:8314#L273">GetUserLessThanLevel</a>
+					<a class="permalink" href="index.html#Client.GetUserLessThanLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) GetUserLessThanLevel(version <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="../user/index.html">causer</a>.<a href="../user/index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetUserLessThanLevel returns all identities that are less than the level specified
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.InsertAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7578:7660#L258">InsertAffiliation</a>
+					<a class="permalink" href="index.html#Client.InsertAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) InsertAffiliation(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, prekey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, version <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+InsertAffiliation adds an affiliation group
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.InsertUser">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=6703:6756#L228">InsertUser</a>
+					<a class="permalink" href="index.html#Client.InsertUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) InsertUser(user *<a href="../user/index.html">causer</a>.<a href="../user/index.html#Info">Info</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+InsertUser inserts a user
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.ModifyAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=7992:8119#L268">ModifyAffiliation</a>
+					<a class="permalink" href="index.html#Client.ModifyAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) ModifyAffiliation(oldAffiliation, newAffiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>, force, isRegistrar <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="../user/index.html">causer</a>.<a href="../user/index.html#DbTxResult">DbTxResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyAffiliation renames the affiliation and updates all identities to use the new affiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.UpdateUser">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=6815:6885#L233">UpdateUser</a>
+					<a class="permalink" href="index.html#Client.UpdateUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Client">Client</a>) UpdateUser(user *<a href="../user/index.html">causer</a>.<a href="../user/index.html#Info">Info</a>, updatePass <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+UpdateUser updates a user
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=764:1252#L26">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config is the configuration object for this LDAP client
+</p>
+
+			<pre>type Config struct {
+<span id="Config.Enabled"></span>    Enabled     <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   `def:&#34;false&#34; help:&#34;Enable the LDAP client for authentication and attributes&#34;`
+<span id="Config.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a> `help:&#34;LDAP client URL of form ldap://adminDN:adminPassword@host[:port]/base&#34; mask:&#34;url&#34;`
+<span id="Config.UserFilter"></span>    UserFilter  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;(uid=%s)&#34; help:&#34;The LDAP user filter to use when searching for users&#34;`
+<span id="Config.GroupFilter"></span>    GroupFilter <a href="http://localhost:6060/pkg/builtin/#string">string</a> `def:&#34;(memberUid=%s)&#34; help:&#34;The LDAP group filter for a single affiliation group&#34;`
+<span id="Config.Attribute"></span>    Attribute   <a href="index.html#AttrConfig">AttrConfig</a>
+<span id="Config.TLS"></span>    TLS         <a href="../../tls/index.html">ctls</a>.<a href="../../tls/index.html#ClientTLSConfig">ClientTLSConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Config.String">func (Config) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=1835:1866#L51">String</a>
+					<a class="permalink" href="index.html#Config.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Config">Config</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Implements Stringer interface for ldap.Config
+Calls util.StructToString to convert the Config struct to
+string.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NameVal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/ldap/client.go?s=1661:1712#L43">NameVal</a>
+				<a class="permalink" href="index.html#NameVal">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NameVal is a name and value pair
+</p>
+
+			<pre>type NameVal struct {
+<span id="NameVal.Name"></span>    Name  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="NameVal.Value"></span>    Value <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

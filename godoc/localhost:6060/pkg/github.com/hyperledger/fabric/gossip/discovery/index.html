@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>discovery - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package discovery
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/discovery"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#HasExternalEndpoint">func HasExternalEndpoint(member NetworkMember) bool</a></dd>
+			
+				
+				<dd><a href="index.html#SetMaxConnAttempts">func SetMaxConnAttempts(attempts int)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CommService">type CommService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CryptoService">type CryptoService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DisclosurePolicy">type DisclosurePolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Discovery">type Discovery</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDiscoveryService">func NewDiscoveryService(self NetworkMember, comm CommService, crypt CryptoService, disPol DisclosurePolicy, config DiscoveryConfig) Discovery</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DiscoveryConfig">type DiscoveryConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EnvelopeFilter">type EnvelopeFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Members">type Members</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Members.ByID">func (members Members) ByID() map[string]NetworkMember</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Members.Filter">func (members Members) Filter(filter func(member NetworkMember) bool) Members</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Members.Intersect">func (members Members) Intersect(otherMembers Members) Members</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Members.Map">func (members Members) Map(f func(member NetworkMember) NetworkMember) Members</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NetworkMember">type NetworkMember</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NetworkMember.PreferredEndpoint">func (n NetworkMember) PreferredEndpoint() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NetworkMember.String">func (n NetworkMember) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerIdentification">type PeerIdentification</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Sieve">type Sieve</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go">discovery.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery_impl.go">discovery_impl.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const <span id="DefAliveExpirationCheckInterval">DefAliveExpirationCheckInterval</span> = <a href="index.html#DefAliveExpirationTimeout">DefAliveExpirationTimeout</a> / 10</pre>
+			
+				
+				<pre>const <span id="DefAliveExpirationTimeout">DefAliveExpirationTimeout</span> = 5 * <a href="index.html#DefAliveTimeInterval">DefAliveTimeInterval</a></pre>
+			
+				
+				<pre>const <span id="DefAliveTimeInterval">DefAliveTimeInterval</span> = 5 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a></pre>
+			
+				
+				<pre>const <span id="DefReconnectInterval">DefReconnectInterval</span> = <a href="index.html#DefAliveExpirationTimeout">DefAliveExpirationTimeout</a></pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="HasExternalEndpoint">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=5935:5986#L176">HasExternalEndpoint</a>
+				<a class="permalink" href="index.html#HasExternalEndpoint">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HasExternalEndpoint(member <a href="index.html#NetworkMember">NetworkMember</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+HaveExternalEndpoints selects network members that have external endpoints
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetMaxConnAttempts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery_impl.go?s=834:871#L26">SetMaxConnAttempts</a>
+				<a class="permalink" href="index.html#SetMaxConnAttempts">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetMaxConnAttempts(attempts <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+			<p>
+SetMaxConnAttempts sets the maximum number of connection
+attempts the peer would perform when invoking Connect()
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CommService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=1693:2705#L36">CommService</a>
+				<a class="permalink" href="index.html#CommService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommService is an interface that the discovery expects to be implemented and passed on creation
+</p>
+
+			<pre>type CommService interface {
+    <span class="comment">// Gossip gossips a message</span>
+    Gossip(msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>)
+
+    <span class="comment">// SendToPeer sends to a given peer a message.</span>
+    <span class="comment">// The nonce can be anything since the communication module handles the nonce itself</span>
+    SendToPeer(peer *<a href="index.html#NetworkMember">NetworkMember</a>, msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>)
+
+    <span class="comment">// Ping probes a remote peer and returns if it&#39;s responsive or not</span>
+    Ping(peer *<a href="index.html#NetworkMember">NetworkMember</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Accept returns a read-only channel for membership messages sent from remote peers</span>
+    Accept() &lt;-chan <a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>
+
+    <span class="comment">// PresumedDead returns a read-only channel for peers that are presumed to be dead</span>
+    PresumedDead() &lt;-chan <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+
+    <span class="comment">// CloseConn orders to close the connection with a certain peer</span>
+    CloseConn(peer *<a href="index.html#NetworkMember">NetworkMember</a>)
+
+    <span class="comment">// Forward sends message to the next hop, excluding the hop</span>
+    <span class="comment">// from which message was initially received</span>
+    Forward(msg <a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>)
+
+    <span class="comment">// IdentitySwitch returns a read-only channel about identity change events</span>
+    IdentitySwitch() &lt;-chan <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CryptoService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=325:593#L7">CryptoService</a>
+				<a class="permalink" href="index.html#CryptoService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CryptoService is an interface that the discovery expects to be implemented and passed on creation
+</p>
+
+			<pre>type CryptoService interface {
+    <span class="comment">// ValidateAliveMsg validates that an Alive message is authentic</span>
+    ValidateAliveMsg(message *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// SignMessage signs a message</span>
+    SignMessage(m *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#GossipMessage">GossipMessage</a>, internalEndpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Envelope">Envelope</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DisclosurePolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=1515:1592#L33">DisclosurePolicy</a>
+				<a class="permalink" href="index.html#DisclosurePolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DisclosurePolicy defines which messages a given remote peer
+is eligible of knowing about, and also what is it eligible
+to know about out of a given SignedGossipMessage.
+Returns:
+1) A Sieve for a given remote peer.
+</p>
+<pre>The Sieve is applied for each peer in question and outputs
+whether the message should be disclosed to the remote peer.
+</pre>
+<p>
+2) A EnvelopeFilter for a given SignedGossipMessage, which may remove
+</p>
+<pre>part of the Envelope the SignedGossipMessage originates from
+</pre>
+
+			<pre>type DisclosurePolicy func(remotePeer *<a href="index.html#NetworkMember">NetworkMember</a>) (<a href="index.html#Sieve">Sieve</a>, <a href="index.html#EnvelopeFilter">EnvelopeFilter</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Discovery">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=3767:4690#L100">Discovery</a>
+				<a class="permalink" href="index.html#Discovery">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Discovery is the interface that represents a discovery module
+</p>
+
+			<pre>type Discovery interface {
+    <span class="comment">// Lookup returns a network member, or nil if not found</span>
+    Lookup(PKIID <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>) *<a href="index.html#NetworkMember">NetworkMember</a>
+
+    <span class="comment">// Self returns this instance&#39;s membership information</span>
+    Self() <a href="index.html#NetworkMember">NetworkMember</a>
+
+    <span class="comment">// UpdateMetadata updates this instance&#39;s metadata</span>
+    UpdateMetadata([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+
+    <span class="comment">// UpdateEndpoint updates this instance&#39;s endpoint</span>
+    UpdateEndpoint(<a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+
+    <span class="comment">// Stops this instance</span>
+    Stop()
+
+    <span class="comment">// GetMembership returns the alive members in the view</span>
+    GetMembership() []<a href="index.html#NetworkMember">NetworkMember</a>
+
+    <span class="comment">// InitiateSync makes the instance ask a given number of peers</span>
+    <span class="comment">// for their membership information</span>
+    InitiateSync(peerNum <a href="http://localhost:6060/pkg/builtin/#int">int</a>)
+
+    <span class="comment">// Connect makes this instance to connect to a remote instance</span>
+    <span class="comment">// The identifier param is a function that can be used to identify</span>
+    <span class="comment">// the peer, and to assert its PKI-ID, whether its in the peer&#39;s org or not,</span>
+    <span class="comment">// and whether the action was successful or not</span>
+    Connect(member <a href="index.html#NetworkMember">NetworkMember</a>, id identifier)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDiscoveryService">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery_impl.go?s=2335:2478#L81">NewDiscoveryService</a>
+					<a class="permalink" href="index.html#NewDiscoveryService">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDiscoveryService(self <a href="index.html#NetworkMember">NetworkMember</a>, comm <a href="index.html#CommService">CommService</a>, crypt <a href="index.html#CryptoService">CryptoService</a>, disPol <a href="index.html#DisclosurePolicy">DisclosurePolicy</a>,
+    config <a href="index.html#DiscoveryConfig">DiscoveryConfig</a>) <a href="index.html#Discovery">Discovery</a></pre>
+				<p>
+NewDiscoveryService returns a new discovery service with the comm module passed and the crypto service passed
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="DiscoveryConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery_impl.go?s=1974:2220#L72">DiscoveryConfig</a>
+				<a class="permalink" href="index.html#DiscoveryConfig">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DiscoveryConfig struct {
+<span id="DiscoveryConfig.AliveTimeInterval"></span>    AliveTimeInterval            <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="DiscoveryConfig.AliveExpirationTimeout"></span>    AliveExpirationTimeout       <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="DiscoveryConfig.AliveExpirationCheckInterval"></span>    AliveExpirationCheckInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="DiscoveryConfig.ReconnectInterval"></span>    ReconnectInterval            <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="DiscoveryConfig.BootstrapPeers"></span>    BootstrapPeers               []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EnvelopeFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=711:787#L17">EnvelopeFilter</a>
+				<a class="permalink" href="index.html#EnvelopeFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnvelopeFilter may or may not remove part of the Envelope
+that the given SignedGossipMessage originates from.
+</p>
+
+			<pre>type EnvelopeFilter func(message *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>) *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Envelope">Envelope</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Members">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=4747:4775#L131">Members</a>
+				<a class="permalink" href="index.html#Members">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Members represents an aggregation of NetworkMembers
+</p>
+
+			<pre>type Members []<a href="index.html#NetworkMember">NetworkMember</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Members.ByID">func (Members) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=4857:4911#L135">ByID</a>
+					<a class="permalink" href="index.html#Members.ByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (members <a href="index.html#Members">Members</a>) ByID() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#NetworkMember">NetworkMember</a></pre>
+				<p>
+ByID returns a mapping from the PKI-IDs (in string form)
+to NetworkMember
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Members.Filter">func (Members) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=5407:5484#L156">Filter</a>
+					<a class="permalink" href="index.html#Members.Filter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (members <a href="index.html#Members">Members</a>) Filter(filter func(member <a href="index.html#NetworkMember">NetworkMember</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="index.html#Members">Members</a></pre>
+				<p>
+Filter returns only members that satisfy the given filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Members.Intersect">func (Members) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=5101:5163#L144">Intersect</a>
+					<a class="permalink" href="index.html#Members.Intersect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (members <a href="index.html#Members">Members</a>) Intersect(otherMembers <a href="index.html#Members">Members</a>) <a href="index.html#Members">Members</a></pre>
+				<p>
+Intersect returns the intersection of 2 Members
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Members.Map">func (Members) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=5686:5764#L167">Map</a>
+					<a class="permalink" href="index.html#Members.Map">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (members <a href="index.html#Members">Members</a>) Map(f func(member <a href="index.html#NetworkMember">NetworkMember</a>) <a href="index.html#NetworkMember">NetworkMember</a>) <a href="index.html#Members">Members</a></pre>
+				<p>
+Map invokes the given function to every NetworkMember among the Members
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NetworkMember">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=2751:2943#L65">NetworkMember</a>
+				<a class="permalink" href="index.html#NetworkMember">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NetworkMember is a peer&#39;s representation
+</p>
+
+			<pre>type NetworkMember struct {
+<span id="NetworkMember.Endpoint"></span>    Endpoint         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="NetworkMember.Metadata"></span>    Metadata         []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="NetworkMember.PKIid"></span>    PKIid            <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+<span id="NetworkMember.InternalEndpoint"></span>    InternalEndpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="NetworkMember.Properties"></span>    Properties       *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Properties">Properties</a>
+    *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Envelope">Envelope</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NetworkMember.PreferredEndpoint">func (NetworkMember) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=3315:3364#L82">PreferredEndpoint</a>
+					<a class="permalink" href="index.html#NetworkMember.PreferredEndpoint">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#NetworkMember">NetworkMember</a>) PreferredEndpoint() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+PreferredEndpoint computes the endpoint to connect to,
+while preferring internal endpoint over the standard
+endpoint
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NetworkMember.String">func (NetworkMember) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=3008:3046#L75">String</a>
+					<a class="permalink" href="index.html#NetworkMember.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#NetworkMember">NetworkMember</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of the NetworkMember
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerIdentification">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=3573:3647#L92">PeerIdentification</a>
+				<a class="permalink" href="index.html#PeerIdentification">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerIdentification encompasses a remote peer&#39;s
+PKI-ID and whether its in the same org as the current
+peer or not
+</p>
+
+			<pre>type PeerIdentification struct {
+<span id="PeerIdentification.ID"></span>    ID      <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+<span id="PeerIdentification.SelfOrg"></span>    SelfOrg <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Sieve">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/discovery/discovery.go?s=957:1013#L22">Sieve</a>
+				<a class="permalink" href="index.html#Sieve">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Sieve defines the messages that are allowed to be sent to some remote peer,
+based on some criteria.
+Returns whether the sieve permits sending a given message.
+</p>
+
+			<pre>type Sieve func(message *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

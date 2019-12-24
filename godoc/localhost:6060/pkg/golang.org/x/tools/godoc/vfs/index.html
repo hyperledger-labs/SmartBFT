@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>vfs - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package vfs
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/godoc/vfs"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package vfs defines types for abstract file system access and provides an
+implementation accessing the file system of the underlying OS.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ReadFile">func ReadFile(fs Opener, path string) ([]byte, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BindMode">type BindMode</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FileSystem">type FileSystem</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OS">func OS(root string) FileSystem</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NameSpace">type NameSpace</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewNameSpace">func NewNameSpace() NameSpace</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.Bind">func (ns NameSpace) Bind(old string, newfs FileSystem, new string, mode BindMode)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.Fprint">func (ns NameSpace) Fprint(w io.Writer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.Lstat">func (ns NameSpace) Lstat(path string) (os.FileInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.Open">func (ns NameSpace) Open(path string) (ReadSeekCloser, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.ReadDir">func (ns NameSpace) ReadDir(path string) ([]os.FileInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.RootType">func (ns NameSpace) RootType(path string) RootType</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.Stat">func (ns NameSpace) Stat(path string) (os.FileInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NameSpace.String">func (NameSpace) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Opener">type Opener</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReadSeekCloser">type ReadSeekCloser</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RootType">type RootType</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/emptyvfs.go">emptyvfs.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go">namespace.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/os.go">os.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go">vfs.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+GOROOT is the GOROOT path under which the godoc binary is running.
+It is needed to check whether a filesystem root is under GOROOT or not.
+This is set from cmd/godoc/main.go.
+</p>
+
+				<pre>var <span id="GOROOT">GOROOT</span> = <a href="http://localhost:6060/pkg/runtime/">runtime</a>.<a href="http://localhost:6060/pkg/runtime/#GOROOT">GOROOT</a>()</pre>
+			
+		
+		
+			
+			
+			<h2 id="ReadFile">func <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go?s=1415:1468#L41">ReadFile</a>
+				<a class="permalink" href="index.html#ReadFile">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ReadFile(fs <a href="index.html#Opener">Opener</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ReadFile reads the file named by path from fs and returns the contents.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BindMode">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=5282:5299#L145">BindMode</a>
+				<a class="permalink" href="index.html#BindMode">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BindMode <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="BindReplace">BindReplace</span> <a href="index.html#BindMode">BindMode</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="BindBefore">BindBefore</span>
+    <span id="BindAfter">BindAfter</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FileSystem">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go?s=865:1077#L19">FileSystem</a>
+				<a class="permalink" href="index.html#FileSystem">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The FileSystem interface specifies the methods godoc is using
+to access the file system for which it serves documentation.
+</p>
+
+			<pre>type FileSystem interface {
+    <a href="index.html#Opener">Opener</a>
+    Lstat(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Stat(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ReadDir(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RootType(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RootType">RootType</a>
+    String() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="OS">func <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/os.go?s=963:994#L20">OS</a>
+					<a class="permalink" href="index.html#OS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func OS(root <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#FileSystem">FileSystem</a></pre>
+				<p>
+OS returns an implementation of FileSystem reading from the
+tree rooted at root.  Recording a root is convenient everywhere
+but necessary on Windows, because the slash-separated path
+passed to Open has no way to specify a drive letter.  Using a root
+lets code refer to OS(`c:\`), OS(`d:\`) and so on.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="NameSpace">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=3798:3835#L91">NameSpace</a>
+				<a class="permalink" href="index.html#NameSpace">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A NameSpace is a file system made up of other file systems
+mounted at specific locations in the name space.
+</p>
+<p>
+The representation is a map from mount point locations
+to the list of file systems mounted at that location.  A traditional
+Unix mount table would use a single file system per mount point,
+but we want to be able to mount multiple file systems on a single
+mount point and have the system behave as if the union of those
+file systems were present at the mount point.
+For example, if the OS file system has a Go installation in
+c:\Go and additional Go path trees in  d:\Work1 and d:\Work2, then
+this name space creates the view we want for the godoc server:
+</p>
+<pre>NameSpace{
+	&#34;/&#34;: {
+		{old: &#34;/&#34;, fs: OS(`c:\Go`), new: &#34;/&#34;},
+	},
+	&#34;/src/pkg&#34;: {
+		{old: &#34;/src/pkg&#34;, fs: OS(`c:\Go`), new: &#34;/src/pkg&#34;},
+		{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work1`), new: &#34;/src&#34;},
+		{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work2`), new: &#34;/src&#34;},
+	},
+}
+</pre>
+<p>
+This is created by executing:
+</p>
+<pre>ns := NameSpace{}
+ns.Bind(&#34;/&#34;, OS(`c:\Go`), &#34;/&#34;, BindReplace)
+ns.Bind(&#34;/src/pkg&#34;, OS(`d:\Work1`), &#34;/src&#34;, BindAfter)
+ns.Bind(&#34;/src/pkg&#34;, OS(`d:\Work2`), &#34;/src&#34;, BindAfter)
+</pre>
+<p>
+A particular mount point entry is a triple (old, fs, new), meaning that to
+operate on a path beginning with old, replace that prefix (old) with new
+and then pass that path to the FileSystem implementation fs.
+</p>
+<p>
+If you do not explicitly mount a FileSystem at the root mountpoint &#34;/&#34; of the
+NameSpace like above, Stat(&#34;/&#34;) will return a &#34;not found&#34; error which could
+break typical directory traversal routines. In such cases, use NewNameSpace()
+to get a NameSpace pre-initialized with an emulated empty directory at root.
+</p>
+<p>
+Given this name space, a ReadDir of /src/pkg/code will check each prefix
+of the path for a mount point (first /src/pkg/code, then /src/pkg, then /src,
+then /), stopping when it finds one.  For the above example, /src/pkg/code
+will find the mount point at /src/pkg:
+</p>
+<pre>{old: &#34;/src/pkg&#34;, fs: OS(`c:\Go`), new: &#34;/src/pkg&#34;},
+{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work1`), new: &#34;/src&#34;},
+{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work2`), new: &#34;/src&#34;},
+</pre>
+<p>
+ReadDir will when execute these three calls and merge the results:
+</p>
+<pre>OS(`c:\Go`).ReadDir(&#34;/src/pkg/code&#34;)
+OS(`d:\Work1&#39;).ReadDir(&#34;/src/code&#34;)
+OS(`d:\Work2&#39;).ReadDir(&#34;/src/code&#34;)
+</pre>
+<p>
+Note that the &#34;/src/pkg&#34; in &#34;/src/pkg/code&#34; has been replaced by
+just &#34;/src&#34; in the final two calls.
+</p>
+<p>
+OS is itself an implementation of a file system: it implements
+OS(`c:\Go`).ReadDir(&#34;/src/pkg/code&#34;) as ioutil.ReadDir(`c:\Go\src\pkg\code`).
+</p>
+<p>
+Because the new path is evaluated by fs (here OS(root)), another way
+to read the mount table is to mentally combine fs+new, so that this table:
+</p>
+<pre>{old: &#34;/src/pkg&#34;, fs: OS(`c:\Go`), new: &#34;/src/pkg&#34;},
+{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work1`), new: &#34;/src&#34;},
+{old: &#34;/src/pkg&#34;, fs: OS(`d:\Work2`), new: &#34;/src&#34;},
+</pre>
+<p>
+reads as:
+</p>
+<pre>&#34;/src/pkg&#34; -&gt; c:\Go\src\pkg
+&#34;/src/pkg&#34; -&gt; d:\Work1\src
+&#34;/src/pkg&#34; -&gt; d:\Work2\src
+</pre>
+<p>
+An invariant (a redundancy) of the name space representation is that
+ns[mtpt][i].old is always equal to mtpt (in the example, ns[&#34;/src/pkg&#34;]&#39;s
+mount table entries always have old == &#34;/src/pkg&#34;).  The &#39;old&#39; field is
+useful to callers, because they receive just a []mountedFS and not any
+other indication of which mount point was found.
+</p>
+
+			<pre>type NameSpace map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]mountedFS</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewNameSpace">func <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/emptyvfs.go?s=459:488#L7">NewNameSpace</a>
+					<a class="permalink" href="index.html#NewNameSpace">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewNameSpace() <a href="index.html#NameSpace">NameSpace</a></pre>
+				<p>
+NewNameSpace returns a NameSpace pre-initialized with an empty
+emulated directory mounted on the root mount point &#34;/&#34;. This
+allows directory traversal routines to work properly even if
+a folder is not explicitly mounted at root by the user.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="NameSpace.Bind">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=5756:5837#L159">Bind</a>
+					<a class="permalink" href="index.html#NameSpace.Bind">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) Bind(old <a href="http://localhost:6060/pkg/builtin/#string">string</a>, newfs <a href="index.html#FileSystem">FileSystem</a>, new <a href="http://localhost:6060/pkg/builtin/#string">string</a>, mode <a href="index.html#BindMode">BindMode</a>)</pre>
+				<p>
+Bind causes references to old to redirect to the path new in newfs.
+If mode is BindReplace, old redirections are discarded.
+If mode is BindBefore, this redirection takes priority over existing ones,
+but earlier ones are still consulted for paths that do not exist in newfs.
+If mode is BindAfter, this redirection happens only after existing ones
+have been tried and failed.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.Fprint">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=4724:4763#L122">Fprint</a>
+					<a class="permalink" href="index.html#NameSpace.Fprint">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) Fprint(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>)</pre>
+				<p>
+Fprint writes a text representation of the name space to w.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.Lstat">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=8186:8245#L257">Lstat</a>
+					<a class="permalink" href="index.html#NameSpace.Lstat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) Lstat(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.Open">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=7054:7115#L212">Open</a>
+					<a class="permalink" href="index.html#NameSpace.Open">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) Open(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ReadSeekCloser">ReadSeekCloser</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Open implements the FileSystem Open method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.ReadDir">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=9573:9636#L288">ReadDir</a>
+					<a class="permalink" href="index.html#NameSpace.ReadDir">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) ReadDir(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ReadDir implements the FileSystem ReadDir method.  It&#39;s where most of the magic is.
+(The rest is in resolve.)
+</p>
+<p>
+Logically, ReadDir must return the union of all the directories that are named
+by path.  In order to avoid misinterpreting Go packages, of all the directories
+that contain Go source code, we only include the files from the first,
+but we include subdirectories from all.
+</p>
+<p>
+ReadDir must also return directory entries needed to reach mount points.
+If the name space looks like the example in the type NameSpace comment,
+but c:\Go does not have a src/pkg subdirectory, we still want to be able
+to find that subdirectory, because we&#39;ve mounted d:\Work1 and d:\Work2
+there.  So if we don&#39;t see &#34;src&#34; in the directory listing for c:\Go, we add an
+entry for it before returning.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.RootType">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=11309:11359#L361">RootType</a>
+					<a class="permalink" href="index.html#NameSpace.RootType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) RootType(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RootType">RootType</a></pre>
+				<p>
+RootType returns the RootType for the given path in the namespace.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.Stat">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=8083:8141#L253">Stat</a>
+					<a class="permalink" href="index.html#NameSpace.Stat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ns <a href="index.html#NameSpace">NameSpace</a>) Stat(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NameSpace.String">func (NameSpace) <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/namespace.go?s=4610:4642#L117">String</a>
+					<a class="permalink" href="index.html#NameSpace.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#NameSpace">NameSpace</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Opener">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go?s=1155:1223#L29">Opener</a>
+				<a class="permalink" href="index.html#Opener">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Opener is a minimal virtual filesystem that can only open regular files.
+</p>
+
+			<pre>type Opener interface {
+    Open(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ReadSeekCloser">ReadSeekCloser</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReadSeekCloser">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go?s=1272:1338#L34">ReadSeekCloser</a>
+				<a class="permalink" href="index.html#ReadSeekCloser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ReadSeekCloser can Read, Seek, and Close.
+</p>
+
+			<pre>type ReadSeekCloser interface {
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Seeker">Seeker</a>
+    <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Closer">Closer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RootType">type <a href="http://localhost:6060/src/golang.org/x/tools/godoc/vfs/vfs.go?s=631:651#L10">RootType</a>
+				<a class="permalink" href="index.html#RootType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RootType indicates the type of files contained within a directory.
+</p>
+<p>
+It is used to indicate whether a directory is the root
+of a GOROOT, a GOPATH, or neither.
+An empty string represents the case when a directory is neither.
+</p>
+
+			<pre>type RootType <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="RootTypeGoRoot">RootTypeGoRoot</span> <a href="index.html#RootType">RootType</a> = &#34;GOROOT&#34;
+    <span id="RootTypeGoPath">RootTypeGoPath</span> <a href="index.html#RootType">RootType</a> = &#34;GOPATH&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="gatefs/index.html">gatefs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package gatefs provides an implementation of the FileSystem interface that wraps another FileSystem and limits its concurrency.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="httpfs/index.html">httpfs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package httpfs implements http.FileSystem using a godoc vfs.FileSystem.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mapfs/index.html">mapfs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package mapfs file provides an implementation of the FileSystem interface based on the contents of a map[string]string.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="zipfs/index.html">zipfs</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package zipfs file provides an implementation of the FileSystem interface based on the contents of a .zip file.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>pull - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package pull
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/gossip/pull"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#SelectEndpoints">func SelectEndpoints(k int, peerPool []discovery.NetworkMember) []*comm.RemotePeer</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EgressDigestFilter">type EgressDigestFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IngressDigestFilter">type IngressDigestFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Mediator">type Mediator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPullMediator">func NewPullMediator(config Config, adapter *PullAdapter) Mediator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MembershipService">type MembershipService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MessageHook">type MessageHook</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MsgType">type MsgType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PullAdapter">type PullAdapter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Sender">type Sender</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go">pullstore.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="SelectEndpoints">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=11536:11618#L370">SelectEndpoints</a>
+				<a class="permalink" href="index.html#SelectEndpoints">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SelectEndpoints(k <a href="http://localhost:6060/pkg/builtin/#int">int</a>, peerPool []<a href="../../discovery/index.html">discovery</a>.<a href="../../discovery/index.html#NetworkMember">NetworkMember</a>) []*<a href="../../comm/index.html">comm</a>.<a href="../../comm/index.html#RemotePeer">RemotePeer</a></pre>
+			<p>
+SelectEndpoints select k peers from peerPool and returns them.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=1297:1634#L40">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config defines the configuration of the pull mediator
+</p>
+
+			<pre>type Config struct {
+<span id="Config.ID"></span>    ID                <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Config.PullInterval"></span>    PullInterval      <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> <span class="comment">// Duration between pull invocations</span>
+<span id="Config.Channel"></span>    Channel           <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>
+<span id="Config.PeerCountToSelect"></span>    PeerCountToSelect <a href="http://localhost:6060/pkg/builtin/#int">int</a> <span class="comment">// Number of peers to initiate pull with</span>
+<span id="Config.Tag"></span>    Tag               <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#GossipMessage_Tag">GossipMessage_Tag</a>
+<span id="Config.MsgType"></span>    MsgType           <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#PullMsgType">PullMsgType</a>
+<span id="Config.PullEngineConfig"></span>    PullEngineConfig  <a href="../algo/index.html">algo</a>.<a href="../algo/index.html#PullEngineConfig">PullEngineConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EgressDigestFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=1920:2009#L55">EgressDigestFilter</a>
+				<a class="permalink" href="index.html#EgressDigestFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EgressDigestFilter filters digests to be sent to a remote peer, that
+sent a hello with the following message
+</p>
+
+			<pre>type EgressDigestFilter func(helloMsg <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>) func(digestItem <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IngressDigestFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=1727:1803#L51">IngressDigestFilter</a>
+				<a class="permalink" href="index.html#IngressDigestFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IngressDigestFilter filters out entities in digests that are received from remote peers
+</p>
+
+			<pre>type IngressDigestFilter func(digestMsg *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#DataDigest">DataDigest</a>) *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#DataDigest">DataDigest</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Mediator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=3035:3526#L83">Mediator</a>
+				<a class="permalink" href="index.html#Mediator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Mediator is a component wrap a PullEngine and provides the methods
+it needs to perform pull synchronization.
+The specialization of a pull mediator to a certain type of message is
+done by the configuration, a IdentifierExtractor, IdentifierExtractor
+given at construction, and also hooks that can be registered for each
+type of pullMsgType (hello, digest, req, res).
+</p>
+
+			<pre>type Mediator interface {
+    <span class="comment">// Stop stop the Mediator</span>
+    Stop()
+
+    <span class="comment">// RegisterMsgHook registers a message hook to a specific type of pull message</span>
+    RegisterMsgHook(<a href="index.html#MsgType">MsgType</a>, <a href="index.html#MessageHook">MessageHook</a>)
+
+    <span class="comment">// Add adds a GossipMessage to the Mediator</span>
+    Add(*<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>)
+
+    <span class="comment">// Remove removes a GossipMessage from the Mediator with a matching digest,</span>
+    <span class="comment">// if such a message exits</span>
+    Remove(digest <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+
+    <span class="comment">// HandleMessage handles a message from some remote peer</span>
+    HandleMessage(msg <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPullMediator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=3855:3921#L113">NewPullMediator</a>
+					<a class="permalink" href="index.html#NewPullMediator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPullMediator(config <a href="index.html#Config">Config</a>, adapter *<a href="index.html#PullAdapter">PullAdapter</a>) <a href="index.html#Mediator">Mediator</a></pre>
+				<p>
+NewPullMediator returns a new Mediator
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MembershipService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=1115:1238#L34">MembershipService</a>
+				<a class="permalink" href="index.html#MembershipService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MembershipService obtains membership information of alive peers
+</p>
+
+			<pre>type MembershipService interface {
+    <span class="comment">// GetMembership returns the membership of</span>
+    GetMembership() []<a href="../../discovery/index.html">discovery</a>.<a href="../../discovery/index.html#NetworkMember">NetworkMember</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MessageHook">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=760:862#L25">MessageHook</a>
+				<a class="permalink" href="index.html#MessageHook">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MessageHook defines a function that will run after a certain pull message is received
+</p>
+
+			<pre>type MessageHook func(itemIDs []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, items []*<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>, msg <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MsgType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=653:669#L22">MsgType</a>
+				<a class="permalink" href="index.html#MsgType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MsgType defines the type of a message that is sent to the PullStore
+</p>
+
+			<pre>type MsgType <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				<p>
+Constants go here.
+</p>
+
+				<pre>const (
+    <span id="HelloMsgType">HelloMsgType</span> <a href="index.html#MsgType">MsgType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="DigestMsgType">DigestMsgType</span>
+    <span id="RequestMsgType">RequestMsgType</span>
+    <span id="ResponseMsgType">ResponseMsgType</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PullAdapter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=2406:2649#L68">PullAdapter</a>
+				<a class="permalink" href="index.html#PullAdapter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PullAdapter defines methods of the pullStore to interact
+with various modules of gossip
+</p>
+
+			<pre>type PullAdapter struct {
+<span id="PullAdapter.Sndr"></span>    Sndr             <a href="index.html#Sender">Sender</a>
+<span id="PullAdapter.MemSvc"></span>    MemSvc           <a href="index.html#MembershipService">MembershipService</a>
+<span id="PullAdapter.IdExtractor"></span>    IdExtractor      <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#IdentifierExtractor">IdentifierExtractor</a>
+<span id="PullAdapter.MsgCons"></span>    MsgCons          <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#MsgConsumer">MsgConsumer</a>
+<span id="PullAdapter.EgressDigFilter"></span>    EgressDigFilter  <a href="index.html#EgressDigestFilter">EgressDigestFilter</a>
+<span id="PullAdapter.IngressDigFilter"></span>    IngressDigFilter <a href="index.html#IngressDigestFilter">IngressDigestFilter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Sender">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/pull/pullstore.go?s=905:1046#L28">Sender</a>
+				<a class="permalink" href="index.html#Sender">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Sender sends messages to remote peers
+</p>
+
+			<pre>type Sender interface {
+    <span class="comment">// Send sends a message to a list of remote peers</span>
+    Send(msg *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>, peers ...*<a href="../../comm/index.html">comm</a>.<a href="../../comm/index.html#RemotePeer">RemotePeer</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

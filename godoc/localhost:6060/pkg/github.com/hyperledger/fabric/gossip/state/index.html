@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>state - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package state
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/state"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Configuration">type Configuration</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GossipAdapter">type GossipAdapter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GossipStateProvider">type GossipStateProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewGossipStateProvider">func NewGossipStateProvider(chainID string, services *ServicesMediator, ledger ledgerResources, stateMetrics *metrics.StateMetrics, config *Configuration) GossipStateProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GossipStateProviderImpl">type GossipStateProviderImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipStateProviderImpl.AddPayload">func (s *GossipStateProviderImpl) AddPayload(payload *proto.Payload) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipStateProviderImpl.Stop">func (s *GossipStateProviderImpl) Stop()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MCSAdapter">type MCSAdapter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PayloadsBuffer">type PayloadsBuffer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPayloadsBuffer">func NewPayloadsBuffer(next uint64) PayloadsBuffer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PayloadsBufferImpl">type PayloadsBufferImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Close">func (b *PayloadsBufferImpl) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Next">func (b *PayloadsBufferImpl) Next() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Pop">func (b *PayloadsBufferImpl) Pop() *proto.Payload</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Push">func (b *PayloadsBufferImpl) Push(payload *proto.Payload)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Ready">func (b *PayloadsBufferImpl) Ready() chan struct{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PayloadsBufferImpl.Size">func (b *PayloadsBufferImpl) Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ServicesMediator">type ServicesMediator</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go">payloads_buffer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go">state.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="DefAntiEntropyInterval">DefAntiEntropyInterval</span>             = 10 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>
+    <span id="DefAntiEntropyStateResponseTimeout">DefAntiEntropyStateResponseTimeout</span> = 3 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>
+    <span id="DefAntiEntropyBatchSize">DefAntiEntropyBatchSize</span>            = 10
+
+    <span id="DefChannelBufferSize">DefChannelBufferSize</span>     = 100
+    <span id="DefAntiEntropyMaxRetries">DefAntiEntropyMaxRetries</span> = 3
+
+    <span id="DefMaxBlockDistance">DefMaxBlockDistance</span> = 100
+
+    <span id="Blocking">Blocking</span>    = <a href="http://localhost:6060/pkg/builtin/#true">true</a>
+    <span id="NonBlocking">NonBlocking</span> = <a href="http://localhost:6060/pkg/builtin/#false">false</a>
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="Configuration">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=1517:1867#L47">Configuration</a>
+				<a class="permalink" href="index.html#Configuration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Configuration keeps state transfer configuration parameters
+</p>
+
+			<pre>type Configuration struct {
+<span id="Configuration.AntiEntropyInterval"></span>    AntiEntropyInterval             <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.AntiEntropyStateResponseTimeout"></span>    AntiEntropyStateResponseTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Configuration.AntiEntropyBatchSize"></span>    AntiEntropyBatchSize            <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Configuration.MaxBlockDistance"></span>    MaxBlockDistance                <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Configuration.AntiEntropyMaxRetries"></span>    AntiEntropyMaxRetries           <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Configuration.ChannelBufferSize"></span>    ChannelBufferSize               <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Configuration.EnableStateTransfer"></span>    EnableStateTransfer             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Configuration.BlockingMode"></span>    BlockingMode                    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GossipAdapter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=1953:2870#L59">GossipAdapter</a>
+				<a class="permalink" href="index.html#GossipAdapter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GossipAdapter defines gossip/communication required interface for state provider
+</p>
+
+			<pre>type GossipAdapter interface {
+    <span class="comment">// Send sends a message to remote peers</span>
+    Send(msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#GossipMessage">GossipMessage</a>, peers ...*<a href="../comm/index.html">comm</a>.<a href="../comm/index.html#RemotePeer">RemotePeer</a>)
+
+    <span class="comment">// Accept returns a dedicated read-only channel for messages sent by other nodes that match a certain predicate.</span>
+    <span class="comment">// If passThrough is false, the messages are processed by the gossip layer beforehand.</span>
+    <span class="comment">// If passThrough is true, the gossip layer doesn&#39;t intervene and the messages</span>
+    <span class="comment">// can be used to send a reply back to the sender</span>
+    Accept(acceptor <a href="../common/index.html">common2</a>.<a href="../common/index.html#MessageAcceptor">MessageAcceptor</a>, passThrough <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (&lt;-chan *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#GossipMessage">GossipMessage</a>, &lt;-chan <a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>)
+
+    <span class="comment">// UpdateLedgerHeight updates the ledger height the peer</span>
+    <span class="comment">// publishes to other peers in the channel</span>
+    UpdateLedgerHeight(height <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chainID <a href="../common/index.html">common2</a>.<a href="../common/index.html#ChainID">ChainID</a>)
+
+    <span class="comment">// PeersOfChannel returns the NetworkMembers considered alive</span>
+    <span class="comment">// and also subscribed to the channel given</span>
+    PeersOfChannel(<a href="../common/index.html">common2</a>.<a href="../common/index.html#ChainID">ChainID</a>) []<a href="../discovery/index.html">discovery</a>.<a href="../discovery/index.html#NetworkMember">NetworkMember</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GossipStateProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=979:1110#L23">GossipStateProvider</a>
+				<a class="permalink" href="index.html#GossipStateProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GossipStateProvider is the interface to acquire sequences of the ledger blocks
+capable to full fill missing blocks by running state replication and
+sending request to get missing block to other nodes
+</p>
+
+			<pre>type GossipStateProvider interface {
+    AddPayload(payload *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Stop terminates state transfer object</span>
+    Stop()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewGossipStateProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=6531:6705#L181">NewGossipStateProvider</a>
+					<a class="permalink" href="index.html#NewGossipStateProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewGossipStateProvider(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, services *<a href="index.html#ServicesMediator">ServicesMediator</a>, ledger ledgerResources, stateMetrics *<a href="../metrics/index.html">metrics</a>.<a href="../metrics/index.html#StateMetrics">StateMetrics</a>, config *<a href="index.html#Configuration">Configuration</a>) <a href="index.html#GossipStateProvider">GossipStateProvider</a></pre>
+				<p>
+NewGossipStateProvider creates state provider with coordinator instance
+to orchestrate arrival of private rwsets and blocks before committing them into the ledger.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="GossipStateProviderImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=5018:5618#L125">GossipStateProviderImpl</a>
+				<a class="permalink" href="index.html#GossipStateProviderImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GossipStateProviderImpl the implementation of the GossipStateProvider interface
+the struct to handle in memory sliding window of
+new ledger block to be acquired by hyper ledger
+</p>
+
+			<pre>type GossipStateProviderImpl struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GossipStateProviderImpl.AddPayload">func (*GossipStateProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=25603:25677#L764">AddPayload</a>
+					<a class="permalink" href="index.html#GossipStateProviderImpl.AddPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#GossipStateProviderImpl">GossipStateProviderImpl</a>) AddPayload(payload *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+AddPayload adds new payload into state.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GossipStateProviderImpl.Stop">func (*GossipStateProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=17530:17570#L522">Stop</a>
+					<a class="permalink" href="index.html#GossipStateProviderImpl.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#GossipStateProviderImpl">GossipStateProviderImpl</a>) Stop()</pre>
+				<p>
+Stop function sends halting signal to all go routines
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MCSAdapter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=2991:3674#L80">MCSAdapter</a>
+				<a class="permalink" href="index.html#MCSAdapter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MCSAdapter adapter of message crypto service interface to bound
+specific APIs required by state transfer service
+</p>
+
+			<pre>type MCSAdapter interface {
+    <span class="comment">// VerifyBlock returns nil if the block is properly signed, and the claimed seqNum is the</span>
+    <span class="comment">// sequence number that the block&#39;s header contains.</span>
+    <span class="comment">// else returns error</span>
+    VerifyBlock(chainID <a href="../common/index.html">common2</a>.<a href="../common/index.html#ChainID">ChainID</a>, seqNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, signedBlock []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// VerifyByChannel checks that signature is a valid signature of message</span>
+    <span class="comment">// under a peer&#39;s verification key, but also in the context of a specific channel.</span>
+    <span class="comment">// If the verification succeeded, Verify returns nil meaning no error occurred.</span>
+    <span class="comment">// If peerIdentity is nil, then the verification fails.</span>
+    VerifyByChannel(chainID <a href="../common/index.html">common2</a>.<a href="../common/index.html#ChainID">ChainID</a>, peerIdentity <a href="../api/index.html">api</a>.<a href="../api/index.html#PeerIdentityType">PeerIdentityType</a>, signature, message []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PayloadsBuffer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=512:936#L12">PayloadsBuffer</a>
+				<a class="permalink" href="index.html#PayloadsBuffer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PayloadsBuffer is used to store payloads into which used to
+support payloads with blocks reordering according to the
+sequence numbers. It also will provide the capability
+to signal whenever expected block has arrived.
+</p>
+
+			<pre>type PayloadsBuffer interface {
+    <span class="comment">// Adds new block into the buffer</span>
+    Push(payload *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>)
+
+    <span class="comment">// Returns next expected sequence number</span>
+    Next() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// Remove and return payload with given sequence number</span>
+    Pop() *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>
+
+    <span class="comment">// Get current buffer size</span>
+    Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// Channel to indicate event when new payload pushed with sequence</span>
+    <span class="comment">// number equal to the next expected value.</span>
+    Ready() chan struct{}
+
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPayloadsBuffer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=1292:1342#L47">NewPayloadsBuffer</a>
+					<a class="permalink" href="index.html#NewPayloadsBuffer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPayloadsBuffer(next <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="index.html#PayloadsBuffer">PayloadsBuffer</a></pre>
+				<p>
+NewPayloadsBuffer is factory function to create new payloads buffer
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="PayloadsBufferImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=1072:1219#L34">PayloadsBufferImpl</a>
+				<a class="permalink" href="index.html#PayloadsBufferImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PayloadsBufferImpl structure to implement PayloadsBuffer interface
+store inner state of available payloads and sequence numbers
+</p>
+
+			<pre>type PayloadsBufferImpl struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PayloadsBufferImpl.Close">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=3686:3722#L136">Close</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Close()</pre>
+				<p>
+Close cleanups resources and channels in maintained
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PayloadsBufferImpl.Next">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=2528:2570#L87">Next</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Next() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Next function provides the number of the next expected block
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PayloadsBufferImpl.Pop">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=2805:2854#L94">Pop</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Pop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Pop() *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a></pre>
+				<p>
+Pop function extracts the payload according to the next expected block
+number, if no next block arrived yet, function returns nil.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PayloadsBufferImpl.Push">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=2020:2077#L67">Push</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Push">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Push(payload *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Payload">Payload</a>)</pre>
+				<p>
+Push new payload into the buffer structure in case new arrived payload
+sequence number is below the expected next block number payload will be
+thrown away.
+TODO return bool to indicate if payload was added or not, so that caller can log result.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PayloadsBufferImpl.Ready">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=1687:1737#L59">Ready</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Ready">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Ready() chan struct{}</pre>
+				<p>
+Ready function returns the channel which indicates whenever expected
+next block has arrived and one could safely pop out
+next sequence of blocks
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PayloadsBufferImpl.Size">func (*PayloadsBufferImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/payloads_buffer.go?s=3525:3564#L129">Size</a>
+					<a class="permalink" href="index.html#PayloadsBufferImpl.Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#PayloadsBufferImpl">PayloadsBufferImpl</a>) Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Size returns current number of payloads stored within buffer
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ServicesMediator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/state.go?s=4771:4830#L117">ServicesMediator</a>
+				<a class="permalink" href="index.html#ServicesMediator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ServicesMediator aggregated adapter to compound all mediator
+required by state transfer into single struct
+</p>
+
+			<pre>type ServicesMediator struct {
+    <a href="index.html#GossipAdapter">GossipAdapter</a>
+    <a href="index.html#MCSAdapter">MCSAdapter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

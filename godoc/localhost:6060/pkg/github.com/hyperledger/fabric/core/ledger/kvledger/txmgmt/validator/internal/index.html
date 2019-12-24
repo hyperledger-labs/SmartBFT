@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>internal - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package internal
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Block">type Block</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PubAndHashUpdates">type PubAndHashUpdates</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPubAndHashUpdates">func NewPubAndHashUpdates() *PubAndHashUpdates</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PubAndHashUpdates.ApplyWriteSet">func (u *PubAndHashUpdates) ApplyWriteSet(txRWSet *rwsetutil.TxRwSet, txHeight *version.Height, db privacyenabledstate.DB) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Transaction">type Transaction</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transaction.ContainsPvtWrites">func (t *Transaction) ContainsPvtWrites() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Transaction.RetrieveHash">func (t *Transaction) RetrieveHash(ns string, coll string) []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Validator">type Validator</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/tx_ops_preparation.go">tx_ops_preparation.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go">val.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Block">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=905:958#L17">Block</a>
+				<a class="permalink" href="index.html#Block">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Block is used to used to hold the information from its proto format to a structure
+that is more suitable/friendly for validation
+</p>
+
+			<pre>type Block struct {
+<span id="Block.Num"></span>    Num <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Block.Txs"></span>    Txs []*<a href="index.html#Transaction">Transaction</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PubAndHashUpdates">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=1416:1550#L33">PubAndHashUpdates</a>
+				<a class="permalink" href="index.html#PubAndHashUpdates">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PubAndHashUpdates encapsulates public and hash updates. The intended use of this to hold the updates
+that are to be applied to the statedb  as a result of the block commit
+</p>
+
+			<pre>type PubAndHashUpdates struct {
+<span id="PubAndHashUpdates.PubUpdates"></span>    PubUpdates  *<a href="../../privacyenabledstate/index.html">privacyenabledstate</a>.<a href="../../privacyenabledstate/index.html#PubUpdateBatch">PubUpdateBatch</a>
+<span id="PubAndHashUpdates.HashUpdates"></span>    HashUpdates *<a href="../../privacyenabledstate/index.html">privacyenabledstate</a>.<a href="../../privacyenabledstate/index.html#HashedUpdateBatch">HashedUpdateBatch</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPubAndHashUpdates">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=1614:1660#L39">NewPubAndHashUpdates</a>
+					<a class="permalink" href="index.html#NewPubAndHashUpdates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPubAndHashUpdates() *<a href="index.html#PubAndHashUpdates">PubAndHashUpdates</a></pre>
+				<p>
+NewPubAndHashUpdates constructs an empty PubAndHashUpdates
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PubAndHashUpdates.ApplyWriteSet">func (*PubAndHashUpdates) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=2669:2797#L79">ApplyWriteSet</a>
+					<a class="permalink" href="index.html#PubAndHashUpdates.ApplyWriteSet">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#PubAndHashUpdates">PubAndHashUpdates</a>) ApplyWriteSet(txRWSet *<a href="../../rwsetutil/index.html">rwsetutil</a>.<a href="../../rwsetutil/index.html#TxRwSet">TxRwSet</a>, txHeight *<a href="../../version/index.html">version</a>.<a href="../../version/index.html#Height">Height</a>, db <a href="../../privacyenabledstate/index.html">privacyenabledstate</a>.<a href="../../privacyenabledstate/index.html#DB">DB</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ApplyWriteSet adds (or deletes) the key/values present in the write set to the PubAndHashUpdates
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Transaction">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=1093:1236#L24">Transaction</a>
+				<a class="permalink" href="index.html#Transaction">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Transaction is used to hold the information from its proto format to a structure
+that is more suitable/friendly for validation
+</p>
+
+			<pre>type Transaction struct {
+<span id="Transaction.IndexInBlock"></span>    IndexInBlock   <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Transaction.ID"></span>    ID             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Transaction.RWSet"></span>    RWSet          *<a href="../../rwsetutil/index.html">rwsetutil</a>.<a href="../../rwsetutil/index.html#TxRwSet">TxRwSet</a>
+<span id="Transaction.ValidationCode"></span>    ValidationCode <a href="../../../../../../protos/peer/index.html">peer</a>.<a href="../../../../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Transaction.ContainsPvtWrites">func (*Transaction) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=1889:1935#L47">ContainsPvtWrites</a>
+					<a class="permalink" href="index.html#Transaction.ContainsPvtWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transaction">Transaction</a>) ContainsPvtWrites() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ContainsPvtWrites returns true if this transaction is not limited to affecting the public data only
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Transaction.RetrieveHash">func (*Transaction) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=2221:2286#L60">RetrieveHash</a>
+					<a class="permalink" href="index.html#Transaction.RetrieveHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Transaction">Transaction</a>) RetrieveHash(ns <a href="http://localhost:6060/pkg/builtin/#string">string</a>, coll <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+RetrieveHash returns the hash of the private write-set present
+in the public data for a given namespace-collection
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Validator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/validator/internal/val.go?s=650:768#L11">Validator</a>
+				<a class="permalink" href="index.html#Validator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Validator is supposed to validate the transactions based on public data and hashes present in a block
+and returns a batch that should be used to update the state
+</p>
+
+			<pre>type Validator interface {
+    ValidateAndPrepareBatch(block *<a href="index.html#Block">Block</a>, doMVCCValidation <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#PubAndHashUpdates">PubAndHashUpdates</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

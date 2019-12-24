@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>wrapper - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package wrapper
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetKey">func GetKey(newkey bccsp.Key) core.Key</a></dd>
+			
+				
+				<dd><a href="index.html#NewCryptoSuite">func NewCryptoSuite(bccsp bccsp.BCCSP) core.CryptoSuite</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CryptoSuite">type CryptoSuite</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.GetHash">func (c *CryptoSuite) GetHash(opts core.HashOpts) (h hash.Hash, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.GetKey">func (c *CryptoSuite) GetKey(ski []byte) (k core.Key, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.Hash">func (c *CryptoSuite) Hash(msg []byte, opts core.HashOpts) (hash []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.KeyGen">func (c *CryptoSuite) KeyGen(opts core.KeyGenOpts) (k core.Key, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.KeyImport">func (c *CryptoSuite) KeyImport(raw interface{}, opts core.KeyImportOpts) (k core.Key, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.Sign">func (c *CryptoSuite) Sign(k core.Key, digest []byte, opts core.SignerOpts) (signature []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CryptoSuite.Verify">func (c *CryptoSuite) Verify(k core.Key, signature, digest []byte, opts core.SignerOpts) (valid bool, err error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go">cryptosuiteimpl.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=530:568#L14">GetKey</a>
+				<a class="permalink" href="index.html#GetKey">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetKey(newkey <a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html#Key">Key</a>) <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a></pre>
+			<p>
+GetKey returns implementation of of cryptosuite.Key
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewCryptoSuite">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=374:429#L7">NewCryptoSuite</a>
+				<a class="permalink" href="index.html#NewCryptoSuite">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewCryptoSuite(bccsp <a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html#BCCSP">BCCSP</a>) <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a></pre>
+			<p>
+NewCryptoSuite returns cryptosuite adaptor for given bccsp.BCCSP implementation
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CryptoSuite">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=638:684#L19">CryptoSuite</a>
+				<a class="permalink" href="index.html#CryptoSuite">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CryptoSuite provides a wrapper of BCCSP
+</p>
+
+			<pre>type CryptoSuite struct {
+<span id="CryptoSuite.BCCSP"></span>    BCCSP <a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../../../../internal/github.com/hyperledger/fabric/bccsp/index.html#BCCSP">BCCSP</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CryptoSuite.GetHash">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=1443:1517#L47">GetHash</a>
+					<a class="permalink" href="index.html#CryptoSuite.GetHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) GetHash(opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#HashOpts">HashOpts</a>) (h <a href="http://localhost:6060/pkg/hash/">hash</a>.<a href="http://localhost:6060/pkg/hash/#Hash">Hash</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetHash is a wrapper of BCCSP.GetHash
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.GetKey">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=1118:1182#L36">GetKey</a>
+					<a class="permalink" href="index.html#CryptoSuite.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) GetKey(ski []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (k <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetKey is a wrapper of BCCSP.GetKey
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.Hash">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=1281:1364#L42">Hash</a>
+					<a class="permalink" href="index.html#CryptoSuite.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) Hash(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#HashOpts">HashOpts</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Hash is a wrapper of BCCSP.Hash
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.KeyGen">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=725:799#L24">KeyGen</a>
+					<a class="permalink" href="index.html#CryptoSuite.KeyGen">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) KeyGen(opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#KeyGenOpts">KeyGenOpts</a>) (k <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+KeyGen is a wrapper of BCCSP.KeyGen
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.KeyImport">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=909:1006#L30">KeyImport</a>
+					<a class="permalink" href="index.html#CryptoSuite.KeyImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) KeyImport(raw interface{}, opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#KeyImportOpts">KeyImportOpts</a>) (k <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+KeyImport is a wrapper of BCCSP.KeyImport
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.Sign">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=1588:1693#L52">Sign</a>
+					<a class="permalink" href="index.html#CryptoSuite.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) Sign(k <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a>, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#SignerOpts">SignerOpts</a>) (signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign is a wrapper of BCCSP.Sign
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoSuite.Verify">func (*CryptoSuite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go?s=1787:1899#L57">Verify</a>
+					<a class="permalink" href="index.html#CryptoSuite.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CryptoSuite">CryptoSuite</a>) Verify(k <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#Key">Key</a>, signature, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../../../common/providers/core/index.html">core</a>.<a href="../../../../common/providers/core/index.html#SignerOpts">SignerOpts</a>) (valid <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify is a wrapper of BCCSP.Verify
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

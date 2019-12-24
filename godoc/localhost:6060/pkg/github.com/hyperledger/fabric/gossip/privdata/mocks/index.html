@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mocks - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mocks
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/privdata/mocks"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#AppCapabilities">type AppCapabilities</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.ACLs">func (_m *AppCapabilities) ACLs() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.CollectionUpgrade">func (_m *AppCapabilities) CollectionUpgrade() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.FabToken">func (_m *AppCapabilities) FabToken() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.ForbidDuplicateTXIdInBlock">func (_m *AppCapabilities) ForbidDuplicateTXIdInBlock() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.KeyLevelEndorsement">func (_m *AppCapabilities) KeyLevelEndorsement() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.MetadataLifecycle">func (_m *AppCapabilities) MetadataLifecycle() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.PrivateChannelData">func (_m *AppCapabilities) PrivateChannelData() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.StorePvtDataOfInvalidTx">func (_m *AppCapabilities) StorePvtDataOfInvalidTx() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.Supported">func (_m *AppCapabilities) Supported() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.V1_1Validation">func (_m *AppCapabilities) V1_1Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.V1_2Validation">func (_m *AppCapabilities) V1_2Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AppCapabilities.V1_3Validation">func (_m *AppCapabilities) V1_3Validation() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CapabilityProvider">type CapabilityProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CapabilityProvider.Capabilities">func (_m *CapabilityProvider) Capabilities() channelconfig.ApplicationCapabilities</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CollectionStore">type CollectionStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.AccessFilter">func (_m *CollectionStore) AccessFilter(channelName string, collectionPolicyConfig *common.CollectionPolicyConfig) (privdata.Filter, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.HasReadAccess">func (_m *CollectionStore) HasReadAccess(_a0 common.CollectionCriteria, _a1 *peer.SignedProposal, _a2 ledger.QueryExecutor) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.RetrieveCollection">func (_m *CollectionStore) RetrieveCollection(_a0 common.CollectionCriteria) (privdata.Collection, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.RetrieveCollectionAccessPolicy">func (_m *CollectionStore) RetrieveCollectionAccessPolicy(_a0 common.CollectionCriteria) (privdata.CollectionAccessPolicy, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.RetrieveCollectionConfigPackage">func (_m *CollectionStore) RetrieveCollectionConfigPackage(_a0 common.CollectionCriteria) (*common.CollectionConfigPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CollectionStore.RetrieveCollectionPersistenceConfigs">func (_m *CollectionStore) RetrieveCollectionPersistenceConfigs(_a0 common.CollectionCriteria) (privdata.CollectionPersistenceConfigs, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Committer">type Committer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.Close">func (_m *Committer) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.CommitPvtDataOfOldBlocks">func (_m *Committer) CommitPvtDataOfOldBlocks(blockPvtData []*ledger.BlockPvtData) ([]*ledger.PvtdataHashMismatch, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.CommitWithPvtData">func (_m *Committer) CommitWithPvtData(blockAndPvtData *ledger.BlockAndPvtData, commitOpts *ledger.CommitOptions) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.DoesPvtDataInfoExistInLedger">func (_m *Committer) DoesPvtDataInfoExistInLedger(blockNum uint64) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.GetBlocks">func (_m *Committer) GetBlocks(blockSeqs []uint64) []*common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.GetConfigHistoryRetriever">func (_m *Committer) GetConfigHistoryRetriever() (ledger.ConfigHistoryRetriever, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.GetMissingPvtDataTracker">func (_m *Committer) GetMissingPvtDataTracker() (ledger.MissingPvtDataTracker, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.GetPvtDataAndBlockByNum">func (_m *Committer) GetPvtDataAndBlockByNum(seqNum uint64) (*ledger.BlockAndPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.GetPvtDataByNum">func (_m *Committer) GetPvtDataByNum(blockNum uint64, filter ledger.PvtNsCollFilter) ([]*ledger.TxPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Committer.LedgerHeight">func (_m *Committer) LedgerHeight() (uint64, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConfigHistoryRetriever">type ConfigHistoryRetriever</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigHistoryRetriever.CollectionConfigAt">func (_m *ConfigHistoryRetriever) CollectionConfigAt(blockNum uint64, chaincodeName string) (*ledger.CollectionConfigInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConfigHistoryRetriever.MostRecentCollectionConfigBelow">func (_m *ConfigHistoryRetriever) MostRecentCollectionConfigBelow(blockNum uint64, chaincodeName string) (*ledger.CollectionConfigInfo, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DataStore">type DataStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DataStore.GetConfigHistoryRetriever">func (_m *DataStore) GetConfigHistoryRetriever() (ledger.ConfigHistoryRetriever, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DataStore.GetPvtDataByNum">func (_m *DataStore) GetPvtDataByNum(blockNum uint64, filter ledger.PvtNsCollFilter) ([]*ledger.TxPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DataStore.GetTxPvtRWSetByTxid">func (_m *DataStore) GetTxPvtRWSetByTxid(txid string, filter ledger.PvtNsCollFilter) (transientstore.RWSetScanner, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DataStore.LedgerHeight">func (_m *DataStore) LedgerHeight() (uint64, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MissingPvtDataTracker">type MissingPvtDataTracker</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MissingPvtDataTracker.GetMissingPvtDataInfoForMostRecentBlocks">func (_m *MissingPvtDataTracker) GetMissingPvtDataInfoForMostRecentBlocks(maxBlocks int) (ledger.MissingPvtDataInfo, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RWSetScanner">type RWSetScanner</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RWSetScanner.Close">func (_m *RWSetScanner) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RWSetScanner.Next">func (_m *RWSetScanner) Next() (*transientstore.EndorserPvtSimulationResults, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RWSetScanner.NextWithConfig">func (_m *RWSetScanner) NextWithConfig() (*transientstore.EndorserPvtSimulationResultsWithConfig, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ReconciliationFetcher">type ReconciliationFetcher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReconciliationFetcher.FetchReconciledItems">func (_m *ReconciliationFetcher) FetchReconciledItems(dig2collectionConfig common.Dig2CollectionConfig) (*common.FetchedPvtDataContainer, error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go">app_capabilities.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/capability_provider.go">capability_provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go">collection_store.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go">committer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/config_history_retriever.go">config_history_retriever.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go">data_store.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/missing_pvt_data_tracker.go">missing_pvt_data_tracker.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/reconciliation_fetcher.go">reconciliation_fetcher.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/rw_set_scanner.go">rw_set_scanner.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="AppCapabilities">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=192:234#L1">AppCapabilities</a>
+				<a class="permalink" href="index.html#AppCapabilities">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AppCapabilities is an autogenerated mock type for the AppCapabilities type
+</p>
+
+			<pre>type AppCapabilities struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AppCapabilities.ACLs">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=288:326#L3">ACLs</a>
+					<a class="permalink" href="index.html#AppCapabilities.ACLs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) ACLs() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ACLs provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.CollectionUpgrade">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=538:589#L17">CollectionUpgrade</a>
+					<a class="permalink" href="index.html#AppCapabilities.CollectionUpgrade">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) CollectionUpgrade() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+CollectionUpgrade provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.FabToken">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=792:834#L31">FabToken</a>
+					<a class="permalink" href="index.html#AppCapabilities.FabToken">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) FabToken() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+FabToken provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.ForbidDuplicateTXIdInBlock">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=1055:1115#L45">ForbidDuplicateTXIdInBlock</a>
+					<a class="permalink" href="index.html#AppCapabilities.ForbidDuplicateTXIdInBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) ForbidDuplicateTXIdInBlock() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ForbidDuplicateTXIdInBlock provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.KeyLevelEndorsement">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=1329:1382#L59">KeyLevelEndorsement</a>
+					<a class="permalink" href="index.html#AppCapabilities.KeyLevelEndorsement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) KeyLevelEndorsement() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+KeyLevelEndorsement provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.MetadataLifecycle">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=1594:1645#L73">MetadataLifecycle</a>
+					<a class="permalink" href="index.html#AppCapabilities.MetadataLifecycle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) MetadataLifecycle() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+MetadataLifecycle provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.PrivateChannelData">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=1858:1910#L87">PrivateChannelData</a>
+					<a class="permalink" href="index.html#AppCapabilities.PrivateChannelData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) PrivateChannelData() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+PrivateChannelData provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.StorePvtDataOfInvalidTx">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=2128:2185#L101">StorePvtDataOfInvalidTx</a>
+					<a class="permalink" href="index.html#AppCapabilities.StorePvtDataOfInvalidTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) StorePvtDataOfInvalidTx() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+StorePvtDataOfInvalidTx provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.Supported">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=2389:2433#L115">Supported</a>
+					<a class="permalink" href="index.html#AppCapabilities.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.V1_1Validation">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=2639:2687#L129">V1_1Validation</a>
+					<a class="permalink" href="index.html#AppCapabilities.V1_1Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) V1_1Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_1Validation provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.V1_2Validation">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=2896:2944#L143">V1_2Validation</a>
+					<a class="permalink" href="index.html#AppCapabilities.V1_2Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) V1_2Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_2Validation provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AppCapabilities.V1_3Validation">func (*AppCapabilities) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/app_capabilities.go?s=3153:3201#L157">V1_3Validation</a>
+					<a class="permalink" href="index.html#AppCapabilities.V1_3Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#AppCapabilities">AppCapabilities</a>) V1_3Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_3Validation provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CapabilityProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/capability_provider.go?s=271:316#L1">CapabilityProvider</a>
+				<a class="permalink" href="index.html#CapabilityProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CapabilityProvider is an autogenerated mock type for the CapabilityProvider type
+</p>
+
+			<pre>type CapabilityProvider struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CapabilityProvider.Capabilities">func (*CapabilityProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/capability_provider.go?s=378:460#L6">Capabilities</a>
+					<a class="permalink" href="index.html#CapabilityProvider.Capabilities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CapabilityProvider">CapabilityProvider</a>) Capabilities() <a href="../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../common/channelconfig/index.html#ApplicationCapabilities">ApplicationCapabilities</a></pre>
+				<p>
+Capabilities provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CollectionStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=419:461#L7">CollectionStore</a>
+				<a class="permalink" href="index.html#CollectionStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CollectionStore is an autogenerated mock type for the CollectionStore type
+</p>
+
+			<pre>type CollectionStore struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CollectionStore.AccessFilter">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=559:698#L12">AccessFilter</a>
+					<a class="permalink" href="index.html#CollectionStore.AccessFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) AccessFilter(channelName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collectionPolicyConfig *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionPolicyConfig">CollectionPolicyConfig</a>) (<a href="../../../core/common/privdata/index.html">privdata</a>.<a href="../../../core/common/privdata/index.html#Filter">Filter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AccessFilter provides a mock function with given fields: channelName, collectionPolicyConfig
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CollectionStore.HasReadAccess">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=1274:1411#L35">HasReadAccess</a>
+					<a class="permalink" href="index.html#CollectionStore.HasReadAccess">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) HasReadAccess(_a0 <a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionCriteria">CollectionCriteria</a>, _a1 *<a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>, _a2 <a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+HasReadAccess provides a mock function with given fields: _a0, _a1, _a2
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CollectionStore.RetrieveCollection">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=1915:2020#L56">RetrieveCollection</a>
+					<a class="permalink" href="index.html#CollectionStore.RetrieveCollection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) RetrieveCollection(_a0 <a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionCriteria">CollectionCriteria</a>) (<a href="../../../core/common/privdata/index.html">privdata</a>.<a href="../../../core/common/privdata/index.html#Collection">Collection</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RetrieveCollection provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CollectionStore.RetrieveCollectionAccessPolicy">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=2493:2622#L79">RetrieveCollectionAccessPolicy</a>
+					<a class="permalink" href="index.html#CollectionStore.RetrieveCollectionAccessPolicy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) RetrieveCollectionAccessPolicy(_a0 <a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionCriteria">CollectionCriteria</a>) (<a href="../../../core/common/privdata/index.html">privdata</a>.<a href="../../../core/common/privdata/index.html#CollectionAccessPolicy">CollectionAccessPolicy</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RetrieveCollectionAccessPolicy provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CollectionStore.RetrieveCollectionConfigPackage">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=3132:3262#L102">RetrieveCollectionConfigPackage</a>
+					<a class="permalink" href="index.html#CollectionStore.RetrieveCollectionConfigPackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) RetrieveCollectionConfigPackage(_a0 <a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionCriteria">CollectionCriteria</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionConfigPackage">CollectionConfigPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RetrieveCollectionConfigPackage provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CollectionStore.RetrieveCollectionPersistenceConfigs">func (*CollectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/collection_store.go?s=3777:3918#L125">RetrieveCollectionPersistenceConfigs</a>
+					<a class="permalink" href="index.html#CollectionStore.RetrieveCollectionPersistenceConfigs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#CollectionStore">CollectionStore</a>) RetrieveCollectionPersistenceConfigs(_a0 <a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#CollectionCriteria">CollectionCriteria</a>) (<a href="../../../core/common/privdata/index.html">privdata</a>.<a href="../../../core/common/privdata/index.html#CollectionPersistenceConfigs">CollectionPersistenceConfigs</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RetrieveCollectionPersistenceConfigs provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Committer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=292:328#L3">Committer</a>
+				<a class="permalink" href="index.html#Committer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Committer is an autogenerated mock type for the Committer type
+</p>
+
+			<pre>type Committer struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Committer.Close">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=383:411#L8">Close</a>
+					<a class="permalink" href="index.html#Committer.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) Close()</pre>
+				<p>
+Close provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.CommitPvtDataOfOldBlocks">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=515:636#L13">CommitPvtDataOfOldBlocks</a>
+					<a class="permalink" href="index.html#Committer.CommitPvtDataOfOldBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) CommitPvtDataOfOldBlocks(blockPvtData []*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#BlockPvtData">BlockPvtData</a>) ([]*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#PvtdataHashMismatch">PvtdataHashMismatch</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CommitPvtDataOfOldBlocks provides a mock function with given fields: blockPvtData
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.CommitWithPvtData">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=1171:1290#L36">CommitWithPvtData</a>
+					<a class="permalink" href="index.html#Committer.CommitWithPvtData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) CommitWithPvtData(blockAndPvtData *<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, commitOpts *<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#CommitOptions">CommitOptions</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CommitWithPvtData provides a mock function with given fields: blockAndPvtData, commitOpts
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.DoesPvtDataInfoExistInLedger">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=1619:1699#L50">DoesPvtDataInfoExistInLedger</a>
+					<a class="permalink" href="index.html#Committer.DoesPvtDataInfoExistInLedger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) DoesPvtDataInfoExistInLedger(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DoesPvtDataInfoExistInLedger provides a mock function with given fields: blockNum
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.GetBlocks">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=2059:2125#L71">GetBlocks</a>
+					<a class="permalink" href="index.html#Committer.GetBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) GetBlocks(blockSeqs []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+GetBlocks provides a mock function with given fields: blockSeqs
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.GetConfigHistoryRetriever">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=2434:2521#L87">GetConfigHistoryRetriever</a>
+					<a class="permalink" href="index.html#Committer.GetConfigHistoryRetriever">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) GetConfigHistoryRetriever() (<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetConfigHistoryRetriever provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.GetMissingPvtDataTracker">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=2955:3040#L110">GetMissingPvtDataTracker</a>
+					<a class="permalink" href="index.html#Committer.GetMissingPvtDataTracker">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) GetMissingPvtDataTracker() (<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#MissingPvtDataTracker">MissingPvtDataTracker</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetMissingPvtDataTracker provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.GetPvtDataAndBlockByNum">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=3477:3569#L133">GetPvtDataAndBlockByNum</a>
+					<a class="permalink" href="index.html#Committer.GetPvtDataAndBlockByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) GetPvtDataAndBlockByNum(seqNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataAndBlockByNum provides a mock function with given fields: seqNum
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.GetPvtDataByNum">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=4023:4136#L156">GetPvtDataByNum</a>
+					<a class="permalink" href="index.html#Committer.GetPvtDataByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataByNum provides a mock function with given fields: blockNum, filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Committer.LedgerHeight">func (*Committer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/committer.go?s=4636:4687#L179">LedgerHeight</a>
+					<a class="permalink" href="index.html#Committer.LedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Committer">Committer</a>) LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LedgerHeight provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConfigHistoryRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/config_history_retriever.go?s=263:312#L1">ConfigHistoryRetriever</a>
+				<a class="permalink" href="index.html#ConfigHistoryRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigHistoryRetriever is an autogenerated mock type for the ConfigHistoryRetriever type
+</p>
+
+			<pre>type ConfigHistoryRetriever struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConfigHistoryRetriever.CollectionConfigAt">func (*ConfigHistoryRetriever) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/config_history_retriever.go?s=404:533#L6">CollectionConfigAt</a>
+					<a class="permalink" href="index.html#ConfigHistoryRetriever.CollectionConfigAt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>) CollectionConfigAt(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#CollectionConfigInfo">CollectionConfigInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CollectionConfigAt provides a mock function with given fields: blockNum, chaincodeName
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConfigHistoryRetriever.MostRecentCollectionConfigBelow">func (*ConfigHistoryRetriever) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/config_history_retriever.go?s=1092:1234#L29">MostRecentCollectionConfigBelow</a>
+					<a class="permalink" href="index.html#ConfigHistoryRetriever.MostRecentCollectionConfigBelow">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>) MostRecentCollectionConfigBelow(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#CollectionConfigInfo">CollectionConfigInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+MostRecentCollectionConfigBelow provides a mock function with given fields: blockNum, chaincodeName
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DataStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go?s=306:342#L3">DataStore</a>
+				<a class="permalink" href="index.html#DataStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DataStore is an autogenerated mock type for the DataStore type
+</p>
+
+			<pre>type DataStore struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DataStore.GetConfigHistoryRetriever">func (*DataStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go?s=417:504#L8">GetConfigHistoryRetriever</a>
+					<a class="permalink" href="index.html#DataStore.GetConfigHistoryRetriever">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#DataStore">DataStore</a>) GetConfigHistoryRetriever() (<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#ConfigHistoryRetriever">ConfigHistoryRetriever</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetConfigHistoryRetriever provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DataStore.GetPvtDataByNum">func (*DataStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go?s=946:1059#L31">GetPvtDataByNum</a>
+					<a class="permalink" href="index.html#DataStore.GetPvtDataByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#DataStore">DataStore</a>) GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataByNum provides a mock function with given fields: blockNum, filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DataStore.GetTxPvtRWSetByTxid">func (*DataStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go?s=1579:1700#L54">GetTxPvtRWSetByTxid</a>
+					<a class="permalink" href="index.html#DataStore.GetTxPvtRWSetByTxid">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#DataStore">DataStore</a>) GetTxPvtRWSetByTxid(txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, filter <a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#PvtNsCollFilter">PvtNsCollFilter</a>) (<a href="../../../core/transientstore/index.html">transientstore</a>.<a href="../../../core/transientstore/index.html#RWSetScanner">RWSetScanner</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTxPvtRWSetByTxid provides a mock function with given fields: txid, filter
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DataStore.LedgerHeight">func (*DataStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/data_store.go?s=2212:2263#L77">LedgerHeight</a>
+					<a class="permalink" href="index.html#DataStore.LedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#DataStore">DataStore</a>) LedgerHeight() (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LedgerHeight provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MissingPvtDataTracker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/missing_pvt_data_tracker.go?s=261:309#L1">MissingPvtDataTracker</a>
+				<a class="permalink" href="index.html#MissingPvtDataTracker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MissingPvtDataTracker is an autogenerated mock type for the MissingPvtDataTracker type
+</p>
+
+			<pre>type MissingPvtDataTracker struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MissingPvtDataTracker.GetMissingPvtDataInfoForMostRecentBlocks">func (*MissingPvtDataTracker) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/missing_pvt_data_tracker.go?s=409:532#L6">GetMissingPvtDataInfoForMostRecentBlocks</a>
+					<a class="permalink" href="index.html#MissingPvtDataTracker.GetMissingPvtDataInfoForMostRecentBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#MissingPvtDataTracker">MissingPvtDataTracker</a>) GetMissingPvtDataInfoForMostRecentBlocks(maxBlocks <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../../../core/ledger/index.html">ledger</a>.<a href="../../../core/ledger/index.html#MissingPvtDataInfo">MissingPvtDataInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetMissingPvtDataInfoForMostRecentBlocks provides a mock function with given fields: maxBlocks
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RWSetScanner">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/rw_set_scanner.go?s=259:298#L1">RWSetScanner</a>
+				<a class="permalink" href="index.html#RWSetScanner">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RWSetScanner is an autogenerated mock type for the RWSetScanner type
+</p>
+
+			<pre>type RWSetScanner struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RWSetScanner.Close">func (*RWSetScanner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/rw_set_scanner.go?s=353:384#L6">Close</a>
+					<a class="permalink" href="index.html#RWSetScanner.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#RWSetScanner">RWSetScanner</a>) Close()</pre>
+				<p>
+Close provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RWSetScanner.Next">func (*RWSetScanner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/rw_set_scanner.go?s=455:539#L11">Next</a>
+					<a class="permalink" href="index.html#RWSetScanner.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#RWSetScanner">RWSetScanner</a>) Next() (*<a href="../../../core/transientstore/index.html">transientstore</a>.<a href="../../../core/transientstore/index.html#EndorserPvtSimulationResults">EndorserPvtSimulationResults</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Next provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RWSetScanner.NextWithConfig">func (*RWSetScanner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/rw_set_scanner.go?s=1008:1112#L34">NextWithConfig</a>
+					<a class="permalink" href="index.html#RWSetScanner.NextWithConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#RWSetScanner">RWSetScanner</a>) NextWithConfig() (*<a href="../../../core/transientstore/index.html">transientstore</a>.<a href="../../../core/transientstore/index.html#EndorserPvtSimulationResultsWithConfig">EndorserPvtSimulationResultsWithConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NextWithConfig provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ReconciliationFetcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/reconciliation_fetcher.go?s=272:320#L1">ReconciliationFetcher</a>
+				<a class="permalink" href="index.html#ReconciliationFetcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReconciliationFetcher is an autogenerated mock type for the ReconciliationFetcher type
+</p>
+
+			<pre>type ReconciliationFetcher struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ReconciliationFetcher.FetchReconciledItems">func (*ReconciliationFetcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/privdata/mocks/reconciliation_fetcher.go?s=411:555#L6">FetchReconciledItems</a>
+					<a class="permalink" href="index.html#ReconciliationFetcher.FetchReconciledItems">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ReconciliationFetcher">ReconciliationFetcher</a>) FetchReconciledItems(dig2collectionConfig <a href="../common/index.html">common</a>.<a href="../common/index.html#Dig2CollectionConfig">Dig2CollectionConfig</a>) (*<a href="../common/index.html">common</a>.<a href="../common/index.html#FetchedPvtDataContainer">FetchedPvtDataContainer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+FetchReconciledItems provides a mock function with given fields: dig2collectionConfig
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>algo - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package algo
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/gossip/algo"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#DigestFilter">type DigestFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PullAdapter">type PullAdapter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PullEngine">type PullEngine</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPullEngine">func NewPullEngine(participant PullAdapter, sleepTime time.Duration, config PullEngineConfig) *PullEngine</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPullEngineWithFilter">func NewPullEngineWithFilter(participant PullAdapter, sleepTime time.Duration, df DigestFilter, config PullEngineConfig) *PullEngine</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.Add">func (engine *PullEngine) Add(seqs ...string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.OnDigest">func (engine *PullEngine) OnDigest(digest []string, nonce uint64, context interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.OnHello">func (engine *PullEngine) OnHello(nonce uint64, context interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.OnReq">func (engine *PullEngine) OnReq(items []string, nonce uint64, context interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.OnRes">func (engine *PullEngine) OnRes(items []string, nonce uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.Remove">func (engine *PullEngine) Remove(seqs ...string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullEngine.Stop">func (engine *PullEngine) Stop()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PullEngineConfig">type PullEngineConfig</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go">pull.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="DefDigestWaitTime">DefDigestWaitTime</span>   = 1000 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>
+    <span id="DefRequestWaitTime">DefRequestWaitTime</span>  = 1500 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>
+    <span id="DefResponseWaitTime">DefResponseWaitTime</span> = 2000 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="DigestFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=1454:1526#L33">DigestFilter</a>
+				<a class="permalink" href="index.html#DigestFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DigestFilter filters digests to be sent to a remote peer that
+sent a hello or a request, based on its messages&#39;s context
+</p>
+
+			<pre>type DigestFilter func(context interface{}) func(digestItem <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PullAdapter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=1780:2577#L40">PullAdapter</a>
+				<a class="permalink" href="index.html#PullAdapter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PullAdapter is needed by the PullEngine in order to
+send messages to the remote PullEngine instances.
+The PullEngine expects to be invoked with
+OnHello, OnDigest, OnReq, OnRes when the respective message arrives
+from a remote PullEngine
+</p>
+
+			<pre>type PullAdapter interface {
+    <span class="comment">// SelectPeers returns a slice of peers which the engine will initiate the protocol with</span>
+    SelectPeers() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Hello sends a hello message to initiate the protocol</span>
+    <span class="comment">// and returns an NONCE that is expected to be returned</span>
+    <span class="comment">// in the digest message.</span>
+    Hello(dest <a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)
+
+    <span class="comment">// SendDigest sends a digest to a remote PullEngine.</span>
+    <span class="comment">// The context parameter specifies the remote engine to send to.</span>
+    SendDigest(digest []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, context interface{})
+
+    <span class="comment">// SendReq sends an array of items to a certain remote PullEngine identified</span>
+    <span class="comment">// by a string</span>
+    SendReq(dest <a href="http://localhost:6060/pkg/builtin/#string">string</a>, items []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)
+
+    <span class="comment">// SendRes sends an array of items to a remote PullEngine identified by a context.</span>
+    SendRes(items []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, context interface{}, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PullEngine">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=2687:3171#L63">PullEngine</a>
+				<a class="permalink" href="index.html#PullEngine">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PullEngine is the component that actually invokes the pull algorithm
+with the help of the PullAdapter
+</p>
+
+			<pre>type PullEngine struct {
+    <a href="index.html#PullAdapter">PullAdapter</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPullEngine">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=4539:4644#L125">NewPullEngine</a>
+					<a class="permalink" href="index.html#NewPullEngine">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPullEngine(participant <a href="index.html#PullAdapter">PullAdapter</a>, sleepTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, config <a href="index.html#PullEngineConfig">PullEngineConfig</a>) *<a href="index.html#PullEngine">PullEngine</a></pre>
+				<p>
+NewPullEngine creates an instance of a PullEngine with a certain sleep time
+between pull initiations
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewPullEngineWithFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=3565:3698#L91">NewPullEngineWithFilter</a>
+					<a class="permalink" href="index.html#NewPullEngineWithFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPullEngineWithFilter(participant <a href="index.html#PullAdapter">PullAdapter</a>, sleepTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, df <a href="index.html#DigestFilter">DigestFilter</a>,
+    config <a href="index.html#PullEngineConfig">PullEngineConfig</a>) *<a href="index.html#PullEngine">PullEngine</a></pre>
+				<p>
+NewPullEngineWithFilter creates an instance of a PullEngine with a certain sleep time
+between pull initiations, and uses the given filters when sending digests and responses
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PullEngine.Add">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=7643:7688#L242">Add</a>
+					<a class="permalink" href="index.html#PullEngine.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) Add(seqs ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Add adds items to the state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.OnDigest">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=7120:7206#L220">OnDigest</a>
+					<a class="permalink" href="index.html#PullEngine.OnDigest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) OnDigest(digest []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, context interface{})</pre>
+				<p>
+OnDigest notifies the engine that a digest has arrived
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.OnHello">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=7951:8019#L256">OnHello</a>
+					<a class="permalink" href="index.html#PullEngine.OnHello">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) OnHello(nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, context interface{})</pre>
+				<p>
+OnHello notifies the engine a hello has arrived
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.OnReq">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=8487:8569#L280">OnReq</a>
+					<a class="permalink" href="index.html#PullEngine.OnReq">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) OnReq(items []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, context interface{})</pre>
+				<p>
+OnReq notifies the engine a request has arrived
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.OnRes">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=9008:9069#L303">OnRes</a>
+					<a class="permalink" href="index.html#PullEngine.OnRes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) OnRes(items []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, nonce <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				<p>
+OnRes notifies the engine a response has arrived
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.Remove">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=7788:7836#L249">Remove</a>
+					<a class="permalink" href="index.html#PullEngine.Remove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) Remove(seqs ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Remove removes items from the state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PullEngine.Stop">func (*PullEngine) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=5534:5566#L159">Stop</a>
+					<a class="permalink" href="index.html#PullEngine.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (engine *<a href="index.html#PullEngine">PullEngine</a>) Stop()</pre>
+				<p>
+Stop stops the engine
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PullEngineConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/gossip/algo/pull.go?s=3255:3383#L83">PullEngineConfig</a>
+				<a class="permalink" href="index.html#PullEngineConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PullEngineConfig is the configuration required to initialize a new pull engine
+</p>
+
+			<pre>type PullEngineConfig struct {
+<span id="PullEngineConfig.DigestWaitTime"></span>    DigestWaitTime   <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="PullEngineConfig.RequestWaitTime"></span>    RequestWaitTime  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="PullEngineConfig.ResponseWaitTime"></span>    ResponseWaitTime <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

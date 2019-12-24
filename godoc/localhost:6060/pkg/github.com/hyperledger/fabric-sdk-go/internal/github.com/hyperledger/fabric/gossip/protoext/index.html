@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>protoext - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package protoext
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#AliveMessageToString">func AliveMessageToString(am *gossip.AliveMessage) string</a></dd>
+			
+				
+				<dd><a href="index.html#DataDigestToString">func DataDigestToString(dig *gossip.DataDigest) string</a></dd>
+			
+				
+				<dd><a href="index.html#DataRequestToString">func DataRequestToString(dataReq *gossip.DataRequest) string</a></dd>
+			
+				
+				<dd><a href="index.html#DataUpdateToString">func DataUpdateToString(du *gossip.DataUpdate) string</a></dd>
+			
+				
+				<dd><a href="index.html#GetPullMsgType">func GetPullMsgType(m *gossip.GossipMessage) gossip.PullMsgType</a></dd>
+			
+				
+				<dd><a href="index.html#InternalEndpoint">func InternalEndpoint(s *gossip.SecretEnvelope) string</a></dd>
+			
+				
+				<dd><a href="index.html#IsAck">func IsAck(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsAliveMsg">func IsAliveMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsChannelRestricted">func IsChannelRestricted(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsDataMsg">func IsDataMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsDataReq">func IsDataReq(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsDataUpdate">func IsDataUpdate(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsDigestMsg">func IsDigestMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsHelloMsg">func IsHelloMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsIdentityMsg">func IsIdentityMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsLeadershipMsg">func IsLeadershipMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsOrgRestricted">func IsOrgRestricted(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsPrivateDataMsg">func IsPrivateDataMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsPullMsg">func IsPullMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsRemoteStateMessage">func IsRemoteStateMessage(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsStateInfoMsg">func IsStateInfoMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsStateInfoPullRequestMsg">func IsStateInfoPullRequestMsg(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsStateInfoSnapshot">func IsStateInfoSnapshot(m *gossip.GossipMessage) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsTagLegal">func IsTagLegal(m *gossip.GossipMessage) error</a></dd>
+			
+				
+				<dd><a href="index.html#LeadershipMessageToString">func LeadershipMessageToString(lm *gossip.LeadershipMessage) string</a></dd>
+			
+				
+				<dd><a href="index.html#MemberToString">func MemberToString(m *gossip.Member) string</a></dd>
+			
+				
+				<dd><a href="index.html#MembershipRequestToString">func MembershipRequestToString(mr *gossip.MembershipRequest) string</a></dd>
+			
+				
+				<dd><a href="index.html#MembershipResponseToString">func MembershipResponseToString(mr *gossip.MembershipResponse) string</a></dd>
+			
+				
+				<dd><a href="index.html#PayloadToString">func PayloadToString(p *gossip.Payload) string</a></dd>
+			
+				
+				<dd><a href="index.html#RemovePvtDataResponseToString">func RemovePvtDataResponseToString(res *gossip.RemotePvtDataResponse) string</a></dd>
+			
+				
+				<dd><a href="index.html#SignSecret">func SignSecret(e *gossip.Envelope, signer Signer, secret *gossip.Secret) error</a></dd>
+			
+				
+				<dd><a href="index.html#StateInfoPullRequestToString">func StateInfoPullRequestToString(sipr *gossip.StateInfoPullRequest) string</a></dd>
+			
+				
+				<dd><a href="index.html#StateInfoSnapshotToString">func StateInfoSnapshotToString(sis *gossip.StateInfoSnapshot) string</a></dd>
+			
+				
+				<dd><a href="index.html#StateInfoToString">func StateInfoToString(si *gossip.StateInfo) string</a></dd>
+			
+			
+				
+				<dd><a href="index.html#SignedGossipMessage">type SignedGossipMessage</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnvelopeToGossipMessage">func EnvelopeToGossipMessage(e *gossip.Envelope) (*SignedGossipMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NoopSign">func NoopSign(m *gossip.GossipMessage) (*SignedGossipMessage, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedGossipMessage.IsSigned">func (m *SignedGossipMessage) IsSigned() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedGossipMessage.Sign">func (m *SignedGossipMessage) Sign(signer Signer) (*gossip.Envelope, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedGossipMessage.String">func (m *SignedGossipMessage) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedGossipMessage.Verify">func (m *SignedGossipMessage) Verify(peerIdentity []byte, verify Verifier) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Verifier">type Verifier</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go">message.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go">signing.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go">stringers.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="AliveMessageToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=1055:1112#L23">AliveMessageToString</a>
+				<a class="permalink" href="index.html#AliveMessageToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AliveMessageToString(am *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#AliveMessage">AliveMessage</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+AliveMessageToString of AliveMessage prints Alive Message, Identity and Timestamp
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DataDigestToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=3556:3610#L92">DataDigestToString</a>
+				<a class="permalink" href="index.html#DataDigestToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DataDigestToString(dig *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#DataDigest">DataDigest</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+DataDigestToString prints nonce, msg_type and digests
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DataRequestToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=3851:3911#L99">DataRequestToString</a>
+				<a class="permalink" href="index.html#DataRequestToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DataRequestToString(dataReq *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#DataRequest">DataRequest</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+DataRequestToString prints nonce, msg_type and digests
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DataUpdateToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=1737:1790#L41">DataUpdateToString</a>
+				<a class="permalink" href="index.html#DataUpdateToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DataUpdateToString(du *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#DataUpdate">DataUpdate</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+DataUpdateToString prints Type, items and nonce
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPullMsgType">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=1873:1936#L49">GetPullMsgType</a>
+				<a class="permalink" href="index.html#GetPullMsgType">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPullMsgType(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#PullMsgType">PullMsgType</a></pre>
+			<p>
+GetPullMsgType returns the phase of the pull mechanism this GossipMessage belongs to
+for example: Hello, Digest, etc.
+If this isn&#39;t a pull message, PullMsgType_UNDEFINED is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InternalEndpoint">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=2165:2219#L68">InternalEndpoint</a>
+				<a class="permalink" href="index.html#InternalEndpoint">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InternalEndpoint(s *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#SecretEnvelope">SecretEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+InternalEndpoint returns the internal endpoint in the secret envelope, or an
+empty string if a failure occurs.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsAck">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3438:3478#L97">IsAck</a>
+				<a class="permalink" href="index.html#IsAck">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsAck(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsAck returns whether this GossipMessage is an acknowledgement
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsAliveMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=438:483#L10">IsAliveMsg</a>
+				<a class="permalink" href="index.html#IsAliveMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsAliveMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsAliveMsg returns whether this GossipMessage is an AliveMessage
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsChannelRestricted">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=2380:2434#L71">IsChannelRestricted</a>
+				<a class="permalink" href="index.html#IsChannelRestricted">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsChannelRestricted(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsChannelRestricted returns whether this GossipMessage should be routed
+only in its channel
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsDataMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=586:630#L15">IsDataMsg</a>
+				<a class="permalink" href="index.html#IsDataMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDataMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDataMsg returns whether this GossipMessage is a data message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsDataReq">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3069:3113#L87">IsDataReq</a>
+				<a class="permalink" href="index.html#IsDataReq">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDataReq(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDataReq returns whether this GossipMessage is a data request message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsDataUpdate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3586:3633#L102">IsDataUpdate</a>
+				<a class="permalink" href="index.html#IsDataUpdate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDataUpdate(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDataUpdate returns whether this GossipMessage is a data update message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsDigestMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3889:3935#L112">IsDigestMsg</a>
+				<a class="permalink" href="index.html#IsDigestMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDigestMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDigestMsg returns whether this GossipMessage is a digest message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsHelloMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3740:3785#L107">IsHelloMsg</a>
+				<a class="permalink" href="index.html#IsHelloMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsHelloMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsHelloMsg returns whether this GossipMessage is a hello message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsIdentityMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=2906:2954#L82">IsIdentityMsg</a>
+				<a class="permalink" href="index.html#IsIdentityMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsIdentityMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsIdentityMsg returns whether this GossipMessage is an identity message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsLeadershipMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=4067:4117#L117">IsLeadershipMsg</a>
+				<a class="permalink" href="index.html#IsLeadershipMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsLeadershipMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsLeadershipMsg returns whether this GossipMessage is a leadership (leader election) message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsOrgRestricted">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=2682:2732#L77">IsOrgRestricted</a>
+				<a class="permalink" href="index.html#IsOrgRestricted">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsOrgRestricted(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsOrgRestricted returns whether this GossipMessage should be routed only
+inside the organization
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsPrivateDataMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=3225:3276#L92">IsPrivateDataMsg</a>
+				<a class="permalink" href="index.html#IsPrivateDataMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsPrivateDataMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsPrivateDataMsg returns whether this message is related to private data
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsPullMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=1301:1345#L36">IsPullMsg</a>
+				<a class="permalink" href="index.html#IsPullMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsPullMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsPullMsg returns whether this GossipMessage is a message that belongs
+to the pull mechanism
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsRemoteStateMessage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=1554:1609#L42">IsRemoteStateMessage</a>
+				<a class="permalink" href="index.html#IsRemoteStateMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsRemoteStateMessage(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsRemoteStateMessage returns whether this GossipMessage is related to state synchronization
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsStateInfoMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=1115:1164#L30">IsStateInfoMsg</a>
+				<a class="permalink" href="index.html#IsStateInfoMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsStateInfoMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsStateInfoMsg returns whether this GossipMessage is a stateInfo message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsStateInfoPullRequestMsg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=756:816#L20">IsStateInfoPullRequestMsg</a>
+				<a class="permalink" href="index.html#IsStateInfoPullRequestMsg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsStateInfoPullRequestMsg(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsStateInfoPullRequestMsg returns whether this GossipMessage is a stateInfoPullRequest
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsStateInfoSnapshot">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=943:997#L25">IsStateInfoSnapshot</a>
+				<a class="permalink" href="index.html#IsStateInfoSnapshot">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsStateInfoSnapshot(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsStateInfoSnapshot returns whether this GossipMessage is a stateInfo snapshot
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsTagLegal">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/message.go?s=4277:4323#L123">IsTagLegal</a>
+				<a class="permalink" href="index.html#IsTagLegal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsTagLegal(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+IsTagLegal checks the GossipMessage tags and inner type
+and returns an error if the tag doesn&#39;t match the type.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="LeadershipMessageToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=4187:4254#L106">LeadershipMessageToString</a>
+				<a class="permalink" href="index.html#LeadershipMessageToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LeadershipMessageToString(lm *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#LeadershipMessage">LeadershipMessage</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+LeadershipMessageToString prints PKI-id, Timestamp and Is Declaration
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MemberToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=558:602#L13">MemberToString</a>
+				<a class="permalink" href="index.html#MemberToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MemberToString(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Member">Member</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+MemberToString prints Endpoint and PKI-id
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MembershipRequestToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=2177:2244#L52">MembershipRequestToString</a>
+				<a class="permalink" href="index.html#MembershipRequestToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MembershipRequestToString(mr *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#MembershipRequest">MembershipRequest</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+MembershipRequestToString prints self information
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MembershipResponseToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=799:868#L18">MembershipResponseToString</a>
+				<a class="permalink" href="index.html#MembershipResponseToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MembershipResponseToString(mr *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#MembershipResponse">MembershipResponse</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+MembershipResponseToString of MembershipResponse prints number of Alive and number of Dead
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PayloadToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=1547:1593#L36">PayloadToString</a>
+				<a class="permalink" href="index.html#PayloadToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PayloadToString(p *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Payload">Payload</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+PayloadToString prints Block message: Data and seq
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RemovePvtDataResponseToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=4503:4579#L112">RemovePvtDataResponseToString</a>
+				<a class="permalink" href="index.html#RemovePvtDataResponseToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RemovePvtDataResponseToString(res *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#RemotePvtDataResponse">RemotePvtDataResponse</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+RemovePvtDataResponseToString returns a string representation of this RemotePvtDataResponse
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SignSecret">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=877:956#L20">SignSecret</a>
+				<a class="permalink" href="index.html#SignSecret">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SignSecret(e *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Envelope">Envelope</a>, signer <a href="index.html#Signer">Signer</a>, secret *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Secret">Secret</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+SignSecret signs the secret payload and creates a secret envelope out of it.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StateInfoPullRequestToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=2528:2603#L64">StateInfoPullRequestToString</a>
+				<a class="permalink" href="index.html#StateInfoPullRequestToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StateInfoPullRequestToString(sipr *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#StateInfoPullRequest">StateInfoPullRequest</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+StateInfoPullRequestToString prints Channel MAC
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StateInfoSnapshotToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=1976:2044#L47">StateInfoSnapshotToString</a>
+				<a class="permalink" href="index.html#StateInfoSnapshotToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StateInfoSnapshotToString(sis *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#StateInfoSnapshot">StateInfoSnapshot</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+StateInfoSnapshotToString prints items
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StateInfoToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/stringers.go?s=2752:2803#L69">StateInfoToString</a>
+				<a class="permalink" href="index.html#StateInfoToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StateInfoToString(si *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#StateInfo">StateInfo</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+StateInfoToString prints Timestamp and PKI-id
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="SignedGossipMessage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=2457:2533#L78">SignedGossipMessage</a>
+				<a class="permalink" href="index.html#SignedGossipMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignedGossipMessage contains a GossipMessage and the Envelope from which it
+came from
+</p>
+
+			<pre>type SignedGossipMessage struct {
+    *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Envelope">Envelope</a>
+    *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="EnvelopeToGossipMessage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=1648:1726#L51">EnvelopeToGossipMessage</a>
+					<a class="permalink" href="index.html#EnvelopeToGossipMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func EnvelopeToGossipMessage(e *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Envelope">Envelope</a>) (*<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EnvelopeToGossipMessage un-marshals a given envelope and creates a
+SignedGossipMessage out of it.
+Returns an error if un-marshaling fails.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NoopSign">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=1258:1326#L37">NoopSign</a>
+					<a class="permalink" href="index.html#NoopSign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NoopSign(m *<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#GossipMessage">GossipMessage</a>) (*<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NoopSign creates a SignedGossipMessage with a nil signature
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="SignedGossipMessage.IsSigned">func (*SignedGossipMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=4222:4267#L143">IsSigned</a>
+					<a class="permalink" href="index.html#SignedGossipMessage.IsSigned">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>) IsSigned() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSigned returns whether the message
+has a signature in the envelope.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedGossipMessage.Sign">func (*SignedGossipMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=2638:2713#L85">Sign</a>
+					<a class="permalink" href="index.html#SignedGossipMessage.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>) Sign(signer <a href="index.html#Signer">Signer</a>) (*<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html">gossip</a>.<a href="../../../../../../third_party/github.com/hyperledger/fabric/protos/gossip/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign signs a GossipMessage with given Signer.
+Returns an Envelope on success, panics on failure.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedGossipMessage.String">func (*SignedGossipMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=4429:4474#L149">String</a>
+					<a class="permalink" href="index.html#SignedGossipMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation
+of a SignedGossipMessage
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedGossipMessage.Verify">func (*SignedGossipMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=3347:3427#L113">Verify</a>
+					<a class="permalink" href="index.html#SignedGossipMessage.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedGossipMessage">SignedGossipMessage</a>) Verify(peerIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, verify <a href="index.html#Verifier">Verifier</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Verify verifies a signed GossipMessage with a given Verifier.
+Returns nil on success, error on failure.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=518:562#L13">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Signer signs a message, and returns (signature, nil)
+on success, and nil and an error on failure.
+</p>
+
+			<pre>type Signer func(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Verifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/gossip/protoext/signing.go?s=723:795#L17">Verifier</a>
+				<a class="permalink" href="index.html#Verifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Verifier receives a peer identity, a signature and a message and returns nil
+if the signature on the message could be verified using the given identity.
+</p>
+
+			<pre>type Verifier func(peerIdentity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, signature, message []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

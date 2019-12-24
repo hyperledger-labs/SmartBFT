@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>common - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package common
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/peer/common"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. 2016-2017 All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. 2016-2017 All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AddOrdererFlags">func AddOrdererFlags(cmd *cobra.Command)</a></dd>
+			
+				
+				<dd><a href="index.html#CheckLogLevel">func CheckLogLevel(level string) error</a></dd>
+			
+				
+				<dd><a href="index.html#GetAdminClient">func GetAdminClient() (pb.AdminClient, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetCertificate">func GetCertificate() (tls.Certificate, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetDefaultSigner">func GetDefaultSigner() (msp.SigningIdentity, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetDeliverClient">func GetDeliverClient(address, tlsRootCertFile string) (pb.Deliver_DeliverClient, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetEndorserClient">func GetEndorserClient(address, tlsRootCertFile string) (pb.EndorserClient, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetMockAdminClient">func GetMockAdminClient(err error) pb.AdminClient</a></dd>
+			
+				
+				<dd><a href="index.html#GetMockEndorserClient">func GetMockEndorserClient(response *pb.ProposalResponse, err error) pb.EndorserClient</a></dd>
+			
+				
+				<dd><a href="index.html#GetOrdererEndpointOfChain">func GetOrdererEndpointOfChain(chainID string, signer msp.SigningIdentity, endorserClient pb.EndorserClient) ([]string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetPeerDeliverClient">func GetPeerDeliverClient(address, tlsRootCertFile string) (api.PeerDeliverClient, error)</a></dd>
+			
+				
+				<dd><a href="index.html#InitCmd">func InitCmd(cmd *cobra.Command, args []string)</a></dd>
+			
+				
+				<dd><a href="index.html#InitConfig">func InitConfig(cmdRoot string) error</a></dd>
+			
+				
+				<dd><a href="index.html#InitCrypto">func InitCrypto(mspMgrConfigDir, localMSPID, localMSPType string) error</a></dd>
+			
+				
+				<dd><a href="index.html#SetBCCSPKeystorePath">func SetBCCSPKeystorePath()</a></dd>
+			
+				
+				<dd><a href="index.html#SetOrdererEnv">func SetOrdererEnv(cmd *cobra.Command, args []string)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BroadcastClient">type BroadcastClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetBroadcastClient">func GetBroadcastClient() (BroadcastClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetMockBroadcastClient">func GetMockBroadcastClient(err error) BroadcastClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CAConfig">type CAConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CCType">type CCType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelNetworkConfig">type ChannelNetworkConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientConfig">type ClientConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CredentialStoreType">type CredentialStoreType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeliverClient">type DeliverClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDeliverClientForOrderer">func NewDeliverClientForOrderer(channelID string, bestEffort bool) (*DeliverClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDeliverClientForPeer">func NewDeliverClientForPeer(channelID string, bestEffort bool) (*DeliverClient, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverClient.Close">func (d *DeliverClient) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverClient.GetNewestBlock">func (d *DeliverClient) GetNewestBlock() (*cb.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverClient.GetOldestBlock">func (d *DeliverClient) GetOldestBlock() (*cb.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverClient.GetSpecifiedBlock">func (d *DeliverClient) GetSpecifiedBlock(num uint64) (*cb.Block, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EnrollCredentials">type EnrollCredentials</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LoggingType">type LoggingType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MutualTLSConfig">type MutualTLSConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NetworkConfig">type NetworkConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetConfig">func GetConfig(fileName string) (*NetworkConfig, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererClient">type OrdererClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewOrdererClientFromEnv">func NewOrdererClientFromEnv() (*OrdererClient, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererClient.Broadcast">func (oc *OrdererClient) Broadcast() (ab.AtomicBroadcast_BroadcastClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererClient.Certificate">func (oc *OrdererClient) Certificate() tls.Certificate</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererClient.Deliver">func (oc *OrdererClient) Deliver() (ab.AtomicBroadcast_DeliverClient, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OrdererConfig">type OrdererConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrganizationConfig">type OrganizationConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerChannelConfig">type PeerChannelConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerClient">type PeerClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPeerClientForAddress">func NewPeerClientForAddress(address, tlsRootCertFile string) (*PeerClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPeerClientFromEnv">func NewPeerClientFromEnv() (*PeerClient, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerClient.Admin">func (pc *PeerClient) Admin() (pb.AdminClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerClient.Certificate">func (pc *PeerClient) Certificate() tls.Certificate</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerClient.Deliver">func (pc *PeerClient) Deliver() (pb.Deliver_DeliverClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerClient.Endorser">func (pc *PeerClient) Endorser() (pb.EndorserClient, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerClient.PeerDeliver">func (pc *PeerClient) PeerDeliver() (api.PeerDeliverClient, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerConfig">type PeerConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerDeliverClient">type PeerDeliverClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerDeliverClient.Deliver">func (dc PeerDeliverClient) Deliver(ctx context.Context, opts ...grpc.CallOption) (ccapi.Deliver, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PeerDeliverClient.DeliverFiltered">func (dc PeerDeliverClient) DeliverFiltered(ctx context.Context, opts ...grpc.CallOption) (ccapi.Deliver, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TLSConfig">type TLSConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TLSKeyPair">type TLSKeyPair</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TLSType">type TLSType</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/broadcastclient.go">broadcastclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go">common.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go">deliverclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/mockclient.go">mockclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go">networkconfig.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go">ordererclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererenv.go">ordererenv.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go">peerclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerdeliverclient.go">peerdeliverclient.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const <span id="CmdRoot">CmdRoot</span> = &#34;core&#34;</pre>
+			
+				<p>
+UndefinedParamValue defines what undefined parameters in the command line will initialise to
+</p>
+
+				<pre>const <span id="UndefinedParamValue">UndefinedParamValue</span> = &#34;&#34;</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+
+    <span class="comment">// GetEndorserClientFnc is a function that returns a new endorser client connection</span>
+    <span class="comment">// to the provided peer address using the TLS root cert file,</span>
+    <span class="comment">// by default it is set to GetEndorserClient function</span>
+    <span id="GetEndorserClientFnc">GetEndorserClientFnc</span> func(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPeerDeliverClientFnc is a function that returns a new deliver client connection</span>
+    <span class="comment">// to the provided peer address using the TLS root cert file,</span>
+    <span class="comment">// by default it is set to GetDeliverClient function</span>
+    <span id="GetPeerDeliverClientFnc">GetPeerDeliverClientFnc</span> func(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="api/index.html">api</a>.<a href="api/index.html#PeerDeliverClient">PeerDeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetDeliverClientFnc is a function that returns a new deliver client connection</span>
+    <span class="comment">// to the provided peer address using the TLS root cert file,</span>
+    <span class="comment">// by default it is set to GetDeliverClient function</span>
+    <span id="GetDeliverClientFnc">GetDeliverClientFnc</span> func(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Deliver_DeliverClient">Deliver_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetDefaultSignerFnc is a function that returns a default Signer(Default/PERR)</span>
+    <span class="comment">// by default it is set to GetDefaultSigner function</span>
+    <span id="GetDefaultSignerFnc">GetDefaultSignerFnc</span> func() (<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetBroadcastClientFnc returns an instance of the BroadcastClient interface</span>
+    <span class="comment">// by default it is set to GetBroadcastClient function</span>
+    <span id="GetBroadcastClientFnc">GetBroadcastClientFnc</span> func() (<a href="index.html#BroadcastClient">BroadcastClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetOrdererEndpointOfChainFnc returns orderer endpoints of given chain</span>
+    <span class="comment">// by default it is set to GetOrdererEndpointOfChain function</span>
+    <span id="GetOrdererEndpointOfChainFnc">GetOrdererEndpointOfChainFnc</span> func(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signer <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>,
+        endorserClient <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a>) ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetCertificateFnc is a function that returns the client TLS certificate</span>
+    <span id="GetCertificateFnc">GetCertificateFnc</span> func() (<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+)</pre>
+			
+				
+				<pre>var (
+    <span id="OrderingEndpoint">OrderingEndpoint</span> <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+)</pre>
+			
+		
+		
+			
+			
+			<h2 id="AddOrdererFlags">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererenv.go?s=1840:1880#L47">AddOrdererFlags</a>
+				<a class="permalink" href="index.html#AddOrdererFlags">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AddOrdererFlags(cmd *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>)</pre>
+			<p>
+AddOrdererFlags adds flags for orderer-related commands
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CheckLogLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=8060:8098#L216">CheckLogLevel</a>
+				<a class="permalink" href="index.html#CheckLogLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CheckLogLevel(level <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+CheckLogLevel checks that a given log level string is valid
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetAdminClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=5598:5643#L160">GetAdminClient</a>
+				<a class="permalink" href="index.html#GetAdminClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetAdminClient() (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#AdminClient">AdminClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetAdminClient returns a new admin client.  The target address for
+the client is taken from the configuration setting &#34;peer.address&#34;
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetCertificate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=5274:5320#L150">GetCertificate</a>
+				<a class="permalink" href="index.html#GetCertificate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetCertificate() (<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetCertificate returns the client&#39;s TLS certificate
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetDefaultSigner">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=5608:5660#L149">GetDefaultSigner</a>
+				<a class="permalink" href="index.html#GetDefaultSigner">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetDefaultSigner() (<a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetDefaultSigner return a default Signer(Default/PERR) for cli
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetDeliverClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=5997:6085#L172">GetDeliverClient</a>
+				<a class="permalink" href="index.html#GetDeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetDeliverClient(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Deliver_DeliverClient">Deliver_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetDeliverClient returns a new deliver client. If both the address and
+tlsRootCertFile are not provided, the target values for the client are taken
+from the configuration settings for &#34;peer.address&#34; and
+&#34;peer.tls.rootcert.file&#34;
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetEndorserClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=4874:4956#L135">GetEndorserClient</a>
+				<a class="permalink" href="index.html#GetEndorserClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetEndorserClient(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetEndorserClient returns a new endorser client. If the both the address and
+tlsRootCertFile are not provided, the target values for the client are taken
+from the configuration settings for &#34;peer.address&#34; and
+&#34;peer.tls.rootcert.file&#34;
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetMockAdminClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/mockclient.go?s=1688:1737#L53">GetMockAdminClient</a>
+				<a class="permalink" href="index.html#GetMockAdminClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetMockAdminClient(err <a href="http://localhost:6060/pkg/builtin/#error">error</a>) <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#AdminClient">AdminClient</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GetMockEndorserClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/mockclient.go?s=931:1017#L20">GetMockEndorserClient</a>
+				<a class="permalink" href="index.html#GetMockEndorserClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetMockEndorserClient(response *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProposalResponse">ProposalResponse</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>) <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a></pre>
+			<p>
+GetMockEndorserClient return a endorser client return specified ProposalResponse and err(nil or error)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetOrdererEndpointOfChain">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=5929:6055#L159">GetOrdererEndpointOfChain</a>
+				<a class="permalink" href="index.html#GetOrdererEndpointOfChain">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetOrdererEndpointOfChain(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signer <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#SigningIdentity">SigningIdentity</a>, endorserClient <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a>) ([]<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetOrdererEndpointOfChain returns orderer endpoints of given chain
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetPeerDeliverClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=6591:6680#L190">GetPeerDeliverClient</a>
+				<a class="permalink" href="index.html#GetPeerDeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetPeerDeliverClient(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="api/index.html">api</a>.<a href="api/index.html#PeerDeliverClient">PeerDeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetPeerDeliverClient returns a new deliver client. If both the address and
+tlsRootCertFile are not provided, the target values for the client are taken
+from the configuration settings for &#34;peer.address&#34; and
+&#34;peer.tls.rootcert.file&#34;
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitCmd">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=9650:9697#L264">InitCmd</a>
+				<a class="permalink" href="index.html#InitCmd">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitCmd(cmd *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>, args []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="InitConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=3462:3499#L88">InitConfig</a>
+				<a class="permalink" href="index.html#InitConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitConfig(cmdRoot <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InitConfig initializes viper config
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitCrypto">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=4293:4364#L112">InitCrypto</a>
+				<a class="permalink" href="index.html#InitCrypto">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitCrypto(mspMgrConfigDir, localMSPID, localMSPType <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+InitCrypto initializes crypto for this peer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetBCCSPKeystorePath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/common.go?s=5402:5429#L143">SetBCCSPKeystorePath</a>
+				<a class="permalink" href="index.html#SetBCCSPKeystorePath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetBCCSPKeystorePath()</pre>
+			<p>
+SetBCCSPKeystorePath sets the file keystore path for the SW BCCSP provider
+to an absolute path relative to the config file
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetOrdererEnv">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererenv.go?s=610:663#L19">SetOrdererEnv</a>
+				<a class="permalink" href="index.html#SetOrdererEnv">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetOrdererEnv(cmd *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>, args []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+SetOrdererEnv adds orderer-specific settings to the global Viper environment
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BroadcastClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/broadcastclient.go?s=745:848#L15">BroadcastClient</a>
+				<a class="permalink" href="index.html#BroadcastClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BroadcastClient interface {
+    <span class="comment">//Send data to orderer</span>
+    Send(env *<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetBroadcastClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/broadcastclient.go?s=1007:1057#L26">GetBroadcastClient</a>
+					<a class="permalink" href="index.html#GetBroadcastClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetBroadcastClient() (<a href="index.html#BroadcastClient">BroadcastClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetBroadcastClient creates a simple instance of the BroadcastClient interface
+</p>
+
+				
+				
+			
+				
+				<h3 id="GetMockBroadcastClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/mockclient.go?s=1352:1406#L36">GetMockBroadcastClient</a>
+					<a class="permalink" href="index.html#GetMockBroadcastClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetMockBroadcastClient(err <a href="http://localhost:6060/pkg/builtin/#error">error</a>) <a href="index.html#BroadcastClient">BroadcastClient</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CAConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=3728:4021#L101">CAConfig</a>
+				<a class="permalink" href="index.html#CAConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAConfig defines a CA configuration
+not currently used by CLI
+</p>
+
+			<pre>type CAConfig struct {
+<span id="CAConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>                 `yaml:&#34;url&#34;`
+<span id="CAConfig.HTTPOptions"></span>    HTTPOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{} `yaml:&#34;httpOptions&#34;`
+<span id="CAConfig.TLSCACerts"></span>    TLSCACerts  <a href="index.html#MutualTLSConfig">MutualTLSConfig</a>        `yaml:&#34;tlsCACerts&#34;`
+<span id="CAConfig.Registrar"></span>    Registrar   <a href="index.html#EnrollCredentials">EnrollCredentials</a>      `yaml:&#34;registrar&#34;`
+<span id="CAConfig.CaName"></span>    CaName      <a href="http://localhost:6060/pkg/builtin/#string">string</a>                 `yaml:&#34;caName&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CCType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1531:1580#L35">CCType</a>
+				<a class="permalink" href="index.html#CCType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCType - not currently used by CLI
+</p>
+
+			<pre>type CCType struct {
+<span id="CCType.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;path&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelNetworkConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1959:2364#L54">ChannelNetworkConfig</a>
+				<a class="permalink" href="index.html#ChannelNetworkConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelNetworkConfig provides the definition of channels for the network
+</p>
+
+			<pre>type ChannelNetworkConfig struct {
+<span id="ChannelNetworkConfig.Orderers"></span>    <span class="comment">// Orderers list of ordering service nodes</span>
+    Orderers []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;orderers&#34;`
+<span id="ChannelNetworkConfig.Peers"></span>    <span class="comment">// Peers a list of peer-channels that are part of this organization</span>
+    <span class="comment">// to get the real Peer config object, use the Name field and fetch NetworkConfig.Peers[Name]</span>
+    Peers map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#PeerChannelConfig">PeerChannelConfig</a> `yaml:&#34;peers&#34;`
+<span id="ChannelNetworkConfig.Chaincodes"></span>    <span class="comment">// Chaincodes list of services</span>
+    Chaincodes []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;chaincodes&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClientConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1080:1392#L21">ClientConfig</a>
+				<a class="permalink" href="index.html#ClientConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientConfig - not currently used by CLI
+</p>
+
+			<pre>type ClientConfig struct {
+<span id="ClientConfig.Organization"></span>    Organization    <a href="http://localhost:6060/pkg/builtin/#string">string</a>              `yaml:&#34;organization&#34;`
+<span id="ClientConfig.Logging"></span>    Logging         <a href="index.html#LoggingType">LoggingType</a>         `yaml:&#34;logging&#34;`
+<span id="ClientConfig.CryptoConfig"></span>    CryptoConfig    <a href="index.html#CCType">CCType</a>              `yaml:&#34;cryptoconfig&#34;`
+<span id="ClientConfig.TLS"></span>    TLS             <a href="index.html#TLSType">TLSType</a>             `yaml:&#34;tls&#34;`
+<span id="ClientConfig.CredentialStore"></span>    CredentialStore <a href="index.html#CredentialStoreType">CredentialStoreType</a> `yaml:&#34;credentialStore&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CredentialStoreType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1728:1881#L45">CredentialStoreType</a>
+				<a class="permalink" href="index.html#CredentialStoreType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredentialStoreType - not currently used by CLI
+</p>
+
+			<pre>type CredentialStoreType struct {
+<span id="CredentialStoreType.Path"></span>    Path        <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;path&#34;`
+<span id="CredentialStoreType.CryptoStore"></span>    CryptoStore struct {
+        Path <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;path&#34;`
+    }
+<span id="CredentialStoreType.Wallet"></span>    Wallet <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;wallet&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeliverClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=893:1012#L28">DeliverClient</a>
+				<a class="permalink" href="index.html#DeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DeliverClient holds the necessary information to connect a client
+to an orderer/peer deliver service
+</p>
+
+			<pre>type DeliverClient struct {
+<span id="DeliverClient.Service"></span>    Service     <a href="api/index.html">api</a>.<a href="api/index.html#DeliverService">DeliverService</a>
+<span id="DeliverClient.ChannelID"></span>    ChannelID   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="DeliverClient.TLSCertHash"></span>    TLSCertHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="DeliverClient.BestEffort"></span>    BestEffort  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDeliverClientForOrderer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=3916:4006#L149">NewDeliverClientForOrderer</a>
+					<a class="permalink" href="index.html#NewDeliverClientForOrderer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDeliverClientForOrderer(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bestEffort <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#DeliverClient">DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewDeliverClientForOrderer creates a new DeliverClient from an OrdererClient
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewDeliverClientForPeer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=4770:4857#L179">NewDeliverClientForPeer</a>
+					<a class="permalink" href="index.html#NewDeliverClientForPeer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDeliverClientForPeer(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bestEffort <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#DeliverClient">DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewDeliverClientForPeer creates a new DeliverClient from a PeerClient
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="DeliverClient.Close">func (*DeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=3097:3134#L107">Close</a>
+					<a class="permalink" href="index.html#DeliverClient.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#DeliverClient">DeliverClient</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close closes a deliver client&#39;s connection
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeliverClient.GetNewestBlock">func (*DeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=2852:2911#L97">GetNewestBlock</a>
+					<a class="permalink" href="index.html#DeliverClient.GetNewestBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#DeliverClient">DeliverClient</a>) GetNewestBlock() (*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetNewestBlock gets the newest block from a peer/orderer&#39;s deliver service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeliverClient.GetOldestBlock">func (*DeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=2575:2634#L87">GetOldestBlock</a>
+					<a class="permalink" href="index.html#DeliverClient.GetOldestBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#DeliverClient">DeliverClient</a>) GetOldestBlock() (*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetOldestBlock gets the oldest block from a peer/orderer&#39;s deliver service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeliverClient.GetSpecifiedBlock">func (*DeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/deliverclient.go?s=2276:2348#L77">GetSpecifiedBlock</a>
+					<a class="permalink" href="index.html#DeliverClient.GetSpecifiedBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#DeliverClient">DeliverClient</a>) GetSpecifiedBlock(num <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSpecifiedBlock gets the specified block from a peer/orderer&#39;s deliver
+service
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EnrollCredentials">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=4111:4226#L111">EnrollCredentials</a>
+				<a class="permalink" href="index.html#EnrollCredentials">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollCredentials holds credentials used for enrollment
+not currently used by CLI
+</p>
+
+			<pre>type EnrollCredentials struct {
+<span id="EnrollCredentials.EnrollID"></span>    EnrollID     <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;enrollId&#34;`
+<span id="EnrollCredentials.EnrollSecret"></span>    EnrollSecret <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;enrollSecret&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LoggingType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1435:1491#L30">LoggingType</a>
+				<a class="permalink" href="index.html#LoggingType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LoggingType not currently used by CLI
+</p>
+
+			<pre>type LoggingType struct {
+<span id="LoggingType.Level"></span>    Level <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;level&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MutualTLSConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=4680:4907#L129">MutualTLSConfig</a>
+				<a class="permalink" href="index.html#MutualTLSConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MutualTLSConfig Mutual TLS configurations
+not currently used by CLI
+</p>
+
+			<pre>type MutualTLSConfig struct {
+<span id="MutualTLSConfig.Pem"></span>    Pem []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;pem&#34;`
+
+    <span class="comment">// Certfiles root certificates for TLS validation (Comma separated path list)</span>
+<span id="MutualTLSConfig.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;path&#34;`
+
+    <span class="comment">//Client TLS information</span>
+<span id="MutualTLSConfig.Client"></span>    Client <a href="index.html#TLSKeyPair">TLSKeyPair</a> `yaml:&#34;client&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NetworkConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=255:1034#L7">NetworkConfig</a>
+				<a class="permalink" href="index.html#NetworkConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NetworkConfig provides a static definition of a Hyperledger Fabric network
+</p>
+
+			<pre>type NetworkConfig struct {
+<span id="NetworkConfig.Name"></span>    Name                   <a href="http://localhost:6060/pkg/builtin/#string">string</a>                          `yaml:&#34;name&#34;`
+<span id="NetworkConfig.Xtype"></span>    Xtype                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>                          `yaml:&#34;x-type&#34;`
+<span id="NetworkConfig.Description"></span>    Description            <a href="http://localhost:6060/pkg/builtin/#string">string</a>                          `yaml:&#34;description&#34;`
+<span id="NetworkConfig.Version"></span>    Version                <a href="http://localhost:6060/pkg/builtin/#string">string</a>                          `yaml:&#34;version&#34;`
+<span id="NetworkConfig.Channels"></span>    Channels               map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#ChannelNetworkConfig">ChannelNetworkConfig</a> `yaml:&#34;channels&#34;`
+<span id="NetworkConfig.Organizations"></span>    Organizations          map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#OrganizationConfig">OrganizationConfig</a>   `yaml:&#34;organizations&#34;`
+<span id="NetworkConfig.Peers"></span>    Peers                  map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#PeerConfig">PeerConfig</a>           `yaml:&#34;peers&#34;`
+<span id="NetworkConfig.Client"></span>    Client                 <a href="index.html#ClientConfig">ClientConfig</a>                    `yaml:&#34;client&#34;`
+<span id="NetworkConfig.Orderers"></span>    Orderers               map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#OrdererConfig">OrdererConfig</a>        `yaml:&#34;orderers&#34;`
+<span id="NetworkConfig.CertificateAuthorities"></span>    CertificateAuthorities map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#CAConfig">CAConfig</a>             `yaml:&#34;certificateAuthorities&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=5194:5249#L148">GetConfig</a>
+					<a class="permalink" href="index.html#GetConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetConfig(fileName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#NetworkConfig">NetworkConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetConfig unmarshals the provided connection profile into a network
+configuration struct
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go?s=357:400#L10">OrdererClient</a>
+				<a class="permalink" href="index.html#OrdererClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererClient represents a client for communicating with an ordering
+service
+</p>
+
+			<pre>type OrdererClient struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewOrdererClientFromEnv">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go?s=503:557#L16">NewOrdererClientFromEnv</a>
+					<a class="permalink" href="index.html#NewOrdererClientFromEnv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewOrdererClientFromEnv() (*<a href="index.html#OrdererClient">OrdererClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewOrdererClientFromEnv creates an instance of an OrdererClient from the
+global Viper instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="OrdererClient.Broadcast">func (*OrdererClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go?s=1109:1189#L34">Broadcast</a>
+					<a class="permalink" href="index.html#OrdererClient.Broadcast">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererClient">OrdererClient</a>) Broadcast() (<a href="../../protos/orderer/index.html">ab</a>.<a href="../../protos/orderer/index.html#AtomicBroadcast_BroadcastClient">AtomicBroadcast_BroadcastClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Broadcast returns a broadcast client for the AtomicBroadcast service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererClient.Certificate">func (*OrdererClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go?s=2071:2125#L55">Certificate</a>
+					<a class="permalink" href="index.html#OrdererClient.Certificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererClient">OrdererClient</a>) Certificate() <a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a></pre>
+				<p>
+Certificate returns the TLS client certificate (if available)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererClient.Deliver">func (*OrdererClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/ordererclient.go?s=1594:1670#L44">Deliver</a>
+					<a class="permalink" href="index.html#OrdererClient.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (oc *<a href="index.html#OrdererClient">OrdererClient</a>) Deliver() (<a href="../../protos/orderer/index.html">ab</a>.<a href="../../protos/orderer/index.html#AtomicBroadcast_DeliverClient">AtomicBroadcast_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Deliver returns a deliver client for the AtomicBroadcast service
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OrdererConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=3180:3371#L85">OrdererConfig</a>
+				<a class="permalink" href="index.html#OrdererConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererConfig defines an orderer configuration
+not currently used by CLI
+</p>
+
+			<pre>type OrdererConfig struct {
+<span id="OrdererConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>                 `yaml:&#34;url&#34;`
+<span id="OrdererConfig.GrpcOptions"></span>    GrpcOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{} `yaml:&#34;grpcOptions&#34;`
+<span id="OrdererConfig.TLSCACerts"></span>    TLSCACerts  <a href="index.html#TLSConfig">TLSConfig</a>              `yaml:&#34;tlsCACerts&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrganizationConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=2734:3099#L74">OrganizationConfig</a>
+				<a class="permalink" href="index.html#OrganizationConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrganizationConfig provides the definition of an organization in the network
+not currently used by CLI
+</p>
+
+			<pre>type OrganizationConfig struct {
+<span id="OrganizationConfig.MspID"></span>    MspID                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `yaml:&#34;mspid&#34;`
+<span id="OrganizationConfig.Peers"></span>    Peers                  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>  `yaml:&#34;peers&#34;`
+<span id="OrganizationConfig.CryptoPath"></span>    CryptoPath             <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `yaml:&#34;cryptoPath&#34;`
+<span id="OrganizationConfig.CertificateAuthorities"></span>    CertificateAuthorities []<a href="http://localhost:6060/pkg/builtin/#string">string</a>  `yaml:&#34;certificateAuthorities&#34;`
+<span id="OrganizationConfig.AdminPrivateKey"></span>    AdminPrivateKey        <a href="index.html#TLSConfig">TLSConfig</a> `yaml:&#34;adminPrivateKey&#34;`
+<span id="OrganizationConfig.SignedCert"></span>    SignedCert             <a href="index.html#TLSConfig">TLSConfig</a> `yaml:&#34;signedCert&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerChannelConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=2417:2623#L65">PeerChannelConfig</a>
+				<a class="permalink" href="index.html#PeerChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerChannelConfig defines the peer capabilities
+</p>
+
+			<pre>type PeerChannelConfig struct {
+<span id="PeerChannelConfig.EndorsingPeer"></span>    EndorsingPeer  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;endorsingPeer&#34;`
+<span id="PeerChannelConfig.ChaincodeQuery"></span>    ChaincodeQuery <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;chaincodeQuery&#34;`
+<span id="PeerChannelConfig.LedgerQuery"></span>    LedgerQuery    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;ledgerQuery&#34;`
+<span id="PeerChannelConfig.EventSource"></span>    EventSource    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;eventSource&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=467:507#L15">PeerClient</a>
+				<a class="permalink" href="index.html#PeerClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerClient represents a client for communicating with a peer
+</p>
+
+			<pre>type PeerClient struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPeerClientForAddress">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=1033:1115#L31">NewPeerClientForAddress</a>
+					<a class="permalink" href="index.html#NewPeerClientForAddress">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPeerClientForAddress(address, tlsRootCertFile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#PeerClient">PeerClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewPeerClientForAddress creates an instance of a PeerClient using the
+provided peer address and, if TLS is enabled, the TLS root cert file
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewPeerClientFromEnv">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=603:651#L21">NewPeerClientFromEnv</a>
+					<a class="permalink" href="index.html#NewPeerClientFromEnv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPeerClientFromEnv() (*<a href="index.html#PeerClient">PeerClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewPeerClientFromEnv creates an instance of a PeerClient from the global
+Viper instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PeerClient.Admin">func (*PeerClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=4186:4239#L118">Admin</a>
+					<a class="permalink" href="index.html#PeerClient.Admin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerClient">PeerClient</a>) Admin() (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#AdminClient">AdminClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Admin returns a client for the Admin service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerClient.Certificate">func (*PeerClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=4533:4584#L127">Certificate</a>
+					<a class="permalink" href="index.html#PeerClient.Certificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerClient">PeerClient</a>) Certificate() <a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a></pre>
+				<p>
+Certificate returns the TLS client certificate (if available)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerClient.Deliver">func (*PeerClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=3362:3427#L98">Deliver</a>
+					<a class="permalink" href="index.html#PeerClient.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerClient">PeerClient</a>) Deliver() (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Deliver_DeliverClient">Deliver_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Deliver returns a client for the Deliver service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerClient.Endorser">func (*PeerClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=3016:3075#L89">Endorser</a>
+					<a class="permalink" href="index.html#PeerClient.Endorser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerClient">PeerClient</a>) Endorser() (<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#EndorserClient">EndorserClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Endorser returns a client for the Endorser service
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerClient.PeerDeliver">func (*PeerClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerclient.go?s=3789:3855#L108">PeerDeliver</a>
+					<a class="permalink" href="index.html#PeerClient.PeerDeliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pc *<a href="index.html#PeerClient">PeerClient</a>) PeerDeliver() (<a href="api/index.html">api</a>.<a href="api/index.html#PeerDeliverClient">PeerDeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PeerDeliver returns a client for the Deliver service for peer-specific use
+cases (i.e. DeliverFiltered)
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=3416:3658#L92">PeerConfig</a>
+				<a class="permalink" href="index.html#PeerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerConfig defines a peer configuration
+</p>
+
+			<pre>type PeerConfig struct {
+<span id="PeerConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>                 `yaml:&#34;url&#34;`
+<span id="PeerConfig.EventURL"></span>    EventURL    <a href="http://localhost:6060/pkg/builtin/#string">string</a>                 `yaml:&#34;eventUrl&#34;`
+<span id="PeerConfig.GRPCOptions"></span>    GRPCOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{} `yaml:&#34;grpcOptions&#34;`
+<span id="PeerConfig.TLSCACerts"></span>    TLSCACerts  <a href="index.html#TLSConfig">TLSConfig</a>              `yaml:&#34;tlsCACerts&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerDeliverClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerdeliverclient.go?s=364:422#L9">PeerDeliverClient</a>
+				<a class="permalink" href="index.html#PeerDeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerDeliverClient holds the necessary information to connect a client
+to a peer deliver service
+</p>
+
+			<pre>type PeerDeliverClient struct {
+<span id="PeerDeliverClient.Client"></span>    Client <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#DeliverClient">DeliverClient</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PeerDeliverClient.Deliver">func (PeerDeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerdeliverclient.go?s=474:578#L14">Deliver</a>
+					<a class="permalink" href="index.html#PeerDeliverClient.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dc <a href="index.html#PeerDeliverClient">PeerDeliverClient</a>) Deliver(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../chaincode/api/index.html">ccapi</a>.<a href="../chaincode/api/index.html#Deliver">Deliver</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Deliver connects the client to the Deliver RPC
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PeerDeliverClient.DeliverFiltered">func (PeerDeliverClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/peerdeliverclient.go?s=708:820#L20">DeliverFiltered</a>
+					<a class="permalink" href="index.html#PeerDeliverClient.DeliverFiltered">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dc <a href="index.html#PeerDeliverClient">PeerDeliverClient</a>) DeliverFiltered(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../chaincode/api/index.html">ccapi</a>.<a href="../chaincode/api/index.html#Deliver">Deliver</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeliverFiltered connects the client to the DeliverFiltered RPC
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TLSConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=4260:4604#L117">TLSConfig</a>
+				<a class="permalink" href="index.html#TLSConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLSConfig TLS configurations
+</p>
+
+			<pre>type TLSConfig struct {
+    <span class="comment">// the following two fields are interchangeable.</span>
+    <span class="comment">// If Path is available, then it will be used to load the cert</span>
+    <span class="comment">// if Pem is available, then it has the raw data of the cert it will be used as-is</span>
+    <span class="comment">// Certificate root certificate path</span>
+<span id="TLSConfig.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;path&#34;`
+    <span class="comment">// Certificate actual content</span>
+<span id="TLSConfig.Pem"></span>    Pem <a href="http://localhost:6060/pkg/builtin/#string">string</a> `yaml:&#34;pem&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TLSKeyPair">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=5012:5097#L141">TLSKeyPair</a>
+				<a class="permalink" href="index.html#TLSKeyPair">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLSKeyPair contains the private key and certificate for TLS encryption
+not currently used by CLI
+</p>
+
+			<pre>type TLSKeyPair struct {
+<span id="TLSKeyPair.Key"></span>    Key  <a href="index.html#TLSConfig">TLSConfig</a> `yaml:&#34;key&#34;`
+<span id="TLSKeyPair.Cert"></span>    Cert <a href="index.html#TLSConfig">TLSConfig</a> `yaml:&#34;cert&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TLSType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/peer/common/networkconfig.go?s=1621:1675#L40">TLSType</a>
+				<a class="permalink" href="index.html#TLSType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLSType - not currently used by CLI
+</p>
+
+			<pre>type TLSType struct {
+<span id="TLSType.Enabled"></span>    Enabled <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> `yaml:&#34;enabled&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="api/index.html">api</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

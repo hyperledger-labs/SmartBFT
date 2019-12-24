@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>godoc - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Command godoc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<p>
+Godoc extracts and generates documentation for Go programs.
+</p>
+<p>
+It runs as a web server and presents the documentation as a
+web page.
+</p>
+<pre>godoc -http=:6060
+</pre>
+<p>
+Usage:
+</p>
+<pre>godoc [flag]
+</pre>
+<p>
+The flags are:
+</p>
+<pre>-v
+	verbose mode
+-timestamps=true
+	show timestamps with directory listings
+-index
+	enable identifier and full text search index
+	(no search box is shown if -index is not set)
+-index_files=&#34;&#34;
+	glob pattern specifying index files; if not empty,
+	the index is read from these files in sorted order
+-index_throttle=0.75
+	index throttle value; a value of 0 means no time is allocated
+	to the indexer (the indexer will never finish), a value of 1.0
+	means that index creation is running at full throttle (other
+	goroutines may get no time while the index is built)
+-index_interval=0
+	interval of indexing; a value of 0 sets it to 5 minutes, a
+	negative value indexes only once at startup
+-play=false
+	enable playground
+-links=true
+	link identifiers to their declarations
+-write_index=false
+	write index to a file; the file name must be specified with
+	-index_files
+-maxresults=10000
+	maximum number of full text search results shown
+	(no full text index is built if maxresults &lt;= 0)
+-notes=&#34;BUG&#34;
+	regular expression matching note markers to show
+	(e.g., &#34;BUG|TODO&#34;, &#34;.*&#34;)
+-goroot=$GOROOT
+	Go root directory
+-http=addr
+	HTTP service address (e.g., &#39;127.0.0.1:6060&#39; or just &#39;:6060&#39;)
+-analysis=type,pointer
+	comma-separated list of analyses to perform
+	&#34;type&#34;: display identifier resolution, type info, method sets,
+		&#39;implements&#39;, and static callees
+	&#34;pointer&#34;: display channel peers, callers and dynamic callees
+		(significantly slower)
+	See <a href="https://golang.org/lib/godoc/analysis/help.html">https://golang.org/lib/godoc/analysis/help.html</a> for details.
+-templates=&#34;&#34;
+	directory containing alternate template files; if set,
+	the directory may provide alternative template files
+	for the files in $GOROOT/lib/godoc
+-url=path
+	print to standard output the data that would be served by
+	an HTTP request for path
+-zip=&#34;&#34;
+	zip file providing the file system to serve; disabled if empty
+</pre>
+<p>
+By default, godoc looks at the packages it finds via $GOROOT and $GOPATH (if set).
+This behavior can be altered by providing an alternative $GOROOT with the -goroot
+flag.
+</p>
+<p>
+When the -index flag is set, a search index is maintained.
+The index is created at startup.
+</p>
+<p>
+The index contains both identifier and full text search information (searchable
+via regular expressions). The maximum number of full text search results shown
+can be set with the -maxresults flag; if set to 0, no full text results are
+shown, and only an identifier index but no full text search index is created.
+</p>
+<p>
+By default, godoc uses the system&#39;s GOOS/GOARCH. You can provide the URL parameters
+&#34;GOOS&#34; and &#34;GOARCH&#34; to set the output on the web page for the target system.
+</p>
+<p>
+The presentation mode of web pages served by godoc can be controlled with the
+&#34;m&#34; URL parameter; it accepts a comma-separated list of flag names as value:
+</p>
+<pre>all	show documentation for all declarations, not just the exported ones
+methods	show all embedded methods, not just those of unexported anonymous fields
+src	show the original source code rather than the extracted documentation
+flat	present flat (not indented) directory listings using full paths
+</pre>
+<p>
+For instance, <a href="https://golang.org/pkg/math/big/?m=all">https://golang.org/pkg/math/big/?m=all</a> shows the documentation
+for all (not just the exported) declarations of package big.
+</p>
+<p>
+By default, godoc serves files from the file system of the underlying OS.
+Instead, a .zip file may be provided via the -zip flag, which contains
+the file system to serve. The file paths stored in the .zip file must use
+slash (&#39;/&#39;) as path separator; and they must be unrooted. $GOROOT (or -goroot)
+must be set to the .zip file directory path containing the Go root directory.
+For instance, for a .zip file created by the command:
+</p>
+<pre>zip -r go.zip $HOME/go
+</pre>
+<p>
+one may run godoc as follows:
+</p>
+<pre>godoc -http=:6060 -zip=go.zip -goroot=$HOME/go
+</pre>
+<p>
+Godoc documentation is converted to HTML or to text using the go/doc package;
+see <a href="https://golang.org/pkg/go/doc/#ToHTML">https://golang.org/pkg/go/doc/#ToHTML</a> for the exact rules.
+Godoc also shows example code that is runnable by the testing package;
+see <a href="https://golang.org/pkg/testing/#hdr-Examples">https://golang.org/pkg/testing/#hdr-Examples</a> for the conventions.
+See &#34;Godoc: documenting Go code&#34; for how to write good comments for godoc:
+<a href="https://golang.org/doc/articles/godoc_documenting_go_code.html">https://golang.org/doc/articles/godoc_documenting_go_code.html</a>
+</p>
+
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

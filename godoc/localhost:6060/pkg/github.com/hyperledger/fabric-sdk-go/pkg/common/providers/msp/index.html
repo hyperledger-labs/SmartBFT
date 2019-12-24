@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#CAConfig">type CAConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CCType">type CCType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientConfig">type ClientConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Context">type Context</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CredentialStoreType">type CredentialStoreType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EnrollCredentials">type EnrollCredentials</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Identity">type Identity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityConfig">type IdentityConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityIdentifier">type IdentityIdentifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityManager">type IdentityManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityManagerProvider">type IdentityManagerProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityOption">type IdentityOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PrivKeyKey">type PrivKeyKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Providers">type Providers</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SigningIdentity">type SigningIdentity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SigningIdentityOption">type SigningIdentityOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCert">func WithCert(cert []byte) SigningIdentityOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithPrivateKey">func WithPrivateKey(key []byte) SigningIdentityOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UserData">type UserData</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UserStore">type UserStore</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go">identity.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go">provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/store.go">store.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// ErrUserNotFound indicates the user was not found</span>
+    <span id="ErrUserNotFound">ErrUserNotFound</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;user not found&#34;)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="CAConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=1563:1791#L56">CAConfig</a>
+				<a class="permalink" href="index.html#CAConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAConfig defines a CA configuration
+</p>
+
+			<pre>type CAConfig struct {
+<span id="CAConfig.URL"></span>    URL              <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CAConfig.GRPCOptions"></span>    GRPCOptions      map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}
+<span id="CAConfig.Registrar"></span>    Registrar        <a href="index.html#EnrollCredentials">EnrollCredentials</a>
+<span id="CAConfig.CAName"></span>    CAName           <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CAConfig.TLSCAServerCerts"></span>    TLSCAServerCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="CAConfig.TLSCAClientCert"></span>    TLSCAClientCert  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="CAConfig.TLSCAClientKey"></span>    TLSCAClientKey   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CCType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=1194:1229#L37">CCType</a>
+				<a class="permalink" href="index.html#CCType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCType defines the path to crypto keys and certs
+</p>
+
+			<pre>type CCType struct {
+<span id="CCType.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClientConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=943:1140#L27">ClientConfig</a>
+				<a class="permalink" href="index.html#ClientConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientConfig provides the definition of the client configuration
+</p>
+
+			<pre>type ClientConfig struct {
+<span id="ClientConfig.Organization"></span>    Organization    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ClientConfig.Logging"></span>    Logging         <a href="../../../core/logging/api/index.html">logApi</a>.<a href="../../../core/logging/api/index.html#LoggingType">LoggingType</a>
+<span id="ClientConfig.CryptoConfig"></span>    CryptoConfig    <a href="index.html#CCType">CCType</a>
+<span id="ClientConfig.TLSKey"></span>    TLSKey          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ClientConfig.TLSCert"></span>    TLSCert         []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ClientConfig.CredentialStore"></span>    CredentialStore <a href="index.html#CredentialStoreType">CredentialStoreType</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Context">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=313:366#L5">Context</a>
+				<a class="permalink" href="index.html#Context">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Context is the context required by MSP services
+</p>
+
+			<pre>type Context interface {
+    <a href="../core/index.html">core</a>.<a href="../core/index.html#Providers">Providers</a>
+    <a href="index.html#Providers">Providers</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CredentialStoreType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=1292:1386#L42">CredentialStoreType</a>
+				<a class="permalink" href="index.html#CredentialStoreType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredentialStoreType defines pluggable KV store properties
+</p>
+
+			<pre>type CredentialStoreType struct {
+<span id="CredentialStoreType.Path"></span>    Path        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CredentialStoreType.CryptoStore"></span>    CryptoStore struct {
+        Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    }
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EnrollCredentials">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=1447:1522#L50">EnrollCredentials</a>
+				<a class="permalink" href="index.html#EnrollCredentials">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollCredentials holds credentials used for enrollment
+</p>
+
+			<pre>type EnrollCredentials struct {
+<span id="EnrollCredentials.EnrollID"></span>    EnrollID     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="EnrollCredentials.EnrollSecret"></span>    EnrollSecret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Identity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=1468:1897#L43">Identity</a>
+				<a class="permalink" href="index.html#Identity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Identity represents a Fabric client identity
+</p>
+
+			<pre>type Identity interface {
+
+    <span class="comment">// Identifier returns the identifier of that identity</span>
+    Identifier() *<a href="index.html#IdentityIdentifier">IdentityIdentifier</a>
+
+    <span class="comment">// Verify a signature over some message using this identity as reference</span>
+    Verify(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Serialize converts an identity to bytes</span>
+    Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// EnrollmentCertificate Returns the underlying ECert representing this user’s identity.</span>
+    EnrollmentCertificate() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=584:873#L16">IdentityConfig</a>
+				<a class="permalink" href="index.html#IdentityConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityConfig contains identity configurations
+</p>
+
+			<pre>type IdentityConfig interface {
+    Client() *<a href="index.html#ClientConfig">ClientConfig</a>
+    CAConfig(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CAConfig">CAConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    CAServerCerts(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    CAClientKey(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    CAClientCert(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    CAKeyStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    CredentialStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityIdentifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=2419:2598#L76">IdentityIdentifier</a>
+				<a class="permalink" href="index.html#IdentityIdentifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityIdentifier is a holder for the identifier of a specific
+identity, naturally namespaced, by its provider identifier.
+</p>
+
+			<pre>type IdentityIdentifier struct {
+
+    <span class="comment">// The identifier of the associated membership service provider</span>
+<span id="IdentityIdentifier.MSPID"></span>    MSPID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identifier for an identity within a provider</span>
+<span id="IdentityIdentifier.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=1248:1418#L37">IdentityManager</a>
+				<a class="permalink" href="index.html#IdentityManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityManager provides management of identities in Fabric network
+</p>
+
+			<pre>type IdentityManager interface {
+    GetSigningIdentity(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CreateSigningIdentity(ops ...<a href="index.html#SigningIdentityOption">SigningIdentityOption</a>) (<a href="index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityManagerProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=433:532#L11">IdentityManagerProvider</a>
+				<a class="permalink" href="index.html#IdentityManagerProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityManagerProvider provides identity management services
+</p>
+
+			<pre>type IdentityManagerProvider interface {
+    IdentityManager(orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#IdentityManager">IdentityManager</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=413:481#L10">IdentityOption</a>
+				<a class="permalink" href="index.html#IdentityOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityOption captures options used for creating a new SigningIdentity instance
+</p>
+
+			<pre>type IdentityOption struct {
+<span id="IdentityOption.Cert"></span>    Cert       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="IdentityOption.PrivateKey"></span>    PrivateKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PrivKeyKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/store.go?s=573:641#L14">PrivKeyKey</a>
+				<a class="permalink" href="index.html#PrivKeyKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrivKeyKey is a composite key for accessing a private key in the key store
+</p>
+
+			<pre>type PrivKeyKey struct {
+<span id="PrivKeyKey.ID"></span>    ID    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PrivKeyKey.MSPID"></span>    MSPID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PrivKeyKey.SKI"></span>    SKI   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Providers">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/provider.go?s=1844:1953#L67">Providers</a>
+				<a class="permalink" href="index.html#Providers">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Providers represents a provider of MSP service.
+</p>
+
+			<pre>type Providers interface {
+    UserStore() <a href="index.html#UserStore">UserStore</a>
+    <a href="index.html#IdentityManagerProvider">IdentityManagerProvider</a>
+    IdentityConfig() <a href="index.html#IdentityConfig">IdentityConfig</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SigningIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=1977:2287#L59">SigningIdentity</a>
+				<a class="permalink" href="index.html#SigningIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SigningIdentity is an extension of Identity to cover signing capabilities.
+</p>
+
+			<pre>type SigningIdentity interface {
+
+    <span class="comment">// Extends Identity</span>
+    <a href="index.html#Identity">Identity</a>
+
+    <span class="comment">// Sign the message</span>
+    Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPublicVersion returns the public parts of this identity</span>
+    PublicVersion() <a href="index.html#Identity">Identity</a>
+
+    <span class="comment">// PrivateKey returns the crypto suite representation of the private key</span>
+    PrivateKey() <a href="../core/index.html">core</a>.<a href="../core/index.html#Key">Key</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SigningIdentityOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=585:639#L16">SigningIdentityOption</a>
+				<a class="permalink" href="index.html#SigningIdentityOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SigningIdentityOption describes a functional parameter for creating a new SigningIdentity instance
+</p>
+
+			<pre>type SigningIdentityOption func(*<a href="index.html#IdentityOption">IdentityOption</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithCert">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=1051:1099#L29">WithCert</a>
+					<a class="permalink" href="index.html#WithCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCert(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="index.html#SigningIdentityOption">SigningIdentityOption</a></pre>
+				<p>
+WithCert can be passed as an option when creating a new SigningIdentity.
+When used alone, SDK will lookup the corresponding private key.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithPrivateKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/identity.go?s=772:825#L20">WithPrivateKey</a>
+					<a class="permalink" href="index.html#WithPrivateKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithPrivateKey(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="index.html#SigningIdentityOption">SigningIdentityOption</a></pre>
+				<p>
+WithPrivateKey can be passed as an option when creating a new SigningIdentity.
+It cannot be used without the WithCert option
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="UserData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/store.go?s=227:341#L1">UserData</a>
+				<a class="permalink" href="index.html#UserData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UserData is the representation of User in UserStore
+PrivateKey is stored separately, in the crypto store
+</p>
+
+			<pre>type UserData struct {
+<span id="UserData.ID"></span>    ID                    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="UserData.MSPID"></span>    MSPID                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="UserData.EnrollmentCertificate"></span>    EnrollmentCertificate []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UserStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp/store.go?s=396:493#L8">UserStore</a>
+				<a class="permalink" href="index.html#UserStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UserStore is responsible for UserData persistence
+</p>
+
+			<pre>type UserStore interface {
+    Store(*<a href="index.html#UserData">UserData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Load(<a href="index.html#IdentityIdentifier">IdentityIdentifier</a>) (*<a href="index.html#UserData">UserData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+
