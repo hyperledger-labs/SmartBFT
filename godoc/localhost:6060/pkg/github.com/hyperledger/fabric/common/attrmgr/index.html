@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>attrmgr - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package attrmgr
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/attrmgr"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Attribute">type Attribute</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AttributeRequest">type AttributeRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Attributes">type Attributes</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Attributes.Contains">func (a *Attributes) Contains(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Attributes.Names">func (a *Attributes) Names() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Attributes.True">func (a *Attributes) True(name string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Attributes.Value">func (a *Attributes) Value(name string) (string, bool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Mgr">type Mgr</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New() *Mgr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Mgr.AddAttributesToCert">func (mgr *Mgr) AddAttributesToCert(attrs *Attributes, cert *x509.Certificate) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Mgr.GetAttributesFromCert">func (mgr *Mgr) GetAttributesFromCert(cert *x509.Certificate) (*Attributes, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Mgr.ProcessAttributeRequests">func (mgr *Mgr) ProcessAttributeRequests(requests []AttributeRequest, attributes []Attribute) (*Attributes, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Mgr.ProcessAttributeRequestsForCert">func (mgr *Mgr) ProcessAttributeRequestsForCert(requests []AttributeRequest, attributes []Attribute, cert *x509.Certificate) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go">attrmgr.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// AttrOID is the ASN.1 object identifier for an attribute extension in an</span>
+    <span class="comment">// X509 certificate</span>
+    <span id="AttrOID">AttrOID</span> = <a href="http://localhost:6060/pkg/encoding/asn1/">asn1</a>.<a href="http://localhost:6060/pkg/encoding/asn1/#ObjectIdentifier">ObjectIdentifier</a>{1, 2, 3, 4, 5, 6, 7, 8, 1}
+    <span class="comment">// AttrOIDString is the string version of AttrOID</span>
+    <span id="AttrOIDString">AttrOIDString</span> = &#34;1.2.3.4.5.6.7.8.1&#34;
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Attribute">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=1149:1308#L33">Attribute</a>
+				<a class="permalink" href="index.html#Attribute">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Attribute is a name/value pair
+</p>
+
+			<pre>type Attribute interface {
+    <span class="comment">// GetName returns the name of the attribute</span>
+    GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// GetValue returns the value of the attribute</span>
+    GetValue() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AttributeRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=1360:1534#L41">AttributeRequest</a>
+				<a class="permalink" href="index.html#AttributeRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AttributeRequest is a request for an attribute
+</p>
+
+			<pre>type AttributeRequest interface {
+    <span class="comment">// GetName returns the name of an attribute</span>
+    GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// IsRequired returns true if the attribute is required</span>
+    IsRequired() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Attributes">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=4112:4178#L126">Attributes</a>
+				<a class="permalink" href="index.html#Attributes">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Attributes contains attribute names and values
+</p>
+
+			<pre>type Attributes struct {
+<span id="Attributes.Attrs"></span>    Attrs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;attrs&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Attributes.Contains">func (*Attributes) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=4442:4489#L142">Contains</a>
+					<a class="permalink" href="index.html#Attributes.Contains">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#Attributes">Attributes</a>) Contains(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Contains returns true if the named attribute is found
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Attributes.Names">func (*Attributes) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=4225:4262#L131">Names</a>
+					<a class="permalink" href="index.html#Attributes.Names">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#Attributes">Attributes</a>) Names() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Names returns the names of the attributes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Attributes.True">func (*Attributes) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=4794:4838#L155">True</a>
+					<a class="permalink" href="index.html#Attributes.True">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#Attributes">Attributes</a>) True(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+True returns nil if the value of attribute &#39;name&#39; is true;
+otherwise, an appropriate error is returned.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Attributes.Value">func (*Attributes) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=4568:4629#L148">Value</a>
+					<a class="permalink" href="index.html#Attributes.Value">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#Attributes">Attributes</a>) Value(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Value returns an attribute&#39;s value
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Mgr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=1682:1699#L52">Mgr</a>
+				<a class="permalink" href="index.html#Mgr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Mgr is the attribute manager and is the main object for this package
+</p>
+
+			<pre>type Mgr struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=1575:1590#L49">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New() *<a href="index.html#Mgr">Mgr</a></pre>
+				<p>
+New constructs an attribute manager
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Mgr.AddAttributesToCert">func (*Mgr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=3179:3263#L93">AddAttributesToCert</a>
+					<a class="permalink" href="index.html#Mgr.AddAttributesToCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#Mgr">Mgr</a>) AddAttributesToCert(attrs *<a href="index.html#Attributes">Attributes</a>, cert *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+AddAttributesToCert adds public attribute info to an X509 certificate.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Mgr.GetAttributesFromCert">func (*Mgr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=3589:3671#L108">GetAttributesFromCert</a>
+					<a class="permalink" href="index.html#Mgr.GetAttributesFromCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#Mgr">Mgr</a>) GetAttributesFromCert(cert *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>) (*<a href="index.html#Attributes">Attributes</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAttributesFromCert gets the attributes from a certificate.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Mgr.ProcessAttributeRequests">func (*Mgr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=2266:2380#L66">ProcessAttributeRequests</a>
+					<a class="permalink" href="index.html#Mgr.ProcessAttributeRequests">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#Mgr">Mgr</a>) ProcessAttributeRequests(requests []<a href="index.html#AttributeRequest">AttributeRequest</a>, attributes []<a href="index.html#Attribute">Attribute</a>) (*<a href="index.html#Attributes">Attributes</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessAttributeRequests takes an array of attribute requests and an identity&#39;s attributes
+and returns an Attributes object containing the requested attributes.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Mgr.ProcessAttributeRequestsForCert">func (*Mgr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/attrmgr/attrmgr.go?s=1819:1949#L56">ProcessAttributeRequestsForCert</a>
+					<a class="permalink" href="index.html#Mgr.ProcessAttributeRequestsForCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#Mgr">Mgr</a>) ProcessAttributeRequestsForCert(requests []<a href="index.html#AttributeRequest">AttributeRequest</a>, attributes []<a href="index.html#Attribute">Attribute</a>, cert *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ProcessAttributeRequestsForCert add attributes to an X509 certificate, given
+attribute requests and attributes.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

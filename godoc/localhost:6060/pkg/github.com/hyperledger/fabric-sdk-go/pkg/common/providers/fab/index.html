@@ -1,0 +1,2970 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>fab - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package fab
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#BalancerType">type BalancerType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockEvent">type BlockEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockFilter">type BlockFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockchainInfoResponse">type BlockchainInfoResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CCEvent">type CCEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CertKeyPair">type CertKeyPair</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CertPool">type CertPool</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeCall">type ChaincodeCall</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeInvokeRequest">type ChaincodeInvokeRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelCfg">type ChannelCfg</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelConfig">type ChannelConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelEndpointConfig">type ChannelEndpointConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelMembership">type ChannelMembership</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelPeer">type ChannelPeer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelPolicies">type ChannelPolicies</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelProvider">type ChannelProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelService">type ChannelService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientContext">type ClientContext</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CommManager">type CommManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigGroupKey">type ConfigGroupKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectionEvent">type ConnectionEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DiscoveryPolicy">type DiscoveryPolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DiscoveryService">type DiscoveryService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EnabledDisabled">type EnabledDisabled</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EndpointConfig">type EndpointConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ErrorHandler">type ErrorHandler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EventClient">type EventClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EventService">type EventService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EventServicePolicy">type EventServicePolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EventSnapshot">type EventSnapshot</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FilteredBlockEvent">type FilteredBlockEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InfraProvider">type InfraProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LocalDiscoveryProvider">type LocalDiscoveryProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MetricsProvider">type MetricsProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MinBlockHeightResolverMode">type MinBlockHeightResolverMode</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NetworkConfig">type NetworkConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NetworkPeer">type NetworkPeer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Orderer">type Orderer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrdererConfig">type OrdererConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrgAnchorPeer">type OrgAnchorPeer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#OrganizationConfig">type OrganizationConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Peer">type Peer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerChannelConfig">type PeerChannelConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerConfig">type PeerConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PeerState">type PeerState</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PrioritySelector">type PrioritySelector</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProcessProposalRequest">type ProcessProposalRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProposalProcessor">type ProposalProcessor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProposalSender">type ProposalSender</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Providers">type Providers</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryChannelConfigPolicy">type QueryChannelConfigPolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Registration">type Registration</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ResolverStrategy">type ResolverStrategy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelectionPolicy">type SelectionPolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelectionService">type SelectionService</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelectionSortingStrategy">type SelectionSortingStrategy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Sender">type Sender</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignedEnvelope">type SignedEnvelope</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TargetFilter">type TargetFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TargetSorter">type TargetSorter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TimeoutType">type TimeoutType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Transaction">type Transaction</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionHeader">type TransactionHeader</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionID">type TransactionID</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionProposal">type TransactionProposal</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionProposalResponse">type TransactionProposalResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionRequest">type TransactionRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionResponse">type TransactionResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Transactor">type Transactor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxStatusEvent">type TxStatusEvent</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxnHeaderOpt">type TxnHeaderOpt</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCreator">func WithCreator(creator []byte) TxnHeaderOpt</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithNonce">func WithNonce(nonce []byte) TxnHeaderOpt</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxnHeaderOptions">type TxnHeaderOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Versions">type Versions</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go">channel.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/context.go">context.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go">eventservice.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go">network.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/orderer.go">orderer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/peer.go">peer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go">proposer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go">provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/sender.go">sender.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// V1_1Capability indicates that Fabric 1.1 features are supported</span>
+    <span id="V1_1Capability">V1_1Capability</span> = &#34;V1_1&#34;
+    <span class="comment">// V1_2Capability indicates that Fabric 1.2 features are supported</span>
+    <span id="V1_2Capability">V1_2Capability</span> = &#34;V1_2&#34;
+)</pre>
+			
+				<p>
+EmptyTransactionID represents a non-existing transaction (usually due to error).
+</p>
+
+				<pre>const <span id="EmptyTransactionID">EmptyTransactionID</span> = <a href="index.html#TransactionID">TransactionID</a>(&#34;&#34;)</pre>
+			
+				<p>
+SystemChannel is the Fabric channel for managaing resources.
+</p>
+
+				<pre>const <span id="SystemChannel">SystemChannel</span> = &#34;&#34;</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="BalancerType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=2057:2081#L61">BalancerType</a>
+				<a class="permalink" href="index.html#BalancerType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BalancerType is the load-balancer type
+</p>
+
+			<pre>type BalancerType <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// RoundRobin (default) chooses endorsers in a round-robin fashion</span>
+    <span id="RoundRobin">RoundRobin</span> <a href="index.html#BalancerType">BalancerType</a> = &#34;RoundRobin&#34;
+
+    <span class="comment">// Random chooses endorsers randomly</span>
+    <span id="Random">Random</span> <a href="index.html#BalancerType">BalancerType</a> = &#34;Random&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=376:547#L5">BlockEvent</a>
+				<a class="permalink" href="index.html#BlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockEvent contains the data for the block event
+</p>
+
+			<pre>type BlockEvent struct {
+<span id="BlockEvent.Block"></span>    <span class="comment">// Block is the block that was committed</span>
+    Block *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>
+<span id="BlockEvent.SourceURL"></span>    <span class="comment">// SourceURL specifies the URL of the peer that produced the event</span>
+    SourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=2205:2248#L57">BlockFilter</a>
+				<a class="permalink" href="index.html#BlockFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockFilter is a function that determines whether a Block event
+should be ignored
+</p>
+
+			<pre>type BlockFilter func(block *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockchainInfoResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=2094:2198#L68">BlockchainInfoResponse</a>
+				<a class="permalink" href="index.html#BlockchainInfoResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockchainInfoResponse wraps blockchain info with endorser info
+</p>
+
+			<pre>type BlockchainInfoResponse struct {
+<span id="BlockchainInfoResponse.BCI"></span>    BCI      *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#BlockchainInfo">BlockchainInfo</a>
+<span id="BlockchainInfoResponse.Endorser"></span>    Endorser <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BlockchainInfoResponse.Status"></span>    Status   <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CCEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=1358:1925#L34">CCEvent</a>
+				<a class="permalink" href="index.html#CCEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCEvent contains the data for a chaincode event
+</p>
+
+			<pre>type CCEvent struct {
+<span id="CCEvent.TxID"></span>    <span class="comment">// TxID is the ID of the transaction in which the event was set</span>
+    TxID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CCEvent.ChaincodeID"></span>    <span class="comment">// ChaincodeID is the ID of the chaincode that set the event</span>
+    ChaincodeID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CCEvent.EventName"></span>    <span class="comment">// EventName is the name of the chaincode event</span>
+    EventName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CCEvent.Payload"></span>    <span class="comment">// Payload contains the payload of the chaincode event</span>
+    <span class="comment">// NOTE: Payload will be nil for filtered events</span>
+    Payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="CCEvent.BlockNumber"></span>    <span class="comment">// BlockNumber contains the block number in which the</span>
+    <span class="comment">// chaincode event was committed</span>
+    BlockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="CCEvent.SourceURL"></span>    <span class="comment">// SourceURL specifies the URL of the peer that produced the event</span>
+    SourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CertKeyPair">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=4129:4182#L131">CertKeyPair</a>
+				<a class="permalink" href="index.html#CertKeyPair">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CertKeyPair contains the private key and certificate
+</p>
+
+			<pre>type CertKeyPair struct {
+<span id="CertKeyPair.Cert"></span>    Cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="CertKeyPair.Key"></span>    Key  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CertPool">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=5146:5405#L152">CertPool</a>
+				<a class="permalink" href="index.html#CertPool">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CertPool is a thread safe wrapper around the x509 standard library
+cert pool implementation.
+</p>
+
+			<pre>type CertPool interface {
+    <span class="comment">// Get returns the cert pool, optionally adding the provided certs</span>
+    Get() (*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#CertPool">CertPool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">//Add allows adding certificates to CertPool</span>
+    <span class="comment">//Call Get() after Add() to get the updated certpool</span>
+    Add(certs ...*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeCall">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=1036:1107#L31">ChaincodeCall</a>
+				<a class="permalink" href="index.html#ChaincodeCall">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeCall contains the ID of the chaincode as well
+as an optional set of private data collections that may be
+accessed by the chaincode.
+</p>
+
+			<pre>type ChaincodeCall struct {
+<span id="ChaincodeCall.ID"></span>    ID          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeCall.Collections"></span>    Collections []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeInvokeRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=2029:2164#L57">ChaincodeInvokeRequest</a>
+				<a class="permalink" href="index.html#ChaincodeInvokeRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeInvokeRequest contains the parameters for sending a transaction proposal.
+</p>
+
+			<pre>type ChaincodeInvokeRequest struct {
+<span id="ChaincodeInvokeRequest.ChaincodeID"></span>    ChaincodeID  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeInvokeRequest.TransientMap"></span>    TransientMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ChaincodeInvokeRequest.Fcn"></span>    Fcn          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeInvokeRequest.Args"></span>    Args         [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelCfg">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=1314:1542#L40">ChannelCfg</a>
+				<a class="permalink" href="index.html#ChannelCfg">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelCfg contains channel configuration
+</p>
+
+			<pre>type ChannelCfg interface {
+    ID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    BlockNumber() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+    MSPs() []*<a href="../../../../third_party/github.com/hyperledger/fabric/protos/msp/index.html">mspCfg</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/msp/index.html#MSPConfig">MSPConfig</a>
+    AnchorPeers() []*<a href="index.html#OrgAnchorPeer">OrgAnchorPeer</a>
+    Orderers() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Versions() *<a href="index.html#Versions">Versions</a>
+    HasCapability(group <a href="index.html#ConfigGroupKey">ConfigGroupKey</a>, capability <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=573:692#L14">ChannelConfig</a>
+				<a class="permalink" href="index.html#ChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelConfig allows for interaction with peer regarding channel configuration
+</p>
+
+			<pre>type ChannelConfig interface {
+
+    <span class="comment">// Query channel configuration</span>
+    Query(reqCtx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelEndpointConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=574:941#L15">ChannelEndpointConfig</a>
+				<a class="permalink" href="index.html#ChannelEndpointConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelEndpointConfig provides the definition of channels for the network
+</p>
+
+			<pre>type ChannelEndpointConfig struct {
+<span id="ChannelEndpointConfig.Orderers"></span>    <span class="comment">// Orderers list of ordering service nodes</span>
+    Orderers []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChannelEndpointConfig.Peers"></span>    <span class="comment">// Peers a list of peer-channels that are part of this organization</span>
+    <span class="comment">// to get the real Peer config object, use the Name field and fetch NetworkConfig.Peers[Name]</span>
+    Peers map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#PeerChannelConfig">PeerChannelConfig</a>
+    <span class="comment">//Policies list of policies for channel</span>
+<span id="ChannelEndpointConfig.Policies"></span>    Policies <a href="index.html#ChannelPolicies">ChannelPolicies</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelMembership">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=1600:1893#L51">ChannelMembership</a>
+				<a class="permalink" href="index.html#ChannelMembership">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelMembership helps identify a channel&#39;s members
+</p>
+
+			<pre>type ChannelMembership interface {
+    <span class="comment">// Validate if the given ID was issued by the channel&#39;s members</span>
+    Validate(serializedID []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// Verify the given signature</span>
+    Verify(serializedID []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">//Check is given MSP is available</span>
+    ContainsMSP(msp <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelPeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3292:3351#L96">ChannelPeer</a>
+				<a class="permalink" href="index.html#ChannelPeer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelPeer combines channel peer info with raw peerConfig info
+</p>
+
+			<pre>type ChannelPeer struct {
+    <a href="index.html#PeerChannelConfig">PeerChannelConfig</a>
+    <a href="index.html#NetworkPeer">NetworkPeer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelPolicies">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=1008:1232#L26">ChannelPolicies</a>
+				<a class="permalink" href="index.html#ChannelPolicies">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelPolicies defines list of policies defined for a channel
+</p>
+
+			<pre>type ChannelPolicies struct {
+    <span class="comment">//Policy for querying channel block</span>
+<span id="ChannelPolicies.QueryChannelConfig"></span>    QueryChannelConfig <a href="index.html#QueryChannelConfigPolicy">QueryChannelConfigPolicy</a>
+<span id="ChannelPolicies.Discovery"></span>    Discovery          <a href="index.html#DiscoveryPolicy">DiscoveryPolicy</a>
+<span id="ChannelPolicies.Selection"></span>    Selection          <a href="index.html#SelectionPolicy">SelectionPolicy</a>
+<span id="ChannelPolicies.EventService"></span>    EventService       <a href="index.html#EventServicePolicy">EventServicePolicy</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/context.go?s=821:932#L23">ChannelProvider</a>
+				<a class="permalink" href="index.html#ChannelProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelProvider supplies Channel related-objects for the named channel.
+</p>
+
+			<pre>type ChannelProvider interface {
+    ChannelService(ctx <a href="index.html#ClientContext">ClientContext</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ChannelService">ChannelService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/context.go?s=268:606#L6">ChannelService</a>
+				<a class="permalink" href="index.html#ChannelService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelService supplies services related to a channel.
+</p>
+
+			<pre>type ChannelService interface {
+    Config() (<a href="index.html#ChannelConfig">ChannelConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    EventService(opts ...<a href="../../options/index.html">options</a>.<a href="../../options/index.html#Opt">Opt</a>) (<a href="index.html#EventService">EventService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Membership() (<a href="index.html#ChannelMembership">ChannelMembership</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ChannelConfig() (<a href="index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Transactor(reqCtx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) (<a href="index.html#Transactor">Transactor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Discovery() (<a href="index.html#DiscoveryService">DiscoveryService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Selection() (<a href="index.html#SelectionService">SelectionService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClientContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=508:603#L13">ClientContext</a>
+				<a class="permalink" href="index.html#ClientContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientContext contains the client context
+</p>
+
+			<pre>type ClientContext interface {
+    <a href="../core/index.html">core</a>.<a href="../core/index.html#Providers">Providers</a>
+    <a href="../msp/index.html">msp</a>.<a href="../msp/index.html#Providers">Providers</a>
+    <a href="index.html#Providers">Providers</a>
+    <a href="../msp/index.html">msp</a>.<a href="../msp/index.html#SigningIdentity">SigningIdentity</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CommManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=2618:2787#L77">CommManager</a>
+				<a class="permalink" href="index.html#CommManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommManager enables network communication.
+</p>
+
+			<pre>type CommManager interface {
+    DialContext(ctx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, target <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#DialOption">DialOption</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ReleaseConn(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigGroupKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=736:762#L21">ConfigGroupKey</a>
+				<a class="permalink" href="index.html#ConfigGroupKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigGroupKey is the config group key
+</p>
+
+			<pre>type ConfigGroupKey <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// ChannelGroupKey is the Channel config group key</span>
+    <span id="ChannelGroupKey">ChannelGroupKey</span> <a href="index.html#ConfigGroupKey">ConfigGroupKey</a> = &#34;&#34;
+    <span class="comment">// OrdererGroupKey is the Orderer config group key</span>
+    <span id="OrdererGroupKey">OrdererGroupKey</span> <a href="index.html#ConfigGroupKey">ConfigGroupKey</a> = &#34;Orderer&#34;
+    <span class="comment">// ApplicationGroupKey is the Application config group key</span>
+    <span id="ApplicationGroupKey">ApplicationGroupKey</span> <a href="index.html#ConfigGroupKey">ConfigGroupKey</a> = &#34;Application&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectionEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=4790:4854#L101">ConnectionEvent</a>
+				<a class="permalink" href="index.html#ConnectionEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionEvent is sent when the client disconnects from or
+reconnects to the event server. Connected == true means that the
+client has connected, whereas Connected == false means that the
+client has disconnected. In the disconnected case, Err contains
+the disconnect error.
+</p>
+
+			<pre>type ConnectionEvent struct {
+<span id="ConnectionEvent.Connected"></span>    Connected <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ConnectionEvent.Err"></span>    Err       <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DiscoveryPolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=1449:1541#L42">DiscoveryPolicy</a>
+				<a class="permalink" href="index.html#DiscoveryPolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DiscoveryPolicy defines policy for discovery
+</p>
+
+			<pre>type DiscoveryPolicy struct {
+<span id="DiscoveryPolicy.MinResponses"></span>    MinResponses <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="DiscoveryPolicy.MaxTargets"></span>    MaxTargets   <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="DiscoveryPolicy.RetryOpts"></span>    RetryOpts    <a href="../../errors/retry/index.html">retry</a>.<a href="../../errors/retry/index.html#Opts">Opts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DiscoveryService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=1680:1743#L46">DiscoveryService</a>
+				<a class="permalink" href="index.html#DiscoveryService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DiscoveryService is used to discover eligible peers on specific channel
+</p>
+
+			<pre>type DiscoveryService interface {
+    GetPeers() ([]<a href="index.html#Peer">Peer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EnabledDisabled">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=5715:5742#L166">EnabledDisabled</a>
+				<a class="permalink" href="index.html#EnabledDisabled">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnabledDisabled specifies whether or not a feature is enabled
+</p>
+
+			<pre>type EnabledDisabled <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// Enabled indicates that the feature is enabled.</span>
+    <span id="Enabled">Enabled</span> <a href="index.html#EnabledDisabled">EnabledDisabled</a> = &#34;Enabled&#34;
+
+    <span class="comment">// Disabled indicates that the feature is disabled.</span>
+    <span id="Disabled">Disabled</span> <a href="index.html#EnabledDisabled">EnabledDisabled</a> = &#34;Disabled&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EndpointConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=2847:3391#L83">EndpointConfig</a>
+				<a class="permalink" href="index.html#EndpointConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndpointConfig contains endpoint network configurations
+</p>
+
+			<pre>type EndpointConfig interface {
+    Timeout(<a href="index.html#TimeoutType">TimeoutType</a>) <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+    OrderersConfig() []<a href="index.html#OrdererConfig">OrdererConfig</a>
+    OrdererConfig(nameOrURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#OrdererConfig">OrdererConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    PeersConfig(org <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="index.html#PeerConfig">PeerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    PeerConfig(nameOrURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#PeerConfig">PeerConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    NetworkConfig() *<a href="index.html#NetworkConfig">NetworkConfig</a>
+    NetworkPeers() []<a href="index.html#NetworkPeer">NetworkPeer</a>
+    ChannelConfig(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#ChannelEndpointConfig">ChannelEndpointConfig</a>
+    ChannelPeers(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="index.html#ChannelPeer">ChannelPeer</a>
+    ChannelOrderers(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="index.html#OrdererConfig">OrdererConfig</a>
+    TLSCACertPool() <a href="index.html#CertPool">CertPool</a>
+    TLSClientCerts() []<a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a>
+    CryptoConfigPath() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ErrorHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/context.go?s=1005:1076#L28">ErrorHandler</a>
+				<a class="permalink" href="index.html#ErrorHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ErrorHandler is invoked when an error occurs in one of the services
+</p>
+
+			<pre>type ErrorHandler func(ctxt <a href="index.html#ClientContext">ClientContext</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EventClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=5814:6694#L131">EventClient</a>
+				<a class="permalink" href="index.html#EventClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EventClient is a client that connects to a peer and receives channel events
+such as block, filtered block, chaincode, and transaction status events.
+</p>
+
+			<pre>type EventClient interface {
+    <a href="index.html#EventService">EventService</a>
+
+    <span class="comment">// Connect connects to the event server.</span>
+    Connect() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Close closes the connection to the event server and releases all resources.</span>
+    <span class="comment">// Once this function is invoked the client may no longer be used.</span>
+    Close()
+
+    <span class="comment">// CloseIfIdle closes the connection to the event server only if there are no outstanding</span>
+    <span class="comment">// registrations.</span>
+    <span class="comment">// Returns true if the client was closed. In this case the client may no longer be used.</span>
+    <span class="comment">// A return value of false indicates that the client could not be closed since</span>
+    <span class="comment">// there was at least one registration.</span>
+    CloseIfIdle() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// TransferRegistrations transfers all registrations into an EventSnapshot.</span>
+    <span class="comment">// The registrations are not closed and may be transferred to a new event client.</span>
+    <span class="comment">// - close: If true then the client will also be closed</span>
+    TransferRegistrations(close <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (<a href="index.html#EventSnapshot">EventSnapshot</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EventService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=2376:4498#L61">EventService</a>
+				<a class="permalink" href="index.html#EventService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EventService is a service that receives events such as block, filtered block,
+chaincode, and transaction status events.
+</p>
+
+			<pre>type EventService interface {
+    <span class="comment">// RegisterBlockEvent registers for block events. If the caller does not have permission</span>
+    <span class="comment">// to register for block events then an error is returned.</span>
+    <span class="comment">// Note that Unregister must be called when the registration is no longer needed.</span>
+    <span class="comment">// - filter is an optional filter that filters out unwanted events. (Note: Only one filter may be specified.)</span>
+    <span class="comment">// - Returns the registration and a channel that is used to receive events. The channel</span>
+    <span class="comment">//   is closed when Unregister is called.</span>
+    RegisterBlockEvent(filter ...<a href="index.html#BlockFilter">BlockFilter</a>) (<a href="index.html#Registration">Registration</a>, &lt;-chan *<a href="index.html#BlockEvent">BlockEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RegisterFilteredBlockEvent registers for filtered block events.</span>
+    <span class="comment">// Note that Unregister must be called when the registration is no longer needed.</span>
+    <span class="comment">// - Returns the registration and a channel that is used to receive events. The channel</span>
+    <span class="comment">//   is closed when Unregister is called.</span>
+    RegisterFilteredBlockEvent() (<a href="index.html#Registration">Registration</a>, &lt;-chan *<a href="index.html#FilteredBlockEvent">FilteredBlockEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RegisterChaincodeEvent registers for chaincode events.</span>
+    <span class="comment">// Note that Unregister must be called when the registration is no longer needed.</span>
+    <span class="comment">// - ccID is the chaincode ID for which events are to be received</span>
+    <span class="comment">// - eventFilter is the chaincode event filter (regular expression) for which events are to be received</span>
+    <span class="comment">// - Returns the registration and a channel that is used to receive events. The channel</span>
+    <span class="comment">//   is closed when Unregister is called.</span>
+    RegisterChaincodeEvent(ccID, eventFilter <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Registration">Registration</a>, &lt;-chan *<a href="index.html#CCEvent">CCEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// RegisterTxStatusEvent registers for transaction status events.</span>
+    <span class="comment">// Note that Unregister must be called when the registration is no longer needed.</span>
+    <span class="comment">// - txID is the transaction ID for which events are to be received</span>
+    <span class="comment">// - Returns the registration and a channel that is used to receive events. The channel</span>
+    <span class="comment">//   is closed when Unregister is called.</span>
+    RegisterTxStatusEvent(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Registration">Registration</a>, &lt;-chan *<a href="index.html#TxStatusEvent">TxStatusEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Unregister removes the given registration and closes the event channel.</span>
+    <span class="comment">// - reg is the registration handle that was returned from one of the Register functions</span>
+    Unregister(reg <a href="index.html#Registration">Registration</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EventServicePolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=6001:7930#L177">EventServicePolicy</a>
+				<a class="permalink" href="index.html#EventServicePolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EventServicePolicy specifies the policy for the event service
+</p>
+
+			<pre>type EventServicePolicy struct {
+<span id="EventServicePolicy.ResolverStrategy"></span>    <span class="comment">// ResolverStrategy returns the peer resolver strategy to use when connecting to a peer</span>
+    <span class="comment">// Default: MinBlockHeightPeerResolver</span>
+    ResolverStrategy <a href="index.html#ResolverStrategy">ResolverStrategy</a>
+
+<span id="EventServicePolicy.Balancer"></span>    <span class="comment">// Balancer is the balancer to use when choosing a peer to connect to</span>
+    Balancer <a href="index.html#BalancerType">BalancerType</a>
+
+<span id="EventServicePolicy.MinBlockHeightResolverMode"></span>    <span class="comment">// MinBlockHeightResolverMode specifies the behaviour of the MinBlockHeight resolver. Note that this</span>
+    <span class="comment">// parameter is used when ResolverStrategy is either MinBlockHeightStrategy or PreferOrgStrategy.</span>
+    <span class="comment">// ResolveByThreshold (default): resolves to peers based on block height lag threshold, as specified by BlockHeightLagThreshold.</span>
+    <span class="comment">// MinBlockHeightResolverMode: then only the peers with the latest block heights are chosen.</span>
+    MinBlockHeightResolverMode <a href="index.html#MinBlockHeightResolverMode">MinBlockHeightResolverMode</a>
+
+<span id="EventServicePolicy.BlockHeightLagThreshold"></span>    <span class="comment">// BlockHeightLagThreshold returns the block height lag threshold. This value is used for choosing a peer</span>
+    <span class="comment">// to connect to. If a peer is lagging behind the most up-to-date peer by more than the given number of</span>
+    <span class="comment">// blocks then it will be excluded from selection.</span>
+    BlockHeightLagThreshold <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+<span id="EventServicePolicy.PeerMonitor"></span>    <span class="comment">// PeerMonitor indicates whether or not to enable the peer monitor.</span>
+    PeerMonitor <a href="index.html#EnabledDisabled">EnabledDisabled</a>
+
+<span id="EventServicePolicy.ReconnectBlockHeightLagThreshold"></span>    <span class="comment">// ReconnectBlockHeightLagThreshold - if &gt;0 then the event client will disconnect from the peer if the peer&#39;s</span>
+    <span class="comment">// block height falls behind the specified number of blocks and will reconnect to a better performing peer.</span>
+    <span class="comment">// If set to 0 (default) then the peer will not disconnect based on block height.</span>
+    <span class="comment">// NOTE: Setting this value too low may cause the event client to disconnect/reconnect too frequently, thereby</span>
+    <span class="comment">// affecting performance.</span>
+    ReconnectBlockHeightLagThreshold <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+<span id="EventServicePolicy.PeerMonitorPeriod"></span>    <span class="comment">// PeerMonitorPeriod is the period in which the connected peer is monitored to see if</span>
+    <span class="comment">// the event client should disconnect from it and reconnect to another peer.</span>
+    <span class="comment">// If set to 0 then the peer will not be monitored and will not be disconnected.</span>
+    PeerMonitorPeriod <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EventSnapshot">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=5021:5657#L108">EventSnapshot</a>
+				<a class="permalink" href="index.html#EventSnapshot">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EventSnapshot contains a snapshot of the event client before it was stopped.
+The snapshot includes all of the event registrations and the last block received.
+</p>
+
+			<pre>type EventSnapshot interface {
+    <span class="comment">// LastBlockReceived returns the block number of the last block received at the time</span>
+    <span class="comment">// that the snapshot was taken.</span>
+    LastBlockReceived() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// BlockRegistrations returns the block registrations.</span>
+    BlockRegistrations() []<a href="index.html#Registration">Registration</a>
+
+    <span class="comment">// FilteredBlockRegistrations returns the filtered block registrations.</span>
+    FilteredBlockRegistrations() []<a href="index.html#Registration">Registration</a>
+
+    <span class="comment">// CCRegistrations returns the chaincode registrations.</span>
+    CCRegistrations() []<a href="index.html#Registration">Registration</a>
+
+    <span class="comment">// TxStatusRegistrations returns the transaction status registrations.</span>
+    TxStatusRegistrations() []<a href="index.html#Registration">Registration</a>
+
+    <span class="comment">// Closes all registrations</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FilteredBlockEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=616:847#L13">FilteredBlockEvent</a>
+				<a class="permalink" href="index.html#FilteredBlockEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FilteredBlockEvent contains the data for a filtered block event
+</p>
+
+			<pre>type FilteredBlockEvent struct {
+<span id="FilteredBlockEvent.FilteredBlock"></span>    <span class="comment">// FilteredBlock contains a filtered version of the block that was committed</span>
+    FilteredBlock *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#FilteredBlock">FilteredBlock</a>
+<span id="FilteredBlockEvent.SourceURL"></span>    <span class="comment">// SourceURL specifies the URL of the peer that produced the event</span>
+    SourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InfraProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=696:884#L21">InfraProvider</a>
+				<a class="permalink" href="index.html#InfraProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InfraProvider enables access to fabric objects such as peer and user based on config or
+</p>
+
+			<pre>type InfraProvider interface {
+    CreatePeerFromConfig(peerCfg *<a href="index.html#NetworkPeer">NetworkPeer</a>) (<a href="index.html#Peer">Peer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CreateOrdererFromConfig(cfg *<a href="index.html#OrdererConfig">OrdererConfig</a>) (<a href="index.html#Orderer">Orderer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CommManager() <a href="index.html#CommManager">CommManager</a>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LocalDiscoveryProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=1814:1924#L51">LocalDiscoveryProvider</a>
+				<a class="permalink" href="index.html#LocalDiscoveryProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LocalDiscoveryProvider is used to discover peers in the local MSP
+</p>
+
+			<pre>type LocalDiscoveryProvider interface {
+    CreateLocalDiscoveryService(mspID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#DiscoveryService">DiscoveryService</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MetricsProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=5460:5531#L161">MetricsProvider</a>
+				<a class="permalink" href="index.html#MetricsProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MetricsProvider represents a provider of metrics.
+</p>
+
+			<pre>type MetricsProvider interface {
+    GetMetrics() *<a href="../../../fabsdk/metrics/index.html">metrics</a>.<a href="../../../fabsdk/metrics/index.html#ClientMetrics">ClientMetrics</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MinBlockHeightResolverMode">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=5316:5354#L155">MinBlockHeightResolverMode</a>
+				<a class="permalink" href="index.html#MinBlockHeightResolverMode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MinBlockHeightResolverMode specifies the behaviour of the MinBlockHeight resolver strategy.
+</p>
+
+			<pre>type MinBlockHeightResolverMode <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// ResolveByThreshold resolves to peers based on block height lag threshold.</span>
+    <span id="ResolveByThreshold">ResolveByThreshold</span> <a href="index.html#MinBlockHeightResolverMode">MinBlockHeightResolverMode</a> = &#34;ResolveByThreshold&#34;
+
+    <span class="comment">// ResolveLatest resolves to peers with the most up-to-date block height</span>
+    <span id="ResolveLatest">ResolveLatest</span> <a href="index.html#MinBlockHeightResolverMode">MinBlockHeightResolverMode</a> = &#34;ResolveLatest&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NetworkConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=296:495#L7">NetworkConfig</a>
+				<a class="permalink" href="index.html#NetworkConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NetworkConfig provides a static definition of endpoint configuration network
+</p>
+
+			<pre>type NetworkConfig struct {
+<span id="NetworkConfig.Channels"></span>    Channels      map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#ChannelEndpointConfig">ChannelEndpointConfig</a>
+<span id="NetworkConfig.Organizations"></span>    Organizations map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#OrganizationConfig">OrganizationConfig</a>
+<span id="NetworkConfig.Orderers"></span>    Orderers      map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#OrdererConfig">OrdererConfig</a>
+<span id="NetworkConfig.Peers"></span>    Peers         map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#PeerConfig">PeerConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NetworkPeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3401:3454#L102">NetworkPeer</a>
+				<a class="permalink" href="index.html#NetworkPeer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NetworkPeer combines peer info with MSP info
+</p>
+
+			<pre>type NetworkPeer struct {
+    <a href="index.html#PeerConfig">PeerConfig</a>
+<span id="NetworkPeer.MSPID"></span>    MSPID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Orderer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/orderer.go?s=415:640#L7">Orderer</a>
+				<a class="permalink" href="index.html#Orderer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Orderer The Orderer class represents a peer in the target blockchain network to which
+HFC sends a block of transactions of endorsed proposals requiring ordering.
+</p>
+
+			<pre>type Orderer interface {
+    URL() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    SendBroadcast(ctx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, envelope *<a href="index.html#SignedEnvelope">SignedEnvelope</a>) (*<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Status">Status</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    SendDeliver(ctx <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, envelope *<a href="index.html#SignedEnvelope">SignedEnvelope</a>) (chan *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, chan <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrdererConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3797:3913#L117">OrdererConfig</a>
+				<a class="permalink" href="index.html#OrdererConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererConfig defines an orderer configuration
+</p>
+
+			<pre>type OrdererConfig struct {
+<span id="OrdererConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrdererConfig.GRPCOptions"></span>    GRPCOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}
+<span id="OrdererConfig.TLSCACert"></span>    TLSCACert   *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrgAnchorPeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=422:489#L7">OrgAnchorPeer</a>
+				<a class="permalink" href="index.html#OrgAnchorPeer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrgAnchorPeer contains information about an anchor peer on this channel
+</p>
+
+			<pre>type OrgAnchorPeer struct {
+<span id="OrgAnchorPeer.Org"></span>    Org  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrgAnchorPeer.Host"></span>    Host <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrgAnchorPeer.Port"></span>    Port <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="OrganizationConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3536:3745#L108">OrganizationConfig</a>
+				<a class="permalink" href="index.html#OrganizationConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrganizationConfig provides the definition of an organization in the network
+</p>
+
+			<pre>type OrganizationConfig struct {
+<span id="OrganizationConfig.MSPID"></span>    MSPID                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrganizationConfig.CryptoPath"></span>    CryptoPath             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrganizationConfig.Users"></span>    Users                  map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#CertKeyPair">CertKeyPair</a>
+<span id="OrganizationConfig.Peers"></span>    Peers                  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="OrganizationConfig.CertificateAuthorities"></span>    CertificateAuthorities []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Peer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/peer.go?s=248:439#L1">Peer</a>
+				<a class="permalink" href="index.html#Peer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The Peer class represents a peer in the target blockchain network to which
+HFC sends endorsement proposals or query requests.
+</p>
+
+			<pre>type Peer interface {
+    <a href="index.html#ProposalProcessor">ProposalProcessor</a>
+    <span class="comment">// MSPID gets the Peer mspID.</span>
+    MSPID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//URL gets the peer address</span>
+    URL() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerChannelConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3106:3223#L88">PeerChannelConfig</a>
+				<a class="permalink" href="index.html#PeerChannelConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerChannelConfig defines the peer capabilities
+</p>
+
+			<pre>type PeerChannelConfig struct {
+<span id="PeerChannelConfig.EndorsingPeer"></span>    EndorsingPeer  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="PeerChannelConfig.ChaincodeQuery"></span>    ChaincodeQuery <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="PeerChannelConfig.LedgerQuery"></span>    LedgerQuery    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="PeerChannelConfig.EventSource"></span>    EventSource    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=3958:4071#L124">PeerConfig</a>
+				<a class="permalink" href="index.html#PeerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerConfig defines a peer configuration
+</p>
+
+			<pre>type PeerConfig struct {
+<span id="PeerConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PeerConfig.GRPCOptions"></span>    GRPCOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}
+<span id="PeerConfig.TLSCACert"></span>    TLSCACert   *<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PeerState">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/peer.go?s=496:546#L13">PeerState</a>
+				<a class="permalink" href="index.html#PeerState">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerState provides state information about the Peer
+</p>
+
+			<pre>type PeerState interface {
+    BlockHeight() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PrioritySelector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=2337:2570#L69">PrioritySelector</a>
+				<a class="permalink" href="index.html#PrioritySelector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrioritySelector determines how likely a peer is to be
+selected over another peer
+</p>
+
+			<pre>type PrioritySelector interface {
+    <span class="comment">// A positive return value means peer1 is selected</span>
+    <span class="comment">// A negative return value means the peer2 is selected</span>
+    <span class="comment">// Zero return value means their priorities are the same</span>
+    Compare(peer1, peer2 <a href="index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProcessProposalRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=2407:2480#L71">ProcessProposalRequest</a>
+				<a class="permalink" href="index.html#ProcessProposalRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProcessProposalRequest requests simulation of a proposed transaction from transaction processors.
+</p>
+
+			<pre>type ProcessProposalRequest struct {
+<span id="ProcessProposalRequest.SignedProposal"></span>    SignedProposal *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#SignedProposal">SignedProposal</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProposalProcessor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=354:500#L6">ProposalProcessor</a>
+				<a class="permalink" href="index.html#ProposalProcessor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProposalProcessor simulates transaction proposal, so that a client can submit the result for ordering.
+</p>
+
+			<pre>type ProposalProcessor interface {
+    ProcessTransactionProposal(<a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, <a href="index.html#ProcessProposalRequest">ProcessProposalRequest</a>) (*<a href="index.html#TransactionProposalResponse">TransactionProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProposalSender">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=1217:1432#L34">ProposalSender</a>
+				<a class="permalink" href="index.html#ProposalSender">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProposalSender provides the ability for a transaction proposal to be created and sent.
+</p>
+
+			<pre>type ProposalSender interface {
+    CreateTransactionHeader(opts ...<a href="index.html#TxnHeaderOpt">TxnHeaderOpt</a>) (<a href="index.html#TransactionHeader">TransactionHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    SendTransactionProposal(*<a href="index.html#TransactionProposal">TransactionProposal</a>, []<a href="index.html#ProposalProcessor">ProposalProcessor</a>) ([]*<a href="index.html#TransactionProposalResponse">TransactionProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Providers">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=4852:5045#L142">Providers</a>
+				<a class="permalink" href="index.html#Providers">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Providers represents the SDK configured service providers context.
+</p>
+
+			<pre>type Providers interface {
+    LocalDiscoveryProvider() <a href="index.html#LocalDiscoveryProvider">LocalDiscoveryProvider</a>
+    ChannelProvider() <a href="index.html#ChannelProvider">ChannelProvider</a>
+    InfraProvider() <a href="index.html#InfraProvider">InfraProvider</a>
+    EndpointConfig() <a href="index.html#EndpointConfig">EndpointConfig</a>
+    <a href="index.html#MetricsProvider">MetricsProvider</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryChannelConfigPolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=1299:1400#L35">QueryChannelConfigPolicy</a>
+				<a class="permalink" href="index.html#QueryChannelConfigPolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryChannelConfigPolicy defines policy for channelConfigBlock
+</p>
+
+			<pre>type QueryChannelConfigPolicy struct {
+<span id="QueryChannelConfigPolicy.MinResponses"></span>    MinResponses <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="QueryChannelConfigPolicy.MaxTargets"></span>    MaxTargets   <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="QueryChannelConfigPolicy.RetryOpts"></span>    RetryOpts    <a href="../../errors/retry/index.html">retry</a>.<a href="../../errors/retry/index.html#Opts">Opts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Registration">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=2086:2115#L53">Registration</a>
+				<a class="permalink" href="index.html#Registration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Registration is a handle that is returned from a successful RegisterXXXEvent.
+This handle should be used in Unregister in order to unregister the event.
+</p>
+
+			<pre>type Registration interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ResolverStrategy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=4230:4258#L137">ResolverStrategy</a>
+				<a class="permalink" href="index.html#ResolverStrategy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ResolverStrategy is the peer resolver type
+</p>
+
+			<pre>type ResolverStrategy <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// BalancedStrategy is a peer resolver strategy that chooses peers based on a configured load balancer</span>
+    <span id="BalancedStrategy">BalancedStrategy</span> <a href="index.html#ResolverStrategy">ResolverStrategy</a> = &#34;Balanced&#34;
+
+    <span class="comment">// MinBlockHeightStrategy is a peer resolver strategy that chooses the best peer according to a block height lag threshold.</span>
+    <span class="comment">// The maximum block height of all peers is determined and the peers whose block heights are under the maximum height but above</span>
+    <span class="comment">// a provided &#34;lag&#34; threshold are load balanced. The other peers are not considered.</span>
+    <span id="MinBlockHeightStrategy">MinBlockHeightStrategy</span> <a href="index.html#ResolverStrategy">ResolverStrategy</a> = &#34;MinBlockHeight&#34;
+
+    <span class="comment">// PreferOrgStrategy is a peer resolver strategy that determines which peers are suitable based on block height lag threshold,</span>
+    <span class="comment">// although will prefer the peers in the current org (as long as their block height is above a configured threshold).</span>
+    <span class="comment">// If none of the peers from the current org are suitable then a peer from another org is chosen.</span>
+    <span id="PreferOrgStrategy">PreferOrgStrategy</span> <a href="index.html#ResolverStrategy">ResolverStrategy</a> = &#34;PreferOrg&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelectionPolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=2320:3053#L72">SelectionPolicy</a>
+				<a class="permalink" href="index.html#SelectionPolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SelectionPolicy defines policy for selection
+</p>
+
+			<pre>type SelectionPolicy struct {
+<span id="SelectionPolicy.SortingStrategy"></span>    <span class="comment">// SortingStrategy is the endorser sorting strategy to use</span>
+    SortingStrategy <a href="index.html#SelectionSortingStrategy">SelectionSortingStrategy</a>
+
+    <span class="comment">// BalancerType is the balancer to use in order to load-balance calls to endorsers</span>
+<span id="SelectionPolicy.Balancer"></span>    Balancer <a href="index.html#BalancerType">BalancerType</a>
+
+<span id="SelectionPolicy.BlockHeightLagThreshold"></span>    <span class="comment">// BlockHeightLagThreshold is the number of blocks from the highest block number of a group of peers</span>
+    <span class="comment">// that a peer can lag behind and still be considered to be up-to-date. These peers will be sorted</span>
+    <span class="comment">// using the given Balancer. If a peer&#39;s block height falls behind this threshold then it will be</span>
+    <span class="comment">// demoted to a lower priority list of peers which will be sorted according to block height.</span>
+    <span class="comment">// Note: This property only applies to BlockHeightPriority sorter</span>
+    BlockHeightLagThreshold <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelectionService">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=1177:1603#L37">SelectionService</a>
+				<a class="permalink" href="index.html#SelectionService">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SelectionService selects peers for endorsement and commit events
+</p>
+
+			<pre>type SelectionService interface {
+    <span class="comment">// GetEndorsersForChaincode returns a set of peers that should satisfy the endorsement</span>
+    <span class="comment">// policies of all of the given chaincodes.</span>
+    <span class="comment">// A set of options may be provided to the selection service. Note that the type of options</span>
+    <span class="comment">// may vary depending on the specific selection service implementation.</span>
+    GetEndorsersForChaincode(chaincodes []*<a href="index.html#ChaincodeCall">ChaincodeCall</a>, opts ...<a href="../../options/index.html">options</a>.<a href="../../options/index.html#Opt">Opt</a>) ([]<a href="index.html#Peer">Peer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelectionSortingStrategy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/network.go?s=1614:1650#L49">SelectionSortingStrategy</a>
+				<a class="permalink" href="index.html#SelectionSortingStrategy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SelectionSortingStrategy is the endorser selection sorting strategy
+</p>
+
+			<pre>type SelectionSortingStrategy <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// BlockHeightPriority (default) is a load-balancing selection sorting strategy</span>
+    <span class="comment">// which also prioritizes peers at a block height that is above a certain &#34;lag&#34; threshold.</span>
+    <span id="BlockHeightPriority">BlockHeightPriority</span> <a href="index.html#SelectionSortingStrategy">SelectionSortingStrategy</a> = &#34;BlockHeightPriority&#34;
+
+    <span class="comment">// Balanced is a load-balancing selection sorting strategy</span>
+    <span id="Balanced">Balanced</span> <a href="index.html#SelectionSortingStrategy">SelectionSortingStrategy</a> = &#34;Balanced&#34;
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Sender">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/sender.go?s=571:729#L12">Sender</a>
+				<a class="permalink" href="index.html#Sender">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Sender provides the ability for a transaction to be created and sent.
+</p>
+<p>
+TODO: CreateTransaction should be refactored as it is actually a factory method.
+</p>
+
+			<pre>type Sender interface {
+    CreateTransaction(request <a href="index.html#TransactionRequest">TransactionRequest</a>) (*<a href="index.html#Transaction">Transaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    SendTransaction(tx *<a href="index.html#Transaction">Transaction</a>) (*<a href="index.html#TransactionResponse">TransactionResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignedEnvelope">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/orderer.go?s=709:775#L14">SignedEnvelope</a>
+				<a class="permalink" href="index.html#SignedEnvelope">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A SignedEnvelope can can be sent to an orderer for broadcasting
+</p>
+
+			<pre>type SignedEnvelope struct {
+<span id="SignedEnvelope.Payload"></span>    Payload   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="SignedEnvelope.Signature"></span>    Signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TargetFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=1976:2110#L56">TargetFilter</a>
+				<a class="permalink" href="index.html#TargetFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TargetFilter allows for filtering target peers
+</p>
+
+			<pre>type TargetFilter interface {
+    <span class="comment">// Accept returns true if peer should be included in the list of target peers</span>
+    Accept(peer <a href="index.html#Peer">Peer</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TargetSorter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=2160:2247#L62">TargetSorter</a>
+				<a class="permalink" href="index.html#TargetSorter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TargetSorter allows for sorting target peers
+</p>
+
+			<pre>type TargetSorter interface {
+    <span class="comment">// Returns the sorted peers</span>
+    Sort(peers []<a href="index.html#Peer">Peer</a>) []<a href="index.html#Peer">Peer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TimeoutType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/provider.go?s=3463:3483#L100">TimeoutType</a>
+				<a class="permalink" href="index.html#TimeoutType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TimeoutType enumerates the different types of outgoing connections
+</p>
+
+			<pre>type TimeoutType <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// PeerConnection connection timeout</span>
+    <span id="PeerConnection">PeerConnection</span> <a href="index.html#TimeoutType">TimeoutType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span class="comment">// EventReg connection timeout</span>
+    <span id="EventReg">EventReg</span>
+    <span class="comment">// Query timeout</span>
+    <span id="Query">Query</span>
+    <span class="comment">// Execute timeout</span>
+    <span id="Execute">Execute</span>
+    <span class="comment">// OrdererConnection orderer connection timeout</span>
+    <span id="OrdererConnection">OrdererConnection</span>
+    <span class="comment">// OrdererResponse orderer response timeout</span>
+    <span id="OrdererResponse">OrdererResponse</span>
+    <span class="comment">// DiscoveryGreylistExpiry discovery Greylist expiration period</span>
+    <span id="DiscoveryGreylistExpiry">DiscoveryGreylistExpiry</span>
+    <span class="comment">// ConnectionIdle is the timeout for closing idle connections</span>
+    <span id="ConnectionIdle">ConnectionIdle</span>
+    <span class="comment">// CacheSweepInterval is the duration between cache sweeps</span>
+    <span id="CacheSweepInterval">CacheSweepInterval</span>
+    <span class="comment">// EventServiceIdle is the timeout for closing the event service connection</span>
+    <span id="EventServiceIdle">EventServiceIdle</span>
+    <span class="comment">// PeerResponse peer response timeout</span>
+    <span id="PeerResponse">PeerResponse</span>
+    <span class="comment">// ResMgmt timeout is default overall timeout for all resource management operations</span>
+    <span id="ResMgmt">ResMgmt</span>
+    <span class="comment">// ChannelConfigRefresh channel configuration refresh interval</span>
+    <span id="ChannelConfigRefresh">ChannelConfigRefresh</span>
+    <span class="comment">// ChannelMembershipRefresh channel membership refresh interval</span>
+    <span id="ChannelMembershipRefresh">ChannelMembershipRefresh</span>
+    <span class="comment">// DiscoveryConnection discovery connection timeout</span>
+    <span id="DiscoveryConnection">DiscoveryConnection</span>
+    <span class="comment">// DiscoveryResponse discovery response timeout</span>
+    <span id="DiscoveryResponse">DiscoveryResponse</span>
+    <span class="comment">// DiscoveryServiceRefresh discovery service refresh interval</span>
+    <span id="DiscoveryServiceRefresh">DiscoveryServiceRefresh</span>
+    <span class="comment">// SelectionServiceRefresh selection service refresh interval</span>
+    <span id="SelectionServiceRefresh">SelectionServiceRefresh</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Transaction">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/sender.go?s=792:882#L18">Transaction</a>
+				<a class="permalink" href="index.html#Transaction">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The Transaction object created from an endorsed proposal.
+</p>
+
+			<pre>type Transaction struct {
+<span id="Transaction.Proposal"></span>    Proposal    *<a href="index.html#TransactionProposal">TransactionProposal</a>
+<span id="Transaction.Transaction"></span>    Transaction *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#Transaction">Transaction</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionHeader">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=1820:1941#L49">TransactionHeader</a>
+				<a class="permalink" href="index.html#TransactionHeader">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionHeader provides a handle to transaction metadata.
+</p>
+
+			<pre>type TransactionHeader interface {
+    TransactionID() <a href="index.html#TransactionID">TransactionID</a>
+    Creator() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    Nonce() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    ChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionID">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=1509:1534#L40">TransactionID</a>
+				<a class="permalink" href="index.html#TransactionID">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionID provides the identifier of a Fabric transaction proposal.
+</p>
+
+			<pre>type TransactionID <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionProposal">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=2234:2304#L65">TransactionProposal</a>
+				<a class="permalink" href="index.html#TransactionProposal">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionProposal contains a marashalled transaction proposal.
+</p>
+
+			<pre>type TransactionProposal struct {
+<span id="TransactionProposal.TxnID"></span>    TxnID <a href="index.html#TransactionID">TransactionID</a>
+    *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#Proposal">Proposal</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionProposalResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=2572:2780#L76">TransactionProposalResponse</a>
+				<a class="permalink" href="index.html#TransactionProposalResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionProposalResponse respresents the result of transaction proposal processing.
+</p>
+
+			<pre>type TransactionProposalResponse struct {
+<span id="TransactionProposalResponse.Endorser"></span>    Endorser <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TransactionProposalResponse.Status"></span>    <span class="comment">// Status is the EndorserStatus</span>
+    Status <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+<span id="TransactionProposalResponse.ChaincodeStatus"></span>    <span class="comment">// ChaincodeStatus is the status returned by Chaincode</span>
+    ChaincodeStatus <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+    *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ProposalResponse">ProposalResponse</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/sender.go?s=285:409#L4">TransactionRequest</a>
+				<a class="permalink" href="index.html#TransactionRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionRequest holds endorsed Transaction Proposals.
+</p>
+
+			<pre>type TransactionRequest struct {
+<span id="TransactionRequest.Proposal"></span>    Proposal          *<a href="index.html#TransactionProposal">TransactionProposal</a>
+<span id="TransactionRequest.ProposalResponses"></span>    ProposalResponses []*<a href="index.html#TransactionProposalResponse">TransactionProposalResponse</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/sender.go?s=953:1004#L24">TransactionResponse</a>
+				<a class="permalink" href="index.html#TransactionResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionResponse contains information returned by the orderer.
+</p>
+
+			<pre>type TransactionResponse struct {
+<span id="TransactionResponse.Orderer"></span>    Orderer <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Transactor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/context.go?s=691:744#L17">Transactor</a>
+				<a class="permalink" href="index.html#Transactor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Transactor supplies methods for sending transaction proposals and transactions.
+</p>
+
+			<pre>type Transactor interface {
+    <a href="index.html#Sender">Sender</a>
+    <a href="index.html#ProposalSender">ProposalSender</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxStatusEvent">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/eventservice.go?s=915:1305#L21">TxStatusEvent</a>
+				<a class="permalink" href="index.html#TxStatusEvent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxStatusEvent contains the data for a transaction status event
+</p>
+
+			<pre>type TxStatusEvent struct {
+<span id="TxStatusEvent.TxID"></span>    <span class="comment">// TxID is the ID of the transaction in which the event was set</span>
+    TxID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxStatusEvent.TxValidationCode"></span>    <span class="comment">// TxValidationCode is the status code of the commit</span>
+    TxValidationCode <a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#TxValidationCode">TxValidationCode</a>
+<span id="TxStatusEvent.BlockNumber"></span>    <span class="comment">// BlockNumber contains the block number in which the</span>
+    <span class="comment">// transaction was committed</span>
+    BlockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="TxStatusEvent.SourceURL"></span>    <span class="comment">// SourceURL specifies the URL of the peer that produced the event</span>
+    SourceURL <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxnHeaderOpt">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=686:727#L17">TxnHeaderOpt</a>
+				<a class="permalink" href="index.html#TxnHeaderOpt">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxnHeaderOpt is a Transaction Header option
+</p>
+
+			<pre>type TxnHeaderOpt func(*<a href="index.html#TxnHeaderOptions">TxnHeaderOptions</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithCreator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=1003:1048#L27">WithCreator</a>
+					<a class="permalink" href="index.html#WithCreator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCreator(creator []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="index.html#TxnHeaderOpt">TxnHeaderOpt</a></pre>
+				<p>
+WithCreator specifies the creator to use when creating the Transaction Header
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithNonce">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=806:847#L20">WithNonce</a>
+					<a class="permalink" href="index.html#WithNonce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithNonce(nonce []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="index.html#TxnHeaderOpt">TxnHeaderOpt</a></pre>
+				<p>
+WithNonce specifies the nonce to use when creating the Transaction Header
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="TxnHeaderOptions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/proposer.go?s=573:637#L11">TxnHeaderOptions</a>
+				<a class="permalink" href="index.html#TxnHeaderOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxnHeaderOptions contains options for creating a Transaction Header
+</p>
+
+			<pre>type TxnHeaderOptions struct {
+<span id="TxnHeaderOptions.Nonce"></span>    Nonce   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="TxnHeaderOptions.Creator"></span>    Creator []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Versions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab/channel.go?s=1911:2025#L61">Versions</a>
+				<a class="permalink" href="index.html#Versions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Versions ...
+</p>
+
+			<pre>type Versions struct {
+<span id="Versions.ReadSet"></span>    ReadSet  *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigGroup">ConfigGroup</a>
+<span id="Versions.WriteSet"></span>    WriteSet *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigGroup">ConfigGroup</a>
+<span id="Versions.Channel"></span>    Channel  *<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#ConfigGroup">ConfigGroup</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

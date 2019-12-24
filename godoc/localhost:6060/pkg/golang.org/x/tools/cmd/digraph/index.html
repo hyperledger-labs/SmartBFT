@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>digraph - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Command digraph
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<p>
+The digraph command performs queries over unlabelled directed graphs
+represented in text form.  It is intended to integrate nicely with
+typical UNIX command pipelines.
+</p>
+<p>
+Usage:
+</p>
+<pre>your-application | digraph [command]
+</pre>
+<p>
+The support commands are:
+</p>
+<pre>nodes
+	the set of all nodes
+degree
+	the in-degree and out-degree of each node
+transpose
+	the reverse of the input edges
+preds &lt;node&gt; ...
+	the set of immediate predecessors of the specified nodes
+succs &lt;node&gt; ...
+	the set of immediate successors of the specified nodes
+forward &lt;node&gt; ...
+	the set of nodes transitively reachable from the specified nodes
+reverse &lt;node&gt; ...
+	the set of nodes that transitively reach the specified nodes
+somepath &lt;node&gt; &lt;node&gt;
+	the list of nodes on some arbitrary path from the first node to the second
+allpaths &lt;node&gt; &lt;node&gt;
+	the set of nodes on all paths from the first node to the second
+sccs
+	all strongly connected components (one per line)
+scc &lt;node&gt;
+	the set of nodes nodes strongly connected to the specified one
+focus &lt;node&gt;
+	the subgraph containing all directed paths that pass through the specified node
+</pre>
+<p>
+Input format:
+</p>
+<p>
+Each line contains zero or more words. Words are separated by unquoted
+whitespace; words may contain Go-style double-quoted portions, allowing spaces
+and other characters to be expressed.
+</p>
+<p>
+Each word declares a node, and if there are more than one, an edge from the
+first to each subsequent one. The graph is provided on the standard input.
+</p>
+<p>
+For instance, the following (acyclic) graph specifies a partial order among the
+subtasks of getting dressed:
+</p>
+<pre>$ cat clothes.txt
+socks shoes
+&#34;boxer shorts&#34; pants
+pants belt shoes
+shirt tie sweater
+sweater jacket
+hat
+</pre>
+<p>
+The line &#34;shirt tie sweater&#34; indicates the two edges shirt -&gt; tie and
+shirt -&gt; sweater, not shirt -&gt; tie -&gt; sweater.
+</p>
+<p>
+Example usage:
+</p>
+<p>
+Using digraph with existing Go tools:
+</p>
+<pre>$ go mod graph | digraph nodes # Operate on the Go module graph.
+$ go list -m all | digraph nodes # Operate on the Go package graph.
+</pre>
+<p>
+Show the transitive closure of imports of the digraph tool itself:
+</p>
+<pre>$ go list -f &#39;{{.ImportPath}} {{join .Imports &#34; &#34;}}&#39; ... | digraph forward golang.org/x/tools/cmd/digraph
+</pre>
+<p>
+Show which clothes (see above) must be donned before a jacket:
+</p>
+<pre>$ digraph reverse jacket
+</pre>
+
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,3258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>shim - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package shim
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode/shim"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package shim provides APIs for the chaincode to access its state
+variables, transaction context and call other chaincodes.
+</p>
+<p>
+Package shim provides APIs for the chaincode to access its state
+variables, transaction context and call other chaincodes.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Error">func Error(msg string) pb.Response</a></dd>
+			
+				
+				<dd><a href="index.html#IsEnabledForLogLevel">func IsEnabledForLogLevel(logLevel string) bool</a></dd>
+			
+				
+				<dd><a href="index.html#SetLoggingLevel">func SetLoggingLevel(level LoggingLevel)</a></dd>
+			
+				
+				<dd><a href="index.html#SetupChaincodeLogging">func SetupChaincodeLogging()</a></dd>
+			
+				
+				<dd><a href="index.html#Start">func Start(cc Chaincode) error</a></dd>
+			
+				
+				<dd><a href="index.html#StartInProc">func StartInProc(env []string, args []string, cc Chaincode, recv &lt;-chan *pb.ChaincodeMessage, send chan&lt;- *pb.ChaincodeMessage) error</a></dd>
+			
+				
+				<dd><a href="index.html#Success">func Success(payload []byte) pb.Response</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Chaincode">type Chaincode</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeLogger">type ChaincodeLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLogger">func NewLogger(name string) *ChaincodeLogger</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Critical">func (c *ChaincodeLogger) Critical(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Criticalf">func (c *ChaincodeLogger) Criticalf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Debug">func (c *ChaincodeLogger) Debug(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Debugf">func (c *ChaincodeLogger) Debugf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Error">func (c *ChaincodeLogger) Error(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Errorf">func (c *ChaincodeLogger) Errorf(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Info">func (c *ChaincodeLogger) Info(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Infof">func (c *ChaincodeLogger) Infof(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.IsEnabledFor">func (c *ChaincodeLogger) IsEnabledFor(level LoggingLevel) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Notice">func (c *ChaincodeLogger) Notice(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Noticef">func (c *ChaincodeLogger) Noticef(format string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.SetLevel">func (c *ChaincodeLogger) SetLevel(level LoggingLevel)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Warning">func (c *ChaincodeLogger) Warning(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeLogger.Warningf">func (c *ChaincodeLogger) Warningf(format string, args ...interface{})</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChaincodeStub">type ChaincodeStub</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.CreateCompositeKey">func (stub *ChaincodeStub) CreateCompositeKey(objectType string, attributes []string) (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.DelPrivateData">func (stub *ChaincodeStub) DelPrivateData(collection string, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.DelState">func (stub *ChaincodeStub) DelState(key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetArgs">func (stub *ChaincodeStub) GetArgs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetArgsSlice">func (stub *ChaincodeStub) GetArgsSlice() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetBinding">func (stub *ChaincodeStub) GetBinding() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetChannelID">func (stub *ChaincodeStub) GetChannelID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetCreator">func (stub *ChaincodeStub) GetCreator() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetDecorations">func (stub *ChaincodeStub) GetDecorations() map[string][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetFunctionAndParameters">func (stub *ChaincodeStub) GetFunctionAndParameters() (function string, params []string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetHistoryForKey">func (stub *ChaincodeStub) GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateData">func (stub *ChaincodeStub) GetPrivateData(collection string, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateDataByPartialCompositeKey">func (stub *ChaincodeStub) GetPrivateDataByPartialCompositeKey(collection, objectType string, attributes []string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateDataByRange">func (stub *ChaincodeStub) GetPrivateDataByRange(collection, startKey, endKey string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateDataHash">func (stub *ChaincodeStub) GetPrivateDataHash(collection string, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateDataQueryResult">func (stub *ChaincodeStub) GetPrivateDataQueryResult(collection, query string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetPrivateDataValidationParameter">func (stub *ChaincodeStub) GetPrivateDataValidationParameter(collection, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetQueryResult">func (stub *ChaincodeStub) GetQueryResult(query string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetQueryResultWithPagination">func (stub *ChaincodeStub) GetQueryResultWithPagination(query string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetSignedProposal">func (stub *ChaincodeStub) GetSignedProposal() (*pb.SignedProposal, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetState">func (stub *ChaincodeStub) GetState(key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStateByPartialCompositeKey">func (stub *ChaincodeStub) GetStateByPartialCompositeKey(objectType string, attributes []string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStateByPartialCompositeKeyWithPagination">func (stub *ChaincodeStub) GetStateByPartialCompositeKeyWithPagination(objectType string, keys []string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStateByRange">func (stub *ChaincodeStub) GetStateByRange(startKey, endKey string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStateByRangeWithPagination">func (stub *ChaincodeStub) GetStateByRangeWithPagination(startKey, endKey string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStateValidationParameter">func (stub *ChaincodeStub) GetStateValidationParameter(key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetStringArgs">func (stub *ChaincodeStub) GetStringArgs() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetTransient">func (stub *ChaincodeStub) GetTransient() (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetTxID">func (stub *ChaincodeStub) GetTxID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.GetTxTimestamp">func (stub *ChaincodeStub) GetTxTimestamp() (*timestamp.Timestamp, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.InvokeChaincode">func (stub *ChaincodeStub) InvokeChaincode(chaincodeName string, args [][]byte, channel string) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.PutPrivateData">func (stub *ChaincodeStub) PutPrivateData(collection string, key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.PutState">func (stub *ChaincodeStub) PutState(key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.SetEvent">func (stub *ChaincodeStub) SetEvent(name string, payload []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.SetPrivateDataValidationParameter">func (stub *ChaincodeStub) SetPrivateDataValidationParameter(collection, key string, ep []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.SetStateValidationParameter">func (stub *ChaincodeStub) SetStateValidationParameter(key string, ep []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeStub.SplitCompositeKey">func (stub *ChaincodeStub) SplitCompositeKey(compositeKey string) (string, []string, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChaincodeStubInterface">type ChaincodeStubInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CommonIterator">type CommonIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonIterator.Close">func (iter *CommonIterator) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommonIterator.HasNext">func (iter *CommonIterator) HasNext() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CommonIteratorInterface">type CommonIteratorInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HistoryQueryIterator">type HistoryQueryIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HistoryQueryIterator.Next">func (iter *HistoryQueryIterator) Next() (*queryresult.KeyModification, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HistoryQueryIteratorInterface">type HistoryQueryIteratorInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LoggingLevel">type LoggingLevel</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LogLevel">func LogLevel(levelString string) (LoggingLevel, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MockQueryIteratorInterface">type MockQueryIteratorInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MockStateRangeQueryIterator">type MockStateRangeQueryIterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockStateRangeQueryIterator">func NewMockStateRangeQueryIterator(stub *MockStub, startKey string, endKey string) *MockStateRangeQueryIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStateRangeQueryIterator.Close">func (iter *MockStateRangeQueryIterator) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStateRangeQueryIterator.HasNext">func (iter *MockStateRangeQueryIterator) HasNext() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStateRangeQueryIterator.Next">func (iter *MockStateRangeQueryIterator) Next() (*queryresult.KV, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStateRangeQueryIterator.Print">func (iter *MockStateRangeQueryIterator) Print()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockStub">type MockStub</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockStub">func NewMockStub(name string, cc Chaincode) *MockStub</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.CreateCompositeKey">func (stub *MockStub) CreateCompositeKey(objectType string, attributes []string) (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.DelPrivateData">func (stub *MockStub) DelPrivateData(collection string, key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.DelState">func (stub *MockStub) DelState(key string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetArgs">func (stub *MockStub) GetArgs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetArgsSlice">func (stub *MockStub) GetArgsSlice() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetBinding">func (stub *MockStub) GetBinding() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetChannelID">func (stub *MockStub) GetChannelID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetCreator">func (stub *MockStub) GetCreator() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetDecorations">func (stub *MockStub) GetDecorations() map[string][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetFunctionAndParameters">func (stub *MockStub) GetFunctionAndParameters() (function string, params []string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetHistoryForKey">func (stub *MockStub) GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateData">func (stub *MockStub) GetPrivateData(collection string, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateDataByPartialCompositeKey">func (stub *MockStub) GetPrivateDataByPartialCompositeKey(collection, objectType string, attributes []string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateDataByRange">func (stub *MockStub) GetPrivateDataByRange(collection, startKey, endKey string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateDataHash">func (stub *MockStub) GetPrivateDataHash(collection, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateDataQueryResult">func (stub *MockStub) GetPrivateDataQueryResult(collection, query string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetPrivateDataValidationParameter">func (stub *MockStub) GetPrivateDataValidationParameter(collection, key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetQueryResult">func (stub *MockStub) GetQueryResult(query string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetQueryResultWithPagination">func (stub *MockStub) GetQueryResultWithPagination(query string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetSignedProposal">func (stub *MockStub) GetSignedProposal() (*pb.SignedProposal, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetState">func (stub *MockStub) GetState(key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStateByPartialCompositeKey">func (stub *MockStub) GetStateByPartialCompositeKey(objectType string, attributes []string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStateByPartialCompositeKeyWithPagination">func (stub *MockStub) GetStateByPartialCompositeKeyWithPagination(objectType string, keys []string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStateByRange">func (stub *MockStub) GetStateByRange(startKey, endKey string) (StateQueryIteratorInterface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStateByRangeWithPagination">func (stub *MockStub) GetStateByRangeWithPagination(startKey, endKey string, pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStateValidationParameter">func (stub *MockStub) GetStateValidationParameter(key string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetStringArgs">func (stub *MockStub) GetStringArgs() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetTransient">func (stub *MockStub) GetTransient() (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetTxID">func (stub *MockStub) GetTxID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.GetTxTimestamp">func (stub *MockStub) GetTxTimestamp() (*timestamp.Timestamp, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.InvokeChaincode">func (stub *MockStub) InvokeChaincode(chaincodeName string, args [][]byte, channel string) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockInit">func (stub *MockStub) MockInit(uuid string, args [][]byte) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockInvoke">func (stub *MockStub) MockInvoke(uuid string, args [][]byte) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockInvokeWithSignedProposal">func (stub *MockStub) MockInvokeWithSignedProposal(uuid string, args [][]byte, sp *pb.SignedProposal) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockPeerChaincode">func (stub *MockStub) MockPeerChaincode(invokableChaincodeName string, otherStub *MockStub)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockTransactionEnd">func (stub *MockStub) MockTransactionEnd(uuid string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.MockTransactionStart">func (stub *MockStub) MockTransactionStart(txid string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.PutPrivateData">func (stub *MockStub) PutPrivateData(collection string, key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.PutState">func (stub *MockStub) PutState(key string, value []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.SetEvent">func (stub *MockStub) SetEvent(name string, payload []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.SetPrivateDataValidationParameter">func (stub *MockStub) SetPrivateDataValidationParameter(collection, key string, ep []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.SetStateValidationParameter">func (stub *MockStub) SetStateValidationParameter(key string, ep []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockStub.SplitCompositeKey">func (stub *MockStub) SplitCompositeKey(compositeKey string) (string, []string, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PeerChaincodeStream">type PeerChaincodeStream</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SendPanicFailure">type SendPanicFailure</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SendPanicFailure.Error">func (e SendPanicFailure) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StateQueryIterator">type StateQueryIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StateQueryIterator.Next">func (iter *StateQueryIterator) Next() (*queryresult.KV, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StateQueryIteratorInterface">type StateQueryIteratorInterface</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go">chaincode.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/handler.go">handler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/inprocstream.go">inprocstream.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go">interfaces.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go">mockstub.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/response.go">response.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="STATE_QUERY_RESULT">STATE_QUERY_RESULT</span> resultType = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a> + 1
+    <span id="HISTORY_QUERY_RESULT">HISTORY_QUERY_RESULT</span>
+)</pre>
+			
+				<p>
+These constants comprise the LoggingLevel enumeration
+</p>
+
+				<pre>const (
+    <span id="LogDebug">LogDebug</span>    = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#DEBUG">DEBUG</a>)
+    <span id="LogInfo">LogInfo</span>     = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#INFO">INFO</a>)
+    <span id="LogNotice">LogNotice</span>   = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#NOTICE">NOTICE</a>)
+    <span id="LogWarning">LogWarning</span>  = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#WARNING">WARNING</a>)
+    <span id="LogError">LogError</span>    = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#ERROR">ERROR</a>)
+    <span id="LogCritical">LogCritical</span> = <a href="index.html#LoggingLevel">LoggingLevel</a>(<a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#CRITICAL">CRITICAL</a>)
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// OK constant - status code less than 400, endorser will endorse it.</span>
+    <span class="comment">// OK means init or invoke successfully.</span>
+    <span id="OK">OK</span> = 200
+
+    <span class="comment">// ERRORTHRESHOLD constant - status code greater than or equal to 400 will be considered an error and rejected by endorser.</span>
+    <span id="ERRORTHRESHOLD">ERRORTHRESHOLD</span> = 400
+
+    <span class="comment">// ERROR constant - default error value</span>
+    <span id="ERROR">ERROR</span> = 500
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Error">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/response.go?s=1092:1126#L31">Error</a>
+				<a class="permalink" href="index.html#Error">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Error(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="IsEnabledForLogLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=4507:4554#L153">IsEnabledForLogLevel</a>
+				<a class="permalink" href="index.html#IsEnabledForLogLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsEnabledForLogLevel(logLevel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsEnabledForLogLevel checks to see if the chaincodeLogger is enabled for a specific logging level
+used primarily for testing
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetLoggingLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=36800:36840#L1073">SetLoggingLevel</a>
+				<a class="permalink" href="index.html#SetLoggingLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetLoggingLevel(level <a href="index.html#LoggingLevel">LoggingLevel</a>)</pre>
+			<p>
+SetLoggingLevel allows a Go language chaincode to set the logging level of
+its shim.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetupChaincodeLogging">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=4899:4927#L163">SetupChaincodeLogging</a>
+				<a class="permalink" href="index.html#SetupChaincodeLogging">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetupChaincodeLogging()</pre>
+			<p>
+SetupChaincodeLogging sets the chaincode logging format and the level
+to the values of CORE_CHAINCODE_LOGGING_FORMAT, CORE_CHAINCODE_LOGGING_LEVEL
+and CORE_CHAINCODE_LOGGING_SHIM set from core.yaml by chaincode_support.go
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Start">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=3635:3665#L121">Start</a>
+				<a class="permalink" href="index.html#Start">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Start(cc <a href="index.html#Chaincode">Chaincode</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+chaincodes.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="StartInProc">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=8588:8721#L264">StartInProc</a>
+				<a class="permalink" href="index.html#StartInProc">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func StartInProc(env []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, args []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, cc <a href="index.html#Chaincode">Chaincode</a>, recv &lt;-chan *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, send chan&lt;- *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+StartInProc is an entry point for system chaincodes bootstrap. It is not an
+API for chaincodes.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Success">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/response.go?s=987:1027#L24">Success</a>
+				<a class="permalink" href="index.html#Success">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Success(payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Chaincode">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=404:891#L7">Chaincode</a>
+				<a class="permalink" href="index.html#Chaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Chaincode interface must be implemented by all chaincodes. The fabric runs
+the transactions by calling these functions as specified.
+</p>
+
+			<pre>type Chaincode interface {
+    <span class="comment">// Init is called during Instantiate transaction after the chaincode container</span>
+    <span class="comment">// has been established for the first time, allowing the chaincode to</span>
+    <span class="comment">// initialize its internal data</span>
+    Init(stub <a href="index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a>
+
+    <span class="comment">// Invoke is called to update or query the ledger in a proposal transaction.</span>
+    <span class="comment">// Updated state variables are not committed to the ledger until the</span>
+    <span class="comment">// transaction is committed.</span>
+    Invoke(stub <a href="index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeLogger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=37499:37554#L1094">ChaincodeLogger</a>
+				<a class="permalink" href="index.html#ChaincodeLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeLogger is an abstraction of a logging object for use by
+chaincodes. These objects are created by the NewLogger API.
+</p>
+
+			<pre>type ChaincodeLogger struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=37891:37935#L1103">NewLogger</a>
+					<a class="permalink" href="index.html#NewLogger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLogger(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a></pre>
+				<p>
+NewLogger allows a Go language chaincode to create one or more logging
+objects whose logs will be formatted consistently with, and temporally
+interleaved with the logs created by the shim interface. The logs created
+by this object can be distinguished from shim logs by the name provided,
+which will appear in the logs.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChaincodeLogger.Critical">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39579:39634#L1151">Critical</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Critical">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Critical(args ...interface{})</pre>
+				<p>
+Critical logs always appear; They can not be disabled.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Criticalf">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=40819:40890#L1186">Criticalf</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Criticalf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Criticalf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Criticalf logs always appear; They can not be disabled.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Debug">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=38649:38701#L1122">Debug</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Debug">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Debug(args ...interface{})</pre>
+				<p>
+Debug logs will only appear if the ChaincodeLogger LoggingLevel is set to
+LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Debugf">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39759:39827#L1157">Debugf</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Debugf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Debugf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Debugf logs will only appear if the ChaincodeLogger LoggingLevel is set to
+LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Error">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39438:39490#L1146">Error</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Error(args ...interface{})</pre>
+				<p>
+Error logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogError, LogWarning, LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Errorf">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=40652:40720#L1181">Errorf</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Errorf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Errorf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Errorf logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogError, LogWarning, LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Info">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=38827:38878#L1128">Info</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Info">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Info(args ...interface{})</pre>
+				<p>
+Info logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Infof">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39963:40030#L1163">Infof</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Infof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Infof(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Infof logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.IsEnabledFor">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=38438:38501#L1116">IsEnabledFor</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.IsEnabledFor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) IsEnabledFor(level <a href="index.html#LoggingLevel">LoggingLevel</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsEnabledFor returns true if the logger is enabled to creates logs at the
+given logging level.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Notice">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39016:39069#L1134">Notice</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Notice">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Notice(args ...interface{})</pre>
+				<p>
+Notice logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Noticef">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=40178:40247#L1169">Noticef</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Noticef">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Noticef(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Noticef logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.SetLevel">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=38220:38274#L1110">SetLevel</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.SetLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) SetLevel(level <a href="index.html#LoggingLevel">LoggingLevel</a>)</pre>
+				<p>
+SetLevel sets the logging level for a chaincode logger. Note that currently
+the levels are actually controlled by the name given when the logger is
+created, so loggers should be given unique names other than &#34;shim&#34;.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Warning">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=39222:39276#L1140">Warning</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Warning">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Warning(args ...interface{})</pre>
+				<p>
+Warning logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogWarning, LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeLogger.Warningf">func (*ChaincodeLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=40410:40480#L1175">Warningf</a>
+					<a class="permalink" href="index.html#ChaincodeLogger.Warningf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ChaincodeLogger">ChaincodeLogger</a>) Warningf(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				<p>
+Warningf logs will appear if the ChaincodeLogger LoggingLevel is set to
+LogWarning, LogNotice, LogInfo or LogDebug.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChaincodeStub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=1272:1769#L43">ChaincodeStub</a>
+				<a class="permalink" href="index.html#ChaincodeStub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeStub is an object passed to chaincode for shim side handling of
+APIs.
+</p>
+
+			<pre>type ChaincodeStub struct {
+<span id="ChaincodeStub.TxID"></span>    TxID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeStub.ChannelId"></span>    ChannelId <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChaincodeStub.CreateCompositeKey">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=23729:23830#L709">CreateCompositeKey</a>
+					<a class="permalink" href="index.html#ChaincodeStub.CreateCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) CreateCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateCompositeKey documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.DelPrivateData">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=17724:17802#L534">DelPrivateData</a>
+					<a class="permalink" href="index.html#ChaincodeStub.DelPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) DelPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DelPrivateData documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.DelState">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=16304:16357#L498">DelState</a>
+					<a class="permalink" href="index.html#ChaincodeStub.DelState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) DelState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DelState documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetArgs">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=32045:32090#L944">GetArgs</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetArgs documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetArgsSlice">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=33394:33451#L991">GetArgsSlice</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetArgsSlice">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetArgsSlice() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetArgsSlice documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetBinding">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=33069:33124#L981">GetBinding</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetBinding">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetBinding() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetBinding documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetChannelID">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=13535:13583#L423">GetChannelID</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetChannelID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetChannelID returns the channel for the proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetCreator">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=32762:32817#L971">GetCreator</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetCreator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetCreator() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCreator documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetDecorations">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=13612:13673#L427">GetDecorations</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetDecorations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetDecorations() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetFunctionAndParameters">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=32459:32547#L959">GetFunctionAndParameters</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetFunctionAndParameters">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetFunctionAndParameters() (function <a href="http://localhost:6060/pkg/builtin/#string">string</a>, params []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+GetFunctionAndParameters documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetHistoryForKey">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=23318:23412#L700">GetHistoryForKey</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetHistoryForKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetHistoryForKey(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#HistoryQueryIteratorInterface">HistoryQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetHistoryForKey documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateData">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=16639:16727#L507">GetPrivateData</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateData documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateDataByPartialCompositeKey">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=19065:19216#L570">GetPrivateDataByPartialCompositeKey</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateDataByPartialCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateDataByPartialCompositeKey(collection, objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataByPartialCompositeKey documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateDataByRange">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=18045:18167#L542">GetPrivateDataByRange</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateDataByRange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateDataByRange(collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataByRange documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateDataHash">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=16972:17064#L515">GetPrivateDataHash</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateDataHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateDataHash(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataHash documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateDataQueryResult">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=19736:19851#L586">GetPrivateDataQueryResult</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateDataQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateDataQueryResult(collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataQueryResult documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetPrivateDataValidationParameter">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=20219:20319#L597">GetPrivateDataValidationParameter</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetPrivateDataValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPrivateDataValidationParameter documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetQueryResult">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=15880:15972#L488">GetQueryResult</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetQueryResult(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetQueryResult documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetQueryResultWithPagination">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=28208:28375#L835">GetQueryResultWithPagination</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetQueryResultWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetQueryResultWithPagination(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+    bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetSignedProposal">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=33221:33295#L986">GetSignedProposal</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetSignedProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetSignedProposal() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSignedProposal documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetState">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=14258:14321#L445">GetState</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetState documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStateByPartialCompositeKey">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=26294:26427#L776">GetStateByPartialCompositeKey</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStateByPartialCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStateByPartialCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateByPartialCompositeKey function can be invoked by a chaincode to query the
+state based on a given partial composite key. This function returns an
+iterator which can be used to iterate over all composite keys whose prefix
+matches the given partial composite key. This function should be used only for
+a partial composite key. For a full composite key, an iter with empty response
+would be returned.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStateByPartialCompositeKeyWithPagination">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=27673:27875#L818">GetStateByPartialCompositeKeyWithPagination</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStateByPartialCompositeKeyWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStateByPartialCompositeKeyWithPagination(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>, bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStateByRange">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=22786:22890#L684">GetStateByRange</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStateByRange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStateByRange(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateByRange documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStateByRangeWithPagination">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=27146:27325#L798">GetStateByRangeWithPagination</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStateByRangeWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStateByRangeWithPagination(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+    bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStateValidationParameter">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=14851:14933#L457">GetStateValidationParameter</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStateValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateValidationParameter documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetStringArgs">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=32175:32226#L949">GetStringArgs</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetStringArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetStringArgs() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetStringArgs documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetTransient">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=32909:32977#L976">GetTransient</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetTransient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetTransient() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTransient documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetTxID">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=13415:13458#L418">GetTxID</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetTxID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetTxID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetTxID returns the transaction ID for the proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.GetTxTimestamp">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=33638:33711#L1001">GetTxTimestamp</a>
+					<a class="permalink" href="index.html#ChaincodeStub.GetTxTimestamp">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) GetTxTimestamp() (*<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTxTimestamp documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.InvokeChaincode">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=13826:13933#L434">InvokeChaincode</a>
+					<a class="permalink" href="index.html#ChaincodeStub.InvokeChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) InvokeChaincode(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+InvokeChaincode documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.PutPrivateData">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=17315:17407#L523">PutPrivateData</a>
+					<a class="permalink" href="index.html#ChaincodeStub.PutPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) PutPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PutPrivateData documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.PutState">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=15210:15277#L469">PutState</a>
+					<a class="permalink" href="index.html#ChaincodeStub.PutState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) PutState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PutState documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.SetEvent">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=34056:34126#L1017">SetEvent</a>
+					<a class="permalink" href="index.html#ChaincodeStub.SetEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) SetEvent(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetEvent documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.SetPrivateDataValidationParameter">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=20629:20730#L609">SetPrivateDataValidationParameter</a>
+					<a class="permalink" href="index.html#ChaincodeStub.SetPrivateDataValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) SetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetPrivateDataValidationParameter documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.SetStateValidationParameter">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=14565:14648#L452">SetStateValidationParameter</a>
+					<a class="permalink" href="index.html#ChaincodeStub.SetStateValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) SetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetStateValidationParameter documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeStub.SplitCompositeKey">func (*ChaincodeStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=23951:24042#L714">SplitCompositeKey</a>
+					<a class="permalink" href="index.html#ChaincodeStub.SplitCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#ChaincodeStub">ChaincodeStub</a>) SplitCompositeKey(compositeKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SplitCompositeKey documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChaincodeStubInterface">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=994:20300#L21">ChaincodeStubInterface</a>
+				<a class="permalink" href="index.html#ChaincodeStubInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeStubInterface is used by deployable chaincode apps to access and
+modify their ledgers
+</p>
+
+			<pre>type ChaincodeStubInterface interface {
+    <span class="comment">// GetArgs returns the arguments intended for the chaincode Init and Invoke</span>
+    <span class="comment">// as an array of byte arrays.</span>
+    GetArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// GetStringArgs returns the arguments intended for the chaincode Init and</span>
+    <span class="comment">// Invoke as a string array. Only use GetStringArgs if the client passes</span>
+    <span class="comment">// arguments intended to be used as strings.</span>
+    GetStringArgs() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// GetFunctionAndParameters returns the first argument as the function</span>
+    <span class="comment">// name and the rest of the arguments as parameters in a string array.</span>
+    <span class="comment">// Only use GetFunctionAndParameters if the client passes arguments intended</span>
+    <span class="comment">// to be used as strings.</span>
+    GetFunctionAndParameters() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+
+    <span class="comment">// GetArgsSlice returns the arguments intended for the chaincode Init and</span>
+    <span class="comment">// Invoke as a byte array</span>
+    GetArgsSlice() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTxID returns the tx_id of the transaction proposal, which is unique per</span>
+    <span class="comment">// transaction and per client. See ChannelHeader in protos/common/common.proto</span>
+    <span class="comment">// for further details.</span>
+    GetTxID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// GetChannelID returns the channel the proposal is sent to for chaincode to process.</span>
+    <span class="comment">// This would be the channel_id of the transaction proposal (see ChannelHeader</span>
+    <span class="comment">// in protos/common/common.proto) except where the chaincode is calling another on</span>
+    <span class="comment">// a different channel</span>
+    GetChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// InvokeChaincode locally calls the specified chaincode `Invoke` using the</span>
+    <span class="comment">// same transaction context; that is, chaincode calling chaincode doesn&#39;t</span>
+    <span class="comment">// create a new transaction message.</span>
+    <span class="comment">// If the called chaincode is on the same channel, it simply adds the called</span>
+    <span class="comment">// chaincode read set and write set to the calling transaction.</span>
+    <span class="comment">// If the called chaincode is on a different channel,</span>
+    <span class="comment">// only the Response is returned to the calling chaincode; any PutState calls</span>
+    <span class="comment">// from the called chaincode will not have any effect on the ledger; that is,</span>
+    <span class="comment">// the called chaincode on a different channel will not have its read set</span>
+    <span class="comment">// and write set applied to the transaction. Only the calling chaincode&#39;s</span>
+    <span class="comment">// read set and write set will be applied to the transaction. Effectively</span>
+    <span class="comment">// the called chaincode on a different channel is a `Query`, which does not</span>
+    <span class="comment">// participate in state validation checks in subsequent commit phase.</span>
+    <span class="comment">// If `channel` is empty, the caller&#39;s channel is assumed.</span>
+    InvokeChaincode(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a>
+
+    <span class="comment">// GetState returns the value of the specified `key` from the</span>
+    <span class="comment">// ledger. Note that GetState doesn&#39;t read data from the writeset, which</span>
+    <span class="comment">// has not been committed to the ledger. In other words, GetState doesn&#39;t</span>
+    <span class="comment">// consider data modified by PutState that has not been committed.</span>
+    <span class="comment">// If the key does not exist in the state database, (nil, nil) is returned.</span>
+    GetState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// PutState puts the specified `key` and `value` into the transaction&#39;s</span>
+    <span class="comment">// writeset as a data-write proposal. PutState doesn&#39;t effect the ledger</span>
+    <span class="comment">// until the transaction is validated and successfully committed.</span>
+    <span class="comment">// Simple keys must not be an empty string and must not start with a</span>
+    <span class="comment">// null character (0x00) in order to avoid range query collisions with</span>
+    <span class="comment">// composite keys, which internally get prefixed with 0x00 as composite</span>
+    <span class="comment">// key namespace. In addition, if using CouchDB, keys can only contain</span>
+    <span class="comment">// valid UTF-8 strings and cannot begin with an underscore (&#34;_&#34;).</span>
+    PutState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// DelState records the specified `key` to be deleted in the writeset of</span>
+    <span class="comment">// the transaction proposal. The `key` and its value will be deleted from</span>
+    <span class="comment">// the ledger when the transaction is validated and successfully committed.</span>
+    DelState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// SetStateValidationParameter sets the key-level endorsement policy for `key`.</span>
+    SetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetStateValidationParameter retrieves the key-level endorsement policy</span>
+    <span class="comment">// for `key`. Note that this will introduce a read dependency on `key` in</span>
+    <span class="comment">// the transaction&#39;s readset.</span>
+    GetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetStateByRange returns a range iterator over a set of keys in the</span>
+    <span class="comment">// ledger. The iterator can be used to iterate over all keys</span>
+    <span class="comment">// between the startKey (inclusive) and endKey (exclusive).</span>
+    <span class="comment">// However, if the number of keys between startKey and endKey is greater than the</span>
+    <span class="comment">// totalQueryLimit (defined in core.yaml), this iterator cannot be used</span>
+    <span class="comment">// to fetch all keys (results will be capped by the totalQueryLimit).</span>
+    <span class="comment">// The keys are returned by the iterator in lexical order. Note</span>
+    <span class="comment">// that startKey and endKey can be empty string, which implies unbounded range</span>
+    <span class="comment">// query on start or end.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// The query is re-executed during validation phase to ensure result set</span>
+    <span class="comment">// has not changed since transaction endorsement (phantom reads detected).</span>
+    GetStateByRange(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetStateByRangeWithPagination returns a range iterator over a set of keys in the</span>
+    <span class="comment">// ledger. The iterator can be used to fetch keys between the startKey (inclusive)</span>
+    <span class="comment">// and endKey (exclusive).</span>
+    <span class="comment">// When an empty string is passed as a value to the bookmark argument, the returned</span>
+    <span class="comment">// iterator can be used to fetch the first `pageSize` keys between the startKey</span>
+    <span class="comment">// (inclusive) and endKey (exclusive).</span>
+    <span class="comment">// When the bookmark is a non-emptry string, the iterator can be used to fetch</span>
+    <span class="comment">// the first `pageSize` keys between the bookmark (inclusive) and endKey (exclusive).</span>
+    <span class="comment">// Note that only the bookmark present in a prior page of query results (ResponseMetadata)</span>
+    <span class="comment">// can be used as a value to the bookmark argument. Otherwise, an empty string must</span>
+    <span class="comment">// be passed as bookmark.</span>
+    <span class="comment">// The keys are returned by the iterator in lexical order. Note</span>
+    <span class="comment">// that startKey and endKey can be empty string, which implies unbounded range</span>
+    <span class="comment">// query on start or end.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// This call is only supported in a read only transaction.</span>
+    GetStateByRangeWithPagination(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+        bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetStateByPartialCompositeKey queries the state in the ledger based on</span>
+    <span class="comment">// a given partial composite key. This function returns an iterator</span>
+    <span class="comment">// which can be used to iterate over all composite keys whose prefix matches</span>
+    <span class="comment">// the given partial composite key. However, if the number of matching composite</span>
+    <span class="comment">// keys is greater than the totalQueryLimit (defined in core.yaml), this iterator</span>
+    <span class="comment">// cannot be used to fetch all matching keys (results will be limited by the totalQueryLimit).</span>
+    <span class="comment">// The `objectType` and attributes are expected to have only valid utf8 strings and</span>
+    <span class="comment">// should not contain U+0000 (nil byte) and U+10FFFF (biggest and unallocated code point).</span>
+    <span class="comment">// See related functions SplitCompositeKey and CreateCompositeKey.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// The query is re-executed during validation phase to ensure result set</span>
+    <span class="comment">// has not changed since transaction endorsement (phantom reads detected).</span>
+    GetStateByPartialCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetStateByPartialCompositeKeyWithPagination queries the state in the ledger based on</span>
+    <span class="comment">// a given partial composite key. This function returns an iterator</span>
+    <span class="comment">// which can be used to iterate over the composite keys whose</span>
+    <span class="comment">// prefix matches the given partial composite key.</span>
+    <span class="comment">// When an empty string is passed as a value to the bookmark argument, the returned</span>
+    <span class="comment">// iterator can be used to fetch the first `pageSize` composite keys whose prefix</span>
+    <span class="comment">// matches the given partial composite key.</span>
+    <span class="comment">// When the bookmark is a non-emptry string, the iterator can be used to fetch</span>
+    <span class="comment">// the first `pageSize` keys between the bookmark (inclusive) and the last matching</span>
+    <span class="comment">// composite key.</span>
+    <span class="comment">// Note that only the bookmark present in a prior page of query result (ResponseMetadata)</span>
+    <span class="comment">// can be used as a value to the bookmark argument. Otherwise, an empty string must</span>
+    <span class="comment">// be passed as bookmark.</span>
+    <span class="comment">// The `objectType` and attributes are expected to have only valid utf8 strings</span>
+    <span class="comment">// and should not contain U+0000 (nil byte) and U+10FFFF (biggest and unallocated</span>
+    <span class="comment">// code point). See related functions SplitCompositeKey and CreateCompositeKey.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// This call is only supported in a read only transaction.</span>
+    GetStateByPartialCompositeKeyWithPagination(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+        pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>, bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// CreateCompositeKey combines the given `attributes` to form a composite</span>
+    <span class="comment">// key. The objectType and attributes are expected to have only valid utf8</span>
+    <span class="comment">// strings and should not contain U+0000 (nil byte) and U+10FFFF</span>
+    <span class="comment">// (biggest and unallocated code point).</span>
+    <span class="comment">// The resulting composite key can be used as the key in PutState().</span>
+    CreateCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// SplitCompositeKey splits the specified key into attributes on which the</span>
+    <span class="comment">// composite key was formed. Composite keys found during range queries</span>
+    <span class="comment">// or partial composite key queries can therefore be split into their</span>
+    <span class="comment">// composite parts.</span>
+    SplitCompositeKey(compositeKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetQueryResult performs a &#34;rich&#34; query against a state database. It is</span>
+    <span class="comment">// only supported for state databases that support rich query,</span>
+    <span class="comment">// e.g.CouchDB. The query string is in the native syntax</span>
+    <span class="comment">// of the underlying state database. An iterator is returned</span>
+    <span class="comment">// which can be used to iterate over all keys in the query result set.</span>
+    <span class="comment">// However, if the number of keys in the query result set is greater than the</span>
+    <span class="comment">// totalQueryLimit (defined in core.yaml), this iterator cannot be used</span>
+    <span class="comment">// to fetch all keys in the query result set (results will be limited by</span>
+    <span class="comment">// the totalQueryLimit).</span>
+    <span class="comment">// The query is NOT re-executed during validation phase, phantom reads are</span>
+    <span class="comment">// not detected. That is, other committed transactions may have added,</span>
+    <span class="comment">// updated, or removed keys that impact the result set, and this would not</span>
+    <span class="comment">// be detected at validation/commit time.  Applications susceptible to this</span>
+    <span class="comment">// should therefore not use GetQueryResult as part of transactions that update</span>
+    <span class="comment">// ledger, and should limit use to read-only chaincode operations.</span>
+    GetQueryResult(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetQueryResultWithPagination performs a &#34;rich&#34; query against a state database.</span>
+    <span class="comment">// It is only supported for state databases that support rich query,</span>
+    <span class="comment">// e.g., CouchDB. The query string is in the native syntax</span>
+    <span class="comment">// of the underlying state database. An iterator is returned</span>
+    <span class="comment">// which can be used to iterate over keys in the query result set.</span>
+    <span class="comment">// When an empty string is passed as a value to the bookmark argument, the returned</span>
+    <span class="comment">// iterator can be used to fetch the first `pageSize` of query results.</span>
+    <span class="comment">// When the bookmark is a non-emptry string, the iterator can be used to fetch</span>
+    <span class="comment">// the first `pageSize` keys between the bookmark and the last key in the query result.</span>
+    <span class="comment">// Note that only the bookmark present in a prior page of query results (ResponseMetadata)</span>
+    <span class="comment">// can be used as a value to the bookmark argument. Otherwise, an empty string</span>
+    <span class="comment">// must be passed as bookmark.</span>
+    <span class="comment">// This call is only supported in a read only transaction.</span>
+    GetQueryResultWithPagination(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+        bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetHistoryForKey returns a history of key values across time.</span>
+    <span class="comment">// For each historic key update, the historic value and associated</span>
+    <span class="comment">// transaction id and timestamp are returned. The timestamp is the</span>
+    <span class="comment">// timestamp provided by the client in the proposal header.</span>
+    <span class="comment">// GetHistoryForKey requires peer configuration</span>
+    <span class="comment">// core.ledger.history.enableHistoryDatabase to be true.</span>
+    <span class="comment">// The query is NOT re-executed during validation phase, phantom reads are</span>
+    <span class="comment">// not detected. That is, other committed transactions may have updated</span>
+    <span class="comment">// the key concurrently, impacting the result set, and this would not be</span>
+    <span class="comment">// detected at validation/commit time. Applications susceptible to this</span>
+    <span class="comment">// should therefore not use GetHistoryForKey as part of transactions that</span>
+    <span class="comment">// update ledger, and should limit use to read-only chaincode operations.</span>
+    GetHistoryForKey(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#HistoryQueryIteratorInterface">HistoryQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPrivateData returns the value of the specified `key` from the specified</span>
+    <span class="comment">// `collection`. Note that GetPrivateData doesn&#39;t read data from the</span>
+    <span class="comment">// private writeset, which has not been committed to the `collection`. In</span>
+    <span class="comment">// other words, GetPrivateData doesn&#39;t consider data modified by PutPrivateData</span>
+    <span class="comment">// that has not been committed.</span>
+    GetPrivateData(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPrivateDataHash returns the hash of the value of the specified `key` from the specified</span>
+    <span class="comment">// `collection`</span>
+    GetPrivateDataHash(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// PutPrivateData puts the specified `key` and `value` into the transaction&#39;s</span>
+    <span class="comment">// private writeset. Note that only hash of the private writeset goes into the</span>
+    <span class="comment">// transaction proposal response (which is sent to the client who issued the</span>
+    <span class="comment">// transaction) and the actual private writeset gets temporarily stored in a</span>
+    <span class="comment">// transient store. PutPrivateData doesn&#39;t effect the `collection` until the</span>
+    <span class="comment">// transaction is validated and successfully committed. Simple keys must not</span>
+    <span class="comment">// be an empty string and must not start with a null character (0x00) in order</span>
+    <span class="comment">// to avoid range query collisions with composite keys, which internally get</span>
+    <span class="comment">// prefixed with 0x00 as composite key namespace. In addition, if using</span>
+    <span class="comment">// CouchDB, keys can only contain valid UTF-8 strings and cannot begin with an</span>
+    <span class="comment">// an underscore (&#34;_&#34;).</span>
+    PutPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// DelState records the specified `key` to be deleted in the private writeset of</span>
+    <span class="comment">// the transaction. Note that only hash of the private writeset goes into the</span>
+    <span class="comment">// transaction proposal response (which is sent to the client who issued the</span>
+    <span class="comment">// transaction) and the actual private writeset gets temporarily stored in a</span>
+    <span class="comment">// transient store. The `key` and its value will be deleted from the collection</span>
+    <span class="comment">// when the transaction is validated and successfully committed.</span>
+    DelPrivateData(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// SetPrivateDataValidationParameter sets the key-level endorsement policy</span>
+    <span class="comment">// for the private data specified by `key`.</span>
+    SetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetPrivateDataValidationParameter retrieves the key-level endorsement</span>
+    <span class="comment">// policy for the private data specified by `key`. Note that this introduces</span>
+    <span class="comment">// a read dependency on `key` in the transaction&#39;s readset.</span>
+    GetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPrivateDataByRange returns a range iterator over a set of keys in a</span>
+    <span class="comment">// given private collection. The iterator can be used to iterate over all keys</span>
+    <span class="comment">// between the startKey (inclusive) and endKey (exclusive).</span>
+    <span class="comment">// The keys are returned by the iterator in lexical order. Note</span>
+    <span class="comment">// that startKey and endKey can be empty string, which implies unbounded range</span>
+    <span class="comment">// query on start or end.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// The query is re-executed during validation phase to ensure result set</span>
+    <span class="comment">// has not changed since transaction endorsement (phantom reads detected).</span>
+    GetPrivateDataByRange(collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPrivateDataByPartialCompositeKey queries the state in a given private</span>
+    <span class="comment">// collection based on a given partial composite key. This function returns</span>
+    <span class="comment">// an iterator which can be used to iterate over all composite keys whose prefix</span>
+    <span class="comment">// matches the given partial composite key. The `objectType` and attributes are</span>
+    <span class="comment">// expected to have only valid utf8 strings and should not contain</span>
+    <span class="comment">// U+0000 (nil byte) and U+10FFFF (biggest and unallocated code point).</span>
+    <span class="comment">// See related functions SplitCompositeKey and CreateCompositeKey.</span>
+    <span class="comment">// Call Close() on the returned StateQueryIteratorInterface object when done.</span>
+    <span class="comment">// The query is re-executed during validation phase to ensure result set</span>
+    <span class="comment">// has not changed since transaction endorsement (phantom reads detected).</span>
+    GetPrivateDataByPartialCompositeKey(collection, objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetPrivateDataQueryResult performs a &#34;rich&#34; query against a given private</span>
+    <span class="comment">// collection. It is only supported for state databases that support rich query,</span>
+    <span class="comment">// e.g.CouchDB. The query string is in the native syntax</span>
+    <span class="comment">// of the underlying state database. An iterator is returned</span>
+    <span class="comment">// which can be used to iterate (next) over the query result set.</span>
+    <span class="comment">// The query is NOT re-executed during validation phase, phantom reads are</span>
+    <span class="comment">// not detected. That is, other committed transactions may have added,</span>
+    <span class="comment">// updated, or removed keys that impact the result set, and this would not</span>
+    <span class="comment">// be detected at validation/commit time.  Applications susceptible to this</span>
+    <span class="comment">// should therefore not use GetQueryResult as part of transactions that update</span>
+    <span class="comment">// ledger, and should limit use to read-only chaincode operations.</span>
+    GetPrivateDataQueryResult(collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetCreator returns `SignatureHeader.Creator` (e.g. an identity)</span>
+    <span class="comment">// of the `SignedProposal`. This is the identity of the agent (or user)</span>
+    <span class="comment">// submitting the transaction.</span>
+    GetCreator() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTransient returns the `ChaincodeProposalPayload.Transient` field.</span>
+    <span class="comment">// It is a map that contains data (e.g. cryptographic material)</span>
+    <span class="comment">// that might be used to implement some form of application-level</span>
+    <span class="comment">// confidentiality. The contents of this field, as prescribed by</span>
+    <span class="comment">// `ChaincodeProposalPayload`, are supposed to always</span>
+    <span class="comment">// be omitted from the transaction and excluded from the ledger.</span>
+    GetTransient() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetBinding returns the transaction binding, which is used to enforce a</span>
+    <span class="comment">// link between application data (like those stored in the transient field</span>
+    <span class="comment">// above) to the proposal itself. This is useful to avoid possible replay</span>
+    <span class="comment">// attacks.</span>
+    GetBinding() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetDecorations returns additional data (if applicable) about the proposal</span>
+    <span class="comment">// that originated from the peer. This data is set by the decorators of the</span>
+    <span class="comment">// peer, which append or mutate the chaincode input passed to the chaincode.</span>
+    GetDecorations() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// GetSignedProposal returns the SignedProposal object, which contains all</span>
+    <span class="comment">// data elements part of a transaction proposal.</span>
+    GetSignedProposal() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTxTimestamp returns the timestamp when the transaction was created. This</span>
+    <span class="comment">// is taken from the transaction ChannelHeader, therefore it will indicate the</span>
+    <span class="comment">// client&#39;s timestamp and will have the same value across all endorsers.</span>
+    GetTxTimestamp() (*<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// SetEvent allows the chaincode to set an event on the response to the</span>
+    <span class="comment">// proposal to be included as part of a transaction. The event will be</span>
+    <span class="comment">// available within the transaction in the committed block regardless of the</span>
+    <span class="comment">// validity of the transaction.</span>
+    SetEvent(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CommonIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=20928:21063#L614">CommonIterator</a>
+				<a class="permalink" href="index.html#CommonIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommonIterator documentation can be found in interfaces.go
+</p>
+
+			<pre>type CommonIterator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CommonIterator.Close">func (*CommonIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=31840:31881#L938">Close</a>
+					<a class="permalink" href="index.html#CommonIterator.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#CommonIterator">CommonIterator</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CommonIterator.HasNext">func (*CommonIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=29130:29172#L864">HasNext</a>
+					<a class="permalink" href="index.html#CommonIterator.HasNext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#CommonIterator">CommonIterator</a>) HasNext() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasNext documentation can be found in interfaces.go
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CommonIteratorInterface">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=20439:20722#L345">CommonIteratorInterface</a>
+				<a class="permalink" href="index.html#CommonIteratorInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommonIteratorInterface allows a chaincode to check whether any more result
+to be fetched from an iterator and close it when done.
+</p>
+
+			<pre>type CommonIteratorInterface interface {
+    <span class="comment">// HasNext returns true if the range query iterator contains additional keys</span>
+    <span class="comment">// and values.</span>
+    HasNext() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Close closes the iterator. This should be called when done</span>
+    <span class="comment">// reading from the iterator to free up resources.</span>
+    Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/handler.go?s=916:1479#L30">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler handler implementation for shim side of chaincode.
+</p>
+
+			<pre>type Handler struct {
+    <span class="comment">//need lock to protect chaincode from attempting</span>
+    <span class="comment">//concurrent requests to the peer</span>
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#Mutex">Mutex</a>
+
+<span id="Handler.To"></span>    To         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Handler.ChatStream"></span>    ChatStream <a href="index.html#PeerChaincodeStream">PeerChaincodeStream</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HistoryQueryIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=21252:21305#L628">HistoryQueryIterator</a>
+				<a class="permalink" href="index.html#HistoryQueryIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HistoryQueryIterator documentation can be found in interfaces.go
+</p>
+
+			<pre>type HistoryQueryIterator struct {
+    *<a href="index.html#CommonIterator">CommonIterator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HistoryQueryIterator.Next">func (*HistoryQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=28837:28915#L855">Next</a>
+					<a class="permalink" href="index.html#HistoryQueryIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#HistoryQueryIterator">HistoryQueryIterator</a>) Next() (*<a href="../../../protos/ledger/queryresult/index.html">queryresult</a>.<a href="../../../protos/ledger/queryresult/index.html#KeyModification">KeyModification</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HistoryQueryIteratorInterface">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=21202:21427#L367">HistoryQueryIteratorInterface</a>
+				<a class="permalink" href="index.html#HistoryQueryIteratorInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HistoryQueryIteratorInterface allows a chaincode to iterate over a set of
+key/value pairs returned by a history query.
+</p>
+
+			<pre>type HistoryQueryIteratorInterface interface {
+    <span class="comment">// Inherit HasNext() and Close()</span>
+    <a href="index.html#CommonIteratorInterface">CommonIteratorInterface</a>
+
+    <span class="comment">// Next returns the next key and value in the history query iterator.</span>
+    Next() (*<a href="../../../protos/ledger/queryresult/index.html">queryresult</a>.<a href="../../../protos/ledger/queryresult/index.html#KeyModification">KeyModification</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LoggingLevel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=36260:36291#L1057">LoggingLevel</a>
+				<a class="permalink" href="index.html#LoggingLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LoggingLevel is an enumerated type of severity levels that control
+chaincode logging.
+</p>
+
+			<pre>type LoggingLevel <a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#Level">Level</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="LogLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=37130:37185#L1081">LogLevel</a>
+					<a class="permalink" href="index.html#LogLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func LogLevel(levelString <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#LoggingLevel">LoggingLevel</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LogLevel converts a case-insensitive string chosen from CRITICAL, ERROR,
+WARNING, NOTICE, INFO or DEBUG into an element of the LoggingLevel
+type. In the event of errors the level returned is LogError.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MockQueryIteratorInterface">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=21662:21736#L379">MockQueryIteratorInterface</a>
+				<a class="permalink" href="index.html#MockQueryIteratorInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockQueryIteratorInterface allows a chaincode to iterate over a set of
+key/value pairs returned by range query.
+TODO: Once the execute query and history query are implemented in MockStub,
+we need to update this interface
+</p>
+
+			<pre>type MockQueryIteratorInterface interface {
+    <a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MockStateRangeQueryIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=14691:14827#L443">MockStateRangeQueryIterator</a>
+				<a class="permalink" href="index.html#MockStateRangeQueryIterator">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MockStateRangeQueryIterator struct {
+<span id="MockStateRangeQueryIterator.Closed"></span>    Closed   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockStateRangeQueryIterator.Stub"></span>    Stub     *<a href="index.html#MockStub">MockStub</a>
+<span id="MockStateRangeQueryIterator.StartKey"></span>    StartKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockStateRangeQueryIterator.EndKey"></span>    EndKey   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockStateRangeQueryIterator.Current"></span>    Current  *<a href="http://localhost:6060/pkg/container/list/">list</a>.<a href="http://localhost:6060/pkg/container/list/#Element">Element</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockStateRangeQueryIterator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=17782:17894#L547">NewMockStateRangeQueryIterator</a>
+					<a class="permalink" href="index.html#NewMockStateRangeQueryIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockStateRangeQueryIterator(stub *<a href="index.html#MockStub">MockStub</a>, startKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#MockStateRangeQueryIterator">MockStateRangeQueryIterator</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="MockStateRangeQueryIterator.Close">func (*MockStateRangeQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=17153:17207#L525">Close</a>
+					<a class="permalink" href="index.html#MockStateRangeQueryIterator.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#MockStateRangeQueryIterator">MockStateRangeQueryIterator</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close closes the range query iterator. This should be called when done
+reading from the iterator to free up resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStateRangeQueryIterator.HasNext">func (*MockStateRangeQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=14921:14976#L453">HasNext</a>
+					<a class="permalink" href="index.html#MockStateRangeQueryIterator.HasNext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#MockStateRangeQueryIterator">MockStateRangeQueryIterator</a>) HasNext() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasNext returns true if the range query iterator contains additional keys
+and values.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStateRangeQueryIterator.Next">func (*MockStateRangeQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=15892:15964#L492">Next</a>
+					<a class="permalink" href="index.html#MockStateRangeQueryIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#MockStateRangeQueryIterator">MockStateRangeQueryIterator</a>) Next() (*<a href="../../../protos/ledger/queryresult/index.html">queryresult</a>.<a href="../../../protos/ledger/queryresult/index.html#KV">KV</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Next returns the next key and value in the range query iterator.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStateRangeQueryIterator.Print">func (*MockStateRangeQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=17400:17448#L536">Print</a>
+					<a class="permalink" href="index.html#MockStateRangeQueryIterator.Print">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#MockStateRangeQueryIterator">MockStateRangeQueryIterator</a>) Print()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockStub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=788:2003#L19">MockStub</a>
+				<a class="permalink" href="index.html#MockStub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockStub is an implementation of ChaincodeStubInterface for unit testing chaincode.
+Use this instead of ChaincodeStub in your chaincode&#39;s unit test calls to Init or Invoke.
+</p>
+
+			<pre>type MockStub struct {
+
+    <span class="comment">// A nice name that can be used for logging</span>
+<span id="MockStub.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="MockStub.State"></span>    <span class="comment">// State keeps name value pairs</span>
+    State map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+<span id="MockStub.Keys"></span>    <span class="comment">// Keys stores the list of mapped values in lexical order</span>
+    Keys *<a href="http://localhost:6060/pkg/container/list/">list</a>.<a href="http://localhost:6060/pkg/container/list/#List">List</a>
+
+    <span class="comment">// registered list of other MockStub chaincodes that can be called from this MockStub</span>
+<span id="MockStub.Invokables"></span>    Invokables map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="index.html#MockStub">MockStub</a>
+
+    <span class="comment">// stores a transaction uuid while being Invoked / Deployed</span>
+    <span class="comment">// TODO if a chaincode uses recursion this may need to be a stack of TxIDs or possibly a reference counting map</span>
+<span id="MockStub.TxID"></span>    TxID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="MockStub.TxTimestamp"></span>    TxTimestamp *<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a>
+
+    <span class="comment">// stores a channel ID of the proposal</span>
+<span id="MockStub.ChannelID"></span>    ChannelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="MockStub.PvtState"></span>    PvtState map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// stores per-key endorsement policy, first map index is the collection, second map index is the key</span>
+<span id="MockStub.EndorsementPolicies"></span>    EndorsementPolicies map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// channel to store ChaincodeEvents</span>
+<span id="MockStub.ChaincodeEventsChannel"></span>    ChaincodeEventsChannel chan *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>
+
+<span id="MockStub.Decorations"></span>    Decorations map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockStub">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=14075:14128#L423">NewMockStub</a>
+					<a class="permalink" href="index.html#NewMockStub">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockStub(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cc <a href="index.html#Chaincode">Chaincode</a>) *<a href="index.html#MockStub">MockStub</a></pre>
+				<p>
+Constructor to initialise the internal State map
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockStub.CreateCompositeKey">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=10225:10321#L305">CreateCompositeKey</a>
+					<a class="permalink" href="index.html#MockStub.CreateCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) CreateCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateCompositeKey combines the list of attributes
+to form a composite key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.DelPrivateData">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4990:5063#L174">DelPrivateData</a>
+					<a class="permalink" href="index.html#MockStub.DelPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) DelPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.DelState">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=7777:7825#L251">DelState</a>
+					<a class="permalink" href="index.html#MockStub.DelState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) DelState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DelState removes the specified `key` and its value from the ledger.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetArgs">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2139:2179#L70">GetArgs</a>
+					<a class="permalink" href="index.html#MockStub.GetArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetArgsSlice">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12715:12767#L373">GetArgsSlice</a>
+					<a class="permalink" href="index.html#MockStub.GetArgsSlice">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetArgsSlice() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Not implemented
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetBinding">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12402:12452#L359">GetBinding</a>
+					<a class="permalink" href="index.html#MockStub.GetBinding">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetBinding() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Not implemented
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetChannelID">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2067:2110#L66">GetChannelID</a>
+					<a class="permalink" href="index.html#MockStub.GetChannelID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetCreator">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12205:12255#L349">GetCreator</a>
+					<a class="permalink" href="index.html#MockStub.GetCreator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetCreator() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Not implemented
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetDecorations">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4004:4060#L134">GetDecorations</a>
+					<a class="permalink" href="index.html#MockStub.GetDecorations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetDecorations() map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetFunctionAndParameters">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2410:2493#L83">GetFunctionAndParameters</a>
+					<a class="permalink" href="index.html#MockStub.GetFunctionAndParameters">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetFunctionAndParameters() (function <a href="http://localhost:6060/pkg/builtin/#string">string</a>, params []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetHistoryForKey">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=9220:9309#L285">GetHistoryForKey</a>
+					<a class="permalink" href="index.html#MockStub.GetHistoryForKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetHistoryForKey(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#HistoryQueryIteratorInterface">HistoryQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetHistoryForKey function can be invoked by a chaincode to return a history of
+key values across time. GetHistoryForKey is intended to be used for read-only queries.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateData">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4421:4504#L148">GetPrivateData</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateDataByPartialCompositeKey">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=5273:5419#L182">GetPrivateDataByPartialCompositeKey</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateDataByPartialCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateDataByPartialCompositeKey(collection, objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateDataByRange">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=5107:5224#L178">GetPrivateDataByRange</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateDataByRange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateDataByRange(collection, startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateDataHash">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4599:4679#L158">GetPrivateDataHash</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateDataHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateDataHash(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateDataQueryResult">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=5468:5578#L186">GetPrivateDataQueryResult</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateDataQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateDataQueryResult(collection, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetPrivateDataValidationParameter">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=13822:13917#L412">GetPrivateDataValidationParameter</a>
+					<a class="permalink" href="index.html#MockStub.GetPrivateDataValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetQueryResult">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=8701:8788#L276">GetQueryResult</a>
+					<a class="permalink" href="index.html#MockStub.GetQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetQueryResult(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetQueryResult function can be invoked by a chaincode to perform a
+rich query against state database.  Only supported by state database implementations
+that support rich query.  The query string is in the syntax of the underlying
+state database. An iterator is returned which can be used to iterate (next) over
+the query result set
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetQueryResultWithPagination">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=11041:11203#L325">GetQueryResultWithPagination</a>
+					<a class="permalink" href="index.html#MockStub.GetQueryResultWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetQueryResultWithPagination(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+    bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetSignedProposal">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12494:12563#L364">GetSignedProposal</a>
+					<a class="permalink" href="index.html#MockStub.GetSignedProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetSignedProposal() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Not implemented
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetState">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=5902:5960#L194">GetState</a>
+					<a class="permalink" href="index.html#MockStub.GetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetState retrieves the value for a given key from the ledger
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStateByPartialCompositeKey">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=9775:9903#L295">GetStateByPartialCompositeKey</a>
+					<a class="permalink" href="index.html#MockStub.GetStateByPartialCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStateByPartialCompositeKey(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetStateByPartialCompositeKey function can be invoked by a chaincode to query the
+state based on a given partial composite key. This function returns an
+iterator which can be used to iterate over all composite keys whose prefix
+matches the given partial composite key. This function should be used only for
+a partial composite key. For a full composite key, an iter with empty response
+would be returned.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStateByPartialCompositeKeyWithPagination">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=10816:11013#L320">GetStateByPartialCompositeKeyWithPagination</a>
+					<a class="permalink" href="index.html#MockStub.GetStateByPartialCompositeKeyWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStateByPartialCompositeKeyWithPagination(objectType <a href="http://localhost:6060/pkg/builtin/#string">string</a>, keys []<a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>, bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStateByRange">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=8098:8197#L264">GetStateByRange</a>
+					<a class="permalink" href="index.html#MockStub.GetStateByRange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStateByRange(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStateByRangeWithPagination">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=10614:10788#L315">GetStateByRangeWithPagination</a>
+					<a class="permalink" href="index.html#MockStub.GetStateByRangeWithPagination">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStateByRangeWithPagination(startKey, endKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pageSize <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>,
+    bookmark <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#StateQueryIteratorInterface">StateQueryIteratorInterface</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#QueryResponseMetadata">QueryResponseMetadata</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStateValidationParameter">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=13383:13460#L397">GetStateValidationParameter</a>
+					<a class="permalink" href="index.html#MockStub.GetStateValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetStringArgs">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2203:2249#L74">GetStringArgs</a>
+					<a class="permalink" href="index.html#MockStub.GetStringArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetStringArgs() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetTransient">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12297:12360#L354">GetTransient</a>
+					<a class="permalink" href="index.html#MockStub.GetTransient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetTransient() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Not implemented
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetTxID">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2005:2043#L62">GetTxID</a>
+					<a class="permalink" href="index.html#MockStub.GetTxID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetTxID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.GetTxTimestamp">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=12884:12952#L381">GetTxTimestamp</a>
+					<a class="permalink" href="index.html#MockStub.GetTxTimestamp">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) GetTxTimestamp() (*<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.InvokeChaincode">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=11528:11630#L334">InvokeChaincode</a>
+					<a class="permalink" href="index.html#MockStub.InvokeChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) InvokeChaincode(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+InvokeChaincode calls a peered chaincode.
+E.g. stub1.InvokeChaincode(&#34;stub2Hash&#34;, funcArgs, channel)
+Before calling this make sure to create another MockStub stub2, call stub2.MockInit(uuid, func, args)
+and register it with stub1 by calling stub1.MockPeerChaincode(&#34;stub2Hash&#34;, stub2)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockInit">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=3544:3614#L117">MockInit</a>
+					<a class="permalink" href="index.html#MockStub.MockInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockInit(uuid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Initialise this chaincode,  also starts and ends a transaction.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockInvoke">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=3803:3875#L126">MockInvoke</a>
+					<a class="permalink" href="index.html#MockStub.MockInvoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockInvoke(uuid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Invoke this chaincode, also starts and ends a transaction.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockInvokeWithSignedProposal">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4153:4266#L139">MockInvokeWithSignedProposal</a>
+					<a class="permalink" href="index.html#MockStub.MockInvokeWithSignedProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockInvokeWithSignedProposal(uuid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sp *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Invoke this chaincode, also starts and ends a transaction.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockPeerChaincode">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=3327:3418#L112">MockPeerChaincode</a>
+					<a class="permalink" href="index.html#MockStub.MockPeerChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockPeerChaincode(invokableChaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, otherStub *<a href="index.html#MockStub">MockStub</a>)</pre>
+				<p>
+Register a peer chaincode with this MockStub
+invokableChaincodeName is the name or hash of the peer
+otherStub is a MockStub of the peer, already intialised
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockTransactionEnd">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=3060:3113#L104">MockTransactionEnd</a>
+					<a class="permalink" href="index.html#MockStub.MockTransactionEnd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockTransactionEnd(uuid <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+End a mocked transaction, clearing the UUID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.MockTransactionStart">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=2839:2894#L97">MockTransactionStart</a>
+					<a class="permalink" href="index.html#MockStub.MockTransactionStart">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) MockTransactionStart(txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Used to indicate to a chaincode that it is part of a transaction.
+This is important when chaincodes invoke each other.
+MockStub doesn&#39;t support concurrent transactions at present.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.PutPrivateData">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=4728:4815#L162">PutPrivateData</a>
+					<a class="permalink" href="index.html#MockStub.PutPrivateData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) PutPrivateData(collection <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.PutState">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=6143:6205#L201">PutState</a>
+					<a class="permalink" href="index.html#MockStub.PutState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) PutState(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PutState writes the specified `value` and `key` into the ledger.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockStub.SetEvent">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=13070:13135#L388">SetEvent</a>
+					<a class="permalink" href="index.html#MockStub.SetEvent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) SetEvent(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.SetPrivateDataValidationParameter">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=13522:13618#L401">SetPrivateDataValidationParameter</a>
+					<a class="permalink" href="index.html#MockStub.SetPrivateDataValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) SetPrivateDataValidationParameter(collection, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.SetStateValidationParameter">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=13239:13317#L393">SetStateValidationParameter</a>
+					<a class="permalink" href="index.html#MockStub.SetStateValidationParameter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) SetStateValidationParameter(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ep []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="MockStub.SplitCompositeKey">func (*MockStub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/mockstub.go?s=10482:10568#L311">SplitCompositeKey</a>
+					<a class="permalink" href="index.html#MockStub.SplitCompositeKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#MockStub">MockStub</a>) SplitCompositeKey(compositeKey <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SplitCompositeKey splits the composite key into attributes
+on which the composite key was formed.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PeerChaincodeStream">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/handler.go?s=513:642#L18">PeerChaincodeStream</a>
+				<a class="permalink" href="index.html#PeerChaincodeStream">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PeerChaincodeStream interface for stream between Peer and chaincode instance.
+</p>
+
+			<pre>type PeerChaincodeStream interface {
+    Send(*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CloseSend() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SendPanicFailure">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/inprocstream.go?s=703:731#L17">SendPanicFailure</a>
+				<a class="permalink" href="index.html#SendPanicFailure">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SendPanicFailure
+</p>
+
+			<pre>type SendPanicFailure <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SendPanicFailure.Error">func (SendPanicFailure) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/inprocstream.go?s=733:773#L19">Error</a>
+					<a class="permalink" href="index.html#SendPanicFailure.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e <a href="index.html#SendPanicFailure">SendPanicFailure</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StateQueryIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=21131:21182#L623">StateQueryIterator</a>
+				<a class="permalink" href="index.html#StateQueryIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateQueryIterator documentation can be found in interfaces.go
+</p>
+
+			<pre>type StateQueryIterator struct {
+    *<a href="index.html#CommonIterator">CommonIterator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StateQueryIterator.Next">func (*StateQueryIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/chaincode.go?s=28629:28692#L847">Next</a>
+					<a class="permalink" href="index.html#StateQueryIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (iter *<a href="index.html#StateQueryIterator">StateQueryIterator</a>) Next() (*<a href="../../../protos/ledger/queryresult/index.html">queryresult</a>.<a href="../../../protos/ledger/queryresult/index.html#KV">KV</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StateQueryIteratorInterface">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/interfaces.go?s=20855:21075#L357">StateQueryIteratorInterface</a>
+				<a class="permalink" href="index.html#StateQueryIteratorInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateQueryIteratorInterface allows a chaincode to iterate over a set of
+key/value pairs returned by range and execute query.
+</p>
+
+			<pre>type StateQueryIteratorInterface interface {
+    <span class="comment">// Inherit HasNext() and Close()</span>
+    <a href="index.html#CommonIteratorInterface">CommonIteratorInterface</a>
+
+    <span class="comment">// Next returns the next key and value in the range and execute query iterator.</span>
+    Next() (*<a href="../../../protos/ledger/queryresult/index.html">queryresult</a>.<a href="../../../protos/ledger/queryresult/index.html#KV">KV</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ext/index.html">ext</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="ext/attrmgr/index.html">attrmgr</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="ext/cid/index.html">cid</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="ext/entities/index.html">entities</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="ext/statebased/index.html">statebased</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ledgerstorage - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ledgerstorage
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/ledgerstorage"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#LoadPreResetHeight">func LoadPreResetHeight(blockstorePath string) (map[string]uint64, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ResetBlockStore">func ResetBlockStore(blockstorePath string) error</a></dd>
+			
+				
+				<dd><a href="index.html#Rollback">func Rollback(blockstorePath, ledgerID string, blockNum uint64) error</a></dd>
+			
+				
+				<dd><a href="index.html#ValidateRollbackParams">func ValidateRollbackParams(blockstorePath, ledgerID string, blockNum uint64) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider(metricsProvider metrics.Provider) *Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.Close">func (p *Provider) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.Exists">func (p *Provider) Exists(ledgerID string) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.Open">func (p *Provider) Open(ledgerid string) (*Store, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Store">type Store</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.CommitPvtDataOfOldBlocks">func (s *Store) CommitPvtDataOfOldBlocks(blocksPvtData map[uint64][]*ledger.TxPvtData) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.CommitWithPvtData">func (s *Store) CommitWithPvtData(blockAndPvtdata *ledger.BlockAndPvtData) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.DoesPvtDataInfoExist">func (s *Store) DoesPvtDataInfoExist(blockNum uint64) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.GetLastUpdatedOldBlocksPvtData">func (s *Store) GetLastUpdatedOldBlocksPvtData() (map[uint64][]*ledger.TxPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.GetMissingPvtDataInfoForMostRecentBlocks">func (s *Store) GetMissingPvtDataInfoForMostRecentBlocks(maxBlock int) (ledger.MissingPvtDataInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.GetPvtDataAndBlockByNum">func (s *Store) GetPvtDataAndBlockByNum(blockNum uint64, filter ledger.PvtNsCollFilter) (*ledger.BlockAndPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.GetPvtDataByNum">func (s *Store) GetPvtDataByNum(blockNum uint64, filter ledger.PvtNsCollFilter) ([]*ledger.TxPvtData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.Init">func (s *Store) Init(btlPolicy pvtdatapolicy.BTLPolicy)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.IsPvtStoreAheadOfBlockStore">func (s *Store) IsPvtStoreAheadOfBlockStore() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.ProcessCollsEligibilityEnabled">func (s *Store) ProcessCollsEligibilityEnabled(committingBlk uint64, nsCollMap map[string][]string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.ResetLastUpdatedOldBlocksList">func (s *Store) ResetLastUpdatedOldBlocksList() error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go">store.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="LoadPreResetHeight">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=12747:12820#L341">LoadPreResetHeight</a>
+				<a class="permalink" href="index.html#LoadPreResetHeight">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LoadPreResetHeight(blockstorePath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+LoadPreResetHeight returns the pre reset height.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ResetBlockStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=12942:12991#L346">ResetBlockStore</a>
+				<a class="permalink" href="index.html#ResetBlockStore">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ResetBlockStore(blockstorePath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ResetBlockStore resets all ledgers to the genesis block.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Rollback">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=13406:13475#L357">Rollback</a>
+				<a class="permalink" href="index.html#Rollback">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Rollback(blockstorePath, ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+Rollback reverts changes made to the block store beyond a given block number.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ValidateRollbackParams">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=13156:13239#L352">ValidateRollbackParams</a>
+				<a class="permalink" href="index.html#ValidateRollbackParams">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ValidateRollbackParams(blockstorePath, ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+ValidateRollbackParams performs necessary validation on the input given for
+the rollback operation.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=791:913#L17">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider encapusaltes two providers 1) block store provider and 2) and pvt data store provider
+</p>
+
+			<pre>type Provider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=1557:1617#L41">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider(metricsProvider <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#Provider">Provider</a></pre>
+				<p>
+NewProvider returns the handle to the provider
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Provider.Close">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=2834:2860#L87">Close</a>
+					<a class="permalink" href="index.html#Provider.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) Close()</pre>
+				<p>
+Close closes the provider
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.Exists">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=2981:3037#L93">Exists</a>
+					<a class="permalink" href="index.html#Provider.Exists">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) Exists(ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Exists checks whether the ledgerID already presents
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.Open">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=2032:2088#L54">Open</a>
+					<a class="permalink" href="index.html#Provider.Open">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) Open(ledgerid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#Store">Store</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Open opens the store
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Store">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=982:1160#L23">Store</a>
+				<a class="permalink" href="index.html#Store">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Store encapsulates two stores 1) block store and pvt data store
+</p>
+
+			<pre>type Store struct {
+    <a href="../../../common/ledger/blkstorage/index.html">blkstorage</a>.<a href="../../../common/ledger/blkstorage/index.html#BlockStore">BlockStore</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Store.CommitPvtDataOfOldBlocks">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=6106:6198#L178">CommitPvtDataOfOldBlocks</a>
+					<a class="permalink" href="index.html#Store.CommitPvtDataOfOldBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) CommitPvtDataOfOldBlocks(blocksPvtData map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CommitPvtDataOfOldBlocks commits the pvtData of old blocks
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.CommitWithPvtData">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=3329:3409#L103">CommitWithPvtData</a>
+					<a class="permalink" href="index.html#Store.CommitWithPvtData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) CommitWithPvtData(blockAndPvtdata *<a href="../index.html">ledger</a>.<a href="../index.html#BlockAndPvtData">BlockAndPvtData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CommitWithPvtData commits the block and the corresponding pvt data in an atomic operation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.DoesPvtDataInfoExist">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=8264:8331#L230">DoesPvtDataInfoExist</a>
+					<a class="permalink" href="index.html#Store.DoesPvtDataInfoExist">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) DoesPvtDataInfoExist(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DoesPvtDataInfoExist returns true when
+(1) the ledger has pvtdata associated with the given block number (or)
+(2) a few or all pvtdata associated with the given block number is missing but the
+</p>
+<pre>missing info is recorded in the ledger (or)
+</pre>
+<p>
+(3) the block is committed does not contain any pvtData.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.GetLastUpdatedOldBlocksPvtData">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=9446:9534#L253">GetLastUpdatedOldBlocksPvtData</a>
+					<a class="permalink" href="index.html#Store.GetLastUpdatedOldBlocksPvtData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) GetLastUpdatedOldBlocksPvtData() (map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetLastUpdatedOldBlocksPvtData invokes the function on underlying pvtdata store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.GetMissingPvtDataInfoForMostRecentBlocks">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=8570:8675#L239">GetMissingPvtDataInfoForMostRecentBlocks</a>
+					<a class="permalink" href="index.html#Store.GetMissingPvtDataInfoForMostRecentBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) GetMissingPvtDataInfoForMostRecentBlocks(maxBlock <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (<a href="../index.html">ledger</a>.<a href="../index.html#MissingPvtDataInfo">MissingPvtDataInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetMissingPvtDataInfoForMostRecentBlocks invokes the function on underlying pvtdata store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.GetPvtDataAndBlockByNum">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=6455:6575#L188">GetPvtDataAndBlockByNum</a>
+					<a class="permalink" href="index.html#Store.GetPvtDataAndBlockByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) GetPvtDataAndBlockByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../index.html">ledger</a>.<a href="../index.html#PvtNsCollFilter">PvtNsCollFilter</a>) (*<a href="../index.html">ledger</a>.<a href="../index.html#BlockAndPvtData">BlockAndPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataAndBlockByNum returns the block and the corresponding pvt data.
+The pvt data is filtered by the list of &#39;collections&#39; supplied
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.GetPvtDataByNum">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=7189:7297#L207">GetPvtDataByNum</a>
+					<a class="permalink" href="index.html#Store.GetPvtDataByNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) GetPvtDataByNum(blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, filter <a href="../index.html">ledger</a>.<a href="../index.html#PvtNsCollFilter">PvtNsCollFilter</a>) ([]*<a href="../index.html">ledger</a>.<a href="../index.html#TxPvtData">TxPvtData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetPvtDataByNum returns only the pvt data  corresponding to the given block number
+The pvt data is filtered by the list of &#39;ns/collections&#39; supplied in the filter
+A nil filter does not filter any results
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.Init">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=3143:3198#L98">Init</a>
+					<a class="permalink" href="index.html#Store.Init">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) Init(btlPolicy <a href="../pvtdatapolicy/index.html">pvtdatapolicy</a>.<a href="../pvtdatapolicy/index.html#BTLPolicy">BTLPolicy</a>)</pre>
+				<p>
+Init initializes store with essential configurations
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.IsPvtStoreAheadOfBlockStore">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=9932:9982#L264">IsPvtStoreAheadOfBlockStore</a>
+					<a class="permalink" href="index.html#Store.IsPvtStoreAheadOfBlockStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) IsPvtStoreAheadOfBlockStore() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsPvtStoreAheadOfBlockStore returns true when the pvtStore height is
+greater than the blockstore height. Otherwise, it returns false.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.ProcessCollsEligibilityEnabled">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=9172:9277#L248">ProcessCollsEligibilityEnabled</a>
+					<a class="permalink" href="index.html#Store.ProcessCollsEligibilityEnabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) ProcessCollsEligibilityEnabled(committingBlk <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, nsCollMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ProcessCollsEligibilityEnabled invokes the function on underlying pvtdata store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.ResetLastUpdatedOldBlocksList">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/ledgerstorage/store.go?s=9678:9731#L258">ResetLastUpdatedOldBlocksList</a>
+					<a class="permalink" href="index.html#Store.ResetLastUpdatedOldBlocksList">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) ResetLastUpdatedOldBlocksList() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ResetLastUpdatedOldBlocksList invokes the function on underlying pvtdata store
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

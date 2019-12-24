@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>multichannel - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package multichannel
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/common/multichannel"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package multichannel tracks the channel resources for the orderer.  It initially
+loads the set of existing channels, and provides an interface for users of these
+channels to retrieve them, or create new ones.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ConfigBlock">func ConfigBlock(reader blockledger.Reader) *cb.Block</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BlockWriter">type BlockWriter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockWriter.CreateNextBlock">func (bw *BlockWriter) CreateNextBlock(messages []*cb.Envelope) *cb.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockWriter.WriteBlock">func (bw *BlockWriter) WriteBlock(block *cb.Block, encodedMetadataValue []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockWriter.WriteConfigBlock">func (bw *BlockWriter) WriteConfigBlock(block *cb.Block, encodedMetadataValue []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChainSupport">type ChainSupport</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Append">func (cs *ChainSupport) Append(block *cb.Block) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Block">func (cs *ChainSupport) Block(number uint64) *cb.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.BlockCutter">func (cs *ChainSupport) BlockCutter() blockcutter.Receiver</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.ChainID">func (cs *ChainSupport) ChainID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.ConfigProto">func (cs *ChainSupport) ConfigProto() *cb.Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.ProposeConfigUpdate">func (cs *ChainSupport) ProposeConfigUpdate(configtx *cb.Envelope) (*cb.ConfigEnvelope, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Reader">func (cs *ChainSupport) Reader() blockledger.Reader</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Sequence">func (cs *ChainSupport) Sequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Signer">func (cs *ChainSupport) Signer() crypto.LocalSigner</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.Validate">func (cs *ChainSupport) Validate(configEnv *cb.ConfigEnvelope) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainSupport.VerifyBlockSignature">func (cs *ChainSupport) VerifyBlockSignature(sd []*cb.SignedData, envelope *cb.ConfigEnvelope) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Registrar">type Registrar</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewRegistrar">func NewRegistrar(config localconfig.TopLevel, ledgerFactory blockledger.Factory, signer crypto.LocalSigner, metricsProvider metrics.Provider, callbacks ...channelconfig.BundleActor) *Registrar</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.BroadcastChannelSupport">func (r *Registrar) BroadcastChannelSupport(msg *cb.Envelope) (*cb.ChannelHeader, bool, *ChainSupport, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.ChannelsCount">func (r *Registrar) ChannelsCount() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.CreateBundle">func (r *Registrar) CreateBundle(channelID string, config *cb.Config) (channelconfig.Resources, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.CreateChain">func (r *Registrar) CreateChain(chainName string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.GetChain">func (r *Registrar) GetChain(chainID string) *ChainSupport</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.Initialize">func (r *Registrar) Initialize(consenters map[string]consensus.Consenter)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.NewChannelConfig">func (r *Registrar) NewChannelConfig(envConfigUpdate *cb.Envelope) (channelconfig.Resources, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Registrar.SystemChannelID">func (r *Registrar) SystemChannelID() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/blockwriter.go">blockwriter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go">chainsupport.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go">registrar.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=3482:3535#L100">ConfigBlock</a>
+				<a class="permalink" href="index.html#ConfigBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConfigBlock(reader <a href="../../../common/ledger/blockledger/index.html">blockledger</a>.<a href="../../../common/ledger/blockledger/index.html#Reader">Reader</a>) *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+ConfigBlock retrieves the last configuration block from the given ledger.
+Panics on failure.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BlockWriter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/blockwriter.go?s=1080:1317#L25">BlockWriter</a>
+				<a class="permalink" href="index.html#BlockWriter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockWriter efficiently writes the blockchain to disk.
+To safely use BlockWriter, only one thread should interact with it.
+BlockWriter will spawn additional committing go routines and handle locking
+so that these other go routines safely interact with the calling one.
+</p>
+
+			<pre>type BlockWriter struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockWriter.CreateNextBlock">func (*BlockWriter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/blockwriter.go?s=2335:2408#L59">CreateNextBlock</a>
+					<a class="permalink" href="index.html#BlockWriter.CreateNextBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bw *<a href="index.html#BlockWriter">BlockWriter</a>) CreateNextBlock(messages []*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+CreateNextBlock creates a new block with the next block number, and the given contents.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockWriter.WriteBlock">func (*BlockWriter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/blockwriter.go?s=6216:6295#L160">WriteBlock</a>
+					<a class="permalink" href="index.html#BlockWriter.WriteBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bw *<a href="index.html#BlockWriter">BlockWriter</a>) WriteBlock(block *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+WriteBlock should be invoked for blocks which contain normal transactions.
+It sets the target block as the pending next block, and returns before it is committed.
+Before returning, it acquires the committing lock, and spawns a go routine which will
+annotate the block with metadata and signatures, and write the block to the ledger
+then release the lock.  This allows the calling thread to begin assembling the next block
+before the commit phase is complete.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockWriter.WriteConfigBlock">func (*BlockWriter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/blockwriter.go?s=3062:3147#L84">WriteConfigBlock</a>
+					<a class="permalink" href="index.html#BlockWriter.WriteConfigBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bw *<a href="index.html#BlockWriter">BlockWriter</a>) WriteConfigBlock(block *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>, encodedMetadataValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+WriteConfigBlock should be invoked for blocks which contain a config transaction.
+This call will block until the new config has taken effect, then will return
+while the block is written asynchronously to disk.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChainSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=683:833#L13">ChainSupport</a>
+				<a class="permalink" href="index.html#ChainSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChainSupport holds the resources for a particular channel.
+</p>
+
+			<pre>type ChainSupport struct {
+    <a href="../msgprocessor/index.html">msgprocessor</a>.<a href="../msgprocessor/index.html#Processor">Processor</a>
+    *<a href="index.html#BlockWriter">BlockWriter</a>
+    <a href="../../consensus/index.html">consensus</a>.<a href="../../consensus/index.html#Chain">Chain</a>
+
+    <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChainSupport.Append">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=4686:4739#L146">Append</a>
+					<a class="permalink" href="index.html#ChainSupport.Append">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Append(block *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Append appends a new block to the ledger in its raw form,
+unlike WriteBlock that also mutates its metadata.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.Block">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=2823:2877#L80">Block</a>
+					<a class="permalink" href="index.html#ChainSupport.Block">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+Block returns a block with the following number,
+or nil if such a block doesn&#39;t exist.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.BlockCutter">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=3302:3360#L101">BlockCutter</a>
+					<a class="permalink" href="index.html#ChainSupport.BlockCutter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) BlockCutter() <a href="../blockcutter/index.html">blockcutter</a>.<a href="../blockcutter/index.html#Receiver">Receiver</a></pre>
+				<p>
+BlockCutter returns the blockcutter.Receiver instance for this channel.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.ChainID">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=4166:4206#L130">ChainID</a>
+					<a class="permalink" href="index.html#ChainSupport.ChainID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) ChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ChainID passes through to the underlying configtx.Validator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.ConfigProto">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=4320:4368#L135">ConfigProto</a>
+					<a class="permalink" href="index.html#ChainSupport.ConfigProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) ConfigProto() *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Config">Config</a></pre>
+				<p>
+ConfigProto passes through to the underlying configtx.Validator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.ProposeConfigUpdate">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=3648:3742#L111">ProposeConfigUpdate</a>
+					<a class="permalink" href="index.html#ChainSupport.ProposeConfigUpdate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) ProposeConfigUpdate(configtx *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) (*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProposeConfigUpdate passes through to the underlying configtx.Validator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.Reader">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=2977:3028#L87">Reader</a>
+					<a class="permalink" href="index.html#ChainSupport.Reader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Reader() <a href="../../../common/ledger/blockledger/index.html">blockledger</a>.<a href="../../../common/ledger/blockledger/index.html#Reader">Reader</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.Sequence">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=4483:4524#L140">Sequence</a>
+					<a class="permalink" href="index.html#ChainSupport.Sequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Sequence passes through to the underlying configtx.Validator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.Signer">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=3104:3155#L92">Signer</a>
+					<a class="permalink" href="index.html#ChainSupport.Signer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Signer() <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a></pre>
+				<p>
+Signer returns the crypto.Localsigner for this channel.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.Validate">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=3448:3516#L106">Validate</a>
+					<a class="permalink" href="index.html#ChainSupport.Validate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) Validate(configEnv *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Validate passes through to the underlying configtx.Validator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainSupport.VerifyBlockSignature">func (*ChainSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/chainsupport.go?s=5175:5275#L156">VerifyBlockSignature</a>
+					<a class="permalink" href="index.html#ChainSupport.VerifyBlockSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChainSupport">ChainSupport</a>) VerifyBlockSignature(sd []*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>, envelope *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyBlockSignature verifies a signature of a block.
+It has an optional argument of a configuration envelope
+which would make the block verification to use validation rules
+based on the given configuration in the ConfigEnvelope.
+If the config envelope passed is nil, then the validation rules used
+are the ones that were applied at commit of previous blocks.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Registrar">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=2901:3381#L84">Registrar</a>
+				<a class="permalink" href="index.html#Registrar">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Registrar serves as a point of access and control for the individual channel resources.
+</p>
+
+			<pre>type Registrar struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewRegistrar">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=4106:4305#L119">NewRegistrar</a>
+					<a class="permalink" href="index.html#NewRegistrar">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewRegistrar(
+    config <a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#TopLevel">TopLevel</a>,
+    ledgerFactory <a href="../../../common/ledger/blockledger/index.html">blockledger</a>.<a href="../../../common/ledger/blockledger/index.html#Factory">Factory</a>,
+    signer <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a>,
+    metricsProvider <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Provider">Provider</a>,
+    callbacks ...<a href="../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../common/channelconfig/index.html#BundleActor">BundleActor</a>) *<a href="index.html#Registrar">Registrar</a></pre>
+				<p>
+NewRegistrar produces an instance of a *Registrar.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Registrar.BroadcastChannelSupport">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=7411:7520#L214">BroadcastChannelSupport</a>
+					<a class="permalink" href="index.html#Registrar.BroadcastChannelSupport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) BroadcastChannelSupport(msg *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) (*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ChannelHeader">ChannelHeader</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, *<a href="index.html#ChainSupport">ChainSupport</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+BroadcastChannelSupport returns the message channel header, whether the message is a config update
+and the channel resources for a message or an error if the message is not a message which can
+be processed directly (like CONFIG and ORDERER_TRANSACTION messages)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.ChannelsCount">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=10785:10824#L329">ChannelsCount</a>
+					<a class="permalink" href="index.html#Registrar.ChannelsCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) ChannelsCount() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+ChannelsCount returns the count of the current total number of channels.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.CreateBundle">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=11210:11312#L342">CreateBundle</a>
+					<a class="permalink" href="index.html#Registrar.CreateBundle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) CreateBundle(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, config *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Config">Config</a>) (<a href="../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../common/channelconfig/index.html#Resources">Resources</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateBundle calls channelconfig.NewBundle
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.CreateChain">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=9459:9508#L287">CreateChain</a>
+					<a class="permalink" href="index.html#Registrar.CreateChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) CreateChain(chainName <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+CreateChain makes the Registrar create a chain with the given name.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.GetChain">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=8108:8166#L239">GetChain</a>
+					<a class="permalink" href="index.html#Registrar.GetChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) GetChain(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#ChainSupport">ChainSupport</a></pre>
+				<p>
+GetChain retrieves the chain support for a chain if it exists.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.Initialize">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=4590:4663#L137">Initialize</a>
+					<a class="permalink" href="index.html#Registrar.Initialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) Initialize(consenters map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../../consensus/index.html">consensus</a>.<a href="../../consensus/index.html#Consenter">Consenter</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Registrar.NewChannelConfig">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=11005:11104#L337">NewChannelConfig</a>
+					<a class="permalink" href="index.html#Registrar.NewChannelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) NewChannelConfig(envConfigUpdate *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) (<a href="../../../common/channelconfig/index.html">channelconfig</a>.<a href="../../../common/channelconfig/index.html#Resources">Resources</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewChannelConfig produces a new template channel configuration based on the system channel&#39;s current config.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Registrar.SystemChannelID">func (*Registrar) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/multichannel/registrar.go?s=7064:7108#L207">SystemChannelID</a>
+					<a class="permalink" href="index.html#Registrar.SystemChannelID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Registrar">Registrar</a>) SystemChannelID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+SystemChannelID returns the ChannelID for the system channel.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>leveldbhelper - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package leveldbhelper
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/ledger/util/leveldbhelper"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Conf">type Conf</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DB">type DB</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CreateDB">func CreateDB(conf *Conf) *DB</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Close">func (dbInst *DB) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Delete">func (dbInst *DB) Delete(key []byte, sync bool) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Get">func (dbInst *DB) Get(key []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.GetIterator">func (dbInst *DB) GetIterator(startKey []byte, endKey []byte) iterator.Iterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Open">func (dbInst *DB) Open()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Put">func (dbInst *DB) Put(key []byte, value []byte, sync bool) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.WriteBatch">func (dbInst *DB) WriteBatch(batch *leveldb.Batch, sync bool) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DBHandle">type DBHandle</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DBHandle.Delete">func (h *DBHandle) Delete(key []byte, sync bool) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DBHandle.Get">func (h *DBHandle) Get(key []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DBHandle.GetIterator">func (h *DBHandle) GetIterator(startKey []byte, endKey []byte) *Iterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DBHandle.Put">func (h *DBHandle) Put(key []byte, value []byte, sync bool) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DBHandle.WriteBatch">func (h *DBHandle) WriteBatch(batch *UpdateBatch, sync bool) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FileLock">type FileLock</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFileLock">func NewFileLock(filePath string) *FileLock</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FileLock.Lock">func (f *FileLock) Lock() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FileLock.Unlock">func (f *FileLock) Unlock()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Iterator">type Iterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Iterator.Key">func (itr *Iterator) Key() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Provider">type Provider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider(conf *Conf) *Provider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.Close">func (p *Provider) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Provider.GetDBHandle">func (p *Provider) GetDBHandle(dbName string) *DBHandle</a></dd>
+				
+			
+				
+				<dd><a href="index.html#UpdateBatch">type UpdateBatch</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUpdateBatch">func NewUpdateBatch() *UpdateBatch</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Delete">func (batch *UpdateBatch) Delete(key []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Len">func (batch *UpdateBatch) Len() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UpdateBatch.Put">func (batch *UpdateBatch) Put(key []byte, value []byte)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go">leveldb_helper.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go">leveldb_provider.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Conf">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=608:643#L23">Conf</a>
+				<a class="permalink" href="index.html#Conf">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Conf configuration for `DB`
+</p>
+
+			<pre>type Conf struct {
+<span id="Conf.DBPath"></span>    DBPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=682:878#L28">DB</a>
+				<a class="permalink" href="index.html#DB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DB - a wrapper on an actual store
+</p>
+
+			<pre>type DB struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateDB">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=910:939#L40">CreateDB</a>
+					<a class="permalink" href="index.html#CreateDB">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func CreateDB(conf *<a href="index.html#Conf">Conf</a>) *<a href="index.html#DB">DB</a></pre>
+				<p>
+CreateDB constructs a `DB`
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="DB.Close">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=1840:1865#L76">Close</a>
+					<a class="permalink" href="index.html#DB.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) Close()</pre>
+				<p>
+Close closes the underlying db
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Delete">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=2868:2921#L117">Delete</a>
+					<a class="permalink" href="index.html#DB.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) Delete(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Delete deletes the given key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Get">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=2124:2173#L89">Get</a>
+					<a class="permalink" href="index.html#DB.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) Get(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Get returns the value for the given key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.GetIterator">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=3544:3623#L133">GetIterator</a>
+					<a class="permalink" href="index.html#DB.GetIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) GetIterator(startKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, endKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/iterator/">iterator</a>.<a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/iterator/#Iterator">Iterator</a></pre>
+				<p>
+GetIterator returns an iterator over key-value store. The iterator should be released after the use.
+The resultset contains all the keys that are present in the db between the startKey (inclusive) and the endKey (exclusive).
+A nil startKey represents the first available key and a nil endKey represent a logical key after the last available key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Open">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=1279:1303#L55">Open</a>
+					<a class="permalink" href="index.html#DB.Open">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) Open()</pre>
+				<p>
+Open opens the underlying db
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Put">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=2501:2565#L103">Put</a>
+					<a class="permalink" href="index.html#DB.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) Put(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Put saves the key/value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.WriteBatch">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=3759:3826#L138">WriteBatch</a>
+					<a class="permalink" href="index.html#DB.WriteBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dbInst *<a href="index.html#DB">DB</a>) WriteBatch(batch *<a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/">leveldb</a>.<a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/#Batch">Batch</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+WriteBatch writes a batch
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DBHandle">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1542:1593#L52">DBHandle</a>
+				<a class="permalink" href="index.html#DBHandle">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DBHandle is an handle to a named db
+</p>
+
+			<pre>type DBHandle struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DBHandle.Delete">func (*DBHandle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1939:1993#L68">Delete</a>
+					<a class="permalink" href="index.html#DBHandle.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#DBHandle">DBHandle</a>) Delete(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Delete deletes the given key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DBHandle.Get">func (*DBHandle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1638:1688#L58">Get</a>
+					<a class="permalink" href="index.html#DBHandle.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#DBHandle">DBHandle</a>) Get(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Get returns the value for the given key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DBHandle.GetIterator">func (*DBHandle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=2843:2915#L95">GetIterator</a>
+					<a class="permalink" href="index.html#DBHandle.GetIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#DBHandle">DBHandle</a>) GetIterator(startKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, endKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#Iterator">Iterator</a></pre>
+				<p>
+GetIterator gets an handle to iterator. The iterator should be released after the use.
+The resultset contains all the keys that are present in the db between the startKey (inclusive) and the endKey (exclusive).
+A nil startKey represents the first available key and a nil endKey represent a logical key after the last available key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DBHandle.Put">func (*DBHandle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1772:1837#L63">Put</a>
+					<a class="permalink" href="index.html#DBHandle.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#DBHandle">DBHandle</a>) Put(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Put saves the key/value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DBHandle.WriteBatch">func (*DBHandle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=2105:2171#L73">WriteBatch</a>
+					<a class="permalink" href="index.html#DBHandle.WriteBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#DBHandle">DBHandle</a>) WriteBatch(batch *<a href="index.html#UpdateBatch">UpdateBatch</a>, sync <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+WriteBatch writes a batch in an atomic way
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FileLock">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=4225:4288#L153">FileLock</a>
+				<a class="permalink" href="index.html#FileLock">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FileLock encapsulate the DB that holds the file lock.
+As the FileLock to be used by a single process/goroutine,
+there is no need for the semaphore to synchronize the
+FileLock usage.
+</p>
+
+			<pre>type FileLock struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFileLock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=4344:4387#L159">NewFileLock</a>
+					<a class="permalink" href="index.html#NewFileLock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFileLock(filePath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#FileLock">FileLock</a></pre>
+				<p>
+NewFileLock returns a new file based lock manager.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="FileLock.Lock">func (*FileLock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=4940:4971#L173">Lock</a>
+					<a class="permalink" href="index.html#FileLock.Lock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FileLock">FileLock</a>) Lock() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Lock acquire a file lock. We achieve this by opening
+a db for the given filePath. Internally, leveldb acquires a
+file lock while opening a db. If the db is opened again by the same or
+another process, error would be returned. When the db is closed
+or the owner process dies, the lock would be released and hence
+the other process can open the db. We exploit this leveldb
+functionality to acquire and release file lock as the leveldb
+supports this for Windows, Solaris, and Unix.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FileLock.Unlock">func (*FileLock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_helper.go?s=5630:5657#L193">Unlock</a>
+					<a class="permalink" href="index.html#FileLock.Unlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FileLock">FileLock</a>) Unlock()</pre>
+				<p>
+Unlock releases a previously acquired lock. We achieve this by closing
+the previously opened db. FileUnlock can be called multiple times.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Iterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3954:3997#L135">Iterator</a>
+				<a class="permalink" href="index.html#Iterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Iterator extends actual leveldb iterator
+</p>
+
+			<pre>type Iterator struct {
+    <a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/iterator/">iterator</a>.<a href="http://localhost:6060/pkg/github.com/syndtr/goleveldb/leveldb/iterator/#Iterator">Iterator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Iterator.Key">func (*Iterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=4043:4076#L140">Key</a>
+					<a class="permalink" href="index.html#Iterator.Key">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (itr *<a href="index.html#Iterator">Iterator</a>) Key() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Key wraps actual leveldb iterator method
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Provider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=857:950#L21">Provider</a>
+				<a class="permalink" href="index.html#Provider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Provider enables to use a single leveldb as multiple logical leveldbs
+</p>
+
+			<pre>type Provider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=989:1027#L28">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider(conf *<a href="index.html#Conf">Conf</a>) *<a href="index.html#Provider">Provider</a></pre>
+				<p>
+NewProvider constructs a Provider
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Provider.Close">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1457:1483#L47">Close</a>
+					<a class="permalink" href="index.html#Provider.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) Close()</pre>
+				<p>
+Close closes the underlying leveldb
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Provider.GetDBHandle">func (*Provider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=1176:1231#L35">GetDBHandle</a>
+					<a class="permalink" href="index.html#Provider.GetDBHandle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Provider">Provider</a>) GetDBHandle(dbName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#DBHandle">DBHandle</a></pre>
+				<p>
+GetDBHandle returns a handle to a named db
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="UpdateBatch">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3316:3366#L107">UpdateBatch</a>
+				<a class="permalink" href="index.html#UpdateBatch">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UpdateBatch encloses the details of multiple `updates`
+</p>
+
+			<pre>type UpdateBatch struct {
+<span id="UpdateBatch.KVs"></span>    KVs map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewUpdateBatch">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3420:3454#L112">NewUpdateBatch</a>
+					<a class="permalink" href="index.html#NewUpdateBatch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewUpdateBatch() *<a href="index.html#UpdateBatch">UpdateBatch</a></pre>
+				<p>
+NewUpdateBatch constructs an instance of a Batch
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="UpdateBatch.Delete">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3716:3760#L125">Delete</a>
+					<a class="permalink" href="index.html#UpdateBatch.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Delete(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+Delete deletes a Key and associated value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Len">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3846:3881#L130">Len</a>
+					<a class="permalink" href="index.html#UpdateBatch.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Len() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len returns the number of entries in the batch
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="UpdateBatch.Put">func (*UpdateBatch) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/util/leveldbhelper/leveldb_provider.go?s=3523:3578#L117">Put</a>
+					<a class="permalink" href="index.html#UpdateBatch.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (batch *<a href="index.html#UpdateBatch">UpdateBatch</a>) Put(key []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+Put adds a KV
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

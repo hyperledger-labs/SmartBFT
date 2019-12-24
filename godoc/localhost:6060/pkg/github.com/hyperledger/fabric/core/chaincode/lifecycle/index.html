@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>lifecycle - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package lifecycle
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode/lifecycle"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ChaincodeStore">type ChaincodeStore</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Lifecycle">type Lifecycle</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Lifecycle.InstallChaincode">func (l *Lifecycle) InstallChaincode(name, version string, chaincodeInstallPackage []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Lifecycle.QueryInstalledChaincode">func (l *Lifecycle) QueryInstalledChaincode(name, version string) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PackageParser">type PackageParser</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Protobuf">type Protobuf</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProtobufImpl">type ProtobufImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProtobufImpl.Marshal">func (p ProtobufImpl) Marshal(msg proto.Message) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProtobufImpl.Unmarshal">func (p ProtobufImpl) Unmarshal(marshaled []byte, msg proto.Message) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SCC">type SCC</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Chaincode">func (scc *SCC) Chaincode() shim.Chaincode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Enabled">func (scc *SCC) Enabled() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Init">func (scc *SCC) Init(stub shim.ChaincodeStubInterface) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.InitArgs">func (scc *SCC) InitArgs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.InvokableCC2CC">func (scc *SCC) InvokableCC2CC() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.InvokableExternal">func (scc *SCC) InvokableExternal() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Invoke">func (scc *SCC) Invoke(stub shim.ChaincodeStubInterface) pb.Response</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Name">func (scc *SCC) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SCC.Path">func (scc *SCC) Path() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SCCFunctions">type SCCFunctions</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go">lifecycle.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/protobuf.go">protobuf.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go">scc.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">//InstalledChaincodeFuncName is the chaincode function name used to install a chaincode</span>
+    <span id="InstallChaincodeFuncName">InstallChaincodeFuncName</span> = &#34;InstallChaincode&#34;
+
+    <span class="comment">// QueryInstalledChaincodeFuncName is the chaincode function name used to query an installed chaincode</span>
+    <span id="QueryInstalledChaincodeFuncName">QueryInstalledChaincodeFuncName</span> = &#34;QueryInstalledChaincode&#34;
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="ChaincodeStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go?s=264:432#L7">ChaincodeStore</a>
+				<a class="permalink" href="index.html#ChaincodeStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeStore provides a way to persist chaincodes
+</p>
+
+			<pre>type ChaincodeStore interface {
+    Save(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccInstallPkg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RetrieveHash(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Lifecycle">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go?s=630:716#L18">Lifecycle</a>
+				<a class="permalink" href="index.html#Lifecycle">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Lifecycle implements the lifecycle operations which are invoked
+by the SCC as well as internally
+</p>
+
+			<pre>type Lifecycle struct {
+<span id="Lifecycle.ChaincodeStore"></span>    ChaincodeStore <a href="index.html#ChaincodeStore">ChaincodeStore</a>
+<span id="Lifecycle.PackageParser"></span>    PackageParser  <a href="index.html#PackageParser">PackageParser</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Lifecycle.InstallChaincode">func (*Lifecycle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go?s=873:979#L25">InstallChaincode</a>
+					<a class="permalink" href="index.html#Lifecycle.InstallChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Lifecycle">Lifecycle</a>) InstallChaincode(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodeInstallPackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InstallChaincode installs a given chaincode to the peer&#39;s chaincode store.
+It returns the hash to reference the chaincode by or an error on failure.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Lifecycle.QueryInstalledChaincode">func (*Lifecycle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go?s=1535:1616#L41">QueryInstalledChaincode</a>
+					<a class="permalink" href="index.html#Lifecycle.QueryInstalledChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#Lifecycle">Lifecycle</a>) QueryInstalledChaincode(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryInstalledChaincode returns the hash of an installed chaincode of a given name and version.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PackageParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/lifecycle.go?s=434:525#L12">PackageParser</a>
+				<a class="permalink" href="index.html#PackageParser">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PackageParser interface {
+    Parse(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../persistence/index.html">persistence</a>.<a href="../persistence/index.html#ChaincodePackage">ChaincodePackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Protobuf">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/protobuf.go?s=293:432#L6">Protobuf</a>
+				<a class="permalink" href="index.html#Protobuf">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Protobuf defines the subset of protobuf lifecycle needs and allows
+for injection of mocked marshaling errors.
+</p>
+
+			<pre>type Protobuf interface {
+    Marshal(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (marshaled []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Unmarshal(marshaled []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProtobufImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/protobuf.go?s=501:527#L12">ProtobufImpl</a>
+				<a class="permalink" href="index.html#ProtobufImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProtobufImpl is the standard implementation to use for Protobuf
+</p>
+
+			<pre>type ProtobufImpl struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ProtobufImpl.Marshal">func (ProtobufImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/protobuf.go?s=572:636#L15">Marshal</a>
+					<a class="permalink" href="index.html#ProtobufImpl.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#ProtobufImpl">ProtobufImpl</a>) Marshal(msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal passes through to proto.Marshal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ProtobufImpl.Unmarshal">func (ProtobufImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/protobuf.go?s=756:830#L21">Unmarshal</a>
+					<a class="permalink" href="index.html#ProtobufImpl.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#ProtobufImpl">ProtobufImpl</a>) Unmarshal(marshaled []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, msg <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Unmarshal passes through to proto.Unmarshal
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SCC">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1226:1289#L28">SCC</a>
+				<a class="permalink" href="index.html#SCC">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SCC implements the required methods to satisfy the chaincode interface.
+It routes the invocation calls to the backing implementations.
+</p>
+
+			<pre>type SCC struct {
+<span id="SCC.Protobuf"></span>    Protobuf  <a href="index.html#Protobuf">Protobuf</a>
+<span id="SCC.Functions"></span>    Functions <a href="index.html#SCCFunctions">SCCFunctions</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SCC.Chaincode">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1669:1711#L49">Chaincode</a>
+					<a class="permalink" href="index.html#SCC.Chaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Chaincode() <a href="../shim/index.html">shim</a>.<a href="../shim/index.html#Chaincode">Chaincode</a></pre>
+				<p>
+Chaincode returns a reference to itself
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.Enabled">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1933:1963#L64">Enabled</a>
+					<a class="permalink" href="index.html#SCC.Enabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Enabled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Enabled returns true
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.Init">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=2057:2123#L69">Init</a>
+					<a class="permalink" href="index.html#SCC.Init">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Init(stub <a href="../shim/index.html">shim</a>.<a href="../shim/index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Init is mostly useless for system chaincodes and always returns success
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.InitArgs">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1573:1608#L44">InitArgs</a>
+					<a class="permalink" href="index.html#SCC.InitArgs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) InitArgs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+InitArgs returns nil
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.InvokableCC2CC">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1853:1890#L59">InvokableCC2CC</a>
+					<a class="permalink" href="index.html#SCC.InvokableCC2CC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) InvokableCC2CC() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+InvokableCC2CC returns true
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.InvokableExternal">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1763:1803#L54">InvokableExternal</a>
+					<a class="permalink" href="index.html#SCC.InvokableExternal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) InvokableExternal() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+InvokableExternal returns true
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.Invoke">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=2396:2464#L76">Invoke</a>
+					<a class="permalink" href="index.html#SCC.Invoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Invoke(stub <a href="../shim/index.html">shim</a>.<a href="../shim/index.html#ChaincodeStubInterface">ChaincodeStubInterface</a>) <a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a></pre>
+				<p>
+Invoke takes chaincode invocation arguments and routes them to the correct
+underlying lifecycle operation.  All functions take a single argument of
+type marshaled lb.&lt;FunctionName&gt;Args and return a marshaled lb.&lt;FunctionName&gt;Result
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.Name">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1320:1349#L34">Name</a>
+					<a class="permalink" href="index.html#SCC.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Name returns &#34;+lifecycle&#34;
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SCC.Path">func (*SCC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=1449:1478#L39">Path</a>
+					<a class="permalink" href="index.html#SCC.Path">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scc *<a href="index.html#SCC">SCC</a>) Path() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Path returns &#34;github.com/hyperledger/fabric/core/chaincode/lifecycle&#34;
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SCCFunctions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/lifecycle/scc.go?s=728:1083#L18">SCCFunctions</a>
+				<a class="permalink" href="index.html#SCCFunctions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SCCFunctions provides a backing implementation with concrete arguments
+for each of the SCC functions
+</p>
+
+			<pre>type SCCFunctions interface {
+    <span class="comment">// InstallChaincode persists a chaincode definition to disk</span>
+    InstallChaincode(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// QueryInstalledChaincode returns the hash for a given name and version of an installed chaincode</span>
+    QueryInstalledChaincode(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

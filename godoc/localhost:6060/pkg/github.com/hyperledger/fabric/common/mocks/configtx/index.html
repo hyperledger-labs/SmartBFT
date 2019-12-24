@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>configtx - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package configtx
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/mocks/configtx"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Validator">type Validator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.Apply">func (cm *Validator) Apply(configEnv *cb.ConfigEnvelope) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.ChainID">func (cm *Validator) ChainID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.ConfigProto">func (cm *Validator) ConfigProto() *cb.Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.ProposeConfigUpdate">func (cm *Validator) ProposeConfigUpdate(update *cb.Envelope) (*cb.ConfigEnvelope, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.Sequence">func (cm *Validator) Sequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Validator.Validate">func (cm *Validator) Validate(configEnv *cb.ConfigEnvelope) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go">configtx.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Validator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=225:937#L4">Validator</a>
+				<a class="permalink" href="index.html#Validator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Validator is a mock implementation of configtx.Validator
+</p>
+
+			<pre>type Validator struct {
+<span id="Validator.ChainIDVal"></span>    <span class="comment">// ChainIDVal is returned as the result of ChainID()</span>
+    ChainIDVal <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="Validator.SequenceVal"></span>    <span class="comment">// SequenceVal is returned as the result of Sequence()</span>
+    SequenceVal <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+<span id="Validator.ApplyVal"></span>    <span class="comment">// ApplyVal is returned by Apply</span>
+    ApplyVal <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="Validator.AppliedConfigUpdateEnvelope"></span>    <span class="comment">// AppliedConfigUpdateEnvelope is set by Apply</span>
+    AppliedConfigUpdateEnvelope *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>
+
+<span id="Validator.ValidateVal"></span>    <span class="comment">// ValidateVal is returned by Validate</span>
+    ValidateVal <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="Validator.ProposeConfigUpdateError"></span>    <span class="comment">// ProposeConfigUpdateError is returned as the error value for ProposeConfigUpdate</span>
+    ProposeConfigUpdateError <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+<span id="Validator.ProposeConfigUpdateVal"></span>    <span class="comment">// ProposeConfigUpdateVal is returns as the value for ProposeConfigUpdate</span>
+    ProposeConfigUpdateVal *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>
+
+<span id="Validator.ConfigProtoVal"></span>    <span class="comment">// ConfigProtoVal is returned as the value for ConfigProtoVal()</span>
+    ConfigProtoVal *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Config">Config</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Validator.Apply">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=1481:1543#L51">Apply</a>
+					<a class="permalink" href="index.html#Validator.Apply">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) Apply(configEnv *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Apply returns ApplyVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Validator.ChainID">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=1104:1141#L36">ChainID</a>
+					<a class="permalink" href="index.html#Validator.ChainID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) ChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ConsensusType returns the ConsensusTypeVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Validator.ConfigProto">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=981:1026#L31">ConfigProto</a>
+					<a class="permalink" href="index.html#Validator.ConfigProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) ConfigProto() *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Config">Config</a></pre>
+				<p>
+ConfigProto returns the ConfigProtoVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Validator.ProposeConfigUpdate">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=1297:1386#L46">ProposeConfigUpdate</a>
+					<a class="permalink" href="index.html#Validator.ProposeConfigUpdate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) ProposeConfigUpdate(update *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) (*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProposeConfigUpdate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Validator.Sequence">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=1207:1245#L41">Sequence</a>
+					<a class="permalink" href="index.html#Validator.Sequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+BatchSize returns the BatchSizeVal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Validator.Validate">func (*Validator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/mocks/configtx/configtx.go?s=1645:1710#L57">Validate</a>
+					<a class="permalink" href="index.html#Validator.Validate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cm *<a href="index.html#Validator">Validator</a>) Validate(configEnv *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Validate returns ValidateVal
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>localconfig - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package localconfig
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/common/localconfig"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Authentication">type Authentication</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Cluster">type Cluster</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Consumer">type Consumer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Debug">type Debug</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FileLedger">type FileLedger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#General">type General</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Kafka">type Kafka</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Keepalive">type Keepalive</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Metadata">type Metadata</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Metrics">type Metrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NetworkTimeouts">type NetworkTimeouts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Operations">type Operations</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Producer">type Producer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Profile">type Profile</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RAMLedger">type RAMLedger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Retry">type Retry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SASLPlain">type SASLPlain</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Statsd">type Statsd</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TLS">type TLS</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TopLevel">type TopLevel</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Load">func Load() (*TopLevel, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Topic">type Topic</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go">config.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<p>
+Prefix for environment variables.
+</p>
+
+				<pre>const <span id="Prefix">Prefix</span> = &#34;ORDERER&#34;</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+Defaults carries the default orderer configuration values.
+</p>
+
+				<pre>var <span id="Defaults">Defaults</span> = <a href="index.html#TopLevel">TopLevel</a>{
+    <a href="index.html#TopLevel.General">General</a>: <a href="index.html#General">General</a>{
+        <a href="index.html#General.LedgerType">LedgerType</a>:     &#34;file&#34;,
+        <a href="index.html#General.ListenAddress">ListenAddress</a>:  &#34;127.0.0.1&#34;,
+        <a href="index.html#General.ListenPort">ListenPort</a>:     7050,
+        <a href="index.html#General.GenesisMethod">GenesisMethod</a>:  &#34;provisional&#34;,
+        <a href="index.html#General.GenesisProfile">GenesisProfile</a>: &#34;SampleSingleMSPSolo&#34;,
+        <a href="index.html#General.SystemChannel">SystemChannel</a>:  &#34;test-system-channel-name&#34;,
+        <a href="index.html#General.GenesisFile">GenesisFile</a>:    &#34;genesisblock&#34;,
+        <a href="index.html#General.Profile">Profile</a>: <a href="index.html#Profile">Profile</a>{
+            <a href="index.html#Profile.Enabled">Enabled</a>: <a href="http://localhost:6060/pkg/builtin/#false">false</a>,
+            <a href="index.html#Profile.Address">Address</a>: &#34;0.0.0.0:6060&#34;,
+        },
+        <a href="index.html#General.Cluster">Cluster</a>: <a href="index.html#Cluster">Cluster</a>{
+            <a href="index.html#Cluster.ReplicationMaxRetries">ReplicationMaxRetries</a>:                12,
+            <a href="index.html#Cluster.RPCTimeout">RPCTimeout</a>:                           <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 7,
+            <a href="index.html#Cluster.DialTimeout">DialTimeout</a>:                          <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 5,
+            <a href="index.html#Cluster.ReplicationBufferSize">ReplicationBufferSize</a>:                20971520,
+            <a href="index.html#Cluster.SendBufferSize">SendBufferSize</a>:                       10,
+            <a href="index.html#Cluster.ReplicationBackgroundRefreshInterval">ReplicationBackgroundRefreshInterval</a>: <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a> * 5,
+            <a href="index.html#Cluster.ReplicationRetryTimeout">ReplicationRetryTimeout</a>:              <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 5,
+            <a href="index.html#Cluster.ReplicationPullTimeout">ReplicationPullTimeout</a>:               <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 5,
+            <a href="index.html#Cluster.CertExpirationWarningThreshold">CertExpirationWarningThreshold</a>:       <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Hour">Hour</a> * 24 * 7,
+        },
+        <a href="index.html#General.LocalMSPDir">LocalMSPDir</a>: &#34;msp&#34;,
+        <a href="index.html#General.LocalMSPID">LocalMSPID</a>:  &#34;SampleOrg&#34;,
+        <a href="index.html#General.BCCSP">BCCSP</a>:       <a href="../../../bccsp/factory/index.html">bccsp</a>.<a href="../../../bccsp/factory/index.html#GetDefaultOpts">GetDefaultOpts</a>(),
+        <a href="index.html#General.Authentication">Authentication</a>: <a href="index.html#Authentication">Authentication</a>{
+            <a href="index.html#Authentication.TimeWindow">TimeWindow</a>: <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>(15 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>),
+        },
+    },
+    <a href="index.html#TopLevel.RAMLedger">RAMLedger</a>: <a href="index.html#RAMLedger">RAMLedger</a>{
+        <a href="index.html#RAMLedger.HistorySize">HistorySize</a>: 10000,
+    },
+    <a href="index.html#TopLevel.FileLedger">FileLedger</a>: <a href="index.html#FileLedger">FileLedger</a>{
+        <a href="index.html#FileLedger.Location">Location</a>: &#34;/var/hyperledger/production/orderer&#34;,
+        <a href="index.html#FileLedger.Prefix">Prefix</a>:   &#34;hyperledger-fabric-ordererledger&#34;,
+    },
+    <a href="index.html#TopLevel.Kafka">Kafka</a>: <a href="index.html#Kafka">Kafka</a>{
+        <a href="index.html#Kafka.Retry">Retry</a>: <a href="index.html#Retry">Retry</a>{
+            <a href="index.html#Retry.ShortInterval">ShortInterval</a>: 1 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>,
+            <a href="index.html#Retry.ShortTotal">ShortTotal</a>:    10 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>,
+            <a href="index.html#Retry.LongInterval">LongInterval</a>:  10 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a>,
+            <a href="index.html#Retry.LongTotal">LongTotal</a>:     12 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Hour">Hour</a>,
+            <a href="index.html#Retry.NetworkTimeouts">NetworkTimeouts</a>: <a href="index.html#NetworkTimeouts">NetworkTimeouts</a>{
+                <a href="index.html#NetworkTimeouts.DialTimeout">DialTimeout</a>:  30 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+                <a href="index.html#NetworkTimeouts.ReadTimeout">ReadTimeout</a>:  30 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+                <a href="index.html#NetworkTimeouts.WriteTimeout">WriteTimeout</a>: 30 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+            },
+            <a href="index.html#Retry.Metadata">Metadata</a>: <a href="index.html#Metadata">Metadata</a>{
+                <a href="index.html#Metadata.RetryBackoff">RetryBackoff</a>: 250 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>,
+                <a href="index.html#Metadata.RetryMax">RetryMax</a>:     3,
+            },
+            <a href="index.html#Retry.Producer">Producer</a>: <a href="index.html#Producer">Producer</a>{
+                <a href="index.html#Producer.RetryBackoff">RetryBackoff</a>: 100 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Millisecond">Millisecond</a>,
+                <a href="index.html#Producer.RetryMax">RetryMax</a>:     3,
+            },
+            <a href="index.html#Retry.Consumer">Consumer</a>: <a href="index.html#Consumer">Consumer</a>{
+                <a href="index.html#Consumer.RetryBackoff">RetryBackoff</a>: 2 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>,
+            },
+        },
+        <a href="index.html#Kafka.Verbose">Verbose</a>: <a href="http://localhost:6060/pkg/builtin/#false">false</a>,
+        <a href="index.html#Kafka.Version">Version</a>: <a href="http://localhost:6060/pkg/github.com/Shopify/sarama/">sarama</a>.<a href="http://localhost:6060/pkg/github.com/Shopify/sarama/#V0_10_2_0">V0_10_2_0</a>,
+        <a href="index.html#Kafka.TLS">TLS</a>: <a href="index.html#TLS">TLS</a>{
+            <a href="index.html#TLS.Enabled">Enabled</a>: <a href="http://localhost:6060/pkg/builtin/#false">false</a>,
+        },
+        <a href="index.html#Kafka.Topic">Topic</a>: <a href="index.html#Topic">Topic</a>{
+            <a href="index.html#Topic.ReplicationFactor">ReplicationFactor</a>: 3,
+        },
+    },
+    <a href="index.html#TopLevel.Debug">Debug</a>: <a href="index.html#Debug">Debug</a>{
+        <a href="index.html#Debug.BroadcastTraceDir">BroadcastTraceDir</a>: &#34;&#34;,
+        <a href="index.html#Debug.DeliverTraceDir">DeliverTraceDir</a>:   &#34;&#34;,
+    },
+    <a href="index.html#TopLevel.Operations">Operations</a>: <a href="index.html#Operations">Operations</a>{
+        <a href="index.html#Operations.ListenAddress">ListenAddress</a>: &#34;127.0.0.1:0&#34;,
+    },
+    <a href="index.html#TopLevel.Metrics">Metrics</a>: <a href="index.html#Metrics">Metrics</a>{
+        <a href="index.html#Metrics.Provider">Provider</a>: &#34;disabled&#34;,
+    },
+}</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Authentication">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3032:3121#L97">Authentication</a>
+				<a class="permalink" href="index.html#Authentication">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Authentication contains configuration parameters related to authenticating
+client messages.
+</p>
+
+			<pre>type Authentication struct {
+<span id="Authentication.TimeWindow"></span>    TimeWindow         <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Authentication.NoExpirationChecks"></span>    NoExpirationChecks <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Cluster">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=1546:2376#L51">Cluster</a>
+				<a class="permalink" href="index.html#Cluster">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Cluster struct {
+<span id="Cluster.ListenAddress"></span>    ListenAddress                        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.ListenPort"></span>    ListenPort                           <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="Cluster.ServerCertificate"></span>    ServerCertificate                    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.ServerPrivateKey"></span>    ServerPrivateKey                     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.ClientCertificate"></span>    ClientCertificate                    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.ClientPrivateKey"></span>    ClientPrivateKey                     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.RootCAs"></span>    RootCAs                              []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Cluster.DialTimeout"></span>    DialTimeout                          <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.RPCTimeout"></span>    RPCTimeout                           <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.ReplicationBufferSize"></span>    ReplicationBufferSize                <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Cluster.ReplicationPullTimeout"></span>    ReplicationPullTimeout               <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.ReplicationRetryTimeout"></span>    ReplicationRetryTimeout              <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.ReplicationBackgroundRefreshInterval"></span>    ReplicationBackgroundRefreshInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.ReplicationMaxRetries"></span>    ReplicationMaxRetries                <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Cluster.SendBufferSize"></span>    SendBufferSize                       <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Cluster.CertExpirationWarningThreshold"></span>    CertExpirationWarningThreshold       <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Cluster.TLSHandshakeTimeShift"></span>    TLSHandshakeTimeShift                <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Consumer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=4870:4922#L168">Consumer</a>
+				<a class="permalink" href="index.html#Consumer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Consumer contains configuration for the consumer&#39;s retries when failing to
+read from a Kafa partition.
+</p>
+
+			<pre>type Consumer struct {
+<span id="Consumer.RetryBackoff"></span>    RetryBackoff <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Debug">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=5105:5178#L178">Debug</a>
+				<a class="permalink" href="index.html#Debug">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Debug contains configuration for the orderer&#39;s debug parameters.
+</p>
+
+			<pre>type Debug struct {
+<span id="Debug.BroadcastTraceDir"></span>    BroadcastTraceDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Debug.DeliverTraceDir"></span>    DeliverTraceDir   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FileLedger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3300:3360#L109">FileLedger</a>
+				<a class="permalink" href="index.html#FileLedger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FileLedger contains configuration for the file-based ledger.
+</p>
+
+			<pre>type FileLedger struct {
+<span id="FileLedger.Location"></span>    Location <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="FileLedger.Prefix"></span>    Prefix   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="General">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=1076:1544#L32">General</a>
+				<a class="permalink" href="index.html#General">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+General contains config which should be common among all orderer types.
+</p>
+
+			<pre>type General struct {
+<span id="General.LedgerType"></span>    LedgerType        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.ListenAddress"></span>    ListenAddress     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.ListenPort"></span>    ListenPort        <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="General.TLS"></span>    TLS               <a href="index.html#TLS">TLS</a>
+<span id="General.Cluster"></span>    Cluster           <a href="index.html#Cluster">Cluster</a>
+<span id="General.Keepalive"></span>    Keepalive         <a href="index.html#Keepalive">Keepalive</a>
+<span id="General.ConnectionTimeout"></span>    ConnectionTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="General.GenesisMethod"></span>    GenesisMethod     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.GenesisProfile"></span>    GenesisProfile    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.SystemChannel"></span>    SystemChannel     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.GenesisFile"></span>    GenesisFile       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.Profile"></span>    Profile           <a href="index.html#Profile">Profile</a>
+<span id="General.LocalMSPDir"></span>    LocalMSPDir       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.LocalMSPID"></span>    LocalMSPID        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="General.BCCSP"></span>    BCCSP             *<a href="../../../bccsp/factory/index.html">bccsp</a>.<a href="../../../bccsp/factory/index.html#FactoryOpts">FactoryOpts</a>
+<span id="General.Authentication"></span>    Authentication    <a href="index.html#Authentication">Authentication</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Kafka">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3524:3697#L120">Kafka</a>
+				<a class="permalink" href="index.html#Kafka">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Kafka contains configuration for the Kafka-based orderer.
+</p>
+
+			<pre>type Kafka struct {
+<span id="Kafka.Retry"></span>    Retry     <a href="index.html#Retry">Retry</a>
+<span id="Kafka.Verbose"></span>    Verbose   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Kafka.Version"></span>    Version   <a href="http://localhost:6060/pkg/github.com/Shopify/sarama/">sarama</a>.<a href="http://localhost:6060/pkg/github.com/Shopify/sarama/#KafkaVersion">KafkaVersion</a> <span class="comment">// TODO Move this to global config</span>
+<span id="Kafka.TLS"></span>    TLS       <a href="index.html#TLS">TLS</a>
+<span id="Kafka.SASLPlain"></span>    SASLPlain <a href="index.html#SASLPlain">SASLPlain</a>
+<span id="Kafka.Topic"></span>    Topic     <a href="index.html#Topic">Topic</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Keepalive">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=2432:2556#L72">Keepalive</a>
+				<a class="permalink" href="index.html#Keepalive">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Keepalive contains configuration for gRPC servers.
+</p>
+
+			<pre>type Keepalive struct {
+<span id="Keepalive.ServerMinInterval"></span>    ServerMinInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Keepalive.ServerInterval"></span>    ServerInterval    <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Keepalive.ServerTimeout"></span>    ServerTimeout     <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=4499:4569#L154">Metadata</a>
+				<a class="permalink" href="index.html#Metadata">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Metadata contains configuration for the metadata requests to the Kafka
+cluster.
+</p>
+
+			<pre>type Metadata struct {
+<span id="Metadata.RetryMax"></span>    RetryMax     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Metadata.RetryBackoff"></span>    RetryBackoff <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=5376:5433#L190">Metrics</a>
+				<a class="permalink" href="index.html#Metrics">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Operations confiures the metrics provider for the orderer.
+</p>
+
+			<pre>type Metrics struct {
+<span id="Metrics.Provider"></span>    Provider <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Metrics.Statsd"></span>    Statsd   <a href="index.html#Statsd">Statsd</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NetworkTimeouts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=4296:4411#L146">NetworkTimeouts</a>
+				<a class="permalink" href="index.html#NetworkTimeouts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NetworkTimeouts contains the socket timeouts for network requests to the
+Kafka cluster.
+</p>
+
+			<pre>type NetworkTimeouts struct {
+<span id="NetworkTimeouts.DialTimeout"></span>    DialTimeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="NetworkTimeouts.ReadTimeout"></span>    ReadTimeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="NetworkTimeouts.WriteTimeout"></span>    WriteTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Operations">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=5245:5312#L184">Operations</a>
+				<a class="permalink" href="index.html#Operations">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Operations configures the operations endpont for the orderer.
+</p>
+
+			<pre>type Operations struct {
+<span id="Operations.ListenAddress"></span>    ListenAddress <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Operations.TLS"></span>    TLS           <a href="index.html#TLS">TLS</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Producer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=4689:4759#L161">Producer</a>
+				<a class="permalink" href="index.html#Producer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Producer contains configuration for the producer&#39;s retries when failing to
+post a message to a Kafka partition.
+</p>
+
+			<pre>type Producer struct {
+<span id="Producer.RetryMax"></span>    RetryMax     <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Producer.RetryBackoff"></span>    RetryBackoff <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Profile">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3181:3234#L103">Profile</a>
+				<a class="permalink" href="index.html#Profile">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Profile contains configuration for Go pprof profiling.
+</p>
+
+			<pre>type Profile struct {
+<span id="Profile.Enabled"></span>    Enabled <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Profile.Address"></span>    Address <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RAMLedger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3418:3461#L115">RAMLedger</a>
+				<a class="permalink" href="index.html#RAMLedger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RAMLedger contains configuration for the RAM ledger.
+</p>
+
+			<pre>type RAMLedger struct {
+<span id="RAMLedger.HistorySize"></span>    HistorySize <a href="http://localhost:6060/pkg/builtin/#uint">uint</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Retry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=3944:4200#L133">Retry</a>
+				<a class="permalink" href="index.html#Retry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Retry contains configuration related to retries and timeouts when the
+connection to the Kafka cluster cannot be established, or when Metadata
+requests needs to be repeated (because the cluster is in the middle of a
+leader election).
+</p>
+
+			<pre>type Retry struct {
+<span id="Retry.ShortInterval"></span>    ShortInterval   <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Retry.ShortTotal"></span>    ShortTotal      <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Retry.LongInterval"></span>    LongInterval    <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Retry.LongTotal"></span>    LongTotal       <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Retry.NetworkTimeouts"></span>    NetworkTimeouts <a href="index.html#NetworkTimeouts">NetworkTimeouts</a>
+<span id="Retry.Metadata"></span>    Metadata        <a href="index.html#Metadata">Metadata</a>
+<span id="Retry.Producer"></span>    Producer        <a href="index.html#Producer">Producer</a>
+<span id="Retry.Consumer"></span>    Consumer        <a href="index.html#Consumer">Consumer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SASLPlain">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=2858:2932#L89">SASLPlain</a>
+				<a class="permalink" href="index.html#SASLPlain">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SASLPlain contains configuration for SASL/PLAIN authentication
+</p>
+
+			<pre>type SASLPlain struct {
+<span id="SASLPlain.Enabled"></span>    Enabled  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="SASLPlain.User"></span>    User     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SASLPlain.Password"></span>    Password <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Statsd">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=5522:5639#L196">Statsd</a>
+				<a class="permalink" href="index.html#Statsd">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Statsd provides the configuration required to emit statsd metrics from the orderer.
+</p>
+
+			<pre>type Statsd struct {
+<span id="Statsd.Network"></span>    Network       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Statsd.Address"></span>    Address       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Statsd.WriteInterval"></span>    WriteInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Statsd.Prefix"></span>    Prefix        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TLS">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=2609:2790#L79">TLS</a>
+				<a class="permalink" href="index.html#TLS">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLS contains configuration for TLS connections.
+</p>
+
+			<pre>type TLS struct {
+<span id="TLS.Enabled"></span>    Enabled            <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="TLS.PrivateKey"></span>    PrivateKey         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TLS.Certificate"></span>    Certificate        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TLS.RootCAs"></span>    RootCAs            []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TLS.ClientAuthRequired"></span>    ClientAuthRequired <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="TLS.ClientRootCAs"></span>    ClientRootCAs      []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TopLevel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=807:999#L20">TopLevel</a>
+				<a class="permalink" href="index.html#TopLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TopLevel directly corresponds to the orderer config YAML.
+Note, for non 1-1 mappings, you may append
+something like `mapstructure:&#34;weirdFoRMat&#34;` to
+modify the default mapping, see the &#34;Unmarshal&#34;
+section of <a href="https://github.com/spf13/viper">https://github.com/spf13/viper</a> for more info.
+</p>
+
+			<pre>type TopLevel struct {
+<span id="TopLevel.General"></span>    General    <a href="index.html#General">General</a>
+<span id="TopLevel.FileLedger"></span>    FileLedger <a href="index.html#FileLedger">FileLedger</a>
+<span id="TopLevel.RAMLedger"></span>    RAMLedger  <a href="index.html#RAMLedger">RAMLedger</a>
+<span id="TopLevel.Kafka"></span>    Kafka      <a href="index.html#Kafka">Kafka</a>
+<span id="TopLevel.Debug"></span>    Debug      <a href="index.html#Debug">Debug</a>
+<span id="TopLevel.Consensus"></span>    Consensus  interface{}
+<span id="TopLevel.Operations"></span>    Operations <a href="index.html#Operations">Operations</a>
+<span id="TopLevel.Metrics"></span>    Metrics    <a href="index.html#Metrics">Metrics</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Load">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=7946:7976#L288">Load</a>
+					<a class="permalink" href="index.html#Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Load() (*<a href="index.html#TopLevel">TopLevel</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Load parses the orderer YAML file and environment, producing
+a struct suitable for config use, returning error on failure.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Topic">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/localconfig/config.go?s=4989:5035#L173">Topic</a>
+				<a class="permalink" href="index.html#Topic">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Topic contains the settings to use when creating Kafka topics
+</p>
+
+			<pre>type Topic struct {
+<span id="Topic.ReplicationFactor"></span>    ReplicationFactor <a href="http://localhost:6060/pkg/builtin/#int16">int16</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

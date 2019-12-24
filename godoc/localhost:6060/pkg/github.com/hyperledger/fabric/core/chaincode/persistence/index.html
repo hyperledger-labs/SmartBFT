@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>persistence - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package persistence
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode/persistence"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ChaincodeMetadata">type ChaincodeMetadata</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodePackage">type ChaincodePackage</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodePackageMetadata">type ChaincodePackageMetadata</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodePackageParser">type ChaincodePackageParser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodePackageParser.Parse">func (ccpp ChaincodePackageParser) Parse(source []byte) (*ChaincodePackage, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CodePackageNotFoundErr">type CodePackageNotFoundErr</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CodePackageNotFoundErr.Error">func (e *CodePackageNotFoundErr) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FilesystemIO">type FilesystemIO</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FilesystemIO.ReadDir">func (f *FilesystemIO) ReadDir(dirname string) ([]os.FileInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FilesystemIO.ReadFile">func (f *FilesystemIO) ReadFile(filename string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FilesystemIO.Remove">func (f *FilesystemIO) Remove(name string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FilesystemIO.Stat">func (f *FilesystemIO) Stat(name string) (os.FileInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FilesystemIO.WriteFile">func (f *FilesystemIO) WriteFile(filename string, data []byte, perm os.FileMode) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IOReadWriter">type IOReadWriter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LegacyPackageProvider">type LegacyPackageProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PackageParser">type PackageParser</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PackageProvider">type PackageProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PackageProvider.GetChaincodeCodePackage">func (p *PackageProvider) GetChaincodeCodePackage(name, version string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PackageProvider.ListInstalledChaincodes">func (p *PackageProvider) ListInstalledChaincodes() ([]chaincode.InstalledChaincode, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Store">type Store</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.GetChaincodeInstallPath">func (s *Store) GetChaincodeInstallPath() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.ListInstalledChaincodes">func (s *Store) ListInstalledChaincodes() ([]chaincode.InstalledChaincode, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.Load">func (s *Store) Load(hash []byte) (ccInstallPkg []byte, name, version string, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.LoadMetadata">func (s *Store) LoadMetadata(path string) (name, version string, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.RetrieveHash">func (s *Store) RetrieveHash(name string, version string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Store.Save">func (s *Store) Save(name, version string, ccInstallPkg []byte) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StorePackageProvider">type StorePackageProvider</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/chaincode_package.go">chaincode_package.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go">package_provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go">persistence.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="ChaincodePackageMetadataFile">ChaincodePackageMetadataFile</span> = &#34;Chaincode-Package-Metadata.json&#34;
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="ChaincodeMetadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=6852:6948#L212">ChaincodeMetadata</a>
+				<a class="permalink" href="index.html#ChaincodeMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeMetadata holds the name and version of a chaincode
+</p>
+
+			<pre>type ChaincodeMetadata struct {
+<span id="ChaincodeMetadata.Name"></span>    Name    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;Name&#34;`
+<span id="ChaincodeMetadata.Version"></span>    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;Version&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodePackage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/chaincode_package.go?s=873:964#L23">ChaincodePackage</a>
+				<a class="permalink" href="index.html#ChaincodePackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodePackage represents the un-tar-ed format of the chaincode package.
+</p>
+
+			<pre>type ChaincodePackage struct {
+<span id="ChaincodePackage.Metadata"></span>    Metadata    *<a href="index.html#ChaincodePackageMetadata">ChaincodePackageMetadata</a>
+<span id="ChaincodePackage.CodePackage"></span>    CodePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodePackageMetadata">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/chaincode_package.go?s=1073:1167#L30">ChaincodePackageMetadata</a>
+				<a class="permalink" href="index.html#ChaincodePackageMetadata">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodePackageMetadata contains the information necessary to understand
+the embedded code package.
+</p>
+
+			<pre>type ChaincodePackageMetadata struct {
+<span id="ChaincodePackageMetadata.Type"></span>    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;Type&#34;`
+<span id="ChaincodePackageMetadata.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;Path&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodePackageParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/chaincode_package.go?s=1244:1280#L36">ChaincodePackageParser</a>
+				<a class="permalink" href="index.html#ChaincodePackageParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodePackageParser provides the ability to parse chaincode packages
+</p>
+
+			<pre>type ChaincodePackageParser struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChaincodePackageParser.Parse">func (ChaincodePackageParser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/chaincode_package.go?s=1382:1464#L40">Parse</a>
+					<a class="permalink" href="index.html#ChaincodePackageParser.Parse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpp <a href="index.html#ChaincodePackageParser">ChaincodePackageParser</a>) Parse(source []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#ChaincodePackage">ChaincodePackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Parse parses a set of bytes as a chaincode package
+and returns the parsed package as a struct
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CodePackageNotFoundErr">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=4625:4695#L139">CodePackageNotFoundErr</a>
+				<a class="permalink" href="index.html#CodePackageNotFoundErr">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CodePackageNotFoundErr is the error returned when a code package cannot
+be found in the persistence store
+</p>
+
+			<pre>type CodePackageNotFoundErr struct {
+<span id="CodePackageNotFoundErr.Name"></span>    Name    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CodePackageNotFoundErr.Version"></span>    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CodePackageNotFoundErr.Error">func (*CodePackageNotFoundErr) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=4697:4744#L144">Error</a>
+					<a class="permalink" href="index.html#CodePackageNotFoundErr.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#CodePackageNotFoundErr">CodePackageNotFoundErr</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FilesystemIO">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=854:882#L27">FilesystemIO</a>
+				<a class="permalink" href="index.html#FilesystemIO">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FilesystemIO is the production implementation of the IOWriter interface
+</p>
+
+			<pre>type FilesystemIO struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FilesystemIO.ReadDir">func (*FilesystemIO) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1607:1676#L52">ReadDir</a>
+					<a class="permalink" href="index.html#FilesystemIO.ReadDir">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FilesystemIO">FilesystemIO</a>) ReadDir(dirname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ReadDir reads a directory from the filesystem
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FilesystemIO.ReadFile">func (*FilesystemIO) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1454:1518#L47">ReadFile</a>
+					<a class="permalink" href="index.html#FilesystemIO.ReadFile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FilesystemIO">FilesystemIO</a>) ReadFile(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ReadFile reads a file from the filesystem
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FilesystemIO.Remove">func (*FilesystemIO) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1331:1379#L42">Remove</a>
+					<a class="permalink" href="index.html#FilesystemIO.Remove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FilesystemIO">FilesystemIO</a>) Remove(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Remove removes a file from the filesystem - used for rolling back an in-flight
+Save operation upon a failure
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FilesystemIO.Stat">func (*FilesystemIO) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1127:1188#L36">Stat</a>
+					<a class="permalink" href="index.html#FilesystemIO.Stat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FilesystemIO">FilesystemIO</a>) Stat(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Stat checks for existence of the file on the filesystem
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FilesystemIO.WriteFile">func (*FilesystemIO) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=929:1015#L31">WriteFile</a>
+					<a class="permalink" href="index.html#FilesystemIO.WriteFile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FilesystemIO">FilesystemIO</a>) WriteFile(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>, data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, perm <a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileMode">FileMode</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+WriteFile writes a file to the filesystem
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IOReadWriter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=564:777#L18">IOReadWriter</a>
+				<a class="permalink" href="index.html#IOReadWriter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IOReadWriter defines the interface needed for reading, writing, removing, and
+checking for existence of a specified file
+</p>
+
+			<pre>type IOReadWriter interface {
+    ReadDir(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ReadFile(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Remove(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Stat(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    WriteFile(<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileMode">FileMode</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LegacyPackageProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=762:1021#L18">LegacyPackageProvider</a>
+				<a class="permalink" href="index.html#LegacyPackageProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LegacyPackageProvider is the interface needed to retrieve
+the code package from a ChaincodeDeploymentSpec
+</p>
+
+			<pre>type LegacyPackageProvider interface {
+    GetChaincodeCodePackage(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (codePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ListInstalledChaincodes(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, de <a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#DirEnumerator">DirEnumerator</a>, ce <a href="../../common/ccprovider/index.html">ccprovider</a>.<a href="../../common/ccprovider/index.html#ChaincodeExtractor">ChaincodeExtractor</a>) ([]<a href="../../../common/chaincode/index.html">chaincode</a>.<a href="../../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PackageParser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=1096:1175#L24">PackageParser</a>
+				<a class="permalink" href="index.html#PackageParser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PackageParser provides an implementation of chaincode package parsing
+</p>
+
+			<pre>type PackageParser interface {
+    Parse(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#ChaincodePackage">ChaincodePackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PackageProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=1281:1399#L30">PackageProvider</a>
+				<a class="permalink" href="index.html#PackageProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PackageProvider holds the necessary dependencies to obtain the code
+package bytes for a chaincode
+</p>
+
+			<pre>type PackageProvider struct {
+<span id="PackageProvider.Store"></span>    Store    <a href="index.html#StorePackageProvider">StorePackageProvider</a>
+<span id="PackageProvider.Parser"></span>    Parser   <a href="index.html#PackageParser">PackageParser</a>
+<span id="PackageProvider.LegacyPP"></span>    LegacyPP <a href="index.html#LegacyPackageProvider">LegacyPackageProvider</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PackageProvider.GetChaincodeCodePackage">func (*PackageProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=1636:1723#L40">GetChaincodeCodePackage</a>
+					<a class="permalink" href="index.html#PackageProvider.GetChaincodeCodePackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PackageProvider">PackageProvider</a>) GetChaincodeCodePackage(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeCodePackage gets the code package bytes for a chaincode given
+the name and version. It first searches through the persisted
+ChaincodeInstallPackages and then falls back to searching for
+ChaincodeDeploymentSpecs
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PackageProvider.ListInstalledChaincodes">func (*PackageProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=3600:3691#L96">ListInstalledChaincodes</a>
+					<a class="permalink" href="index.html#PackageProvider.ListInstalledChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PackageProvider">PackageProvider</a>) ListInstalledChaincodes() ([]<a href="../../../common/chaincode/index.html">chaincode</a>.<a href="../../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListInstalledChaincodes returns metadata (name, version, and ID) for
+each chaincode installed on a peer
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Store">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1795:1860#L57">Store</a>
+				<a class="permalink" href="index.html#Store">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Store holds the information needed for persisting a chaincode install package
+</p>
+
+			<pre>type Store struct {
+<span id="Store.Path"></span>    Path       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Store.ReadWriter"></span>    ReadWriter <a href="index.html#IOReadWriter">IOReadWriter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Store.GetChaincodeInstallPath">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=6720:6768#L207">GetChaincodeInstallPath</a>
+					<a class="permalink" href="index.html#Store.GetChaincodeInstallPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) GetChaincodeInstallPath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetChaincodeInstallPath returns the path where chaincodes
+are installed
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.ListInstalledChaincodes">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=5596:5677#L172">ListInstalledChaincodes</a>
+					<a class="permalink" href="index.html#Store.ListInstalledChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) ListInstalledChaincodes() ([]<a href="../../../common/chaincode/index.html">chaincode</a>.<a href="../../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListInstalledChaincodes returns an array with information about the
+chaincodes installed in the persistence store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.Load">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=3362:3450#L102">Load</a>
+					<a class="permalink" href="index.html#Store.Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) Load(hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (ccInstallPkg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Load loads a persisted chaincode install package bytes with the given hash
+and also returns the name and version
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.LoadMetadata">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=4031:4106#L121">LoadMetadata</a>
+					<a class="permalink" href="index.html#Store.LoadMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) LoadMetadata(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LoadMetadata loads the chaincode metadata stored at the specified path
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.RetrieveHash">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=4970:5043#L150">RetrieveHash</a>
+					<a class="permalink" href="index.html#Store.RetrieveHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) RetrieveHash(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RetrieveHash retrieves the hash of a chaincode install package given the
+name and version of the chaincode
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Store.Save">func (*Store) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/persistence.go?s=1946:2025#L64">Save</a>
+					<a class="permalink" href="index.html#Store.Save">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Store">Store</a>) Save(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccInstallPkg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Save persists chaincode install package bytes with the given name
+and version
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StorePackageProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/persistence/package_provider.go?s=374:648#L9">StorePackageProvider</a>
+				<a class="permalink" href="index.html#StorePackageProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StorePackageProvider is the interface needed to retrieve
+the code package from a ChaincodeInstallPackage
+</p>
+
+			<pre>type StorePackageProvider interface {
+    GetChaincodeInstallPath() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    ListInstalledChaincodes() ([]<a href="../../../common/chaincode/index.html">chaincode</a>.<a href="../../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Load(hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (codePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RetrieveHash(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

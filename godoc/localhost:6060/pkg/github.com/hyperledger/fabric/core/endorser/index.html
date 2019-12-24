@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>endorser - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package endorser
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/endorser"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ChannelState">type ChannelState</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelState.FetchState">func (cs *ChannelState) FetchState() (endorsement.State, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelStateRetriever">type ChannelStateRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CollectionConfigRetriever">type CollectionConfigRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Context">type Context</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Context.String">func (c Context) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Endorser">type Endorser</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorserServer">func NewEndorserServer(privDist privateDataDistributor, s Support, pr *platforms.Registry, metricsProv metrics.Provider) *Endorser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Endorser.ProcessProposal">func (e *Endorser) ProcessProposal(ctx context.Context, signedProp *pb.SignedProposal) (*pb.ProposalResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Endorser.SanitizeUserCDS">func (e *Endorser) SanitizeUserCDS(userCDS *pb.ChaincodeDeploymentSpec) (*pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Endorser.SimulateProposal">func (e *Endorser) SimulateProposal(txParams *ccprovider.TransactionParams, cid *pb.ChaincodeID) (ccprovider.ChaincodeDefinition, *pb.Response, []byte, *pb.ChaincodeEvent, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EndorserMetrics">type EndorserMetrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorserMetrics">func NewEndorserMetrics(p metrics.Provider) *EndorserMetrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MapBasedPluginMapper">type MapBasedPluginMapper</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MapBasedPluginMapper.PluginFactoryByName">func (m MapBasedPluginMapper) PluginFactoryByName(name PluginName) endorsement.PluginFactory</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PluginEndorser">type PluginEndorser</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewPluginEndorser">func NewPluginEndorser(ps *PluginSupport) *PluginEndorser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PluginEndorser.EndorseWithPlugin">func (pe *PluginEndorser) EndorseWithPlugin(ctx Context) (*pb.ProposalResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PluginMapper">type PluginMapper</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PluginName">type PluginName</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PluginSupport">type PluginSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PvtRWSetAssembler">type PvtRWSetAssembler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryCreator">type QueryCreator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StateContext">type StateContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StateContext.GetTransientByTXID">func (sc *StateContext) GetTransientByTXID(txID string) ([]*rwset.TxPvtReadWriteSet, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Support">type Support</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SupportImpl">type SupportImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.CheckACL">func (s *SupportImpl) CheckACL(signedProp *pb.SignedProposal, chdr *common.ChannelHeader, shdr *common.SignatureHeader, hdrext *pb.ChaincodeHeaderExtension) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.CheckInstantiationPolicy">func (s *SupportImpl) CheckInstantiationPolicy(name, version string, cd ccprovider.ChaincodeDefinition) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.Execute">func (s *SupportImpl) Execute(txParams *ccprovider.TransactionParams, cid, name, version, txid string, signedProp *pb.SignedProposal, prop *pb.Proposal, input *pb.ChaincodeInput) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.ExecuteLegacyInit">func (s *SupportImpl) ExecuteLegacyInit(txParams *ccprovider.TransactionParams, cid, name, version, txid string, signedProp *pb.SignedProposal, prop *pb.Proposal, cds *pb.ChaincodeDeploymentSpec) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetApplicationConfig">func (s *SupportImpl) GetApplicationConfig(cid string) (channelconfig.Application, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetChaincodeDefinition">func (s *SupportImpl) GetChaincodeDefinition(chaincodeName string, txsim ledger.QueryExecutor) (ccprovider.ChaincodeDefinition, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetChaincodeDeploymentSpecFS">func (s *SupportImpl) GetChaincodeDeploymentSpecFS(cds *pb.ChaincodeDeploymentSpec) (*pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetHistoryQueryExecutor">func (s *SupportImpl) GetHistoryQueryExecutor(ledgername string) (ledger.HistoryQueryExecutor, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetLedgerHeight">func (s *SupportImpl) GetLedgerHeight(channelID string) (uint64, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetTransactionByID">func (s *SupportImpl) GetTransactionByID(chid, txID string) (*pb.ProcessedTransaction, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.GetTxSimulator">func (s *SupportImpl) GetTxSimulator(ledgername string, txid string) (ledger.TxSimulator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.IsJavaCC">func (s *SupportImpl) IsJavaCC(buf []byte) (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.IsSysCC">func (s *SupportImpl) IsSysCC(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.IsSysCCAndNotInvokableExternal">func (s *SupportImpl) IsSysCCAndNotInvokableExternal(name string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.NewQueryCreator">func (s *SupportImpl) NewQueryCreator(channel string) (QueryCreator, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SupportImpl.SigningIdentityForRequest">func (s *SupportImpl) SigningIdentityForRequest(*pb.SignedProposal) (SigningIdentity, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TransientStoreRetriever">type TransientStoreRetriever</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go">endorser.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/metrics.go">metrics.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go">plugin_endorser.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/pvtrwset_assembler.go">pvtrwset_assembler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go">state.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go">support.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="ChannelState">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go?s=624:688#L14">ChannelState</a>
+				<a class="permalink" href="index.html#ChannelState">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelState defines state operations
+</p>
+
+			<pre>type ChannelState struct {
+    <a href="../transientstore/index.html">transientstore</a>.<a href="../transientstore/index.html#Store">Store</a>
+    <a href="index.html#QueryCreator">QueryCreator</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChannelState.FetchState">func (*ChannelState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go?s=718:781#L20">FetchState</a>
+					<a class="permalink" href="index.html#ChannelState.FetchState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChannelState">ChannelState</a>) FetchState() (<a href="../handlers/endorsement/api/state/index.html">endorsement</a>.<a href="../handlers/endorsement/api/state/index.html#State">State</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+FetchState fetches state
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelStateRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=1073:1233#L24">ChannelStateRetriever</a>
+				<a class="permalink" href="index.html#ChannelStateRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelStateRetriever retrieves Channel state
+</p>
+
+			<pre>type ChannelStateRetriever interface {
+    <span class="comment">// NewQueryCreator returns a QueryCreator for the given Channel</span>
+    NewQueryCreator(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#QueryCreator">QueryCreator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CollectionConfigRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/pvtrwset_assembler.go?s=1059:1278#L25">CollectionConfigRetriever</a>
+				<a class="permalink" href="index.html#CollectionConfigRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CollectionConfigRetriever encapsulates sub-functionality of ledger.TxSimulator
+to abstract minimum required functions set
+</p>
+
+			<pre>type CollectionConfigRetriever interface {
+    <span class="comment">// GetState gets the value for given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Context">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=1908:2194#L45">Context</a>
+				<a class="permalink" href="index.html#Context">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Context defines the data that is related to an in-flight endorsement
+</p>
+
+			<pre>type Context struct {
+<span id="Context.PluginName"></span>    PluginName     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.Channel"></span>    Channel        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.TxID"></span>    TxID           <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Context.Proposal"></span>    Proposal       *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>
+<span id="Context.SignedProposal"></span>    SignedProposal *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>
+<span id="Context.Visibility"></span>    Visibility     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Context.Response"></span>    Response       *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>
+<span id="Context.Event"></span>    Event          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Context.ChaincodeID"></span>    ChaincodeID    *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeID">ChaincodeID</a>
+<span id="Context.SimRes"></span>    SimRes         []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Context.String">func (Context) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=2252:2284#L59">String</a>
+					<a class="permalink" href="index.html#Context.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Context">Context</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a text representation of this context
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Endorser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=4626:4815#L93">Endorser</a>
+				<a class="permalink" href="index.html#Endorser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Endorser provides the Endorser service ProcessProposal
+</p>
+
+			<pre>type Endorser struct {
+<span id="Endorser.PlatformRegistry"></span>    PlatformRegistry *<a href="../chaincode/platforms/index.html">platforms</a>.<a href="../chaincode/platforms/index.html#Registry">Registry</a>
+    <a href="index.html#PvtRWSetAssembler">PvtRWSetAssembler</a>
+<span id="Endorser.Metrics"></span>    Metrics *<a href="index.html#EndorserMetrics">EndorserMetrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEndorserServer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=5114:5244#L111">NewEndorserServer</a>
+					<a class="permalink" href="index.html#NewEndorserServer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorserServer(privDist privateDataDistributor, s <a href="index.html#Support">Support</a>, pr *<a href="../chaincode/platforms/index.html">platforms</a>.<a href="../chaincode/platforms/index.html#Registry">Registry</a>, metricsProv <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#Endorser">Endorser</a></pre>
+				<p>
+NewEndorserServer creates and returns a new Endorser server instance.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Endorser.ProcessProposal">func (*Endorser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=17458:17574#L413">ProcessProposal</a>
+					<a class="permalink" href="index.html#Endorser.ProcessProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Endorser">Endorser</a>) ProcessProposal(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProposalResponse">ProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessProposal process the Proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Endorser.SanitizeUserCDS">func (*Endorser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=8308:8416#L189">SanitizeUserCDS</a>
+					<a class="permalink" href="index.html#Endorser.SanitizeUserCDS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Endorser">Endorser</a>) SanitizeUserCDS(userCDS *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Endorser.SimulateProposal">func (*Endorser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=8841:9019#L203">SimulateProposal</a>
+					<a class="permalink" href="index.html#Endorser.SimulateProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Endorser">Endorser</a>) SimulateProposal(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cid *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeID">ChaincodeID</a>) (<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SimulateProposal simulates the proposal by calling the chaincode
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EndorserMetrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/metrics.go?s=2293:2662#L61">EndorserMetrics</a>
+				<a class="permalink" href="index.html#EndorserMetrics">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type EndorserMetrics struct {
+<span id="EndorserMetrics.ProposalDuration"></span>    ProposalDuration         <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Histogram">Histogram</a>
+<span id="EndorserMetrics.ProposalsReceived"></span>    ProposalsReceived        <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.SuccessfulProposals"></span>    SuccessfulProposals      <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.ProposalValidationFailed"></span>    ProposalValidationFailed <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.ProposalACLCheckFailed"></span>    ProposalACLCheckFailed   <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.InitFailed"></span>    InitFailed               <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.EndorsementsFailed"></span>    EndorsementsFailed       <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="EndorserMetrics.DuplicateTxsFailure"></span>    DuplicateTxsFailure      <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEndorserMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/metrics.go?s=2664:2724#L72">NewEndorserMetrics</a>
+					<a class="permalink" href="index.html#NewEndorserMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorserMetrics(p <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#EndorserMetrics">EndorserMetrics</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MapBasedPluginMapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=1555:1617#L37">MapBasedPluginMapper</a>
+				<a class="permalink" href="index.html#MapBasedPluginMapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MapBasedPluginMapper maps plugin names to their corresponding factories
+</p>
+
+			<pre>type MapBasedPluginMapper map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="../handlers/endorsement/api/index.html">endorsement</a>.<a href="../handlers/endorsement/api/index.html#PluginFactory">PluginFactory</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MapBasedPluginMapper.PluginFactoryByName">func (MapBasedPluginMapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=1714:1806#L40">PluginFactoryByName</a>
+					<a class="permalink" href="index.html#MapBasedPluginMapper.PluginFactoryByName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m <a href="index.html#MapBasedPluginMapper">MapBasedPluginMapper</a>) PluginFactoryByName(name <a href="index.html#PluginName">PluginName</a>) <a href="../handlers/endorsement/api/index.html">endorsement</a>.<a href="../handlers/endorsement/api/index.html#PluginFactory">PluginFactory</a></pre>
+				<p>
+PluginFactoryByName returns a plugin factory for the given plugin name, or nil if not found
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PluginEndorser">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=4822:5018#L142">PluginEndorser</a>
+				<a class="permalink" href="index.html#PluginEndorser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginEndorser endorsers proposal responses using plugins
+</p>
+
+			<pre>type PluginEndorser struct {
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#Mutex">Mutex</a>
+    <a href="index.html#PluginMapper">PluginMapper</a>
+
+    <a href="index.html#ChannelStateRetriever">ChannelStateRetriever</a>
+    <a href="../handlers/endorsement/api/identities/index.html">endorsement3</a>.<a href="../handlers/endorsement/api/identities/index.html#SigningIdentityFetcher">SigningIdentityFetcher</a>
+    <a href="index.html#TransientStoreRetriever">TransientStoreRetriever</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewPluginEndorser">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=2697:2754#L73">NewPluginEndorser</a>
+					<a class="permalink" href="index.html#NewPluginEndorser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewPluginEndorser(ps *<a href="index.html#PluginSupport">PluginSupport</a>) *<a href="index.html#PluginEndorser">PluginEndorser</a></pre>
+				<p>
+NewPluginEndorser endorses with using a plugin
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PluginEndorser.EndorseWithPlugin">func (*PluginEndorser) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=5077:5163#L152">EndorseWithPlugin</a>
+					<a class="permalink" href="index.html#PluginEndorser.EndorseWithPlugin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pe *<a href="index.html#PluginEndorser">PluginEndorser</a>) EndorseWithPlugin(ctx <a href="index.html#Context">Context</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProposalResponse">ProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EndorseWithPlugin endorses the response with a plugin
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PluginMapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=1383:1478#L32">PluginMapper</a>
+				<a class="permalink" href="index.html#PluginMapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginMapper maps plugin names to their corresponding factories
+</p>
+
+			<pre>type PluginMapper interface {
+    PluginFactoryByName(name <a href="index.html#PluginName">PluginName</a>) <a href="../handlers/endorsement/api/index.html">endorsement</a>.<a href="../handlers/endorsement/api/index.html#PluginFactory">PluginFactory</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PluginName">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=3141:3163#L84">PluginName</a>
+				<a class="permalink" href="index.html#PluginName">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginName defines the name of the plugin as it appears in the configuration
+</p>
+
+			<pre>type PluginName <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PluginSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=2517:2645#L65">PluginSupport</a>
+				<a class="permalink" href="index.html#PluginSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PluginSupport aggregates the support interfaces
+needed for the operation of the plugin endorser
+</p>
+
+			<pre>type PluginSupport struct {
+    <a href="index.html#ChannelStateRetriever">ChannelStateRetriever</a>
+    <a href="../handlers/endorsement/api/identities/index.html">endorsement3</a>.<a href="../handlers/endorsement/api/identities/index.html#SigningIdentityFetcher">SigningIdentityFetcher</a>
+    <a href="index.html#PluginMapper">PluginMapper</a>
+    <a href="index.html#TransientStoreRetriever">TransientStoreRetriever</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PvtRWSetAssembler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/pvtrwset_assembler.go?s=534:929#L15">PvtRWSetAssembler</a>
+				<a class="permalink" href="index.html#PvtRWSetAssembler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PvtRWSetAssembler assembles private read write set for distribution
+augments with additional information if needed
+</p>
+
+			<pre>type PvtRWSetAssembler interface {
+    <span class="comment">// AssemblePvtRWSet prepares TxPvtReadWriteSet for distribution</span>
+    <span class="comment">// augmenting it into TxPvtReadWriteSetWithConfigInfo adding</span>
+    <span class="comment">// information about collections config available related</span>
+    <span class="comment">// to private read-write set</span>
+    AssemblePvtRWSet(privData *<a href="../../protos/ledger/rwset/index.html">rwset</a>.<a href="../../protos/ledger/rwset/index.html#TxPvtReadWriteSet">TxPvtReadWriteSet</a>, txsim <a href="index.html#CollectionConfigRetriever">CollectionConfigRetriever</a>) (*<a href="../../protos/transientstore/index.html">transientstore</a>.<a href="../../protos/transientstore/index.html#TxPvtReadWriteSetWithConfigInfo">TxPvtReadWriteSetWithConfigInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryCreator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go?s=500:581#L9">QueryCreator</a>
+				<a class="permalink" href="index.html#QueryCreator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate mockery -dir . -name QueryCreator -case underscore -output mocks/
+QueryCreator creates new QueryExecutors
+</p>
+
+			<pre>type QueryCreator interface {
+    NewQueryExecutor() (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StateContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go?s=1014:1086#L33">StateContext</a>
+				<a class="permalink" href="index.html#StateContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StateContext defines an execution context that interacts with the state
+</p>
+
+			<pre>type StateContext struct {
+    <a href="../transientstore/index.html">transientstore</a>.<a href="../transientstore/index.html#Store">Store</a>
+    <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StateContext.GetTransientByTXID">func (*StateContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/state.go?s=1172:1263#L39">GetTransientByTXID</a>
+					<a class="permalink" href="index.html#StateContext.GetTransientByTXID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sc *<a href="index.html#StateContext">StateContext</a>) GetTransientByTXID(txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="../../protos/ledger/rwset/index.html">rwset</a>.<a href="../../protos/ledger/rwset/index.html#TxPvtReadWriteSet">TxPvtReadWriteSet</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTransientByTXID returns the private data associated with this transaction ID.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Support">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/endorser.go?s=1383:4566#L32">Support</a>
+				<a class="permalink" href="index.html#Support">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Support contains functions that the endorser requires to execute its tasks
+</p>
+
+			<pre>type Support interface {
+    <a href="../../common/crypto/index.html">crypto</a>.<a href="../../common/crypto/index.html#SignerSupport">SignerSupport</a>
+    <span class="comment">// IsSysCCAndNotInvokableExternal returns true if the supplied chaincode is</span>
+    <span class="comment">// a system chaincode and it NOT invokable</span>
+    IsSysCCAndNotInvokableExternal(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// GetTxSimulator returns the transaction simulator for the specified ledger</span>
+    <span class="comment">// a client may obtain more than one such simulator; they are made unique</span>
+    <span class="comment">// by way of the supplied txid</span>
+    GetTxSimulator(ledgername <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#TxSimulator">TxSimulator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetHistoryQueryExecutor gives handle to a history query executor for the</span>
+    <span class="comment">// specified ledger</span>
+    GetHistoryQueryExecutor(ledgername <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#HistoryQueryExecutor">HistoryQueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetTransactionByID retrieves a transaction by id</span>
+    GetTransactionByID(chid, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProcessedTransaction">ProcessedTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// IsSysCC returns true if the name matches a system chaincode&#39;s</span>
+    <span class="comment">// system chaincode names are system, chain wide</span>
+    IsSysCC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Execute - execute proposal, return original response of chaincode</span>
+    Execute(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cid, name, version, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, prop *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// ExecuteLegacyInit - executes a deployment proposal, return original response of chaincode</span>
+    ExecuteLegacyInit(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cid, name, version, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, prop *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>, spec *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetChaincodeDefinition returns ccprovider.ChaincodeDefinition for the chaincode with the supplied name</span>
+    GetChaincodeDefinition(chaincodeID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txsim <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// CheckACL checks the ACL for the resource for the channel using the</span>
+    <span class="comment">// SignedProposal from which an id can be extracted for testing against a policy</span>
+    CheckACL(signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, chdr *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#ChannelHeader">ChannelHeader</a>, shdr *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, hdrext *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeHeaderExtension">ChaincodeHeaderExtension</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// IsJavaCC returns true if the CDS package bytes describe a chaincode</span>
+    <span class="comment">// that requires the java runtime environment to execute</span>
+    IsJavaCC(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// CheckInstantiationPolicy returns an error if the instantiation in the supplied</span>
+    <span class="comment">// ChaincodeDefinition differs from the instantiation policy stored on the ledger</span>
+    CheckInstantiationPolicy(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cd <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetChaincodeDeploymentSpecFS returns the deploymentspec for a chaincode from the fs</span>
+    GetChaincodeDeploymentSpecFS(cds *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetApplicationConfig returns the configtxapplication.SharedConfig for the Channel</span>
+    <span class="comment">// and whether the Application config exists</span>
+    GetApplicationConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    <span class="comment">// NewQueryCreator creates a new QueryCreator</span>
+    NewQueryCreator(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#QueryCreator">QueryCreator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// EndorseWithPlugin endorses the response with a plugin</span>
+    EndorseWithPlugin(ctx <a href="index.html#Context">Context</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProposalResponse">ProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// GetLedgerHeight returns ledger height for given channelID</span>
+    GetLedgerHeight(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SupportImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=1000:1247#L21">SupportImpl</a>
+				<a class="permalink" href="index.html#SupportImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SupportImpl provides an implementation of the endorser.Support interface
+issuing calls to various static methods of the peer
+</p>
+
+			<pre>type SupportImpl struct {
+    *<a href="index.html#PluginEndorser">PluginEndorser</a>
+    <a href="../../common/crypto/index.html">crypto</a>.<a href="../../common/crypto/index.html#SignerSupport">SignerSupport</a>
+<span id="SupportImpl.Peer"></span>    Peer             <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Operations">Operations</a>
+<span id="SupportImpl.PeerSupport"></span>    PeerSupport      <a href="../peer/index.html">peer</a>.<a href="../peer/index.html#Support">Support</a>
+<span id="SupportImpl.ChaincodeSupport"></span>    ChaincodeSupport *<a href="../chaincode/index.html">chaincode</a>.<a href="../chaincode/index.html#ChaincodeSupport">ChaincodeSupport</a>
+<span id="SupportImpl.SysCCProvider"></span>    SysCCProvider    *<a href="../scc/index.html">scc</a>.<a href="../scc/index.html#Provider">Provider</a>
+<span id="SupportImpl.ACLProvider"></span>    ACLProvider      <a href="../aclmgmt/index.html">aclmgmt</a>.<a href="../aclmgmt/index.html#ACLProvider">ACLProvider</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SupportImpl.CheckACL">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=5810:5972#L147">CheckACL</a>
+					<a class="permalink" href="index.html#SupportImpl.CheckACL">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) CheckACL(signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, chdr *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#ChannelHeader">ChannelHeader</a>, shdr *<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, hdrext *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeHeaderExtension">ChaincodeHeaderExtension</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CheckACL checks the ACL for the resource for the Channel using the
+SignedProposal from which an id can be extracted for testing against a policy
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.CheckInstantiationPolicy">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=6635:6744#L165">CheckInstantiationPolicy</a>
+					<a class="permalink" href="index.html#SupportImpl.CheckInstantiationPolicy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) CheckInstantiationPolicy(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cd <a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CheckInstantiationPolicy returns an error if the instantiation in the supplied
+ChaincodeDefinition differs from the instantiation policy stored on the ledger
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.Execute">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=4686:4906#L125">Execute</a>
+					<a class="permalink" href="index.html#SupportImpl.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) Execute(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cid, name, version, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, prop *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Execute a proposal and return the chaincode response
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.ExecuteLegacyInit">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=4246:4483#L115">ExecuteLegacyInit</a>
+					<a class="permalink" href="index.html#SupportImpl.ExecuteLegacyInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) ExecuteLegacyInit(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cid, name, version, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signedProp *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>, prop *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>, cds *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ExecuteInit a deployment proposal and return the chaincode response
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetApplicationConfig">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=6971:7059#L171">GetApplicationConfig</a>
+					<a class="permalink" href="index.html#SupportImpl.GetApplicationConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetApplicationConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+GetApplicationConfig returns the configtxapplication.SharedConfig for the Channel
+and whether the Application config exists
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetChaincodeDefinition">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=5440:5574#L141">GetChaincodeDefinition</a>
+					<a class="permalink" href="index.html#SupportImpl.GetChaincodeDefinition">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetChaincodeDefinition(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txsim <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeDefinition returns ccprovider.ChaincodeDefinition for the chaincode with the supplied name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetChaincodeDeploymentSpecFS">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=3807:3927#L105">GetChaincodeDeploymentSpecFS</a>
+					<a class="permalink" href="index.html#SupportImpl.GetChaincodeDeploymentSpecFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetChaincodeDeploymentSpecFS(cds *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincode returns the CCPackage from the fs
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetHistoryQueryExecutor">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=2390:2491#L62">GetHistoryQueryExecutor</a>
+					<a class="permalink" href="index.html#SupportImpl.GetHistoryQueryExecutor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetHistoryQueryExecutor(ledgername <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#HistoryQueryExecutor">HistoryQueryExecutor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetHistoryQueryExecutor gives handle to a history query executor for the
+specified ledger
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetLedgerHeight">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=3150:3221#L84">GetLedgerHeight</a>
+					<a class="permalink" href="index.html#SupportImpl.GetLedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetLedgerHeight(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetLedgerHeight returns ledger height for given channelID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetTransactionByID">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=2714:2807#L71">GetTransactionByID</a>
+					<a class="permalink" href="index.html#SupportImpl.GetTransactionByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetTransactionByID(chid, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ProcessedTransaction">ProcessedTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTransactionByID retrieves a transaction by id
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.GetTxSimulator">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=2032:2128#L52">GetTxSimulator</a>
+					<a class="permalink" href="index.html#SupportImpl.GetTxSimulator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) GetTxSimulator(ledgername <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#TxSimulator">TxSimulator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetTxSimulator returns the transaction simulator for the specified ledger
+a client may obtain more than one such simulator; they are made unique
+by way of the supplied txid
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.IsJavaCC">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=6189:6245#L153">IsJavaCC</a>
+					<a class="permalink" href="index.html#SupportImpl.IsJavaCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) IsJavaCC(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+IsJavaCC returns true if the CDS package bytes describe a chaincode
+that requires the java runtime environment to execute
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.IsSysCC">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=3666:3713#L100">IsSysCC</a>
+					<a class="permalink" href="index.html#SupportImpl.IsSysCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) IsSysCC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSysCC returns true if the name matches a system chaincode&#39;s
+system chaincode names are system, chain wide
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.IsSysCCAndNotInvokableExternal">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=1713:1783#L45">IsSysCCAndNotInvokableExternal</a>
+					<a class="permalink" href="index.html#SupportImpl.IsSysCCAndNotInvokableExternal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) IsSysCCAndNotInvokableExternal(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSysCCAndNotInvokableExternal returns true if the supplied chaincode is
+ia system chaincode and it NOT invokable
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.NewQueryCreator">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=1249:1324#L31">NewQueryCreator</a>
+					<a class="permalink" href="index.html#SupportImpl.NewQueryCreator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) NewQueryCreator(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#QueryCreator">QueryCreator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SupportImpl.SigningIdentityForRequest">func (*SupportImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/support.go?s=1466:1558#L39">SigningIdentityForRequest</a>
+					<a class="permalink" href="index.html#SupportImpl.SigningIdentityForRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SupportImpl">SupportImpl</a>) SigningIdentityForRequest(*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>) (<a href="index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TransientStoreRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/endorser/plugin_endorser.go?s=766:932#L16">TransientStoreRetriever</a>
+				<a class="permalink" href="index.html#TransientStoreRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransientStoreRetriever retrieves transient stores
+</p>
+
+			<pre>type TransientStoreRetriever interface {
+    <span class="comment">// StoreForChannel returns the transient store for the given channel</span>
+    StoreForChannel(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../transientstore/index.html">transientstore</a>.<a href="../transientstore/index.html#Store">Store</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>flogging - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package flogging
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/flogging"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#ActivateSpec">func ActivateSpec(spec string)</a></dd>
+			
+				
+				<dd><a href="index.html#DefaultLevel">func DefaultLevel() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetLoggerLevel">func GetLoggerLevel(loggerName string) string</a></dd>
+			
+				
+				<dd><a href="index.html#Init">func Init(config Config)</a></dd>
+			
+				
+				<dd><a href="index.html#InitBackend">func InitBackend(formatter logging.Formatter, output io.Writer)</a></dd>
+			
+				
+				<dd><a href="index.html#InitFromSpec">func InitFromSpec(spec string) string</a></dd>
+			
+				
+				<dd><a href="index.html#IsValidLevel">func IsValidLevel(level string) bool</a></dd>
+			
+				
+				<dd><a href="index.html#NameToLevel">func NameToLevel(level string) zapcore.Level</a></dd>
+			
+				
+				<dd><a href="index.html#NewGRPCLogger">func NewGRPCLogger(l *zap.Logger) *zapgrpc.Logger</a></dd>
+			
+				
+				<dd><a href="index.html#NewZapLogger">func NewZapLogger(core zapcore.Core, options ...zap.Option) *zap.Logger</a></dd>
+			
+				
+				<dd><a href="index.html#Reset">func Reset()</a></dd>
+			
+				
+				<dd><a href="index.html#SetFormat">func SetFormat(formatSpec string) logging.Formatter</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Core">type Core</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Core.Check">func (c *Core) Check(e zapcore.Entry, ce *zapcore.CheckedEntry) *zapcore.CheckedEntry</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Core.Sync">func (c *Core) Sync() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Core.With">func (c *Core) With(fields []zapcore.Field) zapcore.Core</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Core.Write">func (c *Core) Write(e zapcore.Entry, fields []zapcore.Field) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Encoding">type Encoding</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EncodingSelector">type EncodingSelector</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FabricLogger">type FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MustGetLogger">func MustGetLogger(loggerName string) *FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFabricLogger">func NewFabricLogger(l *zap.Logger, options ...zap.Option) *FabricLogger</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Critical">func (f *FabricLogger) Critical(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Criticalf">func (f *FabricLogger) Criticalf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.DPanic">func (f *FabricLogger) DPanic(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.DPanicf">func (f *FabricLogger) DPanicf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.DPanicw">func (f *FabricLogger) DPanicw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Debug">func (f *FabricLogger) Debug(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Debugf">func (f *FabricLogger) Debugf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Debugw">func (f *FabricLogger) Debugw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Error">func (f *FabricLogger) Error(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Errorf">func (f *FabricLogger) Errorf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Errorw">func (f *FabricLogger) Errorw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Fatal">func (f *FabricLogger) Fatal(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Fatalf">func (f *FabricLogger) Fatalf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Fatalw">func (f *FabricLogger) Fatalw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Info">func (f *FabricLogger) Info(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Infof">func (f *FabricLogger) Infof(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Infow">func (f *FabricLogger) Infow(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.IsEnabledFor">func (f *FabricLogger) IsEnabledFor(level zapcore.Level) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Named">func (f *FabricLogger) Named(name string) *FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Notice">func (f *FabricLogger) Notice(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Noticef">func (f *FabricLogger) Noticef(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Panic">func (f *FabricLogger) Panic(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Panicf">func (f *FabricLogger) Panicf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Panicw">func (f *FabricLogger) Panicw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Sync">func (f *FabricLogger) Sync() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Warn">func (f *FabricLogger) Warn(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Warnf">func (f *FabricLogger) Warnf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Warning">func (f *FabricLogger) Warning(args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Warningf">func (f *FabricLogger) Warningf(template string, args ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Warnw">func (f *FabricLogger) Warnw(msg string, kvPairs ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.With">func (f *FabricLogger) With(args ...interface{}) *FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.WithOptions">func (f *FabricLogger) WithOptions(opts ...zap.Option) *FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FabricLogger.Zap">func (f *FabricLogger) Zap() *zap.Logger</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LoggerLevels">type LoggerLevels</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoggerLevels.ActivateSpec">func (l *LoggerLevels) ActivateSpec(spec string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoggerLevels.DefaultLevel">func (l *LoggerLevels) DefaultLevel() zapcore.Level</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoggerLevels.Enabled">func (l *LoggerLevels) Enabled(lvl zapcore.Level) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoggerLevels.Level">func (l *LoggerLevels) Level(loggerName string) zapcore.Level</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoggerLevels.Spec">func (l *LoggerLevels) Spec() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Logging">type Logging</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(c Config) (*Logging, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Apply">func (s *Logging) Apply(c Config) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Check">func (s *Logging) Check(e zapcore.Entry, ce *zapcore.CheckedEntry)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Encoding">func (s *Logging) Encoding() Encoding</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Logger">func (s *Logging) Logger(name string) *FabricLogger</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.SetFormat">func (s *Logging) SetFormat(format string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.SetObserver">func (s *Logging) SetObserver(observer Observer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.SetWriter">func (s *Logging) SetWriter(w io.Writer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Sync">func (s *Logging) Sync() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.Write">func (s *Logging) Write(b []byte) (int, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.WriteEntry">func (s *Logging) WriteEntry(e zapcore.Entry, fields []zapcore.Field)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Logging.ZapLogger">func (s *Logging) ZapLogger(name string) *zap.Logger</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Observer">type Observer</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go">core.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go">global.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/legacy.go">legacy.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/levels.go">levels.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go">loggerlevels.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go">logging.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go">zap.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="CONSOLE">CONSOLE</span> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="JSON">JSON</span>
+    <span id="LOGFMT">LOGFMT</span>
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// DisabledLevel represents a disabled log level. Logs at this level should</span>
+    <span class="comment">// never be emitted.</span>
+    <span id="DisabledLevel">DisabledLevel</span> = <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a>(<a href="http://localhost:6060/pkg/math/">math</a>.<a href="http://localhost:6060/pkg/math/#MinInt8">MinInt8</a>)
+
+    <span class="comment">// PayloadLevel is used to log the extremely detailed message level debug</span>
+    <span class="comment">// information.</span>
+    <span id="PayloadLevel">PayloadLevel</span> = <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a>(<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#DebugLevel">DebugLevel</a> - 1)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="ActivateSpec">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go?s=1409:1439#L54">ActivateSpec</a>
+				<a class="permalink" href="index.html#ActivateSpec">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ActivateSpec(spec <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+ActivateSpec is used to activate a logging specification.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DefaultLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/legacy.go?s=1125:1151#L34">DefaultLevel</a>
+				<a class="permalink" href="index.html#DefaultLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DefaultLevel() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+DefaultLevel returns the fallback value for loggers to use if parsing fails.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetLoggerLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go?s=1027:1072#L43">GetLoggerLevel</a>
+				<a class="permalink" href="index.html#GetLoggerLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetLoggerLevel(loggerName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetLoggerLevel gets the current logging level for the logger with the
+provided name.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Init">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go?s=695:719#L27">Init</a>
+				<a class="permalink" href="index.html#Init">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Init(config <a href="index.html#Config">Config</a>)</pre>
+			<p>
+Init initializes logging with the provided config.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitBackend">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/legacy.go?s=793:856#L27">InitBackend</a>
+				<a class="permalink" href="index.html#InitBackend">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitBackend(formatter <a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#Formatter">Formatter</a>, output <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>)</pre>
+			<p>
+InitBackend sets up the logging backend based on
+the provided logging formatter and I/O writer.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="InitFromSpec">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/legacy.go?s=1523:1560#L42">InitFromSpec</a>
+				<a class="permalink" href="index.html#InitFromSpec">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func InitFromSpec(spec <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+InitFromSpec initializes the logging based on the supplied spec. It is
+exposed externally so that consumers of the flogging package may parse their
+own logging specification. The logging specification has the following form:
+</p>
+<pre>[&lt;logger&gt;[,&lt;logger&gt;...]=]&lt;level&gt;[:[&lt;logger&gt;[,&lt;logger&gt;...]=]&lt;logger&gt;...]
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsValidLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/levels.go?s=1490:1526#L55">IsValidLevel</a>
+				<a class="permalink" href="index.html#IsValidLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsValidLevel(level <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="NameToLevel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/levels.go?s=582:626#L18">NameToLevel</a>
+				<a class="permalink" href="index.html#NameToLevel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NameToLevel(level <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a></pre>
+			<p>
+NameToLevel converts a level name to a zapcore.Level.  If the level name is
+unknown, zapcore.InfoLevel is returned.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewGRPCLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=743:792#L23">NewGRPCLogger</a>
+				<a class="permalink" href="index.html#NewGRPCLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewGRPCLogger(l *<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Logger">Logger</a>) *<a href="http://localhost:6060/pkg/go.uber.org/zap/zapgrpc/">zapgrpc</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapgrpc/#Logger">Logger</a></pre>
+			<p>
+NewGRPCLogger creates a grpc.Logger that delegates to a zap.Logger.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewZapLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=461:532#L12">NewZapLogger</a>
+				<a class="permalink" href="index.html#NewZapLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewZapLogger(core <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Core">Core</a>, options ...<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Option">Option</a>) *<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Logger">Logger</a></pre>
+			<p>
+NewZapLogger creates a zap logger around a new zap.Core. The core will use
+the provided encoder and sinks and a level enabler that is associated with
+the provided logger name. The logger that is returned will be named the same
+as the logger.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Reset">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go?s=894:906#L37">Reset</a>
+				<a class="permalink" href="index.html#Reset">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Reset()</pre>
+			<p>
+Reset sets logging to the defaults defined in this package.
+</p>
+<p>
+Used in tests and in the package init
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetFormat">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/legacy.go?s=531:582#L18">SetFormat</a>
+				<a class="permalink" href="index.html#SetFormat">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetFormat(formatSpec <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/github.com/op/go-logging/">logging</a>.<a href="http://localhost:6060/pkg/github.com/op/go-logging/#Formatter">Formatter</a></pre>
+			<p>
+SetFormat sets the logging format.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=388:1211#L13">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config is used to provide dependencies to a Logging instance.
+</p>
+
+			<pre>type Config struct {
+<span id="Config.Format"></span>    <span class="comment">// Format is the log record format specifier for the Logging instance. If the</span>
+    <span class="comment">// spec is the string &#34;json&#34;, log records will be formatted as JSON. Any</span>
+    <span class="comment">// other string will be provided to the FormatEncoder. Please see</span>
+    <span class="comment">// fabenc.ParseFormat for details on the supported verbs.</span>
+    <span class="comment">//</span>
+    <span class="comment">// If Format is not provided, a default format that provides basic information will</span>
+    <span class="comment">// be used.</span>
+    Format <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="Config.LogSpec"></span>    <span class="comment">// LogSpec determines the log levels that are enabled for the logging system. The</span>
+    <span class="comment">// spec must be in a format that can be processed by ActivateSpec.</span>
+    <span class="comment">//</span>
+    <span class="comment">// If LogSpec is not provided, loggers will be enabled at the INFO level.</span>
+    LogSpec <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="Config.Writer"></span>    <span class="comment">// Writer is the sink for encoded and formatted log records.</span>
+    <span class="comment">//</span>
+    <span class="comment">// If a Writer is not provided, os.Stderr will be used as the log sink.</span>
+    Writer <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Core">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=1550:1731#L37">Core</a>
+				<a class="permalink" href="index.html#Core">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Core is a custom implementation of a zapcore.Core. It&#39;s a terrible hack that
+only exists to work around the intersection of state associated with
+encoders, implementation hiding in zapcore, and implicit, ad-hoc logger
+initialization within fabric.
+</p>
+<p>
+In addition to encoding log entries and fields to a buffer, zap Encoder
+implementations also need to maintain field state. When zapcore.Core.With is
+used, the associated encoder is cloned and the fields are added to the
+encoder. This means that encoder instances cannot be shared across cores.
+</p>
+<p>
+In terms of implementation hiding, it&#39;s difficult for our FormatEncoder to
+cleanly wrap the JSON and console implementations from zap as all methods
+from the zapcore.ObjectEncoder would need to be implemented to delegate to
+the correct backend.
+</p>
+<p>
+This implementation works by associating multiple encoders with a core. When
+fields are added to the core, the fields are added to all of the encoder
+implementations. The core also references the logging configuration to
+determine the proper encoding to use, the writer to delegate to, and the
+enabled levels.
+</p>
+
+			<pre>type Core struct {
+    <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#LevelEnabler">LevelEnabler</a>
+<span id="Core.Levels"></span>    Levels   *<a href="index.html#LoggerLevels">LoggerLevels</a>
+<span id="Core.Encoders"></span>    Encoders map[<a href="index.html#Encoding">Encoding</a>]<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Encoder">Encoder</a>
+<span id="Core.Selector"></span>    Selector <a href="index.html#EncodingSelector">EncodingSelector</a>
+<span id="Core.Output"></span>    Output   <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#WriteSyncer">WriteSyncer</a>
+<span id="Core.Observer"></span>    Observer <a href="index.html#Observer">Observer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Core.Check">func (*Core) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=2345:2430#L71">Check</a>
+					<a class="permalink" href="index.html#Core.Check">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Core">Core</a>) Check(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, ce *<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#CheckedEntry">CheckedEntry</a>) *<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#CheckedEntry">CheckedEntry</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Core.Sync">func (*Core) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=3025:3052#L107">Sync</a>
+					<a class="permalink" href="index.html#Core.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Core">Core</a>) Sync() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Core.With">func (*Core) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=1945:2001#L53">With</a>
+					<a class="permalink" href="index.html#Core.With">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Core">Core</a>) With(fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>) <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Core">Core</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Core.Write">func (*Core) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=2604:2671#L82">Write</a>
+					<a class="permalink" href="index.html#Core.Write">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Core">Core</a>) Write(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Encoding">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=142:160#L3">Encoding</a>
+				<a class="permalink" href="index.html#Encoding">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Encoding <a href="http://localhost:6060/pkg/builtin/#int8">int8</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EncodingSelector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=335:391#L13">EncodingSelector</a>
+				<a class="permalink" href="index.html#EncodingSelector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EncodingSelector is used to determine whether log records are
+encoded as JSON or in human readable CONSOLE or LOGFMT formats.
+</p>
+
+			<pre>type EncodingSelector interface {
+    Encoding() <a href="index.html#Encoding">Encoding</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FabricLogger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=1610:1658#L46">FabricLogger</a>
+				<a class="permalink" href="index.html#FabricLogger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A FabricLogger is an adapter around a zap.SugaredLogger that provides
+structured logging capabilities while preserving much of the legacy logging
+behavior.
+</p>
+<p>
+The most significant difference between the FabricLogger and the
+zap.SugaredLogger is that methods without a formatting suffix (f or w) build
+the log entry message with fmt.Sprintln instead of fmt.Sprint. Without this
+change, arguments are not separated by spaces.
+</p>
+
+			<pre>type FabricLogger struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="MustGetLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/global.go?s=1257:1308#L49">MustGetLogger</a>
+					<a class="permalink" href="index.html#MustGetLogger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func MustGetLogger(loggerName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				<p>
+MustGetLogger creates a logger with the specified name. If an invalid name
+is provided, the operation will panic.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewFabricLogger">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=991:1063#L32">NewFabricLogger</a>
+					<a class="permalink" href="index.html#NewFabricLogger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFabricLogger(l *<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Logger">Logger</a>, options ...<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Option">Option</a>) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				<p>
+NewFabricLogger creates a logger that delegates to the zap.SugaredLogger.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="FabricLogger.Critical">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4057:4109#L73">Critical</a>
+					<a class="permalink" href="index.html#FabricLogger.Critical">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Critical(args ...interface{})</pre>
+				<p>
+for backwards compatibility
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Criticalf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4161:4231#L74">Criticalf</a>
+					<a class="permalink" href="index.html#FabricLogger.Criticalf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Criticalf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.DPanic">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=1660:1710#L48">DPanic</a>
+					<a class="permalink" href="index.html#FabricLogger.DPanic">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) DPanic(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.DPanicf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=1764:1832#L49">DPanicf</a>
+					<a class="permalink" href="index.html#FabricLogger.DPanicf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) DPanicf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.DPanicw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=1869:1935#L50">DPanicw</a>
+					<a class="permalink" href="index.html#FabricLogger.DPanicw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) DPanicw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Debug">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=1972:2021#L51">Debug</a>
+					<a class="permalink" href="index.html#FabricLogger.Debug">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Debug(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Debugf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2075:2142#L52">Debugf</a>
+					<a class="permalink" href="index.html#FabricLogger.Debugf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Debugf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Debugw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2179:2244#L53">Debugw</a>
+					<a class="permalink" href="index.html#FabricLogger.Debugw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Debugw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Error">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2281:2330#L54">Error</a>
+					<a class="permalink" href="index.html#FabricLogger.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Error(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Errorf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2384:2451#L55">Errorf</a>
+					<a class="permalink" href="index.html#FabricLogger.Errorf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Errorf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Errorw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2488:2553#L56">Errorw</a>
+					<a class="permalink" href="index.html#FabricLogger.Errorw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Errorw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Fatal">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2590:2639#L57">Fatal</a>
+					<a class="permalink" href="index.html#FabricLogger.Fatal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Fatal(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Fatalf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2693:2760#L58">Fatalf</a>
+					<a class="permalink" href="index.html#FabricLogger.Fatalf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Fatalf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Fatalw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2797:2862#L59">Fatalw</a>
+					<a class="permalink" href="index.html#FabricLogger.Fatalw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Fatalw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Info">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=2899:2947#L60">Info</a>
+					<a class="permalink" href="index.html#FabricLogger.Info">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Info(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Infof">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3001:3067#L61">Infof</a>
+					<a class="permalink" href="index.html#FabricLogger.Infof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Infof(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Infow">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3104:3168#L62">Infow</a>
+					<a class="permalink" href="index.html#FabricLogger.Infow">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Infow(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.IsEnabledFor">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4735:4796#L82">IsEnabledFor</a>
+					<a class="permalink" href="index.html#FabricLogger.IsEnabledFor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) IsEnabledFor(level <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Named">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4474:4529#L78">Named</a>
+					<a class="permalink" href="index.html#FabricLogger.Named">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Named(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Notice">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4266:4316#L75">Notice</a>
+					<a class="permalink" href="index.html#FabricLogger.Notice">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Notice(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Noticef">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4369:4437#L76">Noticef</a>
+					<a class="permalink" href="index.html#FabricLogger.Noticef">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Noticef(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Panic">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3205:3254#L63">Panic</a>
+					<a class="permalink" href="index.html#FabricLogger.Panic">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Panic(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Panicf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3308:3375#L64">Panicf</a>
+					<a class="permalink" href="index.html#FabricLogger.Panicf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Panicf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Panicw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3412:3477#L65">Panicw</a>
+					<a class="permalink" href="index.html#FabricLogger.Panicw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Panicw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Sync">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4575:4610#L79">Sync</a>
+					<a class="permalink" href="index.html#FabricLogger.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Sync() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Warn">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3514:3562#L66">Warn</a>
+					<a class="permalink" href="index.html#FabricLogger.Warn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Warn(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Warnf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3616:3682#L67">Warnf</a>
+					<a class="permalink" href="index.html#FabricLogger.Warnf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Warnf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Warning">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3820:3871#L69">Warning</a>
+					<a class="permalink" href="index.html#FabricLogger.Warning">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Warning(args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Warningf">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3922:3991#L70">Warningf</a>
+					<a class="permalink" href="index.html#FabricLogger.Warningf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Warningf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Warnw">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=3719:3783#L68">Warnw</a>
+					<a class="permalink" href="index.html#FabricLogger.Warnw">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Warnw(msg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, kvPairs ...interface{})</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.With">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4846:4908#L86">With</a>
+					<a class="permalink" href="index.html#FabricLogger.With">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) With(args ...interface{}) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.WithOptions">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4958:5026#L90">WithOptions</a>
+					<a class="permalink" href="index.html#FabricLogger.WithOptions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) WithOptions(opts ...<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Option">Option</a>) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FabricLogger.Zap">func (*FabricLogger) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/zap.go?s=4653:4693#L80">Zap</a>
+					<a class="permalink" href="index.html#FabricLogger.Zap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#FabricLogger">FabricLogger</a>) Zap() *<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Logger">Logger</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LoggerLevels">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=271:460#L11">LoggerLevels</a>
+				<a class="permalink" href="index.html#LoggerLevels">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LoggerLevels tracks the logging level of named loggers.
+</p>
+
+			<pre>type LoggerLevels struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LoggerLevels.ActivateSpec">func (*LoggerLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=877:931#L32">ActivateSpec</a>
+					<a class="permalink" href="index.html#LoggerLevels.ActivateSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LoggerLevels">LoggerLevels</a>) ActivateSpec(spec <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ActivateSpec is used to modify logging levels.
+</p>
+<p>
+The logging specification has the following form:
+</p>
+<pre>[&lt;logger&gt;[,&lt;logger&gt;...]=]&lt;level&gt;[:[&lt;logger&gt;[,&lt;logger&gt;...]=]&lt;level&gt;...]
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="LoggerLevels.DefaultLevel">func (*LoggerLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=567:618#L21">DefaultLevel</a>
+					<a class="permalink" href="index.html#LoggerLevels.DefaultLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LoggerLevels">LoggerLevels</a>) DefaultLevel() <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a></pre>
+				<p>
+DefaultLevel returns the default logging level for loggers that do not have
+an explicit level set.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LoggerLevels.Enabled">func (*LoggerLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=4743:4797#L159">Enabled</a>
+					<a class="permalink" href="index.html#LoggerLevels.Enabled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LoggerLevels">LoggerLevels</a>) Enabled(lvl <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Enabled function is an enabled check that evaluates the minimum active logging level.
+It serves as a fast check before the (relatively) expensive Check call in the core.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LoggerLevels.Level">func (*LoggerLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=3226:3287#L102">Level</a>
+					<a class="permalink" href="index.html#LoggerLevels.Level">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LoggerLevels">LoggerLevels</a>) Level(loggerName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Level">Level</a></pre>
+				<p>
+Level returns the effective logging level for a logger. If a level has not
+been explicitly set for the logger, the default logging level will be
+returned.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LoggerLevels.Spec">func (*LoggerLevels) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/loggerlevels.go?s=4267:4303#L142">Spec</a>
+					<a class="permalink" href="index.html#LoggerLevels.Spec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LoggerLevels">LoggerLevels</a>) Spec() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Spec returns a normalized version of the active logging spec.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Logging">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=1435:1666#L38">Logging</a>
+				<a class="permalink" href="index.html#Logging">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Logging maintains the state associated with the fabric logging system. It is
+intended to bridge between the legacy logging infrastructure built around
+go-logging and the structured, level logging provided by zap.
+</p>
+
+			<pre>type Logging struct {
+    *<a href="index.html#LoggerLevels">LoggerLevels</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+				
+				<pre>var <span id="Global">Global</span> *<a href="index.html#Logging">Logging</a></pre>
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=1759:1795#L51">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(c <a href="index.html#Config">Config</a>) (*<a href="index.html#Logging">Logging</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New creates a new logging system and initializes it with the provided
+configuration.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Logging.Apply">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=2190:2229#L71">Apply</a>
+					<a class="permalink" href="index.html#Logging.Apply">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Apply(c <a href="index.html#Config">Config</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Apply applies the provided configuration to the logging system.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.Check">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=5629:5695#L220">Check</a>
+					<a class="permalink" href="index.html#Logging.Check">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Check(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, ce *<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#CheckedEntry">CheckedEntry</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Logging.Encoding">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=4835:4872#L188">Encoding</a>
+					<a class="permalink" href="index.html#Logging.Encoding">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Encoding() <a href="index.html#Encoding">Encoding</a></pre>
+				<p>
+Encoding satisfies the Encoding interface. It determines whether the JSON or
+CONSOLE encoder should be used by the Core when log records are written.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.Logger">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=6135:6186#L242">Logger</a>
+					<a class="permalink" href="index.html#Logging.Logger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Logger(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#FabricLogger">FabricLogger</a></pre>
+				<p>
+Logger instantiates a new FabricLogger with the specified name. The name is
+used to determine which log levels are enabled.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.SetFormat">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=3016:3064#L111">SetFormat</a>
+					<a class="permalink" href="index.html#Logging.SetFormat">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) SetFormat(format <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetFormat updates how log records are formatted and encoded. Log entries
+created after this method has completed will use the new format.
+</p>
+<p>
+An error is returned if the log format specification cannot be parsed.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.SetObserver">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=4034:4082#L159">SetObserver</a>
+					<a class="permalink" href="index.html#Logging.SetObserver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) SetObserver(observer <a href="index.html#Observer">Observer</a>)</pre>
+				<p>
+SetObserver is used to provide a log observer that will be called as log
+levels are checked or written.. Only a single observer is supported.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.SetWriter">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=3624:3664#L141">SetWriter</a>
+					<a class="permalink" href="index.html#Logging.SetWriter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) SetWriter(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>)</pre>
+				<p>
+SetWriter controls which writer formatted log records are written to.
+Writers, with the exception of an *os.File, need to be safe for concurrent
+use by multiple go routines.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.Sync">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=4574:4604#L178">Sync</a>
+					<a class="permalink" href="index.html#Logging.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Sync() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Sync satisfies the zapcore.WriteSyncer interface. It is used by the Core to
+flush log records before terminating the process.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.Write">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=4319:4365#L168">Write</a>
+					<a class="permalink" href="index.html#Logging.Write">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) Write(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Write satisfies the io.Write contract. It delegates to the writer argument
+of SetWriter or the Writer field of Config. The Core uses this when encoding
+log records.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Logging.WriteEntry">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=5811:5880#L230">WriteEntry</a>
+					<a class="permalink" href="index.html#Logging.WriteEntry">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) WriteEntry(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Logging.ZapLogger">func (*Logging) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/logging.go?s=5072:5124#L197">ZapLogger</a>
+					<a class="permalink" href="index.html#Logging.ZapLogger">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Logging">Logging</a>) ZapLogger(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="http://localhost:6060/pkg/go.uber.org/zap/">zap</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/#Logger">Logger</a></pre>
+				<p>
+ZapLogger instantiates a new zap.Logger with the specified name. The name is
+used to determine which log levels are enabled.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Observer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/flogging/core.go?s=1813:1943#L48">Observer</a>
+				<a class="permalink" href="index.html#Observer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Observer interface {
+    Check(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, ce *<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#CheckedEntry">CheckedEntry</a>)
+    WriteEntry(e <a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Entry">Entry</a>, fields []<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/">zapcore</a>.<a href="http://localhost:6060/pkg/go.uber.org/zap/zapcore/#Field">Field</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="fabenc/index.html">fabenc</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="floggingtest/index.html">floggingtest</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="httpadmin/index.html">httpadmin</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="httpadmin/fakes/index.html">fakes</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="metrics/index.html">metrics</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

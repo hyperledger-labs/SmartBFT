@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/msp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#BuildIdentityConfigFromOptions">func BuildIdentityConfigFromOptions(opts ...interface{}) (msp.IdentityConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ConfigFromBackend">func ConfigFromBackend(coreBackend ...core.ConfigBackend) (msp.IdentityConfig, error)</a></dd>
+			
+				
+				<dd><a href="index.html#IsIdentityConfigFullyOverridden">func IsIdentityConfigFullyOverridden(c *IdentityConfigOptions) bool</a></dd>
+			
+				
+				<dd><a href="index.html#NewFileCertStore">func NewFileCertStore(cryptoConfigMSPPath string) (core.KVStore, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewFileKeyStore">func NewFileKeyStore(cryptoConfigMSPPath string) (core.KVStore, error)</a></dd>
+			
+				
+				<dd><a href="index.html#UpdateMissingOptsWithDefaultConfig">func UpdateMissingOptsWithDefaultConfig(c *IdentityConfigOptions, d msp.IdentityConfig) msp.IdentityConfig</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CAClientImpl">type CAClientImpl</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCAClient">func NewCAClient(orgName string, ctx contextApi.Client, opts ...CAClientOption) (*CAClientImpl, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.AddAffiliation">func (c *CAClientImpl) AddAffiliation(request *api.AffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.CreateIdentity">func (c *CAClientImpl) CreateIdentity(request *api.IdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.Enroll">func (c *CAClientImpl) Enroll(request *api.EnrollmentRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.GetAffiliation">func (c *CAClientImpl) GetAffiliation(affiliation, caname string) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.GetAllAffiliations">func (c *CAClientImpl) GetAllAffiliations(caname string) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.GetAllIdentities">func (c *CAClientImpl) GetAllIdentities(caname string) ([]*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.GetCAInfo">func (c *CAClientImpl) GetCAInfo() (*api.GetCAInfoResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.GetIdentity">func (c *CAClientImpl) GetIdentity(id, caname string) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.ModifyAffiliation">func (c *CAClientImpl) ModifyAffiliation(request *api.ModifyAffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.ModifyIdentity">func (c *CAClientImpl) ModifyIdentity(request *api.IdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.Reenroll">func (c *CAClientImpl) Reenroll(request *api.ReenrollmentRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.Register">func (c *CAClientImpl) Register(request *api.RegistrationRequest) (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.RemoveAffiliation">func (c *CAClientImpl) RemoveAffiliation(request *api.AffiliationRequest) (*api.AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.RemoveIdentity">func (c *CAClientImpl) RemoveIdentity(request *api.RemoveIdentityRequest) (*api.IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CAClientImpl.Revoke">func (c *CAClientImpl) Revoke(request *api.RevocationRequest) (*api.RevocationResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CAClientOption">type CAClientOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCAInstance">func WithCAInstance(caname string) CAClientOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CAConfig">type CAConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CertFileUserStore">type CertFileUserStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCertFileUserStore">func NewCertFileUserStore(path string) (*CertFileUserStore, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCertFileUserStore1">func NewCertFileUserStore1(store core.KVStore) (*CertFileUserStore, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CertFileUserStore.Delete">func (s *CertFileUserStore) Delete(key msp.IdentityIdentifier) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CertFileUserStore.Load">func (s *CertFileUserStore) Load(key msp.IdentityIdentifier) (*msp.UserData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CertFileUserStore.Store">func (s *CertFileUserStore) Store(user *msp.UserData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClientConfig">type ClientConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientTLSConfig">type ClientTLSConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityConfig">type IdentityConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CAClientCert">func (c *IdentityConfig) CAClientCert(caName string) ([]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CAClientKey">func (c *IdentityConfig) CAClientKey(caName string) ([]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CAConfig">func (c *IdentityConfig) CAConfig(caName string) (*msp.CAConfig, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CAKeyStorePath">func (c *IdentityConfig) CAKeyStorePath() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CAServerCerts">func (c *IdentityConfig) CAServerCerts(caName string) ([][]byte, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.Client">func (c *IdentityConfig) Client() *msp.ClientConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityConfig.CredentialStorePath">func (c *IdentityConfig) CredentialStorePath() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IdentityConfigOptions">type IdentityConfigOptions</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityManager">type IdentityManager</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewIdentityManager">func NewIdentityManager(orgName string, userStore msp.UserStore, cryptoSuite core.CryptoSuite, endpointConfig fab.EndpointConfig) (*IdentityManager, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityManager.CreateSigningIdentity">func (mgr *IdentityManager) CreateSigningIdentity(opts ...msp.SigningIdentityOption) (msp.SigningIdentity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityManager.GetSigningIdentity">func (mgr *IdentityManager) GetSigningIdentity(id string) (msp.SigningIdentity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityManager.GetUser">func (mgr *IdentityManager) GetUser(username string) (*User, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IdentityManager.NewUser">func (mgr *IdentityManager) NewUser(userData *msp.UserData) (*User, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MatchConfig">type MatchConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MemoryKeyStore">type MemoryKeyStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemoryKeyStore">func NewMemoryKeyStore(password []byte) *MemoryKeyStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryKeyStore.GetKey">func (s *MemoryKeyStore) GetKey(ski []byte) (bccsp.Key, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryKeyStore.ReadOnly">func (s *MemoryKeyStore) ReadOnly() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryKeyStore.StoreKey">func (s *MemoryKeyStore) StoreKey(key bccsp.Key) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MemoryUserStore">type MemoryUserStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemoryUserStore">func NewMemoryUserStore() *MemoryUserStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryUserStore.Load">func (s *MemoryUserStore) Load(id msp.IdentityIdentifier) (*msp.UserData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemoryUserStore.Store">func (s *MemoryUserStore) Store(user *msp.UserData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#User">type User</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.EnrollmentCertificate">func (u *User) EnrollmentCertificate() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.Identifier">func (u *User) Identifier() *msp.IdentityIdentifier</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.PrivateKey">func (u *User) PrivateKey() core.Key</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.PublicVersion">func (u *User) PublicVersion() msp.Identity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.Serialize">func (u *User) Serialize() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.Sign">func (u *User) Sign(msg []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.Verify">func (u *User) Verify(msg []byte, sig []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go">caclient.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go">certfileuserstore.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/fabcaadapter.go">fabcaadapter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/filecertstore.go">filecertstore.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/filekeystore.go">filekeystore.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/getsigid.go">getsigid.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go">identityconfig.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identitymgr.go">identitymgr.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go">memory_key_store.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_user_store.go">memory_user_store.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/opts.go">opts.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go">user.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="BuildIdentityConfigFromOptions">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/opts.go?s=2005:2089#L57">BuildIdentityConfigFromOptions</a>
+				<a class="permalink" href="index.html#BuildIdentityConfigFromOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BuildIdentityConfigFromOptions(opts ...interface{}) (<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+BuildIdentityConfigFromOptions will return an IdentityConfig instance pre-built with Optional interfaces
+provided in fabsdk&#39;s WithConfigIdentity(opts...) call
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConfigFromBackend">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=792:877#L22">ConfigFromBackend</a>
+				<a class="permalink" href="index.html#ConfigFromBackend">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConfigFromBackend(coreBackend ...<a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#ConfigBackend">ConfigBackend</a>) (<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ConfigFromBackend returns identity config implementation of given backend
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsIdentityConfigFullyOverridden">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/opts.go?s=3282:3349#L89">IsIdentityConfigFullyOverridden</a>
+				<a class="permalink" href="index.html#IsIdentityConfigFullyOverridden">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsIdentityConfigFullyOverridden(c *<a href="index.html#IdentityConfigOptions">IdentityConfigOptions</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsIdentityConfigFullyOverridden will return true if all of the argument&#39;s sub interfaces is not nil
+(ie IdentityConfig interface not fully overridden)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewFileCertStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/filecertstore.go?s=406:477#L11">NewFileCertStore</a>
+				<a class="permalink" href="index.html#NewFileCertStore">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewFileCertStore(cryptoConfigMSPPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#KVStore">KVStore</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewFileCertStore ...
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewFileKeyStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/filekeystore.go?s=414:484#L11">NewFileKeyStore</a>
+				<a class="permalink" href="index.html#NewFileKeyStore">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewFileKeyStore(cryptoConfigMSPPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#KVStore">KVStore</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewFileKeyStore ...
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UpdateMissingOptsWithDefaultConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/opts.go?s=2574:2680#L73">UpdateMissingOptsWithDefaultConfig</a>
+				<a class="permalink" href="index.html#UpdateMissingOptsWithDefaultConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UpdateMissingOptsWithDefaultConfig(c *<a href="index.html#IdentityConfigOptions">IdentityConfigOptions</a>, d <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a>) <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityConfig">IdentityConfig</a></pre>
+			<p>
+UpdateMissingOptsWithDefaultConfig will verify if any functions of the IdentityConfig were not updated with fabsdk&#39;s
+WithConfigIdentity(opts...) call, then use default IdentityConfig interface for these functions instead
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CAClientImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=584:859#L14">CAClientImpl</a>
+				<a class="permalink" href="index.html#CAClientImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAClientImpl implements api/msp/CAClient
+</p>
+
+			<pre>type CAClientImpl struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCAClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=1294:1396#L41">NewCAClient</a>
+					<a class="permalink" href="index.html#NewCAClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCAClient(orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ctx <a href="../common/providers/context/index.html">contextApi</a>.<a href="../common/providers/context/index.html#Client">Client</a>, opts ...<a href="index.html#CAClientOption">CAClientOption</a>) (*<a href="index.html#CAClientImpl">CAClientImpl</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCAClient creates a new CA CAClient instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CAClientImpl.AddAffiliation">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=12247:12351#L410">AddAffiliation</a>
+					<a class="permalink" href="index.html#CAClientImpl.AddAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) AddAffiliation(request *<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AddAffiliation adds a new affiliation to the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.CreateIdentity">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=4532:4630#L151">CreateIdentity</a>
+					<a class="permalink" href="index.html#CAClientImpl.CreateIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) CreateIdentity(request *<a href="api/index.html">api</a>.<a href="api/index.html#IdentityRequest">IdentityRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateIdentity create a new identity with the Fabric CA server. An enrollment secret is returned which can then be used,
+along with the enrollment ID, to enroll a new identity.
+</p>
+<pre>Parameters:
+request holds info about identity
+
+Returns:
+Return identity info including secret
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.Enroll">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=3531:3598#L116">Enroll</a>
+					<a class="permalink" href="index.html#CAClientImpl.Enroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) Enroll(request *<a href="api/index.html">api</a>.<a href="api/index.html#EnrollmentRequest">EnrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Enroll a registered user in order to receive a signed X509 certificate.
+A new key pair is generated for the user. The private key and the
+enrollment certificate issued by the CA are stored in SDK stores.
+They can be retrieved by calling IdentityManager.GetSigningIdentity().
+</p>
+<p>
+enrollmentID The registered ID to use for enrollment
+enrollmentSecret The secret associated with the enrollment ID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.GetAffiliation">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=11114:11213#L377">GetAffiliation</a>
+					<a class="permalink" href="index.html#CAClientImpl.GetAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) GetAffiliation(affiliation, caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAffiliation returns information about the requested affiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.GetAllAffiliations">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=11767:11857#L396">GetAllAffiliations</a>
+					<a class="permalink" href="index.html#CAClientImpl.GetAllAffiliations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) GetAllAffiliations(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllAffiliations returns all affiliations that the caller is authorized to see
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.GetAllIdentities">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=7685:7772#L262">GetAllIdentities</a>
+					<a class="permalink" href="index.html#CAClientImpl.GetAllIdentities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) GetAllIdentities(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="api/index.html">api</a>.<a href="api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllIdentities returns all identities that the caller is authorized to see
+</p>
+<pre>Returns:
+Response containing identities
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.GetCAInfo">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=10829:10895#L368">GetCAInfo</a>
+					<a class="permalink" href="index.html#CAClientImpl.GetCAInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) GetCAInfo() (*<a href="api/index.html">api</a>.<a href="api/index.html#GetCAInfoResponse">GetCAInfoResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCAInfo returns generic CA information
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.GetIdentity">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=7022:7106#L239">GetIdentity</a>
+					<a class="permalink" href="index.html#CAClientImpl.GetIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) GetIdentity(id, caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetIdentity retrieves identity information.
+</p>
+<pre>Parameters:
+id is required identity id
+
+Returns:
+Returns identity information
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.ModifyAffiliation">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=12949:13062#L433">ModifyAffiliation</a>
+					<a class="permalink" href="index.html#CAClientImpl.ModifyAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) ModifyAffiliation(request *<a href="api/index.html">api</a>.<a href="api/index.html#ModifyAffiliationRequest">ModifyAffiliationRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyAffiliation renames an existing affiliation on the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.ModifyIdentity">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=5382:5480#L180">ModifyIdentity</a>
+					<a class="permalink" href="index.html#CAClientImpl.ModifyIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) ModifyIdentity(request *<a href="api/index.html">api</a>.<a href="api/index.html#IdentityRequest">IdentityRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyIdentity modifies identity with the Fabric CA server.
+</p>
+<pre>Parameters:
+request holds info about identity
+
+Returns:
+Return modified identity info
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.Reenroll">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=8185:8256#L277">Reenroll</a>
+					<a class="permalink" href="index.html#CAClientImpl.Reenroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) Reenroll(request *<a href="api/index.html">api</a>.<a href="api/index.html#ReenrollmentRequest">ReenrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Reenroll an enrolled user in order to obtain a new signed X509 certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.Register">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=9169:9250#L312">Register</a>
+					<a class="permalink" href="index.html#CAClientImpl.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) Register(request *<a href="api/index.html">api</a>.<a href="api/index.html#RegistrationRequest">RegistrationRequest</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Register a User with the Fabric CA
+request: Registration Request
+Returns Enrolment Secret
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.RemoveAffiliation">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=13715:13822#L456">RemoveAffiliation</a>
+					<a class="permalink" href="index.html#CAClientImpl.RemoveAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) RemoveAffiliation(request *<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveAffiliation removes an existing affiliation from the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.RemoveIdentity">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=6244:6348#L209">RemoveIdentity</a>
+					<a class="permalink" href="index.html#CAClientImpl.RemoveIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) RemoveIdentity(request *<a href="api/index.html">api</a>.<a href="api/index.html#RemoveIdentityRequest">RemoveIdentityRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveIdentity removes identity from the Fabric CA server.
+</p>
+<pre>Parameters:
+request holds info about identity to be removed
+
+Returns:
+Return removed identity info
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="CAClientImpl.Revoke">func (*CAClientImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=10079:10173#L343">Revoke</a>
+					<a class="permalink" href="index.html#CAClientImpl.Revoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CAClientImpl">CAClientImpl</a>) Revoke(request *<a href="api/index.html">api</a>.<a href="api/index.html#RevocationRequest">RevocationRequest</a>) (*<a href="api/index.html">api</a>.<a href="api/index.html#RevocationResponse">RevocationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Revoke a User with the Fabric CA
+registrar: The User that is initiating the revocation
+request: Revocation Request
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CAClientOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=928:975#L26">CAClientOption</a>
+				<a class="permalink" href="index.html#CAClientOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAClientOption describes a functional parameter for NewCAClient
+</p>
+
+			<pre>type CAClientOption func(*caClientOption) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithCAInstance">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/caclient.go?s=1113:1162#L33">WithCAInstance</a>
+					<a class="permalink" href="index.html#WithCAInstance">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCAInstance(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#CAClientOption">CAClientOption</a></pre>
+				<p>
+WithCAInstance allows for specifying optional CA name (within the CA server instance)
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CAConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=2453:2626#L80">CAConfig</a>
+				<a class="permalink" href="index.html#CAConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAConfig defines a CA configuration in identity config
+</p>
+
+			<pre>type CAConfig struct {
+<span id="CAConfig.URL"></span>    URL         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CAConfig.GRPCOptions"></span>    GRPCOptions map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}
+<span id="CAConfig.TLSCACerts"></span>    TLSCACerts  <a href="../core/config/endpoint/index.html">endpoint</a>.<a href="../core/config/endpoint/index.html#MutualTLSConfig">MutualTLSConfig</a>
+<span id="CAConfig.Registrar"></span>    Registrar   <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#EnrollCredentials">EnrollCredentials</a>
+<span id="CAConfig.CAName"></span>    CAName      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CertFileUserStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=501:554#L9">CertFileUserStore</a>
+				<a class="permalink" href="index.html#CertFileUserStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CertFileUserStore stores each user in a separate file.
+Only user&#39;s enrollment cert is stored, in pem format.
+File naming is &lt;user&gt;@&lt;org&gt;-cert.pem
+</p>
+
+			<pre>type CertFileUserStore struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCertFileUserStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=944:1010#L25">NewCertFileUserStore</a>
+					<a class="permalink" href="index.html#NewCertFileUserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCertFileUserStore(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#CertFileUserStore">CertFileUserStore</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCertFileUserStore creates a new instance of CertFileUserStore
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewCertFileUserStore1">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=744:818#L18">NewCertFileUserStore1</a>
+					<a class="permalink" href="index.html#NewCertFileUserStore1">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCertFileUserStore1(store <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#KVStore">KVStore</a>) (*<a href="index.html#CertFileUserStore">CertFileUserStore</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCertFileUserStore1 creates a new instance of CertFileUserStore
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CertFileUserStore.Delete">func (*CertFileUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=2155:2223#L66">Delete</a>
+					<a class="permalink" href="index.html#CertFileUserStore.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CertFileUserStore">CertFileUserStore</a>) Delete(key <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Delete deletes a User from store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CertFileUserStore.Load">func (*CertFileUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=1351:1434#L39">Load</a>
+					<a class="permalink" href="index.html#CertFileUserStore.Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CertFileUserStore">CertFileUserStore</a>) Load(key <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a>) (*<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserData">UserData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Load returns the User stored in the store for a key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CertFileUserStore.Store">func (*CertFileUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/certfileuserstore.go?s=1908:1967#L60">Store</a>
+					<a class="permalink" href="index.html#CertFileUserStore.Store">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#CertFileUserStore">CertFileUserStore</a>) Store(user *<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserData">UserData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Store stores a User into store
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClientConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=2046:2236#L65">ClientConfig</a>
+				<a class="permalink" href="index.html#ClientConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientConfig defines client configuration in identity config
+</p>
+
+			<pre>type ClientConfig struct {
+<span id="ClientConfig.Organization"></span>    Organization    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ClientConfig.Logging"></span>    Logging         <a href="../core/logging/api/index.html">logApi</a>.<a href="../core/logging/api/index.html#LoggingType">LoggingType</a>
+<span id="ClientConfig.CryptoConfig"></span>    CryptoConfig    <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#CCType">CCType</a>
+<span id="ClientConfig.TLSCerts"></span>    TLSCerts        <a href="index.html#ClientTLSConfig">ClientTLSConfig</a>
+<span id="ClientConfig.CredentialStore"></span>    CredentialStore <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#CredentialStoreType">CredentialStoreType</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClientTLSConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=2308:2393#L74">ClientTLSConfig</a>
+				<a class="permalink" href="index.html#ClientTLSConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientTLSConfig defines client TLS configuration in identity config
+</p>
+
+			<pre>type ClientTLSConfig struct {
+    <span class="comment">//Client TLS information</span>
+<span id="ClientTLSConfig.Client"></span>    Client <a href="../core/config/endpoint/index.html">endpoint</a>.<a href="../core/config/endpoint/index.html#TLSKeyPair">TLSKeyPair</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=1248:1497#L37">IdentityConfig</a>
+				<a class="permalink" href="index.html#IdentityConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityConfig represents the identity configuration for the client
+</p>
+
+			<pre>type IdentityConfig struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IdentityConfig.CAClientCert">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=3576:3643#L117">CAClientCert</a>
+					<a class="permalink" href="index.html#IdentityConfig.CAClientCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CAClientCert(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAClientCert read configuration for the fabric CA client cert bytes for given org
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.CAClientKey">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=3915:3981#L127">CAClientKey</a>
+					<a class="permalink" href="index.html#IdentityConfig.CAClientKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CAClientKey(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAClientKey read configuration for the fabric CA client key bytes for given org
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.CAConfig">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=3351:3421#L111">CAConfig</a>
+					<a class="permalink" href="index.html#IdentityConfig.CAConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CAConfig(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#CAConfig">CAConfig</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAConfig returns the CA configuration.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.CAKeyStorePath">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=4718:4766#L150">CAKeyStorePath</a>
+					<a class="permalink" href="index.html#IdentityConfig.CAKeyStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CAKeyStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CAKeyStorePath returns the same path as KeyStorePath() without the
+&#39;keystore&#39; directory added. This is done because the fabric-ca-client
+adds this to the path
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.CAServerCerts">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=4289:4359#L138">CAServerCerts</a>
+					<a class="permalink" href="index.html#IdentityConfig.CAServerCerts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CAServerCerts(caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+CAServerCerts Read configuration option for the server certificates
+will send a list of cert bytes for given org
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.Client">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=3235:3286#L106">Client</a>
+					<a class="permalink" href="index.html#IdentityConfig.Client">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) Client() *<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#ClientConfig">ClientConfig</a></pre>
+				<p>
+Client returns the Client config
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityConfig.CredentialStorePath">func (*IdentityConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=4848:4901#L155">CredentialStorePath</a>
+					<a class="permalink" href="index.html#IdentityConfig.CredentialStorePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#IdentityConfig">IdentityConfig</a>) CredentialStorePath() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CredentialStorePath returns the user store path
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IdentityConfigOptions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/opts.go?s=408:542#L6">IdentityConfigOptions</a>
+				<a class="permalink" href="index.html#IdentityConfigOptions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityConfigOptions represents IdentityConfig interface with overridable interface functions
+if a function is not overridden, the default IdentityConfig implementation will be used.
+</p>
+
+			<pre>type IdentityConfigOptions struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identitymgr.go?s=429:713#L11">IdentityManager</a>
+				<a class="permalink" href="index.html#IdentityManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityManager implements fab/IdentityManager
+</p>
+
+			<pre>type IdentityManager struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewIdentityManager">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identitymgr.go?s=779:934#L23">NewIdentityManager</a>
+					<a class="permalink" href="index.html#NewIdentityManager">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewIdentityManager(orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, userStore <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserStore">UserStore</a>, cryptoSuite <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>, endpointConfig <a href="../common/providers/fab/index.html">fab</a>.<a href="../common/providers/fab/index.html#EndpointConfig">EndpointConfig</a>) (*<a href="index.html#IdentityManager">IdentityManager</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewIdentityManager creates a new instance of IdentityManager
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="IdentityManager.CreateSigningIdentity">func (*IdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/getsigid.go?s=1994:2107#L60">CreateSigningIdentity</a>
+					<a class="permalink" href="index.html#IdentityManager.CreateSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#IdentityManager">IdentityManager</a>) CreateSigningIdentity(opts ...<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#SigningIdentityOption">SigningIdentityOption</a>) (<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateSigningIdentity creates a signing identity with the given options
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityManager.GetSigningIdentity">func (*IdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/getsigid.go?s=1741:1827#L51">GetSigningIdentity</a>
+					<a class="permalink" href="index.html#IdentityManager.GetSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#IdentityManager">IdentityManager</a>) GetSigningIdentity(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSigningIdentity returns a signing identity for the given id
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityManager.GetUser">func (*IdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/getsigid.go?s=3143:3210#L96">GetUser</a>
+					<a class="permalink" href="index.html#IdentityManager.GetUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#IdentityManager">IdentityManager</a>) GetUser(username <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetUser returns a user for the given user name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IdentityManager.NewUser">func (*IdentityManager) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/getsigid.go?s=1164:1238#L30">NewUser</a>
+					<a class="permalink" href="index.html#IdentityManager.NewUser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mgr *<a href="index.html#IdentityManager">IdentityManager</a>) NewUser(userData *<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserData">UserData</a>) (*<a href="index.html#User">User</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewUser creates a User instance
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MatchConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/identityconfig.go?s=2783:3197#L90">MatchConfig</a>
+				<a class="permalink" href="index.html#MatchConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MatchConfig contains match pattern and substitution pattern
+for pattern matching of network configured hostnames or channel names with static config
+</p>
+
+			<pre>type MatchConfig struct {
+<span id="MatchConfig.Pattern"></span>    Pattern <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// these are used for hostname mapping</span>
+<span id="MatchConfig.URLSubstitutionExp"></span>    URLSubstitutionExp                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MatchConfig.SSLTargetOverrideURLSubstitutionExp"></span>    SSLTargetOverrideURLSubstitutionExp <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MatchConfig.MappedHost"></span>    MappedHost                          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// this is used for Name mapping instead of hostname mappings</span>
+<span id="MatchConfig.MappedName"></span>    MappedName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//IgnoreEndpoint option to exclude given entity from any kind of search or from entity list</span>
+<span id="MatchConfig.IgnoreEndpoint"></span>    IgnoreEndpoint <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MemoryKeyStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go?s=303:381#L8">MemoryKeyStore</a>
+				<a class="permalink" href="index.html#MemoryKeyStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MemoryKeyStore is in-memory implementation of BCCSP key store
+</p>
+
+			<pre>type MemoryKeyStore struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMemoryKeyStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go?s=442:497#L14">NewMemoryKeyStore</a>
+					<a class="permalink" href="index.html#NewMemoryKeyStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMemoryKeyStore(password []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#MemoryKeyStore">MemoryKeyStore</a></pre>
+				<p>
+NewMemoryKeyStore creates a new MemoryKeyStore instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MemoryKeyStore.GetKey">func (*MemoryKeyStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go?s=736:798#L25">GetKey</a>
+					<a class="permalink" href="index.html#MemoryKeyStore.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MemoryKeyStore">MemoryKeyStore</a>) GetKey(ski []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../internal/github.com/hyperledger/fabric/bccsp/index.html#Key">Key</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetKey returns a key for the provided SKI
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryKeyStore.ReadOnly">func (*MemoryKeyStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go?s=631:671#L20">ReadOnly</a>
+					<a class="permalink" href="index.html#MemoryKeyStore.ReadOnly">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MemoryKeyStore">MemoryKeyStore</a>) ReadOnly() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ReadOnly returns always false
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryKeyStore.StoreKey">func (*MemoryKeyStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_key_store.go?s=956:1010#L34">StoreKey</a>
+					<a class="permalink" href="index.html#MemoryKeyStore.StoreKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MemoryKeyStore">MemoryKeyStore</a>) StoreKey(key <a href="../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../internal/github.com/hyperledger/fabric/bccsp/index.html#Key">Key</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+StoreKey stores a key
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MemoryUserStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_user_store.go?s=253:309#L4">MemoryUserStore</a>
+				<a class="permalink" href="index.html#MemoryUserStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MemoryUserStore is in-memory implementation of UserStore
+</p>
+
+			<pre>type MemoryUserStore struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMemoryUserStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_user_store.go?s=372:414#L9">NewMemoryUserStore</a>
+					<a class="permalink" href="index.html#NewMemoryUserStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMemoryUserStore() *<a href="index.html#MemoryUserStore">MemoryUserStore</a></pre>
+				<p>
+NewMemoryUserStore creates a new MemoryUserStore instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MemoryUserStore.Load">func (*MemoryUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_user_store.go?s=696:776#L21">Load</a>
+					<a class="permalink" href="index.html#MemoryUserStore.Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MemoryUserStore">MemoryUserStore</a>) Load(id <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a>) (*<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserData">UserData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Load loads a user from store
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemoryUserStore.Store">func (*MemoryUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/memory_user_store.go?s=527:584#L15">Store</a>
+					<a class="permalink" href="index.html#MemoryUserStore.Store">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MemoryUserStore">MemoryUserStore</a>) Store(user *<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#UserData">UserData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Store stores a user into store
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="User">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=466:608#L9">User</a>
+				<a class="permalink" href="index.html#User">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+User is a representation of a Fabric user
+</p>
+
+			<pre>type User struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="User.EnrollmentCertificate">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=1385:1430#L40">EnrollmentCertificate</a>
+					<a class="permalink" href="index.html#User.EnrollmentCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) EnrollmentCertificate() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+EnrollmentCertificate Returns the underlying ECert representing this user’s identity.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.Identifier">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=648:699#L17">Identifier</a>
+					<a class="permalink" href="index.html#User.Identifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) Identifier() *<a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a></pre>
+				<p>
+Identifier returns user identifier
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.PrivateKey">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=1541:1577#L45">PrivateKey</a>
+					<a class="permalink" href="index.html#User.PrivateKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) PrivateKey() <a href="../common/providers/core/index.html">core</a>.<a href="../common/providers/core/index.html#Key">Key</a></pre>
+				<p>
+PrivateKey returns the crypto suite representation of the private key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.PublicVersion">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=1663:1706#L50">PublicVersion</a>
+					<a class="permalink" href="index.html#User.PublicVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) PublicVersion() <a href="../common/providers/msp/index.html">msp</a>.<a href="../common/providers/msp/index.html#Identity">Identity</a></pre>
+				<p>
+PublicVersion returns the public parts of this identity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.Serialize">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=974:1016#L27">Serialize</a>
+					<a class="permalink" href="index.html#User.Serialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Serialize converts an identity to bytes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.Sign">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=1742:1789#L55">Sign</a>
+					<a class="permalink" href="index.html#User.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign the message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.Verify">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/user.go?s=836:887#L22">Verify</a>
+					<a class="permalink" href="index.html#User.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) Verify(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Verify a signature over some message using this identity as reference
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="api/index.html">api</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="test/index.html">test</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="test/mockmsp/index.html">mockmsp</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="test/mockmspapi/index.html">mockmspapi</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package mockmspapi is a generated GoMock package.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>cc - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package cc
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/cclifecycle"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#DeployedChaincodes">func DeployedChaincodes(q Query, filter ChaincodePredicate, loadCollections bool, chaincodes ...string) (chaincode.MetadataSet, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ChaincodePredicate">type ChaincodePredicate</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Enumerate">type Enumerate</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Enumerate.Enumerate">func (listCCs Enumerate) Enumerate() ([]chaincode.InstalledChaincode, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Enumerator">type Enumerator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HandleMetadataUpdate">type HandleMetadataUpdate</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandleMetadataUpdate.LifeCycleChangeListener">func (mdUpdate HandleMetadataUpdate) LifeCycleChangeListener(channel string, chaincodes chaincode.MetadataSet)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LifeCycleChangeListener">type LifeCycleChangeListener</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Lifecycle">type Lifecycle</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLifeCycle">func NewLifeCycle(installedChaincodes Enumerator) (*Lifecycle, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Lifecycle.AddListener">func (lc *Lifecycle) AddListener(listener LifeCycleChangeListener)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Lifecycle.Metadata">func (lc *Lifecycle) Metadata(channel string, cc string, collections bool) *chaincode.Metadata</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Lifecycle.NewChannelSubscription">func (lc *Lifecycle) NewChannelSubscription(channel string, queryCreator QueryCreator) (*Subscription, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Query">type Query</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryCreator">type QueryCreator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryCreatorFunc">type QueryCreatorFunc</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryCreatorFunc.NewQuery">func (qc QueryCreatorFunc) NewQuery() (Query, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Subscription">type Subscription</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Subscription.ChaincodeDeployDone">func (sub *Subscription) ChaincodeDeployDone(succeeded bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Subscription.HandleChaincodeDeploy">func (sub *Subscription) HandleChaincodeDeploy(chaincodeDefinition *cceventmgmt.ChaincodeDefinition, dbArtifactsTar []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go">lifecycle.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/subscription.go">subscription.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// Logger is the logging instance for this package.</span>
+    <span class="comment">// It&#39;s exported because the tests override its backend</span>
+    <span id="Logger">Logger</span> = <a href="../../common/flogging/index.html">flogging</a>.<a href="../../common/flogging/index.html#MustGetLogger">MustGetLogger</a>(&#34;discovery.lifecycle&#34;)
+)</pre>
+			
+		
+		
+			
+			
+			<h2 id="DeployedChaincodes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/util.go?s=692:826#L18">DeployedChaincodes</a>
+				<a class="permalink" href="index.html#DeployedChaincodes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeployedChaincodes(q <a href="index.html#Query">Query</a>, filter <a href="index.html#ChaincodePredicate">ChaincodePredicate</a>, loadCollections <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, chaincodes ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#MetadataSet">MetadataSet</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+DeployedChaincodes retrieves the metadata of the given deployed chaincodes
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ChaincodePredicate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/util.go?s=556:612#L15">ChaincodePredicate</a>
+				<a class="permalink" href="index.html#ChaincodePredicate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodePredicate accepts or rejects chaincode based on its metadata
+</p>
+
+			<pre>type ChaincodePredicate func(cc <a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#Metadata">Metadata</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+				
+				<pre>var (
+    <span class="comment">// AcceptAll returns a predicate that accepts all Metadata</span>
+    <span id="AcceptAll">AcceptAll</span> <a href="index.html#ChaincodePredicate">ChaincodePredicate</a> = func(cc <a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#Metadata">Metadata</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> {
+        return <a href="http://localhost:6060/pkg/builtin/#true">true</a>
+    }
+)</pre>
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Enumerate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=1817:1878#L48">Enumerate</a>
+				<a class="permalink" href="index.html#Enumerate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Enumerate enumerates installed chaincodes
+</p>
+
+			<pre>type Enumerate func() ([]<a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Enumerate.Enumerate">func (Enumerate) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=1915:1991#L51">Enumerate</a>
+					<a class="permalink" href="index.html#Enumerate.Enumerate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (listCCs <a href="index.html#Enumerate">Enumerate</a>) Enumerate() ([]<a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Enumerate enumerates chaincodes
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Enumerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=1641:1770#L42">Enumerator</a>
+				<a class="permalink" href="index.html#Enumerator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Enumerator enumerates chaincodes
+</p>
+
+			<pre>type Enumerator interface {
+    <span class="comment">// Enumerate returns the installed chaincodes</span>
+    Enumerate() ([]<a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HandleMetadataUpdate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=1070:1150#L29">HandleMetadataUpdate</a>
+				<a class="permalink" href="index.html#HandleMetadataUpdate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HandleMetadataUpdate is triggered upon a change in the chaincode lifecycle change
+</p>
+
+			<pre>type HandleMetadataUpdate func(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodes <a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#MetadataSet">MetadataSet</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HandleMetadataUpdate.LifeCycleChangeListener">func (HandleMetadataUpdate) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=1378:1488#L35">LifeCycleChangeListener</a>
+					<a class="permalink" href="index.html#HandleMetadataUpdate.LifeCycleChangeListener">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mdUpdate <a href="index.html#HandleMetadataUpdate">HandleMetadataUpdate</a>) LifeCycleChangeListener(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodes <a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#MetadataSet">MetadataSet</a>)</pre>
+				<p>
+LifeCycleChangeListener runs whenever there is a change to the metadata
+// of a chaincode in the context of a specific channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LifeCycleChangeListener">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=866:983#L24">LifeCycleChangeListener</a>
+				<a class="permalink" href="index.html#LifeCycleChangeListener">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LifeCycleChangeListener runs whenever there is a change to the metadata
+of a chaincode in the context of a specific channel
+</p>
+
+			<pre>type LifeCycleChangeListener interface {
+    LifeCycleChangeListener(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, chaincodes <a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#MetadataSet">MetadataSet</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Lifecycle">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=480:734#L14">Lifecycle</a>
+				<a class="permalink" href="index.html#Lifecycle">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Lifecycle manages information regarding chaincode lifecycle
+</p>
+
+			<pre>type Lifecycle struct {
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#RWMutex">RWMutex</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLifeCycle">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=2871:2940#L83">NewLifeCycle</a>
+					<a class="permalink" href="index.html#NewLifeCycle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLifeCycle(installedChaincodes <a href="index.html#Enumerator">Enumerator</a>) (*<a href="index.html#Lifecycle">Lifecycle</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewLifeCycle creates a new Lifecycle instance
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Lifecycle.AddListener">func (*Lifecycle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=6523:6589#L198">AddListener</a>
+					<a class="permalink" href="index.html#Lifecycle.AddListener">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Lifecycle">Lifecycle</a>) AddListener(listener <a href="index.html#LifeCycleChangeListener">LifeCycleChangeListener</a>)</pre>
+				<p>
+AddListener registers the given listener to be triggered upon a lifecycle change
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Lifecycle.Metadata">func (*Lifecycle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=3431:3525#L100">Metadata</a>
+					<a class="permalink" href="index.html#Lifecycle.Metadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Lifecycle">Lifecycle</a>) Metadata(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cc <a href="http://localhost:6060/pkg/builtin/#string">string</a>, collections <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="../../common/chaincode/index.html">chaincode</a>.<a href="../../common/chaincode/index.html#Metadata">Metadata</a></pre>
+				<p>
+Metadata returns the metadata of the chaincode on the given channel,
+or nil if not found or an error occurred at retrieving it
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Lifecycle.NewChannelSubscription">func (*Lifecycle) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=5964:6073#L182">NewChannelSubscription</a>
+					<a class="permalink" href="index.html#Lifecycle.NewChannelSubscription">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#Lifecycle">Lifecycle</a>) NewChannelSubscription(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, queryCreator <a href="index.html#QueryCreator">QueryCreator</a>) (*<a href="index.html#Subscription">Subscription</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewChannelSubscription subscribes to a channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Query">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=2117:2383#L58">Query</a>
+				<a class="permalink" href="index.html#Query">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Query queries the state
+</p>
+
+			<pre>type Query interface {
+    <span class="comment">// GetState gets the value for given namespace and key. For a chaincode, the namespace corresponds to the chaincodeId</span>
+    GetState(namespace <a href="http://localhost:6060/pkg/builtin/#string">string</a>, key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Done releases resources occupied by the QueryExecutor</span>
+    Done()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryCreator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=2499:2611#L69">QueryCreator</a>
+				<a class="permalink" href="index.html#QueryCreator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryCreator creates queries
+</p>
+
+			<pre>type QueryCreator interface {
+    <span class="comment">// NewQuery creates a new Query, or error on failure</span>
+    NewQuery() (<a href="index.html#Query">Query</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryCreatorFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=2653:2696#L75">QueryCreatorFunc</a>
+				<a class="permalink" href="index.html#QueryCreatorFunc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryCreatorFunc creates a new query
+</p>
+
+			<pre>type QueryCreatorFunc func() (<a href="index.html#Query">Query</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="QueryCreatorFunc.NewQuery">func (QueryCreatorFunc) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/lifecycle.go?s=2751:2803#L78">NewQuery</a>
+					<a class="permalink" href="index.html#QueryCreatorFunc.NewQuery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (qc <a href="index.html#QueryCreatorFunc">QueryCreatorFunc</a>) NewQuery() (<a href="index.html#Query">Query</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewQuery creates a new Query, or error on failure
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Subscription">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/subscription.go?s=323:493#L9">Subscription</a>
+				<a class="permalink" href="index.html#Subscription">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Subscription channels information flow
+about a specific channel into the Lifecycle
+</p>
+
+			<pre>type Subscription struct {
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#Mutex">Mutex</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Subscription.ChaincodeDeployDone">func (*Subscription) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/subscription.go?s=2053:2113#L52">ChaincodeDeployDone</a>
+					<a class="permalink" href="index.html#Subscription.ChaincodeDeployDone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sub *<a href="index.html#Subscription">Subscription</a>) ChaincodeDeployDone(succeeded <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+ChaincodeDeployDone gets invoked when the chaincode deploy transaction or chaincode install
+(the context in which the above function was invoked)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Subscription.HandleChaincodeDeploy">func (*Subscription) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/cclifecycle/subscription.go?s=841:970#L21">HandleChaincodeDeploy</a>
+					<a class="permalink" href="index.html#Subscription.HandleChaincodeDeploy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sub *<a href="index.html#Subscription">Subscription</a>) HandleChaincodeDeploy(chaincodeDefinition *<a href="../ledger/cceventmgmt/index.html">cceventmgmt</a>.<a href="../ledger/cceventmgmt/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, dbArtifactsTar []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+HandleChaincodeDeploy is expected to be invoked when a chaincode is deployed via a deploy transaction and the chaicndoe was already
+installed on the peer. This also gets invoked when an already deployed chaincode is installed on the peer
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

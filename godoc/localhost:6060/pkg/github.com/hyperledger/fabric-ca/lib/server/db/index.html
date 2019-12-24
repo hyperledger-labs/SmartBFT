@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>db - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package db
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-ca/lib/server/db"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CurrentDBLevels">func CurrentDBLevels(db FabricCADB) (*util.Levels, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Migrate">func Migrate(migrator Migrator, currentLevels, srvLevels *util.Levels) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AffiliationRecord">type AffiliationRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CertRecord">type CertRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DB">type DB</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(db SqlxDB, caName string, metricsProvider metrics.Provider) *DB</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.BeginTx">func (db *DB) BeginTx() FabricCATx</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Close">func (db *DB) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.DriverName">func (db *DB) DriverName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Exec">func (db *DB) Exec(funcName, query string, args ...interface{}) (sql.Result, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Get">func (db *DB) Get(funcName string, dest interface{}, query string, args ...interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.IsInitialized">func (db *DB) IsInitialized() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.MustBegin">func (db *DB) MustBegin() *sqlx.Tx</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.NamedExec">func (db *DB) NamedExec(funcName, query string, args interface{}) (sql.Result, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.PingContext">func (db *DB) PingContext(ctx context.Context) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Queryx">func (db *DB) Queryx(funcName, query string, args ...interface{}) (*sqlx.Rows, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Rebind">func (db *DB) Rebind(query string) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.Select">func (db *DB) Select(funcName string, dest interface{}, query string, args ...interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.SetDBInitialized">func (db *DB) SetDBInitialized(b bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DB.SetMaxOpenConns">func (db *DB) SetMaxOpenConns(n int)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FabricCADB">type FabricCADB</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FabricCATx">type FabricCATx</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Metrics">type Metrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Migrator">type Migrator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SqlxDB">type SqlxDB</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SqlxTx">type SqlxTx</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TX">type TX</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Commit">func (tx *TX) Commit(funcName string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Exec">func (tx *TX) Exec(funcName, query string, args ...interface{}) (sql.Result, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Get">func (tx *TX) Get(funcName string, dest interface{}, query string, args ...interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Queryx">func (tx *TX) Queryx(funcName, query string, args ...interface{}) (*sqlx.Rows, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Rebind">func (tx *TX) Rebind(query string) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Rollback">func (tx *TX) Rollback(funcName string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TX.Select">func (tx *TX) Select(funcName string, dest interface{}, query string, args ...interface{}) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go">db.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/metrics.go">metrics.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/migrator.go">migrator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go">tx.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// APICounterOpts define the counter opts for database APIs</span>
+    <span id="APICounterOpts">APICounterOpts</span> = <a href="../../../../fabric/common/metrics/index.html">metrics</a>.<a href="../../../../fabric/common/metrics/index.html#CounterOpts">CounterOpts</a>{
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.Namespace">Namespace</a>:    &#34;db_api_request&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.Subsystem">Subsystem</a>:    &#34;&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.Name">Name</a>:         &#34;count&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.Help">Help</a>:         &#34;Number of requests made to a database API&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;ca_name&#34;, &#34;func_name&#34;, &#34;dbapi_name&#34;},
+        <a href="../../../../fabric/common/metrics/index.html#CounterOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{ca_name}.%{func_name}.%{dbapi_name}&#34;,
+    }
+
+    <span class="comment">// APIDurationOpts define the duration opts for database APIs</span>
+    <span id="APIDurationOpts">APIDurationOpts</span> = <a href="../../../../fabric/common/metrics/index.html">metrics</a>.<a href="../../../../fabric/common/metrics/index.html#HistogramOpts">HistogramOpts</a>{
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.Namespace">Namespace</a>:    &#34;db_api_request&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.Subsystem">Subsystem</a>:    &#34;&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.Name">Name</a>:         &#34;duration&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.Help">Help</a>:         &#34;Time taken in seconds for the request to a database API to be completed&#34;,
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;ca_name&#34;, &#34;func_name&#34;, &#34;dbapi_name&#34;},
+        <a href="../../../../fabric/common/metrics/index.html#HistogramOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{ca_name}.%{func_name}.%{dbapi_name}&#34;,
+    }
+)</pre>
+			
+		
+		
+			
+			
+			<h2 id="CurrentDBLevels">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=5564:5621#L184">CurrentDBLevels</a>
+				<a class="permalink" href="index.html#CurrentDBLevels">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CurrentDBLevels(db <a href="index.html#FabricCADB">FabricCADB</a>) (*<a href="util/index.html">util</a>.<a href="util/index.html#Levels">Levels</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+CurrentDBLevels returns current levels from the database
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Migrate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/migrator.go?s=681:757#L20">Migrate</a>
+				<a class="permalink" href="index.html#Migrate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Migrate(migrator <a href="index.html#Migrator">Migrator</a>, currentLevels, srvLevels *<a href="util/index.html">util</a>.<a href="util/index.html#Levels">Levels</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+Migrate updates the database tables to use the latest schema and does
+data migration if needed
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AffiliationRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=2196:2338#L60">AffiliationRecord</a>
+				<a class="permalink" href="index.html#AffiliationRecord">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationRecord defines the properties of an affiliation
+</p>
+
+			<pre>type AffiliationRecord struct {
+<span id="AffiliationRecord.ID"></span>    ID     <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;id&#34;`
+<span id="AffiliationRecord.Name"></span>    Name   <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;name&#34;`
+<span id="AffiliationRecord.Prekey"></span>    Prekey <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;prekey&#34;`
+<span id="AffiliationRecord.Level"></span>    Level  <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;level&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CertRecord">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=2029:2132#L53">CertRecord</a>
+				<a class="permalink" href="index.html#CertRecord">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CertRecord extends CFSSL CertificateRecord by adding an enrollment ID to the record
+</p>
+
+			<pre>type CertRecord struct {
+<span id="CertRecord.ID"></span>    ID    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `db:&#34;id&#34;`
+<span id="CertRecord.Level"></span>    Level <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `db:&#34;level&#34;`
+    <a href="http://localhost:6060/pkg/github.com/cloudflare/cfssl/certdb/">certdb</a>.<a href="http://localhost:6060/pkg/github.com/cloudflare/cfssl/certdb/#CertificateRecord">CertificateRecord</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=2408:2548#L68">DB</a>
+				<a class="permalink" href="index.html#DB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DB is an adapter for sqlx.DB and implements FabricCADB interface
+</p>
+
+			<pre>type DB struct {
+<span id="DB.DB"></span>    DB <a href="index.html#SqlxDB">SqlxDB</a>
+    <span class="comment">// Indicates if database was successfully initialized</span>
+<span id="DB.IsDBInitialized"></span>    IsDBInitialized <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="DB.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="DB.Metrics"></span>    Metrics <a href="index.html#Metrics">Metrics</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=2583:2655#L79">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(db <a href="index.html#SqlxDB">SqlxDB</a>, caName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, metricsProvider <a href="../../../../fabric/common/metrics/index.html">metrics</a>.<a href="../../../../fabric/common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#DB">DB</a></pre>
+				<p>
+New creates an instance of DB
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="DB.BeginTx">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=3170:3204#L101">BeginTx</a>
+					<a class="permalink" href="index.html#DB.BeginTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) BeginTx() <a href="index.html#FabricCATx">FabricCATx</a></pre>
+				<p>
+BeginTx implements BeginTx method of FabricCADB interface
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Close">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4877:4904#L164">Close</a>
+					<a class="permalink" href="index.html#DB.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close closes db
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.DriverName">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4669:4702#L154">DriverName</a>
+					<a class="permalink" href="index.html#DB.DriverName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) DriverName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+DriverName returns database driver name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Exec">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=3562:3645#L117">Exec</a>
+					<a class="permalink" href="index.html#DB.Exec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Exec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Exec executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Get">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4055:4148#L133">Get</a>
+					<a class="permalink" href="index.html#DB.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Get(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Get executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.IsInitialized">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=2919:2953#L91">IsInitialized</a>
+					<a class="permalink" href="index.html#DB.IsInitialized">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) IsInitialized() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsInitialized returns true if db is intialized, else false
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.MustBegin">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4560:4594#L149">MustBegin</a>
+					<a class="permalink" href="index.html#DB.MustBegin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) MustBegin() *<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Tx">Tx</a></pre>
+				<p>
+MustBegin starts a transaction
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.NamedExec">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=3807:3892#L125">NamedExec</a>
+					<a class="permalink" href="index.html#DB.NamedExec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) NamedExec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NamedExec executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.PingContext">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=5089:5141#L174">PingContext</a>
+					<a class="permalink" href="index.html#DB.PingContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) PingContext(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PingContext pings the database
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Queryx">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4301:4386#L141">Queryx</a>
+					<a class="permalink" href="index.html#DB.Queryx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Queryx(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Queryx executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Rebind">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4783:4824#L159">Rebind</a>
+					<a class="permalink" href="index.html#DB.Rebind">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Rebind parses query to properly format query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.Select">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=3309:3405#L109">Select</a>
+					<a class="permalink" href="index.html#DB.Select">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) Select(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Select performs select sql statement
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.SetDBInitialized">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=3041:3079#L96">SetDBInitialized</a>
+					<a class="permalink" href="index.html#DB.SetDBInitialized">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) SetDBInitialized(b <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+SetDBInitialized sets the value for Isdbinitialized
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DB.SetMaxOpenConns">func (*DB) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=4987:5023#L169">SetMaxOpenConns</a>
+					<a class="permalink" href="index.html#DB.SetMaxOpenConns">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (db *<a href="index.html#DB">DB</a>) SetMaxOpenConns(n <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				<p>
+SetMaxOpenConns sets number of max open connections
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FabricCADB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=535:1261#L14">FabricCADB</a>
+				<a class="permalink" href="index.html#FabricCADB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricCADB is the interface that wrapper off SqlxDB
+</p>
+
+			<pre>type FabricCADB interface {
+    IsInitialized() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    SetDBInitialized(<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    <span class="comment">// BeginTx has same behavior as MustBegin except it returns FabricCATx</span>
+    <span class="comment">// instead of *sqlx.Tx</span>
+    BeginTx() <a href="index.html#FabricCATx">FabricCATx</a>
+    DriverName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    Select(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Exec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    NamedExec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, arg interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Get(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Queryx(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    MustBegin() *<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Tx">Tx</a>
+    Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    SetMaxOpenConns(n <a href="http://localhost:6060/pkg/builtin/#int">int</a>)
+    PingContext(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FabricCATx">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=361:792#L10">FabricCATx</a>
+				<a class="permalink" href="index.html#FabricCATx">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FabricCATx is the interface with functions implemented by sqlx.Tx
+object that are used by Fabric CA server
+</p>
+
+			<pre>type FabricCATx interface {
+    Select(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Exec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Queryx(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Get(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Commit(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Rollback(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/metrics.go?s=999:1236#L24">Metrics</a>
+				<a class="permalink" href="index.html#Metrics">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Metrics is the set of meters for the database
+</p>
+
+			<pre>type Metrics struct {
+<span id="Metrics.APICounter"></span>    <span class="comment">// APICounter keeps track of number of times a database API is called</span>
+    APICounter <a href="../../../../fabric/common/metrics/index.html">metrics</a>.<a href="../../../../fabric/common/metrics/index.html#Counter">Counter</a>
+<span id="Metrics.APIDuration"></span>    <span class="comment">// APIDuration keeps track of time taken for request to complete to a database API</span>
+    APIDuration <a href="../../../../fabric/common/metrics/index.html">metrics</a>.<a href="../../../../fabric/common/metrics/index.html#Histogram">Histogram</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Migrator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/migrator.go?s=333:578#L7">Migrator</a>
+				<a class="permalink" href="index.html#Migrator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Migrator is the interface that defines a migrator
+</p>
+
+			<pre>type Migrator interface {
+    MigrateUsersTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    MigrateCertificatesTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    MigrateAffiliationsTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    MigrateCredentialsTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    MigrateRAInfoTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    MigrateNoncesTable() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Rollback() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Commit() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SqlxDB">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/db.go?s=1447:1940#L38">SqlxDB</a>
+				<a class="permalink" href="index.html#SqlxDB">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SqlxDB is the interface with functions implemented by sqlx.DB
+object that are used by Fabric CA server
+</p>
+
+			<pre>type SqlxDB interface {
+    DriverName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Select(dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Exec(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    NamedExec(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, arg interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Get(dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Queryx(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    MustBegin() *<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Tx">Tx</a>
+    Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    SetMaxOpenConns(n <a href="http://localhost:6060/pkg/builtin/#int">int</a>)
+    PingContext(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SqlxTx">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=905:1248#L23">SqlxTx</a>
+				<a class="permalink" href="index.html#SqlxTx">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SqlxTx is the contract with sqlx
+</p>
+
+			<pre>type SqlxTx interface {
+    Queryx(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Get(dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Select(dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    Exec(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Commit() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Rollback() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TX">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=1374:1422#L38">TX</a>
+				<a class="permalink" href="index.html#TX">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TX is the database transaction
+</p>
+
+			<pre>type TX struct {
+<span id="TX.TX"></span>    TX     <a href="index.html#SqlxTx">SqlxTx</a>
+<span id="TX.Record"></span>    Record record
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TX.Commit">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=2592:2635#L81">Commit</a>
+					<a class="permalink" href="index.html#TX.Commit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Commit(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Commit commits the transaction
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Exec">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=1724:1807#L52">Exec</a>
+					<a class="permalink" href="index.html#TX.Exec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Exec(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (<a href="http://localhost:6060/pkg/database/sql/">sql</a>.<a href="http://localhost:6060/pkg/database/sql/#Result">Result</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Exec executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Get">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=1970:2063#L60">Get</a>
+					<a class="permalink" href="index.html#TX.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Get(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Get executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Queryx">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=2223:2308#L68">Queryx</a>
+					<a class="permalink" href="index.html#TX.Queryx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Queryx(funcName, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) (*<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/">sqlx</a>.<a href="http://localhost:6060/pkg/github.com/jmoiron/sqlx/#Rows">Rows</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Queryx executes query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Rebind">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=2483:2524#L76">Rebind</a>
+					<a class="permalink" href="index.html#TX.Rebind">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Rebind(query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Rebind rebinds the query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Rollback">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=2795:2840#L89">Rollback</a>
+					<a class="permalink" href="index.html#TX.Rollback">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Rollback(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Rollback roll backs the transaction
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TX.Select">func (*TX) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-ca/lib/server/db/tx.go?s=1464:1560#L44">Select</a>
+					<a class="permalink" href="index.html#TX.Select">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (tx *<a href="index.html#TX">TX</a>) Select(funcName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, dest interface{}, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Select performs select sql statement
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="factory/index.html">factory</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mysql/index.html">mysql</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="mysql/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="postgres/index.html">postgres</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="postgres/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="sqlite/index.html">sqlite</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="sqlite/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="util/index.html">util</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

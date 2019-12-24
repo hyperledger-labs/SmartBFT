@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>graph - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package graph
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/graph"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#CombinationsExceed">func CombinationsExceed(n, k, threshold int) bool</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Iterator">type Iterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Tree">type Tree</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Tree.BFS">func (t *Tree) BFS() Iterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Tree.Permute">func (t *Tree) Permute(combinationUpperBound int) []*Tree</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TreeVertex">type TreeVertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTreeVertex">func NewTreeVertex(id string, data interface{}, descendants ...*TreeVertex) *TreeVertex</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.AddDescendant">func (v *TreeVertex) AddDescendant(u *TreeVertex) *TreeVertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.Clone">func (v *TreeVertex) Clone() *TreeVertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.Exists">func (v *TreeVertex) Exists(id string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.Find">func (v *TreeVertex) Find(id string) *TreeVertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.IsLeaf">func (v *TreeVertex) IsLeaf() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TreeVertex.ToTree">func (v *TreeVertex) ToTree() *Tree</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Vertex">type Vertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewVertex">func NewVertex(id string, data interface{}) *Vertex</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Vertex.AddNeighbor">func (v *Vertex) AddNeighbor(u *Vertex)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Vertex.NeighborById">func (v *Vertex) NeighborById(id string) *Vertex</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Vertex.Neighbors">func (v *Vertex) Neighbors() []*Vertex</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/choose.go">choose.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go">graph.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/perm.go">perm.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go">tree.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CombinationsExceed">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/choose.go?s=537:586#L19">CombinationsExceed</a>
+				<a class="permalink" href="index.html#CombinationsExceed">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CombinationsExceed(n, k, threshold <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CombinationsExceed computes the number of combinations
+of choosing K elements from N elements, and returns
+whether the number of combinations exceeds a given threshold.
+If n &lt; k then it returns false.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Iterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=184:331#L1">Iterator</a>
+				<a class="permalink" href="index.html#Iterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Iterator defines an iterator that can be used to traverse vertices
+of a graph
+</p>
+
+			<pre>type Iterator interface {
+    <span class="comment">// Next returns the next element in the iteration order,</span>
+    <span class="comment">// or nil if there is no such an element</span>
+    Next() *<a href="index.html#TreeVertex">TreeVertex</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Tree">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=2770:2808#L90">Tree</a>
+				<a class="permalink" href="index.html#Tree">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Tree defines a Tree of vertices of type TreeVertex
+</p>
+
+			<pre>type Tree struct {
+<span id="Tree.Root"></span>    Root *<a href="index.html#TreeVertex">TreeVertex</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Tree.BFS">func (*Tree) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=3616:3645#L107">BFS</a>
+					<a class="permalink" href="index.html#Tree.BFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Tree">Tree</a>) BFS() <a href="index.html#Iterator">Iterator</a></pre>
+				<p>
+BFS returns an iterator that iterates the vertices
+in a Breadth-First-Search order
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Tree.Permute">func (*Tree) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=3396:3453#L101">Permute</a>
+					<a class="permalink" href="index.html#Tree.Permute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#Tree">Tree</a>) Permute(combinationUpperBound <a href="http://localhost:6060/pkg/builtin/#int">int</a>) []*<a href="index.html#Tree">Tree</a></pre>
+				<p>
+Permute returns Trees that their vertices and edges all exist in the original tree.
+The permutations are calculated according to the thresholds of all vertices.
+The combinationUpperBound is an upper bound of possible combinations of direct descendants
+of a vertex. If the vertex has a threshold and descendants that result a number of combinations
+that exceeds the given combinationUpperBound, the descendants are pruned until the number of
+combinations is lower than the combinationUpperBound.
+This is done in order to cap the memory usage of the computed result.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TreeVertex">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=374:803#L8">TreeVertex</a>
+				<a class="permalink" href="index.html#TreeVertex">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TreeVertex defines a vertex of a tree
+</p>
+
+			<pre>type TreeVertex struct {
+<span id="TreeVertex.Id"></span>    Id          <a href="http://localhost:6060/pkg/builtin/#string">string</a>        <span class="comment">// id identifies uniquely the TreeVertex in the Tree</span>
+<span id="TreeVertex.Data"></span>    Data        interface{}   <span class="comment">// data holds arbitrary data, to be used by the user of the package</span>
+<span id="TreeVertex.Descendants"></span>    Descendants []*<a href="index.html#TreeVertex">TreeVertex</a> <span class="comment">// descendants are the vertices that this TreeVertex is their parent in the tree</span>
+<span id="TreeVertex.Threshold"></span>    Threshold   <a href="http://localhost:6060/pkg/builtin/#int">int</a>           <span class="comment">// threshold symbols the count of sub-trees / leaves to pick when creating tree permutations</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTreeVertex">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=893:980#L16">NewTreeVertex</a>
+					<a class="permalink" href="index.html#NewTreeVertex">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTreeVertex(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>, data interface{}, descendants ...*<a href="index.html#TreeVertex">TreeVertex</a>) *<a href="index.html#TreeVertex">TreeVertex</a></pre>
+				<p>
+NewTreeVertex creates a new vertex with a given unique id and a given arbitrary data
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TreeVertex.AddDescendant">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=1329:1390#L31">AddDescendant</a>
+					<a class="permalink" href="index.html#TreeVertex.AddDescendant">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) AddDescendant(u *<a href="index.html#TreeVertex">TreeVertex</a>) *<a href="index.html#TreeVertex">TreeVertex</a></pre>
+				<p>
+AddDescendant creates a new vertex who&#39;s parent is the invoker vertex,
+with a given id and data. Returns the new vertex
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TreeVertex.Clone">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=2151:2191#L64">Clone</a>
+					<a class="permalink" href="index.html#TreeVertex.Clone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) Clone() *<a href="index.html#TreeVertex">TreeVertex</a></pre>
+				<p>
+Clone clones the tree who&#39;s root vertex is the current vertex.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TreeVertex.Exists">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=2010:2053#L59">Exists</a>
+					<a class="permalink" href="index.html#TreeVertex.Exists">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) Exists(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Exists searches for a vertex who&#39;s id is the given id,
+and returns whether such a vertex was found or not.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TreeVertex.Find">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=1713:1761#L45">Find</a>
+					<a class="permalink" href="index.html#TreeVertex.Find">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) Find(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#TreeVertex">TreeVertex</a></pre>
+				<p>
+Find searches for a vertex who&#39;s id is the given id.
+Returns the first vertex it finds with such an Id, or nil if not found
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TreeVertex.IsLeaf">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=1131:1165#L25">IsLeaf</a>
+					<a class="permalink" href="index.html#TreeVertex.IsLeaf">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) IsLeaf() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsLeaf returns whether the given vertex is a leaf
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TreeVertex.ToTree">func (*TreeVertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/tree.go?s=1513:1548#L37">ToTree</a>
+					<a class="permalink" href="index.html#TreeVertex.ToTree">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#TreeVertex">TreeVertex</a>) ToTree() *<a href="index.html#Tree">Tree</a></pre>
+				<p>
+ToTree creates a Tree who&#39;s root vertex is the current vertex
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Vertex">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go?s=138:231#L1">Vertex</a>
+				<a class="permalink" href="index.html#Vertex">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Vertex defines a vertex of a graph
+</p>
+
+			<pre>type Vertex struct {
+<span id="Vertex.Id"></span>    Id   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Vertex.Data"></span>    Data interface{}
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewVertex">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go?s=290:341#L7">NewVertex</a>
+					<a class="permalink" href="index.html#NewVertex">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewVertex(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>, data interface{}) *<a href="index.html#Vertex">Vertex</a></pre>
+				<p>
+NewVertex creates a new vertex with given id and data
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Vertex.AddNeighbor">func (*Vertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go?s=885:924#L32">AddNeighbor</a>
+					<a class="permalink" href="index.html#Vertex.AddNeighbor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Vertex">Vertex</a>) AddNeighbor(u *<a href="index.html#Vertex">Vertex</a>)</pre>
+				<p>
+AddNeighbor adds the given vertex as a neighbor
+of the vertex
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Vertex.NeighborById">func (*Vertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go?s=556:604#L17">NeighborById</a>
+					<a class="permalink" href="index.html#Vertex.NeighborById">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Vertex">Vertex</a>) NeighborById(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Vertex">Vertex</a></pre>
+				<p>
+NeighborById returns a neighbor vertex with the given id,
+or nil if no vertex with such an id is a neighbor
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Vertex.Neighbors">func (*Vertex) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/graph/graph.go?s=683:721#L22">Neighbors</a>
+					<a class="permalink" href="index.html#Vertex.Neighbors">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Vertex">Vertex</a>) Neighbors() []*<a href="index.html#Vertex">Vertex</a></pre>
+				<p>
+Neighbors returns the neighbors of the vertex
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

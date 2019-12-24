@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ledger - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ledger
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package ledger enables ledger queries on specified channel on a Fabric network.
+An application that requires ledger queries from multiple channels should create a separate
+instance of the ledger client for each channel. Ledger client supports the following queries:
+QueryInfo, QueryBlock, QueryBlockByHash,  QueryBlockByTxID, QueryTransaction and QueryConfig.
+</p>
+<pre>Basic Flow:
+1) Prepare channel context
+2) Create ledger client
+3) Query ledger
+</pre>
+
+				<div id="example_" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockChannelProvider(&#34;mychannel&#34;)
+
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+block, err := c.QueryBlock(1)
+if err != nil {
+    fmt.Printf(&#34;failed to query block: %s\n&#34;, err)
+}
+
+if block != nil {
+    fmt.Println(&#34;Retrieved block #1&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved block #1
+</pre>
+			
+		
+	</div>
+</div>
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(channelProvider context.ChannelProvider, opts ...ClientOption) (*Client, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryBlock">func (c *Client) QueryBlock(blockNumber uint64, options ...RequestOption) (*common.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryBlockByHash">func (c *Client) QueryBlockByHash(blockHash []byte, options ...RequestOption) (*common.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryBlockByTxID">func (c *Client) QueryBlockByTxID(txID fab.TransactionID, options ...RequestOption) (*common.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryConfig">func (c *Client) QueryConfig(options ...RequestOption) (fab.ChannelCfg, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryConfigBlock">func (c *Client) QueryConfigBlock(options ...RequestOption) (*common.Block, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryInfo">func (c *Client) QueryInfo(options ...RequestOption) (*fab.BlockchainInfoResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.QueryTransaction">func (c *Client) QueryTransaction(transactionID fab.TransactionID, options ...RequestOption) (*pb.ProcessedTransaction, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClientOption">type ClientOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithDefaultTargetFilter">func WithDefaultTargetFilter(filter fab.TargetFilter) ClientOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestOption">type RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithMaxTargets">func WithMaxTargets(maxTargets int) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithMinTargets">func WithMinTargets(minTargets int) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithParentContext">func WithParentContext(parentContext reqContext.Context) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargetEndpoints">func WithTargetEndpoints(keys ...string) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargetFilter">func WithTargetFilter(targetFilter fab.TargetFilter) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTargets">func WithTargets(targets ...fab.Peer) RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithTimeout">func WithTimeout(timeoutType fab.TimeoutType, timeout time.Duration) RequestOption</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_">Package</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryBlock">Client.QueryBlock</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryBlockByHash">Client.QueryBlockByHash</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryBlockByTxID">Client.QueryBlockByTxID</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryConfig">Client.QueryConfig</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryInfo">Client.QueryInfo</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_QueryTransaction">Client.QueryTransaction</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_New">New</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithDefaultTargetFilter">WithDefaultTargetFilter</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithParentContext">WithParentContext</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithTargetFilter">WithTargetFilter</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithTargets">WithTargets</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go">ledger.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go">opts.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=1532:1704#L32">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client enables ledger queries on a Fabric network.
+</p>
+
+			<pre>type Client struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=2253:2341#L53">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(channelProvider <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#ChannelProvider">ChannelProvider</a>, opts ...<a href="index.html#ClientOption">ClientOption</a>) (*<a href="index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New returns a ledger client instance. A ledger client instance provides a handler to query various info on specified channel.
+An application that requires interaction with multiple channels should create a separate
+instance of the ledger client for each channel. Ledger client supports specific queries only.
+</p>
+
+				<div id="example_New" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockChannelProvider(&#34;mychannel&#34;)
+
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(err)
+}
+
+if c != nil {
+    fmt.Println(&#34;ledger client created&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">ledger client created
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+				
+				<h3 id="Client.QueryBlock">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=6779:6875#L208">QueryBlock</a>
+					<a class="permalink" href="index.html#Client.QueryBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryBlock(blockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryBlock queries the ledger for Block by block number.
+</p>
+<pre>Parameters:
+blockNumber is required block number(ID)
+options hold optional request options
+
+Returns:
+block information
+</pre>
+
+				
+				<div id="example_Client_QueryBlock" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+block, err := c.QueryBlock(1)
+if err != nil {
+    fmt.Printf(&#34;failed to query block: %s\n&#34;, err)
+}
+
+if block != nil {
+    fmt.Println(&#34;Retrieved block #1&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved block #1
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryBlockByHash">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=5153:5253#L160">QueryBlockByHash</a>
+					<a class="permalink" href="index.html#Client.QueryBlockByHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryBlockByHash(blockHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryBlockByHash queries the ledger for block by block hash.
+</p>
+<pre>Parameters:
+blockHash is required block hash
+options hold optional request options
+
+Returns:
+block information
+</pre>
+
+				
+				<div id="example_Client_QueryBlockByHash" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+block, err := c.QueryBlockByHash([]byte(&#34;hash&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to query block by hash: %s\n&#34;, err)
+}
+
+if block != nil {
+    fmt.Println(&#34;Retrieved block by hash&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved block by hash
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryBlockByTxID">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=5965:6071#L184">QueryBlockByTxID</a>
+					<a class="permalink" href="index.html#Client.QueryBlockByTxID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryBlockByTxID(txID <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TransactionID">TransactionID</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryBlockByTxID queries for block which contains a transaction.
+</p>
+<pre>Parameters:
+txID is required transaction ID
+options hold optional request options
+
+Returns:
+block information
+</pre>
+
+				
+				<div id="example_Client_QueryBlockByTxID" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+block, err := c.QueryBlockByTxID(&#34;123&#34;)
+if err != nil {
+    fmt.Printf(&#34;failed to query block by transaction ID: %s\n&#34;, err)
+}
+
+if block != nil {
+    fmt.Println(&#34;Retrieved block by transaction ID&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved block by transaction ID
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryConfig">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=9679:9757#L306">QueryConfig</a>
+					<a class="permalink" href="index.html#Client.QueryConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryConfig(options ...<a href="index.html#RequestOption">RequestOption</a>) (<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#ChannelCfg">ChannelCfg</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryConfig queries for channel configuration.
+</p>
+<pre>Parameters:
+options hold optional request options
+
+Returns:
+channel configuration information
+</pre>
+
+				
+				<div id="example_Client_QueryConfig" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+cfg, err := c.QueryConfig(WithTargets(mockPeerWithConfigBlock()))
+if err != nil {
+    fmt.Printf(&#34;failed to query config: %s\n&#34;, err)
+}
+
+if cfg != nil {
+    fmt.Println(&#34;Retrieved channel configuration&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved channel configuration
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryConfigBlock">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=10329:10411#L324">QueryConfigBlock</a>
+					<a class="permalink" href="index.html#Client.QueryConfigBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryConfigBlock(options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">common</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryConfigBlock returns the current configuration block for the specified channel.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.QueryInfo">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=3972:4061#L117">QueryInfo</a>
+					<a class="permalink" href="index.html#Client.QueryInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryInfo(options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#BlockchainInfoResponse">BlockchainInfoResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryInfo queries for various useful blockchain information on this channel such as block height and current block hash.
+</p>
+<pre>Parameters:
+options are optional request options
+
+Returns:
+blockchain information
+</pre>
+
+				
+				<div id="example_Client_QueryInfo" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+bci, err := c.QueryInfo()
+if err != nil {
+    fmt.Printf(&#34;failed to query for blockchain info: %s\n&#34;, err)
+}
+
+if bci != nil {
+    fmt.Println(&#34;Retrieved ledger info&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved ledger info
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.QueryTransaction">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/ledger.go?s=8496:8622#L267">QueryTransaction</a>
+					<a class="permalink" href="index.html#Client.QueryTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) QueryTransaction(transactionID <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TransactionID">TransactionID</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ProcessedTransaction">ProcessedTransaction</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+QueryTransaction queries the ledger for processed transaction by transaction ID.
+</p>
+<pre>Parameters:
+txID is required transaction ID
+options hold optional request options
+
+Returns:
+processed transaction information
+</pre>
+
+				
+				<div id="example_Client_QueryTransaction" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+t, err := c.QueryTransaction(&#34;123&#34;)
+if err != nil {
+    fmt.Printf(&#34;failed to query transaction: %s\n&#34;, err)
+}
+
+if t != nil {
+    fmt.Println(&#34;Retrieved transaction&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved transaction
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+		
+			
+			
+			<h2 id="ClientOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=490:527#L15">ClientOption</a>
+				<a class="permalink" href="index.html#ClientOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientOption describes a functional parameter for the New constructor
+</p>
+
+			<pre>type ClientOption func(*<a href="index.html#Client">Client</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithDefaultTargetFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=580:646#L18">WithDefaultTargetFilter</a>
+					<a class="permalink" href="index.html#WithDefaultTargetFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithDefaultTargetFilter(filter <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TargetFilter">TargetFilter</a>) <a href="index.html#ClientOption">ClientOption</a></pre>
+				<p>
+WithDefaultTargetFilter option to configure new
+</p>
+
+				<div id="example_WithDefaultTargetFilter" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockChannelProvider(&#34;mychannel&#34;)
+
+c, err := New(ctx, WithDefaultTargetFilter(&amp;urlTargetFilter{url: &#34;example.com&#34;}))
+if err != nil {
+    fmt.Println(err)
+}
+
+if c != nil {
+    fmt.Println(&#34;ledger client created with url target filter&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">ledger client created with url target filter
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RequestOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=778:849#L26">RequestOption</a>
+				<a class="permalink" href="index.html#RequestOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RequestOption func for each requestOptions argument
+</p>
+
+			<pre>type RequestOption func(ctx <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#Client">Client</a>, opts *requestOptions) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithMaxTargets">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=2929:2978#L90">WithMaxTargets</a>
+					<a class="permalink" href="index.html#WithMaxTargets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithMaxTargets(maxTargets <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithMaxTargets specifies maximum number of targets to select per request.
+Default value for maximum number of targets is 1.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithMinTargets">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=3257:3306#L99">WithMinTargets</a>
+					<a class="permalink" href="index.html#WithMinTargets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithMinTargets(minTargets <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithMinTargets specifies minimum number of targets that have to respond with no error (or agree on result).
+Default value for minimum number of targets is 1.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithParentContext">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=3954:4024#L119">WithParentContext</a>
+					<a class="permalink" href="index.html#WithParentContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithParentContext(parentContext <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithParentContext encapsulates grpc parent context
+</p>
+
+				<div id="example_WithParentContext" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(err)
+}
+
+channelContext, err := mockChannelProvider(&#34;mychannel&#34;)()
+if err != nil {
+    fmt.Println(&#34;failed to return channel context&#34;)
+    return
+}
+
+<span class="comment">// get parent context and cancel</span>
+parentContext, cancel := sdkCtx.NewRequest(channelContext, sdkCtx.WithTimeout(20*time.Second))
+defer cancel()
+
+bci, err := c.QueryInfo(WithParentContext(parentContext))
+if err != nil {
+    fmt.Printf(&#34;failed to query for blockchain info: %s\n&#34;, err)
+}
+
+if bci != nil {
+    fmt.Println(&#34;Retrieved blockchain info&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved blockchain info
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithTargetEndpoints">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=2012:2066#L56">WithTargetEndpoints</a>
+					<a class="permalink" href="index.html#WithTargetEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargetEndpoints(keys ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargetEndpoints allows overriding of the target peers per request.
+Targets are specified by name or URL, and the SDK will create the underlying peer objects.
+</p>
+
+				
+				
+			
+				
+				<h3 id="WithTargetFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=2614:2680#L81">WithTargetFilter</a>
+					<a class="permalink" href="index.html#WithTargetFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargetFilter(targetFilter <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TargetFilter">TargetFilter</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargetFilter specifies a per-request target peer-filter.
+</p>
+
+				<div id="example_WithTargetFilter" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(err)
+}
+
+block, err := c.QueryBlock(1, WithTargetFilter(&amp;urlTargetFilter{url: &#34;example.com&#34;}))
+if err != nil {
+    fmt.Printf(&#34;failed to query block: %s\n&#34;, err)
+}
+
+if block != nil {
+    fmt.Println(&#34;Retrieved block #1 from example.com&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved block #1 from example.com
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithTargets">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=1564:1615#L39">WithTargets</a>
+					<a class="permalink" href="index.html#WithTargets">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTargets(targets ...<a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#Peer">Peer</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTargets allows for overriding of the target peers per request.
+</p>
+
+				<div id="example_WithTargets" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">c, err := New(mockChannelProvider(&#34;mychannel&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create client&#34;)
+}
+
+cfg, err := c.QueryConfig(WithTargets(mockPeerWithConfigBlock()))
+if err != nil {
+    fmt.Printf(&#34;failed to query config with target peer: %s\n&#34;, err)
+}
+
+if cfg != nil {
+    fmt.Println(&#34;Retrieved config from target peer&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">Retrieved config from target peer
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithTimeout">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/ledger/opts.go?s=3616:3698#L108">WithTimeout</a>
+					<a class="permalink" href="index.html#WithTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithTimeout(timeoutType <a href="../../common/providers/fab/index.html">fab</a>.<a href="../../common/providers/fab/index.html#TimeoutType">TimeoutType</a>, timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithTimeout encapsulates key value pairs of timeout type, timeout duration to Options
+for QueryInfo, QueryBlock, QueryBlockByHash,  QueryBlockByTxID, QueryTransaction, QueryConfig functions
+</p>
+
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>endpoint - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package endpoint
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#AttemptSecured">func AttemptSecured(url string, allowInSecure bool) bool</a></dd>
+			
+				
+				<dd><a href="index.html#IsTLSEnabled">func IsTLSEnabled(url string) bool</a></dd>
+			
+				
+				<dd><a href="index.html#ToAddress">func ToAddress(url string) string</a></dd>
+			
+			
+				
+				<dd><a href="index.html#MutualTLSConfig">type MutualTLSConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TLSConfig">type TLSConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TLSConfig.Bytes">func (cfg *TLSConfig) Bytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TLSConfig.LoadBytes">func (cfg *TLSConfig) LoadBytes() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TLSConfig.TLSCert">func (cfg *TLSConfig) TLSCert() (*x509.Certificate, bool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TLSKeyPair">type TLSKeyPair</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go">endpoint.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="AttemptSecured">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=1219:1275#L36">AttemptSecured</a>
+				<a class="permalink" href="index.html#AttemptSecured">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AttemptSecured(url <a href="http://localhost:6060/pkg/builtin/#string">string</a>, allowInSecure <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+AttemptSecured is a utility function which verifies URL and returns if secured connections needs to established
+for protocol &#39;grpcs&#39; in URL returns true
+for protocol &#39;grpc&#39; in URL returns false
+for no protocol mentioned, returns !allowInSecure
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsTLSEnabled">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=387:421#L12">IsTLSEnabled</a>
+				<a class="permalink" href="index.html#IsTLSEnabled">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsTLSEnabled(url <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsTLSEnabled is a generic function that expects a URL and verifies if it has
+a prefix HTTPS or GRPCS to return true for TLS Enabled URLs or false otherwise
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ToAddress">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=737:770#L22">ToAddress</a>
+				<a class="permalink" href="index.html#ToAddress">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ToAddress(url <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+ToAddress is a utility function to trim the GRPC protocol prefix as it is not needed by GO
+if the GRPC protocol is not found, the url is returned unchanged
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="MutualTLSConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=1507:1690#L48">MutualTLSConfig</a>
+				<a class="permalink" href="index.html#MutualTLSConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MutualTLSConfig Mutual TLS configurations
+</p>
+
+			<pre>type MutualTLSConfig struct {
+<span id="MutualTLSConfig.Pem"></span>    Pem []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Certfiles root certificates for TLS validation (Comma separated path list)</span>
+<span id="MutualTLSConfig.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">//Client TLS information</span>
+<span id="MutualTLSConfig.Client"></span>    Client <a href="index.html#TLSKeyPair">TLSKeyPair</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TLSConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=1884:2303#L64">TLSConfig</a>
+				<a class="permalink" href="index.html#TLSConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLSConfig TLS configuration used in the sdk&#39;s configs.
+</p>
+
+			<pre>type TLSConfig struct {
+    <span class="comment">// the following two fields are interchangeable.</span>
+    <span class="comment">// If Path is available, then it will be used to load the cert</span>
+    <span class="comment">// if Pem is available, then it has the raw data of the cert it will be used as-is</span>
+    <span class="comment">// Certificate root certificate path</span>
+    <span class="comment">// If both Path and Pem are available, pem takes the precedence</span>
+<span id="TLSConfig.Path"></span>    Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Certificate actual content</span>
+<span id="TLSConfig.Pem"></span>    Pem <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TLSConfig.Bytes">func (*TLSConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=2358:2394#L78">Bytes</a>
+					<a class="permalink" href="index.html#TLSConfig.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#TLSConfig">TLSConfig</a>) Bytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Bytes returns the tls certificate as a byte array
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TLSConfig.LoadBytes">func (*TLSConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=2492:2531#L84">LoadBytes</a>
+					<a class="permalink" href="index.html#TLSConfig.LoadBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#TLSConfig">TLSConfig</a>) LoadBytes() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+LoadBytes preloads bytes from Pem/Path
+Pem takes precedence over Path
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TLSConfig.TLSCert">func (*TLSConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=2904:2968#L98">TLSCert</a>
+					<a class="permalink" href="index.html#TLSConfig.TLSCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cfg *<a href="index.html#TLSConfig">TLSConfig</a>) TLSCert() (*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+TLSCert returns the tls certificate as a *x509.Certificate by loading it either from the embedded Pem or Path
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TLSKeyPair">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/core/config/endpoint/endpoint.go?s=1766:1824#L58">TLSKeyPair</a>
+				<a class="permalink" href="index.html#TLSKeyPair">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TLSKeyPair contains the private key and certificate for TLS encryption
+</p>
+
+			<pre>type TLSKeyPair struct {
+<span id="TLSKeyPair.Key"></span>    Key  <a href="index.html#TLSConfig">TLSConfig</a>
+<span id="TLSKeyPair.Cert"></span>    Cert <a href="index.html#TLSConfig">TLSConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

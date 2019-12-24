@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>generator - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package generator
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/golang/protobuf/protoc-gen-go/generator"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+The code generator for the plugin for the Google protocol buffer compiler.
+It generates Go code from the protocol buffer description files read by the
+main routine.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#CamelCase">func CamelCase(s string) string</a></dd>
+			
+				
+				<dd><a href="index.html#CamelCaseSlice">func CamelCaseSlice(elem []string) string</a></dd>
+			
+				
+				<dd><a href="index.html#RegisterPlugin">func RegisterPlugin(p Plugin)</a></dd>
+			
+				
+				<dd><a href="index.html#RegisterUniquePackageName">func RegisterUniquePackageName(pkg string, f *FileDescriptor) string</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AnnotatedAtoms">type AnnotatedAtoms</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Annotate">func Annotate(file *FileDescriptor, path string, atoms ...interface{}) *AnnotatedAtoms</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Descriptor">type Descriptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Descriptor.File">func (c *Descriptor) File() *FileDescriptor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Descriptor.GoImportPath">func (c *Descriptor) GoImportPath() GoImportPath</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Descriptor.TypeName">func (d *Descriptor) TypeName() []string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EnumDescriptor">type EnumDescriptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnumDescriptor.File">func (c *EnumDescriptor) File() *FileDescriptor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnumDescriptor.GoImportPath">func (c *EnumDescriptor) GoImportPath() GoImportPath</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EnumDescriptor.TypeName">func (e *EnumDescriptor) TypeName() (s []string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ExtensionDescriptor">type ExtensionDescriptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtensionDescriptor.DescName">func (e *ExtensionDescriptor) DescName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtensionDescriptor.File">func (c *ExtensionDescriptor) File() *FileDescriptor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtensionDescriptor.GoImportPath">func (c *ExtensionDescriptor) GoImportPath() GoImportPath</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtensionDescriptor.TypeName">func (e *ExtensionDescriptor) TypeName() (s []string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FileDescriptor">type FileDescriptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FileDescriptor.VarName">func (d *FileDescriptor) VarName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Generator">type Generator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New() *Generator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.AddImport">func (g *Generator) AddImport(importPath GoImportPath) GoPackageName</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.BuildTypeNameMap">func (g *Generator) BuildTypeNameMap()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.CommandLineParameters">func (g *Generator) CommandLineParameters(parameter string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.DefaultPackageName">func (g *Generator) DefaultPackageName(obj Object) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.Error">func (g *Generator) Error(err error, msgs ...string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.Fail">func (g *Generator) Fail(msgs ...string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.GenerateAllFiles">func (g *Generator) GenerateAllFiles()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.GoPackageName">func (g *Generator) GoPackageName(importPath GoImportPath) GoPackageName</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.GoType">func (g *Generator) GoType(message *Descriptor, field *descriptor.FieldDescriptorProto) (typ string, wire string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.In">func (g *Generator) In()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.ObjectNamed">func (g *Generator) ObjectNamed(typeName string) Object</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.Out">func (g *Generator) Out()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.P">func (g *Generator) P(str ...interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.PrintComments">func (g *Generator) PrintComments(path string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.RecordTypeUse">func (g *Generator) RecordTypeUse(t string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.SetPackageNames">func (g *Generator) SetPackageNames()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.TypeName">func (g *Generator) TypeName(obj Object) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.WrapTypes">func (g *Generator) WrapTypes()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#GoImportPath">type GoImportPath</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GoImportPath.String">func (p GoImportPath) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#GoPackageName">type GoPackageName</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ImportedDescriptor">type ImportedDescriptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ImportedDescriptor.File">func (c *ImportedDescriptor) File() *FileDescriptor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ImportedDescriptor.GoImportPath">func (c *ImportedDescriptor) GoImportPath() GoImportPath</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ImportedDescriptor.TypeName">func (id *ImportedDescriptor) TypeName() []string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Object">type Object</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Plugin">type Plugin</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go">generator.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CamelCase">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=87841:87872#L2655">CamelCase</a>
+				<a class="permalink" href="index.html#CamelCase">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CamelCase(s <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+CamelCase returns the CamelCased name.
+If there is an interior underscore followed by a lower case letter,
+drop the underscore and convert the letter to upper case.
+There is a remote possibility of this rewrite causing a name collision,
+but it&#39;s so remote we&#39;re prepared to pretend it&#39;s nonexistent - since the
+C++ generator lowercases names, it&#39;s extremely unlikely to have two fields
+with different capitalizations.
+In short, _my_field_name_2 becomes XMyFieldName_2.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CamelCaseSlice">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=88950:88991#L2696">CamelCaseSlice</a>
+				<a class="permalink" href="index.html#CamelCaseSlice">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CamelCaseSlice(elem []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+CamelCaseSlice is like CamelCase, but the argument is a slice of strings to
+be joined with &#34;_&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RegisterPlugin">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=3419:3448#L83">RegisterPlugin</a>
+				<a class="permalink" href="index.html#RegisterPlugin">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterPlugin(p <a href="index.html#Plugin">Plugin</a>)</pre>
+			<p>
+RegisterPlugin installs a (second-order) plugin to be run when the Go output is generated.
+It is typically called during initialization.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RegisterUniquePackageName">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=19158:19226#L551">RegisterUniquePackageName</a>
+				<a class="permalink" href="index.html#RegisterUniquePackageName">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterUniquePackageName(pkg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, f *<a href="index.html#FileDescriptor">FileDescriptor</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+Create and remember a guaranteed unique package name. Pkg is the candidate name.
+The FileDescriptor parameter is unused.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AnnotatedAtoms">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=32112:32194#L970">AnnotatedAtoms</a>
+				<a class="permalink" href="index.html#AnnotatedAtoms">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AnnotatedAtoms is a list of atoms (as consumed by P) that records the file name and proto AST path from which they originated.
+</p>
+
+			<pre>type AnnotatedAtoms struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Annotate">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=32343:32429#L978">Annotate</a>
+					<a class="permalink" href="index.html#Annotate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Annotate(file *<a href="index.html#FileDescriptor">FileDescriptor</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>, atoms ...interface{}) *<a href="index.html#AnnotatedAtoms">AnnotatedAtoms</a></pre>
+				<p>
+Annotate records the file name and proto AST path of a list of atoms
+so that a later call to P can emit a link from each atom to its origin.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Descriptor">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4764:5335#L120">Descriptor</a>
+				<a class="permalink" href="index.html#Descriptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Descriptor represents a protocol buffer message.
+</p>
+
+			<pre>type Descriptor struct {
+    *<a href="../descriptor/index.html">descriptor</a>.<a href="../descriptor/index.html#DescriptorProto">DescriptorProto</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Descriptor.File">func (*Descriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4466:4505#L111">File</a>
+					<a class="permalink" href="index.html#Descriptor.File">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Descriptor">Descriptor</a>) File() *<a href="index.html#FileDescriptor">FileDescriptor</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Descriptor.GoImportPath">func (*Descriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4390:4434#L107">GoImportPath</a>
+					<a class="permalink" href="index.html#Descriptor.GoImportPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Descriptor">Descriptor</a>) GoImportPath() <a href="index.html#GoImportPath">GoImportPath</a></pre>
+				<p>
+GoImportPath is the import path of the Go package containing the type.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Descriptor.TypeName">func (*Descriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=5441:5481#L135">TypeName</a>
+					<a class="permalink" href="index.html#Descriptor.TypeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#Descriptor">Descriptor</a>) TypeName() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+TypeName returns the elements of the dotted type name.
+The package name is not part of this name.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EnumDescriptor">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=5913:6254#L154">EnumDescriptor</a>
+				<a class="permalink" href="index.html#EnumDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnumDescriptor describes an enum. If it&#39;s at top level, its parent will be nil.
+Otherwise it will be the descriptor of the message in which it is defined.
+</p>
+
+			<pre>type EnumDescriptor struct {
+    *<a href="../descriptor/index.html">descriptor</a>.<a href="../descriptor/index.html#EnumDescriptorProto">EnumDescriptorProto</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="EnumDescriptor.File">func (*EnumDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4466:4505#L111">File</a>
+					<a class="permalink" href="index.html#EnumDescriptor.File">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#EnumDescriptor">EnumDescriptor</a>) File() *<a href="index.html#FileDescriptor">FileDescriptor</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="EnumDescriptor.GoImportPath">func (*EnumDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4390:4434#L107">GoImportPath</a>
+					<a class="permalink" href="index.html#EnumDescriptor.GoImportPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#EnumDescriptor">EnumDescriptor</a>) GoImportPath() <a href="index.html#GoImportPath">GoImportPath</a></pre>
+				<p>
+GoImportPath is the import path of the Go package containing the type.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="EnumDescriptor.TypeName">func (*EnumDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=6360:6408#L165">TypeName</a>
+					<a class="permalink" href="index.html#EnumDescriptor.TypeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#EnumDescriptor">EnumDescriptor</a>) TypeName() (s []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+TypeName returns the elements of the dotted type name.
+The package name is not part of this name.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ExtensionDescriptor">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=7553:7685#L206">ExtensionDescriptor</a>
+				<a class="permalink" href="index.html#ExtensionDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ExtensionDescriptor describes an extension. If it&#39;s at top level, its parent will be nil.
+Otherwise it will be the descriptor of the message in which it is defined.
+</p>
+
+			<pre>type ExtensionDescriptor struct {
+    *<a href="../descriptor/index.html">descriptor</a>.<a href="../descriptor/index.html#FieldDescriptorProto">FieldDescriptorProto</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ExtensionDescriptor.DescName">func (*ExtensionDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=8141:8188#L229">DescName</a>
+					<a class="permalink" href="index.html#ExtensionDescriptor.DescName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#ExtensionDescriptor">ExtensionDescriptor</a>) DescName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+DescName returns the variable name used for the generated descriptor.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ExtensionDescriptor.File">func (*ExtensionDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4466:4505#L111">File</a>
+					<a class="permalink" href="index.html#ExtensionDescriptor.File">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ExtensionDescriptor">ExtensionDescriptor</a>) File() *<a href="index.html#FileDescriptor">FileDescriptor</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ExtensionDescriptor.GoImportPath">func (*ExtensionDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4390:4434#L107">GoImportPath</a>
+					<a class="permalink" href="index.html#ExtensionDescriptor.GoImportPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ExtensionDescriptor">ExtensionDescriptor</a>) GoImportPath() <a href="index.html#GoImportPath">GoImportPath</a></pre>
+				<p>
+GoImportPath is the import path of the Go package containing the type.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ExtensionDescriptor.TypeName">func (*ExtensionDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=7791:7844#L214">TypeName</a>
+					<a class="permalink" href="index.html#ExtensionDescriptor.TypeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#ExtensionDescriptor">ExtensionDescriptor</a>) TypeName() (s []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+TypeName returns the elements of the dotted type name.
+The package name is not part of this name.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FileDescriptor">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=8870:9758#L250">FileDescriptor</a>
+				<a class="permalink" href="index.html#FileDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FileDescriptor describes an protocol buffer descriptor file (.proto).
+It includes slices of all the messages and enums defined within it.
+Those slices are constructed by WrapTypes.
+</p>
+
+			<pre>type FileDescriptor struct {
+    *<a href="../descriptor/index.html">descriptor</a>.<a href="../descriptor/index.html#FileDescriptorProto">FileDescriptorProto</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FileDescriptor.VarName">func (*FileDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=9953:9994#L274">VarName</a>
+					<a class="permalink" href="index.html#FileDescriptor.VarName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (d *<a href="index.html#FileDescriptor">FileDescriptor</a>) VarName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+VarName is the variable name we&#39;ll use in the generated code to refer
+to the compressed bytes of this descriptor. It is not exported, so
+it is only valid inside the generated package.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Generator">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=13707:15510#L392">Generator</a>
+				<a class="permalink" href="index.html#Generator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Generator is the type whose methods generate the output, stored in the associated response structure.
+</p>
+
+			<pre>type Generator struct {
+    *<a href="http://localhost:6060/pkg/bytes/">bytes</a>.<a href="http://localhost:6060/pkg/bytes/#Buffer">Buffer</a>
+
+<span id="Generator.Request"></span>    Request  *<a href="../plugin/index.html">plugin</a>.<a href="../plugin/index.html#CodeGeneratorRequest">CodeGeneratorRequest</a>  <span class="comment">// The input.</span>
+<span id="Generator.Response"></span>    Response *<a href="../plugin/index.html">plugin</a>.<a href="../plugin/index.html#CodeGeneratorResponse">CodeGeneratorResponse</a> <span class="comment">// The output.</span>
+
+<span id="Generator.Param"></span>    Param             map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// Command-line parameters.</span>
+<span id="Generator.PackageImportPath"></span>    PackageImportPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>            <span class="comment">// Go import path of the package we&#39;re generating code for</span>
+<span id="Generator.ImportPrefix"></span>    ImportPrefix      <a href="http://localhost:6060/pkg/builtin/#string">string</a>            <span class="comment">// String to prefix to imported package file names.</span>
+<span id="Generator.ImportMap"></span>    ImportMap         map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// Mapping from .proto file name to import path</span>
+
+<span id="Generator.Pkg"></span>    Pkg map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// The names under which we import support packages</span>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=15679:15700#L431">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New() *<a href="index.html#Generator">Generator</a></pre>
+				<p>
+New creates a new generator and allocates the request and response protobufs.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Generator.AddImport">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=18786:18854#L538">AddImport</a>
+					<a class="permalink" href="index.html#Generator.AddImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) AddImport(importPath <a href="index.html#GoImportPath">GoImportPath</a>) <a href="index.html#GoPackageName">GoPackageName</a></pre>
+				<p>
+AddImport adds a package to the generated file&#39;s import section.
+It returns the name used for the package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.BuildTypeNameMap">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=31005:31043#L938">BuildTypeNameMap</a>
+					<a class="permalink" href="index.html#Generator.BuildTypeNameMap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) BuildTypeNameMap()</pre>
+				<p>
+BuildTypeNameMap builds the map from fully qualified type names to objects.
+The key names for the map come from the input data, which puts a period at the beginning.
+It should be called after SetPackageNames and before GenerateAllFiles.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.CommandLineParameters">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=16481:16540#L456">CommandLineParameters</a>
+					<a class="permalink" href="index.html#Generator.CommandLineParameters">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) CommandLineParameters(parameter <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+CommandLineParameters breaks the comma-separated list of key=value pairs
+in the parameter (a member of the request protobuf) into a key/value map.
+It then sets file name mappings defined by those entries.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.DefaultPackageName">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=17987:18044#L514">DefaultPackageName</a>
+					<a class="permalink" href="index.html#Generator.DefaultPackageName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) DefaultPackageName(obj <a href="index.html#Object">Object</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+DefaultPackageName returns the package name printed for the object.
+If its file is in a different package, it returns the package name we&#39;re using for this file, plus &#34;.&#34;.
+Otherwise it returns the empty string.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.Error">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=15932:15984#L440">Error</a>
+					<a class="permalink" href="index.html#Generator.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) Error(err <a href="http://localhost:6060/pkg/builtin/#error">error</a>, msgs ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Error reports a problem, including an error, and exits the program.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.Fail">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=16140:16180#L447">Fail</a>
+					<a class="permalink" href="index.html#Generator.Fail">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) Fail(msgs ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Fail reports a problem and exits the program.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.GenerateAllFiles">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=34813:34851#L1069">GenerateAllFiles</a>
+					<a class="permalink" href="index.html#Generator.GenerateAllFiles">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) GenerateAllFiles()</pre>
+				<p>
+GenerateAllFiles generates the output for all the files we&#39;re outputting.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.GoPackageName">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=18242:18314#L523">GoPackageName</a>
+					<a class="permalink" href="index.html#Generator.GoPackageName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) GoPackageName(importPath <a href="index.html#GoImportPath">GoImportPath</a>) <a href="index.html#GoPackageName">GoPackageName</a></pre>
+				<p>
+GoPackageName returns the name used for a package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.GoType">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=51502:51615#L1591">GoType</a>
+					<a class="permalink" href="index.html#Generator.GoType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) GoType(message *<a href="index.html#Descriptor">Descriptor</a>, field *<a href="../descriptor/index.html">descriptor</a>.<a href="../descriptor/index.html#FieldDescriptorProto">FieldDescriptorProto</a>) (typ <a href="http://localhost:6060/pkg/builtin/#string">string</a>, wire <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+GoType returns a string representing the type name, and the wire type
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.In">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=34563:34587#L1059">In</a>
+					<a class="permalink" href="index.html#Generator.In">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) In()</pre>
+				<p>
+In Indents the output one tab stop.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.ObjectNamed">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=31809:31864#L961">ObjectNamed</a>
+					<a class="permalink" href="index.html#Generator.ObjectNamed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) ObjectNamed(typeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#Object">Object</a></pre>
+				<p>
+ObjectNamed, given a fully-qualified input type name as it appears in the input data,
+returns the descriptor for the message or enum with that name.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.Out">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=34652:34677#L1062">Out</a>
+					<a class="permalink" href="index.html#Generator.Out">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) Out()</pre>
+				<p>
+Out unindents the output one tab stop.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.P">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=33442:33483#L1016">P</a>
+					<a class="permalink" href="index.html#Generator.P">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) P(str ...interface{})</pre>
+				<p>
+P prints the arguments to the generated output.  It handles strings and int32s, plus
+handling indirections because they may be *string, etc.  Any inputs of type AnnotatedAtoms may emit
+annotations in a .meta file in addition to outputting the atoms themselves (if g.annotateCode
+is true).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.PrintComments">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=40327:40378#L1235">PrintComments</a>
+					<a class="permalink" href="index.html#Generator.PrintComments">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) PrintComments(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+PrintComments prints any comments from the source .proto file.
+The path is a comma-separated list of integers.
+It returns an indication of whether any comments were printed.
+See descriptor.proto for its format.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.RecordTypeUse">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=53627:53670#L1648">RecordTypeUse</a>
+					<a class="permalink" href="index.html#Generator.RecordTypeUse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) RecordTypeUse(t <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Generator.SetPackageNames">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=21749:21786#L656">SetPackageNames</a>
+					<a class="permalink" href="index.html#Generator.SetPackageNames">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) SetPackageNames()</pre>
+				<p>
+SetPackageNames sets the package name for this run.
+The package name must agree across all files being generated.
+It also defines unique package names for all imported files.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.TypeName">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=51309:51356#L1586">TypeName</a>
+					<a class="permalink" href="index.html#Generator.TypeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) TypeName(obj <a href="index.html#Object">Object</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+TypeName is the printed name appropriate for an item. If the object is in the current file,
+TypeName drops the package name and underscores the rest.
+Otherwise the object is from another package; and the result is the underscored
+package name followed by the item name.
+The result always has an initial capital.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.WrapTypes">func (*Generator) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=23809:23840#L713">WrapTypes</a>
+					<a class="permalink" href="index.html#Generator.WrapTypes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) WrapTypes()</pre>
+				<p>
+WrapTypes walks the incoming data, wrapping DescriptorProtos, EnumDescriptorProtos
+and FileDescriptorProtos into file-referenced objects within the Generator.
+It also creates the list of files to generate and so should be called before GenerateAllFiles.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="GoImportPath">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=3583:3607#L88">GoImportPath</a>
+				<a class="permalink" href="index.html#GoImportPath">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A GoImportPath is the import path of a Go package. e.g., &#34;google.golang.org/genproto/protobuf&#34;.
+</p>
+
+			<pre>type GoImportPath <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GoImportPath.String">func (GoImportPath) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=3609:3646#L90">String</a>
+					<a class="permalink" href="index.html#GoImportPath.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#GoImportPath">GoImportPath</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="GoPackageName">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=3750:3775#L93">GoPackageName</a>
+				<a class="permalink" href="index.html#GoPackageName">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A GoPackageName is the name of a Go package. e.g., &#34;protobuf&#34;.
+</p>
+
+			<pre>type GoPackageName <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ImportedDescriptor">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=8548:8600#L240">ImportedDescriptor</a>
+				<a class="permalink" href="index.html#ImportedDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ImportedDescriptor describes a type that has been publicly imported from another file.
+</p>
+
+			<pre>type ImportedDescriptor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ImportedDescriptor.File">func (*ImportedDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4466:4505#L111">File</a>
+					<a class="permalink" href="index.html#ImportedDescriptor.File">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ImportedDescriptor">ImportedDescriptor</a>) File() *<a href="index.html#FileDescriptor">FileDescriptor</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ImportedDescriptor.GoImportPath">func (*ImportedDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=4390:4434#L107">GoImportPath</a>
+					<a class="permalink" href="index.html#ImportedDescriptor.GoImportPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ImportedDescriptor">ImportedDescriptor</a>) GoImportPath() <a href="index.html#GoImportPath">GoImportPath</a></pre>
+				<p>
+GoImportPath is the import path of the Go package containing the type.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ImportedDescriptor.TypeName">func (*ImportedDescriptor) <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=8602:8651#L245">TypeName</a>
+					<a class="permalink" href="index.html#ImportedDescriptor.TypeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (id *<a href="index.html#ImportedDescriptor">ImportedDescriptor</a>) TypeName() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Object">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=13501:13600#L385">Object</a>
+				<a class="permalink" href="index.html#Object">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Object is an interface abstracting the abilities shared by enums, messages, extensions and imported objects.
+</p>
+
+			<pre>type Object interface {
+    GoImportPath() <a href="index.html#GoImportPath">GoImportPath</a>
+    TypeName() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    File() *<a href="index.html#FileDescriptor">FileDescriptor</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Plugin">type <a href="http://localhost:6060/src/github.com/golang/protobuf/protoc-gen-go/generator/generator.go?s=2744:3252#L65">Plugin</a>
+				<a class="permalink" href="index.html#Plugin">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Plugin provides functionality to add to the output during Go code generation,
+such as to produce RPC stubs.
+</p>
+
+			<pre>type Plugin interface {
+    <span class="comment">// Name identifies the plugin.</span>
+    Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Init is called once after data structures are built but before</span>
+    <span class="comment">// code generation begins.</span>
+    Init(g *<a href="index.html#Generator">Generator</a>)
+    <span class="comment">// Generate produces the code generated by the plugin for this file,</span>
+    <span class="comment">// except for the imports, by calling the generator&#39;s methods P, In, and Out.</span>
+    Generate(file *<a href="index.html#FileDescriptor">FileDescriptor</a>)
+    <span class="comment">// GenerateImports produces the import declarations for this file.</span>
+    <span class="comment">// It is called after Generate.</span>
+    GenerateImports(file *<a href="index.html#FileDescriptor">FileDescriptor</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

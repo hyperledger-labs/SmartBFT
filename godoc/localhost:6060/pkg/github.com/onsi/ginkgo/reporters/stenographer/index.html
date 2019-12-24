@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>stenographer - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package stenographer
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/onsi/ginkgo/reporters/stenographer"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#FakeStenographer">type FakeStenographer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFakeStenographer">func NewFakeStenographer() *FakeStenographer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceAfterSuiteFailure">func (stenographer *FakeStenographer) AnnounceAfterSuiteFailure(summary *types.SetupSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceAggregatedParallelRun">func (stenographer *FakeStenographer) AnnounceAggregatedParallelRun(nodes int, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceBeforeSuiteFailure">func (stenographer *FakeStenographer) AnnounceBeforeSuiteFailure(summary *types.SetupSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceCapturedOutput">func (stenographer *FakeStenographer) AnnounceCapturedOutput(output string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceNumberOfSpecs">func (stenographer *FakeStenographer) AnnounceNumberOfSpecs(specsToRun int, total int, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceParallelRun">func (stenographer *FakeStenographer) AnnounceParallelRun(node int, nodes int, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnouncePendingSpec">func (stenographer *FakeStenographer) AnnouncePendingSpec(spec *types.SpecSummary, noisy bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSkippedSpec">func (stenographer *FakeStenographer) AnnounceSkippedSpec(spec *types.SpecSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSpecFailed">func (stenographer *FakeStenographer) AnnounceSpecFailed(spec *types.SpecSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSpecPanicked">func (stenographer *FakeStenographer) AnnounceSpecPanicked(spec *types.SpecSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSpecRunCompletion">func (stenographer *FakeStenographer) AnnounceSpecRunCompletion(summary *types.SuiteSummary, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSpecTimedOut">func (stenographer *FakeStenographer) AnnounceSpecTimedOut(spec *types.SpecSummary, succinct bool, fullTrace bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSpecWillRun">func (stenographer *FakeStenographer) AnnounceSpecWillRun(spec *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSuccesfulMeasurement">func (stenographer *FakeStenographer) AnnounceSuccesfulMeasurement(spec *types.SpecSummary, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSuccesfulSlowSpec">func (stenographer *FakeStenographer) AnnounceSuccesfulSlowSpec(spec *types.SpecSummary, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSuccesfulSpec">func (stenographer *FakeStenographer) AnnounceSuccesfulSpec(spec *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceSuite">func (stenographer *FakeStenographer) AnnounceSuite(description string, randomSeed int64, randomizingAll bool, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.AnnounceTotalNumberOfSpecs">func (stenographer *FakeStenographer) AnnounceTotalNumberOfSpecs(total int, succinct bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.Calls">func (stenographer *FakeStenographer) Calls() []FakeStenographerCall</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.CallsTo">func (stenographer *FakeStenographer) CallsTo(method string) []FakeStenographerCall</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.Reset">func (stenographer *FakeStenographer) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeStenographer.SummarizeFailures">func (stenographer *FakeStenographer) SummarizeFailures(summaries []*types.SpecSummary)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FakeStenographerCall">type FakeStenographerCall</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFakeStenographerCall">func NewFakeStenographerCall(method string, args ...interface{}) FakeStenographerCall</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Stenographer">type Stenographer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(color bool, enableFlakes bool, writer io.Writer) Stenographer</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/console_logging.go">console_logging.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go">fake_stenographer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/stenographer.go">stenographer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="FakeStenographer">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=233:314#L6">FakeStenographer</a>
+				<a class="permalink" href="index.html#FakeStenographer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FakeStenographer struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFakeStenographer">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=391:435#L16">NewFakeStenographer</a>
+					<a class="permalink" href="index.html#NewFakeStenographer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFakeStenographer() *<a href="index.html#FakeStenographer">FakeStenographer</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="FakeStenographer.AnnounceAfterSuiteFailure">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2924:3047#L91">AnnounceAfterSuiteFailure</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceAfterSuiteFailure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceAfterSuiteFailure(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SetupSummary">SetupSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceAggregatedParallelRun">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=1669:1762#L63">AnnounceAggregatedParallelRun</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceAggregatedParallelRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceAggregatedParallelRun(nodes <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceBeforeSuiteFailure">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2707:2831#L87">AnnounceBeforeSuiteFailure</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceBeforeSuiteFailure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceBeforeSuiteFailure(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SetupSummary">SetupSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceCapturedOutput">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3138:3213#L94">AnnounceCapturedOutput</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceCapturedOutput">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceCapturedOutput(output <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceNumberOfSpecs">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2017:2118#L71">AnnounceNumberOfSpecs</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceNumberOfSpecs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceNumberOfSpecs(specsToRun <a href="http://localhost:6060/pkg/builtin/#int">int</a>, total <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceParallelRun">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=1845:1938#L67">AnnounceParallelRun</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceParallelRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceParallelRun(node <a href="http://localhost:6060/pkg/builtin/#int">int</a>, nodes <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnouncePendingSpec">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3796:3890#L110">AnnouncePendingSpec</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnouncePendingSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnouncePendingSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, noisy <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSkippedSpec">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3959:4072#L114">AnnounceSkippedSpec</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSkippedSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSkippedSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSpecFailed">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=4551:4663#L126">AnnounceSpecFailed</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSpecFailed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSpecFailed(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSpecPanicked">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=4353:4467#L122">AnnounceSpecPanicked</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSpecPanicked">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSpecPanicked(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSpecRunCompletion">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2375:2482#L79">AnnounceSpecRunCompletion</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSpecRunCompletion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSpecRunCompletion(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SuiteSummary">SuiteSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSpecTimedOut">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=4155:4269#L118">AnnounceSpecTimedOut</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSpecTimedOut">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSpecTimedOut(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSpecWillRun">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2563:2645#L83">AnnounceSpecWillRun</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSpecWillRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSpecWillRun(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSuccesfulMeasurement">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3609:3715#L106">AnnounceSuccesfulMeasurement</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSuccesfulMeasurement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSuccesfulMeasurement(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSuccesfulSlowSpec">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3428:3531#L102">AnnounceSuccesfulSlowSpec</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSuccesfulSlowSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSuccesfulSlowSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSuccesfulSpec">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=3280:3364#L98">AnnounceSuccesfulSpec</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSuccesfulSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSuccesfulSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceSuite">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=1443:1568#L59">AnnounceSuite</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceSuite">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceSuite(description <a href="http://localhost:6060/pkg/builtin/#string">string</a>, randomSeed <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>, randomizingAll <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.AnnounceTotalNumberOfSpecs">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=2205:2295#L75">AnnounceTotalNumberOfSpecs</a>
+					<a class="permalink" href="index.html#FakeStenographer.AnnounceTotalNumberOfSpecs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) AnnounceTotalNumberOfSpecs(total <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.Calls">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=546:614#L24">Calls</a>
+					<a class="permalink" href="index.html#FakeStenographer.Calls">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) Calls() []<a href="index.html#FakeStenographerCall">FakeStenographerCall</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.CallsTo">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=874:957#L38">CallsTo</a>
+					<a class="permalink" href="index.html#FakeStenographer.CallsTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) CallsTo(method <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="index.html#FakeStenographerCall">FakeStenographerCall</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.Reset">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=708:753#L31">Reset</a>
+					<a class="permalink" href="index.html#FakeStenographer.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeStenographer.SummarizeFailures">func (*FakeStenographer) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=4745:4832#L130">SummarizeFailures</a>
+					<a class="permalink" href="index.html#FakeStenographer.SummarizeFailures">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stenographer *<a href="index.html#FakeStenographer">FakeStenographer</a>) SummarizeFailures(summaries []*<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FakeStenographerCall">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=316:389#L11">FakeStenographerCall</a>
+				<a class="permalink" href="index.html#FakeStenographerCall">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FakeStenographerCall struct {
+<span id="FakeStenographerCall.Method"></span>    Method <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="FakeStenographerCall.Args"></span>    Args   []interface{}
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFakeStenographerCall">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/fake_stenographer.go?s=75:160#L1">NewFakeStenographerCall</a>
+					<a class="permalink" href="index.html#NewFakeStenographerCall">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFakeStenographerCall(method <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{}) <a href="index.html#FakeStenographerCall">FakeStenographerCall</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Stenographer">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/stenographer.go?s=591:1884#L26">Stenographer</a>
+				<a class="permalink" href="index.html#Stenographer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Stenographer interface {
+    AnnounceSuite(description <a href="http://localhost:6060/pkg/builtin/#string">string</a>, randomSeed <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>, randomizingAll <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceAggregatedParallelRun(nodes <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceParallelRun(node <a href="http://localhost:6060/pkg/builtin/#int">int</a>, nodes <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceTotalNumberOfSpecs(total <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceNumberOfSpecs(specsToRun <a href="http://localhost:6060/pkg/builtin/#int">int</a>, total <a href="http://localhost:6060/pkg/builtin/#int">int</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceSpecRunCompletion(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SuiteSummary">SuiteSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    AnnounceSpecWillRun(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)
+    AnnounceBeforeSuiteFailure(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SetupSummary">SetupSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceAfterSuiteFailure(summary *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SetupSummary">SetupSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    AnnounceCapturedOutput(output <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+
+    AnnounceSuccesfulSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)
+    AnnounceSuccesfulSlowSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceSuccesfulMeasurement(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    AnnouncePendingSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, noisy <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceSkippedSpec(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    AnnounceSpecTimedOut(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceSpecPanicked(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    AnnounceSpecFailed(spec *<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>, succinct <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, fullTrace <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+
+    SummarizeFailures(summaries []*<a href="../../types/index.html">types</a>.<a href="../../types/index.html#SpecSummary">SpecSummary</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/stenographer/stenographer.go?s=1886:1956#L54">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(color <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, enableFlakes <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, writer <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>) <a href="index.html#Stenographer">Stenographer</a></pre>
+				
+				
+				
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="support/index.html">support</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/go-colorable/index.html">go-colorable</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/go-isatty/index.html">go-isatty</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package isatty implements interface to isatty
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

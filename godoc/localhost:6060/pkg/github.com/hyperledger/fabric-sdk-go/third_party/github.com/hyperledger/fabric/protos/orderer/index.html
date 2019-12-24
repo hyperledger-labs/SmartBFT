@@ -1,0 +1,3204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>orderer - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package orderer
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#RegisterAtomicBroadcastServer">func RegisterAtomicBroadcastServer(s *grpc.Server, srv AtomicBroadcastServer)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AtomicBroadcastClient">type AtomicBroadcastClient</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewAtomicBroadcastClient">func NewAtomicBroadcastClient(cc *grpc.ClientConn) AtomicBroadcastClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AtomicBroadcastServer">type AtomicBroadcastServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AtomicBroadcast_BroadcastClient">type AtomicBroadcast_BroadcastClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AtomicBroadcast_BroadcastServer">type AtomicBroadcast_BroadcastServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AtomicBroadcast_DeliverClient">type AtomicBroadcast_DeliverClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AtomicBroadcast_DeliverServer">type AtomicBroadcast_DeliverServer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BatchSize">type BatchSize</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.Descriptor">func (*BatchSize) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.GetAbsoluteMaxBytes">func (m *BatchSize) GetAbsoluteMaxBytes() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.GetMaxMessageCount">func (m *BatchSize) GetMaxMessageCount() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.GetPreferredMaxBytes">func (m *BatchSize) GetPreferredMaxBytes() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.ProtoMessage">func (*BatchSize) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.Reset">func (m *BatchSize) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.String">func (m *BatchSize) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.XXX_DiscardUnknown">func (m *BatchSize) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.XXX_Marshal">func (m *BatchSize) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.XXX_Merge">func (dst *BatchSize) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.XXX_Size">func (m *BatchSize) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchSize.XXX_Unmarshal">func (m *BatchSize) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BatchTimeout">type BatchTimeout</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.Descriptor">func (*BatchTimeout) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.GetTimeout">func (m *BatchTimeout) GetTimeout() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.ProtoMessage">func (*BatchTimeout) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.Reset">func (m *BatchTimeout) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.String">func (m *BatchTimeout) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.XXX_DiscardUnknown">func (m *BatchTimeout) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.XXX_Marshal">func (m *BatchTimeout) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.XXX_Merge">func (dst *BatchTimeout) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.XXX_Size">func (m *BatchTimeout) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BatchTimeout.XXX_Unmarshal">func (m *BatchTimeout) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BroadcastResponse">type BroadcastResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.Descriptor">func (*BroadcastResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.GetInfo">func (m *BroadcastResponse) GetInfo() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.GetStatus">func (m *BroadcastResponse) GetStatus() common.Status</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.ProtoMessage">func (*BroadcastResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.Reset">func (m *BroadcastResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.String">func (m *BroadcastResponse) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.XXX_DiscardUnknown">func (m *BroadcastResponse) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.XXX_Marshal">func (m *BroadcastResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.XXX_Merge">func (dst *BroadcastResponse) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.XXX_Size">func (m *BroadcastResponse) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BroadcastResponse.XXX_Unmarshal">func (m *BroadcastResponse) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelRestrictions">type ChannelRestrictions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.Descriptor">func (*ChannelRestrictions) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.GetMaxCount">func (m *ChannelRestrictions) GetMaxCount() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.ProtoMessage">func (*ChannelRestrictions) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.Reset">func (m *ChannelRestrictions) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.String">func (m *ChannelRestrictions) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.XXX_DiscardUnknown">func (m *ChannelRestrictions) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.XXX_Marshal">func (m *ChannelRestrictions) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.XXX_Merge">func (dst *ChannelRestrictions) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.XXX_Size">func (m *ChannelRestrictions) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelRestrictions.XXX_Unmarshal">func (m *ChannelRestrictions) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConsensusType">type ConsensusType</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.Descriptor">func (*ConsensusType) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.GetMetadata">func (m *ConsensusType) GetMetadata() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.GetMigrationContext">func (m *ConsensusType) GetMigrationContext() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.GetMigrationState">func (m *ConsensusType) GetMigrationState() ConsensusType_MigrationState</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.GetType">func (m *ConsensusType) GetType() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.ProtoMessage">func (*ConsensusType) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.Reset">func (m *ConsensusType) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.String">func (m *ConsensusType) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.XXX_DiscardUnknown">func (m *ConsensusType) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.XXX_Marshal">func (m *ConsensusType) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.XXX_Merge">func (dst *ConsensusType) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.XXX_Size">func (m *ConsensusType) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType.XXX_Unmarshal">func (m *ConsensusType) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConsensusType_MigrationState">type ConsensusType_MigrationState</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType_MigrationState.EnumDescriptor">func (ConsensusType_MigrationState) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsensusType_MigrationState.String">func (x ConsensusType_MigrationState) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DeliverResponse">type DeliverResponse</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.Descriptor">func (*DeliverResponse) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.GetBlock">func (m *DeliverResponse) GetBlock() *common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.GetStatus">func (m *DeliverResponse) GetStatus() common.Status</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.GetType">func (m *DeliverResponse) GetType() isDeliverResponse_Type</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.ProtoMessage">func (*DeliverResponse) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.Reset">func (m *DeliverResponse) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.String">func (m *DeliverResponse) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_DiscardUnknown">func (m *DeliverResponse) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_Marshal">func (m *DeliverResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_Merge">func (dst *DeliverResponse) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_OneofFuncs">func (*DeliverResponse) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_Size">func (m *DeliverResponse) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeliverResponse.XXX_Unmarshal">func (m *DeliverResponse) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DeliverResponse_Block">type DeliverResponse_Block</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DeliverResponse_Status">type DeliverResponse_Status</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#KafkaBrokers">type KafkaBrokers</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.Descriptor">func (*KafkaBrokers) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.GetBrokers">func (m *KafkaBrokers) GetBrokers() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.ProtoMessage">func (*KafkaBrokers) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.Reset">func (m *KafkaBrokers) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.String">func (m *KafkaBrokers) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.XXX_DiscardUnknown">func (m *KafkaBrokers) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.XXX_Marshal">func (m *KafkaBrokers) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.XXX_Merge">func (dst *KafkaBrokers) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.XXX_Size">func (m *KafkaBrokers) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KafkaBrokers.XXX_Unmarshal">func (m *KafkaBrokers) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekInfo">type SeekInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.Descriptor">func (*SeekInfo) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.GetBehavior">func (m *SeekInfo) GetBehavior() SeekInfo_SeekBehavior</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.GetStart">func (m *SeekInfo) GetStart() *SeekPosition</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.GetStop">func (m *SeekInfo) GetStop() *SeekPosition</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.ProtoMessage">func (*SeekInfo) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.Reset">func (m *SeekInfo) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.String">func (m *SeekInfo) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.XXX_DiscardUnknown">func (m *SeekInfo) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.XXX_Marshal">func (m *SeekInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.XXX_Merge">func (dst *SeekInfo) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.XXX_Size">func (m *SeekInfo) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo.XXX_Unmarshal">func (m *SeekInfo) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekInfo_SeekBehavior">type SeekInfo_SeekBehavior</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo_SeekBehavior.EnumDescriptor">func (SeekInfo_SeekBehavior) EnumDescriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekInfo_SeekBehavior.String">func (x SeekInfo_SeekBehavior) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekNewest">type SeekNewest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.Descriptor">func (*SeekNewest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.ProtoMessage">func (*SeekNewest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.Reset">func (m *SeekNewest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.String">func (m *SeekNewest) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.XXX_DiscardUnknown">func (m *SeekNewest) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.XXX_Marshal">func (m *SeekNewest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.XXX_Merge">func (dst *SeekNewest) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.XXX_Size">func (m *SeekNewest) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekNewest.XXX_Unmarshal">func (m *SeekNewest) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekOldest">type SeekOldest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.Descriptor">func (*SeekOldest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.ProtoMessage">func (*SeekOldest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.Reset">func (m *SeekOldest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.String">func (m *SeekOldest) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.XXX_DiscardUnknown">func (m *SeekOldest) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.XXX_Marshal">func (m *SeekOldest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.XXX_Merge">func (dst *SeekOldest) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.XXX_Size">func (m *SeekOldest) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekOldest.XXX_Unmarshal">func (m *SeekOldest) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekPosition">type SeekPosition</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.Descriptor">func (*SeekPosition) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.GetNewest">func (m *SeekPosition) GetNewest() *SeekNewest</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.GetOldest">func (m *SeekPosition) GetOldest() *SeekOldest</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.GetSpecified">func (m *SeekPosition) GetSpecified() *SeekSpecified</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.GetType">func (m *SeekPosition) GetType() isSeekPosition_Type</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.ProtoMessage">func (*SeekPosition) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.Reset">func (m *SeekPosition) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.String">func (m *SeekPosition) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_DiscardUnknown">func (m *SeekPosition) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_Marshal">func (m *SeekPosition) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_Merge">func (dst *SeekPosition) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_OneofFuncs">func (*SeekPosition) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_Size">func (m *SeekPosition) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekPosition.XXX_Unmarshal">func (m *SeekPosition) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SeekPosition_Newest">type SeekPosition_Newest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SeekPosition_Oldest">type SeekPosition_Oldest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SeekPosition_Specified">type SeekPosition_Specified</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SeekSpecified">type SeekSpecified</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.Descriptor">func (*SeekSpecified) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.GetNumber">func (m *SeekSpecified) GetNumber() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.ProtoMessage">func (*SeekSpecified) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.Reset">func (m *SeekSpecified) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.String">func (m *SeekSpecified) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.XXX_DiscardUnknown">func (m *SeekSpecified) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.XXX_Marshal">func (m *SeekSpecified) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.XXX_Merge">func (dst *SeekSpecified) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.XXX_Size">func (m *SeekSpecified) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SeekSpecified.XXX_Unmarshal">func (m *SeekSpecified) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go">ab.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go">configuration.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var <span id="ConsensusType_MigrationState_name">ConsensusType_MigrationState_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;MIG_STATE_NONE&#34;,
+    1: &#34;MIG_STATE_START&#34;,
+    2: &#34;MIG_STATE_COMMIT&#34;,
+    3: &#34;MIG_STATE_ABORT&#34;,
+    4: &#34;MIG_STATE_CONTEXT&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="ConsensusType_MigrationState_value">ConsensusType_MigrationState_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;MIG_STATE_NONE&#34;:    0,
+    &#34;MIG_STATE_START&#34;:   1,
+    &#34;MIG_STATE_COMMIT&#34;:  2,
+    &#34;MIG_STATE_ABORT&#34;:   3,
+    &#34;MIG_STATE_CONTEXT&#34;: 4,
+}</pre>
+			
+				
+				<pre>var <span id="SeekInfo_SeekBehavior_name">SeekInfo_SeekBehavior_name</span> = map[<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a>{
+    0: &#34;BLOCK_UNTIL_READY&#34;,
+    1: &#34;FAIL_IF_NOT_READY&#34;,
+}</pre>
+			
+				
+				<pre>var <span id="SeekInfo_SeekBehavior_value">SeekInfo_SeekBehavior_value</span> = map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#int32">int32</a>{
+    &#34;BLOCK_UNTIL_READY&#34;: 0,
+    &#34;FAIL_IF_NOT_READY&#34;: 1,
+}</pre>
+			
+		
+		
+			
+			
+			<h2 id="RegisterAtomicBroadcastServer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=22302:22379#L677">RegisterAtomicBroadcastServer</a>
+				<a class="permalink" href="index.html#RegisterAtomicBroadcastServer">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RegisterAtomicBroadcastServer(s *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>, srv <a href="index.html#AtomicBroadcastServer">AtomicBroadcastServer</a>)</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AtomicBroadcastClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=19403:19917#L592">AtomicBroadcastClient</a>
+				<a class="permalink" href="index.html#AtomicBroadcastClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AtomicBroadcastClient is the client API for AtomicBroadcast service.
+</p>
+<p>
+For semantics around ctx use and closing/ending streaming RPCs, please refer to <a href="https://godoc.org/google.golang.org/grpc#ClientConn.NewStream">https://godoc.org/google.golang.org/grpc#ClientConn.NewStream</a>.
+</p>
+
+			<pre>type AtomicBroadcastClient interface {
+    <span class="comment">// broadcast receives a reply of Acknowledgement for each common.Envelope in order, indicating success or type of failure</span>
+    Broadcast(ctx <a href="../../../../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../../../../golang.org/x/net/context/index.html#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="index.html#AtomicBroadcast_BroadcastClient">AtomicBroadcast_BroadcastClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// deliver first requires an Envelope of type DELIVER_SEEK_INFO with Payload data as a mashaled SeekInfo message, then a stream of block replies is received.</span>
+    Deliver(ctx <a href="../../../../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../../../../golang.org/x/net/context/index.html#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="index.html#AtomicBroadcast_DeliverClient">AtomicBroadcast_DeliverClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewAtomicBroadcastClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=19979:20051#L603">NewAtomicBroadcastClient</a>
+					<a class="permalink" href="index.html#NewAtomicBroadcastClient">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewAtomicBroadcastClient(cc *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>) <a href="index.html#AtomicBroadcastClient">AtomicBroadcastClient</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="AtomicBroadcastServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=21882:22300#L670">AtomicBroadcastServer</a>
+				<a class="permalink" href="index.html#AtomicBroadcastServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AtomicBroadcastServer is the server API for AtomicBroadcast service.
+</p>
+
+			<pre>type AtomicBroadcastServer interface {
+    <span class="comment">// broadcast receives a reply of Acknowledgement for each common.Envelope in order, indicating success or type of failure</span>
+    Broadcast(<a href="index.html#AtomicBroadcast_BroadcastServer">AtomicBroadcast_BroadcastServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// deliver first requires an Envelope of type DELIVER_SEEK_INFO with Payload data as a mashaled SeekInfo message, then a stream of block replies is received.</span>
+    Deliver(<a href="index.html#AtomicBroadcast_DeliverServer">AtomicBroadcast_DeliverServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AtomicBroadcast_BroadcastClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=20450:20585#L616">AtomicBroadcast_BroadcastClient</a>
+				<a class="permalink" href="index.html#AtomicBroadcast_BroadcastClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type AtomicBroadcast_BroadcastClient interface {
+    Send(*<a href="../common/index.html">common</a>.<a href="../common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="index.html#BroadcastResponse">BroadcastResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AtomicBroadcast_BroadcastServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=22621:22756#L685">AtomicBroadcast_BroadcastServer</a>
+				<a class="permalink" href="index.html#AtomicBroadcast_BroadcastServer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type AtomicBroadcast_BroadcastServer interface {
+    Send(*<a href="index.html#BroadcastResponse">BroadcastResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../common/index.html">common</a>.<a href="../common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ServerStream">ServerStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AtomicBroadcast_DeliverClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=21312:21443#L647">AtomicBroadcast_DeliverClient</a>
+				<a class="permalink" href="index.html#AtomicBroadcast_DeliverClient">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type AtomicBroadcast_DeliverClient interface {
+    Send(*<a href="../common/index.html">common</a>.<a href="../common/index.html#Envelope">Envelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AtomicBroadcast_DeliverServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=23306:23437#L711">AtomicBroadcast_DeliverServer</a>
+				<a class="permalink" href="index.html#AtomicBroadcast_DeliverServer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type AtomicBroadcast_DeliverServer interface {
+    Send(*<a href="index.html#DeliverResponse">DeliverResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../common/index.html">common</a>.<a href="../common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ServerStream">ServerStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BatchSize">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4736:5619#L121">BatchSize</a>
+				<a class="permalink" href="index.html#BatchSize">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BatchSize struct {
+    <span class="comment">// Simply specified as number of messages for now, in the future</span>
+    <span class="comment">// we may want to allow this to be specified by size in bytes</span>
+<span id="BatchSize.MaxMessageCount"></span>    MaxMessageCount <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a> `protobuf:&#34;varint,1,opt,name=max_message_count,json=maxMessageCount,proto3&#34; json:&#34;max_message_count,omitempty&#34;`
+    <span class="comment">// The byte count of the serialized messages in a batch cannot</span>
+    <span class="comment">// exceed this value.</span>
+<span id="BatchSize.AbsoluteMaxBytes"></span>    AbsoluteMaxBytes <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a> `protobuf:&#34;varint,2,opt,name=absolute_max_bytes,json=absoluteMaxBytes,proto3&#34; json:&#34;absolute_max_bytes,omitempty&#34;`
+    <span class="comment">// The byte count of the serialized messages in a batch should not</span>
+    <span class="comment">// exceed this value.</span>
+<span id="BatchSize.PreferredMaxBytes"></span>    PreferredMaxBytes    <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>   `protobuf:&#34;varint,3,opt,name=preferred_max_bytes,json=preferredMaxBytes,proto3&#34; json:&#34;preferred_max_bytes,omitempty&#34;`
+<span id="BatchSize.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="BatchSize.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="BatchSize.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BatchSize.Descriptor">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=5791:5837#L139">Descriptor</a>
+					<a class="permalink" href="index.html#BatchSize.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BatchSize">BatchSize</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.GetAbsoluteMaxBytes">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6590:6638#L167">GetAbsoluteMaxBytes</a>
+					<a class="permalink" href="index.html#BatchSize.GetAbsoluteMaxBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) GetAbsoluteMaxBytes() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.GetMaxMessageCount">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6482:6529#L160">GetMaxMessageCount</a>
+					<a class="permalink" href="index.html#BatchSize.GetMaxMessageCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) GetMaxMessageCount() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.GetPreferredMaxBytes">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6700:6749#L174">GetPreferredMaxBytes</a>
+					<a class="permalink" href="index.html#BatchSize.GetPreferredMaxBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) GetPreferredMaxBytes() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.ProtoMessage">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=5752:5784#L138">ProtoMessage</a>
+					<a class="permalink" href="index.html#BatchSize.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BatchSize">BatchSize</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.Reset">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=5621:5648#L136">Reset</a>
+					<a class="permalink" href="index.html#BatchSize.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.String">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=5678:5713#L137">String</a>
+					<a class="permalink" href="index.html#BatchSize.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.XXX_DiscardUnknown">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6334:6374#L154">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#BatchSize.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.XXX_Marshal">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6010:6087#L145">XXX_Marshal</a>
+					<a class="permalink" href="index.html#BatchSize.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.XXX_Merge">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6155:6205#L148">XXX_Merge</a>
+					<a class="permalink" href="index.html#BatchSize.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#BatchSize">BatchSize</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.XXX_Size">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6253:6287#L151">XXX_Size</a>
+					<a class="permalink" href="index.html#BatchSize.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchSize.XXX_Unmarshal">func (*BatchSize) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=5906:5955#L142">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#BatchSize.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchSize">BatchSize</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BatchTimeout">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=6812:7168#L181">BatchTimeout</a>
+				<a class="permalink" href="index.html#BatchTimeout">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BatchTimeout struct {
+    <span class="comment">// Any duration string parseable by ParseDuration():</span>
+    <span class="comment">// https://golang.org/pkg/time/#ParseDuration</span>
+<span id="BatchTimeout.Timeout"></span>    Timeout              <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=timeout,proto3&#34; json:&#34;timeout,omitempty&#34;`
+<span id="BatchTimeout.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="BatchTimeout.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="BatchTimeout.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BatchTimeout.Descriptor">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7352:7401#L193">Descriptor</a>
+					<a class="permalink" href="index.html#BatchTimeout.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BatchTimeout">BatchTimeout</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.GetTimeout">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8079:8121#L214">GetTimeout</a>
+					<a class="permalink" href="index.html#BatchTimeout.GetTimeout">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) GetTimeout() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.ProtoMessage">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7310:7345#L192">ProtoMessage</a>
+					<a class="permalink" href="index.html#BatchTimeout.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BatchTimeout">BatchTimeout</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.Reset">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7170:7200#L190">Reset</a>
+					<a class="permalink" href="index.html#BatchTimeout.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.String">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7233:7271#L191">String</a>
+					<a class="permalink" href="index.html#BatchTimeout.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.XXX_DiscardUnknown">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7922:7965#L208">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#BatchTimeout.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.XXX_Marshal">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7580:7660#L199">XXX_Marshal</a>
+					<a class="permalink" href="index.html#BatchTimeout.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.XXX_Merge">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7731:7784#L202">XXX_Merge</a>
+					<a class="permalink" href="index.html#BatchTimeout.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#BatchTimeout">BatchTimeout</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.XXX_Size">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7835:7872#L205">XXX_Size</a>
+					<a class="permalink" href="index.html#BatchTimeout.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BatchTimeout.XXX_Unmarshal">func (*BatchTimeout) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=7470:7522#L196">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#BatchTimeout.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BatchTimeout">BatchTimeout</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BroadcastResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=1673:2201#L44">BroadcastResponse</a>
+				<a class="permalink" href="index.html#BroadcastResponse">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BroadcastResponse struct {
+<span id="BroadcastResponse.Status"></span>    <span class="comment">// Status code, which may be used to programatically respond to success/failure</span>
+    Status <a href="../common/index.html">common</a>.<a href="../common/index.html#Status">Status</a> `protobuf:&#34;varint,1,opt,name=status,proto3,enum=common.Status&#34; json:&#34;status,omitempty&#34;`
+<span id="BroadcastResponse.Info"></span>    <span class="comment">// Info string which may contain additional information about the status returned</span>
+    Info                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,2,opt,name=info,proto3&#34; json:&#34;info,omitempty&#34;`
+<span id="BroadcastResponse.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="BroadcastResponse.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="BroadcastResponse.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BroadcastResponse.Descriptor">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2405:2459#L57">Descriptor</a>
+					<a class="permalink" href="index.html#BroadcastResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BroadcastResponse">BroadcastResponse</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.GetInfo">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3306:3350#L85">GetInfo</a>
+					<a class="permalink" href="index.html#BroadcastResponse.GetInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) GetInfo() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.GetStatus">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3181:3234#L78">GetStatus</a>
+					<a class="permalink" href="index.html#BroadcastResponse.GetStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) GetStatus() <a href="../common/index.html">common</a>.<a href="../common/index.html#Status">Status</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.ProtoMessage">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2358:2398#L56">ProtoMessage</a>
+					<a class="permalink" href="index.html#BroadcastResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#BroadcastResponse">BroadcastResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.Reset">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2203:2238#L54">Reset</a>
+					<a class="permalink" href="index.html#BroadcastResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.String">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2276:2319#L55">String</a>
+					<a class="permalink" href="index.html#BroadcastResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.XXX_DiscardUnknown">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3009:3057#L72">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#BroadcastResponse.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.XXX_Marshal">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2637:2722#L63">XXX_Marshal</a>
+					<a class="permalink" href="index.html#BroadcastResponse.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.XXX_Merge">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2798:2856#L66">XXX_Merge</a>
+					<a class="permalink" href="index.html#BroadcastResponse.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.XXX_Size">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2912:2954#L69">XXX_Size</a>
+					<a class="permalink" href="index.html#BroadcastResponse.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BroadcastResponse.XXX_Unmarshal">func (*BroadcastResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=2517:2574#L60">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#BroadcastResponse.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#BroadcastResponse">BroadcastResponse</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelRestrictions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9786:10067#L264">ChannelRestrictions</a>
+				<a class="permalink" href="index.html#ChannelRestrictions">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelRestrictions is the mssage which conveys restrictions on channel creation for an orderer
+</p>
+
+			<pre>type ChannelRestrictions struct {
+<span id="ChannelRestrictions.MaxCount"></span>    MaxCount             <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=max_count,json=maxCount,proto3&#34; json:&#34;max_count,omitempty&#34;`
+<span id="ChannelRestrictions.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ChannelRestrictions.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ChannelRestrictions.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChannelRestrictions.Descriptor">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10279:10335#L274">Descriptor</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.GetMaxCount">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=11090:11140#L295">GetMaxCount</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.GetMaxCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) GetMaxCount() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.ProtoMessage">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10230:10272#L273">ProtoMessage</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.Reset">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10069:10106#L271">Reset</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.String">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10146:10191#L272">String</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.XXX_DiscardUnknown">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10912:10962#L289">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.XXX_Marshal">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10528:10615#L280">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.XXX_Merge">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10693:10753#L283">XXX_Merge</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.XXX_Size">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10811:10855#L286">XXX_Size</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChannelRestrictions.XXX_Unmarshal">func (*ChannelRestrictions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=10404:10463#L277">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ChannelRestrictions.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelRestrictions">ChannelRestrictions</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConsensusType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=2045:3345#L49">ConsensusType</a>
+				<a class="permalink" href="index.html#ConsensusType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ConsensusType struct {
+    <span class="comment">// The consensus type: &#34;solo&#34;, &#34;kafka&#34; or &#34;etcdraft&#34;.</span>
+<span id="ConsensusType.Type"></span>    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=type,proto3&#34; json:&#34;type,omitempty&#34;`
+    <span class="comment">// Opaque metadata, dependent on the consensus type.</span>
+<span id="ConsensusType.Metadata"></span>    Metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=metadata,proto3&#34; json:&#34;metadata,omitempty&#34;`
+    <span class="comment">// The state of a consensus-type migration.</span>
+    <span class="comment">// On the system channel this could be NONE | START | COMMIT | ABORT.</span>
+    <span class="comment">// On a standard channel this could be NONE | CONTEXT.</span>
+    <span class="comment">// When migration is not taking place it is set to NONE.</span>
+<span id="ConsensusType.MigrationState"></span>    MigrationState <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> `protobuf:&#34;varint,3,opt,name=migration_state,json=migrationState,proto3,enum=orderer.ConsensusType_MigrationState&#34; json:&#34;migration_state,omitempty&#34;`
+    <span class="comment">// The context of a consensus-type migration.</span>
+    <span class="comment">// The migration context is the system channel block height of the config-update-tx that START migration.</span>
+    <span class="comment">// The context must be present in COMMIT, CONTEXT, and ABORT config-updates, and match the START block height.</span>
+    <span class="comment">// On NONE and START it is set =0.</span>
+<span id="ConsensusType.MigrationContext"></span>    MigrationContext     <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,4,opt,name=migration_context,json=migrationContext,proto3&#34; json:&#34;migration_context,omitempty&#34;`
+<span id="ConsensusType.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ConsensusType.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ConsensusType.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConsensusType.Descriptor">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3533:3583#L72">Descriptor</a>
+					<a class="permalink" href="index.html#ConsensusType.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ConsensusType">ConsensusType</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.GetMetadata">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4363:4407#L100">GetMetadata</a>
+					<a class="permalink" href="index.html#ConsensusType.GetMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) GetMetadata() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.GetMigrationContext">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4622:4674#L114">GetMigrationContext</a>
+					<a class="permalink" href="index.html#ConsensusType.GetMigrationContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) GetMigrationContext() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.GetMigrationState">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4463:4535#L107">GetMigrationState</a>
+					<a class="permalink" href="index.html#ConsensusType.GetMigrationState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) GetMigrationState() <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.GetType">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4272:4312#L93">GetType</a>
+					<a class="permalink" href="index.html#ConsensusType.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) GetType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.ProtoMessage">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3490:3526#L71">ProtoMessage</a>
+					<a class="permalink" href="index.html#ConsensusType.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ConsensusType">ConsensusType</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.Reset">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3347:3378#L69">Reset</a>
+					<a class="permalink" href="index.html#ConsensusType.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.String">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3412:3451#L70">String</a>
+					<a class="permalink" href="index.html#ConsensusType.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.XXX_DiscardUnknown">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4112:4156#L87">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ConsensusType.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.XXX_Marshal">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3764:3845#L78">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ConsensusType.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.XXX_Merge">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3917:3971#L81">XXX_Merge</a>
+					<a class="permalink" href="index.html#ConsensusType.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ConsensusType">ConsensusType</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.XXX_Size">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=4023:4061#L84">XXX_Size</a>
+					<a class="permalink" href="index.html#ConsensusType.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType.XXX_Unmarshal">func (*ConsensusType) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=3652:3705#L75">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ConsensusType.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ConsensusType">ConsensusType</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConsensusType_MigrationState">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=1032:1071#L17">ConsensusType_MigrationState</a>
+				<a class="permalink" href="index.html#ConsensusType_MigrationState">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MigrationState defines the possible states of a consensus-type migration.
+NONE represents that migration is not taking place.
+</p>
+
+			<pre>type ConsensusType_MigrationState <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="ConsensusType_MIG_STATE_NONE">ConsensusType_MIG_STATE_NONE</span>    <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> = 0
+    <span id="ConsensusType_MIG_STATE_START">ConsensusType_MIG_STATE_START</span>   <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> = 1
+    <span id="ConsensusType_MIG_STATE_COMMIT">ConsensusType_MIG_STATE_COMMIT</span>  <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> = 2
+    <span id="ConsensusType_MIG_STATE_ABORT">ConsensusType_MIG_STATE_ABORT</span>   <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> = 3
+    <span id="ConsensusType_MIG_STATE_CONTEXT">ConsensusType_MIG_STATE_CONTEXT</span> <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a> = 4
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConsensusType_MigrationState.EnumDescriptor">func (ConsensusType_MigrationState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=1904:1972#L45">EnumDescriptor</a>
+					<a class="permalink" href="index.html#ConsensusType_MigrationState.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ConsensusType_MigrationState.String">func (ConsensusType_MigrationState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=1778:1831#L42">String</a>
+					<a class="permalink" href="index.html#ConsensusType_MigrationState.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#ConsensusType_MigrationState">ConsensusType_MigrationState</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DeliverResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14059:14431#L430">DeliverResponse</a>
+				<a class="permalink" href="index.html#DeliverResponse">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DeliverResponse struct {
+    <span class="comment">// Types that are valid to be assigned to Type:</span>
+    <span class="comment">//	*DeliverResponse_Status</span>
+    <span class="comment">//	*DeliverResponse_Block</span>
+<span id="DeliverResponse.Type"></span>    Type                 isDeliverResponse_Type `protobuf_oneof:&#34;Type&#34;`
+<span id="DeliverResponse.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}               `json:&#34;-&#34;`
+<span id="DeliverResponse.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                 `json:&#34;-&#34;`
+<span id="DeliverResponse.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                  `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DeliverResponse.Descriptor">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14627:14679#L443">Descriptor</a>
+					<a class="permalink" href="index.html#DeliverResponse.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#DeliverResponse">DeliverResponse</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.GetBlock">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=16083:16133#L494">GetBlock</a>
+					<a class="permalink" href="index.html#DeliverResponse.GetBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) GetBlock() *<a href="../common/index.html">common</a>.<a href="../common/index.html#Block">Block</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.GetStatus">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15918:15969#L487">GetStatus</a>
+					<a class="permalink" href="index.html#DeliverResponse.GetStatus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) GetStatus() <a href="../common/index.html">common</a>.<a href="../common/index.html#Status">Status</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.GetType">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15808:15866#L480">GetType</a>
+					<a class="permalink" href="index.html#DeliverResponse.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) GetType() isDeliverResponse_Type</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.ProtoMessage">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14582:14620#L442">ProtoMessage</a>
+					<a class="permalink" href="index.html#DeliverResponse.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#DeliverResponse">DeliverResponse</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.Reset">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14433:14466#L440">Reset</a>
+					<a class="permalink" href="index.html#DeliverResponse.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.String">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14502:14543#L441">String</a>
+					<a class="permalink" href="index.html#DeliverResponse.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_DiscardUnknown">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15213:15259#L458">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_Marshal">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14853:14936#L449">XXX_Marshal</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_Merge">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15010:15066#L452">XXX_Merge</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_OneofFuncs">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=16291:16499#L502">XXX_OneofFuncs</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_OneofFuncs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_OneofFuncs() (func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, b *<a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>, func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, tag, wire <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b *<a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>), func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>), []interface{})</pre>
+				<p>
+XXX_OneofFuncs is for the internal use of the proto package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_Size">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15120:15160#L455">XXX_Size</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DeliverResponse.XXX_Unmarshal">func (*DeliverResponse) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=14737:14792#L446">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#DeliverResponse.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#DeliverResponse">DeliverResponse</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DeliverResponse_Block">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15580:15687#L472">DeliverResponse_Block</a>
+				<a class="permalink" href="index.html#DeliverResponse_Block">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DeliverResponse_Block struct {
+<span id="DeliverResponse_Block.Block"></span>    Block *<a href="../common/index.html">common</a>.<a href="../common/index.html#Block">Block</a> `protobuf:&#34;bytes,2,opt,name=block,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DeliverResponse_Status">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=15448:15578#L468">DeliverResponse_Status</a>
+				<a class="permalink" href="index.html#DeliverResponse_Status">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DeliverResponse_Status struct {
+<span id="DeliverResponse_Status.Status"></span>    Status <a href="../common/index.html">common</a>.<a href="../common/index.html#Status">Status</a> `protobuf:&#34;varint,1,opt,name=status,proto3,enum=common.Status,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="KafkaBrokers">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8284:8677#L223">KafkaBrokers</a>
+				<a class="permalink" href="index.html#KafkaBrokers">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Carries a list of bootstrap brokers, i.e. this is not the exclusive set of
+brokers an ordering service
+</p>
+
+			<pre>type KafkaBrokers struct {
+    <span class="comment">// Each broker here should be identified using the (IP|host):port notation,</span>
+    <span class="comment">// e.g. 127.0.0.1:7050, or localhost:7050 are valid entries</span>
+<span id="KafkaBrokers.Brokers"></span>    Brokers              []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,rep,name=brokers,proto3&#34; json:&#34;brokers,omitempty&#34;`
+<span id="KafkaBrokers.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KafkaBrokers.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KafkaBrokers.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KafkaBrokers.Descriptor">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8861:8910#L235">Descriptor</a>
+					<a class="permalink" href="index.html#KafkaBrokers.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KafkaBrokers">KafkaBrokers</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.GetBrokers">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9588:9632#L256">GetBrokers</a>
+					<a class="permalink" href="index.html#KafkaBrokers.GetBrokers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) GetBrokers() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.ProtoMessage">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8819:8854#L234">ProtoMessage</a>
+					<a class="permalink" href="index.html#KafkaBrokers.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KafkaBrokers">KafkaBrokers</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.Reset">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8679:8709#L232">Reset</a>
+					<a class="permalink" href="index.html#KafkaBrokers.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.String">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8742:8780#L233">String</a>
+					<a class="permalink" href="index.html#KafkaBrokers.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.XXX_DiscardUnknown">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9431:9474#L250">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KafkaBrokers.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.XXX_Marshal">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9089:9169#L241">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KafkaBrokers.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.XXX_Merge">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9240:9293#L244">XXX_Merge</a>
+					<a class="permalink" href="index.html#KafkaBrokers.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.XXX_Size">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=9344:9381#L247">XXX_Size</a>
+					<a class="permalink" href="index.html#KafkaBrokers.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KafkaBrokers.XXX_Unmarshal">func (*KafkaBrokers) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/configuration.pb.go?s=8979:9031#L238">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KafkaBrokers.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KafkaBrokers">KafkaBrokers</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=12341:12900#L376">SeekInfo</a>
+				<a class="permalink" href="index.html#SeekInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SeekInfo specifies the range of requested blocks to return
+If the start position is not found, an error is immediately returned
+Otherwise, blocks are returned until a missing block is encountered, then behavior is dictated
+by the SeekBehavior specified.  If BLOCK_UNTIL_READY is specified, the reply will block until
+the requested blocks are available, if FAIL_IF_NOT_READY is specified, the reply will return an
+error indicating that the block is not found.  To request that all blocks be returned indefinitely
+as they are created, behavior should be set to BLOCK_UNTIL_READY and the stop should be set to
+specified with a number of MAX_UINT64
+</p>
+
+			<pre>type SeekInfo struct {
+<span id="SeekInfo.Start"></span>    Start                *<a href="index.html#SeekPosition">SeekPosition</a>         `protobuf:&#34;bytes,1,opt,name=start,proto3&#34; json:&#34;start,omitempty&#34;`
+<span id="SeekInfo.Stop"></span>    Stop                 *<a href="index.html#SeekPosition">SeekPosition</a>         `protobuf:&#34;bytes,2,opt,name=stop,proto3&#34; json:&#34;stop,omitempty&#34;`
+<span id="SeekInfo.Behavior"></span>    Behavior             <a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a> `protobuf:&#34;varint,3,opt,name=behavior,proto3,enum=orderer.SeekInfo_SeekBehavior&#34; json:&#34;behavior,omitempty&#34;`
+<span id="SeekInfo.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}              `json:&#34;-&#34;`
+<span id="SeekInfo.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                `json:&#34;-&#34;`
+<span id="SeekInfo.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                 `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekInfo.Descriptor">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13068:13113#L388">Descriptor</a>
+					<a class="permalink" href="index.html#SeekInfo.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekInfo">SeekInfo</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.GetBehavior">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13926:13980#L423">GetBehavior</a>
+					<a class="permalink" href="index.html#SeekInfo.GetBehavior">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) GetBehavior() <a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.GetStart">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13736:13779#L409">GetStart</a>
+					<a class="permalink" href="index.html#SeekInfo.GetStart">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) GetStart() *<a href="index.html#SeekPosition">SeekPosition</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.GetStop">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13832:13874#L416">GetStop</a>
+					<a class="permalink" href="index.html#SeekInfo.GetStop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) GetStop() *<a href="index.html#SeekPosition">SeekPosition</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.ProtoMessage">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13030:13061#L387">ProtoMessage</a>
+					<a class="permalink" href="index.html#SeekInfo.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekInfo">SeekInfo</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.Reset">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=12902:12928#L385">Reset</a>
+					<a class="permalink" href="index.html#SeekInfo.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.String">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=12957:12991#L386">String</a>
+					<a class="permalink" href="index.html#SeekInfo.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.XXX_DiscardUnknown">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13591:13630#L403">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SeekInfo.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.XXX_Marshal">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13273:13349#L394">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SeekInfo.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.XXX_Merge">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13416:13465#L397">XXX_Merge</a>
+					<a class="permalink" href="index.html#SeekInfo.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SeekInfo">SeekInfo</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.XXX_Size">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13512:13545#L400">XXX_Size</a>
+					<a class="permalink" href="index.html#SeekInfo.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo.XXX_Unmarshal">func (*SeekInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=13171:13219#L391">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SeekInfo.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekInfo">SeekInfo</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekInfo_SeekBehavior">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=1077:1109#L21">SeekInfo_SeekBehavior</a>
+				<a class="permalink" href="index.html#SeekInfo_SeekBehavior">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekInfo_SeekBehavior <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="SeekInfo_BLOCK_UNTIL_READY">SeekInfo_BLOCK_UNTIL_READY</span> <a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a> = 0
+    <span id="SeekInfo_FAIL_IF_NOT_READY">SeekInfo_FAIL_IF_NOT_READY</span> <a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a> = 1
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekInfo_SeekBehavior.EnumDescriptor">func (SeekInfo_SeekBehavior) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=1550:1611#L40">EnumDescriptor</a>
+					<a class="permalink" href="index.html#SeekInfo_SeekBehavior.EnumDescriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (<a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a>) EnumDescriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekInfo_SeekBehavior.String">func (SeekInfo_SeekBehavior) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=1438:1484#L37">String</a>
+					<a class="permalink" href="index.html#SeekInfo_SeekBehavior.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#SeekInfo_SeekBehavior">SeekInfo_SeekBehavior</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekNewest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3401:3553#L92">SeekNewest</a>
+				<a class="permalink" href="index.html#SeekNewest">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekNewest struct {
+<span id="SeekNewest.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SeekNewest.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SeekNewest.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekNewest.Descriptor">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3729:3776#L101">Descriptor</a>
+					<a class="permalink" href="index.html#SeekNewest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekNewest">SeekNewest</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.ProtoMessage">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3689:3722#L100">ProtoMessage</a>
+					<a class="permalink" href="index.html#SeekNewest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekNewest">SeekNewest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.Reset">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3555:3583#L98">Reset</a>
+					<a class="permalink" href="index.html#SeekNewest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.String">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3614:3650#L99">String</a>
+					<a class="permalink" href="index.html#SeekNewest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.XXX_DiscardUnknown">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4270:4311#L116">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SeekNewest.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.XXX_Marshal">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3940:4018#L107">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SeekNewest.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.XXX_Merge">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4087:4138#L110">XXX_Merge</a>
+					<a class="permalink" href="index.html#SeekNewest.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SeekNewest">SeekNewest</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.XXX_Size">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4187:4222#L113">XXX_Size</a>
+					<a class="permalink" href="index.html#SeekNewest.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekNewest.XXX_Unmarshal">func (*SeekNewest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=3834:3884#L104">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SeekNewest.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekNewest">SeekNewest</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekOldest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4421:4573#L122">SeekOldest</a>
+				<a class="permalink" href="index.html#SeekOldest">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekOldest struct {
+<span id="SeekOldest.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SeekOldest.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SeekOldest.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekOldest.Descriptor">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4749:4796#L131">Descriptor</a>
+					<a class="permalink" href="index.html#SeekOldest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekOldest">SeekOldest</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.ProtoMessage">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4709:4742#L130">ProtoMessage</a>
+					<a class="permalink" href="index.html#SeekOldest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekOldest">SeekOldest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.Reset">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4575:4603#L128">Reset</a>
+					<a class="permalink" href="index.html#SeekOldest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.String">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4634:4670#L129">String</a>
+					<a class="permalink" href="index.html#SeekOldest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.XXX_DiscardUnknown">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5290:5331#L146">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SeekOldest.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.XXX_Marshal">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4960:5038#L137">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SeekOldest.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.XXX_Merge">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5107:5158#L140">XXX_Merge</a>
+					<a class="permalink" href="index.html#SeekOldest.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SeekOldest">SeekOldest</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.XXX_Size">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5207:5242#L143">XXX_Size</a>
+					<a class="permalink" href="index.html#SeekOldest.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekOldest.XXX_Unmarshal">func (*SeekOldest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=4854:4904#L134">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SeekOldest.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekOldest">SeekOldest</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekPosition">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6706:7086#L190">SeekPosition</a>
+				<a class="permalink" href="index.html#SeekPosition">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekPosition struct {
+    <span class="comment">// Types that are valid to be assigned to Type:</span>
+    <span class="comment">//	*SeekPosition_Newest</span>
+    <span class="comment">//	*SeekPosition_Oldest</span>
+    <span class="comment">//	*SeekPosition_Specified</span>
+<span id="SeekPosition.Type"></span>    Type                 isSeekPosition_Type `protobuf_oneof:&#34;Type&#34;`
+<span id="SeekPosition.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}            `json:&#34;-&#34;`
+<span id="SeekPosition.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `json:&#34;-&#34;`
+<span id="SeekPosition.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>               `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekPosition.Descriptor">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7270:7319#L204">Descriptor</a>
+					<a class="permalink" href="index.html#SeekPosition.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekPosition">SeekPosition</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.GetNewest">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8651:8697#L254">GetNewest</a>
+					<a class="permalink" href="index.html#SeekPosition.GetNewest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) GetNewest() *<a href="index.html#SeekNewest">SeekNewest</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.GetOldest">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8790:8836#L261">GetOldest</a>
+					<a class="permalink" href="index.html#SeekPosition.GetOldest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) GetOldest() *<a href="index.html#SeekOldest">SeekOldest</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.GetSpecified">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8929:8981#L268">GetSpecified</a>
+					<a class="permalink" href="index.html#SeekPosition.GetSpecified">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) GetSpecified() *<a href="index.html#SeekSpecified">SeekSpecified</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.GetType">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8547:8599#L247">GetType</a>
+					<a class="permalink" href="index.html#SeekPosition.GetType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) GetType() isSeekPosition_Type</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.ProtoMessage">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7228:7263#L203">ProtoMessage</a>
+					<a class="permalink" href="index.html#SeekPosition.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekPosition">SeekPosition</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.Reset">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7088:7118#L201">Reset</a>
+					<a class="permalink" href="index.html#SeekPosition.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.String">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7151:7189#L202">String</a>
+					<a class="permalink" href="index.html#SeekPosition.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_DiscardUnknown">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7829:7872#L219">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_Marshal">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7487:7567#L210">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_Merge">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7638:7691#L213">XXX_Merge</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SeekPosition">SeekPosition</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_OneofFuncs">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=9144:9349#L276">XXX_OneofFuncs</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_OneofFuncs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekPosition">SeekPosition</a>) XXX_OneofFuncs() (func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, b *<a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>, func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, tag, wire <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b *<a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>), func(msg <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>), []interface{})</pre>
+				<p>
+XXX_OneofFuncs is for the internal use of the proto package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_Size">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7742:7779#L216">XXX_Size</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekPosition.XXX_Unmarshal">func (*SeekPosition) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=7377:7429#L207">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SeekPosition.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekPosition">SeekPosition</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SeekPosition_Newest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8049:8154#L229">SeekPosition_Newest</a>
+				<a class="permalink" href="index.html#SeekPosition_Newest">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekPosition_Newest struct {
+<span id="SeekPosition_Newest.Newest"></span>    Newest *<a href="index.html#SeekNewest">SeekNewest</a> `protobuf:&#34;bytes,1,opt,name=newest,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SeekPosition_Oldest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8156:8261#L233">SeekPosition_Oldest</a>
+				<a class="permalink" href="index.html#SeekPosition_Oldest">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekPosition_Oldest struct {
+<span id="SeekPosition_Oldest.Oldest"></span>    Oldest *<a href="index.html#SeekOldest">SeekOldest</a> `protobuf:&#34;bytes,2,opt,name=oldest,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SeekPosition_Specified">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=8263:8380#L237">SeekPosition_Specified</a>
+				<a class="permalink" href="index.html#SeekPosition_Specified">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekPosition_Specified struct {
+<span id="SeekPosition_Specified.Specified"></span>    Specified *<a href="index.html#SeekSpecified">SeekSpecified</a> `protobuf:&#34;bytes,3,opt,name=specified,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SeekSpecified">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5441:5696#L152">SeekSpecified</a>
+				<a class="permalink" href="index.html#SeekSpecified">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SeekSpecified struct {
+<span id="SeekSpecified.Number"></span>    Number               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=number,proto3&#34; json:&#34;number,omitempty&#34;`
+<span id="SeekSpecified.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="SeekSpecified.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="SeekSpecified.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SeekSpecified.Descriptor">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5884:5934#L162">Descriptor</a>
+					<a class="permalink" href="index.html#SeekSpecified.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekSpecified">SeekSpecified</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.GetNumber">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6612:6654#L183">GetNumber</a>
+					<a class="permalink" href="index.html#SeekSpecified.GetNumber">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) GetNumber() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.ProtoMessage">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5841:5877#L161">ProtoMessage</a>
+					<a class="permalink" href="index.html#SeekSpecified.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SeekSpecified">SeekSpecified</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.Reset">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5698:5729#L159">Reset</a>
+					<a class="permalink" href="index.html#SeekSpecified.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.String">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5763:5802#L160">String</a>
+					<a class="permalink" href="index.html#SeekSpecified.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.XXX_DiscardUnknown">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6452:6496#L177">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#SeekSpecified.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.XXX_Marshal">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6104:6185#L168">XXX_Marshal</a>
+					<a class="permalink" href="index.html#SeekSpecified.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.XXX_Merge">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6257:6311#L171">XXX_Merge</a>
+					<a class="permalink" href="index.html#SeekSpecified.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#SeekSpecified">SeekSpecified</a>) XXX_Merge(src <a href="../../../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.XXX_Size">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=6363:6401#L174">XXX_Size</a>
+					<a class="permalink" href="index.html#SeekSpecified.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="SeekSpecified.XXX_Unmarshal">func (*SeekSpecified) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/orderer/ab.pb.go?s=5992:6045#L165">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#SeekSpecified.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SeekSpecified">SeekSpecified</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="etcdraft/index.html">etcdraft</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

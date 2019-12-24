@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ptypes - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ptypes
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/golang/protobuf/ptypes"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package ptypes contains code for interacting with well-known types.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#AnyMessageName">func AnyMessageName(any *any.Any) (string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Duration">func Duration(p *durpb.Duration) (time.Duration, error)</a></dd>
+			
+				
+				<dd><a href="index.html#DurationProto">func DurationProto(d time.Duration) *durpb.Duration</a></dd>
+			
+				
+				<dd><a href="index.html#Empty">func Empty(any *any.Any) (proto.Message, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Is">func Is(any *any.Any, pb proto.Message) bool</a></dd>
+			
+				
+				<dd><a href="index.html#MarshalAny">func MarshalAny(pb proto.Message) (*any.Any, error)</a></dd>
+			
+				
+				<dd><a href="index.html#Timestamp">func Timestamp(ts *tspb.Timestamp) (time.Time, error)</a></dd>
+			
+				
+				<dd><a href="index.html#TimestampNow">func TimestampNow() *tspb.Timestamp</a></dd>
+			
+				
+				<dd><a href="index.html#TimestampProto">func TimestampProto(t time.Time) (*tspb.Timestamp, error)</a></dd>
+			
+				
+				<dd><a href="index.html#TimestampString">func TimestampString(ts *tspb.Timestamp) string</a></dd>
+			
+				
+				<dd><a href="index.html#UnmarshalAny">func UnmarshalAny(any *any.Any, pb proto.Message) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#DynamicAny">type DynamicAny</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go">any.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/doc.go">doc.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration.go">duration.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp.go">timestamp.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="AnyMessageName">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=2266:2315#L43">AnyMessageName</a>
+				<a class="permalink" href="index.html#AnyMessageName">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AnyMessageName(any *<a href="any/index.html">any</a>.<a href="any/index.html#Any">Any</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+AnyMessageName returns the name of the message contained in a google.protobuf.Any message.
+</p>
+<p>
+Note that regular type assertions should be done using the Is
+function. AnyMessageName is provided for less common use cases like filtering a
+sequence of Any messages based on a set of allowed message type names.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Duration">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration.go?s=3149:3204#L66">Duration</a>
+				<a class="permalink" href="index.html#Duration">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Duration(p *<a href="duration/index.html">durpb</a>.<a href="duration/index.html#Duration">Duration</a>) (<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Duration converts a durpb.Duration to a time.Duration. Duration
+returns an error if the durpb.Duration is invalid or is too large to be
+represented in a time.Duration.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DurationProto">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration.go?s=3699:3750#L84">DurationProto</a>
+				<a class="permalink" href="index.html#DurationProto">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DurationProto(d <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) *<a href="duration/index.html">durpb</a>.<a href="duration/index.html#Duration">Duration</a></pre>
+			<p>
+DurationProto converts a time.Duration to a durpb.Duration.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Empty">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=3444:3491#L79">Empty</a>
+				<a class="permalink" href="index.html#Empty">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Empty(any *<a href="any/index.html">any</a>.<a href="any/index.html#Any">Any</a>) (<a href="../proto/index.html">proto</a>.<a href="../proto/index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Empty returns a new proto.Message of the type specified in a
+google.protobuf.Any message. It returns an error if corresponding message
+type isn&#39;t linked in.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Is">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=4588:4632#L122">Is</a>
+				<a class="permalink" href="index.html#Is">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Is(any *<a href="any/index.html">any</a>.<a href="any/index.html#Any">Any</a>, pb <a href="../proto/index.html">proto</a>.<a href="../proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+Is returns true if any value contains a given message type.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MarshalAny">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=2635:2686#L55">MarshalAny</a>
+				<a class="permalink" href="index.html#MarshalAny">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MarshalAny(pb <a href="../proto/index.html">proto</a>.<a href="../proto/index.html#Message">Message</a>) (*<a href="any/index.html">any</a>.<a href="any/index.html#Any">Any</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MarshalAny takes the protocol buffer and encodes it into google.protobuf.Any.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Timestamp">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp.go?s=3561:3614#L80">Timestamp</a>
+				<a class="permalink" href="index.html#Timestamp">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Timestamp(ts *<a href="timestamp/index.html">tspb</a>.<a href="timestamp/index.html#Timestamp">Timestamp</a>) (<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Timestamp converts a google.protobuf.Timestamp proto to a time.Time.
+It returns an error if the argument is invalid.
+</p>
+<p>
+Unlike most Go functions, if Timestamp returns an error, the first return value
+is not the zero time.Time. Instead, it is the value obtained from the
+time.Unix function when passed the contents of the Timestamp, in the UTC
+locale. This may or may not be a meaningful time; many invalid Timestamps
+do map to valid time.Times.
+</p>
+<p>
+A nil Timestamp returns an error. The first return value in that case is
+undefined.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="TimestampNow">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp.go?s=4022:4057#L93">TimestampNow</a>
+				<a class="permalink" href="index.html#TimestampNow">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func TimestampNow() *<a href="timestamp/index.html">tspb</a>.<a href="timestamp/index.html#Timestamp">Timestamp</a></pre>
+			<p>
+TimestampNow returns a google.protobuf.Timestamp for the current time.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="TimestampProto">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp.go?s=4327:4384#L103">TimestampProto</a>
+				<a class="permalink" href="index.html#TimestampProto">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func TimestampProto(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) (*<a href="timestamp/index.html">tspb</a>.<a href="timestamp/index.html#Timestamp">Timestamp</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+TimestampProto converts the time.Time to a google.protobuf.Timestamp proto.
+It returns an error if the resulting Timestamp is invalid.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="TimestampString">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/timestamp.go?s=4696:4743#L116">TimestampString</a>
+				<a class="permalink" href="index.html#TimestampString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func TimestampString(ts *<a href="timestamp/index.html">tspb</a>.<a href="timestamp/index.html#Timestamp">Timestamp</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+TimestampString returns the RFC 3339 string for valid Timestamps. For invalid
+Timestamps, it returns an error message in parentheses.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UnmarshalAny">func <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=4030:4085#L97">UnmarshalAny</a>
+				<a class="permalink" href="index.html#UnmarshalAny">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalAny(any *<a href="any/index.html">any</a>.<a href="any/index.html#Any">Any</a>, pb <a href="../proto/index.html">proto</a>.<a href="../proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+UnmarshalAny parses the protocol buffer representation in a google.protobuf.Any
+message and places the decoded result in pb. It returns an error if type of
+contents of Any message does not match type of pb message.
+</p>
+<p>
+pb can be a proto.Message, or a *DynamicAny.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="DynamicAny">type <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/any.go?s=3235:3276#L72">DynamicAny</a>
+				<a class="permalink" href="index.html#DynamicAny">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DynamicAny is a value that can be passed to UnmarshalAny to automatically
+allocate a proto.Message for the type specified in a google.protobuf.Any
+message. The allocated message is stored in the embedded proto.Message.
+</p>
+<p>
+Example:
+</p>
+<pre>var x ptypes.DynamicAny
+if err := ptypes.UnmarshalAny(a, &amp;x); err != nil { ... }
+fmt.Printf(&#34;unmarshaled message: %v&#34;, x.Message)
+</pre>
+
+			<pre>type DynamicAny struct {
+    <a href="../proto/index.html">proto</a>.<a href="../proto/index.html#Message">Message</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="any/index.html">any</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="duration/index.html">duration</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="empty/index.html">empty</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="struct/index.html">struct</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="timestamp/index.html">timestamp</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="wrappers/index.html">wrappers</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

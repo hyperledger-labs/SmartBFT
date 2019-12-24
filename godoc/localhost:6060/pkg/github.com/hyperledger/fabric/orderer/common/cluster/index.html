@@ -1,0 +1,3594 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>cluster - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package cluster
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/common/cluster"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AnyChannel">func AnyChannel(_ string) bool</a></dd>
+			
+				
+				<dd><a href="index.html#BlockToString">func BlockToString(block *common.Block) string</a></dd>
+			
+				
+				<dd><a href="index.html#ChannelCreationBlockToGenesisBlock">func ChannelCreationBlockToGenesisBlock(block *common.Block) (*common.Block, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ConfigFromBlock">func ConfigFromBlock(block *common.Block) (*common.ConfigEnvelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#DERtoPEM">func DERtoPEM(der []byte) string</a></dd>
+			
+				
+				<dd><a href="index.html#IsNewChannelBlock">func IsNewChannelBlock(block *common.Block) (string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#LastConfigBlock">func LastConfigBlock(block *common.Block, blockRetriever BlockRetriever) (*common.Block, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewStreamsByType">func NewStreamsByType() map[OperationType]map[uint64]*Stream</a></dd>
+			
+				
+				<dd><a href="index.html#Participant">func Participant(puller ChainPuller, analyzeLastConfBlock SelfMembershipPredicate) error</a></dd>
+			
+				
+				<dd><a href="index.html#PullLastConfigBlock">func PullLastConfigBlock(puller ChainPuller) (*common.Block, error)</a></dd>
+			
+				
+				<dd><a href="index.html#SignatureSetFromBlock">func SignatureSetFromBlock(block *common.Block) ([]*common.SignedData, error)</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyBlockHash">func VerifyBlockHash(indexInBuffer int, blockBuff []*common.Block) error</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyBlockSignature">func VerifyBlockSignature(block *common.Block, verifier BlockVerifier, config *common.ConfigEnvelope) error</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyBlocks">func VerifyBlocks(blockBuff []*common.Block, signatureVerifier BlockVerifier) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BlockCommitFunc">type BlockCommitFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockPuller">type BlockPuller</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockPullerFromConfigBlock">func BlockPullerFromConfigBlock(conf PullerConfig, block *common.Block, verifierRetriever VerifierRetriever) (*BlockPuller, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockPuller.Clone">func (p *BlockPuller) Clone() *BlockPuller</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockPuller.Close">func (p *BlockPuller) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockPuller.HeightsByEndpoints">func (p *BlockPuller) HeightsByEndpoints() (map[string]uint64, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockPuller.PullBlock">func (p *BlockPuller) PullBlock(seq uint64) *common.Block</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BlockRetriever">type BlockRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockSequenceVerifier">type BlockSequenceVerifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockValidationPolicyVerifier">type BlockValidationPolicyVerifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockValidationPolicyVerifier.VerifyBlockSignature">func (bv *BlockValidationPolicyVerifier) VerifyBlockSignature(sd []*common.SignedData, envelope *common.ConfigEnvelope) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BlockVerifier">type BlockVerifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockVerifierAssembler">type BlockVerifierAssembler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockVerifierAssembler.VerifierFromConfig">func (bva *BlockVerifierAssembler) VerifierFromConfig(configuration *common.ConfigEnvelope, channel string) (BlockVerifier, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChainInspector">type ChainInspector</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainInspector.Channels">func (ci *ChainInspector) Channels() []ChannelGenesisBlock</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainInspector.Close">func (ci *ChainInspector) Close()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChainPuller">type ChainPuller</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelExtractor">type ChannelExtractor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelGenesisBlock">type ChannelGenesisBlock</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelLister">type ChannelLister</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChannelPredicate">type ChannelPredicate</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClusterClient">type ClusterClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Comm">type Comm</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Comm.Configure">func (c *Comm) Configure(channel string, newNodes []RemoteNode)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Comm.DispatchConsensus">func (c *Comm) DispatchConsensus(ctx context.Context, request *orderer.ConsensusRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Comm.DispatchSubmit">func (c *Comm) DispatchSubmit(ctx context.Context, request *orderer.SubmitRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Comm.Remote">func (c *Comm) Remote(channel string, id uint64) (*RemoteContext, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Comm.Shutdown">func (c *Comm) Shutdown()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Communicator">type Communicator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnByCertMap">type ConnByCertMap</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnByCertMap.Lookup">func (cbc ConnByCertMap) Lookup(cert []byte) (*grpc.ClientConn, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnByCertMap.Put">func (cbc ConnByCertMap) Put(cert []byte, conn *grpc.ClientConn)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnByCertMap.Remove">func (cbc ConnByCertMap) Remove(cert []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnByCertMap.Size">func (cbc ConnByCertMap) Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConnectionMapper">type ConnectionMapper</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnectionStore">type ConnectionStore</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewConnectionStore">func NewConnectionStore(dialer SecureDialer, tlsConnectionCount metrics.Gauge) *ConnectionStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnectionStore.Connection">func (c *ConnectionStore) Connection(endpoint string, expectedServerCert []byte) (*grpc.ClientConn, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConnectionStore.Disconnect">func (c *ConnectionStore) Disconnect(expectedServerCert []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Dialer">type Dialer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Dispatcher">type Dispatcher</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EndpointCriteria">type EndpointCriteria</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndpointconfigFromConfigBlock">func EndpointconfigFromConfigBlock(block *common.Block) ([]EndpointCriteria, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GenesisBlocks">type GenesisBlocks</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GenesisBlocks.Names">func (gbs GenesisBlocks) Names() []string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ImpatientStream">type ImpatientStream</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ImpatientStream.Recv">func (stream *ImpatientStream) Recv() (*orderer.DeliverResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ImpatientStreamCreator">type ImpatientStreamCreator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewImpatientStream">func NewImpatientStream(conn *grpc.ClientConn, waitTimeout time.Duration) ImpatientStreamCreator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LedgerFactory">type LedgerFactory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LedgerInterceptor">type LedgerInterceptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerInterceptor.Append">func (interceptor *LedgerInterceptor) Append(block *common.Block) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LedgerWriter">type LedgerWriter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MemberMapping">type MemberMapping</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemberMapping.ByID">func (mp MemberMapping) ByID(ID uint64) *Stub</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemberMapping.LookupByClientCert">func (mp MemberMapping) LookupByClientCert(cert []byte) *Stub</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemberMapping.Put">func (mp MemberMapping) Put(stub *Stub)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MemberMapping.ServerCertificates">func (mp MemberMapping) ServerCertificates() StringSet</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MembersByChannel">type MembersByChannel</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Metrics">type Metrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMetrics">func NewMetrics(provider MetricsProvider) *Metrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MetricsProvider">type MetricsProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NoopBlockVerifier">type NoopBlockVerifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NoopBlockVerifier.VerifyBlockSignature">func (*NoopBlockVerifier) VerifyBlockSignature(sd []*common.SignedData, config *common.ConfigEnvelope) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OperationType">type OperationType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PredicateDialer">type PredicateDialer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PredicateDialer.Dial">func (dialer *PredicateDialer) Dial(address string, verifyFunc RemoteVerifier) (*grpc.ClientConn, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PredicateDialer.UpdateRootCAs">func (dialer *PredicateDialer) UpdateRootCAs(serverRootCAs [][]byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PullerConfig">type PullerConfig</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PullerConfigFromTopLevelConfig">func PullerConfigFromTopLevelConfig(systemChannel string, conf *localconfig.TopLevel, tlsKey, tlsCert []byte, signer crypto.LocalSigner) PullerConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RPC">type RPC</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RPC.SendConsensus">func (s *RPC) SendConsensus(destination uint64, msg *orderer.ConsensusRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RPC.SendSubmit">func (s *RPC) SendSubmit(destination uint64, request *orderer.SubmitRequest) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RemoteContext">type RemoteContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RemoteContext.Abort">func (rc *RemoteContext) Abort()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RemoteContext.NewStream">func (rc *RemoteContext) NewStream(timeout time.Duration) (*Stream, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RemoteNode">type RemoteNode</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RemoteNode.String">func (rm RemoteNode) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RemoteVerifier">type RemoteVerifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Replicator">type Replicator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Replicator.IsReplicationNeeded">func (r *Replicator) IsReplicationNeeded() (bool, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Replicator.PullChannel">func (r *Replicator) PullChannel(channel string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Replicator.ReplicateChains">func (r *Replicator) ReplicateChains() []string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SecureDialer">type SecureDialer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelfMembershipPredicate">type SelfMembershipPredicate</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Service">type Service</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Service.Step">func (s *Service) Step(stream orderer.Cluster_StepServer) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StandardDialer">type StandardDialer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StandardDialer.Dial">func (dialer *StandardDialer) Dial(endpointCriteria EndpointCriteria) (*grpc.ClientConn, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StepClient">type StepClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StepStream">type StepStream</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Stream">type Stream</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stream.Canceled">func (stream *Stream) Canceled() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stream.Recv">func (stream *Stream) Recv() (*orderer.StepResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stream.Send">func (stream *Stream) Send(request *orderer.StepRequest) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StreamCountReporter">type StreamCountReporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StreamCountReporter.Decrement">func (scr *StreamCountReporter) Decrement()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StreamCountReporter.Increment">func (scr *StreamCountReporter) Increment()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StreamOperation">type StreamOperation</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#StringSet">type StringSet</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Stub">type Stub</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stub.Activate">func (stub *Stub) Activate(createRemoteContext func() (*RemoteContext, error)) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stub.Active">func (stub *Stub) Active() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Stub.Deactivate">func (stub *Stub) Deactivate()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VerificationRegistry">type VerificationRegistry</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VerificationRegistry.BlockCommitted">func (vr *VerificationRegistry) BlockCommitted(block *common.Block, channel string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VerificationRegistry.RegisterVerifier">func (vr *VerificationRegistry) RegisterVerifier(chain string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VerificationRegistry.RetrieveVerifier">func (vr *VerificationRegistry) RetrieveVerifier(channel string) BlockVerifier</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VerifierFactory">type VerifierFactory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#VerifierRetriever">type VerifierRetriever</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go">comm.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go">connections.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go">deliver.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/metrics.go">metrics.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go">replication.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go">rpc.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/service.go">service.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// MinimumExpirationWarningInterval is the default minimum time interval</span>
+    <span class="comment">// between consecutive warnings about certificate expiration.</span>
+    <span id="MinimumExpirationWarningInterval">MinimumExpirationWarningInterval</span> = <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Minute">Minute</a> * 5
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// RetryTimeout is the time the block puller retries.</span>
+    <span id="RetryTimeout">RetryTimeout</span> = <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 10
+)</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span id="EgressQueueLengthOpts">EgressQueueLengthOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;egress_queue_length&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Length of the egress queue.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;host&#34;, &#34;msg_type&#34;, &#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{host}.%{msg_type}.%{channel}&#34;,
+    }
+
+    <span id="EgressQueueCapacityOpts">EgressQueueCapacityOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;egress_queue_capacity&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Capacity of the egress queue.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;host&#34;, &#34;msg_type&#34;, &#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{host}.%{msg_type}.%{channel}&#34;,
+    }
+
+    <span id="EgressWorkersOpts">EgressWorkersOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;egress_queue_workers&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Count of egress queue workers.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{channel}&#34;,
+    }
+
+    <span id="IngressStreamsCountOpts">IngressStreamsCountOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;ingress_stream_count&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Count of streams from other nodes.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}&#34;,
+    }
+
+    <span id="EgressStreamsCountOpts">EgressStreamsCountOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;egress_stream_count&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Count of streams to other nodes.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{channel}&#34;,
+    }
+
+    <span id="EgressTLSConnectionCountOpts">EgressTLSConnectionCountOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>{
+        <a href="../../../common/metrics/index.html#GaugeOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Name">Name</a>:         &#34;egress_tls_connection_count&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.Help">Help</a>:         &#34;Count of TLS connections to other nodes.&#34;,
+        <a href="../../../common/metrics/index.html#GaugeOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}&#34;,
+    }
+
+    <span id="MessageSendTimeOpts">MessageSendTimeOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#HistogramOpts">HistogramOpts</a>{
+        <a href="../../../common/metrics/index.html#HistogramOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#HistogramOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#HistogramOpts.Name">Name</a>:         &#34;msg_send_time&#34;,
+        <a href="../../../common/metrics/index.html#HistogramOpts.Help">Help</a>:         &#34;The time it takes to send a message in seconds.&#34;,
+        <a href="../../../common/metrics/index.html#HistogramOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;host&#34;, &#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#HistogramOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{host}.%{channel}&#34;,
+    }
+
+    <span id="MessagesDroppedCountOpts">MessagesDroppedCountOpts</span> = <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#CounterOpts">CounterOpts</a>{
+        <a href="../../../common/metrics/index.html#CounterOpts.Namespace">Namespace</a>:    &#34;cluster&#34;,
+        <a href="../../../common/metrics/index.html#CounterOpts.Subsystem">Subsystem</a>:    &#34;comm&#34;,
+        <a href="../../../common/metrics/index.html#CounterOpts.Name">Name</a>:         &#34;msg_dropped_count&#34;,
+        <a href="../../../common/metrics/index.html#CounterOpts.Help">Help</a>:         &#34;Count of messages dropped.&#34;,
+        <a href="../../../common/metrics/index.html#CounterOpts.LabelNames">LabelNames</a>:   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>{&#34;host&#34;, &#34;channel&#34;},
+        <a href="../../../common/metrics/index.html#CounterOpts.StatsdFormat">StatsdFormat</a>: &#34;%{#fqname}.%{host}.%{channel}&#34;,
+    }
+)</pre>
+			
+				<p>
+ErrForbidden denotes that an ordering node refuses sending blocks due to access control.
+</p>
+
+				<pre>var <span id="ErrForbidden">ErrForbidden</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;forbidden pulling the channel&#34;)</pre>
+			
+				<p>
+ErrNotInChannel denotes that an ordering node is not in the channel
+</p>
+
+				<pre>var <span id="ErrNotInChannel">ErrNotInChannel</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;not in the channel&#34;)</pre>
+			
+				
+				<pre>var <span id="ErrRetryCountExhausted">ErrRetryCountExhausted</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;retry attempts exhausted&#34;)</pre>
+			
+				<p>
+ErrServiceUnavailable denotes that an ordering node is not servicing at the moment.
+</p>
+
+				<pre>var <span id="ErrServiceUnavailable">ErrServiceUnavailable</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;service unavailable&#34;)</pre>
+			
+				<p>
+ErrSkipped denotes that replicating a chain was skipped
+</p>
+
+				<pre>var <span id="ErrSkipped">ErrSkipped</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;skipped&#34;)</pre>
+			
+		
+		
+			
+			
+			<h2 id="AnyChannel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=751:781#L24">AnyChannel</a>
+				<a class="permalink" href="index.html#AnyChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AnyChannel(_ <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+AnyChannel accepts all channels.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="BlockToString">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=16657:16703#L496">BlockToString</a>
+				<a class="permalink" href="index.html#BlockToString">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BlockToString(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+BlockToString returns a string representation of this block.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ChannelCreationBlockToGenesisBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=20908:20991#L597">ChannelCreationBlockToGenesisBlock</a>
+				<a class="permalink" href="index.html#ChannelCreationBlockToGenesisBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ChannelCreationBlockToGenesisBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ChannelCreationBlockToGenesisBlock converts a channel creation block to a genesis block
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConfigFromBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=7018:7091#L225">ConfigFromBlock</a>
+				<a class="permalink" href="index.html#ConfigFromBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConfigFromBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ConfigFromBlock returns a ConfigEnvelope if exists, or a *NotAConfigBlock error.
+It may also return some other error in case parsing failed.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DERtoPEM">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=3604:3636#L126">DERtoPEM</a>
+				<a class="permalink" href="index.html#DERtoPEM">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DERtoPEM(der []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+DERtoPEM returns a PEM representation of the DER
+encoded certificate
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsNewChannelBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=21932:21991#L627">IsNewChannelBlock</a>
+				<a class="permalink" href="index.html#IsNewChannelBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsNewChannelBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+IsNewChannelBlock returns a name of the channel in case
+it holds a channel create transaction, or empty string otherwise.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="LastConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=19581:19676#L577">LastConfigBlock</a>
+				<a class="permalink" href="index.html#LastConfigBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LastConfigBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, blockRetriever <a href="index.html#BlockRetriever">BlockRetriever</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+LastConfigBlock returns the last config block relative to the given block.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewStreamsByType">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=1320:1380#L41">NewStreamsByType</a>
+				<a class="permalink" href="index.html#NewStreamsByType">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewStreamsByType() map[<a href="index.html#OperationType">OperationType</a>]map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="index.html#Stream">Stream</a></pre>
+			<p>
+NewStreamsByType returns a mapping of operation type to
+a mapping of destination to stream.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Participant">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=16150:16238#L449">Participant</a>
+				<a class="permalink" href="index.html#Participant">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Participant(puller <a href="index.html#ChainPuller">ChainPuller</a>, analyzeLastConfBlock <a href="index.html#SelfMembershipPredicate">SelfMembershipPredicate</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+Participant returns whether the caller participates in the chain.
+It receives a ChainPuller that should already be calibrated for the chain,
+and a SelfMembershipPredicate that is used to detect whether the caller should service the chain.
+It returns nil if the caller participates in the chain.
+It may return:
+ErrNotInChannel in case the caller doesn&#39;t participate in the chain.
+ErrForbidden in case the caller is forbidden from pulling the block.
+ErrServiceUnavailable in case all orderers reachable cannot complete the request.
+ErrRetryCountExhausted in case no orderer is reachable.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PullLastConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=16467:16534#L458">PullLastConfigBlock</a>
+				<a class="permalink" href="index.html#PullLastConfigBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PullLastConfigBlock(puller <a href="index.html#ChainPuller">ChainPuller</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+PullLastConfigBlock pulls the last configuration block, or returns an error on failure.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SignatureSetFromBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=9863:9940#L303">SignatureSetFromBlock</a>
+				<a class="permalink" href="index.html#SignatureSetFromBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SignatureSetFromBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) ([]*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SignatureSetFromBlock creates a signature set out of a block.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyBlockHash">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=8253:8325#L264">VerifyBlockHash</a>
+				<a class="permalink" href="index.html#VerifyBlockHash">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyBlockHash(indexInBuffer <a href="http://localhost:6060/pkg/builtin/#int">int</a>, blockBuff []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+VerifyBlockHash verifies the hash chain of the block with the given index
+among the blocks of the given block buffer.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyBlockSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=11013:11120#L332">VerifyBlockSignature</a>
+				<a class="permalink" href="index.html#VerifyBlockSignature">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyBlockSignature(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, verifier <a href="index.html#BlockVerifier">BlockVerifier</a>, config *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+VerifyBlockSignature verifies the signature on the block with the given BlockVerifier and the given config.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyBlocks">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=5421:5504#L176">VerifyBlocks</a>
+				<a class="permalink" href="index.html#VerifyBlocks">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyBlocks(blockBuff []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, signatureVerifier <a href="index.html#BlockVerifier">BlockVerifier</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+VerifyBlocks verifies the given consecutive sequence of blocks is valid,
+and returns nil if it&#39;s valid, else an error.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BlockCommitFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=16840:16902#L503">BlockCommitFunc</a>
+				<a class="permalink" href="index.html#BlockCommitFunc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockCommitFunc signals a block commit.
+</p>
+
+			<pre>type BlockCommitFunc func(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockPuller">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=622:1215#L20">BlockPuller</a>
+				<a class="permalink" href="index.html#BlockPuller">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockPuller pulls blocks from remote ordering nodes.
+Its operations are not thread safe.
+</p>
+
+			<pre>type BlockPuller struct {
+    <span class="comment">// Configuration</span>
+<span id="BlockPuller.MaxPullBlockRetries"></span>    MaxPullBlockRetries <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="BlockPuller.MaxTotalBufferBytes"></span>    MaxTotalBufferBytes <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="BlockPuller.Signer"></span>    Signer              <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a>
+<span id="BlockPuller.TLSCert"></span>    TLSCert             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="BlockPuller.Channel"></span>    Channel             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BlockPuller.FetchTimeout"></span>    FetchTimeout        <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="BlockPuller.RetryTimeout"></span>    RetryTimeout        <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="BlockPuller.Logger"></span>    Logger              *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="BlockPuller.Dialer"></span>    Dialer              <a href="index.html#Dialer">Dialer</a>
+<span id="BlockPuller.VerifyBlockSequence"></span>    VerifyBlockSequence <a href="index.html#BlockSequenceVerifier">BlockSequenceVerifier</a>
+<span id="BlockPuller.Endpoints"></span>    Endpoints           []<a href="index.html#EndpointCriteria">EndpointCriteria</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="BlockPullerFromConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=12465:12595#L345">BlockPullerFromConfigBlock</a>
+					<a class="permalink" href="index.html#BlockPullerFromConfigBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func BlockPullerFromConfigBlock(conf <a href="index.html#PullerConfig">PullerConfig</a>, block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, verifierRetriever <a href="index.html#VerifierRetriever">VerifierRetriever</a>) (*<a href="index.html#BlockPuller">BlockPuller</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+BlockPullerFromConfigBlock returns a BlockPuller that doesn&#39;t verify signatures on blocks.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BlockPuller.Clone">func (*BlockPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=1298:1340#L44">Clone</a>
+					<a class="permalink" href="index.html#BlockPuller.Clone">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#BlockPuller">BlockPuller</a>) Clone() *<a href="index.html#BlockPuller">BlockPuller</a></pre>
+				<p>
+Clone returns a copy of this BlockPuller initialized
+for the given channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockPuller.Close">func (*BlockPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=1667:1696#L59">Close</a>
+					<a class="permalink" href="index.html#BlockPuller.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#BlockPuller">BlockPuller</a>) Close()</pre>
+				<p>
+Close makes the BlockPuller close the connection and stream
+with the remote endpoint, and wipe the internal block buffer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockPuller.HeightsByEndpoints">func (*BlockPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=2544:2613#L94">HeightsByEndpoints</a>
+					<a class="permalink" href="index.html#BlockPuller.HeightsByEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#BlockPuller">BlockPuller</a>) HeightsByEndpoints() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+HeightsByEndpoints returns the block heights by endpoints of orderers
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockPuller.PullBlock">func (*BlockPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=2069:2126#L77">PullBlock</a>
+					<a class="permalink" href="index.html#BlockPuller.PullBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#BlockPuller">BlockPuller</a>) PullBlock(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+PullBlock blocks until a block with the given sequence is fetched
+from some remote ordering node, or until consecutive failures
+of fetching the block exceed MaxPullBlockRetries.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BlockRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=19341:19501#L570">BlockRetriever</a>
+				<a class="permalink" href="index.html#BlockRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockRetriever retrieves blocks
+</p>
+
+			<pre>type BlockRetriever interface {
+    <span class="comment">// Block returns a block with the given number,</span>
+    <span class="comment">// or nil if such a block doesn&#39;t exist.</span>
+    Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockSequenceVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=5067:5144#L167">BlockSequenceVerifier</a>
+				<a class="permalink" href="index.html#BlockSequenceVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockSequenceVerifier verifies that the given consecutive sequence
+of blocks is valid.
+</p>
+
+			<pre>type BlockSequenceVerifier func(blocks []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockValidationPolicyVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=18112:18237#L539">BlockValidationPolicyVerifier</a>
+				<a class="permalink" href="index.html#BlockValidationPolicyVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockValidationPolicyVerifier verifies signatures based on the block validation policy.
+</p>
+
+			<pre>type BlockValidationPolicyVerifier struct {
+<span id="BlockValidationPolicyVerifier.Logger"></span>    Logger    *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="BlockValidationPolicyVerifier.Channel"></span>    Channel   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BlockValidationPolicyVerifier.PolicyMgr"></span>    PolicyMgr <a href="../../../common/policies/index.html">policies</a>.<a href="../../../common/policies/index.html#Manager">Manager</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockValidationPolicyVerifier.VerifyBlockSignature">func (*BlockValidationPolicyVerifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=18354:18479#L546">VerifyBlockSignature</a>
+					<a class="permalink" href="index.html#BlockValidationPolicyVerifier.VerifyBlockSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bv *<a href="index.html#BlockValidationPolicyVerifier">BlockValidationPolicyVerifier</a>) VerifyBlockSignature(sd []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>, envelope *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyBlockSignature verifies the signed data associated to a block, optionally with the given config envelope.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BlockVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=4472:4972#L155">BlockVerifier</a>
+				<a class="permalink" href="index.html#BlockVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockVerifier verifies block signatures.
+</p>
+
+			<pre>type BlockVerifier interface {
+    <span class="comment">// VerifyBlockSignature verifies a signature of a block.</span>
+    <span class="comment">// It has an optional argument of a configuration envelope</span>
+    <span class="comment">// which would make the block verification to use validation rules</span>
+    <span class="comment">// based on the given configuration in the ConfigEnvelope.</span>
+    <span class="comment">// If the config envelope passed is nil, then the validation rules used</span>
+    <span class="comment">// are the ones that were applied at commit of previous blocks.</span>
+    VerifyBlockSignature(sd []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>, config *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockVerifierAssembler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=17417:17486#L519">BlockVerifierAssembler</a>
+				<a class="permalink" href="index.html#BlockVerifierAssembler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockVerifierAssembler creates a BlockVerifier out of a config envelope
+</p>
+
+			<pre>type BlockVerifierAssembler struct {
+<span id="BlockVerifierAssembler.Logger"></span>    Logger *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockVerifierAssembler.VerifierFromConfig">func (*BlockVerifierAssembler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=17564:17694#L524">VerifierFromConfig</a>
+					<a class="permalink" href="index.html#BlockVerifierAssembler.VerifierFromConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bva *<a href="index.html#BlockVerifierAssembler">BlockVerifierAssembler</a>) VerifierFromConfig(configuration *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#BlockVerifier">BlockVerifier</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+VerifierFromConfig creates a BlockVerifier from the given configuration.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChainInspector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=14644:14774#L417">ChainInspector</a>
+				<a class="permalink" href="index.html#ChainInspector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChainInspector walks over a chain
+</p>
+
+			<pre>type ChainInspector struct {
+<span id="ChainInspector.Logger"></span>    Logger          *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="ChainInspector.Puller"></span>    Puller          <a href="index.html#ChainPuller">ChainPuller</a>
+<span id="ChainInspector.LastConfigBlock"></span>    LastConfigBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChainInspector.Channels">func (*ChainInspector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=18649:18707#L534">Channels</a>
+					<a class="permalink" href="index.html#ChainInspector.Channels">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ci *<a href="index.html#ChainInspector">ChainInspector</a>) Channels() []<a href="index.html#ChannelGenesisBlock">ChannelGenesisBlock</a></pre>
+				<p>
+Channels returns the list of ChannelGenesisBlocks
+for all channels. Each such ChannelGenesisBlock contains
+the genesis block of the channel.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainInspector.Close">func (*ChainInspector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=17996:18029#L509">Close</a>
+					<a class="permalink" href="index.html#ChainInspector.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ci *<a href="index.html#ChainInspector">ChainInspector</a>) Close()</pre>
+				<p>
+Close closes the ChainInspector
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChainPuller">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=14312:14605#L405">ChainPuller</a>
+				<a class="permalink" href="index.html#ChainPuller">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChainPuller pulls blocks from a chain
+</p>
+
+			<pre>type ChainPuller interface {
+    <span class="comment">// PullBlock pulls the given block from some orderer node</span>
+    PullBlock(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+
+    <span class="comment">// HeightsByEndpoints returns the block heights by endpoints of orderers</span>
+    HeightsByEndpoints() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Close closes the ChainPuller</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelExtractor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=953:1033#L33">ChannelExtractor</a>
+				<a class="permalink" href="index.html#ChannelExtractor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelExtractor extracts the channel of a given message,
+or returns an empty string if that&#39;s not possible
+</p>
+
+			<pre>type ChannelExtractor interface {
+    TargetChannel(message <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelGenesisBlock">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=18112:18196#L514">ChannelGenesisBlock</a>
+				<a class="permalink" href="index.html#ChannelGenesisBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelGenesisBlock wraps a Block and its channel name
+</p>
+
+			<pre>type ChannelGenesisBlock struct {
+<span id="ChannelGenesisBlock.ChannelName"></span>    ChannelName  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChannelGenesisBlock.GenesisBlock"></span>    GenesisBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelLister">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=2204:2354#L65">ChannelLister</a>
+				<a class="permalink" href="index.html#ChannelLister">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelLister returns a list of channels
+</p>
+
+			<pre>type ChannelLister interface {
+    <span class="comment">// Channels returns a list of channels</span>
+    Channels() []<a href="index.html#ChannelGenesisBlock">ChannelGenesisBlock</a>
+    <span class="comment">// Close closes the ChannelLister</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChannelPredicate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=662:713#L21">ChannelPredicate</a>
+				<a class="permalink" href="index.html#ChannelPredicate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelPredicate accepts channels according to their names.
+</p>
+
+			<pre>type ChannelPredicate func(channelName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ClusterClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=766:886#L23">ClusterClient</a>
+				<a class="permalink" href="index.html#ClusterClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClusterClient creates streams that point to a remote cluster member.
+</p>
+
+			<pre>type ClusterClient interface {
+    Step(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#Cluster_StepClient">Cluster_StepClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Comm">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=2864:3447#L84">Comm</a>
+				<a class="permalink" href="index.html#Comm">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Comm implements Communicator
+</p>
+
+			<pre>type Comm struct {
+<span id="Comm.MinimumExpirationWarningInterval"></span>    MinimumExpirationWarningInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Comm.CertExpWarningThreshold"></span>    CertExpWarningThreshold          <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+
+<span id="Comm.SendBufferSize"></span>    SendBufferSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Comm.Lock"></span>    Lock           <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#RWMutex">RWMutex</a>
+<span id="Comm.Logger"></span>    Logger         *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Comm.ChanExt"></span>    ChanExt        <a href="index.html#ChannelExtractor">ChannelExtractor</a>
+<span id="Comm.H"></span>    H              <a href="index.html#Handler">Handler</a>
+<span id="Comm.Connections"></span>    Connections    *<a href="index.html#ConnectionStore">ConnectionStore</a>
+<span id="Comm.Chan2Members"></span>    Chan2Members   <a href="index.html#MembersByChannel">MembersByChannel</a>
+<span id="Comm.Metrics"></span>    Metrics        *<a href="index.html#Metrics">Metrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Comm.Configure">func (*Comm) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=5943:6006#L186">Configure</a>
+					<a class="permalink" href="index.html#Comm.Configure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Comm">Comm</a>) Configure(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, newNodes []<a href="index.html#RemoteNode">RemoteNode</a>)</pre>
+				<p>
+Configure configures the channel with the given RemoteNodes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Comm.DispatchConsensus">func (*Comm) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=3983:4077#L116">DispatchConsensus</a>
+					<a class="permalink" href="index.html#Comm.DispatchConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Comm">Comm</a>) DispatchConsensus(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DispatchConsensus identifies the channel and sender of the step request and passes it
+to the underlying Handler
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Comm.DispatchSubmit">func (*Comm) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=3630:3718#L106">DispatchSubmit</a>
+					<a class="permalink" href="index.html#Comm.DispatchSubmit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Comm">Comm</a>) DispatchSubmit(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DispatchSubmit identifies the channel and sender of the submit request and passes it
+to the underlying Handler
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Comm.Remote">func (*Comm) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=5207:5279#L157">Remote</a>
+					<a class="permalink" href="index.html#Comm.Remote">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Comm">Comm</a>) Remote(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="index.html#RemoteContext">RemoteContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Remote obtains a RemoteContext linked to the destination node on the context
+of a given channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Comm.Shutdown">func (*Comm) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=6647:6672#L213">Shutdown</a>
+					<a class="permalink" href="index.html#Comm.Shutdown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Comm">Comm</a>) Shutdown()</pre>
+				<p>
+Shutdown shuts down the instance
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Communicator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=2187:2711#L66">Communicator</a>
+				<a class="permalink" href="index.html#Communicator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Communicator defines communication for a consenter
+</p>
+
+			<pre>type Communicator interface {
+    <span class="comment">// Remote returns a RemoteContext for the given RemoteNode ID in the context</span>
+    <span class="comment">// of the given channel, or error if connection cannot be established, or</span>
+    <span class="comment">// the channel wasn&#39;t configured</span>
+    Remote(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="index.html#RemoteContext">RemoteContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Configure configures the communication to connect to all</span>
+    <span class="comment">// given members, and disconnect from any members not among the given</span>
+    <span class="comment">// members.</span>
+    Configure(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, members []<a href="index.html#RemoteNode">RemoteNode</a>)
+    <span class="comment">// Shutdown shuts down the communicator</span>
+    Shutdown()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConnByCertMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=763:809#L22">ConnByCertMap</a>
+				<a class="permalink" href="index.html#ConnByCertMap">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnByCertMap maps certificates represented as strings
+to gRPC connections
+</p>
+
+			<pre>type ConnByCertMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConnByCertMap.Lookup">func (ConnByCertMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=942:1011#L26">Lookup</a>
+					<a class="permalink" href="index.html#ConnByCertMap.Lookup">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cbc <a href="index.html#ConnByCertMap">ConnByCertMap</a>) Lookup(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Lookup looks up a certificate and returns the connection that was mapped
+to the certificate, and whether it was found or not
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConnByCertMap.Put">func (ConnByCertMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1123:1187#L32">Put</a>
+					<a class="permalink" href="index.html#ConnByCertMap.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cbc <a href="index.html#ConnByCertMap">ConnByCertMap</a>) Put(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>)</pre>
+				<p>
+Put associates the given connection to the certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConnByCertMap.Remove">func (ConnByCertMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1296:1340#L37">Remove</a>
+					<a class="permalink" href="index.html#ConnByCertMap.Remove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cbc <a href="index.html#ConnByCertMap">ConnByCertMap</a>) Remove(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+Remove removes the connection that is associated to the given certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConnByCertMap.Size">func (ConnByCertMap) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1373:1408#L41">Size</a>
+					<a class="permalink" href="index.html#ConnByCertMap.Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cbc <a href="index.html#ConnByCertMap">ConnByCertMap</a>) Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConnectionMapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=705:860#L21">ConnectionMapper</a>
+				<a class="permalink" href="index.html#ConnectionMapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionMapper maps certificates to connections
+</p>
+
+			<pre>type ConnectionMapper interface {
+    Lookup(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    Put(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>)
+    Remove(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+    Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConnectionStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=916:1075#L29">ConnectionStore</a>
+				<a class="permalink" href="index.html#ConnectionStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnectionStore stores connections to remote nodes
+</p>
+
+			<pre>type ConnectionStore struct {
+<span id="ConnectionStore.Connections"></span>    Connections <a href="index.html#ConnectionMapper">ConnectionMapper</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewConnectionStore">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=1157:1252#L37">NewConnectionStore</a>
+					<a class="permalink" href="index.html#NewConnectionStore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewConnectionStore(dialer <a href="index.html#SecureDialer">SecureDialer</a>, tlsConnectionCount <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>) *<a href="index.html#ConnectionStore">ConnectionStore</a></pre>
+				<p>
+NewConnectionStore creates a new ConnectionStore with the given SecureDialer
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ConnectionStore.Connection">func (*ConnectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=2423:2529#L74">Connection</a>
+					<a class="permalink" href="index.html#ConnectionStore.Connection">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ConnectionStore">ConnectionStore</a>) Connection(endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>, expectedServerCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Connection obtains a connection to the given endpoint and expects the given server certificate
+to be presented by the remote node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ConnectionStore.Disconnect">func (*ConnectionStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=2033:2096#L60">Disconnect</a>
+					<a class="permalink" href="index.html#ConnectionStore.Disconnect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ConnectionStore">ConnectionStore</a>) Disconnect(expectedServerCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+Disconnect closes the gRPC connection that is mapped to the given certificate
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Dialer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=5202:5294#L170">Dialer</a>
+				<a class="permalink" href="index.html#Dialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Dialer creates a gRPC connection to a remote address
+</p>
+
+			<pre>type Dialer interface {
+    Dial(endpointCriteria <a href="index.html#EndpointCriteria">EndpointCriteria</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Dispatcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/service.go?s=490:675#L15">Dispatcher</a>
+				<a class="permalink" href="index.html#Dispatcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Dispatcher dispatches requests
+</p>
+
+			<pre>type Dispatcher interface {
+    DispatchSubmit(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    DispatchConsensus(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EndpointCriteria">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=11351:11499#L341">EndpointCriteria</a>
+				<a class="permalink" href="index.html#EndpointCriteria">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndpointCriteria defines criteria of how to connect to a remote orderer node.
+</p>
+
+			<pre>type EndpointCriteria struct {
+<span id="EndpointCriteria.Endpoint"></span>    Endpoint   <a href="http://localhost:6060/pkg/builtin/#string">string</a>   <span class="comment">// Endpoint of the form host:port</span>
+<span id="EndpointCriteria.TLSRootCAs"></span>    TLSRootCAs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// PEM encoded TLS root CA certificates</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="EndpointconfigFromConfigBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=11602:11685#L348">EndpointconfigFromConfigBlock</a>
+					<a class="permalink" href="index.html#EndpointconfigFromConfigBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func EndpointconfigFromConfigBlock(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) ([]<a href="index.html#EndpointCriteria">EndpointCriteria</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+EndpointconfigFromConfigBlock retrieves TLS CA certificates and endpoints
+from a config block.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="GenesisBlocks">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=18255:18295#L520">GenesisBlocks</a>
+				<a class="permalink" href="index.html#GenesisBlocks">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GenesisBlocks aggregates several ChannelGenesisBlocks
+</p>
+
+			<pre>type GenesisBlocks []<a href="index.html#ChannelGenesisBlock">ChannelGenesisBlock</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GenesisBlocks.Names">func (GenesisBlocks) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=18357:18398#L523">Names</a>
+					<a class="permalink" href="index.html#GenesisBlocks.Names">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (gbs <a href="index.html#GenesisBlocks">GenesisBlocks</a>) Names() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Names returns the channel names all ChannelGenesisBlocks
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=1198:1380#L40">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler handles Step() and Submit() requests and returns a corresponding response
+</p>
+
+			<pre>type Handler interface {
+    OnConsensus(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    OnSubmit(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ImpatientStream">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=14891:15007#L493">ImpatientStream</a>
+				<a class="permalink" href="index.html#ImpatientStream">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ImpatientStream aborts the stream if it waits for too long for a message.
+</p>
+
+			<pre>type ImpatientStream struct {
+    <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#AtomicBroadcast_DeliverClient">AtomicBroadcast_DeliverClient</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ImpatientStream.Recv">func (*ImpatientStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=15161:15232#L505">Recv</a>
+					<a class="permalink" href="index.html#ImpatientStream.Recv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stream *<a href="index.html#ImpatientStream">ImpatientStream</a>) Recv() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#DeliverResponse">DeliverResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Recv blocks until a response is received from the stream or the
+timeout expires.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ImpatientStreamCreator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=14752:14812#L490">ImpatientStreamCreator</a>
+				<a class="permalink" href="index.html#ImpatientStreamCreator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ImpatientStreamCreator creates an ImpatientStream
+</p>
+
+			<pre>type ImpatientStreamCreator func() (*<a href="index.html#ImpatientStream">ImpatientStream</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewImpatientStream">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/deliver.go?s=16035:16131#L534">NewImpatientStream</a>
+					<a class="permalink" href="index.html#NewImpatientStream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewImpatientStream(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, waitTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) <a href="index.html#ImpatientStreamCreator">ImpatientStreamCreator</a></pre>
+				<p>
+NewImpatientStream returns a ImpatientStreamCreator that creates impatientStreams.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="LedgerFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=1905:2076#L56">LedgerFactory</a>
+				<a class="permalink" href="index.html#LedgerFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerFactory retrieves or creates new ledgers by chainID
+</p>
+
+			<pre>type LedgerFactory interface {
+    <span class="comment">// GetOrCreate gets an existing ledger (if it exists)</span>
+    <span class="comment">// or creates it if it does not</span>
+    GetOrCreate(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#LedgerWriter">LedgerWriter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LedgerInterceptor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=16951:17065#L506">LedgerInterceptor</a>
+				<a class="permalink" href="index.html#LedgerInterceptor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerInterceptor intercepts block commits.
+</p>
+
+			<pre>type LedgerInterceptor struct {
+<span id="LedgerInterceptor.Channel"></span>    Channel              <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="LedgerInterceptor.InterceptBlockCommit"></span>    InterceptBlockCommit <a href="index.html#BlockCommitFunc">BlockCommitFunc</a>
+    <a href="index.html#LedgerWriter">LedgerWriter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LedgerInterceptor.Append">func (*LedgerInterceptor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=17150:17221#L513">Append</a>
+					<a class="permalink" href="index.html#LedgerInterceptor.Append">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (interceptor *<a href="index.html#LedgerInterceptor">LedgerInterceptor</a>) Append(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Append commits a block into the ledger, and also fires the configured callback.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LedgerWriter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=1585:1760#L45">LedgerWriter</a>
+				<a class="permalink" href="index.html#LedgerWriter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerWriter allows the caller to write blocks and inspect the height
+</p>
+
+			<pre>type LedgerWriter interface {
+    <span class="comment">// Append a new block to the ledger</span>
+    Append(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Height returns the number of blocks on the ledger</span>
+    Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MemberMapping">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1483:1518#L46">MemberMapping</a>
+				<a class="permalink" href="index.html#MemberMapping">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MemberMapping defines NetworkMembers by their ID
+</p>
+
+			<pre>type MemberMapping map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="index.html#Stub">Stub</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MemberMapping.ByID">func (MemberMapping) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1704:1749#L54">ByID</a>
+					<a class="permalink" href="index.html#MemberMapping.ByID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mp <a href="index.html#MemberMapping">MemberMapping</a>) ByID(ID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="index.html#Stub">Stub</a></pre>
+				<p>
+ByID retrieves the Stub with the given ID from the MemberMapping
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemberMapping.LookupByClientCert">func (MemberMapping) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1843:1904#L59">LookupByClientCert</a>
+					<a class="permalink" href="index.html#MemberMapping.LookupByClientCert">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mp <a href="index.html#MemberMapping">MemberMapping</a>) LookupByClientCert(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="index.html#Stub">Stub</a></pre>
+				<p>
+LookupByClientCert retrieves a Stub with the given client certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemberMapping.Put">func (MemberMapping) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=1571:1610#L49">Put</a>
+					<a class="permalink" href="index.html#MemberMapping.Put">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mp <a href="index.html#MemberMapping">MemberMapping</a>) Put(stub *<a href="index.html#Stub">Stub</a>)</pre>
+				<p>
+Put inserts the given stub to the MemberMapping
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MemberMapping.ServerCertificates">func (MemberMapping) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=2105:2159#L70">ServerCertificates</a>
+					<a class="permalink" href="index.html#MemberMapping.ServerCertificates">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (mp <a href="index.html#MemberMapping">MemberMapping</a>) ServerCertificates() <a href="index.html#StringSet">StringSet</a></pre>
+				<p>
+ServerCertificates returns a set of the server certificates
+represented as strings
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MembersByChannel">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=2784:2830#L81">MembersByChannel</a>
+				<a class="permalink" href="index.html#MembersByChannel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MembersByChannel is a mapping from channel name
+to MemberMapping
+</p>
+
+			<pre>type MembersByChannel map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#MemberMapping">MemberMapping</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/metrics.go?s=2415:2764#L78">Metrics</a>
+				<a class="permalink" href="index.html#Metrics">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Metrics defines the metrics for the cluster.
+</p>
+
+			<pre>type Metrics struct {
+<span id="Metrics.EgressQueueLength"></span>    EgressQueueLength        <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.EgressQueueCapacity"></span>    EgressQueueCapacity      <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.EgressWorkerCount"></span>    EgressWorkerCount        <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.IngressStreamsCount"></span>    IngressStreamsCount      <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.EgressStreamsCount"></span>    EgressStreamsCount       <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.EgressTLSConnectionCount"></span>    EgressTLSConnectionCount <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.MessageSendTime"></span>    MessageSendTime          <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Histogram">Histogram</a>
+<span id="Metrics.MessagesDroppedCount"></span>    MessagesDroppedCount     <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Counter">Counter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/metrics.go?s=3400:3450#L103">NewMetrics</a>
+					<a class="permalink" href="index.html#NewMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMetrics(provider <a href="index.html#MetricsProvider">MetricsProvider</a>) *<a href="index.html#Metrics">Metrics</a></pre>
+				<p>
+NewMetrics initializes new metrics for the cluster infrastructure.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="MetricsProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/metrics.go?s=2890:3242#L91">MetricsProvider</a>
+				<a class="permalink" href="index.html#MetricsProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MetricsProvider is an abstraction for a metrics provider. It is a factory for
+Counter, Gauge, and Histogram meters.
+</p>
+
+			<pre>type MetricsProvider interface {
+    <span class="comment">// NewCounter creates a new instance of a Counter.</span>
+    NewCounter(opts <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#CounterOpts">CounterOpts</a>) <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Counter">Counter</a>
+    <span class="comment">// NewGauge creates a new instance of a Gauge.</span>
+    NewGauge(opts <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>) <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+    <span class="comment">// NewHistogram creates a new instance of a Histogram.</span>
+    NewHistogram(opts <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#HistogramOpts">HistogramOpts</a>) <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Histogram">Histogram</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NoopBlockVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=13972:14003#L395">NoopBlockVerifier</a>
+				<a class="permalink" href="index.html#NoopBlockVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NoopBlockVerifier doesn&#39;t verify block signatures
+</p>
+
+			<pre>type NoopBlockVerifier struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NoopBlockVerifier.VerifyBlockSignature">func (*NoopBlockVerifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=14065:14173#L398">VerifyBlockSignature</a>
+					<a class="permalink" href="index.html#NoopBlockVerifier.VerifyBlockSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NoopBlockVerifier">NoopBlockVerifier</a>) VerifyBlockSignature(sd []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>, config *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyBlockSignature accepts all signatures over blocks.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OperationType">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=1678:1700#L50">OperationType</a>
+				<a class="permalink" href="index.html#OperationType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OperationType denotes a type of operation that the RPC can perform
+such as sending a transaction, or a consensus related message.
+</p>
+
+			<pre>type OperationType <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="ConsensusOperation">ConsensusOperation</span> <a href="index.html#OperationType">OperationType</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="SubmitOperation">SubmitOperation</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PredicateDialer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=2775:2844#L98">PredicateDialer</a>
+				<a class="permalink" href="index.html#PredicateDialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PredicateDialer creates gRPC connections
+that are only established if the given predicate
+is fulfilled
+</p>
+
+			<pre>type PredicateDialer struct {
+    <a href="../../../core/comm/index.html">comm</a>.<a href="../../../core/comm/index.html#ClientConfig">ClientConfig</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PredicateDialer.Dial">func (*PredicateDialer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=3156:3260#L111">Dial</a>
+					<a class="permalink" href="index.html#PredicateDialer.Dial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dialer *<a href="index.html#PredicateDialer">PredicateDialer</a>) Dial(address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, verifyFunc <a href="index.html#RemoteVerifier">RemoteVerifier</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Dial creates a new gRPC connection that can only be established, if the remote node&#39;s
+certificate chain satisfy verifyFunc
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PredicateDialer.UpdateRootCAs">func (*PredicateDialer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=2846:2914#L103">UpdateRootCAs</a>
+					<a class="permalink" href="index.html#PredicateDialer.UpdateRootCAs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dialer *<a href="index.html#PredicateDialer">PredicateDialer</a>) UpdateRootCAs(serverRootCAs [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PullerConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=11855:12067#L327">PullerConfig</a>
+				<a class="permalink" href="index.html#PullerConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PullerConfig configures a BlockPuller.
+</p>
+
+			<pre>type PullerConfig struct {
+<span id="PullerConfig.TLSKey"></span>    TLSKey              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="PullerConfig.TLSCert"></span>    TLSCert             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="PullerConfig.Timeout"></span>    Timeout             <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="PullerConfig.Signer"></span>    Signer              <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a>
+<span id="PullerConfig.Channel"></span>    Channel             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="PullerConfig.MaxTotalBufferBytes"></span>    MaxTotalBufferBytes <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="PullerConfigFromTopLevelConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=996:1145#L31">PullerConfigFromTopLevelConfig</a>
+					<a class="permalink" href="index.html#PullerConfigFromTopLevelConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func PullerConfigFromTopLevelConfig(systemChannel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#TopLevel">TopLevel</a>, tlsKey, tlsCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, signer <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#LocalSigner">LocalSigner</a>) <a href="index.html#PullerConfig">PullerConfig</a></pre>
+				<p>
+PullerConfigFromTopLevelConfig creates a PullerConfig from a TopLevel config,
+and from a signer and TLS key cert pair.
+The PullerConfig&#39;s channel is initialized to be the system channel.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RPC">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=952:1220#L28">RPC</a>
+				<a class="permalink" href="index.html#RPC">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RPC performs remote procedure calls to remote cluster nodes.
+</p>
+
+			<pre>type RPC struct {
+<span id="RPC.Logger"></span>    Logger  *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="RPC.Timeout"></span>    Timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="RPC.Channel"></span>    Channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RPC.Comm"></span>    Comm    <a href="index.html#Communicator">Communicator</a>
+
+<span id="RPC.StreamsByType"></span>    StreamsByType map[<a href="index.html#OperationType">OperationType</a>]map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="index.html#Stream">Stream</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RPC.SendConsensus">func (*RPC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=1853:1937#L58">SendConsensus</a>
+					<a class="permalink" href="index.html#RPC.SendConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#RPC">RPC</a>) SendConsensus(destination <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, msg *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Consensus passes the given ConsensusRequest message to the raft.Node instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RPC.SendSubmit">func (*RPC) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=2497:2579#L86">SendSubmit</a>
+					<a class="permalink" href="index.html#RPC.SendSubmit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#RPC">RPC</a>) SendSubmit(destination <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SendSubmit sends a SubmitRequest to the given destination node.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RemoteContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=13582:14345#L430">RemoteContext</a>
+				<a class="permalink" href="index.html#RemoteContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemoteContext interacts with remote cluster
+nodes. Every call can be aborted via call to Abort()
+</p>
+
+			<pre>type RemoteContext struct {
+<span id="RemoteContext.Metrics"></span>    Metrics      *<a href="index.html#Metrics">Metrics</a>
+<span id="RemoteContext.Channel"></span>    Channel      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RemoteContext.SendBuffSize"></span>    SendBuffSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+<span id="RemoteContext.Logger"></span>    Logger *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+
+<span id="RemoteContext.Client"></span>    Client    <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ClusterClient">ClusterClient</a>
+<span id="RemoteContext.ProbeConn"></span>    ProbeConn func(conn *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RemoteContext.Abort">func (*RemoteContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=22262:22294#L714">Abort</a>
+					<a class="permalink" href="index.html#RemoteContext.Abort">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#RemoteContext">RemoteContext</a>) Abort()</pre>
+				<p>
+Abort aborts the contexts the RemoteContext uses, thus effectively
+causes all operations that use this RemoteContext to terminate.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RemoteContext.NewStream">func (*RemoteContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=19732:19806#L631">NewStream</a>
+					<a class="permalink" href="index.html#RemoteContext.NewStream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rc *<a href="index.html#RemoteContext">RemoteContext</a>) NewStream(timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) (*<a href="index.html#Stream">Stream</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewStream creates a new stream.
+It is not thread safe, and Send() or Recv() block only until the timeout expires.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RemoteNode">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=1424:1785#L46">RemoteNode</a>
+				<a class="permalink" href="index.html#RemoteNode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemoteNode represents a cluster member
+</p>
+
+			<pre>type RemoteNode struct {
+<span id="RemoteNode.ID"></span>    <span class="comment">// ID is unique among all members, and cannot be 0.</span>
+    ID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="RemoteNode.Endpoint"></span>    <span class="comment">// Endpoint is the endpoint of the node, denoted in %s:%d format</span>
+    Endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RemoteNode.ServerTLSCert"></span>    <span class="comment">// ServerTLSCert is the DER encoded TLS server certificate of the node</span>
+    ServerTLSCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="RemoteNode.ClientTLSCert"></span>    <span class="comment">// ClientTLSCert is the DER encoded TLS client certificate of the node</span>
+    ClientTLSCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RemoteNode.String">func (RemoteNode) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=1848:1884#L58">String</a>
+					<a class="permalink" href="index.html#RemoteNode.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rm <a href="index.html#RemoteNode">RemoteNode</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of this RemoteNode
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RemoteVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=327:414#L11">RemoteVerifier</a>
+				<a class="permalink" href="index.html#RemoteVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemoteVerifier verifies the connection to the remote host
+</p>
+
+			<pre>type RemoteVerifier func(rawCerts [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, verifiedChains [][]*<a href="http://localhost:6060/pkg/crypto/x509/">x509</a>.<a href="http://localhost:6060/pkg/crypto/x509/#Certificate">Certificate</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Replicator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=2388:2842#L73">Replicator</a>
+				<a class="permalink" href="index.html#Replicator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Replicator replicates chains
+</p>
+
+			<pre>type Replicator struct {
+<span id="Replicator.DoNotPanicIfClusterNotReachable"></span>    DoNotPanicIfClusterNotReachable <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Replicator.Filter"></span>    Filter                          <a href="index.html#ChannelPredicate">ChannelPredicate</a>
+<span id="Replicator.SystemChannel"></span>    SystemChannel                   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Replicator.ChannelLister"></span>    ChannelLister                   <a href="index.html#ChannelLister">ChannelLister</a>
+<span id="Replicator.Logger"></span>    Logger                          *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Replicator.Puller"></span>    Puller                          *<a href="index.html#BlockPuller">BlockPuller</a>
+<span id="Replicator.BootBlock"></span>    BootBlock                       *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+<span id="Replicator.AmIPartOfChannel"></span>    AmIPartOfChannel                <a href="index.html#SelfMembershipPredicate">SelfMembershipPredicate</a>
+<span id="Replicator.LedgerFactory"></span>    LedgerFactory                   <a href="index.html#LedgerFactory">LedgerFactory</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Replicator.IsReplicationNeeded">func (*Replicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=2960:3016#L87">IsReplicationNeeded</a>
+					<a class="permalink" href="index.html#Replicator.IsReplicationNeeded">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Replicator">Replicator</a>) IsReplicationNeeded() (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+IsReplicationNeeded returns whether replication is needed,
+or the cluster node can resume standard boot flow.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Replicator.PullChannel">func (*Replicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=5722:5776#L170">PullChannel</a>
+					<a class="permalink" href="index.html#Replicator.PullChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Replicator">Replicator</a>) PullChannel(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PullChannel pulls the given channel from some orderer,
+and commits it to the ledger.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Replicator.ReplicateChains">func (*Replicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=3582:3629#L111">ReplicateChains</a>
+					<a class="permalink" href="index.html#Replicator.ReplicateChains">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Replicator">Replicator</a>) ReplicateChains() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+ReplicateChains pulls chains and commits them.
+Returns the names of the chains replicated successfully.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SecureDialer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/connections.go?s=544:650#L16">SecureDialer</a>
+				<a class="permalink" href="index.html#SecureDialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SecureDialer connects to a remote address
+</p>
+
+			<pre>type SecureDialer interface {
+    Dial(address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, verifyFunc <a href="index.html#RemoteVerifier">RemoteVerifier</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelfMembershipPredicate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=15469:15535#L438">SelfMembershipPredicate</a>
+				<a class="permalink" href="index.html#SelfMembershipPredicate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SelfMembershipPredicate determines whether the caller is found in the given config block
+</p>
+
+			<pre>type SelfMembershipPredicate func(configBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Service">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/service.go?s=1031:1364#L31">Service</a>
+				<a class="permalink" href="index.html#Service">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Service defines the raft Service
+</p>
+
+			<pre>type Service struct {
+<span id="Service.StreamCountReporter"></span>    StreamCountReporter              *<a href="index.html#StreamCountReporter">StreamCountReporter</a>
+<span id="Service.Dispatcher"></span>    Dispatcher                       <a href="index.html#Dispatcher">Dispatcher</a>
+<span id="Service.Logger"></span>    Logger                           *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Service.StepLogger"></span>    StepLogger                       *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Service.MinimumExpirationWarningInterval"></span>    MinimumExpirationWarningInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Service.CertExpWarningThreshold"></span>    CertExpWarningThreshold          <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Service.Step">func (*Service) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/service.go?s=1443:1506#L41">Step</a>
+					<a class="permalink" href="index.html#Service.Step">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Service">Service</a>) Step(stream <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#Cluster_StepServer">Cluster_StepServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Step passes an implementation-specific message to another cluster member.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StandardDialer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=3850:3899#L135">StandardDialer</a>
+				<a class="permalink" href="index.html#StandardDialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StandardDialer wraps an AtomicClientConfig,
+and provides a means to connect according to given EndpointCriteria.
+</p>
+
+			<pre>type StandardDialer struct {
+    <a href="../../../core/comm/index.html">comm</a>.<a href="../../../core/comm/index.html#ClientConfig">ClientConfig</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StandardDialer.Dial">func (*StandardDialer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=3966:4061#L140">Dial</a>
+					<a class="permalink" href="index.html#StandardDialer.Dial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dialer *<a href="index.html#StandardDialer">StandardDialer</a>) Dial(endpointCriteria <a href="index.html#EndpointCriteria">EndpointCriteria</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Dial dials an address according to the given EndpointCriteria
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StepClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/rpc.go?s=487:608#L14">StepClient</a>
+				<a class="permalink" href="index.html#StepClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StepClient defines a client that sends and receives Step requests and responses.
+</p>
+
+			<pre>type StepClient interface {
+    Send(*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepRequest">StepRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepResponse">StepResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientStream">ClientStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StepStream">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/service.go?s=863:993#L24">StepStream</a>
+				<a class="permalink" href="index.html#StepStream">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StepStream defines the gRPC stream for sending
+transactions, and receiving corresponding responses
+</p>
+
+			<pre>type StepStream interface {
+    Send(response *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepResponse">StepResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Recv() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepRequest">StepRequest</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ServerStream">ServerStream</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Stream">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=14425:14851#L449">Stream</a>
+				<a class="permalink" href="index.html#Stream">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Stream is used to send/receive messages to/from the remote cluster member.
+</p>
+
+			<pre>type Stream struct {
+<span id="Stream.ID"></span>    ID       <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Stream.Channel"></span>    Channel  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Stream.NodeName"></span>    NodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Stream.Endpoint"></span>    Endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Stream.Logger"></span>    Logger   *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Stream.Timeout"></span>    Timeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+    <a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#Cluster_StepClient">Cluster_StepClient</a>
+<span id="Stream.Cancel"></span>    Cancel func(<a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Stream.Canceled">func (*Stream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=15048:15085#L471">Canceled</a>
+					<a class="permalink" href="index.html#Stream.Canceled">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stream *<a href="index.html#Stream">Stream</a>) Canceled() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Canceled returns whether the stream was canceled.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Stream.Recv">func (*Stream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=17538:17597#L559">Recv</a>
+					<a class="permalink" href="index.html#Stream.Recv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stream *<a href="index.html#Stream">Stream</a>) Recv() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepResponse">StepResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Recv receives a message from a remote cluster member.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Stream.Send">func (*Stream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=15209:15271#L476">Send</a>
+					<a class="permalink" href="index.html#Stream.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stream *<a href="index.html#Stream">Stream</a>) Send(request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepRequest">StepRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Send sends the given request to the remote cluster member.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StreamCountReporter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=20386:20455#L599">StreamCountReporter</a>
+				<a class="permalink" href="index.html#StreamCountReporter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StreamCountReporter reports the number of streams currently connected to this node
+</p>
+
+			<pre>type StreamCountReporter struct {
+<span id="StreamCountReporter.Metrics"></span>    Metrics *<a href="index.html#Metrics">Metrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StreamCountReporter.Decrement">func (*StreamCountReporter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=20586:20629#L609">Decrement</a>
+					<a class="permalink" href="index.html#StreamCountReporter.Decrement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scr *<a href="index.html#StreamCountReporter">StreamCountReporter</a>) Decrement()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="StreamCountReporter.Increment">func (*StreamCountReporter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=20457:20500#L604">Increment</a>
+					<a class="permalink" href="index.html#StreamCountReporter.Increment">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (scr *<a href="index.html#StreamCountReporter">StreamCountReporter</a>) Increment()</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StreamOperation">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=14935:14993#L468">StreamOperation</a>
+				<a class="permalink" href="index.html#StreamOperation">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StreamOperation denotes an operation done by a stream, such a Send or Receive.
+</p>
+
+			<pre>type StreamOperation func() (*<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#StepResponse">StepResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="StringSet">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=2315:2349#L79">StringSet</a>
+				<a class="permalink" href="index.html#StringSet">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StringSet is a set of strings
+</p>
+
+			<pre>type StringSet map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]struct{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Stub">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=12249:12316#L376">Stub</a>
+				<a class="permalink" href="index.html#Stub">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Stub holds all information about the remote node,
+including the RemoteContext for it, and serializes
+some operations on it.
+</p>
+
+			<pre>type Stub struct {
+    <a href="index.html#RemoteNode">RemoteNode</a>
+    *<a href="index.html#RemoteContext">RemoteContext</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Stub.Activate">func (*Stub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=13084:13168#L412">Activate</a>
+					<a class="permalink" href="index.html#Stub.Activate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#Stub">Stub</a>) Activate(createRemoteContext func() (*<a href="index.html#RemoteContext">RemoteContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Activate creates a remote context with the given function callback
+in an atomic manner - if two parallel invocations are invoked on this Stub,
+only a single invocation of createRemoteStub takes place.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Stub.Active">func (*Stub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=12373:12404#L384">Active</a>
+					<a class="permalink" href="index.html#Stub.Active">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#Stub">Stub</a>) Active() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Active returns whether the Stub
+is active or not
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Stub.Deactivate">func (*Stub) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/comm.go?s=12705:12735#L399">Deactivate</a>
+					<a class="permalink" href="index.html#Stub.Deactivate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (stub *<a href="index.html#Stub">Stub</a>) Deactivate()</pre>
+				<p>
+Deactivate deactivates the Stub and
+ceases all communication operations
+invoked on it.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VerificationRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=14429:14642#L431">VerificationRegistry</a>
+				<a class="permalink" href="index.html#VerificationRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VerificationRegistry registers verifiers and retrieves them.
+</p>
+
+			<pre>type VerificationRegistry struct {
+<span id="VerificationRegistry.LoadVerifier"></span>    LoadVerifier       func(chain <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#BlockVerifier">BlockVerifier</a>
+<span id="VerificationRegistry.Logger"></span>    Logger             *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="VerificationRegistry.VerifierFactory"></span>    VerifierFactory    <a href="index.html#VerifierFactory">VerifierFactory</a>
+<span id="VerificationRegistry.VerifiersByChannel"></span>    VerifiersByChannel map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#BlockVerifier">BlockVerifier</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VerificationRegistry.BlockCommitted">func (*VerificationRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=15649:15732#L467">BlockCommitted</a>
+					<a class="permalink" href="index.html#VerificationRegistry.BlockCommitted">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vr *<a href="index.html#VerificationRegistry">VerificationRegistry</a>) BlockCommitted(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+BlockCommitted notifies the VerificationRegistry upon a block commit, which may
+trigger a registration of a verifier out of the block in case the block is a config block.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="VerificationRegistry.RegisterVerifier">func (*VerificationRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=14713:14775#L439">RegisterVerifier</a>
+					<a class="permalink" href="index.html#VerificationRegistry.RegisterVerifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vr *<a href="index.html#VerificationRegistry">VerificationRegistry</a>) RegisterVerifier(chain <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+RegisterVerifier adds a verifier into the registry if applicable.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="VerificationRegistry.RetrieveVerifier">func (*VerificationRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=15226:15304#L456">RetrieveVerifier</a>
+					<a class="permalink" href="index.html#VerificationRegistry.RetrieveVerifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (vr *<a href="index.html#VerificationRegistry">VerificationRegistry</a>) RetrieveVerifier(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#BlockVerifier">BlockVerifier</a></pre>
+				<p>
+RetrieveVerifier returns a BlockVerifier for the given channel, or nil if not found.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VerifierFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/util.go?s=14155:14363#L425">VerifierFactory</a>
+				<a class="permalink" href="index.html#VerifierFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VerifierFactory creates BlockVerifiers.
+</p>
+
+			<pre>type VerifierFactory interface {
+    <span class="comment">// VerifierFromConfig creates a BlockVerifier from the given configuration.</span>
+    VerifierFromConfig(configuration *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#BlockVerifier">BlockVerifier</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="VerifierRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/replication.go?s=12215:12369#L339">VerifierRetriever</a>
+				<a class="permalink" href="index.html#VerifierRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VerifierRetriever retrieves BlockVerifiers for channels.
+</p>
+
+			<pre>type VerifierRetriever interface {
+    <span class="comment">// RetrieveVerifier retrieves a BlockVerifier for the given channel.</span>
+    RetrieveVerifier(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#BlockVerifier">BlockVerifier</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

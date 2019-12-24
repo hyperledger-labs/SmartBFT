@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>pointer - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package pointer
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/pointer"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package pointer implements Andersen&#39;s analysis, an inclusion-based
+pointer analysis algorithm first described in (Andersen, 1994).
+</p>
+<p>
+A pointer analysis relates every pointer expression in a whole program
+to the set of memory locations to which it might point.  This
+information can be used to construct a call graph of the program that
+precisely represents the destinations of dynamic function and method
+calls.  It can also be used to determine, for example, which pairs of
+channel operations operate on the same channel.
+</p>
+<p>
+The package allows the client to request a set of expressions of
+interest for which the points-to information will be returned once the
+analysis is complete.  In addition, the client may request that a
+callgraph is constructed.  The example program in example_test.go
+demonstrates both of these features.  Clients should not request more
+information than they need since it may increase the cost of the
+analysis significantly.
+</p>
+<h3 id="hdr-CLASSIFICATION">CLASSIFICATION</h3>
+<p>
+Our algorithm is INCLUSION-BASED: the points-to sets for x and y will
+be related by pts(y) ⊇ pts(x) if the program contains the statement
+y = x.
+</p>
+<p>
+It is FLOW-INSENSITIVE: it ignores all control flow constructs and the
+order of statements in a program.  It is therefore a &#34;MAY ALIAS&#34;
+analysis: its facts are of the form &#34;P may/may not point to L&#34;,
+not &#34;P must point to L&#34;.
+</p>
+<p>
+It is FIELD-SENSITIVE: it builds separate points-to sets for distinct
+fields, such as x and y in struct { x, y *int }.
+</p>
+<p>
+It is mostly CONTEXT-INSENSITIVE: most functions are analyzed once,
+so values can flow in at one call to the function and return out at
+another.  Only some smaller functions are analyzed with consideration
+of their calling context.
+</p>
+<p>
+It has a CONTEXT-SENSITIVE HEAP: objects are named by both allocation
+site and context, so the objects returned by two distinct calls to f:
+</p>
+<pre>func f() *T { return new(T) }
+</pre>
+<p>
+are distinguished up to the limits of the calling context.
+</p>
+<p>
+It is a WHOLE PROGRAM analysis: it requires SSA-form IR for the
+complete Go program and summaries for native code.
+</p>
+<p>
+See the (Hind, PASTE&#39;01) survey paper for an explanation of these terms.
+</p>
+<h3 id="hdr-SOUNDNESS">SOUNDNESS</h3>
+<p>
+The analysis is fully sound when invoked on pure Go programs that do not
+use reflection or unsafe.Pointer conversions.  In other words, if there
+is any possible execution of the program in which pointer P may point to
+object O, the analysis will report that fact.
+</p>
+<h3 id="hdr-REFLECTION">REFLECTION</h3>
+<p>
+By default, the &#34;reflect&#34; library is ignored by the analysis, as if all
+its functions were no-ops, but if the client enables the Reflection flag,
+the analysis will make a reasonable attempt to model the effects of
+calls into this library.  However, this comes at a significant
+performance cost, and not all features of that library are yet
+implemented.  In addition, some simplifying approximations must be made
+to ensure that the analysis terminates; for example, reflection can be
+used to construct an infinite set of types and values of those types,
+but the analysis arbitrarily bounds the depth of such types.
+</p>
+<p>
+Most but not all reflection operations are supported.
+In particular, addressable reflect.Values are not yet implemented, so
+operations such as (reflect.Value).Set have no analytic effect.
+</p>
+<h3 id="hdr-UNSAFE_POINTER_CONVERSIONS">UNSAFE POINTER CONVERSIONS</h3>
+<p>
+The pointer analysis makes no attempt to understand aliasing between the
+operand x and result y of an unsafe.Pointer conversion:
+</p>
+<pre>y = (*T)(unsafe.Pointer(x))
+</pre>
+<p>
+It is as if the conversion allocated an entirely new object:
+</p>
+<pre>y = new(T)
+</pre>
+<h3 id="hdr-NATIVE_CODE">NATIVE CODE</h3>
+<p>
+The analysis cannot model the aliasing effects of functions written in
+languages other than Go, such as runtime intrinsics in C or assembly, or
+code accessed via cgo.  The result is as if such functions are no-ops.
+However, various important intrinsics are understood by the analysis,
+along with built-ins such as append.
+</p>
+<p>
+The analysis currently provides no way for users to specify the aliasing
+effects of native code.
+</p>
+<p>
+------------------------------------------------------------------------
+</p>
+<h3 id="hdr-IMPLEMENTATION">IMPLEMENTATION</h3>
+<p>
+The remaining documentation is intended for package maintainers and
+pointer analysis specialists.  Maintainers should have a solid
+understanding of the referenced papers (especially those by H&amp;L and PKH)
+before making making significant changes.
+</p>
+<p>
+The implementation is similar to that described in (Pearce et al,
+PASTE&#39;04).  Unlike many algorithms which interleave constraint
+generation and solving, constructing the callgraph as they go, this
+implementation for the most part observes a phase ordering (generation
+before solving), with only simple (copy) constraints being generated
+during solving.  (The exception is reflection, which creates various
+constraints during solving as new types flow to reflect.Value
+operations.)  This improves the traction of presolver optimisations,
+but imposes certain restrictions, e.g. potential context sensitivity
+is limited since all variants must be created a priori.
+</p>
+<h3 id="hdr-TERMINOLOGY">TERMINOLOGY</h3>
+<p>
+A type is said to be &#34;pointer-like&#34; if it is a reference to an object.
+Pointer-like types include pointers and also interfaces, maps, channels,
+functions and slices.
+</p>
+<p>
+We occasionally use C&#39;s x-&gt;f notation to distinguish the case where x
+is a struct pointer from x.f where is a struct value.
+</p>
+<p>
+Pointer analysis literature (and our comments) often uses the notation
+dst=*src+offset to mean something different than what it means in Go.
+It means: for each node index p in pts(src), the node index p+offset is
+in pts(dst).  Similarly *dst+offset=src is used for store constraints
+and dst=src+offset for offset-address constraints.
+</p>
+<h3 id="hdr-NODES">NODES</h3>
+<p>
+Nodes are the key datastructure of the analysis, and have a dual role:
+they represent both constraint variables (equivalence classes of
+pointers) and members of points-to sets (things that can be pointed
+at, i.e. &#34;labels&#34;).
+</p>
+<p>
+Nodes are naturally numbered.  The numbering enables compact
+representations of sets of nodes such as bitvectors (or BDDs); and the
+ordering enables a very cheap way to group related nodes together.  For
+example, passing n parameters consists of generating n parallel
+constraints from caller+i to callee+i for 0&lt;=i&lt;n.
+</p>
+<p>
+The zero nodeid means &#34;not a pointer&#34;.  For simplicity, we generate flow
+constraints even for non-pointer types such as int.  The pointer
+equivalence (PE) presolver optimization detects which variables cannot
+point to anything; this includes not only all variables of non-pointer
+types (such as int) but also variables of pointer-like types if they are
+always nil, or are parameters to a function that is never called.
+</p>
+<p>
+Each node represents a scalar part of a value or object.
+Aggregate types (structs, tuples, arrays) are recursively flattened
+out into a sequential list of scalar component types, and all the
+elements of an array are represented by a single node.  (The
+flattening of a basic type is a list containing a single node.)
+</p>
+<p>
+Nodes are connected into a graph with various kinds of labelled edges:
+simple edges (or copy constraints) represent value flow.  Complex
+edges (load, store, etc) trigger the creation of new simple edges
+during the solving phase.
+</p>
+<h3 id="hdr-OBJECTS">OBJECTS</h3>
+<p>
+Conceptually, an &#34;object&#34; is a contiguous sequence of nodes denoting
+an addressable location: something that a pointer can point to.  The
+first node of an object has a non-nil obj field containing information
+about the allocation: its size, context, and ssa.Value.
+</p>
+<p>
+Objects include:
+</p>
+<pre>- functions and globals;
+- variable allocations in the stack frame or heap;
+- maps, channels and slices created by calls to make();
+- allocations to construct an interface;
+- allocations caused by conversions, e.g. []byte(str).
+- arrays allocated by calls to append();
+</pre>
+<p>
+Many objects have no Go types.  For example, the func, map and chan type
+kinds in Go are all varieties of pointers, but their respective objects
+are actual functions (executable code), maps (hash tables), and channels
+(synchronized queues).  Given the way we model interfaces, they too are
+pointers to &#34;tagged&#34; objects with no Go type.  And an *ssa.Global denotes
+the address of a global variable, but the object for a Global is the
+actual data.  So, the types of an ssa.Value that creates an object is
+&#34;off by one indirection&#34;: a pointer to the object.
+</p>
+<p>
+The individual nodes of an object are sometimes referred to as &#34;labels&#34;.
+</p>
+<p>
+For uniformity, all objects have a non-zero number of fields, even those
+of the empty type struct{}.  (All arrays are treated as if of length 1,
+so there are no empty arrays.  The empty tuple is never address-taken,
+so is never an object.)
+</p>
+<h3 id="hdr-TAGGED_OBJECTS">TAGGED OBJECTS</h3>
+<p>
+An tagged object has the following layout:
+</p>
+<pre>T          -- obj.flags ⊇ {otTagged}
+v
+...
+</pre>
+<p>
+The T node&#39;s typ field is the dynamic type of the &#34;payload&#34;: the value
+v which follows, flattened out.  The T node&#39;s obj has the otTagged
+flag.
+</p>
+<p>
+Tagged objects are needed when generalizing across types: interfaces,
+reflect.Values, reflect.Types.  Each of these three types is modelled
+as a pointer that exclusively points to tagged objects.
+</p>
+<p>
+Tagged objects may be indirect (obj.flags ⊇ {otIndirect}) meaning that
+the value v is not of type T but *T; this is used only for
+reflect.Values that represent lvalues.  (These are not implemented yet.)
+</p>
+<h3 id="hdr-ANALYSIS_ABSTRACTION_OF_EACH_TYPE">ANALYSIS ABSTRACTION OF EACH TYPE</h3>
+<p>
+Variables of the following &#34;scalar&#34; types may be represented by a
+single node: basic types, pointers, channels, maps, slices, &#39;func&#39;
+pointers, interfaces.
+</p>
+<p>
+Pointers
+</p>
+<pre>Nothing to say here, oddly.
+</pre>
+<p>
+Basic types (bool, string, numbers, unsafe.Pointer)
+</p>
+<pre>Currently all fields in the flattening of a type, including
+non-pointer basic types such as int, are represented in objects and
+values.  Though non-pointer nodes within values are uninteresting,
+non-pointer nodes in objects may be useful (if address-taken)
+because they permit the analysis to deduce, in this example,
+
+   var s struct{ ...; x int; ... }
+   p := &amp;s.x
+
+that p points to s.x.  If we ignored such object fields, we could only
+say that p points somewhere within s.
+
+All other basic types are ignored.  Expressions of these types have
+zero nodeid, and fields of these types within aggregate other types
+are omitted.
+
+unsafe.Pointers are not modelled as pointers, so a conversion of an
+unsafe.Pointer to *T is (unsoundly) treated equivalent to new(T).
+</pre>
+<p>
+Channels
+</p>
+<pre>An expression of type &#39;chan T&#39; is a kind of pointer that points
+exclusively to channel objects, i.e. objects created by MakeChan (or
+reflection).
+
+&#39;chan T&#39; is treated like *T.
+*ssa.MakeChan is treated as equivalent to new(T).
+*ssa.Send and receive (*ssa.UnOp(ARROW)) and are equivalent to store
+ and load.
+</pre>
+<p>
+Maps
+</p>
+<pre>An expression of type &#39;map[K]V&#39; is a kind of pointer that points
+exclusively to map objects, i.e. objects created by MakeMap (or
+reflection).
+
+map K[V] is treated like *M where M = struct{k K; v V}.
+*ssa.MakeMap is equivalent to new(M).
+*ssa.MapUpdate is equivalent to *y=x where *y and x have type M.
+*ssa.Lookup is equivalent to y=x.v where x has type *M.
+</pre>
+<p>
+Slices
+</p>
+<pre>A slice []T, which dynamically resembles a struct{array *T, len, cap int},
+is treated as if it were just a *T pointer; the len and cap fields are
+ignored.
+
+*ssa.MakeSlice is treated like new([1]T): an allocation of a
+ singleton array.
+*ssa.Index on a slice is equivalent to a load.
+*ssa.IndexAddr on a slice returns the address of the sole element of the
+slice, i.e. the same address.
+*ssa.Slice is treated as a simple copy.
+</pre>
+<p>
+Functions
+</p>
+<pre>An expression of type &#39;func...&#39; is a kind of pointer that points
+exclusively to function objects.
+
+A function object has the following layout:
+
+   identity         -- typ:*types.Signature; obj.flags ⊇ {otFunction}
+   params_0         -- (the receiver, if a method)
+   ...
+   params_n-1
+   results_0
+   ...
+   results_m-1
+
+There may be multiple function objects for the same *ssa.Function
+due to context-sensitive treatment of some functions.
+
+The first node is the function&#39;s identity node.
+Associated with every callsite is a special &#34;targets&#34; variable,
+whose pts() contains the identity node of each function to which
+the call may dispatch.  Identity words are not otherwise used during
+the analysis, but we construct the call graph from the pts()
+solution for such nodes.
+
+The following block of contiguous nodes represents the flattened-out
+types of the parameters (&#34;P-block&#34;) and results (&#34;R-block&#34;) of the
+function object.
+
+The treatment of free variables of closures (*ssa.FreeVar) is like
+that of global variables; it is not context-sensitive.
+*ssa.MakeClosure instructions create copy edges to Captures.
+
+A Go value of type &#39;func&#39; (i.e. a pointer to one or more functions)
+is a pointer whose pts() contains function objects.  The valueNode()
+for an *ssa.Function returns a singleton for that function.
+</pre>
+<p>
+Interfaces
+</p>
+<pre>An expression of type &#39;interface{...}&#39; is a kind of pointer that
+points exclusively to tagged objects.  All tagged objects pointed to
+by an interface are direct (the otIndirect flag is clear) and
+concrete (the tag type T is not itself an interface type).  The
+associated ssa.Value for an interface&#39;s tagged objects may be an
+*ssa.MakeInterface instruction, or nil if the tagged object was
+created by an instrinsic (e.g. reflection).
+
+Constructing an interface value causes generation of constraints for
+all of the concrete type&#39;s methods; we can&#39;t tell a priori which
+ones may be called.
+
+TypeAssert y = x.(T) is implemented by a dynamic constraint
+triggered by each tagged object O added to pts(x): a typeFilter
+constraint if T is an interface type, or an untag constraint if T is
+a concrete type.  A typeFilter tests whether O.typ implements T; if
+so, O is added to pts(y).  An untagFilter tests whether O.typ is
+assignable to T,and if so, a copy edge O.v -&gt; y is added.
+
+ChangeInterface is a simple copy because the representation of
+tagged objects is independent of the interface type (in contrast
+to the &#34;method tables&#34; approach used by the gc runtime).
+
+y := Invoke x.m(...) is implemented by allocating contiguous P/R
+blocks for the callsite and adding a dynamic rule triggered by each
+tagged object added to pts(x).  The rule adds param/results copy
+edges to/from each discovered concrete method.
+
+(Q. Why do we model an interface as a pointer to a pair of type and
+value, rather than as a pair of a pointer to type and a pointer to
+value?
+A. Control-flow joins would merge interfaces ({T1}, {V1}) and ({T2},
+{V2}) to make ({T1,T2}, {V1,V2}), leading to the infeasible and
+type-unsafe combination (T1,V2).  Treating the value and its concrete
+type as inseparable makes the analysis type-safe.)
+</pre>
+<p>
+reflect.Value
+</p>
+<pre>A reflect.Value is modelled very similar to an interface{}, i.e. as
+a pointer exclusively to tagged objects, but with two generalizations.
+
+1) a reflect.Value that represents an lvalue points to an indirect
+   (obj.flags ⊇ {otIndirect}) tagged object, which has a similar
+   layout to an tagged object except that the value is a pointer to
+   the dynamic type.  Indirect tagged objects preserve the correct
+   aliasing so that mutations made by (reflect.Value).Set can be
+   observed.
+
+   Indirect objects only arise when an lvalue is derived from an
+   rvalue by indirection, e.g. the following code:
+
+      type S struct { X T }
+      var s S
+      var i interface{} = &amp;s    // i points to a *S-tagged object (from MakeInterface)
+      v1 := reflect.ValueOf(i)  // v1 points to same *S-tagged object as i
+      v2 := v1.Elem()           // v2 points to an indirect S-tagged object, pointing to s
+      v3 := v2.FieldByName(&#34;X&#34;) // v3 points to an indirect int-tagged object, pointing to s.X
+      v3.Set(y)                 // pts(s.X) ⊇ pts(y)
+
+   Whether indirect or not, the concrete type of the tagged object
+   corresponds to the user-visible dynamic type, and the existence
+   of a pointer is an implementation detail.
+
+   (NB: indirect tagged objects are not yet implemented)
+
+2) The dynamic type tag of a tagged object pointed to by a
+   reflect.Value may be an interface type; it need not be concrete.
+
+   This arises in code such as this:
+      tEface := reflect.TypeOf(new(interface{}).Elem() // interface{}
+      eface := reflect.Zero(tEface)
+   pts(eface) is a singleton containing an interface{}-tagged
+   object.  That tagged object&#39;s payload is an interface{} value,
+   i.e. the pts of the payload contains only concrete-tagged
+   objects, although in this example it&#39;s the zero interface{} value,
+   so its pts is empty.
+</pre>
+<p>
+reflect.Type
+</p>
+<pre>Just as in the real &#34;reflect&#34; library, we represent a reflect.Type
+as an interface whose sole implementation is the concrete type,
+*reflect.rtype.  (This choice is forced on us by go/types: clients
+cannot fabricate types with arbitrary method sets.)
+
+rtype instances are canonical: there is at most one per dynamic
+type.  (rtypes are in fact large structs but since identity is all
+that matters, we represent them by a single node.)
+
+The payload of each *rtype-tagged object is an *rtype pointer that
+points to exactly one such canonical rtype object.  We exploit this
+by setting the node.typ of the payload to the dynamic type, not
+&#39;*rtype&#39;.  This saves us an indirection in each resolution rule.  As
+an optimisation, *rtype-tagged objects are canonicalized too.
+</pre>
+<p>
+Aggregate types:
+</p>
+<p>
+Aggregate types are treated as if all directly contained
+aggregates are recursively flattened out.
+</p>
+<p>
+Structs
+</p>
+<pre>*ssa.Field y = x.f creates a simple edge to y from x&#39;s node at f&#39;s offset.
+
+*ssa.FieldAddr y = &amp;x-&gt;f requires a dynamic closure rule to create
+ simple edges for each struct discovered in pts(x).
+
+The nodes of a struct consist of a special &#39;identity&#39; node (whose
+type is that of the struct itself), followed by the nodes for all
+the struct&#39;s fields, recursively flattened out.  A pointer to the
+struct is a pointer to its identity node.  That node allows us to
+distinguish a pointer to a struct from a pointer to its first field.
+
+Field offsets are logical field offsets (plus one for the identity
+node), so the sizes of the fields can be ignored by the analysis.
+
+(The identity node is non-traditional but enables the distinction
+described above, which is valuable for code comprehension tools.
+Typical pointer analyses for C, whose purpose is compiler
+optimization, must soundly model unsafe.Pointer (void*) conversions,
+and this requires fidelity to the actual memory layout using physical
+field offsets.)
+
+*ssa.Field y = x.f creates a simple edge to y from x&#39;s node at f&#39;s offset.
+
+*ssa.FieldAddr y = &amp;x-&gt;f requires a dynamic closure rule to create
+ simple edges for each struct discovered in pts(x).
+</pre>
+<p>
+Arrays
+</p>
+<pre>We model an array by an identity node (whose type is that of the
+array itself) followed by a node representing all the elements of
+the array; the analysis does not distinguish elements with different
+indices.  Effectively, an array is treated like struct{elem T}, a
+load y=x[i] like y=x.elem, and a store x[i]=y like x.elem=y; the
+index i is ignored.
+
+A pointer to an array is pointer to its identity node.  (A slice is
+also a pointer to an array&#39;s identity node.)  The identity node
+allows us to distinguish a pointer to an array from a pointer to one
+of its elements, but it is rather costly because it introduces more
+offset constraints into the system.  Furthermore, sound treatment of
+unsafe.Pointer would require us to dispense with this node.
+
+Arrays may be allocated by Alloc, by make([]T), by calls to append,
+and via reflection.
+</pre>
+<p>
+Tuples (T, ...)
+</p>
+<pre>Tuples are treated like structs with naturally numbered fields.
+*ssa.Extract is analogous to *ssa.Field.
+
+However, tuples have no identity field since by construction, they
+cannot be address-taken.
+</pre>
+<p>
+FUNCTION CALLS
+</p>
+<pre>There are three kinds of function call:
+(1) static &#34;call&#34;-mode calls of functions.
+(2) dynamic &#34;call&#34;-mode calls of functions.
+(3) dynamic &#34;invoke&#34;-mode calls of interface methods.
+Cases 1 and 2 apply equally to methods and standalone functions.
+
+Static calls.
+  A static call consists three steps:
+  - finding the function object of the callee;
+  - creating copy edges from the actual parameter value nodes to the
+    P-block in the function object (this includes the receiver if
+    the callee is a method);
+  - creating copy edges from the R-block in the function object to
+    the value nodes for the result of the call.
+
+  A static function call is little more than two struct value copies
+  between the P/R blocks of caller and callee:
+
+     callee.P = caller.P
+     caller.R = callee.R
+
+  Context sensitivity
+
+    Static calls (alone) may be treated context sensitively,
+    i.e. each callsite may cause a distinct re-analysis of the
+    callee, improving precision.  Our current context-sensitivity
+    policy treats all intrinsics and getter/setter methods in this
+    manner since such functions are small and seem like an obvious
+    source of spurious confluences, though this has not yet been
+    evaluated.
+
+Dynamic function calls
+
+  Dynamic calls work in a similar manner except that the creation of
+  copy edges occurs dynamically, in a similar fashion to a pair of
+  struct copies in which the callee is indirect:
+
+     callee-&gt;P = caller.P
+     caller.R = callee-&gt;R
+
+  (Recall that the function object&#39;s P- and R-blocks are contiguous.)
+
+Interface method invocation
+
+  For invoke-mode calls, we create a params/results block for the
+  callsite and attach a dynamic closure rule to the interface.  For
+  each new tagged object that flows to the interface, we look up
+  the concrete method, find its function object, and connect its P/R
+  blocks to the callsite&#39;s P/R blocks, adding copy edges to the graph
+  during solving.
+
+Recording call targets
+
+  The analysis notifies its clients of each callsite it encounters,
+  passing a CallSite interface.  Among other things, the CallSite
+  contains a synthetic constraint variable (&#34;targets&#34;) whose
+  points-to solution includes the set of all function objects to
+  which the call may dispatch.
+
+  It is via this mechanism that the callgraph is made available.
+  Clients may also elect to be notified of callgraph edges directly;
+  internally this just iterates all &#34;targets&#34; variables&#39; pts(·)s.
+</pre>
+<h3 id="hdr-PRESOLVER">PRESOLVER</h3>
+<p>
+We implement Hash-Value Numbering (HVN), a pre-solver constraint
+optimization described in Hardekopf &amp; Lin, SAS&#39;07.  This is documented
+in more detail in hvn.go.  We intend to add its cousins HR and HU in
+future.
+</p>
+<h3 id="hdr-SOLVER">SOLVER</h3>
+<p>
+The solver is currently a naive Andersen-style implementation; it does
+not perform online cycle detection, though we plan to add solver
+optimisations such as Hybrid- and Lazy- Cycle Detection from (Hardekopf
+&amp; Lin, PLDI&#39;07).
+</p>
+<p>
+It uses difference propagation (Pearce et al, SQC&#39;04) to avoid
+redundant re-triggering of closure rules for values already seen.
+</p>
+<p>
+Points-to sets are represented using sparse bit vectors (similar to
+those used in LLVM and gcc), which are more space- and time-efficient
+than sets based on Go&#39;s built-in map type or dense bit vectors.
+</p>
+<p>
+Nodes are permuted prior to solving so that object nodes (which may
+appear in points-to sets) are lower numbered than non-object (var)
+nodes.  This improves the density of the set over which the PTSs
+range, and thus the efficiency of the representation.
+</p>
+<p>
+Partly thanks to avoiding map iteration, the execution of the solver is
+100% deterministic, a great help during debugging.
+</p>
+<h3 id="hdr-FURTHER_READING">FURTHER READING</h3>
+<p>
+Andersen, L. O. 1994. Program analysis and specialization for the C
+programming language. Ph.D. dissertation. DIKU, University of
+Copenhagen.
+</p>
+<p>
+David J. Pearce, Paul H. J. Kelly, and Chris Hankin. 2004.  Efficient
+field-sensitive pointer analysis for C. In Proceedings of the 5th ACM
+SIGPLAN-SIGSOFT workshop on Program analysis for software tools and
+engineering (PASTE &#39;04). ACM, New York, NY, USA, 37-42.
+<a href="http://doi.acm.org/10.1145/996821.996835">http://doi.acm.org/10.1145/996821.996835</a>
+</p>
+<p>
+David J. Pearce, Paul H. J. Kelly, and Chris Hankin. 2004. Online
+Cycle Detection and Difference Propagation: Applications to Pointer
+Analysis. Software Quality Control 12, 4 (December 2004), 311-337.
+<a href="http://dx.doi.org/10.1023/B:SQJO.0000039791.93071.a2">http://dx.doi.org/10.1023/B:SQJO.0000039791.93071.a2</a>
+</p>
+<p>
+David Grove and Craig Chambers. 2001. A framework for call graph
+construction algorithms. ACM Trans. Program. Lang. Syst. 23, 6
+(November 2001), 685-746.
+<a href="http://doi.acm.org/10.1145/506315.506316">http://doi.acm.org/10.1145/506315.506316</a>
+</p>
+<p>
+Ben Hardekopf and Calvin Lin. 2007. The ant and the grasshopper: fast
+and accurate pointer analysis for millions of lines of code. In
+Proceedings of the 2007 ACM SIGPLAN conference on Programming language
+design and implementation (PLDI &#39;07). ACM, New York, NY, USA, 290-299.
+<a href="http://doi.acm.org/10.1145/1250734.1250767">http://doi.acm.org/10.1145/1250734.1250767</a>
+</p>
+<p>
+Ben Hardekopf and Calvin Lin. 2007. Exploiting pointer and location
+equivalence to optimize pointer analysis. In Proceedings of the 14th
+international conference on Static Analysis (SAS&#39;07), Hanne Riis
+Nielson and Gilberto Filé (Eds.). Springer-Verlag, Berlin, Heidelberg,
+265-280.
+</p>
+<p>
+Atanas Rountev and Satish Chandra. 2000. Off-line variable substitution
+for scaling points-to analysis. In Proceedings of the ACM SIGPLAN 2000
+conference on Programming language design and implementation (PLDI &#39;00).
+ACM, New York, NY, USA, 47-56. DOI=10.1145/349299.349310
+<a href="http://doi.acm.org/10.1145/349299.349310">http://doi.acm.org/10.1145/349299.349310</a>
+</p>
+
+				<div id="example_" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		<p>This program demonstrates how to use the pointer analysis to
+obtain a conservative call-graph of a Go program.
+It also shows how to compute the points-to set of a variable,
+in this case, (C).f&#39;s ch parameter.
+</p>
+		
+		
+			<p>Code:</p>
+			<pre class="code">const myprog = `
+package main
+
+import &#34;fmt&#34;
+
+type I interface {
+    f(map[string]int)
+}
+
+type C struct{}
+
+func (C) f(m map[string]int) {
+    fmt.Println(&#34;C.f()&#34;)
+}
+
+func main() {
+    var i I = C{}
+    x := map[string]int{&#34;one&#34;:1}
+    i.f(x) // dynamic method call
+}
+`
+var conf loader.Config
+
+<span class="comment">// Parse the input file, a string.</span>
+<span class="comment">// (Command-line tools should use conf.FromArgs.)</span>
+file, err := conf.ParseFile(&#34;myprog.go&#34;, myprog)
+if err != nil {
+    fmt.Print(err) <span class="comment">// parse error</span>
+    return
+}
+
+<span class="comment">// Create single-file main package and import its dependencies.</span>
+conf.CreateFromFiles(&#34;main&#34;, file)
+
+iprog, err := conf.Load()
+if err != nil {
+    fmt.Print(err) <span class="comment">// type error in some package</span>
+    return
+}
+
+<span class="comment">// Create SSA-form program representation.</span>
+prog := ssautil.CreateProgram(iprog, 0)
+mainPkg := prog.Package(iprog.Created[0].Pkg)
+
+<span class="comment">// Build SSA code for bodies of all functions in the whole program.</span>
+prog.Build()
+
+<span class="comment">// Configure the pointer analysis to build a call-graph.</span>
+config := &amp;pointer.Config{
+    Mains:          []*ssa.Package{mainPkg},
+    BuildCallGraph: true,
+}
+
+<span class="comment">// Query points-to set of (C).f&#39;s parameter m, a map.</span>
+C := mainPkg.Type(&#34;C&#34;).Type()
+Cfm := prog.LookupMethod(C, mainPkg.Pkg, &#34;f&#34;).Params[1]
+config.AddQuery(Cfm)
+
+<span class="comment">// Run the pointer analysis.</span>
+result, err := pointer.Analyze(config)
+if err != nil {
+    panic(err) <span class="comment">// internal error in pointer analysis</span>
+}
+
+<span class="comment">// Find edges originating from the main package.</span>
+<span class="comment">// By converting to strings, we de-duplicate nodes</span>
+<span class="comment">// representing the same function due to context sensitivity.</span>
+var edges []string
+callgraph.GraphVisitEdges(result.CallGraph, func(edge *callgraph.Edge) error {
+    caller := edge.Caller.Func
+    if caller.Pkg == mainPkg {
+        edges = append(edges, fmt.Sprint(caller, &#34; --&gt; &#34;, edge.Callee.Func))
+    }
+    return nil
+})
+
+<span class="comment">// Print the edges in sorted order.</span>
+sort.Strings(edges)
+for _, edge := range edges {
+    fmt.Println(edge)
+}
+fmt.Println()
+
+<span class="comment">// Print the labels of (C).f(m)&#39;s points-to set.</span>
+fmt.Println(&#34;m may point to:&#34;)
+var labels []string
+for _, l := range result.Queries[Cfm].PointsTo().Labels() {
+    label := fmt.Sprintf(&#34;  %s: %s&#34;, prog.Fset.Position(l.Pos()), l)
+    labels = append(labels, label)
+}
+sort.Strings(labels)
+for _, label := range labels {
+    fmt.Println(label)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">(main.C).f --&gt; fmt.Println
+main.init --&gt; fmt.init
+main.main --&gt; (main.C).f
+
+m may point to:
+  myprog.go:18:21: makemap
+</pre>
+			
+		
+	</div>
+</div>
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#CanHaveDynamicTypes">func CanHaveDynamicTypes(T types.Type) bool</a></dd>
+			
+				
+				<dd><a href="index.html#CanPoint">func CanPoint(T types.Type) bool</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Config.AddExtendedQuery">func (c *Config) AddExtendedQuery(v ssa.Value, query string) (*Pointer, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Config.AddIndirectQuery">func (c *Config) AddIndirectQuery(v ssa.Value)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Config.AddQuery">func (c *Config) AddQuery(v ssa.Value)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Label">type Label</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Label.Path">func (l Label) Path() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Label.Pos">func (l Label) Pos() token.Pos</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Label.ReflectType">func (l Label) ReflectType() types.Type</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Label.String">func (l Label) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Label.Value">func (l Label) Value() ssa.Value</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Pointer">type Pointer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Pointer.DynamicTypes">func (p Pointer) DynamicTypes() *typeutil.Map</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Pointer.MayAlias">func (p Pointer) MayAlias(q Pointer) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Pointer.PointsTo">func (p Pointer) PointsTo() PointsToSet</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Pointer.String">func (p Pointer) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PointsToSet">type PointsToSet</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PointsToSet.DynamicTypes">func (s PointsToSet) DynamicTypes() *typeutil.Map</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PointsToSet.Intersects">func (x PointsToSet) Intersects(y PointsToSet) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PointsToSet.Labels">func (s PointsToSet) Labels() []*Label</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PointsToSet.String">func (s PointsToSet) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Result">type Result</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Analyze">func Analyze(config *Config) (result *Result, err error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Warning">type Warning</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_">Package</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/analysis.go">analysis.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go">api.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/callgraph.go">callgraph.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/constraint.go">constraint.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/doc.go">doc.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/gen.go">gen.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/hvn.go">hvn.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/intrinsics.go">intrinsics.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go">labels.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/opt.go">opt.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/print.go">print.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/query.go">query.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/reflect.go">reflect.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/solve.go">solve.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CanHaveDynamicTypes">func <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/util.go?s=956:999#L29">CanHaveDynamicTypes</a>
+				<a class="permalink" href="index.html#CanHaveDynamicTypes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CanHaveDynamicTypes(T <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CanHaveDynamicTypes reports whether the type T can &#34;hold&#34; dynamic types,
+i.e. is an interface (incl. reflect.Type) or a reflect.Value.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CanPoint">func <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/util.go?s=394:426#L12">CanPoint</a>
+				<a class="permalink" href="index.html#CanPoint">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CanPoint(T <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+CanPoint reports whether the type T is pointerlike,
+for the purposes of this analysis.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=514:2456#L12">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Config formulates a pointer analysis problem for Analyze. It is
+only usable for a single invocation of Analyze and must not be
+reused.
+</p>
+
+			<pre>type Config struct {
+<span id="Config.Mains"></span>    <span class="comment">// Mains contains the set of &#39;main&#39; packages to analyze</span>
+    <span class="comment">// Clients must provide the analysis with at least one</span>
+    <span class="comment">// package defining a main() function.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Non-main packages in the ssa.Program that are not</span>
+    <span class="comment">// dependencies of any main package may still affect the</span>
+    <span class="comment">// analysis result, because they contribute runtime types and</span>
+    <span class="comment">// thus methods.</span>
+    <span class="comment">// TODO(adonovan): investigate whether this is desirable.</span>
+    Mains []*<a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Package">Package</a>
+
+<span id="Config.Reflection"></span>    <span class="comment">// Reflection determines whether to handle reflection</span>
+    <span class="comment">// operators soundly, which is currently rather slow since it</span>
+    <span class="comment">// causes constraint to be generated during solving</span>
+    <span class="comment">// proportional to the number of constraint variables, which</span>
+    <span class="comment">// has not yet been reduced by presolver optimisation.</span>
+    Reflection <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+<span id="Config.BuildCallGraph"></span>    <span class="comment">// BuildCallGraph determines whether to construct a callgraph.</span>
+    <span class="comment">// If enabled, the graph will be available in Result.CallGraph.</span>
+    BuildCallGraph <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// The client populates Queries[v] or IndirectQueries[v]</span>
+    <span class="comment">// for each ssa.Value v of interest, to request that the</span>
+    <span class="comment">// points-to sets pts(v) or pts(*v) be computed.  If the</span>
+    <span class="comment">// client needs both points-to sets, v may appear in both</span>
+    <span class="comment">// maps.</span>
+    <span class="comment">//</span>
+    <span class="comment">// (IndirectQueries is typically used for Values corresponding</span>
+    <span class="comment">// to source-level lvalues, e.g. an *ssa.Global.)</span>
+    <span class="comment">//</span>
+    <span class="comment">// The analysis populates the corresponding</span>
+    <span class="comment">// Result.{Indirect,}Queries map when it creates the pointer</span>
+    <span class="comment">// variable for v or *v.  Upon completion the client can</span>
+    <span class="comment">// inspect that map for the results.</span>
+    <span class="comment">//</span>
+    <span class="comment">// TODO(adonovan): this API doesn&#39;t scale well for batch tools</span>
+    <span class="comment">// that want to dump the entire solution.  Perhaps optionally</span>
+    <span class="comment">// populate a map[*ssa.DebugRef]Pointer in the Result, one</span>
+    <span class="comment">// entry per source expression.</span>
+    <span class="comment">//</span>
+<span id="Config.Queries"></span>    Queries         map[<a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>]struct{}
+<span id="Config.IndirectQueries"></span>    IndirectQueries map[<a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>]struct{}
+
+    <span class="comment">// If Log is non-nil, log messages are written to it.</span>
+    <span class="comment">// Logging is extremely verbose.</span>
+<span id="Config.Log"></span>    Log <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Config.AddExtendedQuery">func (*Config) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=4716:4794#L124">AddExtendedQuery</a>
+					<a class="permalink" href="index.html#Config.AddExtendedQuery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Config">Config</a>) AddExtendedQuery(v <a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>, query <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#Pointer">Pointer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AddExtendedQuery adds an extended, AST-based query on v to the
+analysis. The query, which must be a single Go expression, allows
+destructuring the value.
+</p>
+<p>
+The query must operate on a variable named &#39;x&#39;, which represents
+the value, and result in a pointer-like object. Only a subset of
+Go expressions are permitted in queries, namely channel receives,
+pointer dereferences, field selectors, array/slice/map/tuple
+indexing and grouping with parentheses. The specific indices when
+indexing arrays, slices and maps have no significance. Indices used
+on tuples must be numeric and within bounds.
+</p>
+<p>
+All field selectors must be explicit, even ones usually elided
+due to promotion of embedded fields.
+</p>
+<p>
+The query &#39;x&#39; is identical to using AddQuery. The query &#39;*x&#39; is
+identical to using AddIndirectQuery.
+</p>
+<p>
+On success, AddExtendedQuery returns a Pointer to the queried
+value. This Pointer will be initialized during analysis. Using it
+before analysis has finished has undefined behavior.
+</p>
+<p>
+Example:
+</p>
+<pre>// given v, which represents a function call to &#39;fn() (int, []*T)&#39;, and
+// &#39;type T struct { F *int }&#39;, the following query will access the field F.
+c.AddExtendedQuery(v, &#34;x[1][0].F&#34;)
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Config.AddIndirectQuery">func (*Config) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=3172:3218#L88">AddIndirectQuery</a>
+					<a class="permalink" href="index.html#Config.AddIndirectQuery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Config">Config</a>) AddIndirectQuery(v <a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>)</pre>
+				<p>
+AddQuery adds v to Config.IndirectQueries.
+Precondition: CanPoint(v.Type().Underlying().(*types.Pointer).Elem()).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Config.AddQuery">func (*Config) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=2811:2849#L76">AddQuery</a>
+					<a class="permalink" href="index.html#Config.AddQuery">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Config">Config</a>) AddQuery(v <a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>)</pre>
+				<p>
+AddQuery adds v to Config.Queries.
+Precondition: CanPoint(v.Type()).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Label">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=1200:1372#L27">Label</a>
+				<a class="permalink" href="index.html#Label">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Label is an entity that may be pointed to by a pointer, map,
+channel, &#39;func&#39;, slice or interface.
+</p>
+<p>
+Labels include:
+</p>
+<pre>- functions
+- globals
+- tagged objects, representing interfaces and reflect.Values
+- arrays created by conversions (e.g. []byte(&#34;foo&#34;), []byte(s))
+- stack- and heap-allocated variables (including composite literals)
+- channels, maps and arrays created by make()
+- intrinsic or reflective operations that allocate (e.g. append, reflect.New)
+- intrinsic objects, e.g. the initial array behind os.Args.
+- and their subelements, e.g. &#34;alloc.y[*].z&#34;
+</pre>
+<p>
+Labels are so varied that they defy good generalizations;
+some have no value, no callgraph node, or no position.
+Many objects have types that are inexpressible in Go:
+maps, channels, functions, tagged objects.
+</p>
+<p>
+At most one of Value() or ReflectType() may return non-nil.
+</p>
+
+			<pre>type Label struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Label.Path">func (Label) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=1879:1907#L49">Path</a>
+					<a class="permalink" href="index.html#Label.Path">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Label">Label</a>) Path() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Path returns the path to the subelement of the object containing
+this label.  For example, &#34;.x[*].y&#34;.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Label.Pos">func (Label) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=2010:2040#L54">Pos</a>
+					<a class="permalink" href="index.html#Label.Pos">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Label">Label</a>) Pos() <a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#Pos">Pos</a></pre>
+				<p>
+Pos returns the position of this label, if known, zero otherwise.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Label.ReflectType">func (Label) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=1672:1711#L41">ReflectType</a>
+					<a class="permalink" href="index.html#Label.ReflectType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Label">Label</a>) ReflectType() <a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Type">Type</a></pre>
+				<p>
+ReflectType returns the type represented by this label if it is an
+reflect.rtype instance object or *reflect.rtype-tagged object.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Label.String">func (Label) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=3427:3457#L89">String</a>
+					<a class="permalink" href="index.html#Label.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Label">Label</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns the printed form of this label.
+</p>
+<p>
+Examples:                                    Object type:
+</p>
+<pre>x                                       (a variable)
+(sync.Mutex).Lock                       (a function)
+convert                                 (array created by conversion)
+makemap                                 (map allocated via make)
+makechan                                (channel allocated via make)
+makeinterface                           (tagged object allocated by makeinterface)
+&lt;alloc in reflect.Zero&gt;                 (allocation in instrinsic)
+sync.Mutex                              (a reflect.rtype instance)
+&lt;command-line arguments&gt;                (an intrinsic object)
+</pre>
+<p>
+Labels within compound objects have subelement paths:
+</p>
+<pre>x.y[*].z                                (a struct variable, x)
+append.y[*].z                           (array allocated by append)
+makeslice.y[*].z                        (array allocated via make)
+</pre>
+<p>
+TODO(adonovan): expose func LabelString(*types.Package, Label).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Label.Value">func (Label) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/labels.go?s=1449:1481#L33">Value</a>
+					<a class="permalink" href="index.html#Label.Value">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l <a href="index.html#Label">Label</a>) Value() <a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a></pre>
+				<p>
+Value returns the ssa.Value that allocated this label&#39;s object, if any.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Pointer">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=5949:5995#L166">Pointer</a>
+				<a class="permalink" href="index.html#Pointer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Pointer is an equivalence class of pointer-like values.
+</p>
+<p>
+A Pointer doesn&#39;t have a unique type because pointers of distinct
+types may alias the same object.
+</p>
+
+			<pre>type Pointer struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Pointer.DynamicTypes">func (Pointer) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=8695:8740#L273">DynamicTypes</a>
+					<a class="permalink" href="index.html#Pointer.DynamicTypes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#Pointer">Pointer</a>) DynamicTypes() *<a href="../types/typeutil/index.html">typeutil</a>.<a href="../types/typeutil/index.html#Map">Map</a></pre>
+				<p>
+DynamicTypes returns p.PointsTo().DynamicTypes().
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Pointer.MayAlias">func (Pointer) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=8549:8590#L268">MayAlias</a>
+					<a class="permalink" href="index.html#Pointer.MayAlias">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#Pointer">Pointer</a>) MayAlias(q <a href="index.html#Pointer">Pointer</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+MayAlias reports whether the receiver pointer may alias
+the argument pointer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Pointer.PointsTo">func (Pointer) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=8327:8366#L259">PointsTo</a>
+					<a class="permalink" href="index.html#Pointer.PointsTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#Pointer">Pointer</a>) PointsTo() <a href="index.html#PointsToSet">PointsToSet</a></pre>
+				<p>
+PointsTo returns the points-to set of this pointer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Pointer.String">func (Pointer) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=8202:8234#L254">String</a>
+					<a class="permalink" href="index.html#Pointer.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#Pointer">Pointer</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PointsToSet">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=6061:6145#L172">PointsToSet</a>
+				<a class="permalink" href="index.html#PointsToSet">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PointsToSet is a set of labels (locations or allocations).
+</p>
+
+			<pre>type PointsToSet struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PointsToSet.DynamicTypes">func (PointsToSet) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=7238:7287#L217">DynamicTypes</a>
+					<a class="permalink" href="index.html#PointsToSet.DynamicTypes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#PointsToSet">PointsToSet</a>) DynamicTypes() *<a href="../types/typeutil/index.html">typeutil</a>.<a href="../types/typeutil/index.html#Map">Map</a></pre>
+				<p>
+If this PointsToSet came from a Pointer of interface kind
+or a reflect.Value, DynamicTypes returns the set of dynamic
+types that it may contain.  (For an interface, they will
+always be concrete types.)
+</p>
+<p>
+The result is a mapping whose keys are the dynamic types to which
+it may point.  For each pointer-like key type, the corresponding
+map value is the PointsToSet for pointers of that type.
+</p>
+<p>
+The result is empty unless CanHaveDynamicTypes(T).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PointsToSet.Intersects">func (PointsToSet) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=7970:8021#L244">Intersects</a>
+					<a class="permalink" href="index.html#PointsToSet.Intersects">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (x <a href="index.html#PointsToSet">PointsToSet</a>) Intersects(y <a href="index.html#PointsToSet">PointsToSet</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Intersects reports whether this points-to set and the
+argument points-to set contain common members.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PointsToSet.Labels">func (PointsToSet) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=6539:6577#L195">Labels</a>
+					<a class="permalink" href="index.html#PointsToSet.Labels">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#PointsToSet">PointsToSet</a>) Labels() []*<a href="index.html#Label">Label</a></pre>
+				<p>
+PointsTo returns the set of labels that this points-to set
+contains.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PointsToSet.String">func (PointsToSet) <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=6147:6183#L177">String</a>
+					<a class="permalink" href="index.html#PointsToSet.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#PointsToSet">PointsToSet</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Result">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=5456:5775#L154">Result</a>
+				<a class="permalink" href="index.html#Result">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Result contains the results of a pointer analysis.
+</p>
+<p>
+See Config for how to request the various Result components.
+</p>
+
+			<pre>type Result struct {
+<span id="Result.CallGraph"></span>    CallGraph       *<a href="../callgraph/index.html">callgraph</a>.<a href="../callgraph/index.html#Graph">Graph</a>      <span class="comment">// discovered call graph</span>
+<span id="Result.Queries"></span>    Queries         map[<a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>]<a href="index.html#Pointer">Pointer</a> <span class="comment">// pts(v) for each v in Config.Queries.</span>
+<span id="Result.IndirectQueries"></span>    IndirectQueries map[<a href="../ssa/index.html">ssa</a>.<a href="../ssa/index.html#Value">Value</a>]<a href="index.html#Pointer">Pointer</a> <span class="comment">// pts(*v) for each v in Config.IndirectQueries.</span>
+<span id="Result.Warnings"></span>    Warnings        []<a href="index.html#Warning">Warning</a>             <span class="comment">// warnings of unsoundness</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Analyze">func <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/analysis.go?s=8090:8146#L209">Analyze</a>
+					<a class="permalink" href="index.html#Analyze">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Analyze(config *<a href="index.html#Config">Config</a>) (result *<a href="index.html#Result">Result</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Analyze runs the pointer analysis with the scope and options
+specified by config, and returns the (synthetic) root of the callgraph.
+</p>
+<p>
+Pointer analysis of a transitively closed well-typed program should
+always succeed.  An error can occur only due to an internal bug.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Warning">type <a href="http://localhost:6060/src/golang.org/x/tools/go/pointer/api.go?s=5270:5328#L145">Warning</a>
+				<a class="permalink" href="index.html#Warning">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Warning struct {
+<span id="Warning.Pos"></span>    Pos     <a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#Pos">Pos</a>
+<span id="Warning.Message"></span>    Message <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

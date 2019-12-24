@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mocks - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mocks
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/common/cluster/mocks"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#BlockRetriever">type BlockRetriever</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockRetriever.Block">func (_m *BlockRetriever) Block(number uint64) *common.Block</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BlockVerifier">type BlockVerifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockVerifier.VerifyBlockSignature">func (_m *BlockVerifier) VerifyBlockSignature(sd []*common.SignedData, config *common.ConfigEnvelope) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChainPuller">type ChainPuller</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainPuller.Close">func (_m *ChainPuller) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainPuller.HeightsByEndpoints">func (_m *ChainPuller) HeightsByEndpoints() (map[string]uint64, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChainPuller.PullBlock">func (_m *ChainPuller) PullBlock(seq uint64) *common.Block</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelLister">type ChannelLister</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelLister.Channels">func (_m *ChannelLister) Channels() []cluster.ChannelGenesisBlock</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelLister.Close">func (_m *ChannelLister) Close()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClusterClient">type ClusterClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ClusterClient.Step">func (_m *ClusterClient) Step(ctx context.Context, opts ...grpc.CallOption) (orderer.Cluster_StepClient, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Communicator">type Communicator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Communicator.Configure">func (_m *Communicator) Configure(channel string, members []cluster.RemoteNode)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Communicator.Remote">func (_m *Communicator) Remote(channel string, id uint64) (*cluster.RemoteContext, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Communicator.Shutdown">func (_m *Communicator) Shutdown()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Dispatcher">type Dispatcher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.DispatchConsensus">func (_m *Dispatcher) DispatchConsensus(ctx context.Context, request *orderer.ConsensusRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Dispatcher.DispatchSubmit">func (_m *Dispatcher) DispatchSubmit(ctx context.Context, request *orderer.SubmitRequest) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.OnConsensus">func (_m *Handler) OnConsensus(channel string, sender uint64, req *orderer.ConsensusRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.OnSubmit">func (_m *Handler) OnSubmit(channel string, sender uint64, req *orderer.SubmitRequest) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LedgerFactory">type LedgerFactory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerFactory.GetOrCreate">func (_m *LedgerFactory) GetOrCreate(chainID string) (cluster.LedgerWriter, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LedgerWriter">type LedgerWriter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerWriter.Append">func (_m *LedgerWriter) Append(block *common.Block) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LedgerWriter.Height">func (_m *LedgerWriter) Height() uint64</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MetricsProvider">type MetricsProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MetricsProvider.NewCounter">func (_m *MetricsProvider) NewCounter(opts metrics.CounterOpts) metrics.Counter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MetricsProvider.NewGauge">func (_m *MetricsProvider) NewGauge(opts metrics.GaugeOpts) metrics.Gauge</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MetricsProvider.NewHistogram">func (_m *MetricsProvider) NewHistogram(opts metrics.HistogramOpts) metrics.Histogram</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SecureDialer">type SecureDialer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SecureDialer.Dial">func (_m *SecureDialer) Dial(address string, verifyFunc cluster.RemoteVerifier) (*grpc.ClientConn, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StepClient">type StepClient</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.CloseSend">func (_m *StepClient) CloseSend() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.Context">func (_m *StepClient) Context() context.Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.Header">func (_m *StepClient) Header() (metadata.MD, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.Recv">func (_m *StepClient) Recv() (*orderer.StepResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.RecvMsg">func (_m *StepClient) RecvMsg(m interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.Send">func (_m *StepClient) Send(_a0 *orderer.StepRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.SendMsg">func (_m *StepClient) SendMsg(m interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepClient.Trailer">func (_m *StepClient) Trailer() metadata.MD</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StepStream">type StepStream</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.Context">func (_m *StepStream) Context() context.Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.Recv">func (_m *StepStream) Recv() (*orderer.StepRequest, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.RecvMsg">func (_m *StepStream) RecvMsg(m interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.Send">func (_m *StepStream) Send(response *orderer.StepResponse) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.SendHeader">func (_m *StepStream) SendHeader(_a0 metadata.MD) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.SendMsg">func (_m *StepStream) SendMsg(m interface{}) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.SetHeader">func (_m *StepStream) SetHeader(_a0 metadata.MD) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StepStream.SetTrailer">func (_m *StepStream) SetTrailer(_a0 metadata.MD)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VerifierFactory">type VerifierFactory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VerifierFactory.VerifierFromConfig">func (_m *VerifierFactory) VerifierFromConfig(configuration *common.ConfigEnvelope, channel string) (cluster.BlockVerifier, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#VerifierRetriever">type VerifierRetriever</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#VerifierRetriever.RetrieveVerifier">func (_m *VerifierRetriever) RetrieveVerifier(channel string) cluster.BlockVerifier</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_retriever.go">block_retriever.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_verifier.go">block_verifier.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/chain_puller.go">chain_puller.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/channel_lister.go">channel_lister.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/cluster_client.go">cluster_client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/communicator.go">communicator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/dispatcher.go">dispatcher.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/handler.go">handler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_factory.go">ledger_factory.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_writer.go">ledger_writer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/metrics_provider.go">metrics_provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/secure_dialer.go">secure_dialer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go">step_client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go">step_stream.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_factory.go">verifier_factory.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_retriever.go">verifier_retriever.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="BlockRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_retriever.go?s=249:290#L1">BlockRetriever</a>
+				<a class="permalink" href="index.html#BlockRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockRetriever is an autogenerated mock type for the BlockRetriever type
+</p>
+
+			<pre>type BlockRetriever struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockRetriever.Block">func (*BlockRetriever) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_retriever.go?s=352:412#L6">Block</a>
+					<a class="permalink" href="index.html#BlockRetriever.Block">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#BlockRetriever">BlockRetriever</a>) Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+Block provides a mock function with given fields: number
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BlockVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_verifier.go?s=247:287#L1">BlockVerifier</a>
+				<a class="permalink" href="index.html#BlockVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockVerifier is an autogenerated mock type for the BlockVerifier type
+</p>
+
+			<pre>type BlockVerifier struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BlockVerifier.VerifyBlockSignature">func (*BlockVerifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/block_verifier.go?s=368:475#L6">VerifyBlockSignature</a>
+					<a class="permalink" href="index.html#BlockVerifier.VerifyBlockSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#BlockVerifier">BlockVerifier</a>) VerifyBlockSignature(sd []*<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#SignedData">SignedData</a>, config *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyBlockSignature provides a mock function with given fields: sd, config
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChainPuller">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/chain_puller.go?s=243:281#L1">ChainPuller</a>
+				<a class="permalink" href="index.html#ChainPuller">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChainPuller is an autogenerated mock type for the ChainPuller type
+</p>
+
+			<pre>type ChainPuller struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChainPuller.Close">func (*ChainPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/chain_puller.go?s=336:366#L6">Close</a>
+					<a class="permalink" href="index.html#ChainPuller.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ChainPuller">ChainPuller</a>) Close()</pre>
+				<p>
+Close provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainPuller.HeightsByEndpoints">func (*ChainPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/chain_puller.go?s=451:521#L11">HeightsByEndpoints</a>
+					<a class="permalink" href="index.html#ChainPuller.HeightsByEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ChainPuller">ChainPuller</a>) HeightsByEndpoints() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+HeightsByEndpoints provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChainPuller.PullBlock">func (*ChainPuller) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/chain_puller.go?s=908:966#L34">PullBlock</a>
+					<a class="permalink" href="index.html#ChainPuller.PullBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ChainPuller">ChainPuller</a>) PullBlock(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+PullBlock provides a mock function with given fields: seq
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelLister">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/channel_lister.go?s=257:297#L1">ChannelLister</a>
+				<a class="permalink" href="index.html#ChannelLister">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelLister is an autogenerated mock type for the ChannelLister type
+</p>
+
+			<pre>type ChannelLister struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ChannelLister.Channels">func (*ChannelLister) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/channel_lister.go?s=355:420#L6">Channels</a>
+					<a class="permalink" href="index.html#ChannelLister.Channels">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ChannelLister">ChannelLister</a>) Channels() []<a href="../index.html">cluster</a>.<a href="../index.html#ChannelGenesisBlock">ChannelGenesisBlock</a></pre>
+				<p>
+Channels provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelLister.Close">func (*ChannelLister) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/channel_lister.go?s=725:757#L22">Close</a>
+					<a class="permalink" href="index.html#ChannelLister.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ChannelLister">ChannelLister</a>) Close()</pre>
+				<p>
+Close provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ClusterClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/cluster_client.go?s=302:342#L6">ClusterClient</a>
+				<a class="permalink" href="index.html#ClusterClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClusterClient is an autogenerated mock type for the ClusterClient type
+</p>
+
+			<pre>type ClusterClient struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ClusterClient.Step">func (*ClusterClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/cluster_client.go?s=406:517#L11">Step</a>
+					<a class="permalink" href="index.html#ClusterClient.Step">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#ClusterClient">ClusterClient</a>) Step(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, opts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#CallOption">CallOption</a>) (<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#Cluster_StepClient">Cluster_StepClient</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Step provides a mock function with given fields: ctx, opts
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Communicator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/communicator.go?s=255:294#L1">Communicator</a>
+				<a class="permalink" href="index.html#Communicator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Communicator is an autogenerated mock type for the Communicator type
+</p>
+
+			<pre>type Communicator struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Communicator.Configure">func (*Communicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/communicator.go?s=370:449#L6">Configure</a>
+					<a class="permalink" href="index.html#Communicator.Configure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Communicator">Communicator</a>) Configure(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, members []<a href="../index.html">cluster</a>.<a href="../index.html#RemoteNode">RemoteNode</a>)</pre>
+				<p>
+Configure provides a mock function with given fields: channel, members
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Communicator.Remote">func (*Communicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/communicator.go?s=550:639#L11">Remote</a>
+					<a class="permalink" href="index.html#Communicator.Remote">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Communicator">Communicator</a>) Remote(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../index.html">cluster</a>.<a href="../index.html#RemoteContext">RemoteContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Remote provides a mock function with given fields: channel, id
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Communicator.Shutdown">func (*Communicator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/communicator.go?s=1097:1131#L34">Shutdown</a>
+					<a class="permalink" href="index.html#Communicator.Shutdown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Communicator">Communicator</a>) Shutdown()</pre>
+				<p>
+Shutdown provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Dispatcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/dispatcher.go?s=263:300#L3">Dispatcher</a>
+				<a class="permalink" href="index.html#Dispatcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Dispatcher is an autogenerated mock type for the Dispatcher type
+</p>
+
+			<pre>type Dispatcher struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Dispatcher.DispatchConsensus">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/dispatcher.go?s=380:481#L8">DispatchConsensus</a>
+					<a class="permalink" href="index.html#Dispatcher.DispatchConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Dispatcher">Dispatcher</a>) DispatchConsensus(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DispatchConsensus provides a mock function with given fields: ctx, request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Dispatcher.DispatchSubmit">func (*Dispatcher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/dispatcher.go?s=766:861#L22">DispatchSubmit</a>
+					<a class="permalink" href="index.html#Dispatcher.DispatchSubmit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Dispatcher">Dispatcher</a>) DispatchSubmit(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>, request *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+DispatchSubmit provides a mock function with given fields: ctx, request
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/handler.go?s=237:271#L1">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler is an autogenerated mock type for the Handler type
+</p>
+
+			<pre>type Handler struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Handler.OnConsensus">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/handler.go?s=353:451#L6">OnConsensus</a>
+					<a class="permalink" href="index.html#Handler.OnConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Handler">Handler</a>) OnConsensus(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+OnConsensus provides a mock function with given fields: channel, sender, req
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.OnSubmit">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/handler.go?s=753:845#L20">OnSubmit</a>
+					<a class="permalink" href="index.html#Handler.OnSubmit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#Handler">Handler</a>) OnSubmit(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+OnSubmit provides a mock function with given fields: channel, sender, req
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LedgerFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_factory.go?s=257:297#L1">LedgerFactory</a>
+				<a class="permalink" href="index.html#LedgerFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerFactory is an autogenerated mock type for the LedgerFactory type
+</p>
+
+			<pre>type LedgerFactory struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LedgerFactory.GetOrCreate">func (*LedgerFactory) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_factory.go?s=366:448#L6">GetOrCreate</a>
+					<a class="permalink" href="index.html#LedgerFactory.GetOrCreate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#LedgerFactory">LedgerFactory</a>) GetOrCreate(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../index.html">cluster</a>.<a href="../index.html#LedgerWriter">LedgerWriter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetOrCreate provides a mock function with given fields: chainID
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LedgerWriter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_writer.go?s=245:284#L1">LedgerWriter</a>
+				<a class="permalink" href="index.html#LedgerWriter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerWriter is an autogenerated mock type for the LedgerWriter type
+</p>
+
+			<pre>type LedgerWriter struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LedgerWriter.Append">func (*LedgerWriter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_writer.go?s=346:403#L6">Append</a>
+					<a class="permalink" href="index.html#LedgerWriter.Append">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#LedgerWriter">LedgerWriter</a>) Append(block *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Append provides a mock function with given fields: block
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LedgerWriter.Height">func (*LedgerWriter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/ledger_writer.go?s=624:663#L20">Height</a>
+					<a class="permalink" href="index.html#LedgerWriter.Height">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#LedgerWriter">LedgerWriter</a>) Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Height provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MetricsProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/metrics_provider.go?s=253:295#L1">MetricsProvider</a>
+				<a class="permalink" href="index.html#MetricsProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MetricsProvider is an autogenerated mock type for the MetricsProvider type
+</p>
+
+			<pre>type MetricsProvider struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MetricsProvider.NewCounter">func (*MetricsProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/metrics_provider.go?s=360:439#L6">NewCounter</a>
+					<a class="permalink" href="index.html#MetricsProvider.NewCounter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#MetricsProvider">MetricsProvider</a>) NewCounter(opts <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#CounterOpts">CounterOpts</a>) <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#Counter">Counter</a></pre>
+				<p>
+NewCounter provides a mock function with given fields: opts
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MetricsProvider.NewGauge">func (*MetricsProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/metrics_provider.go?s=737:810#L22">NewGauge</a>
+					<a class="permalink" href="index.html#MetricsProvider.NewGauge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#MetricsProvider">MetricsProvider</a>) NewGauge(opts <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#GaugeOpts">GaugeOpts</a>) <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#Gauge">Gauge</a></pre>
+				<p>
+NewGauge provides a mock function with given fields: opts
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MetricsProvider.NewHistogram">func (*MetricsProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/metrics_provider.go?s=1104:1189#L38">NewHistogram</a>
+					<a class="permalink" href="index.html#MetricsProvider.NewHistogram">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#MetricsProvider">MetricsProvider</a>) NewHistogram(opts <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#HistogramOpts">HistogramOpts</a>) <a href="../../../../common/metrics/index.html">metrics</a>.<a href="../../../../common/metrics/index.html#Histogram">Histogram</a></pre>
+				<p>
+NewHistogram provides a mock function with given fields: opts
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SecureDialer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/secure_dialer.go?s=287:326#L3">SecureDialer</a>
+				<a class="permalink" href="index.html#SecureDialer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SecureDialer is an autogenerated mock type for the SecureDialer type
+</p>
+
+			<pre>type SecureDialer struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SecureDialer.Dial">func (*SecureDialer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/secure_dialer.go?s=400:505#L8">Dial</a>
+					<a class="permalink" href="index.html#SecureDialer.Dial">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#SecureDialer">SecureDialer</a>) Dial(address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, verifyFunc <a href="../index.html">cluster</a>.<a href="../index.html#RemoteVerifier">RemoteVerifier</a>) (*<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#ClientConn">ClientConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Dial provides a mock function with given fields: address, verifyFunc
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StepClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=308:345#L5">StepClient</a>
+				<a class="permalink" href="index.html#StepClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StepClient is an autogenerated mock type for the StepClient type
+</p>
+
+			<pre>type StepClient struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StepClient.CloseSend">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=404:443#L10">CloseSend</a>
+					<a class="permalink" href="index.html#StepClient.CloseSend">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) CloseSend() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CloseSend provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.Context">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=642:689#L24">Context</a>
+					<a class="permalink" href="index.html#StepClient.Context">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) Context() <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a></pre>
+				<p>
+Context provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.Header">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=953:1004#L40">Header</a>
+					<a class="permalink" href="index.html#StepClient.Header">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) Header() (<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/">metadata</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/#MD">MD</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Header provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.Recv">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=1364:1423#L63">Recv</a>
+					<a class="permalink" href="index.html#StepClient.Recv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) Recv() (*<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#StepResponse">StepResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Recv provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.RecvMsg">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=1818:1868#L86">RecvMsg</a>
+					<a class="permalink" href="index.html#StepClient.RecvMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) RecvMsg(m interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+RecvMsg provides a mock function with given fields: m
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.Send">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=2081:2139#L100">Send</a>
+					<a class="permalink" href="index.html#StepClient.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) Send(_a0 *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#StepRequest">StepRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Send provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.SendMsg">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=2366:2416#L114">SendMsg</a>
+					<a class="permalink" href="index.html#StepClient.SendMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) SendMsg(m interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SendMsg provides a mock function with given fields: m
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepClient.Trailer">func (*StepClient) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_client.go?s=2628:2671#L128">Trailer</a>
+					<a class="permalink" href="index.html#StepClient.Trailer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepClient">StepClient</a>) Trailer() <a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/">metadata</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/#MD">MD</a></pre>
+				<p>
+Trailer provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StepStream">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=308:345#L5">StepStream</a>
+				<a class="permalink" href="index.html#StepStream">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+StepStream is an autogenerated mock type for the StepStream type
+</p>
+
+			<pre>type StepStream struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StepStream.Context">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=402:449#L10">Context</a>
+					<a class="permalink" href="index.html#StepStream.Context">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) Context() <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a></pre>
+				<p>
+Context provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.Recv">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=711:769#L26">Recv</a>
+					<a class="permalink" href="index.html#StepStream.Recv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) Recv() (*<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#StepRequest">StepRequest</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Recv provides a mock function with given fields:
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.RecvMsg">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=1161:1211#L49">RecvMsg</a>
+					<a class="permalink" href="index.html#StepStream.RecvMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) RecvMsg(m interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+RecvMsg provides a mock function with given fields: m
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.Send">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=1429:1493#L63">Send</a>
+					<a class="permalink" href="index.html#StepStream.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) Send(response *<a href="../../../../protos/orderer/index.html">orderer</a>.<a href="../../../../protos/orderer/index.html#StepResponse">StepResponse</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Send provides a mock function with given fields: response
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.SendHeader">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=1736:1791#L77">SendHeader</a>
+					<a class="permalink" href="index.html#StepStream.SendHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) SendHeader(_a0 <a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/">metadata</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/#MD">MD</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SendHeader provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.SendMsg">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=2009:2059#L91">SendMsg</a>
+					<a class="permalink" href="index.html#StepStream.SendMsg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) SendMsg(m interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SendMsg provides a mock function with given fields: m
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.SetHeader">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=2277:2331#L105">SetHeader</a>
+					<a class="permalink" href="index.html#StepStream.SetHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) SetHeader(_a0 <a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/">metadata</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/#MD">MD</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetHeader provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="StepStream.SetTrailer">func (*StepStream) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/step_stream.go?s=2554:2603#L119">SetTrailer</a>
+					<a class="permalink" href="index.html#StepStream.SetTrailer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#StepStream">StepStream</a>) SetTrailer(_a0 <a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/">metadata</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/metadata/#MD">MD</a>)</pre>
+				<p>
+SetTrailer provides a mock function with given fields: _a0
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VerifierFactory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_factory.go?s=316:358#L3">VerifierFactory</a>
+				<a class="permalink" href="index.html#VerifierFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VerifierFactory is an autogenerated mock type for the VerifierFactory type
+</p>
+
+			<pre>type VerifierFactory struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VerifierFactory.VerifierFromConfig">func (*VerifierFactory) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_factory.go?s=449:579#L8">VerifierFromConfig</a>
+					<a class="permalink" href="index.html#VerifierFactory.VerifierFromConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#VerifierFactory">VerifierFactory</a>) VerifierFromConfig(configuration *<a href="../../../../protos/common/index.html">common</a>.<a href="../../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../index.html">cluster</a>.<a href="../index.html#BlockVerifier">BlockVerifier</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+VerifierFromConfig provides a mock function with given fields: configuration, channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="VerifierRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_retriever.go?s=265:309#L1">VerifierRetriever</a>
+				<a class="permalink" href="index.html#VerifierRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+VerifierRetriever is an autogenerated mock type for the VerifierRetriever type
+</p>
+
+			<pre>type VerifierRetriever struct {
+    <a href="../../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="VerifierRetriever.RetrieveVerifier">func (*VerifierRetriever) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/common/cluster/mocks/verifier_retriever.go?s=383:466#L6">RetrieveVerifier</a>
+					<a class="permalink" href="index.html#VerifierRetriever.RetrieveVerifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (_m *<a href="index.html#VerifierRetriever">VerifierRetriever</a>) RetrieveVerifier(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../index.html">cluster</a>.<a href="../index.html#BlockVerifier">BlockVerifier</a></pre>
+				<p>
+RetrieveVerifier provides a mock function with given fields: channel
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

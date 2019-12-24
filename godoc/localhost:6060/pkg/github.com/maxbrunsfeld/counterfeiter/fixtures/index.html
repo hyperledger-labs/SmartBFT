@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>fixtures - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package fixtures
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/maxbrunsfeld/counterfeiter/fixtures"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#AliasedInterface">type AliasedInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DotImports">type DotImports</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EmbedsInterfaces">type EmbedsInterfaces</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FirstInterface">type FirstInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HasImports">type HasImports</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HasOtherTypes">type HasOtherTypes</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HasVarArgs">type HasVarArgs</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HasVarArgsWithLocalTypes">type HasVarArgsWithLocalTypes</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ImportsGoHyphenPackage">type ImportsGoHyphenPackage</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InterfaceToEmbed">type InterfaceToEmbed</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LocalType">type LocalType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Params">type Params</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Request">type Request</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestFactory">type RequestFactory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReusesArgTypes">type ReusesArgTypes</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SecondInterface">type SecondInterface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomeFunc">type SomeFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomeNum">type SomeNum</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomeString">type SomeString</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Something">type Something</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomethingElse">type SomethingElse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomethingFactory">type SomethingFactory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SomethingWithForeignInterface">type SomethingWithForeignInterface</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/aliased_interfaces.go">aliased_interfaces.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/blank.go">blank.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/compound_return.go">compound_return.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/dot_imports.go">dot_imports.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/embeds_interfaces.go">embeds_interfaces.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_imports.go">has_imports.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_other_types.go">has_other_types.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_var_args.go">has_var_args.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/imports_go_hyphen_package.go">imports_go_hyphen_package.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/multiple_interfaces.go">multiple_interfaces.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/other_types.go">other_types.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/request_factory.go">request_factory.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/reuses_arg_types.go">reuses_arg_types.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/something.go">something.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/something_remote.go">something_remote.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/typed_function.go">typed_function.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/unexported.go">unexported.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="AliasedInterface">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/aliased_interfaces.go?s=229:288#L1">AliasedInterface</a>
+				<a class="permalink" href="index.html#AliasedInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AliasedInterface is an interface that embeds an interface in an aliased package.
+</p>
+
+			<pre>type AliasedInterface interface {
+    <a href="another_package/index.html">alias</a>.<a href="another_package/index.html#AnotherInterface">AnotherInterface</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DotImports">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/dot_imports.go?s=97:167#L1">DotImports</a>
+				<a class="permalink" href="index.html#DotImports">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . DotImports
+</p>
+
+			<pre>type DotImports interface {
+    DoThings(<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, *<a href="index.html#File">File</a>) *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Client">Client</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EmbedsInterfaces">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/embeds_interfaces.go?s=156:270#L1">EmbedsInterfaces</a>
+				<a class="permalink" href="index.html#EmbedsInterfaces">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . EmbedsInterfaces
+</p>
+
+			<pre>type EmbedsInterfaces interface {
+    <a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Handler">Handler</a>
+    <a href="another_package/index.html">another_package</a>.<a href="another_package/index.html#AnotherInterface">AnotherInterface</a>
+    <a href="index.html#InterfaceToEmbed">InterfaceToEmbed</a>
+
+    DoThings()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FirstInterface">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/multiple_interfaces.go?s=63:108#L1">FirstInterface</a>
+				<a class="permalink" href="index.html#FirstInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . FirstInterface
+</p>
+
+			<pre>type FirstInterface interface {
+    DoThings()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HasImports">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_imports.go?s=106:187#L1">HasImports</a>
+				<a class="permalink" href="index.html#HasImports">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . HasImports
+</p>
+
+			<pre>type HasImports interface {
+    DoThings(<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, *<a href="http://localhost:6060/pkg/os/">some_alias</a>.<a href="http://localhost:6060/pkg/os/#File">File</a>) *<a href="http://localhost:6060/pkg/net/http/">http</a>.<a href="http://localhost:6060/pkg/net/http/#Client">Client</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HasOtherTypes">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_other_types.go?s=62:125#L1">HasOtherTypes</a>
+				<a class="permalink" href="index.html#HasOtherTypes">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . HasOtherTypes
+</p>
+
+			<pre>type HasOtherTypes interface {
+    GetThing(<a href="index.html#SomeString">SomeString</a>) <a href="index.html#SomeFunc">SomeFunc</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HasVarArgs">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_var_args.go?s=59:157#L1">HasVarArgs</a>
+				<a class="permalink" href="index.html#HasVarArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . HasVarArgs
+</p>
+
+			<pre>type HasVarArgs interface {
+    DoThings(<a href="http://localhost:6060/pkg/builtin/#int">int</a>, ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    DoMoreThings(<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#int">int</a>, ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="HasVarArgsWithLocalTypes">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_var_args.go?s=214:281#L1">HasVarArgsWithLocalTypes</a>
+				<a class="permalink" href="index.html#HasVarArgsWithLocalTypes">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . HasVarArgsWithLocalTypes
+</p>
+
+			<pre>type HasVarArgsWithLocalTypes interface {
+    DoThings(...<a href="index.html#LocalType">LocalType</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ImportsGoHyphenPackage">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/imports_go_hyphen_package.go?s=150:232#L1">ImportsGoHyphenPackage</a>
+				<a class="permalink" href="index.html#ImportsGoHyphenPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . ImportsGoHyphenPackage
+</p>
+
+			<pre>type ImportsGoHyphenPackage interface {
+    UseHyphenType(hyphenpackage.<a href="index.html#HyphenType">HyphenType</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InterfaceToEmbed">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/embeds_interfaces.go?s=272:332#L8">InterfaceToEmbed</a>
+				<a class="permalink" href="index.html#InterfaceToEmbed">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type InterfaceToEmbed interface {
+    EmbeddedMethod() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LocalType">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/has_var_args.go?s=283:306#L4">LocalType</a>
+				<a class="permalink" href="index.html#LocalType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LocalType struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Params">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/request_factory.go?s=18:38#L1">Params</a>
+				<a class="permalink" href="index.html#Params">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Params struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Request">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/request_factory.go?s=39:60#L1">Request</a>
+				<a class="permalink" href="index.html#Request">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Request struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RequestFactory">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/request_factory.go?s=61:134#L1">RequestFactory</a>
+				<a class="permalink" href="index.html#RequestFactory">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RequestFactory func(<a href="index.html#Params">Params</a>, map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) (<a href="index.html#Request">Request</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReusesArgTypes">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/reuses_arg_types.go?s=63:119#L1">ReusesArgTypes</a>
+				<a class="permalink" href="index.html#ReusesArgTypes">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . ReusesArgTypes
+</p>
+
+			<pre>type ReusesArgTypes interface {
+    DoThings(x, y <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SecondInterface">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/multiple_interfaces.go?s=156:215#L1">SecondInterface</a>
+				<a class="permalink" href="index.html#SecondInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . SecondInterface
+</p>
+
+			<pre>type SecondInterface interface {
+    EmbeddedMethod() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomeFunc">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/other_types.go?s=61:93#L1">SomeFunc</a>
+				<a class="permalink" href="index.html#SomeFunc">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SomeFunc func(<a href="index.html#SomeNum">SomeNum</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomeNum">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/other_types.go?s=18:37#L1">SomeNum</a>
+				<a class="permalink" href="index.html#SomeNum">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SomeNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomeString">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/other_types.go?s=38:60#L1">SomeString</a>
+				<a class="permalink" href="index.html#SomeString">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SomeString <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Something">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/something.go?s=58:176#L1">Something</a>
+				<a class="permalink" href="index.html#Something">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . Something
+</p>
+
+			<pre>type Something interface {
+    DoThings(<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    DoNothing()
+    DoASlice([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+    DoAnArray([4]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomethingElse">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/compound_return.go?s=62:120#L1">SomethingElse</a>
+				<a class="permalink" href="index.html#SomethingElse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . SomethingElse
+</p>
+
+			<pre>type SomethingElse interface {
+    ReturnStuff() (a, b <a href="http://localhost:6060/pkg/builtin/#int">int</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomethingFactory">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/typed_function.go?s=65:130#L1">SomethingFactory</a>
+				<a class="permalink" href="index.html#SomethingFactory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+go:generate counterfeiter . SomethingFactory
+</p>
+
+			<pre>type SomethingFactory func(<a href="http://localhost:6060/pkg/builtin/#string">string</a>, map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]interface{}) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SomethingWithForeignInterface">type <a href="http://localhost:6060/src/github.com/maxbrunsfeld/counterfeiter/fixtures/something_remote.go?s=234:320#L1">SomethingWithForeignInterface</a>
+				<a class="permalink" href="index.html#SomethingWithForeignInterface">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SomethingWithForeignInterface is an interface that embeds a foreign interface.
+</p>
+
+			<pre>type SomethingWithForeignInterface interface {
+    the_aliased_package.<a href="index.html#InAliasedPackage">InAliasedPackage</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="aliased_package/index.html">aliased_package</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="another_package/index.html">another_package</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="dup_packages/index.html">dup_packages</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="dup_packages/a/index.html">a</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="dup_packages/a/foo/index.html">foo</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="dup_packages/b/index.html">b</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="dup_packages/b/foo/index.html">foo</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="dup_packages/foo/index.html">foo</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="go-hyphenpackage/index.html">go-hyphenpackage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="hyphenated_package_same_name/index.html">hyphenated_package_same_name</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="hyphenated_package_same_name/hyphen-ated/index.html">hyphen-ated</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="hyphenated_package_same_name/hyphen-ated/some_package/index.html">some_package</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="hyphenated_package_same_name/some_package/index.html">some_package</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="packagegen/index.html">packagegen</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="packagegen/apackage/index.html">apackage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="sync/index.html">sync</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

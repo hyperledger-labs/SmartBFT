@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>/src/golang.org/x/tools/go/analysis/passes - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Directory /src/golang.org/x/tools/go/analysis/passes
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+
+
+
+
+	
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="asmdecl/index.html">asmdecl</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package asmdecl defines an Analyzer that reports mismatches between assembly files and Go declarations.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="assign/index.html">assign</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package assign defines an Analyzer that detects useless assignments.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="atomic/index.html">atomic</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package atomic defines an Analyzer that checks for common mistakes using the sync/atomic package.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="atomicalign/index.html">atomicalign</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package atomicalign defines an Analyzer that checks for non-64-bit-aligned arguments to sync/atomic functions.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="bools/index.html">bools</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package bools defines an Analyzer that detects common mistakes involving boolean operators.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="buildssa/index.html">buildssa</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package buildssa defines an Analyzer that constructs the SSA representation of an error-free package and returns the set of all functions within it.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="buildtag/index.html">buildtag</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package buildtag defines an Analyzer that checks build tags.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="cgocall/index.html">cgocall</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package cgocall defines an Analyzer that detects some violations of the cgo pointer passing rules.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="composite/index.html">composite</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package composite defines an Analyzer that checks for unkeyed composite literals.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="copylock/index.html">copylock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package copylock defines an Analyzer that checks for locks erroneously passed by value.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ctrlflow/index.html">ctrlflow</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package ctrlflow is an analysis that provides a syntactic control-flow graph (CFG) for the body of a function.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="deepequalerrors/index.html">deepequalerrors</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package deepequalerrors defines an Analyzer that checks for the use of reflect.DeepEqual with error values.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="errorsas/index.html">errorsas</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The errorsas package defines an Analyzer that checks that the second argument to errors.As is a pointer to a type implementing error.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="findcall/index.html">findcall</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="findcall/cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="findcall/cmd/findcall/index.html">findcall</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The findcall command runs the findcall analyzer.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="httpresponse/index.html">httpresponse</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package httpresponse defines an Analyzer that checks for mistakes using HTTP responses.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="inspect/index.html">inspect</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package inspect defines an Analyzer that provides an AST inspector (golang.org/x/tools/go/ast/inspect.Inspect) for the syntax trees of a package.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="loopclosure/index.html">loopclosure</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package loopclosure defines an Analyzer that checks for references to enclosing loop variables from within nested functions.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="lostcancel/index.html">lostcancel</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package lostcancel defines an Analyzer that checks for failure to call a context cancellation function.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="lostcancel/cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="lostcancel/cmd/lostcancel/index.html">lostcancel</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The lostcancel command applies the golang.org/x/tools/go/analysis/passes/lostcancel analysis to the specified packages of Go source code.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="nilfunc/index.html">nilfunc</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package nilfunc defines an Analyzer that checks for useless comparisons against nil.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="nilness/index.html">nilness</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package nilness inspects the control-flow graph of an SSA function and reports errors such as nil pointer dereferences and degenerate nil pointer comparisons.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="nilness/cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="nilness/cmd/nilness/index.html">nilness</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The nilness command applies the golang.org/x/tools/go/analysis/passes/nilness analysis to the specified packages of Go source code.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="pkgfact/index.html">pkgfact</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The pkgfact package is a demonstration and test of the package fact mechanism.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="printf/index.html">printf</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="shadow/index.html">shadow</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="shadow/cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="shadow/cmd/shadow/index.html">shadow</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The shadow command runs the shadow analyzer.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="shift/index.html">shift</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package shift defines an Analyzer that checks for shifts that exceed the width of an integer.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="sortslice/index.html">sortslice</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package sortslice defines an Analyzer that checks for calls to sort.Slice that do not use a slice type as first argument.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="stdmethods/index.html">stdmethods</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package stdmethods defines an Analyzer that checks for misspellings in the signatures of methods similar to well-known interfaces.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="structtag/index.html">structtag</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package structtag defines an Analyzer that checks struct field tags are well formed.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="tests/index.html">tests</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package tests defines an Analyzer that checks for common mistaken usages of tests and examples.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="unmarshal/index.html">unmarshal</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The unmarshal package defines an Analyzer that checks for passing non-pointer or non-interface types to unmarshal and decode functions.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="unmarshal/cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="unmarshal/cmd/unmarshal/index.html">unmarshal</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						The unmarshal command runs the unmarshal analyzer.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="unreachable/index.html">unreachable</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package unreachable defines an Analyzer that checks for unreachable code.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="unsafeptr/index.html">unsafeptr</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package unsafeptr defines an Analyzer that checks for invalid conversions of uintptr to unsafe.Pointer.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="unusedresult/index.html">unusedresult</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package unusedresult defines an analyzer that checks for unused results of calls to certain pure functions.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

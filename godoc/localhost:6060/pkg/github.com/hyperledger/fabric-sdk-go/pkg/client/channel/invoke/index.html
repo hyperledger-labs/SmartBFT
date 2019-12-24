@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>invoke - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package invoke
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package invoke provides the handlers for performing chaincode invocations.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CCFilter">type CCFilter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChainedCCFilter">func NewChainedCCFilter(filters ...CCFilter) CCFilter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ClientContext">type ClientContext</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CommitTxHandler">type CommitTxHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommitHandler">func NewCommitHandler(next ...Handler) *CommitTxHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CommitTxHandler.Handle">func (c *CommitTxHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EndorsementHandler">type EndorsementHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorsementHandler">func NewEndorsementHandler(next ...Handler) *EndorsementHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorsementHandlerWithOpts">func NewEndorsementHandlerWithOpts(next Handler, provider TxnHeaderOptsProvider) *EndorsementHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsementHandler.Handle">func (e *EndorsementHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#EndorsementValidationHandler">type EndorsementValidationHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEndorsementValidationHandler">func NewEndorsementValidationHandler(next ...Handler) *EndorsementValidationHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EndorsementValidationHandler.Handle">func (f *EndorsementValidationHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewExecuteHandler">func NewExecuteHandler(next ...Handler) Handler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewQueryHandler">func NewQueryHandler(next ...Handler) Handler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewSelectAndEndorseHandler">func NewSelectAndEndorseHandler(next ...Handler) Handler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Opts">type Opts</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ProposalProcessorHandler">type ProposalProcessorHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProposalProcessorHandler">func NewProposalProcessorHandler(next ...Handler) *ProposalProcessorHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ProposalProcessorHandler.Handle">func (h *ProposalProcessorHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Request">type Request</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestContext">type RequestContext</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Response">type Response</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SelectAndEndorseHandler">type SelectAndEndorseHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SelectAndEndorseHandler.Handle">func (e *SelectAndEndorseHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignatureValidationHandler">type SignatureValidationHandler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewSignatureValidationHandler">func NewSignatureValidationHandler(next ...Handler) *SignatureValidationHandler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignatureValidationHandler.Handle">func (f *SignatureValidationHandler) Handle(requestContext *RequestContext, clientContext *ClientContext)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TxnHeaderOptsProvider">type TxnHeaderOptsProvider</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go">api.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/selectendorsehandler.go">selectendorsehandler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/signature.go">signature.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go">txnhandler.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CCFilter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=739:775#L13">CCFilter</a>
+				<a class="permalink" href="index.html#CCFilter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCFilter returns true if the given chaincode should be included
+in the invocation chain when computing endorsers.
+</p>
+
+			<pre>type CCFilter func(ccID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChainedCCFilter">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/selectendorsehandler.go?s=3647:3700#L87">NewChainedCCFilter</a>
+					<a class="permalink" href="index.html#NewChainedCCFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChainedCCFilter(filters ...<a href="index.html#CCFilter">CCFilter</a>) <a href="index.html#CCFilter">CCFilter</a></pre>
+				<p>
+NewChainedCCFilter returns a chaincode filter that chains
+multiple filters together. False is returned if at least one
+of the filters in the chain returns false.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ClientContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=2527:2753#L61">ClientContext</a>
+				<a class="permalink" href="index.html#ClientContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientContext contains context parameters for handler execution
+</p>
+
+			<pre>type ClientContext struct {
+<span id="ClientContext.CryptoSuite"></span>    CryptoSuite  <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>
+<span id="ClientContext.Discovery"></span>    Discovery    <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#DiscoveryService">DiscoveryService</a>
+<span id="ClientContext.Selection"></span>    Selection    <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#SelectionService">SelectionService</a>
+<span id="ClientContext.Membership"></span>    Membership   <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChannelMembership">ChannelMembership</a>
+<span id="ClientContext.Transactor"></span>    Transactor   <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Transactor">Transactor</a>
+<span id="ClientContext.EventService"></span>    EventService <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#EventService">EventService</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CommitTxHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=5260:5305#L152">CommitTxHandler</a>
+				<a class="permalink" href="index.html#CommitTxHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommitTxHandler for committing transactions
+</p>
+
+			<pre>type CommitTxHandler struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCommitHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=8372:8427#L236">NewCommitHandler</a>
+					<a class="permalink" href="index.html#NewCommitHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCommitHandler(next ...<a href="index.html#Handler">Handler</a>) *<a href="index.html#CommitTxHandler">CommitTxHandler</a></pre>
+				<p>
+NewCommitHandler returns a handler that commits transaction propsal responses
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CommitTxHandler.Handle">func (*CommitTxHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=5334:5428#L157">Handle</a>
+					<a class="permalink" href="index.html#CommitTxHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CommitTxHandler">CommitTxHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle handles commit tx
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EndorsementHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=981:1085#L19">EndorsementHandler</a>
+				<a class="permalink" href="index.html#EndorsementHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndorsementHandler for handling endorse transactions
+</p>
+
+			<pre>type EndorsementHandler struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEndorsementHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=7681:7744#L221">NewEndorsementHandler</a>
+					<a class="permalink" href="index.html#NewEndorsementHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorsementHandler(next ...<a href="index.html#Handler">Handler</a>) *<a href="index.html#EndorsementHandler">EndorsementHandler</a></pre>
+				<p>
+NewEndorsementHandler returns a handler that endorses a transaction proposal
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewEndorsementHandlerWithOpts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=7886:7986#L226">NewEndorsementHandlerWithOpts</a>
+					<a class="permalink" href="index.html#NewEndorsementHandlerWithOpts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorsementHandlerWithOpts(next <a href="index.html#Handler">Handler</a>, provider <a href="index.html#TxnHeaderOptsProvider">TxnHeaderOptsProvider</a>) *<a href="index.html#EndorsementHandler">EndorsementHandler</a></pre>
+				<p>
+NewEndorsementHandlerWithOpts returns a handler that endorses a transaction proposal
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="EndorsementHandler.Handle">func (*EndorsementHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=1123:1220#L25">Handle</a>
+					<a class="permalink" href="index.html#EndorsementHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#EndorsementHandler">EndorsementHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle for endorsing transactions
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="EndorsementValidationHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=3944:4002#L109">EndorsementValidationHandler</a>
+				<a class="permalink" href="index.html#EndorsementValidationHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndorsementValidationHandler for transaction proposal response filtering
+</p>
+
+			<pre>type EndorsementValidationHandler struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEndorsementValidationHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=8144:8227#L231">NewEndorsementValidationHandler</a>
+					<a class="permalink" href="index.html#NewEndorsementValidationHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEndorsementValidationHandler(next ...<a href="index.html#Handler">Handler</a>) *<a href="index.html#EndorsementValidationHandler">EndorsementValidationHandler</a></pre>
+				<p>
+NewEndorsementValidationHandler returns a handler that validates an endorsement
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="EndorsementValidationHandler.Handle">func (*EndorsementValidationHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=4045:4152#L114">Handle</a>
+					<a class="permalink" href="index.html#EndorsementValidationHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#EndorsementValidationHandler">EndorsementValidationHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle for Filtering proposal response
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=2370:2459#L56">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler for chaining transaction executions
+</p>
+
+			<pre>type Handler interface {
+    Handle(context *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewExecuteHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=7192:7239#L207">NewExecuteHandler</a>
+					<a class="permalink" href="index.html#NewExecuteHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewExecuteHandler(next ...<a href="index.html#Handler">Handler</a>) <a href="index.html#Handler">Handler</a></pre>
+				<p>
+NewExecuteHandler returns execute handler with chain of SelectAndEndorseHandler, EndorsementValidationHandler, SignatureValidationHandler and CommitHandler
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewQueryHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=6827:6872#L196">NewQueryHandler</a>
+					<a class="permalink" href="index.html#NewQueryHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewQueryHandler(next ...<a href="index.html#Handler">Handler</a>) <a href="index.html#Handler">Handler</a></pre>
+				<p>
+NewQueryHandler returns query handler with chain of ProposalProcessorHandler, EndorsementHandler, EndorsementValidationHandler and SignatureValidationHandler
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewSelectAndEndorseHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/selectendorsehandler.go?s=1531:1587#L29">NewSelectAndEndorseHandler</a>
+					<a class="permalink" href="index.html#NewSelectAndEndorseHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewSelectAndEndorseHandler(next ...<a href="index.html#Handler">Handler</a>) <a href="index.html#Handler">Handler</a></pre>
+				<p>
+NewSelectAndEndorseHandler returns a new SelectAndEndorseHandler
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Opts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=834:1150#L16">Opts</a>
+				<a class="permalink" href="index.html#Opts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Opts allows the user to specify more advanced options
+</p>
+
+			<pre>type Opts struct {
+<span id="Opts.Targets"></span>    Targets       []<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#Peer">Peer</a> <span class="comment">// targets</span>
+<span id="Opts.TargetFilter"></span>    TargetFilter  <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TargetFilter">TargetFilter</a>
+<span id="Opts.TargetSorter"></span>    TargetSorter  <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TargetSorter">TargetSorter</a>
+<span id="Opts.Retry"></span>    Retry         <a href="../../../common/errors/retry/index.html">retry</a>.<a href="../../../common/errors/retry/index.html#Opts">Opts</a>
+<span id="Opts.BeforeRetry"></span>    BeforeRetry   <a href="../../../common/errors/retry/index.html">retry</a>.<a href="../../../common/errors/retry/index.html#BeforeRetryHandler">BeforeRetryHandler</a>
+<span id="Opts.Timeouts"></span>    Timeouts      map[<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TimeoutType">TimeoutType</a>]<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Opts.ParentContext"></span>    ParentContext <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a> <span class="comment">//parent grpc context</span>
+<span id="Opts.CCFilter"></span>    CCFilter      <a href="index.html#CCFilter">CCFilter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ProposalProcessorHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=2417:2471#L66">ProposalProcessorHandler</a>
+				<a class="permalink" href="index.html#ProposalProcessorHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ProposalProcessorHandler for selecting proposal processors
+</p>
+
+			<pre>type ProposalProcessorHandler struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProposalProcessorHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=7466:7541#L216">NewProposalProcessorHandler</a>
+					<a class="permalink" href="index.html#NewProposalProcessorHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProposalProcessorHandler(next ...<a href="index.html#Handler">Handler</a>) *<a href="index.html#ProposalProcessorHandler">ProposalProcessorHandler</a></pre>
+				<p>
+NewProposalProcessorHandler returns a handler that selects proposal processors
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ProposalProcessorHandler.Handle">func (*ProposalProcessorHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=2510:2613#L71">Handle</a>
+					<a class="permalink" href="index.html#ProposalProcessorHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#ProposalProcessorHandler">ProposalProcessorHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle selects proposal processors
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Request">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=1210:2003#L28">Request</a>
+				<a class="permalink" href="index.html#Request">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Request contains the parameters to execute transaction
+</p>
+
+			<pre>type Request struct {
+<span id="Request.ChaincodeID"></span>    ChaincodeID  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Request.Fcn"></span>    Fcn          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Request.Args"></span>    Args         [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Request.TransientMap"></span>    TransientMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+<span id="Request.InvocationChain"></span>    <span class="comment">// InvocationChain contains meta-data that&#39;s used by some Selection Service implementations</span>
+    <span class="comment">// to choose endorsers that satisfy the endorsement policies of all chaincodes involved</span>
+    <span class="comment">// in an invocation chain (i.e. for CC-to-CC invocations).</span>
+    <span class="comment">// Each chaincode may also be associated with a set of private data collection names</span>
+    <span class="comment">// which are used by some Selection Services (e.g. Fabric Selection) to exclude endorsers</span>
+    <span class="comment">// that do NOT have read access to the collections.</span>
+    <span class="comment">// The invoked chaincode (specified by ChaincodeID) may optionally be added to the invocation</span>
+    <span class="comment">// chain along with any collections, otherwise it may be omitted.</span>
+    InvocationChain []*<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#ChaincodeCall">ChaincodeCall</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RequestContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=2838:3109#L71">RequestContext</a>
+				<a class="permalink" href="index.html#RequestContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RequestContext contains request, opts, response parameters for handler execution
+</p>
+
+			<pre>type RequestContext struct {
+<span id="RequestContext.Request"></span>    Request         <a href="index.html#Request">Request</a>
+<span id="RequestContext.Opts"></span>    Opts            <a href="index.html#Opts">Opts</a>
+<span id="RequestContext.Response"></span>    Response        <a href="index.html#Response">Response</a>
+<span id="RequestContext.Error"></span>    Error           <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+<span id="RequestContext.RetryHandler"></span>    RetryHandler    <a href="../../../common/errors/retry/index.html">retry</a>.<a href="../../../common/errors/retry/index.html#Handler">Handler</a>
+<span id="RequestContext.Ctx"></span>    Ctx             <a href="http://localhost:6060/pkg/context/">reqContext</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>
+<span id="RequestContext.SelectionFilter"></span>    SelectionFilter <a href="../../common/selection/options/index.html">selectopts</a>.<a href="../../common/selection/options/index.html#PeerFilter">PeerFilter</a>
+<span id="RequestContext.PeerSorter"></span>    PeerSorter      <a href="../../common/selection/options/index.html">selectopts</a>.<a href="../../common/selection/options/index.html#PeerSorter">PeerSorter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Response">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/api.go?s=2079:2322#L46">Response</a>
+				<a class="permalink" href="index.html#Response">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Response contains response parameters for query and execute transaction
+</p>
+
+			<pre>type Response struct {
+<span id="Response.Proposal"></span>    Proposal         *<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TransactionProposal">TransactionProposal</a>
+<span id="Response.Responses"></span>    Responses        []*<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TransactionProposalResponse">TransactionProposalResponse</a>
+<span id="Response.TransactionID"></span>    TransactionID    <a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TransactionID">TransactionID</a>
+<span id="Response.TxValidationCode"></span>    TxValidationCode <a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#TxValidationCode">TxValidationCode</a>
+<span id="Response.ChaincodeStatus"></span>    ChaincodeStatus  <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+<span id="Response.Payload"></span>    Payload          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SelectAndEndorseHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/selectendorsehandler.go?s=1387:1461#L23">SelectAndEndorseHandler</a>
+				<a class="permalink" href="index.html#SelectAndEndorseHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SelectAndEndorseHandler selects endorsers according to the policies of the chaincodes in the provided invocation chain
+and then sends the proposal to those endorsers. The read/write sets from the responses are then checked to see if additional
+chaincodes were invoked that were not in the original invocation chain. If so, a new endorser set is computed with the
+additional chaincodes and (if necessary) endorsements are requested from those additional endorsers.
+</p>
+
+			<pre>type SelectAndEndorseHandler struct {
+    *<a href="index.html#EndorsementHandler">EndorsementHandler</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SelectAndEndorseHandler.Handle">func (*SelectAndEndorseHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/selectendorsehandler.go?s=1779:1881#L37">Handle</a>
+					<a class="permalink" href="index.html#SelectAndEndorseHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#SelectAndEndorseHandler">SelectAndEndorseHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle selects endorsers and sends proposals to the endorsers
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignatureValidationHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/signature.go?s=584:640#L12">SignatureValidationHandler</a>
+				<a class="permalink" href="index.html#SignatureValidationHandler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignatureValidationHandler for transaction proposal response filtering
+</p>
+
+			<pre>type SignatureValidationHandler struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewSignatureValidationHandler">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/signature.go?s=369:448#L7">NewSignatureValidationHandler</a>
+					<a class="permalink" href="index.html#NewSignatureValidationHandler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewSignatureValidationHandler(next ...<a href="index.html#Handler">Handler</a>) *<a href="index.html#SignatureValidationHandler">SignatureValidationHandler</a></pre>
+				<p>
+NewSignatureValidationHandler returns a handler that validates an endorsement
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="SignatureValidationHandler.Handle">func (*SignatureValidationHandler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/signature.go?s=683:788#L17">Handle</a>
+					<a class="permalink" href="index.html#SignatureValidationHandler.Handle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (f *<a href="index.html#SignatureValidationHandler">SignatureValidationHandler</a>) Handle(requestContext *<a href="index.html#RequestContext">RequestContext</a>, clientContext *<a href="index.html#ClientContext">ClientContext</a>)</pre>
+				<p>
+Handle for Filtering proposal response
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TxnHeaderOptsProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/channel/invoke/txnhandler.go?s=872:924#L16">TxnHeaderOptsProvider</a>
+				<a class="permalink" href="index.html#TxnHeaderOptsProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxnHeaderOptsProvider provides transaction header options which allow
+the provider to specify a custom creator and/or nonce.
+</p>
+
+			<pre>type TxnHeaderOptsProvider func() []<a href="../../../common/providers/fab/index.html">fab</a>.<a href="../../../common/providers/fab/index.html#TxnHeaderOpt">TxnHeaderOpt</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mocks - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mocks
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/bccsp/sw/mocks"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Decryptor">type Decryptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decryptor.Decrypt">func (*Decryptor) Decrypt(k bccsp.Key, ciphertext []byte, opts bccsp.DecrypterOpts) (plaintext []byte, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Encryptor">type Encryptor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encryptor.Encrypt">func (e *Encryptor) Encrypt(k bccsp.Key, plaintext []byte, opts bccsp.EncrypterOpts) (ciphertext []byte, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Hasher">type Hasher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Hasher.GetHash">func (h *Hasher) GetHash(opts bccsp.HashOpts) (hash.Hash, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Hasher.Hash">func (h *Hasher) Hash(msg []byte, opts bccsp.HashOpts) (hash []byte, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyDeriver">type KeyDeriver</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyDeriver.KeyDeriv">func (kd *KeyDeriver) KeyDeriv(k bccsp.Key, opts bccsp.KeyDerivOpts) (dk bccsp.Key, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyGenerator">type KeyGenerator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyGenerator.KeyGen">func (kg *KeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (k bccsp.Key, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KeyImporter">type KeyImporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KeyImporter.KeyImport">func (ki *KeyImporter) KeyImport(raw interface{}, opts bccsp.KeyImportOpts) (k bccsp.Key, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signer.Sign">func (s *Signer) Sign(k bccsp.Key, digest []byte, opts bccsp.SignerOpts) (signature []byte, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Verifier">type Verifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.Verify">func (s *Verifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (valid bool, err error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go">mocks.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Decryptor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=1232:1257#L40">Decryptor</a>
+				<a class="permalink" href="index.html#Decryptor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Decryptor struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Decryptor.Decrypt">func (*Decryptor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=1259:1372#L43">Decrypt</a>
+					<a class="permalink" href="index.html#Decryptor.Decrypt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Decryptor">Decryptor</a>) Decrypt(k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#DecrypterOpts">DecrypterOpts</a>) (plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Encryptor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=673:811#L17">Encryptor</a>
+				<a class="permalink" href="index.html#Encryptor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Encryptor struct {
+<span id="Encryptor.KeyArg"></span>    KeyArg       <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="Encryptor.PlaintextArg"></span>    PlaintextArg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Encryptor.OptsArg"></span>    OptsArg      <a href="../../index.html">bccsp</a>.<a href="../../index.html#EncrypterOpts">EncrypterOpts</a>
+
+<span id="Encryptor.EncValue"></span>    EncValue []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Encryptor.EncErr"></span>    EncErr   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Encryptor.Encrypt">func (*Encryptor) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=813:928#L26">Encrypt</a>
+					<a class="permalink" href="index.html#Encryptor.Encrypt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encryptor">Encryptor</a>) Encrypt(k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#EncrypterOpts">EncrypterOpts</a>) (ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Hasher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=2569:2688#L97">Hasher</a>
+				<a class="permalink" href="index.html#Hasher">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Hasher struct {
+<span id="Hasher.MsgArg"></span>    MsgArg  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Hasher.OptsArg"></span>    OptsArg <a href="../../index.html">bccsp</a>.<a href="../../index.html#HashOpts">HashOpts</a>
+
+<span id="Hasher.Value"></span>    Value     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Hasher.ValueHash"></span>    ValueHash <a href="http://localhost:6060/pkg/hash/">hash</a>.<a href="http://localhost:6060/pkg/hash/#Hash">Hash</a>
+<span id="Hasher.Err"></span>    Err       <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Hasher.GetHash">func (*Hasher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=2972:3036#L117">GetHash</a>
+					<a class="permalink" href="index.html#Hasher.GetHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Hasher">Hasher</a>) GetHash(opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#HashOpts">HashOpts</a>) (<a href="http://localhost:6060/pkg/hash/">hash</a>.<a href="http://localhost:6060/pkg/hash/#Hash">Hash</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Hasher.Hash">func (*Hasher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=2690:2769#L106">Hash</a>
+					<a class="permalink" href="index.html#Hasher.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Hasher">Hasher</a>) Hash(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#HashOpts">HashOpts</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyDeriver">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3440:3544#L140">KeyDeriver</a>
+				<a class="permalink" href="index.html#KeyDeriver">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KeyDeriver struct {
+<span id="KeyDeriver.KeyArg"></span>    KeyArg  <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="KeyDeriver.OptsArg"></span>    OptsArg <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyDerivOpts">KeyDerivOpts</a>
+
+<span id="KeyDeriver.Value"></span>    Value <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="KeyDeriver.Err"></span>    Err   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyDeriver.KeyDeriv">func (*KeyDeriver) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3546:3640#L148">KeyDeriv</a>
+					<a class="permalink" href="index.html#KeyDeriver.KeyDeriv">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (kd *<a href="index.html#KeyDeriver">KeyDeriver</a>) KeyDeriv(k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyDerivOpts">KeyDerivOpts</a>) (dk <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyGenerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3156:3241#L125">KeyGenerator</a>
+				<a class="permalink" href="index.html#KeyGenerator">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KeyGenerator struct {
+<span id="KeyGenerator.OptsArg"></span>    OptsArg <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyGenOpts">KeyGenOpts</a>
+
+<span id="KeyGenerator.Value"></span>    Value <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="KeyGenerator.Err"></span>    Err   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyGenerator.KeyGen">func (*KeyGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3243:3321#L132">KeyGen</a>
+					<a class="permalink" href="index.html#KeyGenerator.KeyGen">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (kg *<a href="index.html#KeyGenerator">KeyGenerator</a>) KeyGen(opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyGenOpts">KeyGenOpts</a>) (k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KeyImporter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3841:3944#L159">KeyImporter</a>
+				<a class="permalink" href="index.html#KeyImporter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type KeyImporter struct {
+<span id="KeyImporter.RawArg"></span>    RawArg  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="KeyImporter.OptsArg"></span>    OptsArg <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyImportOpts">KeyImportOpts</a>
+
+<span id="KeyImporter.Value"></span>    Value <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="KeyImporter.Err"></span>    Err   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KeyImporter.KeyImport">func (*KeyImporter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=3946:4046#L167">KeyImport</a>
+					<a class="permalink" href="index.html#KeyImporter.KeyImport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ki *<a href="index.html#KeyImporter">KeyImporter</a>) KeyImport(raw interface{}, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#KeyImportOpts">KeyImportOpts</a>) (k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=1401:1518#L47">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signer struct {
+<span id="Signer.KeyArg"></span>    KeyArg    <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="Signer.DigestArg"></span>    DigestArg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Signer.OptsArg"></span>    OptsArg   <a href="../../index.html">bccsp</a>.<a href="../../index.html#SignerOpts">SignerOpts</a>
+
+<span id="Signer.Value"></span>    Value []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Signer.Err"></span>    Err   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Signer.Sign">func (*Signer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=1520:1622#L56">Sign</a>
+					<a class="permalink" href="index.html#Signer.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Signer">Signer</a>) Sign(k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#SignerOpts">SignerOpts</a>) (signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Verifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=1911:2058#L70">Verifier</a>
+				<a class="permalink" href="index.html#Verifier">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Verifier struct {
+<span id="Verifier.KeyArg"></span>    KeyArg       <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>
+<span id="Verifier.SignatureArg"></span>    SignatureArg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Verifier.DigestArg"></span>    DigestArg    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Verifier.OptsArg"></span>    OptsArg      <a href="../../index.html">bccsp</a>.<a href="../../index.html#SignerOpts">SignerOpts</a>
+
+<span id="Verifier.Value"></span>    Value <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Verifier.Err"></span>    Err   <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Verifier.Verify">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/sw/mocks/mocks.go?s=2060:2171#L80">Verify</a>
+					<a class="permalink" href="index.html#Verifier.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Verifier">Verifier</a>) Verify(k <a href="../../index.html">bccsp</a>.<a href="../../index.html#Key">Key</a>, signature, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, opts <a href="../../index.html">bccsp</a>.<a href="../../index.html#SignerOpts">SignerOpts</a>) (valid <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,3095 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>kvrwset - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package kvrwset
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#HashedRWSet">type HashedRWSet</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.Descriptor">func (*HashedRWSet) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.GetHashedReads">func (m *HashedRWSet) GetHashedReads() []*KVReadHash</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.GetHashedWrites">func (m *HashedRWSet) GetHashedWrites() []*KVWriteHash</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.GetMetadataWrites">func (m *HashedRWSet) GetMetadataWrites() []*KVMetadataWriteHash</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.ProtoMessage">func (*HashedRWSet) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.Reset">func (m *HashedRWSet) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.String">func (m *HashedRWSet) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.XXX_DiscardUnknown">func (m *HashedRWSet) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.XXX_Marshal">func (m *HashedRWSet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.XXX_Merge">func (dst *HashedRWSet) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.XXX_Size">func (m *HashedRWSet) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HashedRWSet.XXX_Unmarshal">func (m *HashedRWSet) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVMetadataEntry">type KVMetadataEntry</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.Descriptor">func (*KVMetadataEntry) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.GetName">func (m *KVMetadataEntry) GetName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.GetValue">func (m *KVMetadataEntry) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.ProtoMessage">func (*KVMetadataEntry) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.Reset">func (m *KVMetadataEntry) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.String">func (m *KVMetadataEntry) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.XXX_DiscardUnknown">func (m *KVMetadataEntry) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.XXX_Marshal">func (m *KVMetadataEntry) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.XXX_Merge">func (dst *KVMetadataEntry) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.XXX_Size">func (m *KVMetadataEntry) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataEntry.XXX_Unmarshal">func (m *KVMetadataEntry) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVMetadataWrite">type KVMetadataWrite</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.Descriptor">func (*KVMetadataWrite) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.GetEntries">func (m *KVMetadataWrite) GetEntries() []*KVMetadataEntry</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.GetKey">func (m *KVMetadataWrite) GetKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.ProtoMessage">func (*KVMetadataWrite) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.Reset">func (m *KVMetadataWrite) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.String">func (m *KVMetadataWrite) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.XXX_DiscardUnknown">func (m *KVMetadataWrite) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.XXX_Marshal">func (m *KVMetadataWrite) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.XXX_Merge">func (dst *KVMetadataWrite) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.XXX_Size">func (m *KVMetadataWrite) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWrite.XXX_Unmarshal">func (m *KVMetadataWrite) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVMetadataWriteHash">type KVMetadataWriteHash</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.Descriptor">func (*KVMetadataWriteHash) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.GetEntries">func (m *KVMetadataWriteHash) GetEntries() []*KVMetadataEntry</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.GetKeyHash">func (m *KVMetadataWriteHash) GetKeyHash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.ProtoMessage">func (*KVMetadataWriteHash) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.Reset">func (m *KVMetadataWriteHash) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.String">func (m *KVMetadataWriteHash) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.XXX_DiscardUnknown">func (m *KVMetadataWriteHash) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.XXX_Marshal">func (m *KVMetadataWriteHash) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.XXX_Merge">func (dst *KVMetadataWriteHash) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.XXX_Size">func (m *KVMetadataWriteHash) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVMetadataWriteHash.XXX_Unmarshal">func (m *KVMetadataWriteHash) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVRWSet">type KVRWSet</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.Descriptor">func (*KVRWSet) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.GetMetadataWrites">func (m *KVRWSet) GetMetadataWrites() []*KVMetadataWrite</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.GetRangeQueriesInfo">func (m *KVRWSet) GetRangeQueriesInfo() []*RangeQueryInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.GetReads">func (m *KVRWSet) GetReads() []*KVRead</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.GetWrites">func (m *KVRWSet) GetWrites() []*KVWrite</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.ProtoMessage">func (*KVRWSet) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.Reset">func (m *KVRWSet) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.String">func (m *KVRWSet) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.XXX_DiscardUnknown">func (m *KVRWSet) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.XXX_Marshal">func (m *KVRWSet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.XXX_Merge">func (dst *KVRWSet) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.XXX_Size">func (m *KVRWSet) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRWSet.XXX_Unmarshal">func (m *KVRWSet) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVRead">type KVRead</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.Descriptor">func (*KVRead) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.GetKey">func (m *KVRead) GetKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.GetVersion">func (m *KVRead) GetVersion() *Version</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.ProtoMessage">func (*KVRead) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.Reset">func (m *KVRead) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.String">func (m *KVRead) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.XXX_DiscardUnknown">func (m *KVRead) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.XXX_Marshal">func (m *KVRead) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.XXX_Merge">func (dst *KVRead) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.XXX_Size">func (m *KVRead) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVRead.XXX_Unmarshal">func (m *KVRead) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVReadHash">type KVReadHash</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.Descriptor">func (*KVReadHash) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.GetKeyHash">func (m *KVReadHash) GetKeyHash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.GetVersion">func (m *KVReadHash) GetVersion() *Version</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.ProtoMessage">func (*KVReadHash) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.Reset">func (m *KVReadHash) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.String">func (m *KVReadHash) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.XXX_DiscardUnknown">func (m *KVReadHash) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.XXX_Marshal">func (m *KVReadHash) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.XXX_Merge">func (dst *KVReadHash) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.XXX_Size">func (m *KVReadHash) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVReadHash.XXX_Unmarshal">func (m *KVReadHash) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVWrite">type KVWrite</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.Descriptor">func (*KVWrite) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.GetIsDelete">func (m *KVWrite) GetIsDelete() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.GetKey">func (m *KVWrite) GetKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.GetValue">func (m *KVWrite) GetValue() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.ProtoMessage">func (*KVWrite) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.Reset">func (m *KVWrite) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.String">func (m *KVWrite) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.XXX_DiscardUnknown">func (m *KVWrite) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.XXX_Marshal">func (m *KVWrite) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.XXX_Merge">func (dst *KVWrite) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.XXX_Size">func (m *KVWrite) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWrite.XXX_Unmarshal">func (m *KVWrite) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#KVWriteHash">type KVWriteHash</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.Descriptor">func (*KVWriteHash) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.GetIsDelete">func (m *KVWriteHash) GetIsDelete() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.GetKeyHash">func (m *KVWriteHash) GetKeyHash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.GetValueHash">func (m *KVWriteHash) GetValueHash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.ProtoMessage">func (*KVWriteHash) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.Reset">func (m *KVWriteHash) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.String">func (m *KVWriteHash) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.XXX_DiscardUnknown">func (m *KVWriteHash) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.XXX_Marshal">func (m *KVWriteHash) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.XXX_Merge">func (dst *KVWriteHash) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.XXX_Size">func (m *KVWriteHash) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#KVWriteHash.XXX_Unmarshal">func (m *KVWriteHash) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#QueryReads">type QueryReads</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.Descriptor">func (*QueryReads) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.GetKvReads">func (m *QueryReads) GetKvReads() []*KVRead</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.ProtoMessage">func (*QueryReads) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.Reset">func (m *QueryReads) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.String">func (m *QueryReads) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.XXX_DiscardUnknown">func (m *QueryReads) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.XXX_Marshal">func (m *QueryReads) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.XXX_Merge">func (dst *QueryReads) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.XXX_Size">func (m *QueryReads) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReads.XXX_Unmarshal">func (m *QueryReads) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#QueryReadsMerkleSummary">type QueryReadsMerkleSummary</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.Descriptor">func (*QueryReadsMerkleSummary) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.Equal">func (ms *QueryReadsMerkleSummary) Equal(anotherMS *QueryReadsMerkleSummary) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.GetMaxDegree">func (m *QueryReadsMerkleSummary) GetMaxDegree() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.GetMaxLevel">func (m *QueryReadsMerkleSummary) GetMaxLevel() uint32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.GetMaxLevelHashes">func (m *QueryReadsMerkleSummary) GetMaxLevelHashes() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.ProtoMessage">func (*QueryReadsMerkleSummary) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.Reset">func (m *QueryReadsMerkleSummary) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.String">func (m *QueryReadsMerkleSummary) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.XXX_DiscardUnknown">func (m *QueryReadsMerkleSummary) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.XXX_Marshal">func (m *QueryReadsMerkleSummary) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.XXX_Merge">func (dst *QueryReadsMerkleSummary) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.XXX_Size">func (m *QueryReadsMerkleSummary) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryReadsMerkleSummary.XXX_Unmarshal">func (m *QueryReadsMerkleSummary) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RangeQueryInfo">type RangeQueryInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.Descriptor">func (*RangeQueryInfo) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetEndKey">func (m *RangeQueryInfo) GetEndKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetItrExhausted">func (m *RangeQueryInfo) GetItrExhausted() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetRawReads">func (m *RangeQueryInfo) GetRawReads() *QueryReads</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetReadsInfo">func (m *RangeQueryInfo) GetReadsInfo() isRangeQueryInfo_ReadsInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetReadsMerkleHashes">func (m *RangeQueryInfo) GetReadsMerkleHashes() *QueryReadsMerkleSummary</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.GetStartKey">func (m *RangeQueryInfo) GetStartKey() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.ProtoMessage">func (*RangeQueryInfo) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.Reset">func (m *RangeQueryInfo) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.SetMerkelSummary">func (rqi *RangeQueryInfo) SetMerkelSummary(merkleSummary *QueryReadsMerkleSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.SetRawReads">func (rqi *RangeQueryInfo) SetRawReads(kvReads []*KVRead)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.String">func (m *RangeQueryInfo) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_DiscardUnknown">func (m *RangeQueryInfo) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_Marshal">func (m *RangeQueryInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_Merge">func (dst *RangeQueryInfo) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_OneofFuncs">func (*RangeQueryInfo) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{})</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_Size">func (m *RangeQueryInfo) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RangeQueryInfo.XXX_Unmarshal">func (m *RangeQueryInfo) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RangeQueryInfo_RawReads">type RangeQueryInfo_RawReads</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RangeQueryInfo_ReadsMerkleHashes">type RangeQueryInfo_ReadsMerkleHashes</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Version">type Version</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Descriptor">func (*Version) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetBlockNum">func (m *Version) GetBlockNum() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.GetTxNum">func (m *Version) GetTxNum() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.ProtoMessage">func (*Version) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.Reset">func (m *Version) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.String">func (m *Version) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_DiscardUnknown">func (m *Version) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Marshal">func (m *Version) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Merge">func (dst *Version) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Size">func (m *Version) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Version.XXX_Unmarshal">func (m *Version) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/helper.go">helper.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go">kv_rwset.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="HashedRWSet">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2949:3582#L80">HashedRWSet</a>
+				<a class="permalink" href="index.html#HashedRWSet">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HashedRWSet encapsulates hashed representation of a private read-write set for KV or Document data model
+</p>
+
+			<pre>type HashedRWSet struct {
+<span id="HashedRWSet.HashedReads"></span>    HashedReads          []*<a href="index.html#KVReadHash">KVReadHash</a>          `protobuf:&#34;bytes,1,rep,name=hashed_reads,json=hashedReads,proto3&#34; json:&#34;hashed_reads,omitempty&#34;`
+<span id="HashedRWSet.HashedWrites"></span>    HashedWrites         []*<a href="index.html#KVWriteHash">KVWriteHash</a>         `protobuf:&#34;bytes,2,rep,name=hashed_writes,json=hashedWrites,proto3&#34; json:&#34;hashed_writes,omitempty&#34;`
+<span id="HashedRWSet.MetadataWrites"></span>    MetadataWrites       []*<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a> `protobuf:&#34;bytes,3,rep,name=metadata_writes,json=metadataWrites,proto3&#34; json:&#34;metadata_writes,omitempty&#34;`
+<span id="HashedRWSet.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}               `json:&#34;-&#34;`
+<span id="HashedRWSet.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                 `json:&#34;-&#34;`
+<span id="HashedRWSet.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                  `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="HashedRWSet.Descriptor">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3762:3810#L92">Descriptor</a>
+					<a class="permalink" href="index.html#HashedRWSet.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#HashedRWSet">HashedRWSet</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.GetHashedReads">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4472:4524#L113">GetHashedReads</a>
+					<a class="permalink" href="index.html#HashedRWSet.GetHashedReads">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) GetHashedReads() []*<a href="index.html#KVReadHash">KVReadHash</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.GetHashedWrites">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4583:4637#L120">GetHashedWrites</a>
+					<a class="permalink" href="index.html#HashedRWSet.GetHashedWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) GetHashedWrites() []*<a href="index.html#KVWriteHash">KVWriteHash</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.GetMetadataWrites">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4697:4761#L127">GetMetadataWrites</a>
+					<a class="permalink" href="index.html#HashedRWSet.GetMetadataWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) GetMetadataWrites() []*<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.ProtoMessage">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3721:3755#L91">ProtoMessage</a>
+					<a class="permalink" href="index.html#HashedRWSet.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#HashedRWSet">HashedRWSet</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.Reset">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3584:3613#L89">Reset</a>
+					<a class="permalink" href="index.html#HashedRWSet.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.String">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3645:3682#L90">String</a>
+					<a class="permalink" href="index.html#HashedRWSet.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.XXX_DiscardUnknown">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4318:4360#L107">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#HashedRWSet.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.XXX_Marshal">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3982:4061#L98">XXX_Marshal</a>
+					<a class="permalink" href="index.html#HashedRWSet.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.XXX_Merge">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4131:4183#L101">XXX_Merge</a>
+					<a class="permalink" href="index.html#HashedRWSet.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#HashedRWSet">HashedRWSet</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.XXX_Size">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4233:4269#L104">XXX_Size</a>
+					<a class="permalink" href="index.html#HashedRWSet.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="HashedRWSet.XXX_Unmarshal">func (*HashedRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=3874:3925#L95">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#HashedRWSet.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#HashedRWSet">HashedRWSet</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVMetadataEntry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14961:15310#L436">KVMetadataEntry</a>
+				<a class="permalink" href="index.html#KVMetadataEntry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVMetadataEntry captures a &#39;name&#39;ed entry in the metadata of a key/key-hash.
+</p>
+
+			<pre>type KVMetadataEntry struct {
+<span id="KVMetadataEntry.Name"></span>    Name                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=name,proto3&#34; json:&#34;name,omitempty&#34;`
+<span id="KVMetadataEntry.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="KVMetadataEntry.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVMetadataEntry.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVMetadataEntry.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVMetadataEntry.Descriptor">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15506:15558#L447">Descriptor</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.GetName">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=16264:16306#L468">GetName</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.GetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) GetName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.GetValue">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=16357:16400#L475">GetValue</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.ProtoMessage">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15461:15499#L446">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.Reset">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15312:15345#L444">Reset</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.String">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15381:15422#L445">String</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.XXX_DiscardUnknown">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=16098:16144#L462">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.XXX_Marshal">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15738:15821#L453">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.XXX_Merge">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15895:15951#L456">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.XXX_Size">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=16005:16045#L459">XXX_Size</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataEntry.XXX_Unmarshal">func (*KVMetadataEntry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=15622:15677#L450">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVMetadataEntry.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataEntry">KVMetadataEntry</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVMetadataWrite">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8024:8425#L238">KVMetadataWrite</a>
+				<a class="permalink" href="index.html#KVMetadataWrite">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVMetadataWrite captures all the entries in the metadata associated with a key
+</p>
+
+			<pre>type KVMetadataWrite struct {
+<span id="KVMetadataWrite.Key"></span>    Key                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>             `protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`
+<span id="KVMetadataWrite.Entries"></span>    Entries              []*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a> `protobuf:&#34;bytes,2,rep,name=entries,proto3&#34; json:&#34;entries,omitempty&#34;`
+<span id="KVMetadataWrite.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}           `json:&#34;-&#34;`
+<span id="KVMetadataWrite.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>             `json:&#34;-&#34;`
+<span id="KVMetadataWrite.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>              `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVMetadataWrite.Descriptor">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8621:8673#L249">Descriptor</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.GetEntries">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9470:9527#L277">GetEntries</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.GetEntries">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) GetEntries() []*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.GetKey">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9379:9420#L270">GetKey</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) GetKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.ProtoMessage">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8576:8614#L248">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.Reset">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8427:8460#L246">Reset</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.String">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8496:8537#L247">String</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.XXX_DiscardUnknown">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9213:9259#L264">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.XXX_Marshal">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8853:8936#L255">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.XXX_Merge">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9010:9066#L258">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.XXX_Size">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9120:9160#L261">XXX_Size</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWrite.XXX_Unmarshal">func (*KVMetadataWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=8737:8792#L252">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVMetadataWrite.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWrite">KVMetadataWrite</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVMetadataWriteHash">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13215:13643#L389">KVMetadataWriteHash</a>
+				<a class="permalink" href="index.html#KVMetadataWriteHash">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVMetadataWriteHash captures all the upserts to the metadata associated with a key hash
+</p>
+
+			<pre>type KVMetadataWriteHash struct {
+<span id="KVMetadataWriteHash.KeyHash"></span>    KeyHash              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>             `protobuf:&#34;bytes,1,opt,name=key_hash,json=keyHash,proto3&#34; json:&#34;key_hash,omitempty&#34;`
+<span id="KVMetadataWriteHash.Entries"></span>    Entries              []*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a> `protobuf:&#34;bytes,2,rep,name=entries,proto3&#34; json:&#34;entries,omitempty&#34;`
+<span id="KVMetadataWriteHash.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}           `json:&#34;-&#34;`
+<span id="KVMetadataWriteHash.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>             `json:&#34;-&#34;`
+<span id="KVMetadataWriteHash.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>              `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVMetadataWriteHash.Descriptor">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13855:13911#L400">Descriptor</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.GetEntries">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14765:14826#L428">GetEntries</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.GetEntries">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) GetEntries() []*<a href="index.html#KVMetadataEntry">KVMetadataEntry</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.GetKeyHash">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14661:14710#L421">GetKeyHash</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.GetKeyHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) GetKeyHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.ProtoMessage">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13806:13848#L399">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.Reset">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13645:13682#L397">Reset</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.String">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13722:13767#L398">String</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.XXX_DiscardUnknown">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14483:14533#L415">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.XXX_Marshal">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14099:14186#L406">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.XXX_Merge">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14264:14324#L409">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.XXX_Size">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=14382:14426#L412">XXX_Size</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVMetadataWriteHash.XXX_Unmarshal">func (*KVMetadataWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13975:14034#L403">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVMetadataWriteHash.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVMetadataWriteHash">KVMetadataWriteHash</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVRWSet">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=894:1591#L17">KVRWSet</a>
+				<a class="permalink" href="index.html#KVRWSet">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVRWSet encapsulates the read-write set for a chaincode that operates upon a KV or Document data model
+This structure is used for both the public data and the private data
+</p>
+
+			<pre>type KVRWSet struct {
+<span id="KVRWSet.Reads"></span>    Reads                []*<a href="index.html#KVRead">KVRead</a>          `protobuf:&#34;bytes,1,rep,name=reads,proto3&#34; json:&#34;reads,omitempty&#34;`
+<span id="KVRWSet.RangeQueriesInfo"></span>    RangeQueriesInfo     []*<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>  `protobuf:&#34;bytes,2,rep,name=range_queries_info,json=rangeQueriesInfo,proto3&#34; json:&#34;range_queries_info,omitempty&#34;`
+<span id="KVRWSet.Writes"></span>    Writes               []*<a href="index.html#KVWrite">KVWrite</a>         `protobuf:&#34;bytes,3,rep,name=writes,proto3&#34; json:&#34;writes,omitempty&#34;`
+<span id="KVRWSet.MetadataWrites"></span>    MetadataWrites       []*<a href="index.html#KVMetadataWrite">KVMetadataWrite</a> `protobuf:&#34;bytes,4,rep,name=metadata_writes,json=metadataWrites,proto3&#34; json:&#34;metadata_writes,omitempty&#34;`
+<span id="KVRWSet.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}           `json:&#34;-&#34;`
+<span id="KVRWSet.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>             `json:&#34;-&#34;`
+<span id="KVRWSet.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>              `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVRWSet.Descriptor">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1755:1799#L30">Descriptor</a>
+					<a class="permalink" href="index.html#KVRWSet.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVRWSet">KVRWSet</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.GetMetadataWrites">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2723:2779#L72">GetMetadataWrites</a>
+					<a class="permalink" href="index.html#KVRWSet.GetMetadataWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) GetMetadataWrites() []*<a href="index.html#KVMetadataWrite">KVMetadataWrite</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.GetRangeQueriesInfo">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2508:2565#L58">GetRangeQueriesInfo</a>
+					<a class="permalink" href="index.html#KVRWSet.GetRangeQueriesInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) GetRangeQueriesInfo() []*<a href="index.html#RangeQueryInfo">RangeQueryInfo</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.GetReads">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2417:2455#L51">GetReads</a>
+					<a class="permalink" href="index.html#KVRWSet.GetReads">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) GetReads() []*<a href="index.html#KVRead">KVRead</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.GetWrites">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2629:2669#L65">GetWrites</a>
+					<a class="permalink" href="index.html#KVRWSet.GetWrites">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) GetWrites() []*<a href="index.html#KVWrite">KVWrite</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.ProtoMessage">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1718:1748#L29">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVRWSet.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVRWSet">KVRWSet</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.Reset">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1593:1618#L27">Reset</a>
+					<a class="permalink" href="index.html#KVRWSet.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.String">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1646:1679#L28">String</a>
+					<a class="permalink" href="index.html#KVRWSet.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.XXX_DiscardUnknown">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2275:2313#L45">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVRWSet.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.XXX_Marshal">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1963:2038#L36">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVRWSet.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.XXX_Merge">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2104:2152#L39">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVRWSet.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVRWSet">KVRWSet</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.XXX_Size">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=2198:2230#L42">XXX_Size</a>
+					<a class="permalink" href="index.html#KVRWSet.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRWSet.XXX_Unmarshal">func (*KVRWSet) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=1863:1910#L33">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVRWSet.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRWSet">KVRWSet</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVRead">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=4971:5313#L136">KVRead</a>
+				<a class="permalink" href="index.html#KVRead">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVRead captures a read operation performed during transaction simulation
+A &#39;nil&#39; version indicates a non-existing key read by the transaction
+</p>
+
+			<pre>type KVRead struct {
+<span id="KVRead.Key"></span>    Key                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`
+<span id="KVRead.Version"></span>    Version              *<a href="index.html#Version">Version</a> `protobuf:&#34;bytes,2,opt,name=version,proto3&#34; json:&#34;version,omitempty&#34;`
+<span id="KVRead.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVRead.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVRead.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVRead.Descriptor">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5473:5516#L147">Descriptor</a>
+					<a class="permalink" href="index.html#KVRead.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVRead">KVRead</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.GetKey">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6123:6155#L168">GetKey</a>
+					<a class="permalink" href="index.html#KVRead.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) GetKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.GetVersion">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6205:6243#L175">GetVersion</a>
+					<a class="permalink" href="index.html#KVRead.GetVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) GetVersion() *<a href="index.html#Version">Version</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.ProtoMessage">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5437:5466#L146">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVRead.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVRead">KVRead</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.Reset">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5315:5339#L144">Reset</a>
+					<a class="permalink" href="index.html#KVRead.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.String">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5366:5398#L145">String</a>
+					<a class="permalink" href="index.html#KVRead.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.XXX_DiscardUnknown">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5984:6021#L162">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVRead.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.XXX_Marshal">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5678:5752#L153">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVRead.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.XXX_Merge">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5817:5864#L156">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVRead.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVRead">KVRead</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.XXX_Size">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5909:5940#L159">XXX_Size</a>
+					<a class="permalink" href="index.html#KVRead.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVRead.XXX_Unmarshal">func (*KVRead) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=5580:5626#L150">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVRead.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVRead">KVRead</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVReadHash">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=9866:10235#L287">KVReadHash</a>
+				<a class="permalink" href="index.html#KVReadHash">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVReadHash is similar to the KVRead in spirit. However, it captures the hash of the key instead of the key itself
+version is kept as is for now. However, if the version also needs to be privacy-protected, it would need to be the
+hash of the version and hence of &#39;bytes&#39; type
+</p>
+
+			<pre>type KVReadHash struct {
+<span id="KVReadHash.KeyHash"></span>    KeyHash              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=key_hash,json=keyHash,proto3&#34; json:&#34;key_hash,omitempty&#34;`
+<span id="KVReadHash.Version"></span>    Version              *<a href="index.html#Version">Version</a> `protobuf:&#34;bytes,2,opt,name=version,proto3&#34; json:&#34;version,omitempty&#34;`
+<span id="KVReadHash.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVReadHash.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVReadHash.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVReadHash.Descriptor">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10411:10458#L298">Descriptor</a>
+					<a class="permalink" href="index.html#KVReadHash.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVReadHash">KVReadHash</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.GetKeyHash">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=11109:11149#L319">GetKeyHash</a>
+					<a class="permalink" href="index.html#KVReadHash.GetKeyHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) GetKeyHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.GetVersion">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=11204:11246#L326">GetVersion</a>
+					<a class="permalink" href="index.html#KVReadHash.GetVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) GetVersion() *<a href="index.html#Version">Version</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.ProtoMessage">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10371:10404#L297">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVReadHash.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVReadHash">KVReadHash</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.Reset">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10237:10265#L295">Reset</a>
+					<a class="permalink" href="index.html#KVReadHash.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.String">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10296:10332#L296">String</a>
+					<a class="permalink" href="index.html#KVReadHash.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.XXX_DiscardUnknown">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10958:10999#L313">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVReadHash.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.XXX_Marshal">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10628:10706#L304">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVReadHash.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.XXX_Merge">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10775:10826#L307">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVReadHash.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVReadHash">KVReadHash</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.XXX_Size">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10875:10910#L310">XXX_Size</a>
+					<a class="permalink" href="index.html#KVReadHash.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVReadHash.XXX_Unmarshal">func (*KVReadHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=10522:10572#L301">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVReadHash.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVReadHash">KVReadHash</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVWrite">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6392:6851#L183">KVWrite</a>
+				<a class="permalink" href="index.html#KVWrite">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVWrite captures a write (update/delete) operation performed during transaction simulation
+</p>
+
+			<pre>type KVWrite struct {
+<span id="KVWrite.Key"></span>    Key                  <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `protobuf:&#34;bytes,1,opt,name=key,proto3&#34; json:&#34;key,omitempty&#34;`
+<span id="KVWrite.IsDelete"></span>    IsDelete             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>     `protobuf:&#34;varint,2,opt,name=is_delete,json=isDelete,proto3&#34; json:&#34;is_delete,omitempty&#34;`
+<span id="KVWrite.Value"></span>    Value                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=value,proto3&#34; json:&#34;value,omitempty&#34;`
+<span id="KVWrite.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVWrite.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVWrite.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVWrite.Descriptor">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7015:7059#L195">Descriptor</a>
+					<a class="permalink" href="index.html#KVWrite.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWrite">KVWrite</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.GetIsDelete">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7760:7796#L223">GetIsDelete</a>
+					<a class="permalink" href="index.html#KVWrite.GetIsDelete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) GetIsDelete() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.GetKey">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7677:7710#L216">GetKey</a>
+					<a class="permalink" href="index.html#KVWrite.GetKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) GetKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.GetValue">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7854:7889#L230">GetValue</a>
+					<a class="permalink" href="index.html#KVWrite.GetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) GetValue() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.ProtoMessage">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6978:7008#L194">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVWrite.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWrite">KVWrite</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.Reset">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6853:6878#L192">Reset</a>
+					<a class="permalink" href="index.html#KVWrite.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.String">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=6906:6939#L193">String</a>
+					<a class="permalink" href="index.html#KVWrite.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.XXX_DiscardUnknown">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7535:7573#L210">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVWrite.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.XXX_Marshal">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7223:7298#L201">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVWrite.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.XXX_Merge">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7364:7412#L204">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVWrite.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVWrite">KVWrite</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.XXX_Size">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7458:7490#L207">XXX_Size</a>
+					<a class="permalink" href="index.html#KVWrite.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWrite.XXX_Unmarshal">func (*KVWrite) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=7123:7170#L198">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVWrite.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWrite">KVWrite</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="KVWriteHash">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=11429:11940#L334">KVWriteHash</a>
+				<a class="permalink" href="index.html#KVWriteHash">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+KVWriteHash is similar to the KVWrite. It captures a write (update/delete) operation performed during transaction simulation
+</p>
+
+			<pre>type KVWriteHash struct {
+<span id="KVWriteHash.KeyHash"></span>    KeyHash              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=key_hash,json=keyHash,proto3&#34; json:&#34;key_hash,omitempty&#34;`
+<span id="KVWriteHash.IsDelete"></span>    IsDelete             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>     `protobuf:&#34;varint,2,opt,name=is_delete,json=isDelete,proto3&#34; json:&#34;is_delete,omitempty&#34;`
+<span id="KVWriteHash.ValueHash"></span>    ValueHash            []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=value_hash,json=valueHash,proto3&#34; json:&#34;value_hash,omitempty&#34;`
+<span id="KVWriteHash.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="KVWriteHash.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="KVWriteHash.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="KVWriteHash.Descriptor">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12120:12168#L346">Descriptor</a>
+					<a class="permalink" href="index.html#KVWriteHash.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWriteHash">KVWriteHash</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.GetIsDelete">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12926:12966#L374">GetIsDelete</a>
+					<a class="permalink" href="index.html#KVWriteHash.GetIsDelete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) GetIsDelete() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.GetKeyHash">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12830:12871#L367">GetKeyHash</a>
+					<a class="permalink" href="index.html#KVWriteHash.GetKeyHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) GetKeyHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.GetValueHash">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=13024:13067#L381">GetValueHash</a>
+					<a class="permalink" href="index.html#KVWriteHash.GetValueHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) GetValueHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.ProtoMessage">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12079:12113#L345">ProtoMessage</a>
+					<a class="permalink" href="index.html#KVWriteHash.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#KVWriteHash">KVWriteHash</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.Reset">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=11942:11971#L343">Reset</a>
+					<a class="permalink" href="index.html#KVWriteHash.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.String">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12003:12040#L344">String</a>
+					<a class="permalink" href="index.html#KVWriteHash.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.XXX_DiscardUnknown">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12676:12718#L361">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#KVWriteHash.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.XXX_Marshal">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12340:12419#L352">XXX_Marshal</a>
+					<a class="permalink" href="index.html#KVWriteHash.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.XXX_Merge">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12489:12541#L355">XXX_Merge</a>
+					<a class="permalink" href="index.html#KVWriteHash.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#KVWriteHash">KVWriteHash</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.XXX_Size">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12591:12627#L358">XXX_Size</a>
+					<a class="permalink" href="index.html#KVWriteHash.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="KVWriteHash.XXX_Unmarshal">func (*KVWriteHash) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=12232:12283#L349">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#KVWriteHash.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#KVWriteHash">KVWriteHash</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="QueryReads">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24008:24280#L708">QueryReads</a>
+				<a class="permalink" href="index.html#QueryReads">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryReads encapsulates the KVReads for the items read by a transaction as a result of a query execution
+</p>
+
+			<pre>type QueryReads struct {
+<span id="QueryReads.KvReads"></span>    KvReads              []*<a href="index.html#KVRead">KVRead</a> `protobuf:&#34;bytes,1,rep,name=kv_reads,json=kvReads,proto3&#34; json:&#34;kv_reads,omitempty&#34;`
+<span id="QueryReads.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}  `json:&#34;-&#34;`
+<span id="QueryReads.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>    `json:&#34;-&#34;`
+<span id="QueryReads.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>     `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="QueryReads.Descriptor">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24456:24503#L718">Descriptor</a>
+					<a class="permalink" href="index.html#QueryReads.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#QueryReads">QueryReads</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.GetKvReads">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=25155:25198#L739">GetKvReads</a>
+					<a class="permalink" href="index.html#QueryReads.GetKvReads">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) GetKvReads() []*<a href="index.html#KVRead">KVRead</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.ProtoMessage">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24416:24449#L717">ProtoMessage</a>
+					<a class="permalink" href="index.html#QueryReads.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#QueryReads">QueryReads</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.Reset">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24282:24310#L715">Reset</a>
+					<a class="permalink" href="index.html#QueryReads.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.String">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24341:24377#L716">String</a>
+					<a class="permalink" href="index.html#QueryReads.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.XXX_DiscardUnknown">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=25004:25045#L733">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#QueryReads.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.XXX_Marshal">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24674:24752#L724">XXX_Marshal</a>
+					<a class="permalink" href="index.html#QueryReads.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.XXX_Merge">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24821:24872#L727">XXX_Merge</a>
+					<a class="permalink" href="index.html#QueryReads.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#QueryReads">QueryReads</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.XXX_Size">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24921:24956#L730">XXX_Size</a>
+					<a class="permalink" href="index.html#QueryReads.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReads.XXX_Unmarshal">func (*QueryReads) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=24568:24618#L721">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#QueryReads.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReads">QueryReads</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="QueryReadsMerkleSummary">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=25661:26208#L751">QueryReadsMerkleSummary</a>
+				<a class="permalink" href="index.html#QueryReadsMerkleSummary">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryReadsMerkleSummary encapsulates the Merkle-tree hashes for the QueryReads
+This allows to reduce the size of RWSet in the presence of query results
+by storing certain hashes instead of actual results.
+maxDegree field refers to the maximum number of children in the tree at any level
+maxLevel field contains the lowest level which has lesser nodes than maxDegree (starting from leaf level)
+</p>
+
+			<pre>type QueryReadsMerkleSummary struct {
+<span id="QueryReadsMerkleSummary.MaxDegree"></span>    MaxDegree            <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>   `protobuf:&#34;varint,1,opt,name=max_degree,json=maxDegree,proto3&#34; json:&#34;max_degree,omitempty&#34;`
+<span id="QueryReadsMerkleSummary.MaxLevel"></span>    MaxLevel             <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>   `protobuf:&#34;varint,2,opt,name=max_level,json=maxLevel,proto3&#34; json:&#34;max_level,omitempty&#34;`
+<span id="QueryReadsMerkleSummary.MaxLevelHashes"></span>    MaxLevelHashes       [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,rep,name=max_level_hashes,json=maxLevelHashes,proto3&#34; json:&#34;max_level_hashes,omitempty&#34;`
+<span id="QueryReadsMerkleSummary.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="QueryReadsMerkleSummary.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="QueryReadsMerkleSummary.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="QueryReadsMerkleSummary.Descriptor">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26436:26496#L763">Descriptor</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.Equal">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/helper.go?s=1178:1259#L28">Equal</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.Equal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ms *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) Equal(anotherMS *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Equal verifies whether the give MerkleSummary is equals to this
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.GetMaxDegree">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=27291:27346#L784">GetMaxDegree</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.GetMaxDegree">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) GetMaxDegree() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.GetMaxLevel">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=27401:27455#L791">GetMaxLevel</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.GetMaxLevel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) GetMaxLevel() <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.GetMaxLevelHashes">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=27509:27571#L798">GetMaxLevelHashes</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.GetMaxLevelHashes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) GetMaxLevelHashes() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.ProtoMessage">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26383:26429#L762">ProtoMessage</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.Reset">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26210:26251#L760">Reset</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.String">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26295:26344#L761">String</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.XXX_DiscardUnknown">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=27101:27155#L778">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.XXX_Marshal">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26693:26784#L769">XXX_Marshal</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.XXX_Merge">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26866:26930#L772">XXX_Merge</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.XXX_Size">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26992:27040#L775">XXX_Size</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="QueryReadsMerkleSummary.XXX_Unmarshal">func (*QueryReadsMerkleSummary) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=26561:26624#L766">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#QueryReadsMerkleSummary.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RangeQueryInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=18663:19407#L538">RangeQueryInfo</a>
+				<a class="permalink" href="index.html#RangeQueryInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RangeQueryInfo encapsulates the details of a range query performed by a transaction during simulation.
+This helps protect transactions from phantom reads by varifying during validation whether any new items
+got committed within the given range between transaction simuation and validation
+(in addition to regular checks for updates/deletes of the existing items).
+readInfo field contains either the KVReads (for the items read by the range query) or a merkle-tree hash
+if the KVReads exceeds a pre-configured numbers
+</p>
+
+			<pre>type RangeQueryInfo struct {
+<span id="RangeQueryInfo.StartKey"></span>    StartKey     <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=start_key,json=startKey,proto3&#34; json:&#34;start_key,omitempty&#34;`
+<span id="RangeQueryInfo.EndKey"></span>    EndKey       <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=end_key,json=endKey,proto3&#34; json:&#34;end_key,omitempty&#34;`
+<span id="RangeQueryInfo.ItrExhausted"></span>    ItrExhausted <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>   `protobuf:&#34;varint,3,opt,name=itr_exhausted,json=itrExhausted,proto3&#34; json:&#34;itr_exhausted,omitempty&#34;`
+    <span class="comment">// Types that are valid to be assigned to ReadsInfo:</span>
+    <span class="comment">//	*RangeQueryInfo_RawReads</span>
+    <span class="comment">//	*RangeQueryInfo_ReadsMerkleHashes</span>
+<span id="RangeQueryInfo.ReadsInfo"></span>    ReadsInfo            isRangeQueryInfo_ReadsInfo `protobuf_oneof:&#34;reads_info&#34;`
+<span id="RangeQueryInfo.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}                   `json:&#34;-&#34;`
+<span id="RangeQueryInfo.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>                     `json:&#34;-&#34;`
+<span id="RangeQueryInfo.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>                      `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RangeQueryInfo.Descriptor">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19599:19650#L554">Descriptor</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetEndKey">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20446:20489#L582">GetEndKey</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetEndKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetEndKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetItrExhausted">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20542:20589#L589">GetItrExhausted</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetItrExhausted">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetItrExhausted() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetRawReads">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=21300:21350#L619">GetRawReads</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetRawReads">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetRawReads() *<a href="index.html#QueryReads">QueryReads</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetReadsInfo">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=21177:21243#L612">GetReadsInfo</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetReadsInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetReadsInfo() isRangeQueryInfo_ReadsInfo</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetReadsMerkleHashes">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=21454:21526#L626">GetReadsMerkleHashes</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetReadsMerkleHashes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetReadsMerkleHashes() *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.GetStartKey">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20346:20391#L575">GetStartKey</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.GetStartKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) GetStartKey() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.ProtoMessage">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19555:19592#L553">ProtoMessage</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.Reset">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19409:19441#L551">Reset</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.SetMerkelSummary">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/helper.go?s=956:1039#L23">SetMerkelSummary</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.SetMerkelSummary">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rqi *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) SetMerkelSummary(merkleSummary *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a>)</pre>
+				<p>
+SetMerkelSummary sets the &#39;readsInfo&#39; field to merkle summary of the raw KVReads of query results
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.SetRawReads">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/helper.go?s=695:752#L14">SetRawReads</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.SetRawReads">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (rqi *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) SetRawReads(kvReads []*<a href="index.html#KVRead">KVRead</a>)</pre>
+				<p>
+SetRawReads sets the &#39;readsInfo&#39; field to raw KVReads performed by the query
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.String">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19476:19516#L552">String</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_DiscardUnknown">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20183:20228#L569">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_Marshal">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19829:19911#L560">XXX_Marshal</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_Merge">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19984:20039#L563">XXX_Merge</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_OneofFuncs">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=21712:21919#L634">XXX_OneofFuncs</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_OneofFuncs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_OneofFuncs() (func(msg <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, b *<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>, func(msg <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>, tag, wire <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b *<a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Buffer">Buffer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>), func(msg <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>) (n <a href="http://localhost:6060/pkg/builtin/#int">int</a>), []interface{})</pre>
+				<p>
+XXX_OneofFuncs is for the internal use of the proto package.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_Size">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20092:20131#L566">XXX_Size</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="RangeQueryInfo.XXX_Unmarshal">func (*RangeQueryInfo) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=19715:19769#L557">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#RangeQueryInfo.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#RangeQueryInfo">RangeQueryInfo</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RangeQueryInfo_RawReads">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20728:20856#L600">RangeQueryInfo_RawReads</a>
+				<a class="permalink" href="index.html#RangeQueryInfo_RawReads">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RangeQueryInfo_RawReads struct {
+<span id="RangeQueryInfo_RawReads.RawReads"></span>    RawReads *<a href="index.html#QueryReads">QueryReads</a> `protobuf:&#34;bytes,4,opt,name=raw_reads,json=rawReads,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RangeQueryInfo_ReadsMerkleHashes">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=20858:21036#L604">RangeQueryInfo_ReadsMerkleHashes</a>
+				<a class="permalink" href="index.html#RangeQueryInfo_ReadsMerkleHashes">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RangeQueryInfo_ReadsMerkleHashes struct {
+<span id="RangeQueryInfo_ReadsMerkleHashes.ReadsMerkleHashes"></span>    ReadsMerkleHashes *<a href="index.html#QueryReadsMerkleSummary">QueryReadsMerkleSummary</a> `protobuf:&#34;bytes,5,opt,name=reads_merkle_hashes,json=readsMerkleHashes,proto3,oneof&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Version">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=16744:17124#L486">Version</a>
+				<a class="permalink" href="index.html#Version">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Version encapsulates the version of a Key
+A version of a committed key is maintained as the height of the transaction that committed the key.
+The height is represenetd as a tuple &lt;blockNum, txNum&gt; where the txNum is the position of the transaction
+(starting with 0) within block
+</p>
+
+			<pre>type Version struct {
+<span id="Version.BlockNum"></span>    BlockNum             <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=block_num,json=blockNum,proto3&#34; json:&#34;block_num,omitempty&#34;`
+<span id="Version.TxNum"></span>    TxNum                <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,2,opt,name=tx_num,json=txNum,proto3&#34; json:&#34;tx_num,omitempty&#34;`
+<span id="Version.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Version.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Version.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Version.Descriptor">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17288:17332#L497">Descriptor</a>
+					<a class="permalink" href="index.html#Version.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Version">Version</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetBlockNum">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17950:17988#L518">GetBlockNum</a>
+					<a class="permalink" href="index.html#Version.GetBlockNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetBlockNum() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.GetTxNum">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=18042:18077#L525">GetTxNum</a>
+					<a class="permalink" href="index.html#Version.GetTxNum">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) GetTxNum() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.ProtoMessage">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17251:17281#L496">ProtoMessage</a>
+					<a class="permalink" href="index.html#Version.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Version">Version</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.Reset">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17126:17151#L494">Reset</a>
+					<a class="permalink" href="index.html#Version.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.String">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17179:17212#L495">String</a>
+					<a class="permalink" href="index.html#Version.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_DiscardUnknown">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17808:17846#L512">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Version.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Marshal">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17496:17571#L503">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Version.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Merge">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17637:17685#L506">XXX_Merge</a>
+					<a class="permalink" href="index.html#Version.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Version">Version</a>) XXX_Merge(src <a href="../../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Size">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17731:17763#L509">XXX_Size</a>
+					<a class="permalink" href="index.html#Version.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Version.XXX_Unmarshal">func (*Version) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/protos/ledger/rwset/kvrwset/kv_rwset.pb.go?s=17396:17443#L500">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Version.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Version">Version</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

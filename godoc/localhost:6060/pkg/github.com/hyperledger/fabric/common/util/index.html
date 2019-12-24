@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>util - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package util
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/util"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#ArrayToChaincodeArgs">func ArrayToChaincodeArgs(args []string) [][]byte</a></dd>
+			
+				
+				<dd><a href="index.html#ComputeSHA256">func ComputeSHA256(data []byte) (hash []byte)</a></dd>
+			
+				
+				<dd><a href="index.html#ComputeSHA3256">func ComputeSHA3256(data []byte) (hash []byte)</a></dd>
+			
+				
+				<dd><a href="index.html#ConcatenateBytes">func ConcatenateBytes(data ...[]byte) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#CreateUtcTimestamp">func CreateUtcTimestamp() *timestamp.Timestamp</a></dd>
+			
+				
+				<dd><a href="index.html#ExtractRemoteAddress">func ExtractRemoteAddress(ctx context.Context) string</a></dd>
+			
+				
+				<dd><a href="index.html#FindMissingElements">func FindMissingElements(all []string, some []string) (delta []string)</a></dd>
+			
+				
+				<dd><a href="index.html#Flatten">func Flatten(i interface{}) []string</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateBytesUUID">func GenerateBytesUUID() []byte</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateHashFromSignature">func GenerateHashFromSignature(path string, args []byte) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateIDWithAlg">func GenerateIDWithAlg(customIDgenAlg string, payload []byte) (string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateIDfromTxSHAHash">func GenerateIDfromTxSHAHash(payload []byte) string</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateIntUUID">func GenerateIntUUID() *big.Int</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateUUID">func GenerateUUID() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetSysCCVersion">func GetSysCCVersion() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetTestChainID">func GetTestChainID() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetTestOrgID">func GetTestOrgID() string</a></dd>
+			
+				
+				<dd><a href="index.html#ToChaincodeArgs">func ToChaincodeArgs(args ...string) [][]byte</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/net.go">net.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go">utils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const <span id="DELIMITER">DELIMITER</span> = &#34;.&#34;</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="ArrayToChaincodeArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=4109:4158#L141">ArrayToChaincodeArgs</a>
+				<a class="permalink" href="index.html#ArrayToChaincodeArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ArrayToChaincodeArgs(args []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ArrayToChaincodeArgs converts array of string args to array of []byte args
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ComputeSHA256">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=1061:1106#L35">ComputeSHA256</a>
+				<a class="permalink" href="index.html#ComputeSHA256">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ComputeSHA256(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+			<p>
+ComputeSHA256 returns SHA2-256 on data
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ComputeSHA3256">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=1312:1358#L44">ComputeSHA3256</a>
+				<a class="permalink" href="index.html#ComputeSHA3256">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ComputeSHA3256(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (hash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+			<p>
+ComputeSHA3256 returns SHA3-256 on data
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConcatenateBytes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=5022:5066#L172">ConcatenateBytes</a>
+				<a class="permalink" href="index.html#ConcatenateBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConcatenateBytes(data ...[]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ConcatenateBytes is useful for combining multiple arrays of bytes, especially for
+signatures or digests over multiple fields
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateUtcTimestamp">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2339:2385#L83">CreateUtcTimestamp</a>
+				<a class="permalink" href="index.html#CreateUtcTimestamp">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateUtcTimestamp() *<a href="../../../../golang/protobuf/ptypes/timestamp/index.html">timestamp</a>.<a href="../../../../golang/protobuf/ptypes/timestamp/index.html#Timestamp">Timestamp</a></pre>
+			<p>
+CreateUtcTimestamp returns a google/protobuf/Timestamp in UTC
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExtractRemoteAddress">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/net.go?s=154:207#L5">ExtractRemoteAddress</a>
+				<a class="permalink" href="index.html#ExtractRemoteAddress">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExtractRemoteAddress(ctx <a href="http://localhost:6060/pkg/context/">context</a>.<a href="http://localhost:6060/pkg/context/#Context">Context</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="FindMissingElements">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=3582:3652#L118">FindMissingElements</a>
+				<a class="permalink" href="index.html#FindMissingElements">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func FindMissingElements(all []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, some []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (delta []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+FindMissingElements identifies the elements of the first slice that are not present in the second
+The second slice is expected to be a subset of the first slice
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Flatten">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=5878:5914#L206">Flatten</a>
+				<a class="permalink" href="index.html#Flatten">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Flatten(i interface{}) []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+`flatten` recursively retrieves every leaf node in a struct in depth-first fashion
+and aggregate the results into given string slice with format: &#34;path.to.leaf = value&#34;
+in the order of definition. Root name is ignored in the path. This helper function is
+useful to pretty-print a struct, such as configs.
+for example, given data structure:
+A{
+</p>
+<pre>B{
+  C: &#34;foo&#34;,
+  D: 42,
+},
+E: nil,
+</pre>
+<p>
+}
+it should yield a slice of string containing following items:
+[
+</p>
+<pre>&#34;B.C = \&#34;foo\&#34;&#34;,
+&#34;B.D = 42&#34;,
+&#34;E =&#34;,
+</pre>
+<p>
+]
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateBytesUUID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=1609:1640#L53">GenerateBytesUUID</a>
+				<a class="permalink" href="index.html#GenerateBytesUUID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateBytesUUID() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+GenerateBytesUUID returns a UUID based on RFC 4122 returning the generated bytes
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateHashFromSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2620:2683#L91">GenerateHashFromSignature</a>
+				<a class="permalink" href="index.html#GenerateHashFromSignature">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateHashFromSignature(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+GenerateHashFromSignature returns a hash of the combined parameters
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateIDWithAlg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2952:3029#L101">GenerateIDWithAlg</a>
+				<a class="permalink" href="index.html#GenerateIDWithAlg">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateIDWithAlg(customIDgenAlg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GenerateIDWithAlg generates an ID using a custom algorithm
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateIDfromTxSHAHash">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2783:2834#L96">GenerateIDfromTxSHAHash</a>
+				<a class="permalink" href="index.html#GenerateIDfromTxSHAHash">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateIDfromTxSHAHash(payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GenerateIDfromTxSHAHash generates SHA256 hash using Tx payload
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateIntUUID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2026:2057#L70">GenerateIntUUID</a>
+				<a class="permalink" href="index.html#GenerateIntUUID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateIntUUID() *<a href="http://localhost:6060/pkg/math/big/">big</a>.<a href="http://localhost:6060/pkg/math/big/#Int">Int</a></pre>
+			<p>
+GenerateIntUUID returns a UUID based on RFC 4122 returning a big.Int
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateUUID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=2186:2212#L77">GenerateUUID</a>
+				<a class="permalink" href="index.html#GenerateUUID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateUUID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GenerateUUID returns a UUID based on RFC 4122
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetSysCCVersion">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=4831:4860#L166">GetSysCCVersion</a>
+				<a class="permalink" href="index.html#GetSysCCVersion">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetSysCCVersion() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetSysCCVersion returns the version of all system chaincodes
+This needs to be revisited on policies around system chaincode
+&#34;upgrades&#34; from user and relationship with &#34;fabric&#34; upgrade. For
+now keep it simple and use the fabric&#39;s version stamp
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetTestChainID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=4404:4432#L153">GetTestChainID</a>
+				<a class="permalink" href="index.html#GetTestChainID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetTestChainID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetTestChainID returns the CHAINID constant in use by orderer
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetTestOrgID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=4530:4556#L158">GetTestOrgID</a>
+				<a class="permalink" href="index.html#GetTestOrgID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetTestOrgID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetTestOrgID returns the ORGID constant in use by gossip join message
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ToChaincodeArgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/util/utils.go?s=3874:3919#L132">ToChaincodeArgs</a>
+				<a class="permalink" href="index.html#ToChaincodeArgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ToChaincodeArgs(args ...<a href="http://localhost:6060/pkg/builtin/#string">string</a>) [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ToChaincodeArgs converts string args to []byte args
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

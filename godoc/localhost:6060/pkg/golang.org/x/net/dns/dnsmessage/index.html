@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>dnsmessage - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package dnsmessage
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/net/dns/dnsmessage"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package dnsmessage provides a mostly RFC 1035 compliant implementation of
+DNS message packing and unpacking.
+</p>
+<p>
+The package also supports messages with Extension Mechanisms for DNS
+(EDNS(0)) as defined in RFC 6891.
+</p>
+<p>
+This implementation is designed to minimize heap allocations and avoid
+unnecessary packing and unpacking as much as possible.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#AAAAResource">type AAAAResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AAAAResource.GoString">func (r *AAAAResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AResource">type AResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AResource.GoString">func (r *AResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Builder">type Builder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewBuilder">func NewBuilder(buf []byte, h Header) Builder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.AAAAResource">func (b *Builder) AAAAResource(h ResourceHeader, r AAAAResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.AResource">func (b *Builder) AResource(h ResourceHeader, r AResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.CNAMEResource">func (b *Builder) CNAMEResource(h ResourceHeader, r CNAMEResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.EnableCompression">func (b *Builder) EnableCompression()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.Finish">func (b *Builder) Finish() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.MXResource">func (b *Builder) MXResource(h ResourceHeader, r MXResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.NSResource">func (b *Builder) NSResource(h ResourceHeader, r NSResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.OPTResource">func (b *Builder) OPTResource(h ResourceHeader, r OPTResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.PTRResource">func (b *Builder) PTRResource(h ResourceHeader, r PTRResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.Question">func (b *Builder) Question(q Question) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.SOAResource">func (b *Builder) SOAResource(h ResourceHeader, r SOAResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.SRVResource">func (b *Builder) SRVResource(h ResourceHeader, r SRVResource) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.StartAdditionals">func (b *Builder) StartAdditionals() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.StartAnswers">func (b *Builder) StartAnswers() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.StartAuthorities">func (b *Builder) StartAuthorities() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.StartQuestions">func (b *Builder) StartQuestions() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Builder.TXTResource">func (b *Builder) TXTResource(h ResourceHeader, r TXTResource) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CNAMEResource">type CNAMEResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CNAMEResource.GoString">func (r *CNAMEResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Class">type Class</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Class.GoString">func (c Class) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Class.String">func (c Class) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Header">type Header</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Header.GoString">func (m *Header) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MXResource">type MXResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MXResource.GoString">func (r *MXResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Message">type Message</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.AppendPack">func (m *Message) AppendPack(b []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.GoString">func (m *Message) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Pack">func (m *Message) Pack() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Unpack">func (m *Message) Unpack(msg []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NSResource">type NSResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NSResource.GoString">func (r *NSResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Name">type Name</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MustNewName">func MustNewName(name string) Name</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewName">func NewName(name string) (Name, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Name.GoString">func (n *Name) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Name.String">func (n Name) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OPTResource">type OPTResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OPTResource.GoString">func (r *OPTResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OpCode">type OpCode</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OpCode.GoString">func (o OpCode) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Option">type Option</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Option.GoString">func (o *Option) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PTRResource">type PTRResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PTRResource.GoString">func (r *PTRResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Parser">type Parser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AAAAResource">func (p *Parser) AAAAResource() (AAAAResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AResource">func (p *Parser) AResource() (AResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Additional">func (p *Parser) Additional() (Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AdditionalHeader">func (p *Parser) AdditionalHeader() (ResourceHeader, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AllAdditionals">func (p *Parser) AllAdditionals() ([]Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AllAnswers">func (p *Parser) AllAnswers() ([]Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AllAuthorities">func (p *Parser) AllAuthorities() ([]Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AllQuestions">func (p *Parser) AllQuestions() ([]Question, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Answer">func (p *Parser) Answer() (Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AnswerHeader">func (p *Parser) AnswerHeader() (ResourceHeader, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Authority">func (p *Parser) Authority() (Resource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.AuthorityHeader">func (p *Parser) AuthorityHeader() (ResourceHeader, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.CNAMEResource">func (p *Parser) CNAMEResource() (CNAMEResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.MXResource">func (p *Parser) MXResource() (MXResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.NSResource">func (p *Parser) NSResource() (NSResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.OPTResource">func (p *Parser) OPTResource() (OPTResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.PTRResource">func (p *Parser) PTRResource() (PTRResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Question">func (p *Parser) Question() (Question, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SOAResource">func (p *Parser) SOAResource() (SOAResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SRVResource">func (p *Parser) SRVResource() (SRVResource, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAdditional">func (p *Parser) SkipAdditional() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAllAdditionals">func (p *Parser) SkipAllAdditionals() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAllAnswers">func (p *Parser) SkipAllAnswers() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAllAuthorities">func (p *Parser) SkipAllAuthorities() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAllQuestions">func (p *Parser) SkipAllQuestions() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAnswer">func (p *Parser) SkipAnswer() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipAuthority">func (p *Parser) SkipAuthority() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.SkipQuestion">func (p *Parser) SkipQuestion() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Start">func (p *Parser) Start(msg []byte) (Header, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.TXTResource">func (p *Parser) TXTResource() (TXTResource, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Question">type Question</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Question.GoString">func (q *Question) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RCode">type RCode</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RCode.GoString">func (r RCode) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RCode.String">func (r RCode) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Resource">type Resource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Resource.GoString">func (r *Resource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ResourceBody">type ResourceBody</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ResourceHeader">type ResourceHeader</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResourceHeader.DNSSECAllowed">func (h *ResourceHeader) DNSSECAllowed() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResourceHeader.ExtendedRCode">func (h *ResourceHeader) ExtendedRCode(rcode RCode) RCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResourceHeader.GoString">func (h *ResourceHeader) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ResourceHeader.SetEDNS0">func (h *ResourceHeader) SetEDNS0(udpPayloadLen int, extRCode RCode, dnssecOK bool) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SOAResource">type SOAResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SOAResource.GoString">func (r *SOAResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SRVResource">type SRVResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SRVResource.GoString">func (r *SRVResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TXTResource">type TXTResource</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TXTResource.GoString">func (r *TXTResource) GoString() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Type">type Type</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Type.GoString">func (t Type) GoString() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Type.String">func (t Type) String() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Parser">Parser</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go">message.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// ErrNotStarted indicates that the prerequisite information isn&#39;t</span>
+    <span class="comment">// available yet because the previous records haven&#39;t been appropriately</span>
+    <span class="comment">// parsed, skipped or finished.</span>
+    <span id="ErrNotStarted">ErrNotStarted</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;parsing/packing of this type isn&#39;t available yet&#34;)
+
+    <span class="comment">// ErrSectionDone indicated that all records in the section have been</span>
+    <span class="comment">// parsed or finished.</span>
+    <span id="ErrSectionDone">ErrSectionDone</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;parsing/packing of this section has completed&#34;)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="AAAAResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=64660:64703#L2496">AAAAResource</a>
+				<a class="permalink" href="index.html#AAAAResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An AAAAResource is an AAAA Resource record.
+</p>
+
+			<pre>type AAAAResource struct {
+<span id="AAAAResource.AAAA"></span>    AAAA [16]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AAAAResource.GoString">func (*AAAAResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=64814:64854#L2505">GoString</a>
+					<a class="permalink" href="index.html#AAAAResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#AAAAResource">AAAAResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=63956:63992#L2468">AResource</a>
+				<a class="permalink" href="index.html#AResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An AResource is an A Resource record.
+</p>
+
+			<pre>type AResource struct {
+<span id="AResource.A"></span>    A [4]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AResource.GoString">func (*AResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=64296:64333#L2482">GoString</a>
+					<a class="permalink" href="index.html#AResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#AResource">AResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Builder">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=29628:30090#L1155">Builder</a>
+				<a class="permalink" href="index.html#Builder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Builder allows incrementally packing a DNS message.
+</p>
+<p>
+Example usage:
+</p>
+<pre>buf := make([]byte, 2, 514)
+b := NewBuilder(buf, Header{...})
+b.EnableCompression()
+// Optionally start a section and add things to that section.
+// Repeat adding sections as necessary.
+buf, err := b.Finish()
+// If err is nil, buf[2:] will contain the built bytes.
+</pre>
+
+			<pre>type Builder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewBuilder">func <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=30610:30655#L1184">NewBuilder</a>
+					<a class="permalink" href="index.html#NewBuilder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewBuilder(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, h <a href="index.html#Header">Header</a>) <a href="index.html#Builder">Builder</a></pre>
+				<p>
+NewBuilder creates a new builder with compression disabled.
+</p>
+<p>
+Note: Most users will want to immediately enable compression with the
+EnableCompression method. See that method&#39;s comment for why you may or may
+not want to enable compression.
+</p>
+<p>
+The DNS message is appended to the provided initial buffer buf (which may be
+nil) as it is built. The final message is returned by the (*Builder).Finish
+method, which may return the same underlying array if there was sufficient
+capacity in the slice.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Builder.AAAAResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=38687:38757#L1503">AAAAResource</a>
+					<a class="permalink" href="index.html#Builder.AAAAResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) AAAAResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#AAAAResource">AAAAResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+AAAAResource adds a single AAAAResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.AResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=38064:38128#L1479">AResource</a>
+					<a class="permalink" href="index.html#Builder.AResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) AResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#AResource">AResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+AResource adds a single AResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.CNAMEResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=33683:33755#L1311">CNAMEResource</a>
+					<a class="permalink" href="index.html#Builder.CNAMEResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) CNAMEResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#CNAMEResource">CNAMEResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+CNAMEResource adds a single CNAMEResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.EnableCompression">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=31408:31445#L1207">EnableCompression</a>
+					<a class="permalink" href="index.html#Builder.EnableCompression">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) EnableCompression()</pre>
+				<p>
+EnableCompression enables compression in the Builder.
+</p>
+<p>
+Leaving compression disabled avoids compression related allocations, but can
+result in larger message sizes. Be careful with this mode as it can cause
+messages to exceed the UDP size limit.
+</p>
+<p>
+According to RFC 1035, section 4.1.4, the use of compression is optional, but
+all implementations must accept both compressed and uncompressed DNS
+messages.
+</p>
+<p>
+Compression should be enabled before any sections are added for best results.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.Finish">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=39966:40008#L1551">Finish</a>
+					<a class="permalink" href="index.html#Builder.Finish">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) Finish() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Finish ends message building and generates a binary message.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.MXResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=34314:34380#L1335">MXResource</a>
+					<a class="permalink" href="index.html#Builder.MXResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) MXResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#MXResource">MXResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+MXResource adds a single MXResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.NSResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=34936:35002#L1359">NSResource</a>
+					<a class="permalink" href="index.html#Builder.NSResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) NSResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#NSResource">NSResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+NSResource adds a single NSResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.OPTResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=39317:39385#L1527">OPTResource</a>
+					<a class="permalink" href="index.html#Builder.OPTResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) OPTResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#OPTResource">OPTResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+OPTResource adds a single OPTResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.PTRResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=35560:35628#L1383">PTRResource</a>
+					<a class="permalink" href="index.html#Builder.PTRResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) PTRResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#PTRResource">PTRResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PTRResource adds a single PTRResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.Question">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=33101:33145#L1282">Question</a>
+					<a class="permalink" href="index.html#Builder.Question">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) Question(q <a href="index.html#Question">Question</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Question adds a single Question.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.SOAResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=36187:36255#L1407">SOAResource</a>
+					<a class="permalink" href="index.html#Builder.SOAResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) SOAResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#SOAResource">SOAResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SOAResource adds a single SOAResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.SRVResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=37441:37509#L1455">SRVResource</a>
+					<a class="permalink" href="index.html#Builder.SRVResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) SRVResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#SRVResource">SRVResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SRVResource adds a single SRVResource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.StartAdditionals">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=32390:32432#L1249">StartAdditionals</a>
+					<a class="permalink" href="index.html#Builder.StartAdditionals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) StartAdditionals() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+StartAdditionals prepares the builder for packing Additionals.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.StartAnswers">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=31938:31976#L1231">StartAnswers</a>
+					<a class="permalink" href="index.html#Builder.StartAnswers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) StartAnswers() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+StartAnswers prepares the builder for packing Answers.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.StartAuthorities">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=32158:32200#L1240">StartAuthorities</a>
+					<a class="permalink" href="index.html#Builder.StartAuthorities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) StartAuthorities() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+StartAuthorities prepares the builder for packing Authorities.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.StartQuestions">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=31720:31760#L1222">StartQuestions</a>
+					<a class="permalink" href="index.html#Builder.StartQuestions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) StartQuestions() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+StartQuestions prepares the builder for packing Questions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Builder.TXTResource">func (*Builder) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=36814:36882#L1431">TXTResource</a>
+					<a class="permalink" href="index.html#Builder.TXTResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Builder">Builder</a>) TXTResource(h <a href="index.html#ResourceHeader">ResourceHeader</a>, r <a href="index.html#TXTResource">TXTResource</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+TXTResource adds a single TXTResource.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CNAMEResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=55496:55537#L2158">CNAMEResource</a>
+				<a class="permalink" href="index.html#CNAMEResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A CNAMEResource is a CNAME Resource record.
+</p>
+
+			<pre>type CNAMEResource struct {
+<span id="CNAMEResource.CNAME"></span>    CNAME <a href="index.html#Name">Name</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CNAMEResource.GoString">func (*CNAMEResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=55876:55917#L2172">GoString</a>
+					<a class="permalink" href="index.html#CNAMEResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#CNAMEResource">CNAMEResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Class">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=1786:1803#L70">Class</a>
+				<a class="permalink" href="index.html#Class">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Class is a type of network.
+</p>
+
+			<pre>type Class <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// ResourceHeader.Class and Question.Class</span>
+    <span id="ClassINET">ClassINET</span>   <a href="index.html#Class">Class</a> = 1
+    <span id="ClassCSNET">ClassCSNET</span>  <a href="index.html#Class">Class</a> = 2
+    <span id="ClassCHAOS">ClassCHAOS</span>  <a href="index.html#Class">Class</a> = 3
+    <span id="ClassHESIOD">ClassHESIOD</span> <a href="index.html#Class">Class</a> = 4
+
+    <span class="comment">// Question.Class</span>
+    <span id="ClassANY">ClassANY</span> <a href="index.html#Class">Class</a> = 255
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Class.GoString">func (Class) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=2374:2406#L100">GoString</a>
+					<a class="permalink" href="index.html#Class.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Class">Class</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Class.String">func (Class) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=2212:2242#L92">String</a>
+					<a class="permalink" href="index.html#Class.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Class">Class</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String implements fmt.Stringer.String.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Header">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=7620:7847#L302">Header</a>
+				<a class="permalink" href="index.html#Header">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Header is a representation of a DNS message header.
+</p>
+
+			<pre>type Header struct {
+<span id="Header.ID"></span>    ID                 <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="Header.Response"></span>    Response           <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Header.OpCode"></span>    OpCode             <a href="index.html#OpCode">OpCode</a>
+<span id="Header.Authoritative"></span>    Authoritative      <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Header.Truncated"></span>    Truncated          <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Header.RecursionDesired"></span>    RecursionDesired   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Header.RecursionAvailable"></span>    RecursionAvailable <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Header.RCode"></span>    RCode              <a href="index.html#RCode">RCode</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Header.GoString">func (*Header) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=8251:8285#L335">GoString</a>
+					<a class="permalink" href="index.html#Header.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Header">Header</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MXResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=56244:56294#L2185">MXResource</a>
+				<a class="permalink" href="index.html#MXResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An MXResource is an MX Resource record.
+</p>
+
+			<pre>type MXResource struct {
+<span id="MXResource.Pref"></span>    Pref <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="MXResource.MX"></span>    MX   <a href="index.html#Name">Name</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MXResource.GoString">func (*MXResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=56758:56796#L2206">GoString</a>
+					<a class="permalink" href="index.html#MXResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#MXResource">MXResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Message">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=8780:8907#L348">Message</a>
+				<a class="permalink" href="index.html#Message">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Message is a representation of a DNS message.
+</p>
+
+			<pre>type Message struct {
+    <a href="index.html#Header">Header</a>
+<span id="Message.Questions"></span>    Questions   []<a href="index.html#Question">Question</a>
+<span id="Message.Answers"></span>    Answers     []<a href="index.html#Resource">Resource</a>
+<span id="Message.Authorities"></span>    Authorities []<a href="index.html#Resource">Resource</a>
+<span id="Message.Additionals"></span>    Additionals []<a href="index.html#Resource">Resource</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Message.AppendPack">func (*Message) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=26309:26363#L1045">AppendPack</a>
+					<a class="permalink" href="index.html#Message.AppendPack">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) AppendPack(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AppendPack is like Pack but appends the full Message to b and returns the
+extended buffer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Message.GoString">func (*Message) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=28426:28461#L1112">GoString</a>
+					<a class="permalink" href="index.html#Message.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Message.Pack">func (*Message) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=26111:26151#L1039">Pack</a>
+					<a class="permalink" href="index.html#Message.Pack">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) Pack() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Pack packs a full Message.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Message.Unpack">func (*Message) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=25645:25687#L1017">Unpack</a>
+					<a class="permalink" href="index.html#Message.Unpack">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) Unpack(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Unpack parses a full Message.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NSResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=57279:57314#L2225">NSResource</a>
+				<a class="permalink" href="index.html#NSResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An NSResource is an NS Resource record.
+</p>
+
+			<pre>type NSResource struct {
+<span id="NSResource.NS"></span>    NS <a href="index.html#Name">Name</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NSResource.GoString">func (*NSResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=57638:57676#L2239">GoString</a>
+					<a class="permalink" href="index.html#NSResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#NSResource">NSResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Name">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=48030:48086#L1849">Name</a>
+				<a class="permalink" href="index.html#Name">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Name is a non-encoded domain name. It is used instead of strings to avoid
+allocations.
+</p>
+
+			<pre>type Name struct {
+<span id="Name.Data"></span>    Data   [nameLen]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Name.Length"></span>    Length <a href="http://localhost:6060/pkg/builtin/#uint8">uint8</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="MustNewName">func <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=48395:48429#L1865">MustNewName</a>
+					<a class="permalink" href="index.html#MustNewName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func MustNewName(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#Name">Name</a></pre>
+				<p>
+MustNewName creates a new Name from a string and panics on error.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewName">func <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=48133:48172#L1855">NewName</a>
+					<a class="permalink" href="index.html#NewName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewName(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#Name">Name</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewName creates a new Name from a string.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Name.GoString">func (*Name) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=48690:48722#L1879">GoString</a>
+					<a class="permalink" href="index.html#Name.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#Name">Name</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Name.String">func (Name) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=48573:48602#L1874">String</a>
+					<a class="permalink" href="index.html#Name.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#Name">Name</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String implements fmt.Stringer.String.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OPTResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=65530:65575#L2527">OPTResource</a>
+				<a class="permalink" href="index.html#OPTResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An OPTResource is an OPT pseudo Resource record.
+</p>
+<p>
+The pseudo resource record is part of the extension mechanisms for DNS
+as defined in RFC 6891.
+</p>
+
+			<pre>type OPTResource struct {
+<span id="OPTResource.Options"></span>    Options []<a href="index.html#Option">Option</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="OPTResource.GoString">func (*OPTResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=66405:66444#L2562">GoString</a>
+					<a class="permalink" href="index.html#OPTResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#OPTResource">OPTResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OpCode">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=2544:2562#L108">OpCode</a>
+				<a class="permalink" href="index.html#OpCode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An OpCode is a DNS operation code.
+</p>
+
+			<pre>type OpCode <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="OpCode.GoString">func (OpCode) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=2612:2645#L111">GoString</a>
+					<a class="permalink" href="index.html#OpCode.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o <a href="index.html#OpCode">OpCode</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Option">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=65738:65801#L2535">Option</a>
+				<a class="permalink" href="index.html#Option">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Option represents a DNS message option within OPTResource.
+</p>
+<p>
+The message option is part of the extension mechanisms for DNS as
+defined in RFC 6891.
+</p>
+
+			<pre>type Option struct {
+<span id="Option.Code"></span>    Code <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a> <span class="comment">// option code</span>
+<span id="Option.Data"></span>    Data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Option.GoString">func (*Option) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=65851:65885#L2541">GoString</a>
+					<a class="permalink" href="index.html#Option.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Option">Option</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PTRResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=57973:58010#L2252">PTRResource</a>
+				<a class="permalink" href="index.html#PTRResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PTRResource is a PTR Resource record.
+</p>
+
+			<pre>type PTRResource struct {
+<span id="PTRResource.PTR"></span>    PTR <a href="index.html#Name">Name</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PTRResource.GoString">func (*PTRResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=58339:58378#L2266">GoString</a>
+					<a class="permalink" href="index.html#PTRResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#PTRResource">PTRResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Parser">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=13548:13717#L513">Parser</a>
+				<a class="permalink" href="index.html#Parser">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Parser allows incrementally parsing a DNS message.
+</p>
+<p>
+When parsing is started, the Header is parsed. Next, each Question can be
+either parsed or skipped. Alternatively, all Questions can be skipped at
+once. When all Questions have been parsed, attempting to parse Questions
+will return (nil, nil) and attempting to skip Questions will return
+(true, nil). After all Questions have been either parsed or skipped, all
+Answers, Authorities and Additionals can be either parsed or skipped in the
+same way, and each type of Resource must be fully parsed or skipped before
+proceeding to the next type of Resource.
+</p>
+<p>
+Note that there is no requirement to fully skip or parse the message.
+</p>
+
+			<pre>type Parser struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			<div id="example_Parser" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">package dnsmessage_test
+
+import (
+    &#34;fmt&#34;
+    &#34;net&#34;
+    &#34;strings&#34;
+
+    &#34;golang.org/x/net/dns/dnsmessage&#34;
+)
+
+func mustNewName(name string) dnsmessage.Name {
+    n, err := dnsmessage.NewName(name)
+    if err != nil {
+        panic(err)
+    }
+    return n
+}
+
+func ExampleParser() {
+    msg := dnsmessage.Message{
+        Header: dnsmessage.Header{Response: true, Authoritative: true},
+        Questions: []dnsmessage.Question{
+            {
+                Name:  mustNewName(&#34;foo.bar.example.com.&#34;),
+                Type:  dnsmessage.TypeA,
+                Class: dnsmessage.ClassINET,
+            },
+            {
+                Name:  mustNewName(&#34;bar.example.com.&#34;),
+                Type:  dnsmessage.TypeA,
+                Class: dnsmessage.ClassINET,
+            },
+        },
+        Answers: []dnsmessage.Resource{
+            {
+                Header: dnsmessage.ResourceHeader{
+                    Name:  mustNewName(&#34;foo.bar.example.com.&#34;),
+                    Type:  dnsmessage.TypeA,
+                    Class: dnsmessage.ClassINET,
+                },
+                Body: &amp;dnsmessage.AResource{A: [4]byte{127, 0, 0, 1}},
+            },
+            {
+                Header: dnsmessage.ResourceHeader{
+                    Name:  mustNewName(&#34;bar.example.com.&#34;),
+                    Type:  dnsmessage.TypeA,
+                    Class: dnsmessage.ClassINET,
+                },
+                Body: &amp;dnsmessage.AResource{A: [4]byte{127, 0, 0, 2}},
+            },
+        },
+    }
+
+    buf, err := msg.Pack()
+    if err != nil {
+        panic(err)
+    }
+
+    wantName := &#34;bar.example.com.&#34;
+
+    var p dnsmessage.Parser
+    if _, err := p.Start(buf); err != nil {
+        panic(err)
+    }
+
+    for {
+        q, err := p.Question()
+        if err == dnsmessage.ErrSectionDone {
+            break
+        }
+        if err != nil {
+            panic(err)
+        }
+
+        if q.Name.String() != wantName {
+            continue
+        }
+
+        fmt.Println(&#34;Found question for name&#34;, wantName)
+        if err := p.SkipAllQuestions(); err != nil {
+            panic(err)
+        }
+        break
+    }
+
+    var gotIPs []net.IP
+    for {
+        h, err := p.AnswerHeader()
+        if err == dnsmessage.ErrSectionDone {
+            break
+        }
+        if err != nil {
+            panic(err)
+        }
+
+        if (h.Type != dnsmessage.TypeA &amp;&amp; h.Type != dnsmessage.TypeAAAA) || h.Class != dnsmessage.ClassINET {
+            continue
+        }
+
+        if !strings.EqualFold(h.Name.String(), wantName) {
+            if err := p.SkipAnswer(); err != nil {
+                panic(err)
+            }
+            continue
+        }
+
+        switch h.Type {
+        case dnsmessage.TypeA:
+            r, err := p.AResource()
+            if err != nil {
+                panic(err)
+            }
+            gotIPs = append(gotIPs, r.A[:])
+        case dnsmessage.TypeAAAA:
+            r, err := p.AAAAResource()
+            if err != nil {
+                panic(err)
+            }
+            gotIPs = append(gotIPs, r.AAAA[:])
+        }
+    }
+
+    fmt.Printf(&#34;Found A/AAAA records for name %s: %v\n&#34;, wantName, gotIPs)
+
+    <span class="comment">// Output:</span>
+    <span class="comment">// Found question for name bar.example.com.</span>
+    <span class="comment">// Found A/AAAA records for name bar.example.com.: [127.0.0.2]</span>
+}
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+			
+
+			
+
+			
+				
+				<h3 id="Parser.AAAAResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=24794:24847#L984">AAAAResource</a>
+					<a class="permalink" href="index.html#Parser.AAAAResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AAAAResource() (<a href="index.html#AAAAResource">AAAAResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AAAAResource parses a single AAAAResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=24342:24389#L966">AResource</a>
+					<a class="permalink" href="index.html#Parser.AResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AResource() (<a href="index.html#AResource">AResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AResource parses a single AResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.Additional">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=19995:20042#L792">Additional</a>
+					<a class="permalink" href="index.html#Parser.Additional">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Additional() (<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Additional parses a single Additional Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AdditionalHeader">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=19834:19893#L787">AdditionalHeader</a>
+					<a class="permalink" href="index.html#Parser.AdditionalHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AdditionalHeader() (<a href="index.html#ResourceHeader">ResourceHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AdditionalHeader parses a single Additional ResourceHeader.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AllAdditionals">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=20138:20191#L797">AllAdditionals</a>
+					<a class="permalink" href="index.html#Parser.AllAdditionals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AllAdditionals() ([]<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AllAdditionals parses all Additional Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AllAnswers">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=17795:17844#L697">AllAnswers</a>
+					<a class="permalink" href="index.html#Parser.AllAnswers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AllAnswers() ([]<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AllAnswers parses all Answer Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AllAuthorities">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=18942:18995#L747">AllAuthorities</a>
+					<a class="permalink" href="index.html#Parser.AllAuthorities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AllAuthorities() ([]<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AllAuthorities parses all Authority Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AllQuestions">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=16283:16334#L635">AllQuestions</a>
+					<a class="permalink" href="index.html#Parser.AllQuestions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AllQuestions() ([]<a href="index.html#Question">Question</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AllQuestions parses all Questions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.Answer">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=17668:17711#L692">Answer</a>
+					<a class="permalink" href="index.html#Parser.Answer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Answer() (<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Answer parses a single Answer Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AnswerHeader">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=17523:17578#L687">AnswerHeader</a>
+					<a class="permalink" href="index.html#Parser.AnswerHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AnswerHeader() (<a href="index.html#ResourceHeader">ResourceHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AnswerHeader parses a single Answer ResourceHeader.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.Authority">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=18801:18847#L742">Authority</a>
+					<a class="permalink" href="index.html#Parser.Authority">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Authority() (<a href="index.html#Resource">Resource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Authority parses a single Authority Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.AuthorityHeader">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=18643:18701#L737">AuthorityHeader</a>
+					<a class="permalink" href="index.html#Parser.AuthorityHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) AuthorityHeader() (<a href="index.html#ResourceHeader">ResourceHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AuthorityHeader parses a single Authority ResourceHeader.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.CNAMEResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=21096:21151#L840">CNAMEResource</a>
+					<a class="permalink" href="index.html#Parser.CNAMEResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) CNAMEResource() (<a href="index.html#CNAMEResource">CNAMEResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CNAMEResource parses a single CNAMEResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.MXResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=21568:21617#L858">MXResource</a>
+					<a class="permalink" href="index.html#Parser.MXResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) MXResource() (<a href="index.html#MXResource">MXResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+MXResource parses a single MXResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.NSResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=22022:22071#L876">NSResource</a>
+					<a class="permalink" href="index.html#Parser.NSResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) NSResource() (<a href="index.html#NSResource">NSResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NSResource parses a single NSResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.OPTResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=25262:25313#L1002">OPTResource</a>
+					<a class="permalink" href="index.html#Parser.OPTResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) OPTResource() (<a href="index.html#OPTResource">OPTResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+OPTResource parses a single OPTResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.PTRResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=22478:22529#L894">PTRResource</a>
+					<a class="permalink" href="index.html#Parser.PTRResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) PTRResource() (<a href="index.html#PTRResource">PTRResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PTRResource parses a single PTRResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.Question">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=15646:15691#L612">Question</a>
+					<a class="permalink" href="index.html#Parser.Question">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Question() (<a href="index.html#Question">Question</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Question parses a single Question.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SOAResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=22940:22991#L912">SOAResource</a>
+					<a class="permalink" href="index.html#Parser.SOAResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SOAResource() (<a href="index.html#SOAResource">SOAResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SOAResource parses a single SOAResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SRVResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=23884:23935#L948">SRVResource</a>
+					<a class="permalink" href="index.html#Parser.SRVResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SRVResource() (<a href="index.html#SRVResource">SRVResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SRVResource parses a single SRVResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAdditional">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=20646:20685#L821">SkipAdditional</a>
+					<a class="permalink" href="index.html#Parser.SkipAdditional">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAdditional() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAdditional skips a single Additional Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAllAdditionals">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=20788:20831#L826">SkipAllAdditionals</a>
+					<a class="permalink" href="index.html#Parser.SkipAllAdditionals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAllAdditionals() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAllAdditionals skips all Additional Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAllAnswers">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=18418:18457#L726">SkipAllAnswers</a>
+					<a class="permalink" href="index.html#Parser.SkipAllAnswers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAllAnswers() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAllAnswers skips all Answer Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAllAuthorities">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=19600:19643#L776">SkipAllAuthorities</a>
+					<a class="permalink" href="index.html#Parser.SkipAllAuthorities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAllAuthorities() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAllAuthorities skips all Authority Resources.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAllQuestions">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=17300:17341#L676">SkipAllQuestions</a>
+					<a class="permalink" href="index.html#Parser.SkipAllQuestions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAllQuestions() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAllQuestions skips all Questions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAnswer">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=18292:18327#L721">SkipAnswer</a>
+					<a class="permalink" href="index.html#Parser.SkipAnswer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAnswer() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAnswer skips a single Answer Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipAuthority">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=19460:19498#L771">SkipAuthority</a>
+					<a class="permalink" href="index.html#Parser.SkipAuthority">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipAuthority() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipAuthority skips a single Authority Resource.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.SkipQuestion">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=16783:16820#L656">SkipQuestion</a>
+					<a class="permalink" href="index.html#Parser.SkipQuestion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) SkipQuestion() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SkipQuestion skips a single Question.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.Start">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=13784:13834#L525">Start</a>
+					<a class="permalink" href="index.html#Parser.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Start(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#Header">Header</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Start parses the header and enables the parsing of Questions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Parser.TXTResource">func (*Parser) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=23402:23453#L930">TXTResource</a>
+					<a class="permalink" href="index.html#Parser.TXTResource">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) TXTResource() (<a href="index.html#TXTResource">TXTResource</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+TXTResource parses a single TXTResource.
+</p>
+<p>
+One of the XXXHeader methods must have been called before calling this
+method.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Question">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=53381:53442#L2066">Question</a>
+				<a class="permalink" href="index.html#Question">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Question is a DNS query.
+</p>
+
+			<pre>type Question struct {
+<span id="Question.Name"></span>    Name  <a href="index.html#Name">Name</a>
+<span id="Question.Type"></span>    Type  <a href="index.html#Type">Type</a>
+<span id="Question.Class"></span>    Class <a href="index.html#Class">Class</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Question.GoString">func (*Question) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=53838:53874#L2083">GoString</a>
+					<a class="permalink" href="index.html#Question.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (q *<a href="index.html#Question">Question</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RCode">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=2725:2742#L116">RCode</a>
+				<a class="permalink" href="index.html#RCode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An RCode is a DNS response status code.
+</p>
+
+			<pre>type RCode <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// Message.Rcode</span>
+    <span id="RCodeSuccess">RCodeSuccess</span>        <a href="index.html#RCode">RCode</a> = 0
+    <span id="RCodeFormatError">RCodeFormatError</span>    <a href="index.html#RCode">RCode</a> = 1
+    <span id="RCodeServerFailure">RCodeServerFailure</span>  <a href="index.html#RCode">RCode</a> = 2
+    <span id="RCodeNameError">RCodeNameError</span>      <a href="index.html#RCode">RCode</a> = 3
+    <span id="RCodeNotImplemented">RCodeNotImplemented</span> <a href="index.html#RCode">RCode</a> = 4
+    <span id="RCodeRefused">RCodeRefused</span>        <a href="index.html#RCode">RCode</a> = 5
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RCode.GoString">func (RCode) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=3448:3480#L146">GoString</a>
+					<a class="permalink" href="index.html#RCode.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#RCode">RCode</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="RCode.String">func (RCode) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=3286:3316#L138">String</a>
+					<a class="permalink" href="index.html#RCode.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#RCode">RCode</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String implements fmt.Stringer.String.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Resource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=11546:11614#L454">Resource</a>
+				<a class="permalink" href="index.html#Resource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Resource is a DNS resource record.
+</p>
+
+			<pre>type Resource struct {
+<span id="Resource.Header"></span>    Header <a href="index.html#ResourceHeader">ResourceHeader</a>
+<span id="Resource.Body"></span>    Body   <a href="index.html#ResourceBody">ResourceBody</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Resource.GoString">func (*Resource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=11616:11652#L459">GoString</a>
+					<a class="permalink" href="index.html#Resource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#Resource">Resource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ResourceBody">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=11831:12185#L467">ResourceBody</a>
+				<a class="permalink" href="index.html#ResourceBody">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ResourceBody is a DNS resource record minus the header.
+</p>
+
+			<pre>type ResourceBody interface {
+
+    <span class="comment">// GoString implements fmt.GoStringer.GoString.</span>
+    GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// contains filtered or unexported methods</span>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ResourceHeader">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=40359:41035#L1563">ResourceHeader</a>
+				<a class="permalink" href="index.html#ResourceHeader">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ResourceHeader is the header of a DNS resource record. There are
+many types of DNS resource records, but they all share the same header.
+</p>
+
+			<pre>type ResourceHeader struct {
+<span id="ResourceHeader.Name"></span>    <span class="comment">// Name is the domain name for which this resource record pertains.</span>
+    Name <a href="index.html#Name">Name</a>
+
+<span id="ResourceHeader.Type"></span>    <span class="comment">// Type is the type of DNS resource record.</span>
+    <span class="comment">//</span>
+    <span class="comment">// This field will be set automatically during packing.</span>
+    Type <a href="index.html#Type">Type</a>
+
+<span id="ResourceHeader.Class"></span>    <span class="comment">// Class is the class of network to which this DNS resource record</span>
+    <span class="comment">// pertains.</span>
+    Class <a href="index.html#Class">Class</a>
+
+<span id="ResourceHeader.TTL"></span>    <span class="comment">// TTL is the length of time (measured in seconds) which this resource</span>
+    <span class="comment">// record is valid for (time to live). All Resources in a set should</span>
+    <span class="comment">// have the same TTL (RFC 2181 Section 5.2).</span>
+    TTL <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+
+<span id="ResourceHeader.Length"></span>    <span class="comment">// Length is the length of data in the resource record after the header.</span>
+    <span class="comment">//</span>
+    <span class="comment">// This field will be set automatically during packing.</span>
+    Length <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ResourceHeader.DNSSECAllowed">func (*ResourceHeader) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=43782:43827#L1677">DNSSECAllowed</a>
+					<a class="permalink" href="index.html#ResourceHeader.DNSSECAllowed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#ResourceHeader">ResourceHeader</a>) DNSSECAllowed() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+DNSSECAllowed reports whether the DNSSEC OK bit is set.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ResourceHeader.ExtendedRCode">func (*ResourceHeader) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=44018:44075#L1684">ExtendedRCode</a>
+					<a class="permalink" href="index.html#ResourceHeader.ExtendedRCode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#ResourceHeader">ResourceHeader</a>) ExtendedRCode(rcode <a href="index.html#RCode">RCode</a>) <a href="index.html#RCode">RCode</a></pre>
+				<p>
+ExtendedRCode returns an extended RCode.
+</p>
+<p>
+The provided rcode must be the RCode in DNS message header.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ResourceHeader.GoString">func (*ResourceHeader) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=41085:41127#L1588">GoString</a>
+					<a class="permalink" href="index.html#ResourceHeader.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#ResourceHeader">ResourceHeader</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ResourceHeader.SetEDNS0">func (*ResourceHeader) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=43408:43497#L1665">SetEDNS0</a>
+					<a class="permalink" href="index.html#ResourceHeader.SetEDNS0">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#ResourceHeader">ResourceHeader</a>) SetEDNS0(udpPayloadLen <a href="http://localhost:6060/pkg/builtin/#int">int</a>, extRCode <a href="index.html#RCode">RCode</a>, dnssecOK <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetEDNS0 configures h for EDNS(0).
+</p>
+<p>
+The provided extRCode must be an extedned RCode.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SOAResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=58687:58975#L2279">SOAResource</a>
+				<a class="permalink" href="index.html#SOAResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An SOAResource is an SOA Resource record.
+</p>
+
+			<pre>type SOAResource struct {
+<span id="SOAResource.NS"></span>    NS      <a href="index.html#Name">Name</a>
+<span id="SOAResource.MBox"></span>    MBox    <a href="index.html#Name">Name</a>
+<span id="SOAResource.Serial"></span>    Serial  <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+<span id="SOAResource.Refresh"></span>    Refresh <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+<span id="SOAResource.Retry"></span>    Retry   <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+<span id="SOAResource.Expire"></span>    Expire  <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+
+<span id="SOAResource.MinTTL"></span>    <span class="comment">// MinTTL the is the default TTL of Resources records which did not</span>
+    <span class="comment">// contain a TTL value and the TTL of negative responses. (RFC 2308</span>
+    <span class="comment">// Section 4)</span>
+    MinTTL <a href="http://localhost:6060/pkg/builtin/#uint32">uint32</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SOAResource.GoString">func (*SOAResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=59700:59739#L2316">GoString</a>
+					<a class="permalink" href="index.html#SOAResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#SOAResource">SOAResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SRVResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=62351:62479#L2414">SRVResource</a>
+				<a class="permalink" href="index.html#SRVResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An SRVResource is an SRV Resource record.
+</p>
+
+			<pre>type SRVResource struct {
+<span id="SRVResource.Priority"></span>    Priority <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="SRVResource.Weight"></span>    Weight   <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="SRVResource.Port"></span>    Port     <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="SRVResource.Target"></span>    Target   <a href="index.html#Name">Name</a> <span class="comment">// Not compressed as per RFC 2782.</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SRVResource.GoString">func (*SRVResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=63016:63055#L2439">GoString</a>
+					<a class="permalink" href="index.html#SRVResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#SRVResource">SRVResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TXTResource">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=61083:61124#L2361">TXTResource</a>
+				<a class="permalink" href="index.html#TXTResource">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A TXTResource is a TXT Resource record.
+</p>
+
+			<pre>type TXTResource struct {
+<span id="TXTResource.TXT"></span>    TXT []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TXTResource.GoString">func (*TXTResource) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=61552:61591#L2383">GoString</a>
+					<a class="permalink" href="index.html#TXTResource.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#TXTResource">TXTResource</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Type">type <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=633:649#L12">Type</a>
+				<a class="permalink" href="index.html#Type">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Type is a type of DNS request and response.
+</p>
+
+			<pre>type Type <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a></pre>
+
+			
+				
+				<pre>const (
+    <span class="comment">// ResourceHeader.Type and Question.Type</span>
+    <span id="TypeA">TypeA</span>     <a href="index.html#Type">Type</a> = 1
+    <span id="TypeNS">TypeNS</span>    <a href="index.html#Type">Type</a> = 2
+    <span id="TypeCNAME">TypeCNAME</span> <a href="index.html#Type">Type</a> = 5
+    <span id="TypeSOA">TypeSOA</span>   <a href="index.html#Type">Type</a> = 6
+    <span id="TypePTR">TypePTR</span>   <a href="index.html#Type">Type</a> = 12
+    <span id="TypeMX">TypeMX</span>    <a href="index.html#Type">Type</a> = 15
+    <span id="TypeTXT">TypeTXT</span>   <a href="index.html#Type">Type</a> = 16
+    <span id="TypeAAAA">TypeAAAA</span>  <a href="index.html#Type">Type</a> = 28
+    <span id="TypeSRV">TypeSRV</span>   <a href="index.html#Type">Type</a> = 33
+    <span id="TypeOPT">TypeOPT</span>   <a href="index.html#Type">Type</a> = 41
+
+    <span class="comment">// Question.Type</span>
+    <span id="TypeWKS">TypeWKS</span>   <a href="index.html#Type">Type</a> = 11
+    <span id="TypeHINFO">TypeHINFO</span> <a href="index.html#Type">Type</a> = 13
+    <span id="TypeMINFO">TypeMINFO</span> <a href="index.html#Type">Type</a> = 14
+    <span id="TypeAXFR">TypeAXFR</span>  <a href="index.html#Type">Type</a> = 252
+    <span id="TypeALL">TypeALL</span>   <a href="index.html#Type">Type</a> = 255
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Type.GoString">func (Type) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=1623:1654#L62">GoString</a>
+					<a class="permalink" href="index.html#Type.GoString">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#Type">Type</a>) GoString() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GoString implements fmt.GoStringer.GoString.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Type.String">func (Type) <a href="http://localhost:6060/src/golang.org/x/net/dns/dnsmessage/message.go?s=1463:1492#L54">String</a>
+					<a class="permalink" href="index.html#Type.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t <a href="index.html#Type">Type</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String implements fmt.Stringer.String.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

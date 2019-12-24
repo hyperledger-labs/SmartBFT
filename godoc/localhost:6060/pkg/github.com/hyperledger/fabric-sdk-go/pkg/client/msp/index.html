@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>msp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package msp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package msp enables creation and update of users on a Fabric network.
+Msp client supports the following actions:
+Enroll, Reenroll, Register,  Revoke and GetSigningIdentity.
+</p>
+<pre>Basic Flow:
+1) Prepare client context
+2) Create msp client
+3) Register user
+4) Enroll user
+</pre>
+
+				<div id="example_" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+username := randomUsername()
+
+enrollmentSecret, err := c.Register(&amp;RegistrationRequest{Name: username})
+if err != nil {
+    fmt.Printf(&#34;Register return error %s\n&#34;, err)
+    return
+}
+
+err = c.Enroll(username, WithSecret(enrollmentSecret))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#AffiliationInfo">type AffiliationInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AffiliationRequest">type AffiliationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AffiliationResponse">type AffiliationResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Attribute">type Attribute</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AttributeRequest">type AttributeRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Client">type Client</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(clientProvider context.ClientProvider, opts ...ClientOption) (*Client, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.AddAffiliation">func (c *Client) AddAffiliation(request *AffiliationRequest) (*AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.CreateIdentity">func (c *Client) CreateIdentity(request *IdentityRequest) (*IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.CreateSigningIdentity">func (c *Client) CreateSigningIdentity(opts ...mspctx.SigningIdentityOption) (mspctx.SigningIdentity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Enroll">func (c *Client) Enroll(enrollmentID string, opts ...EnrollmentOption) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAffiliation">func (c *Client) GetAffiliation(affiliation string, options ...RequestOption) (*AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAllAffiliations">func (c *Client) GetAllAffiliations(options ...RequestOption) (*AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetAllIdentities">func (c *Client) GetAllIdentities(options ...RequestOption) ([]*IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetCAInfo">func (c *Client) GetCAInfo() (*GetCAInfoResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetIdentity">func (c *Client) GetIdentity(ID string, options ...RequestOption) (*IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.GetSigningIdentity">func (c *Client) GetSigningIdentity(id string) (mspctx.SigningIdentity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.ModifyAffiliation">func (c *Client) ModifyAffiliation(request *ModifyAffiliationRequest) (*AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.ModifyIdentity">func (c *Client) ModifyIdentity(request *IdentityRequest) (*IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Reenroll">func (c *Client) Reenroll(enrollmentID string, opts ...EnrollmentOption) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Register">func (c *Client) Register(request *RegistrationRequest) (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.RemoveAffiliation">func (c *Client) RemoveAffiliation(request *AffiliationRequest) (*AffiliationResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.RemoveIdentity">func (c *Client) RemoveIdentity(request *RemoveIdentityRequest) (*IdentityResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Client.Revoke">func (c *Client) Revoke(request *RevocationRequest) (*RevocationResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ClientOption">type ClientOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCAInstance">func WithCAInstance(caInstanceName string) ClientOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithOrg">func WithOrg(orgName string) ClientOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EnrollmentOption">type EnrollmentOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithAttributeRequests">func WithAttributeRequests(attrReqs []*AttributeRequest) EnrollmentOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithLabel">func WithLabel(label string) EnrollmentOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithProfile">func WithProfile(profile string) EnrollmentOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithSecret">func WithSecret(secret string) EnrollmentOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithType">func WithType(typ string) EnrollmentOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GetCAInfoResponse">type GetCAInfoResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityInfo">type IdentityInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityManager">type IdentityManager</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityRequest">type IdentityRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityResponse">type IdentityResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ModifyAffiliationRequest">type ModifyAffiliationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegistrationRequest">type RegistrationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RemoveIdentityRequest">type RemoveIdentityRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestOption">type RequestOption</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#WithCA">func WithCA(caname string) RequestOption</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationRequest">type RevocationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationResponse">type RevocationResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevokedCert">type RevokedCert</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_">Package</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_CreateIdentity">Client.CreateIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_CreateSigningIdentity">Client.CreateSigningIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_Enroll">Client.Enroll</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_GetAllIdentities">Client.GetAllIdentities</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_GetIdentity">Client.GetIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_GetSigningIdentity">Client.GetSigningIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_ModifyIdentity">Client.ModifyIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_Reenroll">Client.Reenroll</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_Register">Client.Register</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_RemoveIdentity">Client.RemoveIdentity</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_Client_Revoke">Client.Revoke</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_New">New</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithAttributeRequests">WithAttributeRequests</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithCA">WithCA</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithCAInstance">WithCAInstance</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithLabel">WithLabel</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithOrg">WithOrg</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithProfile">WithProfile</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithSecret">WithSecret</a></dd>
+			
+			<dd><a class="exampleLink" href="index.html#example_WithType">WithType</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go">ca.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go">client.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/identity.go">identity.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// ErrUserNotFound indicates the user was not found</span>
+    <span id="ErrUserNotFound">ErrUserNotFound</span> = <a href="http://localhost:6060/pkg/github.com/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/github.com/pkg/errors/#New">New</a>(&#34;user not found&#34;)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="AffiliationInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=4750:4863#L159">AffiliationInfo</a>
+				<a class="permalink" href="index.html#AffiliationInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationInfo contains the affiliation name, child affiliation info, and identities
+associated with this affiliation.
+</p>
+
+			<pre>type AffiliationInfo struct {
+<span id="AffiliationInfo.Name"></span>    Name         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="AffiliationInfo.Affiliations"></span>    Affiliations []<a href="index.html#AffiliationInfo">AffiliationInfo</a>
+<span id="AffiliationInfo.Identities"></span>    Identities   []<a href="index.html#IdentityInfo">IdentityInfo</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AffiliationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=4061:4237#L131">AffiliationRequest</a>
+				<a class="permalink" href="index.html#AffiliationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationRequest represents the request to add/remove affiliation to the fabric-ca-server
+</p>
+
+			<pre>type AffiliationRequest struct {
+<span id="AffiliationRequest.Name"></span>    <span class="comment">// Name of the affiliation</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Creates parent affiliations if they do not exist</span>
+<span id="AffiliationRequest.Force"></span>    Force <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="AffiliationRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AffiliationResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=4555:4622#L152">AffiliationResponse</a>
+				<a class="permalink" href="index.html#AffiliationResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationResponse contains the response for get, add, modify, and remove an affiliation
+</p>
+
+			<pre>type AffiliationResponse struct {
+    <a href="index.html#AffiliationInfo">AffiliationInfo</a>
+<span id="AffiliationResponse.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Attribute">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=1129:1194#L27">Attribute</a>
+				<a class="permalink" href="index.html#Attribute">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Attribute defines additional attributes that may be passed along during registration
+</p>
+
+			<pre>type Attribute struct {
+<span id="Attribute.Name"></span>    Name  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Attribute.Value"></span>    Value <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Attribute.ECert"></span>    ECert <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AttributeRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=167:231#L1">AttributeRequest</a>
+				<a class="permalink" href="index.html#AttributeRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AttributeRequest is a request for an attribute.
+</p>
+
+			<pre>type AttributeRequest struct {
+<span id="AttributeRequest.Name"></span>    Name     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="AttributeRequest.Optional"></span>    Optional <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Client">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=827:938#L23">Client</a>
+				<a class="permalink" href="index.html#Client">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Client enables access to Client services
+</p>
+
+			<pre>type Client struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1839:1925#L66">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(clientProvider <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#ClientProvider">ClientProvider</a>, opts ...<a href="index.html#ClientOption">ClientOption</a>) (*<a href="index.html#Client">Client</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+New creates a new Client instance
+</p>
+
+				<div id="example_New" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+if c != nil {
+    fmt.Println(&#34;msp client created&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">msp client created
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+				
+				<h3 id="Client.AddAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=15883:15973#L609">AddAffiliation</a>
+					<a class="permalink" href="index.html#Client.AddAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) AddAffiliation(request *<a href="index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+AddAffiliation adds a new affiliation to the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.CreateIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=4889:4973#L191">CreateIdentity</a>
+					<a class="permalink" href="index.html#Client.CreateIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) CreateIdentity(request *<a href="index.html#IdentityRequest">IdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateIdentity creates a new identity with the Fabric CA server. An enrollment secret is returned which can then be used,
+along with the enrollment ID, to enroll a new identity.
+</p>
+<pre>Parameters:
+request holds info about identity
+
+Returns:
+Return identity info including the secret
+</pre>
+
+				
+				<div id="example_Client_CreateIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+identity, err := c.CreateIdentity(&amp;IdentityRequest{ID: &#34;123&#34;, Affiliation: &#34;org2&#34;,
+    Attributes: []Attribute{{Name: &#34;attName1&#34;, Value: &#34;attValue1&#34;}}})
+if err != nil {
+    fmt.Printf(&#34;Create identity return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;identity &#39;%s&#39; created\n&#34;, identity.ID)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">identity &#39;123&#39; created
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.CreateSigningIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=13912:14020#L543">CreateSigningIdentity</a>
+					<a class="permalink" href="index.html#Client.CreateSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) CreateSigningIdentity(opts ...<a href="../../common/providers/msp/index.html">mspctx</a>.<a href="../../common/providers/msp/index.html#SigningIdentityOption">SigningIdentityOption</a>) (<a href="../../common/providers/msp/index.html">mspctx</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateSigningIdentity creates a signing identity with the given options
+</p>
+
+				
+				<div id="example_Client_CreateSigningIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+testPrivKey := `-----BEGIN PRIVATE KEY-----
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgp4qKKB0WCEfx7XiB
+5Ul+GpjM1P5rqc6RhjD5OkTgl5OhRANCAATyFT0voXX7cA4PPtNstWleaTpwjvbS
+J3+tMGTG67f+TdCfDxWYMpQYxLlE8VkbEzKWDwCYvDZRMKCQfv2ErNvb
+-----END PRIVATE KEY-----`
+
+testCert := `-----BEGIN CERTIFICATE-----
+MIICGTCCAcCgAwIBAgIRALR/1GXtEud5GQL2CZykkOkwCgYIKoZIzj0EAwIwczEL
+MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
+cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh
+Lm9yZzEuZXhhbXBsZS5jb20wHhcNMTcwNzI4MTQyNzIwWhcNMjcwNzI2MTQyNzIw
+WjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN
+U2FuIEZyYW5jaXNjbzEfMB0GA1UEAwwWVXNlcjFAb3JnMS5leGFtcGxlLmNvbTBZ
+MBMGByqGSM49AgEGCCqGSM49AwEHA0IABPIVPS+hdftwDg8+02y1aV5pOnCO9tIn
+f60wZMbrt/5N0J8PFZgylBjEuUTxWRsTMpYPAJi8NlEwoJB+/YSs29ujTTBLMA4G
+A1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIIeR0TY+iVFf
+mvoEKwaToscEu43ZXSj5fTVJornjxDUtMAoGCCqGSM49BAMCA0cAMEQCID+dZ7H5
+AiaiI2BjxnL3/TetJ8iFJYZyWvK//an13WV/AiARBJd/pI5A7KZgQxJhXmmR8bie
+XdsmTcdRvJ3TS/6HCA==
+-----END CERTIFICATE-----`
+
+<span class="comment">// Create signing identity based on certificate and private key</span>
+id, err := c.CreateSigningIdentity(msp.WithCert([]byte(testCert)), msp.WithPrivateKey([]byte(testPrivKey)))
+if err != nil {
+    fmt.Printf(&#34;failed when creating identity based on certificate and private key: %s\n&#34;, err)
+    return
+}
+if string(id.EnrollmentCertificate()) != testCert {
+    fmt.Printf(&#34;certificate mismatch\n&#34;)
+    return
+}
+
+<span class="comment">// In this user case client might want to import keys directly into keystore</span>
+<span class="comment">// out of band instead of enrolling the user via SDK. User enrolment creates a cert</span>
+<span class="comment">// and stores it into local SDK user store, while user might not want SDK to manage certs.</span>
+err = importPrivateKeyOutOfBand([]byte(testPrivKey), c)
+if err != nil {
+    fmt.Printf(&#34;failed to import key: %s\n&#34;, err)
+    return
+}
+
+<span class="comment">// Create signing identity using certificate. SDK will lookup the private key based on the certificate.</span>
+id, err = c.CreateSigningIdentity(msp.WithCert([]byte(testCert)))
+if err != nil {
+    fmt.Printf(&#34;failed when creating identity using certificate: %s\n&#34;, err)
+    return
+}
+if string(id.EnrollmentCertificate()) != testCert {
+    fmt.Printf(&#34;certificate mismatch\n&#34;)
+    return
+}
+
+fmt.Println(&#34;create signing identity is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">create signing identity is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.Enroll">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=9779:9855#L379">Enroll</a>
+					<a class="permalink" href="index.html#Client.Enroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Enroll(enrollmentID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="index.html#EnrollmentOption">EnrollmentOption</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Enroll enrolls a registered user in order to receive a signed X509 certificate.
+A new key pair is generated for the user. The private key and the
+enrollment certificate issued by the CA are stored in SDK stores.
+They can be retrieved by calling IdentityManager.GetSigningIdentity().
+</p>
+<pre>Parameters:
+enrollmentID enrollment ID of a registered user
+opts are optional enrollment options
+
+Returns:
+an error if enrollment fails
+</pre>
+
+				
+				<div id="example_Client_Enroll" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.GetAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=14555:14662#L561">GetAffiliation</a>
+					<a class="permalink" href="index.html#Client.GetAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetAffiliation(affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAffiliation returns information about the requested affiliation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetAllAffiliations">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=15246:15337#L585">GetAllAffiliations</a>
+					<a class="permalink" href="index.html#Client.GetAllAffiliations">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetAllAffiliations(options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllAffiliations returns all affiliations that the caller is authorized to see
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetAllIdentities">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=7442:7530#L289">GetAllIdentities</a>
+					<a class="permalink" href="index.html#Client.GetAllIdentities">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetAllIdentities(options ...<a href="index.html#RequestOption">RequestOption</a>) ([]*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetAllIdentities returns all identities that the caller is authorized to see
+</p>
+<pre>Parameters:
+options holds optional request options
+Returns:
+Response containing identities
+</pre>
+
+				
+				<div id="example_Client_GetAllIdentities" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+results, err := c.GetAllIdentities()
+if err != nil {
+    fmt.Printf(&#34;Get identities return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;%d identities retrieved\n&#34;, len(results))
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">2 identities retrieved
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.GetCAInfo">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=12994:13050#L510">GetCAInfo</a>
+					<a class="permalink" href="index.html#Client.GetCAInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetCAInfo() (*<a href="index.html#GetCAInfoResponse">GetCAInfoResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCAInfo returns generic CA information
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.GetIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=8081:8173#L318">GetIdentity</a>
+					<a class="permalink" href="index.html#Client.GetIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetIdentity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, options ...<a href="index.html#RequestOption">RequestOption</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetIdentity retrieves identity information.
+</p>
+<pre>Parameters:
+ID is required identity ID
+options holds optional request options
+
+Returns:
+Response containing identity information
+</pre>
+
+				
+				<div id="example_Client_GetIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+identity, err := c.GetIdentity(&#34;123&#34;)
+if err != nil {
+    fmt.Printf(&#34;Get identity return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;identity &#39;%s&#39; retrieved\n&#34;, identity.ID)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">identity &#39;123&#39; retrieved
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.GetSigningIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=13546:13624#L530">GetSigningIdentity</a>
+					<a class="permalink" href="index.html#Client.GetSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) GetSigningIdentity(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/providers/msp/index.html">mspctx</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetSigningIdentity returns signing identity for id
+</p>
+<pre>Parameters:
+id is user id
+
+Returns:
+signing identity
+</pre>
+
+				
+				<div id="example_Client_GetSigningIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+username := randomUsername()
+
+err = c.Enroll(username, WithSecret(&#34;enrollmentSecret&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+enrolledUser, err := c.GetSigningIdentity(username)
+if err != nil {
+    fmt.Printf(&#34;user not found %s\n&#34;, err)
+    return
+}
+
+if enrolledUser.Identifier().ID != username {
+    fmt.Println(&#34;Enrolled user name doesn&#39;t match&#34;)
+    return
+}
+
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.ModifyAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=16516:16615#L633">ModifyAffiliation</a>
+					<a class="permalink" href="index.html#Client.ModifyAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) ModifyAffiliation(request *<a href="index.html#ModifyAffiliationRequest">ModifyAffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyAffiliation renames an existing affiliation on the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.ModifyIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=5852:5936#L227">ModifyIdentity</a>
+					<a class="permalink" href="index.html#Client.ModifyIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) ModifyIdentity(request *<a href="index.html#IdentityRequest">IdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ModifyIdentity modifies identity with the Fabric CA server.
+</p>
+<pre>Parameters:
+request holds info about identity
+
+Returns:
+Return updated identity info
+</pre>
+
+				
+				<div id="example_Client_ModifyIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+identity, err := c.ModifyIdentity(&amp;IdentityRequest{ID: &#34;123&#34;, Affiliation: &#34;org2&#34;, Secret: &#34;top-secret&#34;})
+if err != nil {
+    fmt.Printf(&#34;Modify identity return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;identity &#39;%s&#39; modified\n&#34;, identity.ID)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">identity &#39;123&#39; modified
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.Reenroll">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=10720:10798#L419">Reenroll</a>
+					<a class="permalink" href="index.html#Client.Reenroll">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Reenroll(enrollmentID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, opts ...<a href="index.html#EnrollmentOption">EnrollmentOption</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Reenroll reenrolls an enrolled user in order to obtain a new signed X509 certificate
+</p>
+<pre>Parameters:
+enrollmentID enrollment ID of a registered user
+
+Returns:
+an error if re-enrollment fails
+</pre>
+
+				
+				<div id="example_Client_Reenroll" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+username := randomUsername()
+
+err = c.Enroll(username, WithSecret(&#34;enrollmentSecret&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+
+err = c.Reenroll(username)
+if err != nil {
+    fmt.Printf(&#34;failed to reenroll user: %s\n&#34;, err)
+    return
+}
+
+fmt.Println(&#34;reenroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">reenroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.Register">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=11552:11623#L454">Register</a>
+					<a class="permalink" href="index.html#Client.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Register(request *<a href="index.html#RegistrationRequest">RegistrationRequest</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Register registers a User with the Fabric CA
+</p>
+<pre>Parameters:
+request is registration request
+
+Returns:
+enrolment secret
+</pre>
+
+				
+				<div id="example_Client_Register" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+_, err = c.Register(&amp;RegistrationRequest{Name: randomUsername()})
+if err != nil {
+    fmt.Printf(&#34;Register return error %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;register user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">register user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.RemoveAffiliation">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=17254:17347#L660">RemoveAffiliation</a>
+					<a class="permalink" href="index.html#Client.RemoveAffiliation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) RemoveAffiliation(request *<a href="index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveAffiliation removes an existing affiliation from the server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Client.RemoveIdentity">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=6828:6918#L263">RemoveIdentity</a>
+					<a class="permalink" href="index.html#Client.RemoveIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) RemoveIdentity(request *<a href="index.html#RemoveIdentityRequest">RemoveIdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+RemoveIdentity removes identity with the Fabric CA server.
+</p>
+<pre>Parameters:
+request holds info about identity to be removed
+
+Returns:
+Return removed identity info
+</pre>
+
+				
+				<div id="example_Client_RemoveIdentity" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+identity, err := c.RemoveIdentity(&amp;RemoveIdentityRequest{ID: &#34;123&#34;})
+if err != nil {
+    fmt.Printf(&#34;Remove identity return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;identity &#39;%s&#39; removed\n&#34;, identity.ID)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">identity &#39;123&#39; removed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="Client.Revoke">func (*Client) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=12355:12435#L483">Revoke</a>
+					<a class="permalink" href="index.html#Client.Revoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Client">Client</a>) Revoke(request *<a href="index.html#RevocationRequest">RevocationRequest</a>) (*<a href="index.html#RevocationResponse">RevocationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Revoke revokes a User with the Fabric CA
+</p>
+<pre>Parameters:
+request is revocation request
+
+Returns:
+revocation response
+</pre>
+
+				
+				<div id="example_Client_Revoke" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+_, err = c.Revoke(&amp;RevocationRequest{Name: &#34;testuser&#34;})
+if err != nil {
+    fmt.Printf(&#34;revoke return error %s\n&#34;, err)
+}
+fmt.Println(&#34;revoke user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">revoke user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+		
+			
+			
+			<h2 id="ClientOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1013:1050#L31">ClientOption</a>
+				<a class="permalink" href="index.html#ClientOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ClientOption describes a functional parameter for the New constructor
+</p>
+
+			<pre>type ClientOption func(*<a href="index.html#Client">Client</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithCAInstance">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1216:1271#L42">WithCAInstance</a>
+					<a class="permalink" href="index.html#WithCAInstance">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCAInstance(caInstanceName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#ClientOption">ClientOption</a></pre>
+				<p>
+WithCAInstance option
+</p>
+
+				<div id="example_WithCAInstance" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx, WithCAInstance(&#34;tlsca.org1.example.com&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+if c != nil {
+    fmt.Println(&#34;msp client created with CA Instance&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">msp client created with CA Instance
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithOrg">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1070:1111#L34">WithOrg</a>
+					<a class="permalink" href="index.html#WithOrg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithOrg(orgName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#ClientOption">ClientOption</a></pre>
+				<p>
+WithOrg option
+</p>
+
+				<div id="example_WithOrg" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx, WithOrg(&#34;org1&#34;))
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+if c != nil {
+    fmt.Println(&#34;msp client created with org&#34;)
+}
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">msp client created with org
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+		
+			
+			
+			<h2 id="EnrollmentOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=3687:3739#L142">EnrollmentOption</a>
+				<a class="permalink" href="index.html#EnrollmentOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollmentOption describes a functional parameter for Enroll
+</p>
+
+			<pre>type EnrollmentOption func(*enrollmentOptions) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithAttributeRequests">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=4427:4500#L177">WithAttributeRequests</a>
+					<a class="permalink" href="index.html#WithAttributeRequests">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithAttributeRequests(attrReqs []*<a href="index.html#AttributeRequest">AttributeRequest</a>) <a href="index.html#EnrollmentOption">EnrollmentOption</a></pre>
+				<p>
+WithAttributeRequests enrollment option
+</p>
+
+				<div id="example_WithAttributeRequests" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+attrs := []*AttributeRequest{{Name: &#34;name1&#34;, Optional: true}, {Name: &#34;name2&#34;, Optional: true}}
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;), WithAttributeRequests(attrs))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithLabel">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=4256:4301#L169">WithLabel</a>
+					<a class="permalink" href="index.html#WithLabel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithLabel(label <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#EnrollmentOption">EnrollmentOption</a></pre>
+				<p>
+WithLabel enrollment option
+</p>
+
+				<div id="example_WithLabel" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;), WithLabel(&#34;ForFabric&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithProfile">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=3938:3987#L153">WithProfile</a>
+					<a class="permalink" href="index.html#WithProfile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithProfile(profile <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#EnrollmentOption">EnrollmentOption</a></pre>
+				<p>
+WithProfile enrollment option
+</p>
+
+				<div id="example_WithProfile" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;), WithProfile(&#34;tls&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithSecret">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=3773:3820#L145">WithSecret</a>
+					<a class="permalink" href="index.html#WithSecret">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithSecret(secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#EnrollmentOption">EnrollmentOption</a></pre>
+				<p>
+WithSecret enrollment option
+</p>
+
+				<div id="example_WithSecret" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;))
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+				
+				<h3 id="WithType">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=4104:4146#L161">WithType</a>
+					<a class="permalink" href="index.html#WithType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithType(typ <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#EnrollmentOption">EnrollmentOption</a></pre>
+				<p>
+WithType enrollment option
+</p>
+
+				<div id="example_WithType" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">ctx := mockClientProvider()
+
+<span class="comment">// Create msp client</span>
+c, err := New(ctx)
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+err = c.Enroll(randomUsername(), WithSecret(&#34;enrollmentSecret&#34;), WithType(&#34;x509&#34;) <span class="comment">/*or idemix, which is not support now*/</span>)
+if err != nil {
+    fmt.Printf(&#34;failed to enroll user: %s\n&#34;, err)
+    return
+}
+fmt.Println(&#34;enroll user is completed&#34;)
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">enroll user is completed
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+		
+			
+			
+			<h2 id="GetCAInfoResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=5128:5540#L175">GetCAInfoResponse</a>
+				<a class="permalink" href="index.html#GetCAInfoResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GetCAInfoResponse is the response from the GetCAInfo call
+</p>
+
+			<pre>type GetCAInfoResponse struct {
+<span id="GetCAInfoResponse.CAName"></span>    <span class="comment">// CAName is the name of the CA</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="GetCAInfoResponse.CAChain"></span>    <span class="comment">// CAChain is the PEM-encoded bytes of the fabric-ca-server&#39;s CA chain.</span>
+    <span class="comment">// The 1st element of the chain is the root CA cert</span>
+    CAChain []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// Idemix issuer public key of the CA</span>
+<span id="GetCAInfoResponse.IssuerPublicKey"></span>    IssuerPublicKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// Idemix issuer revocation public key of the CA</span>
+<span id="GetCAInfoResponse.IssuerRevocationPublicKey"></span>    IssuerRevocationPublicKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="GetCAInfoResponse.Version"></span>    <span class="comment">// Version of the server</span>
+    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=4920:5065#L166">IdentityInfo</a>
+				<a class="permalink" href="index.html#IdentityInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityInfo contains information about an identity
+</p>
+
+			<pre>type IdentityInfo struct {
+<span id="IdentityInfo.ID"></span>    ID             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Type"></span>    Type           <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Affiliation"></span>    Affiliation    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Attributes"></span>    Attributes     []<a href="index.html#Attribute">Attribute</a>
+<span id="IdentityInfo.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityManager">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/identity.go?s=401:583#L10">IdentityManager</a>
+				<a class="permalink" href="index.html#IdentityManager">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityManager provides management of identities in a Fabric network
+</p>
+
+			<pre>type IdentityManager interface {
+    GetSigningIdentity(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CreateSigningIdentity(ops ...<a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentityOption">SigningIdentityOption</a>) (<a href="../../common/providers/msp/index.html">msp</a>.<a href="../../common/providers/msp/index.html#SigningIdentity">SigningIdentity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=2491:3141#L67">IdentityRequest</a>
+				<a class="permalink" href="index.html#IdentityRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityRequest represents the request to add/update identity to the fabric-ca-server
+</p>
+
+			<pre>type IdentityRequest struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity (required)</span>
+<span id="IdentityRequest.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identity&#39;s affiliation (required)</span>
+<span id="IdentityRequest.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Array of attributes to assign to the user</span>
+<span id="IdentityRequest.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+
+<span id="IdentityRequest.Type"></span>    <span class="comment">// Type of identity being registered (e.g. &#39;peer, app, user&#39;). Default is &#39;user&#39;.</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The maximum number of times the secret can be reused to enroll (default CA&#39;s Max Enrollment)</span>
+<span id="IdentityRequest.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// The enrollment secret. If not provided, a random secret is generated.</span>
+<span id="IdentityRequest.Secret"></span>    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Name of the CA to send the request to within the Fabric CA server (optional)</span>
+<span id="IdentityRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=3229:3680#L92">IdentityResponse</a>
+				<a class="permalink" href="index.html#IdentityResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityResponse is the response from the any read/add/modify/remove identity call
+</p>
+
+			<pre>type IdentityResponse struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity</span>
+<span id="IdentityResponse.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identity&#39;s affiliation</span>
+<span id="IdentityResponse.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Array of attributes assigned to the user</span>
+<span id="IdentityResponse.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+
+<span id="IdentityResponse.Type"></span>    <span class="comment">// Type of identity (e.g. &#39;peer, app, user&#39;)</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The maximum number of times the secret can be reused to enroll</span>
+<span id="IdentityResponse.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// The enrollment secret</span>
+<span id="IdentityResponse.Secret"></span>    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="IdentityResponse.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ModifyAffiliationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=4351:4460#L144">ModifyAffiliationRequest</a>
+				<a class="permalink" href="index.html#ModifyAffiliationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ModifyAffiliationRequest represents the request to modify an existing affiliation on the
+fabric-ca-server
+</p>
+
+			<pre>type ModifyAffiliationRequest struct {
+    <a href="index.html#AffiliationRequest">AffiliationRequest</a>
+
+    <span class="comment">// New name of the affiliation</span>
+<span id="ModifyAffiliationRequest.NewName"></span>    NewName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RegistrationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=319:1039#L6">RegistrationRequest</a>
+				<a class="permalink" href="index.html#RegistrationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegistrationRequest defines the attributes required to register a user with the CA
+</p>
+
+			<pre>type RegistrationRequest struct {
+<span id="RegistrationRequest.Name"></span>    <span class="comment">// Name is the unique name of the identity</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.Type"></span>    <span class="comment">// Type of identity being registered (e.g. &#34;peer, app, user&#34;)</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.MaxEnrollments"></span>    <span class="comment">// MaxEnrollments is the number of times the secret can  be reused to enroll.</span>
+    <span class="comment">// if omitted, this defaults to max_enrollments configured on the server</span>
+    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// The identity&#39;s affiliation e.g. org1.department1</span>
+<span id="RegistrationRequest.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Optional attributes associated with this identity</span>
+<span id="RegistrationRequest.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+<span id="RegistrationRequest.CAName"></span>    <span class="comment">// CAName is the name of the CA to connect to</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.Secret"></span>    <span class="comment">// Secret is an optional password.  If not specified,</span>
+    <span class="comment">// a random secret is generated.  In both cases, the secret</span>
+    <span class="comment">// is returned from registration.</span>
+    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RemoveIdentityRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=3790:3964#L118">RemoveIdentityRequest</a>
+				<a class="permalink" href="index.html#RemoveIdentityRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemoveIdentityRequest represents the request to remove an existing identity from the
+fabric-ca-server
+</p>
+
+			<pre>type RemoveIdentityRequest struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity</span>
+<span id="RemoveIdentityRequest.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="RemoveIdentityRequest.Force"></span>    <span class="comment">// Force delete</span>
+    Force <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="RemoveIdentityRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RequestOption">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1510:1581#L55">RequestOption</a>
+				<a class="permalink" href="index.html#RequestOption">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RequestOption func for each Opts argument
+</p>
+
+			<pre>type RequestOption func(ctx <a href="../../common/providers/context/index.html">context</a>.<a href="../../common/providers/context/index.html#Client">Client</a>, opts *requestOptions) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="WithCA">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/client.go?s=1664:1704#L58">WithCA</a>
+					<a class="permalink" href="index.html#WithCA">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func WithCA(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#RequestOption">RequestOption</a></pre>
+				<p>
+WithCA allows for specifying optional CA name (within the CA server instance)
+</p>
+
+				<div id="example_WithCA" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code"><span class="comment">// Create msp client</span>
+c, err := New(mockClientProvider())
+if err != nil {
+    fmt.Println(&#34;failed to create msp client&#34;)
+    return
+}
+
+results, err := c.GetAllIdentities(WithCA(&#34;CA&#34;))
+if err != nil {
+    fmt.Printf(&#34;Get identities return error %s\n&#34;, err)
+    return
+}
+fmt.Printf(&#34;%d identities retrieved\n&#34;, len(results))
+
+<span class="comment"></pre>
+			
+			<p>Output:</p>
+			<pre class="output">2 identities retrieved
+</pre>
+			
+		
+	</div>
+</div>
+
+				
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=1283:1888#L34">RevocationRequest</a>
+				<a class="permalink" href="index.html#RevocationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationRequest defines the attributes required to revoke credentials with the CA
+</p>
+
+			<pre>type RevocationRequest struct {
+<span id="RevocationRequest.Name"></span>    <span class="comment">// Name of the identity whose certificates should be revoked</span>
+    <span class="comment">// If this field is omitted, then Serial and AKI must be specified.</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.Serial"></span>    <span class="comment">// Serial number of the certificate to be revoked</span>
+    <span class="comment">// If this is omitted, then Name must be specified</span>
+    Serial <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.AKI"></span>    <span class="comment">// AKI (Authority Key Identifier) of the certificate to be revoked</span>
+    AKI <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.Reason"></span>    <span class="comment">// Reason is the reason for revocation. See https://godoc.org/golang.org/x/crypto/ocsp</span>
+    <span class="comment">// for valid values. The default value is 0 (ocsp.Unspecified).</span>
+    Reason <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.CAName"></span>    <span class="comment">// CAName is the name of the CA to connect to</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=1973:2216#L51">RevocationResponse</a>
+				<a class="permalink" href="index.html#RevocationResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationResponse represents response from the server for a revocation request
+</p>
+
+			<pre>type RevocationResponse struct {
+<span id="RevocationResponse.RevokedCerts"></span>    <span class="comment">// RevokedCerts is an array of certificates that were revoked</span>
+    RevokedCerts []<a href="index.html#RevokedCert">RevokedCert</a>
+<span id="RevocationResponse.CRL"></span>    <span class="comment">// CRL is PEM-encoded certificate revocation list (CRL) that contains all unexpired revoked certificates</span>
+    CRL []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevokedCert">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/client/msp/ca.go?s=2266:2400#L59">RevokedCert</a>
+				<a class="permalink" href="index.html#RevokedCert">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevokedCert represents a revoked certificate
+</p>
+
+			<pre>type RevokedCert struct {
+<span id="RevokedCert.Serial"></span>    <span class="comment">// Serial number of the revoked certificate</span>
+    Serial <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevokedCert.AKI"></span>    <span class="comment">// AKI of the revoked certificate</span>
+    AKI <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

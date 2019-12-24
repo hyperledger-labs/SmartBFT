@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ginkgo - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Command ginkgo
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<p>
+The Ginkgo CLI
+</p>
+<p>
+The Ginkgo CLI is fully documented [here](<a href="http://onsi.github.io/ginkgo/#the_ginkgo_cli">http://onsi.github.io/ginkgo/#the_ginkgo_cli</a>)
+</p>
+<p>
+You can also learn more by running:
+</p>
+<pre>ginkgo help
+</pre>
+<p>
+Here are some of the more commonly used commands:
+</p>
+<p>
+To install:
+</p>
+<pre>go install github.com/onsi/ginkgo/ginkgo
+</pre>
+<p>
+To run tests:
+</p>
+<pre>ginkgo
+</pre>
+<p>
+To run tests in all subdirectories:
+</p>
+<pre>ginkgo -r
+</pre>
+<p>
+To run tests in particular packages:
+</p>
+<pre>ginkgo &lt;flags&gt; /path/to/package /path/to/another/package
+</pre>
+<p>
+To pass arguments/flags to your tests:
+</p>
+<pre>ginkgo &lt;flags&gt; &lt;packages&gt; -- &lt;pass-throughs&gt;
+</pre>
+<p>
+To run tests in parallel
+</p>
+<pre>ginkgo -p
+</pre>
+<p>
+this will automatically detect the optimal number of nodes to use.  Alternatively, you can specify the number of nodes with:
+</p>
+<pre>ginkgo -nodes=N
+</pre>
+<p>
+(note that you don&#39;t need to provide -p in this case).
+</p>
+<p>
+By default the Ginkgo CLI will spin up a server that the individual test processes send test output to.  The CLI aggregates this output and then presents coherent test output, one test at a time, as each test completes.
+An alternative is to have the parallel nodes run and stream interleaved output back.  This useful for debugging, particularly in contexts where tests hang/fail to start.  To get this interleaved output:
+</p>
+<pre>ginkgo -nodes=N -stream=true
+</pre>
+<p>
+On windows, the default value for stream is true.
+</p>
+<p>
+By default, when running multiple tests (with -r or a list of packages) Ginkgo will abort when a test fails.  To have Ginkgo run subsequent test suites instead you can:
+</p>
+<pre>ginkgo -keepGoing
+</pre>
+<p>
+To fail if there are ginkgo tests in a directory but no test suite (missing `RunSpecs`)
+</p>
+<pre>ginkgo -requireSuite
+</pre>
+<p>
+To monitor packages and rerun tests when changes occur:
+</p>
+<pre>ginkgo watch &lt;-r&gt; &lt;/path/to/package&gt;
+</pre>
+<p>
+passing `ginkgo watch` the `-r` flag will recursively detect all test suites under the current directory and monitor them.
+`watch` does not detect *new* packages. Moreover, changes in package X only rerun the tests for package X, tests for packages
+that depend on X are not rerun.
+</p>
+<p>
+[OSX &amp; Linux only] To receive (desktop) notifications when a test run completes:
+</p>
+<pre>ginkgo -notify
+</pre>
+<p>
+this is particularly useful with `ginkgo watch`.  Notifications are currently only supported on OS X and require that you `brew install terminal-notifier`
+</p>
+<p>
+Sometimes (to suss out race conditions/flakey tests, for example) you want to keep running a test suite until it fails.  You can do this with:
+</p>
+<pre>ginkgo -untilItFails
+</pre>
+<p>
+To bootstrap a test suite:
+</p>
+<pre>ginkgo bootstrap
+</pre>
+<p>
+To generate a test file:
+</p>
+<pre>ginkgo generate &lt;test_file_name&gt;
+</pre>
+<p>
+To bootstrap/generate test files without using &#34;.&#34; imports:
+</p>
+<pre>ginkgo bootstrap --nodot
+ginkgo generate --nodot
+</pre>
+<p>
+this will explicitly export all the identifiers in Ginkgo and Gomega allowing you to rename them to avoid collisions.  When you pull to the latest Ginkgo/Gomega you&#39;ll want to run
+</p>
+<pre>ginkgo nodot
+</pre>
+<p>
+to refresh this list and pull in any new identifiers.  In particular, this will pull in any new Gomega matchers that get added.
+</p>
+<p>
+To convert an existing XUnit style test suite to a Ginkgo-style test suite:
+</p>
+<pre>ginkgo convert .
+</pre>
+<p>
+To unfocus tests:
+</p>
+<pre>ginkgo unfocus
+</pre>
+<p>
+or
+</p>
+<pre>ginkgo blur
+</pre>
+<p>
+To compile a test suite:
+</p>
+<pre>ginkgo build &lt;path-to-package&gt;
+</pre>
+<p>
+will output an executable file named `package.test`.  This can be run directly or by invoking
+</p>
+<pre>ginkgo &lt;path-to-package.test&gt;
+</pre>
+<p>
+To print out Ginkgo&#39;s version:
+</p>
+<pre>ginkgo version
+</pre>
+<p>
+To get more help:
+</p>
+<pre>ginkgo help
+</pre>
+
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="convert/index.html">convert</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="interrupthandler/index.html">interrupthandler</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="nodot/index.html">nodot</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="testrunner/index.html">testrunner</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="testsuite/index.html">testsuite</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="watch/index.html">watch</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

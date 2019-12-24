@@ -1,0 +1,3426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>idemix - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package idemix
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/idemix"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BigToBytes">func BigToBytes(big *FP256BN.BIG) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#Ecp2FromProto">func Ecp2FromProto(p *ECP2) *FP256BN.ECP2</a></dd>
+			
+				
+				<dd><a href="index.html#EcpFromProto">func EcpFromProto(p *ECP) *FP256BN.ECP</a></dd>
+			
+				
+				<dd><a href="index.html#EcpToBytes">func EcpToBytes(E *FP256BN.ECP) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#GenerateLongTermRevocationKey">func GenerateLongTermRevocationKey() (*ecdsa.PrivateKey, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetRand">func GetRand() (*amcl.RAND, error)</a></dd>
+			
+				
+				<dd><a href="index.html#HashModOrder">func HashModOrder(data []byte) *FP256BN.BIG</a></dd>
+			
+				
+				<dd><a href="index.html#MakeNym">func MakeNym(sk *FP256BN.BIG, IPk *IssuerPublicKey, rng *amcl.RAND) (*FP256BN.ECP, *FP256BN.BIG)</a></dd>
+			
+				
+				<dd><a href="index.html#Modadd">func Modadd(a, b, m *FP256BN.BIG) *FP256BN.BIG</a></dd>
+			
+				
+				<dd><a href="index.html#Modsub">func Modsub(a, b, m *FP256BN.BIG) *FP256BN.BIG</a></dd>
+			
+				
+				<dd><a href="index.html#RandModOrder">func RandModOrder(rng *amcl.RAND) *FP256BN.BIG</a></dd>
+			
+				
+				<dd><a href="index.html#VerifyEpochPK">func VerifyEpochPK(pk *ecdsa.PublicKey, epochPK *ECP2, epochPkSig []byte, epoch int, alg RevocationAlgorithm) error</a></dd>
+			
+				
+				<dd><a href="index.html#WBBKeyGen">func WBBKeyGen(rng *amcl.RAND) (*FP256BN.BIG, *FP256BN.ECP2)</a></dd>
+			
+				
+				<dd><a href="index.html#WBBSign">func WBBSign(sk *FP256BN.BIG, m *FP256BN.BIG) *FP256BN.ECP</a></dd>
+			
+				
+				<dd><a href="index.html#WBBVerify">func WBBVerify(pk *FP256BN.ECP2, sig *FP256BN.ECP, m *FP256BN.BIG) error</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CredRequest">type CredRequest</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCredRequest">func NewCredRequest(sk *FP256BN.BIG, IssuerNonce []byte, ipk *IssuerPublicKey, rng *amcl.RAND) *CredRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.Check">func (m *CredRequest) Check(ipk *IssuerPublicKey) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.Descriptor">func (*CredRequest) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.GetIssuerNonce">func (m *CredRequest) GetIssuerNonce() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.GetNym">func (m *CredRequest) GetNym() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.GetProofC">func (m *CredRequest) GetProofC() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.GetProofS">func (m *CredRequest) GetProofS() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.ProtoMessage">func (*CredRequest) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.Reset">func (m *CredRequest) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.String">func (m *CredRequest) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.XXX_DiscardUnknown">func (m *CredRequest) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.XXX_Marshal">func (m *CredRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.XXX_Merge">func (dst *CredRequest) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.XXX_Size">func (m *CredRequest) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.XXX_Unmarshal">func (m *CredRequest) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Credential">type Credential</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCredential">func NewCredential(key *IssuerKey, m *CredRequest, attrs []*FP256BN.BIG, rng *amcl.RAND) (*Credential, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.Descriptor">func (*Credential) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.GetA">func (m *Credential) GetA() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.GetAttrs">func (m *Credential) GetAttrs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.GetB">func (m *Credential) GetB() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.GetE">func (m *Credential) GetE() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.GetS">func (m *Credential) GetS() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.ProtoMessage">func (*Credential) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.Reset">func (m *Credential) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.String">func (m *Credential) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.Ver">func (cred *Credential) Ver(sk *FP256BN.BIG, ipk *IssuerPublicKey) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.XXX_DiscardUnknown">func (m *Credential) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.XXX_Marshal">func (m *Credential) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.XXX_Merge">func (dst *Credential) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.XXX_Size">func (m *Credential) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.XXX_Unmarshal">func (m *Credential) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CredentialRevocationInformation">type CredentialRevocationInformation</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CreateCRI">func CreateCRI(key *ecdsa.PrivateKey, unrevokedHandles []*FP256BN.BIG, epoch int, alg RevocationAlgorithm, rng *amcl.RAND) (*CredentialRevocationInformation, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.Descriptor">func (*CredentialRevocationInformation) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.GetEpoch">func (m *CredentialRevocationInformation) GetEpoch() int64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.GetEpochPk">func (m *CredentialRevocationInformation) GetEpochPk() *ECP2</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.GetEpochPkSig">func (m *CredentialRevocationInformation) GetEpochPkSig() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.GetRevocationAlg">func (m *CredentialRevocationInformation) GetRevocationAlg() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.GetRevocationData">func (m *CredentialRevocationInformation) GetRevocationData() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.ProtoMessage">func (*CredentialRevocationInformation) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.Reset">func (m *CredentialRevocationInformation) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.String">func (m *CredentialRevocationInformation) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.XXX_DiscardUnknown">func (m *CredentialRevocationInformation) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.XXX_Marshal">func (m *CredentialRevocationInformation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.XXX_Merge">func (dst *CredentialRevocationInformation) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.XXX_Size">func (m *CredentialRevocationInformation) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredentialRevocationInformation.XXX_Unmarshal">func (m *CredentialRevocationInformation) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECP">type ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#EcpToProto">func EcpToProto(p *FP256BN.ECP) *ECP</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.Descriptor">func (*ECP) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.GetX">func (m *ECP) GetX() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.GetY">func (m *ECP) GetY() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.ProtoMessage">func (*ECP) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.Reset">func (m *ECP) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.String">func (m *ECP) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.XXX_DiscardUnknown">func (m *ECP) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.XXX_Marshal">func (m *ECP) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.XXX_Merge">func (dst *ECP) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.XXX_Size">func (m *ECP) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP.XXX_Unmarshal">func (m *ECP) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ECP2">type ECP2</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Ecp2ToProto">func Ecp2ToProto(p *FP256BN.ECP2) *ECP2</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.Descriptor">func (*ECP2) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.GetXa">func (m *ECP2) GetXa() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.GetXb">func (m *ECP2) GetXb() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.GetYa">func (m *ECP2) GetYa() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.GetYb">func (m *ECP2) GetYb() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.ProtoMessage">func (*ECP2) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.Reset">func (m *ECP2) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.String">func (m *ECP2) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.XXX_DiscardUnknown">func (m *ECP2) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.XXX_Marshal">func (m *ECP2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.XXX_Merge">func (dst *ECP2) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.XXX_Size">func (m *ECP2) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ECP2.XXX_Unmarshal">func (m *ECP2) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IssuerKey">type IssuerKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewIssuerKey">func NewIssuerKey(AttributeNames []string, rng *amcl.RAND) (*IssuerKey, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.Descriptor">func (*IssuerKey) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.GetIpk">func (m *IssuerKey) GetIpk() *IssuerPublicKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.GetIsk">func (m *IssuerKey) GetIsk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.ProtoMessage">func (*IssuerKey) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.Reset">func (m *IssuerKey) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.String">func (m *IssuerKey) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.XXX_DiscardUnknown">func (m *IssuerKey) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.XXX_Marshal">func (m *IssuerKey) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.XXX_Merge">func (dst *IssuerKey) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.XXX_Size">func (m *IssuerKey) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerKey.XXX_Unmarshal">func (m *IssuerKey) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IssuerPublicKey">type IssuerPublicKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.Check">func (IPk *IssuerPublicKey) Check() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.Descriptor">func (*IssuerPublicKey) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetAttributeNames">func (m *IssuerPublicKey) GetAttributeNames() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetBarG1">func (m *IssuerPublicKey) GetBarG1() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetBarG2">func (m *IssuerPublicKey) GetBarG2() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetHAttrs">func (m *IssuerPublicKey) GetHAttrs() []*ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetHRand">func (m *IssuerPublicKey) GetHRand() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetHSk">func (m *IssuerPublicKey) GetHSk() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetHash">func (m *IssuerPublicKey) GetHash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetProofC">func (m *IssuerPublicKey) GetProofC() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetProofS">func (m *IssuerPublicKey) GetProofS() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.GetW">func (m *IssuerPublicKey) GetW() *ECP2</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.ProtoMessage">func (*IssuerPublicKey) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.Reset">func (m *IssuerPublicKey) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.SetHash">func (IPk *IssuerPublicKey) SetHash() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.String">func (m *IssuerPublicKey) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.XXX_DiscardUnknown">func (m *IssuerPublicKey) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.XXX_Marshal">func (m *IssuerPublicKey) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.XXX_Merge">func (dst *IssuerPublicKey) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.XXX_Size">func (m *IssuerPublicKey) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.XXX_Unmarshal">func (m *IssuerPublicKey) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NonRevocationProof">type NonRevocationProof</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.Descriptor">func (*NonRevocationProof) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.GetNonRevocationProof">func (m *NonRevocationProof) GetNonRevocationProof() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.GetRevocationAlg">func (m *NonRevocationProof) GetRevocationAlg() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.ProtoMessage">func (*NonRevocationProof) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.Reset">func (m *NonRevocationProof) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.String">func (m *NonRevocationProof) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.XXX_DiscardUnknown">func (m *NonRevocationProof) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.XXX_Marshal">func (m *NonRevocationProof) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.XXX_Merge">func (dst *NonRevocationProof) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.XXX_Size">func (m *NonRevocationProof) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NonRevocationProof.XXX_Unmarshal">func (m *NonRevocationProof) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NymSignature">type NymSignature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewNymSignature">func NewNymSignature(sk *FP256BN.BIG, Nym *FP256BN.ECP, RNym *FP256BN.BIG, ipk *IssuerPublicKey, msg []byte, rng *amcl.RAND) (*NymSignature, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.Descriptor">func (*NymSignature) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.GetNonce">func (m *NymSignature) GetNonce() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.GetProofC">func (m *NymSignature) GetProofC() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.GetProofSRNym">func (m *NymSignature) GetProofSRNym() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.GetProofSSk">func (m *NymSignature) GetProofSSk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.ProtoMessage">func (*NymSignature) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.Reset">func (m *NymSignature) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.String">func (m *NymSignature) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.Ver">func (sig *NymSignature) Ver(nym *FP256BN.ECP, ipk *IssuerPublicKey, msg []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.XXX_DiscardUnknown">func (m *NymSignature) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.XXX_Marshal">func (m *NymSignature) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.XXX_Merge">func (dst *NymSignature) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.XXX_Size">func (m *NymSignature) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignature.XXX_Unmarshal">func (m *NymSignature) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RevocationAlgorithm">type RevocationAlgorithm</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Signature">type Signature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewSignature">func NewSignature(cred *Credential, sk *FP256BN.BIG, Nym *FP256BN.ECP, RNym *FP256BN.BIG, ipk *IssuerPublicKey, Disclosure []byte, msg []byte, rhIndex int, cri *CredentialRevocationInformation, rng *amcl.RAND) (*Signature, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Descriptor">func (*Signature) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetABar">func (m *Signature) GetABar() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetAPrime">func (m *Signature) GetAPrime() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetBPrime">func (m *Signature) GetBPrime() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetEpoch">func (m *Signature) GetEpoch() int64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetNonRevocationProof">func (m *Signature) GetNonRevocationProof() *NonRevocationProof</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetNonce">func (m *Signature) GetNonce() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetNym">func (m *Signature) GetNym() *ECP</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofC">func (m *Signature) GetProofC() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSAttrs">func (m *Signature) GetProofSAttrs() [][]byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSE">func (m *Signature) GetProofSE() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSR2">func (m *Signature) GetProofSR2() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSR3">func (m *Signature) GetProofSR3() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSRNym">func (m *Signature) GetProofSRNym() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSSPrime">func (m *Signature) GetProofSSPrime() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetProofSSk">func (m *Signature) GetProofSSk() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetRevocationEpochPk">func (m *Signature) GetRevocationEpochPk() *ECP2</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.GetRevocationPkSig">func (m *Signature) GetRevocationPkSig() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.ProtoMessage">func (*Signature) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Reset">func (m *Signature) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.String">func (m *Signature) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Ver">func (sig *Signature) Ver(Disclosure []byte, ipk *IssuerPublicKey, msg []byte, attributeValues []*FP256BN.BIG, rhIndex int, revPk *ecdsa.PublicKey, epoch int) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_DiscardUnknown">func (m *Signature) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Marshal">func (m *Signature) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Merge">func (dst *Signature) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Size">func (m *Signature) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.XXX_Unmarshal">func (m *Signature) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credential.go">credential.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credrequest.go">credrequest.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go">idemix.pb.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/issuerkey.go">issuerkey.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/nonrevocation-prover.go">nonrevocation-prover.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/nonrevocation-verifier.go">nonrevocation-verifier.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/nymsignature.go">nymsignature.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/revocation_authority.go">revocation_authority.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/signature.go">signature.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go">util.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/weak-bb.go">weak-bb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+FieldBytes is the bytelength of the group order
+</p>
+
+				<pre>var <span id="FieldBytes">FieldBytes</span> = <a href="http://localhost:6060/pkg/builtin/#int">int</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#MODBYTES">MODBYTES</a>)</pre>
+			
+				<p>
+GenG1 is a generator of Group G1
+</p>
+
+				<pre>var <span id="GenG1">GenG1</span> = <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewECPbigs">NewECPbigs</a>(
+    <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Gx">CURVE_Gx</a>),
+    <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Gy">CURVE_Gy</a>))</pre>
+			
+				<p>
+GenG2 is a generator of Group G2
+</p>
+
+				<pre>var <span id="GenG2">GenG2</span> = <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewECP2fp2s">NewECP2fp2s</a>(
+    <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewFP2bigs">NewFP2bigs</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Pxa">CURVE_Pxa</a>), <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Pxb">CURVE_Pxb</a>)),
+    <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewFP2bigs">NewFP2bigs</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Pya">CURVE_Pya</a>), <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Pyb">CURVE_Pyb</a>)))</pre>
+			
+				<p>
+GenGT is a generator of Group GT
+</p>
+
+				<pre>var <span id="GenGT">GenGT</span> = <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#Fexp">Fexp</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#Ate">Ate</a>(<a href="index.html#GenG2">GenG2</a>, <a href="index.html#GenG1">GenG1</a>))</pre>
+			
+				<p>
+GroupOrder is the order of the groups
+</p>
+
+				<pre>var <span id="GroupOrder">GroupOrder</span> = <a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#NewBIGints">NewBIGints</a>(<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#CURVE_Order">CURVE_Order</a>)</pre>
+			
+				
+				<pre>var <span id="ProofBytes">ProofBytes</span> = map[<a href="index.html#RevocationAlgorithm">RevocationAlgorithm</a>]<a href="http://localhost:6060/pkg/builtin/#int">int</a>{
+    <a href="index.html#ALG_NO_REVOCATION">ALG_NO_REVOCATION</a>: 0,
+}</pre>
+			
+		
+		
+			
+			
+			<h2 id="BigToBytes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=2714:2754#L85">BigToBytes</a>
+				<a class="permalink" href="index.html#BigToBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func BigToBytes(big *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+BigToBytes takes an *amcl.BIG and returns a []byte representation
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Ecp2FromProto">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=3518:3559#L113">Ecp2FromProto</a>
+				<a class="permalink" href="index.html#Ecp2FromProto">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Ecp2FromProto(p *<a href="index.html#ECP2">ECP2</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP2">ECP2</a></pre>
+			<p>
+Ecp2FromProto converts a proto struct *ECP2 into an *amcl.ECP2
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="EcpFromProto">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=3058:3096#L99">EcpFromProto</a>
+				<a class="permalink" href="index.html#EcpFromProto">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func EcpFromProto(p *<a href="index.html#ECP">ECP</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a></pre>
+			<p>
+EcpFromProto converts a proto struct *ECP into an *amcl.ECP
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="EcpToBytes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=1721:1759#L53">EcpToBytes</a>
+				<a class="permalink" href="index.html#EcpToBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func EcpToBytes(E *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GenerateLongTermRevocationKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/revocation_authority.go?s=642:705#L23">GenerateLongTermRevocationKey</a>
+				<a class="permalink" href="index.html#GenerateLongTermRevocationKey">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateLongTermRevocationKey() (*<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GenerateLongTermRevocationKey generates a long term signing key that will be used for revocation
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetRand">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=3812:3846#L120">GetRand</a>
+				<a class="permalink" href="index.html#GetRand">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetRand() (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetRand returns a new *amcl.RAND with a fresh seed
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HashModOrder">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=1259:1302#L37">HashModOrder</a>
+				<a class="permalink" href="index.html#HashModOrder">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HashModOrder(data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a></pre>
+			<p>
+HashModOrder hashes data into 0, ..., GroupOrder-1
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MakeNym">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=2350:2446#L76">MakeNym</a>
+				<a class="permalink" href="index.html#MakeNym">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MakeNym(sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, IPk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>, *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>)</pre>
+			<p>
+MakeNym creates a new unlinkable pseudonym
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Modadd">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=4152:4198#L134">Modadd</a>
+				<a class="permalink" href="index.html#Modadd">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Modadd(a, b, m *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a></pre>
+			<p>
+Modadd takes input BIGs a, b, m, and returns a+b modulo m
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Modsub">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=4300:4346#L141">Modsub</a>
+				<a class="permalink" href="index.html#Modsub">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Modsub(a, b, m *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a></pre>
+			<p>
+Modsub takes input BIGs a, b, m and returns a-b modulo m
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RandModOrder">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=1024:1070#L28">RandModOrder</a>
+				<a class="permalink" href="index.html#RandModOrder">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RandModOrder(rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a></pre>
+			<p>
+RandModOrder returns a random element in 0, ..., GroupOrder-1
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="VerifyEpochPK">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/revocation_authority.go?s=2447:2562#L73">VerifyEpochPK</a>
+				<a class="permalink" href="index.html#VerifyEpochPK">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func VerifyEpochPK(pk *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>, epochPK *<a href="index.html#ECP2">ECP2</a>, epochPkSig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>, alg <a href="index.html#RevocationAlgorithm">RevocationAlgorithm</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+VerifyEpochPK verifies that the revocation PK for a certain epoch is valid,
+by checking that it was signed with the long term revocation key.
+Note that even if we use no revocation (i.e., alg = ALG_NO_REVOCATION), we need
+to verify the signature to make sure the issuer indeed signed that no revocation
+is used in this epoch.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WBBKeyGen">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/weak-bb.go?s=321:381#L6">WBBKeyGen</a>
+				<a class="permalink" href="index.html#WBBKeyGen">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WBBKeyGen(rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP2">ECP2</a>)</pre>
+			<p>
+WBBKeyGen creates a fresh weak-Boneh-Boyen signature key pair (<a href="http://ia.cr/2004/171">http://ia.cr/2004/171</a>)
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WBBSign">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/weak-bb.go?s=577:635#L15">WBBSign</a>
+				<a class="permalink" href="index.html#WBBSign">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WBBSign(sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, m *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a></pre>
+			<p>
+WBBSign places a weak Boneh-Boyen signature on message m using secret key sk
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WBBVerify">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/weak-bb.go?s=889:961#L25">WBBVerify</a>
+				<a class="permalink" href="index.html#WBBVerify">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WBBVerify(pk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP2">ECP2</a>, sig *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>, m *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+WBBVerify verifies a weak Boneh-Boyen signature sig on message m with public key pk
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CredRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=11186:11786#L369">CredRequest</a>
+				<a class="permalink" href="index.html#CredRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredRequest specifies a credential request object that consists of
+nym - a pseudonym, which is a commitment to the user secret
+issuer_nonce - a random nonce provided by the issuer
+proof_c, proof_s - a zero-knowledge proof of knowledge of the
+user secret inside Nym
+</p>
+
+			<pre>type CredRequest struct {
+<span id="CredRequest.Nym"></span>    Nym                  *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,1,opt,name=nym,proto3&#34; json:&#34;nym,omitempty&#34;`
+<span id="CredRequest.IssuerNonce"></span>    IssuerNonce          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=issuer_nonce,json=issuerNonce,proto3&#34; json:&#34;issuer_nonce,omitempty&#34;`
+<span id="CredRequest.ProofC"></span>    ProofC               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=proof_c,json=proofC,proto3&#34; json:&#34;proof_c,omitempty&#34;`
+<span id="CredRequest.ProofS"></span>    ProofS               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,4,opt,name=proof_s,json=proofS,proto3&#34; json:&#34;proof_s,omitempty&#34;`
+<span id="CredRequest.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="CredRequest.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="CredRequest.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCredRequest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credrequest.go?s=1694:1801#L25">NewCredRequest</a>
+					<a class="permalink" href="index.html#NewCredRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCredRequest(sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, IssuerNonce []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) *<a href="index.html#CredRequest">CredRequest</a></pre>
+				<p>
+NewCredRequest creates a new Credential Request, the first message of the interactive credential issuance protocol
+(from user to issuer)
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CredRequest.Check">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credrequest.go?s=3240:3295#L66">Check</a>
+					<a class="permalink" href="index.html#CredRequest.Check">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) Check(ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Check cryptographically verifies the credential request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.Descriptor">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=11966:12014#L382">Descriptor</a>
+					<a class="permalink" href="index.html#CredRequest.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CredRequest">CredRequest</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.GetIssuerNonce">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12760:12805#L410">GetIssuerNonce</a>
+					<a class="permalink" href="index.html#CredRequest.GetIssuerNonce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) GetIssuerNonce() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.GetNym">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12674:12709#L403">GetNym</a>
+					<a class="permalink" href="index.html#CredRequest.GetNym">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) GetNym() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.GetProofC">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12864:12904#L417">GetProofC</a>
+					<a class="permalink" href="index.html#CredRequest.GetProofC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) GetProofC() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.GetProofS">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12958:12998#L424">GetProofS</a>
+					<a class="permalink" href="index.html#CredRequest.GetProofS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) GetProofS() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.ProtoMessage">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=11925:11959#L381">ProtoMessage</a>
+					<a class="permalink" href="index.html#CredRequest.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CredRequest">CredRequest</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.Reset">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=11788:11817#L379">Reset</a>
+					<a class="permalink" href="index.html#CredRequest.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.String">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=11849:11886#L380">String</a>
+					<a class="permalink" href="index.html#CredRequest.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.XXX_DiscardUnknown">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12520:12562#L397">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CredRequest.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.XXX_Marshal">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12184:12263#L388">XXX_Marshal</a>
+					<a class="permalink" href="index.html#CredRequest.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.XXX_Merge">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12333:12385#L391">XXX_Merge</a>
+					<a class="permalink" href="index.html#CredRequest.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CredRequest">CredRequest</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.XXX_Size">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12435:12471#L394">XXX_Size</a>
+					<a class="permalink" href="index.html#CredRequest.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.XXX_Unmarshal">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=12076:12127#L385">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#CredRequest.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredRequest">CredRequest</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Credential">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9008:9613#L294">Credential</a>
+				<a class="permalink" href="index.html#Credential">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Credential specifies a credential object that consists of
+a, b, e, s - signature value
+attrs - attribute values
+</p>
+
+			<pre>type Credential struct {
+<span id="Credential.A"></span>    A                    *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,1,opt,name=a,proto3&#34; json:&#34;a,omitempty&#34;`
+<span id="Credential.B"></span>    B                    *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,2,opt,name=b,proto3&#34; json:&#34;b,omitempty&#34;`
+<span id="Credential.E"></span>    E                    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=e,proto3&#34; json:&#34;e,omitempty&#34;`
+<span id="Credential.S"></span>    S                    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,4,opt,name=s,proto3&#34; json:&#34;s,omitempty&#34;`
+<span id="Credential.Attrs"></span>    Attrs                [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,5,rep,name=attrs,proto3&#34; json:&#34;attrs,omitempty&#34;`
+<span id="Credential.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Credential.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Credential.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCredential">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credential.go?s=1873:1982#L27">NewCredential</a>
+					<a class="permalink" href="index.html#NewCredential">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCredential(key *<a href="index.html#IssuerKey">IssuerKey</a>, m *<a href="index.html#CredRequest">CredRequest</a>, attrs []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="index.html#Credential">Credential</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCredential issues a new credential, which is the last step of the interactive issuance protocol
+All attribute values are added by the issuer at this step and then signed together with a commitment to
+the user&#39;s secret key from a credential request
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Credential.Descriptor">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9789:9836#L308">Descriptor</a>
+					<a class="permalink" href="index.html#Credential.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Credential">Credential</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.GetA">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10485:10517#L329">GetA</a>
+					<a class="permalink" href="index.html#Credential.GetA">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) GetA() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.GetAttrs">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10813:10853#L357">GetAttrs</a>
+					<a class="permalink" href="index.html#Credential.GetAttrs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) GetAttrs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.GetB">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10566:10598#L336">GetB</a>
+					<a class="permalink" href="index.html#Credential.GetB">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) GetB() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.GetE">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10647:10681#L343">GetE</a>
+					<a class="permalink" href="index.html#Credential.GetE">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) GetE() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.GetS">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10730:10764#L350">GetS</a>
+					<a class="permalink" href="index.html#Credential.GetS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) GetS() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.ProtoMessage">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9749:9782#L307">ProtoMessage</a>
+					<a class="permalink" href="index.html#Credential.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Credential">Credential</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.Reset">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9615:9643#L305">Reset</a>
+					<a class="permalink" href="index.html#Credential.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.String">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9674:9710#L306">String</a>
+					<a class="permalink" href="index.html#Credential.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.Ver">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/credential.go?s=4366:4438#L101">Ver</a>
+					<a class="permalink" href="index.html#Credential.Ver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cred *<a href="index.html#Credential">Credential</a>) Ver(sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Ver cryptographically verifies the credential by verifying the signature
+on the attribute values and user&#39;s secret key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Credential.XXX_DiscardUnknown">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10334:10375#L323">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Credential.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.XXX_Marshal">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10004:10082#L314">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Credential.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.XXX_Merge">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10151:10202#L317">XXX_Merge</a>
+					<a class="permalink" href="index.html#Credential.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Credential">Credential</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.XXX_Size">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=10251:10286#L320">XXX_Size</a>
+					<a class="permalink" href="index.html#Credential.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Credential.XXX_Unmarshal">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=9898:9948#L311">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Credential.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Credential">Credential</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CredentialRevocationInformation">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22615:23739#L721">CredentialRevocationInformation</a>
+				<a class="permalink" href="index.html#CredentialRevocationInformation">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CredentialRevocationInformation struct {
+    <span class="comment">// epoch contains the epoch (time window) in which this CRI is valid</span>
+<span id="CredentialRevocationInformation.Epoch"></span>    Epoch <a href="http://localhost:6060/pkg/builtin/#int64">int64</a> `protobuf:&#34;varint,1,opt,name=epoch,proto3&#34; json:&#34;epoch,omitempty&#34;`
+    <span class="comment">// epoch_pk is the public key that is used by the revocation authority in this epoch</span>
+<span id="CredentialRevocationInformation.EpochPk"></span>    EpochPk *<a href="index.html#ECP2">ECP2</a> `protobuf:&#34;bytes,2,opt,name=epoch_pk,json=epochPk,proto3&#34; json:&#34;epoch_pk,omitempty&#34;`
+    <span class="comment">// epoch_pk_sig is a signature on the EpochPK valid under the revocation authority&#39;s long term key</span>
+<span id="CredentialRevocationInformation.EpochPkSig"></span>    EpochPkSig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,opt,name=epoch_pk_sig,json=epochPkSig,proto3&#34; json:&#34;epoch_pk_sig,omitempty&#34;`
+    <span class="comment">// revocation_alg denotes which revocation algorithm is used</span>
+<span id="CredentialRevocationInformation.RevocationAlg"></span>    RevocationAlg <a href="http://localhost:6060/pkg/builtin/#int32">int32</a> `protobuf:&#34;varint,4,opt,name=revocation_alg,json=revocationAlg,proto3&#34; json:&#34;revocation_alg,omitempty&#34;`
+    <span class="comment">// revocation_data contains data specific to the revocation algorithm used</span>
+<span id="CredentialRevocationInformation.RevocationData"></span>    RevocationData       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,5,opt,name=revocation_data,json=revocationData,proto3&#34; json:&#34;revocation_data,omitempty&#34;`
+<span id="CredentialRevocationInformation.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="CredentialRevocationInformation.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="CredentialRevocationInformation.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateCRI">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/revocation_authority.go?s=1089:1253#L31">CreateCRI</a>
+					<a class="permalink" href="index.html#CreateCRI">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func CreateCRI(key *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, unrevokedHandles []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>, alg <a href="index.html#RevocationAlgorithm">RevocationAlgorithm</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+CreateCRI creates the Credential Revocation Information for a certain time period (epoch).
+Users can use the CRI to prove that they are not revoked.
+Note that when not using revocation (i.e., alg = ALG_NO_REVOCATION), the entered unrevokedHandles are not used,
+and the resulting CRI can be used by any signer.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CredentialRevocationInformation.Descriptor">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=23999:24067#L740">Descriptor</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.GetEpoch">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24947:25005#L761">GetEpoch</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.GetEpoch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) GetEpoch() <a href="http://localhost:6060/pkg/builtin/#int64">int64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.GetEpochPk">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=25056:25116#L768">GetEpochPk</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.GetEpochPk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) GetEpochPk() *<a href="index.html#ECP2">ECP2</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.GetEpochPkSig">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=25171:25235#L775">GetEpochPkSig</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.GetEpochPkSig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) GetEpochPkSig() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.GetRevocationAlg">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=25293:25359#L782">GetRevocationAlg</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.GetRevocationAlg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) GetRevocationAlg() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.GetRevocationData">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=25418:25486#L789">GetRevocationData</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.GetRevocationData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) GetRevocationData() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.ProtoMessage">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=23938:23992#L739">ProtoMessage</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.Reset">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=23741:23790#L737">Reset</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.String">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=23842:23899#L738">String</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.XXX_DiscardUnknown">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24733:24795#L755">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.XXX_Marshal">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24277:24376#L746">XXX_Marshal</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.XXX_Merge">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24466:24538#L749">XXX_Merge</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.XXX_Size">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24608:24664#L752">XXX_Size</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CredentialRevocationInformation.XXX_Unmarshal">func (*CredentialRevocationInformation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=24129:24200#L743">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#CredentialRevocationInformation.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECP">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=798:1121#L17">ECP</a>
+				<a class="permalink" href="index.html#ECP">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECP is an elliptic curve point specified by its coordinates
+ECP corresponds to an element of the first group (G1)
+</p>
+
+			<pre>type ECP struct {
+<span id="ECP.X"></span>    X                    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=x,proto3&#34; json:&#34;x,omitempty&#34;`
+<span id="ECP.Y"></span>    Y                    []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=y,proto3&#34; json:&#34;y,omitempty&#34;`
+<span id="ECP.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ECP.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ECP.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="EcpToProto">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=2885:2921#L92">EcpToProto</a>
+					<a class="permalink" href="index.html#EcpToProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func EcpToProto(p *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>) *<a href="index.html#ECP">ECP</a></pre>
+				<p>
+EcpToProto converts a *amcl.ECP into the proto struct *ECP
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ECP.Descriptor">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1269:1309#L28">Descriptor</a>
+					<a class="permalink" href="index.html#ECP.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ECP">ECP</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.GetX">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1881:1908#L49">GetX</a>
+					<a class="permalink" href="index.html#ECP.GetX">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) GetX() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.GetY">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1957:1984#L56">GetY</a>
+					<a class="permalink" href="index.html#ECP.GetY">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) GetY() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.ProtoMessage">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1236:1262#L27">ProtoMessage</a>
+					<a class="permalink" href="index.html#ECP.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ECP">ECP</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.Reset">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1123:1144#L25">Reset</a>
+					<a class="permalink" href="index.html#ECP.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.String">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1168:1197#L26">String</a>
+					<a class="permalink" href="index.html#ECP.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.XXX_DiscardUnknown">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1751:1785#L43">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ECP.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.XXX_Marshal">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1463:1534#L34">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ECP.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.XXX_Merge">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1596:1640#L37">XXX_Merge</a>
+					<a class="permalink" href="index.html#ECP.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ECP">ECP</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.XXX_Size">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1682:1710#L40">XXX_Size</a>
+					<a class="permalink" href="index.html#ECP.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP.XXX_Unmarshal">func (*ECP) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=1371:1414#L31">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ECP.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP">ECP</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ECP2">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2156:2666#L65">ECP2</a>
+				<a class="permalink" href="index.html#ECP2">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ECP2 is an elliptic curve point specified by its coordinates
+ECP2 corresponds to an element of the second group (G2)
+</p>
+
+			<pre>type ECP2 struct {
+<span id="ECP2.Xa"></span>    Xa                   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,1,opt,name=xa,proto3&#34; json:&#34;xa,omitempty&#34;`
+<span id="ECP2.Xb"></span>    Xb                   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=xb,proto3&#34; json:&#34;xb,omitempty&#34;`
+<span id="ECP2.Ya"></span>    Ya                   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,3,opt,name=ya,proto3&#34; json:&#34;ya,omitempty&#34;`
+<span id="ECP2.Yb"></span>    Yb                   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,4,opt,name=yb,proto3&#34; json:&#34;yb,omitempty&#34;`
+<span id="ECP2.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="ECP2.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="ECP2.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="Ecp2ToProto">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/util.go?s=3252:3291#L104">Ecp2ToProto</a>
+					<a class="permalink" href="index.html#Ecp2ToProto">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func Ecp2ToProto(p *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP2">ECP2</a>) *<a href="index.html#ECP2">ECP2</a></pre>
+				<p>
+Ecp2ToProto converts a *amcl.ECP2 into the proto struct *ECP2
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ECP2.Descriptor">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2818:2859#L78">Descriptor</a>
+					<a class="permalink" href="index.html#ECP2.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ECP2">ECP2</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.GetXa">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3442:3471#L99">GetXa</a>
+					<a class="permalink" href="index.html#ECP2.GetXa">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) GetXa() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.GetXb">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3521:3550#L106">GetXb</a>
+					<a class="permalink" href="index.html#ECP2.GetXb">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) GetXb() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.GetYa">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3600:3629#L113">GetYa</a>
+					<a class="permalink" href="index.html#ECP2.GetYa">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) GetYa() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.GetYb">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3679:3708#L120">GetYb</a>
+					<a class="permalink" href="index.html#ECP2.GetYb">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) GetYb() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.ProtoMessage">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2784:2811#L77">ProtoMessage</a>
+					<a class="permalink" href="index.html#ECP2.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ECP2">ECP2</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.Reset">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2668:2690#L75">Reset</a>
+					<a class="permalink" href="index.html#ECP2.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.String">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2715:2745#L76">String</a>
+					<a class="permalink" href="index.html#ECP2.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.XXX_DiscardUnknown">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3309:3344#L93">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#ECP2.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.XXX_Marshal">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3015:3087#L84">XXX_Marshal</a>
+					<a class="permalink" href="index.html#ECP2.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.XXX_Merge">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3150:3195#L87">XXX_Merge</a>
+					<a class="permalink" href="index.html#ECP2.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#ECP2">ECP2</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.XXX_Size">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=3238:3267#L90">XXX_Size</a>
+					<a class="permalink" href="index.html#ECP2.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ECP2.XXX_Unmarshal">func (*ECP2) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=2921:2965#L81">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#ECP2.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ECP2">ECP2</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IssuerKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7472:7849#L245">IssuerKey</a>
+				<a class="permalink" href="index.html#IssuerKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IssuerKey specifies an issuer key pair that consists of
+ISk - the issuer secret key and
+IssuerPublicKey - the issuer public key
+</p>
+
+			<pre>type IssuerKey struct {
+<span id="IssuerKey.Isk"></span>    Isk                  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>           `protobuf:&#34;bytes,1,opt,name=isk,proto3&#34; json:&#34;isk,omitempty&#34;`
+<span id="IssuerKey.Ipk"></span>    Ipk                  *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a> `protobuf:&#34;bytes,2,opt,name=ipk,proto3&#34; json:&#34;ipk,omitempty&#34;`
+<span id="IssuerKey.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}         `json:&#34;-&#34;`
+<span id="IssuerKey.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>           `json:&#34;-&#34;`
+<span id="IssuerKey.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>            `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewIssuerKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/issuerkey.go?s=985:1063#L19">NewIssuerKey</a>
+					<a class="permalink" href="index.html#NewIssuerKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewIssuerKey(AttributeNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="index.html#IssuerKey">IssuerKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewIssuerKey creates a new issuer key pair taking an array of attribute names
+that will be contained in credentials certified by this issuer (a credential specification)
+See <a href="http://eprint.iacr.org/2016/663.pdf">http://eprint.iacr.org/2016/663.pdf</a> Sec. 4.3, for references.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="IssuerKey.Descriptor">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8021:8067#L256">Descriptor</a>
+					<a class="permalink" href="index.html#IssuerKey.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IssuerKey">IssuerKey</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.GetIpk">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8791:8836#L284">GetIpk</a>
+					<a class="permalink" href="index.html#IssuerKey.GetIpk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) GetIpk() *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.GetIsk">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8705:8740#L277">GetIsk</a>
+					<a class="permalink" href="index.html#IssuerKey.GetIsk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) GetIsk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.ProtoMessage">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7982:8014#L255">ProtoMessage</a>
+					<a class="permalink" href="index.html#IssuerKey.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IssuerKey">IssuerKey</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.Reset">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7851:7878#L253">Reset</a>
+					<a class="permalink" href="index.html#IssuerKey.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.String">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7908:7943#L254">String</a>
+					<a class="permalink" href="index.html#IssuerKey.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.XXX_DiscardUnknown">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8557:8597#L271">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#IssuerKey.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.XXX_Marshal">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8233:8310#L262">XXX_Marshal</a>
+					<a class="permalink" href="index.html#IssuerKey.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.XXX_Merge">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8378:8428#L265">XXX_Merge</a>
+					<a class="permalink" href="index.html#IssuerKey.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#IssuerKey">IssuerKey</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.XXX_Size">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8476:8510#L268">XXX_Size</a>
+					<a class="permalink" href="index.html#IssuerKey.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerKey.XXX_Unmarshal">func (*IssuerKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=8129:8178#L259">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#IssuerKey.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerKey">IssuerKey</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IssuerPublicKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=4168:5420#L132">IssuerPublicKey</a>
+				<a class="permalink" href="index.html#IssuerPublicKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IssuerPublicKey specifies an issuer public key that consists of
+attribute_names - a list of the attribute names of a credential issued by the issuer
+h_sk, h_rand, h_attrs, w, bar_g1, bar_g2 - group elements corresponding to the signing key, randomness, and attributes
+proof_c, proof_s compose a zero-knowledge proof of knowledge of the secret key
+hash is a hash of the public key appended to it
+</p>
+
+			<pre>type IssuerPublicKey struct {
+<span id="IssuerPublicKey.AttributeNames"></span>    AttributeNames       []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,rep,name=attribute_names,json=attributeNames,proto3&#34; json:&#34;attribute_names,omitempty&#34;`
+<span id="IssuerPublicKey.HSk"></span>    HSk                  *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,2,opt,name=h_sk,json=hSk,proto3&#34; json:&#34;h_sk,omitempty&#34;`
+<span id="IssuerPublicKey.HRand"></span>    HRand                *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,3,opt,name=h_rand,json=hRand,proto3&#34; json:&#34;h_rand,omitempty&#34;`
+<span id="IssuerPublicKey.HAttrs"></span>    HAttrs               []*<a href="index.html#ECP">ECP</a>   `protobuf:&#34;bytes,4,rep,name=h_attrs,json=hAttrs,proto3&#34; json:&#34;h_attrs,omitempty&#34;`
+<span id="IssuerPublicKey.W"></span>    W                    *<a href="index.html#ECP2">ECP2</a>    `protobuf:&#34;bytes,5,opt,name=w,proto3&#34; json:&#34;w,omitempty&#34;`
+<span id="IssuerPublicKey.BarG1"></span>    BarG1                *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,6,opt,name=bar_g1,json=barG1,proto3&#34; json:&#34;bar_g1,omitempty&#34;`
+<span id="IssuerPublicKey.BarG2"></span>    BarG2                *<a href="index.html#ECP">ECP</a>     `protobuf:&#34;bytes,7,opt,name=bar_g2,json=barG2,proto3&#34; json:&#34;bar_g2,omitempty&#34;`
+<span id="IssuerPublicKey.ProofC"></span>    ProofC               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,8,opt,name=proof_c,json=proofC,proto3&#34; json:&#34;proof_c,omitempty&#34;`
+<span id="IssuerPublicKey.ProofS"></span>    ProofS               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,9,opt,name=proof_s,json=proofS,proto3&#34; json:&#34;proof_s,omitempty&#34;`
+<span id="IssuerPublicKey.Hash"></span>    Hash                 []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,10,opt,name=hash,proto3&#34; json:&#34;hash,omitempty&#34;`
+<span id="IssuerPublicKey.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="IssuerPublicKey.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="IssuerPublicKey.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IssuerPublicKey.Check">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/issuerkey.go?s=3572:3613#L104">Check</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.Check">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (IPk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) Check() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Check checks that this issuer public key is valid, i.e.
+that all components are present and a ZK proofs verifies
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.Descriptor">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5616:5668#L151">Descriptor</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetAttributeNames">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6372:6426#L172">GetAttributeNames</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetAttributeNames">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetAttributeNames() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetBarG1">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6857:6898#L207">GetBarG1</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetBarG1">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetBarG1() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetBarG2">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6951:6992#L214">GetBarG2</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetBarG2">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetBarG2() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetHAttrs">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6672:6716#L193">GetHAttrs</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetHAttrs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetHAttrs() []*<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetHRand">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6578:6619#L186">GetHRand</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetHRand">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetHRand() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetHSk">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6488:6527#L179">GetHSk</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetHSk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetHSk() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetHash">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7241:7283#L235">GetHash</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetHash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetProofC">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7045:7089#L221">GetProofC</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetProofC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetProofC() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetProofS">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=7143:7187#L228">GetProofS</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetProofS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetProofS() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.GetW">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6770:6808#L200">GetW</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.GetW">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) GetW() *<a href="index.html#ECP2">ECP2</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.ProtoMessage">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5571:5609#L150">ProtoMessage</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.Reset">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5422:5455#L148">Reset</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.SetHash">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/issuerkey.go?s=5407:5450#L165">SetHash</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.SetHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (IPk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) SetHash() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetHash appends a hash of a serialized public key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.String">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5491:5532#L149">String</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.XXX_DiscardUnknown">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6206:6252#L166">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.XXX_Marshal">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5846:5929#L157">XXX_Marshal</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.XXX_Merge">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6003:6059#L160">XXX_Merge</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.XXX_Size">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=6113:6153#L163">XXX_Size</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.XXX_Unmarshal">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=5730:5785#L154">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NonRevocationProof">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18449:18895#L604">NonRevocationProof</a>
+				<a class="permalink" href="index.html#NonRevocationProof">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NonRevocationProof contains proof that the credential is not revoked
+</p>
+
+			<pre>type NonRevocationProof struct {
+<span id="NonRevocationProof.RevocationAlg"></span>    RevocationAlg        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `protobuf:&#34;varint,1,opt,name=revocation_alg,json=revocationAlg,proto3&#34; json:&#34;revocation_alg,omitempty&#34;`
+<span id="NonRevocationProof.NonRevocationProof"></span>    NonRevocationProof   []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=non_revocation_proof,json=nonRevocationProof,proto3&#34; json:&#34;non_revocation_proof,omitempty&#34;`
+<span id="NonRevocationProof.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="NonRevocationProof.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="NonRevocationProof.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NonRevocationProof.Descriptor">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19103:19158#L615">Descriptor</a>
+					<a class="permalink" href="index.html#NonRevocationProof.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NonRevocationProof">NonRevocationProof</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.GetNonRevocationProof">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=20007:20066#L643">GetNonRevocationProof</a>
+					<a class="permalink" href="index.html#NonRevocationProof.GetNonRevocationProof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) GetNonRevocationProof() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.GetRevocationAlg">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19895:19948#L636">GetRevocationAlg</a>
+					<a class="permalink" href="index.html#NonRevocationProof.GetRevocationAlg">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) GetRevocationAlg() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.ProtoMessage">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19055:19096#L614">ProtoMessage</a>
+					<a class="permalink" href="index.html#NonRevocationProof.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NonRevocationProof">NonRevocationProof</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.Reset">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18897:18933#L612">Reset</a>
+					<a class="permalink" href="index.html#NonRevocationProof.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.String">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18972:19016#L613">String</a>
+					<a class="permalink" href="index.html#NonRevocationProof.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.XXX_DiscardUnknown">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19720:19769#L630">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#NonRevocationProof.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.XXX_Marshal">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19342:19428#L621">XXX_Marshal</a>
+					<a class="permalink" href="index.html#NonRevocationProof.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.XXX_Merge">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19505:19564#L624">XXX_Merge</a>
+					<a class="permalink" href="index.html#NonRevocationProof.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.XXX_Size">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19621:19664#L627">XXX_Size</a>
+					<a class="permalink" href="index.html#NonRevocationProof.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NonRevocationProof.XXX_Unmarshal">func (*NonRevocationProof) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=19220:19278#L618">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#NonRevocationProof.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NonRevocationProof">NonRevocationProof</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NymSignature">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=20501:21321#L655">NymSignature</a>
+				<a class="permalink" href="index.html#NymSignature">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NymSignature specifies a signature object that signs a message
+with respect to a pseudonym. It differs from the standard idemix.signature in the fact that
+the  standard signature object also proves that the pseudonym is based on a secret certified by
+a CA (issuer), whereas NymSignature only proves that the the owner of the pseudonym
+signed the message
+</p>
+
+			<pre>type NymSignature struct {
+    <span class="comment">// proof_c is the Fiat-Shamir challenge of the ZKP</span>
+<span id="NymSignature.ProofC"></span>    ProofC []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=proof_c,json=proofC,proto3&#34; json:&#34;proof_c,omitempty&#34;`
+    <span class="comment">// proof_s_sk is the s-value proving knowledge of the user secret key</span>
+<span id="NymSignature.ProofSSk"></span>    ProofSSk []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=proof_s_sk,json=proofSSk,proto3&#34; json:&#34;proof_s_sk,omitempty&#34;`
+    <span class="comment">// proof_s_r_nym is the s-value proving knowledge of the pseudonym secret</span>
+<span id="NymSignature.ProofSRNym"></span>    ProofSRNym []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,opt,name=proof_s_r_nym,json=proofSRNym,proto3&#34; json:&#34;proof_s_r_nym,omitempty&#34;`
+    <span class="comment">// nonce is a fresh nonce used for the signature</span>
+<span id="NymSignature.Nonce"></span>    Nonce                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,4,opt,name=nonce,proto3&#34; json:&#34;nonce,omitempty&#34;`
+<span id="NymSignature.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="NymSignature.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="NymSignature.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewNymSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/nymsignature.go?s=289:436#L6">NewNymSignature</a>
+					<a class="permalink" href="index.html#NewNymSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewNymSignature(sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, Nym *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>, RNym *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="index.html#NymSignature">NymSignature</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewSignature creates a new idemix pseudonym signature
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="NymSignature.Descriptor">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21505:21554#L672">Descriptor</a>
+					<a class="permalink" href="index.html#NymSignature.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NymSignature">NymSignature</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.GetNonce">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22522:22562#L714">GetNonce</a>
+					<a class="permalink" href="index.html#NymSignature.GetNonce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) GetNonce() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.GetProofC">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22225:22266#L693">GetProofC</a>
+					<a class="permalink" href="index.html#NymSignature.GetProofC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) GetProofC() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.GetProofSRNym">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22419:22464#L707">GetProofSRNym</a>
+					<a class="permalink" href="index.html#NymSignature.GetProofSRNym">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) GetProofSRNym() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.GetProofSSk">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22320:22363#L700">GetProofSSk</a>
+					<a class="permalink" href="index.html#NymSignature.GetProofSSk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) GetProofSSk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.ProtoMessage">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21463:21498#L671">ProtoMessage</a>
+					<a class="permalink" href="index.html#NymSignature.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NymSignature">NymSignature</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.Reset">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21323:21353#L669">Reset</a>
+					<a class="permalink" href="index.html#NymSignature.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.String">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21386:21424#L670">String</a>
+					<a class="permalink" href="index.html#NymSignature.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.Ver">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/nymsignature.go?s=2833:2919#L64">Ver</a>
+					<a class="permalink" href="index.html#NymSignature.Ver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sig *<a href="index.html#NymSignature">NymSignature</a>) Ver(nym *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Ver verifies an idemix NymSignature
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.XXX_DiscardUnknown">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=22068:22111#L687">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#NymSignature.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.XXX_Marshal">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21726:21806#L678">XXX_Marshal</a>
+					<a class="permalink" href="index.html#NymSignature.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.XXX_Merge">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21877:21930#L681">XXX_Merge</a>
+					<a class="permalink" href="index.html#NymSignature.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#NymSignature">NymSignature</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.XXX_Size">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21981:22018#L684">XXX_Size</a>
+					<a class="permalink" href="index.html#NymSignature.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NymSignature.XXX_Unmarshal">func (*NymSignature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=21616:21668#L675">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#NymSignature.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#NymSignature">NymSignature</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RevocationAlgorithm">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/revocation_authority.go?s=381:411#L12">RevocationAlgorithm</a>
+				<a class="permalink" href="index.html#RevocationAlgorithm">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RevocationAlgorithm <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="ALG_NO_REVOCATION">ALG_NO_REVOCATION</span> <a href="index.html#RevocationAlgorithm">RevocationAlgorithm</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Signature">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=13431:15860#L437">Signature</a>
+				<a class="permalink" href="index.html#Signature">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Signature specifies a signature object that consists of
+a_prime, a_bar, b_prime, proof_* - randomized credential signature values
+and a zero-knowledge proof of knowledge of a credential
+and the corresponding user secret together with the attribute values
+nonce - a fresh nonce used for the signature
+nym - a fresh pseudonym (a commitment to to the user secret)
+</p>
+
+			<pre>type Signature struct {
+<span id="Signature.APrime"></span>    APrime               *<a href="index.html#ECP">ECP</a>                `protobuf:&#34;bytes,1,opt,name=a_prime,json=aPrime,proto3&#34; json:&#34;a_prime,omitempty&#34;`
+<span id="Signature.ABar"></span>    ABar                 *<a href="index.html#ECP">ECP</a>                `protobuf:&#34;bytes,2,opt,name=a_bar,json=aBar,proto3&#34; json:&#34;a_bar,omitempty&#34;`
+<span id="Signature.BPrime"></span>    BPrime               *<a href="index.html#ECP">ECP</a>                `protobuf:&#34;bytes,3,opt,name=b_prime,json=bPrime,proto3&#34; json:&#34;b_prime,omitempty&#34;`
+<span id="Signature.ProofC"></span>    ProofC               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,4,opt,name=proof_c,json=proofC,proto3&#34; json:&#34;proof_c,omitempty&#34;`
+<span id="Signature.ProofSSk"></span>    ProofSSk             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,5,opt,name=proof_s_sk,json=proofSSk,proto3&#34; json:&#34;proof_s_sk,omitempty&#34;`
+<span id="Signature.ProofSE"></span>    ProofSE              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,6,opt,name=proof_s_e,json=proofSE,proto3&#34; json:&#34;proof_s_e,omitempty&#34;`
+<span id="Signature.ProofSR2"></span>    ProofSR2             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,7,opt,name=proof_s_r2,json=proofSR2,proto3&#34; json:&#34;proof_s_r2,omitempty&#34;`
+<span id="Signature.ProofSR3"></span>    ProofSR3             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,8,opt,name=proof_s_r3,json=proofSR3,proto3&#34; json:&#34;proof_s_r3,omitempty&#34;`
+<span id="Signature.ProofSSPrime"></span>    ProofSSPrime         []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,9,opt,name=proof_s_s_prime,json=proofSSPrime,proto3&#34; json:&#34;proof_s_s_prime,omitempty&#34;`
+<span id="Signature.ProofSAttrs"></span>    ProofSAttrs          [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>            `protobuf:&#34;bytes,10,rep,name=proof_s_attrs,json=proofSAttrs,proto3&#34; json:&#34;proof_s_attrs,omitempty&#34;`
+<span id="Signature.Nonce"></span>    Nonce                []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,11,opt,name=nonce,proto3&#34; json:&#34;nonce,omitempty&#34;`
+<span id="Signature.Nym"></span>    Nym                  *<a href="index.html#ECP">ECP</a>                `protobuf:&#34;bytes,12,opt,name=nym,proto3&#34; json:&#34;nym,omitempty&#34;`
+<span id="Signature.ProofSRNym"></span>    ProofSRNym           []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,13,opt,name=proof_s_r_nym,json=proofSRNym,proto3&#34; json:&#34;proof_s_r_nym,omitempty&#34;`
+<span id="Signature.RevocationEpochPk"></span>    RevocationEpochPk    *<a href="index.html#ECP2">ECP2</a>               `protobuf:&#34;bytes,14,opt,name=revocation_epoch_pk,json=revocationEpochPk,proto3&#34; json:&#34;revocation_epoch_pk,omitempty&#34;`
+<span id="Signature.RevocationPkSig"></span>    RevocationPkSig      []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `protobuf:&#34;bytes,15,opt,name=revocation_pk_sig,json=revocationPkSig,proto3&#34; json:&#34;revocation_pk_sig,omitempty&#34;`
+<span id="Signature.Epoch"></span>    Epoch                <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>               `protobuf:&#34;varint,16,opt,name=epoch,proto3&#34; json:&#34;epoch,omitempty&#34;`
+<span id="Signature.NonRevocationProof"></span>    NonRevocationProof   *<a href="index.html#NonRevocationProof">NonRevocationProof</a> `protobuf:&#34;bytes,17,opt,name=non_revocation_proof,json=nonRevocationProof,proto3&#34; json:&#34;non_revocation_proof,omitempty&#34;`
+<span id="Signature.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{}            `json:&#34;-&#34;`
+<span id="Signature.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>              `json:&#34;-&#34;`
+<span id="Signature.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>               `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewSignature">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/signature.go?s=2322:2551#L43">NewSignature</a>
+					<a class="permalink" href="index.html#NewSignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewSignature(cred *<a href="index.html#Credential">Credential</a>, sk *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, Nym *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>, RNym *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, Disclosure []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, rhIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, cri *<a href="index.html#CredentialRevocationInformation">CredentialRevocationInformation</a>, rng *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>) (*<a href="index.html#Signature">Signature</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewSignature creates a new idemix signature (Schnorr-type signature)
+The []byte Disclosure steers which attributes are disclosed:
+if Disclosure[i] == 0 then attribute i remains hidden and otherwise it is disclosed.
+We require the revocation handle to remain undisclosed (i.e., Disclosure[rhIndex] == 0).
+We use the zero-knowledge proof by <a href="http://eprint.iacr.org/2016/663.pdf">http://eprint.iacr.org/2016/663.pdf</a>, Sec. 4.5 to prove knowledge of a BBS+ signature
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Signature.Descriptor">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16032:16078#L463">Descriptor</a>
+					<a class="permalink" href="index.html#Signature.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Signature">Signature</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetABar">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16806:16840#L491">GetABar</a>
+					<a class="permalink" href="index.html#Signature.GetABar">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetABar() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetAPrime">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16716:16752#L484">GetAPrime</a>
+					<a class="permalink" href="index.html#Signature.GetAPrime">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetAPrime() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetBPrime">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16892:16928#L498">GetBPrime</a>
+					<a class="permalink" href="index.html#Signature.GetBPrime">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetBPrime() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetEpoch">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18161:18197#L589">GetEpoch</a>
+					<a class="permalink" href="index.html#Signature.GetEpoch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetEpoch() <a href="http://localhost:6060/pkg/builtin/#int64">int64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetNonRevocationProof">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18248:18311#L596">GetNonRevocationProof</a>
+					<a class="permalink" href="index.html#Signature.GetNonRevocationProof">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetNonRevocationProof() *<a href="index.html#NonRevocationProof">NonRevocationProof</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetNonce">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17664:17701#L554">GetNonce</a>
+					<a class="permalink" href="index.html#Signature.GetNonce">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetNonce() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetNym">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17754:17787#L561">GetNym</a>
+					<a class="permalink" href="index.html#Signature.GetNym">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetNym() *<a href="index.html#ECP">ECP</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofC">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16982:17020#L505">GetProofC</a>
+					<a class="permalink" href="index.html#Signature.GetProofC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofC() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSAttrs">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17560:17605#L547">GetProofSAttrs</a>
+					<a class="permalink" href="index.html#Signature.GetProofSAttrs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSAttrs() [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSE">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17170:17209#L519">GetProofSE</a>
+					<a class="permalink" href="index.html#Signature.GetProofSE">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSE() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSR2">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17264:17304#L526">GetProofSR2</a>
+					<a class="permalink" href="index.html#Signature.GetProofSR2">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSR2() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSR3">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17360:17400#L533">GetProofSR3</a>
+					<a class="permalink" href="index.html#Signature.GetProofSR3">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSR3() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSRNym">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17838:17880#L568">GetProofSRNym</a>
+					<a class="permalink" href="index.html#Signature.GetProofSRNym">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSRNym() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSSPrime">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17456:17500#L540">GetProofSSPrime</a>
+					<a class="permalink" href="index.html#Signature.GetProofSSPrime">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSSPrime() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetProofSSk">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17074:17114#L512">GetProofSSk</a>
+					<a class="permalink" href="index.html#Signature.GetProofSSk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetProofSSk() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetRevocationEpochPk">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=17938:17986#L575">GetRevocationEpochPk</a>
+					<a class="permalink" href="index.html#Signature.GetRevocationEpochPk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetRevocationEpochPk() *<a href="index.html#ECP2">ECP2</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.GetRevocationPkSig">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=18051:18098#L582">GetRevocationPkSig</a>
+					<a class="permalink" href="index.html#Signature.GetRevocationPkSig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) GetRevocationPkSig() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.ProtoMessage">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=15993:16025#L462">ProtoMessage</a>
+					<a class="permalink" href="index.html#Signature.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Signature">Signature</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.Reset">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=15862:15889#L460">Reset</a>
+					<a class="permalink" href="index.html#Signature.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.String">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=15919:15954#L461">String</a>
+					<a class="permalink" href="index.html#Signature.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.Ver">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/signature.go?s=9945:10109#L236">Ver</a>
+					<a class="permalink" href="index.html#Signature.Ver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sig *<a href="index.html#Signature">Signature</a>) Ver(Disclosure []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, ipk *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, attributeValues []*<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>, rhIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, revPk *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Ver verifies an idemix signature
+Disclosure steers which attributes it expects to be disclosed
+attributeValues contains the desired attribute values.
+This function will check that if attribute i is disclosed, the i-th attribute equals attributeValues[i].
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_DiscardUnknown">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16568:16608#L478">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Signature.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Marshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16244:16321#L469">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Signature.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Merge">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16389:16439#L472">XXX_Merge</a>
+					<a class="permalink" href="index.html#Signature.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dst *<a href="index.html#Signature">Signature</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Size">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16487:16521#L475">XXX_Size</a>
+					<a class="permalink" href="index.html#Signature.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.XXX_Unmarshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/idemix/idemix.pb.go?s=16140:16189#L466">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Signature.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Signature">Signature</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

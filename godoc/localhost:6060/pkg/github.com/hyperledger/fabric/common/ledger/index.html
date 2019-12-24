@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ledger - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ledger
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/ledger"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Ledger">type Ledger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PrunePolicy">type PrunePolicy</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResult">type QueryResult</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResultsIterator">type QueryResultsIterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ResultsIterator">type ResultsIterator</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go">ledger_interface.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Ledger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go?s=763:1418#L14">Ledger</a>
+				<a class="permalink" href="index.html#Ledger">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Ledger captures the methods that are common across the &#39;PeerLedger&#39;, &#39;OrdererLedger&#39;, and &#39;ValidatedLedger&#39;
+</p>
+
+			<pre>type Ledger interface {
+    <span class="comment">// GetBlockchainInfo returns basic info about blockchain</span>
+    GetBlockchainInfo() (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#BlockchainInfo">BlockchainInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetBlockByNumber returns block at a given height</span>
+    <span class="comment">// blockNumber of  math.MaxUint64 will return last block</span>
+    GetBlockByNumber(blockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (*<a href="../../protos/common/index.html">common</a>.<a href="../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// GetBlocksIterator returns an iterator that starts from `startBlockNumber`(inclusive).</span>
+    <span class="comment">// The iterator is a blocking iterator i.e., it blocks till the next block gets available in the ledger</span>
+    <span class="comment">// ResultsIterator contains type BlockHolder</span>
+    GetBlocksIterator(startBlockNumber <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) (<a href="index.html#ResultsIterator">ResultsIterator</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Close closes the ledger</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PrunePolicy">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go?s=2113:2141#L47">PrunePolicy</a>
+				<a class="permalink" href="index.html#PrunePolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PrunePolicy - a general interface for supporting different pruning policies
+</p>
+
+			<pre>type PrunePolicy interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go?s=2004:2032#L44">QueryResult</a>
+				<a class="permalink" href="index.html#QueryResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResult - a general interface for supporting different types of query results. Actual types differ for different queries
+</p>
+
+			<pre>type QueryResult interface{}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResultsIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go?s=1788:1874#L38">QueryResultsIterator</a>
+				<a class="permalink" href="index.html#QueryResultsIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResultsIterator - an iterator for query result set
+</p>
+
+			<pre>type QueryResultsIterator interface {
+    <a href="index.html#ResultsIterator">ResultsIterator</a>
+    GetBookmarkAndClose() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ResultsIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/ledger_interface.go?s=1474:1727#L29">ResultsIterator</a>
+				<a class="permalink" href="index.html#ResultsIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ResultsIterator - an iterator for query result set
+</p>
+
+			<pre>type ResultsIterator interface {
+    <span class="comment">// Next returns the next item in the result set. The `QueryResult` is expected to be nil when</span>
+    <span class="comment">// the iterator gets exhausted</span>
+    Next() (<a href="index.html#QueryResult">QueryResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Close releases resources occupied by the iterator</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="blkstorage/index.html">blkstorage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="blkstorage/fsblkstorage/index.html">fsblkstorage</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="blockledger/index.html">blockledger</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="blockledger/file/index.html">file</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="blockledger/json/index.html">json</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="blockledger/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="blockledger/ram/index.html">ram</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="testutil/index.html">testutil</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="util/index.html">util</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="util/leveldbhelper/index.html">leveldbhelper</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>yaml - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package yaml
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "gopkg.in/yaml.v2"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package yaml implements YAML support for the Go language.
+</p>
+<p>
+Source code and other details for the project are available at GitHub:
+</p>
+<pre><a href="https://github.com/go-yaml/yaml">https://github.com/go-yaml/yaml</a>
+</pre>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#Marshal">func Marshal(in interface{}) (out []byte, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#Unmarshal">func Unmarshal(in []byte, out interface{}) (err error)</a></dd>
+			
+				
+				<dd><a href="index.html#UnmarshalStrict">func UnmarshalStrict(in []byte, out interface{}) (err error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Decoder">type Decoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDecoder">func NewDecoder(r io.Reader) *Decoder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.Decode">func (dec *Decoder) Decode(v interface{}) (err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Decoder.SetStrict">func (dec *Decoder) SetStrict(strict bool)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Encoder">type Encoder</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEncoder">func NewEncoder(w io.Writer) *Encoder</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encoder.Close">func (e *Encoder) Close() (err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Encoder.Encode">func (e *Encoder) Encode(v interface{}) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IsZeroer">type IsZeroer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MapItem">type MapItem</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MapSlice">type MapSlice</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Marshaler">type Marshaler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TypeError">type TypeError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TypeError.Error">func (e *TypeError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Unmarshaler">type Unmarshaler</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_Unmarshal_embedded">Unmarshal (Embedded)</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/apic.go">apic.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/decode.go">decode.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/emitterc.go">emitterc.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/encode.go">encode.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/parserc.go">parserc.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/readerc.go">readerc.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/resolve.go">resolve.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/scannerc.go">scannerc.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/sorter.go">sorter.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/writerc.go">writerc.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go">yaml.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/yamlh.go">yamlh.go</a>
+			
+				<a href="http://localhost:6060/src/gopkg.in/yaml.v2/yamlprivateh.go">yamlprivateh.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="Marshal">func <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=6672:6724#L189">Marshal</a>
+				<a class="permalink" href="index.html#Marshal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Marshal(in interface{}) (out []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Marshal serializes the value provided into a YAML document. The structure
+of the generated document will reflect the structure of the value itself.
+Maps and pointers (to struct, string, int, etc) are accepted as the in value.
+</p>
+<p>
+Struct fields are only marshalled if they are exported (have an upper case
+first letter), and are marshalled using the field name lowercased as the
+default key. Custom keys may be defined via the &#34;yaml&#34; name in the field
+tag: the content preceding the first comma is used as the key, and the
+following comma-separated options are used to tweak the marshalling process.
+Conflicting names result in a runtime error.
+</p>
+<p>
+The field tag format accepted is:
+</p>
+<pre>`(...) yaml:&#34;[&lt;key&gt;][,&lt;flag1&gt;[,&lt;flag2&gt;]]&#34; (...)`
+</pre>
+<p>
+The following flags are currently supported:
+</p>
+<pre>omitempty    Only include the field if it&#39;s not set to the zero
+             value for the type or to empty slices or maps.
+             Zero valued structs will be omitted if all their public
+             fields are zero, unless they implement an IsZero
+             method (see the IsZeroer interface type), in which
+             case the field will be included if that method returns true.
+
+flow         Marshal using a flow style (useful for structs,
+             sequences and maps).
+
+inline       Inline the field, which must be a struct or a map,
+             causing all of its fields or keys to be processed as if
+             they were part of the outer struct. For maps, keys must
+             not conflict with the yaml keys of other struct fields.
+</pre>
+<p>
+In addition, if the key is &#34;-&#34;, the field is ignored.
+</p>
+<p>
+For example:
+</p>
+<pre>type T struct {
+    F int `yaml:&#34;a,omitempty&#34;`
+    B int
+}
+yaml.Marshal(&amp;T{B: 2}) // Returns &#34;b: 2\n&#34;
+yaml.Marshal(&amp;T{F: 1}} // Returns &#34;a: 1\nb: 0\n&#34;
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Unmarshal">func <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=2752:2806#L70">Unmarshal</a>
+				<a class="permalink" href="index.html#Unmarshal">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Unmarshal(in []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, out interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+Unmarshal decodes the first document found within the in byte slice
+and assigns decoded values into the out value.
+</p>
+<p>
+Maps and pointers (to a struct, string, int, etc) are accepted as out
+values. If an internal pointer within a struct is not initialized,
+the yaml package will initialize it if necessary for unmarshalling
+the provided data. The out parameter must not be nil.
+</p>
+<p>
+The type of the decoded values should be compatible with the respective
+values in out. If one or more values cannot be decoded due to a type
+mismatches, decoding continues partially until the end of the YAML
+content, and a *yaml.TypeError is returned with details for all
+missed values.
+</p>
+<p>
+Struct fields are only unmarshalled if they are exported (have an
+upper case first letter), and are unmarshalled using the field name
+lowercased as the default key. Custom keys may be defined via the
+&#34;yaml&#34; name in the field tag: the content preceding the first comma
+is used as the key, and the following comma-separated options are
+used to tweak the marshalling process (see Marshal).
+Conflicting names result in a runtime error.
+</p>
+<p>
+For example:
+</p>
+<pre>type T struct {
+    F int `yaml:&#34;a,omitempty&#34;`
+    B int
+}
+var t T
+yaml.Unmarshal([]byte(&#34;a: 1\nb: 2&#34;), &amp;t)
+</pre>
+<p>
+See the documentation of Marshal for the format of tags and a list of
+supported tag options.
+</p>
+
+			<div id="example_Unmarshal_embedded" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example (Embedded)</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example (Embedded)</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">package yaml_test
+
+import (
+    &#34;fmt&#34;
+    &#34;log&#34;
+
+    &#34;gopkg.in/yaml.v2&#34;
+)
+
+<span class="comment">// An example showing how to unmarshal embedded</span>
+<span class="comment">// structs from YAML.</span>
+
+type StructA struct {
+    A string `yaml:&#34;a&#34;`
+}
+
+type StructB struct {
+    <span class="comment">// Embedded structs are not treated as embedded in YAML by default. To do that,</span>
+    <span class="comment">// add the &#34;,inline&#34; annotation below</span>
+    StructA `yaml:&#34;,inline&#34;`
+    B       string `yaml:&#34;b&#34;`
+}
+
+var data = `
+a: a string from struct A
+b: a string from struct B
+`
+
+func ExampleUnmarshal_embedded() {
+    var b StructB
+
+    err := yaml.Unmarshal([]byte(data), &amp;b)
+    if err != nil {
+        log.Fatalf(&#34;cannot unmarshal data: %v&#34;, err)
+    }
+    fmt.Println(b.A)
+    fmt.Println(b.B)
+    <span class="comment">// Output:</span>
+    <span class="comment">// a string from struct A</span>
+    <span class="comment">// a string from struct B</span>
+}
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+
+		
+			
+			
+			<h2 id="UnmarshalStrict">func <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=3051:3111#L78">UnmarshalStrict</a>
+				<a class="permalink" href="index.html#UnmarshalStrict">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UnmarshalStrict(in []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, out interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+UnmarshalStrict is like Unmarshal except that any fields that are found
+in the data that do not have corresponding struct members, or mapping
+keys that are duplicates, will result in
+an error.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Decoder">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=3216:3268#L83">Decoder</a>
+				<a class="permalink" href="index.html#Decoder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Decorder reads and decodes YAML values from an input stream.
+</p>
+
+			<pre>type Decoder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDecoder">func <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=3434:3471#L92">NewDecoder</a>
+					<a class="permalink" href="index.html#NewDecoder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDecoder(r <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>) *<a href="index.html#Decoder">Decoder</a></pre>
+				<p>
+NewDecoder returns a new decoder that reads from r.
+</p>
+<p>
+The decoder introduces its own buffering and may read
+data from r beyond the YAML values requested.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Decoder.Decode">func (*Decoder) <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=3967:4020#L109">Decode</a>
+					<a class="permalink" href="index.html#Decoder.Decode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dec *<a href="index.html#Decoder">Decoder</a>) Decode(v interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Decode reads the next YAML-encoded value from its input
+and stores it in the value pointed to by v.
+</p>
+<p>
+See the documentation for Unmarshal for details about the
+conversion of YAML into a Go value.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Decoder.SetStrict">func (*Decoder) <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=3689:3731#L100">SetStrict</a>
+					<a class="permalink" href="index.html#Decoder.SetStrict">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (dec *<a href="index.html#Decoder">Decoder</a>) SetStrict(strict <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+SetStrict sets whether strict decoding behaviour is enabled when
+decoding items in the data (see UnmarshalStrict). By default, decoding is not strict.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Encoder">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=6917:6958#L200">Encoder</a>
+				<a class="permalink" href="index.html#Encoder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Encoder writes YAML values to an output stream.
+</p>
+
+			<pre>type Encoder struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewEncoder">func <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=7083:7120#L207">NewEncoder</a>
+					<a class="permalink" href="index.html#NewEncoder">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEncoder(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>) *<a href="index.html#Encoder">Encoder</a></pre>
+				<p>
+NewEncoder returns a new encoder that writes to w.
+The Encoder should be closed after use to flush all data
+to w.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Encoder.Close">func (*Encoder) <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=7752:7789#L228">Close</a>
+					<a class="permalink" href="index.html#Encoder.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encoder">Encoder</a>) Close() (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Close closes the encoder by writing any remaining data.
+It does not write a stream terminating string &#34;...&#34;.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Encoder.Encode">func (*Encoder) <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=7499:7550#L220">Encode</a>
+					<a class="permalink" href="index.html#Encoder.Encode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Encoder">Encoder</a>) Encode(v interface{}) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Encode writes the YAML encoding of v to the stream.
+If multiple items are encoded to the stream, the
+second and subsequent document will be preceded
+with a &#34;---&#34; document separator, but the first will not.
+</p>
+<p>
+See the documentation for Marshal for details about the conversion of Go
+values to YAML.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IsZeroer">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=12331:12373#L414">IsZeroer</a>
+				<a class="permalink" href="index.html#IsZeroer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IsZeroer is used to check whether an object is zero to
+determine whether it should be omitted when marshaling
+with the omitempty flag. One notable implementation
+is time.Time.
+</p>
+
+			<pre>type IsZeroer interface {
+    IsZero() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MapItem">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=431:478#L13">MapItem</a>
+				<a class="permalink" href="index.html#MapItem">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MapItem is an item in a MapSlice.
+</p>
+
+			<pre>type MapItem struct {
+<span id="MapItem.Key"></span>    Key, Value interface{}
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MapSlice">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=369:392#L10">MapSlice</a>
+				<a class="permalink" href="index.html#MapSlice">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MapSlice encodes and decodes as a YAML map.
+The order of keys is preserved when encoding and decoding.
+</p>
+
+			<pre>type MapSlice []<a href="index.html#MapItem">MapItem</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Marshaler">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=1254:1318#L32">Marshaler</a>
+				<a class="permalink" href="index.html#Marshaler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The Marshaler interface may be implemented by types to customize their
+behavior when being marshaled into a YAML document. The returned value
+is marshaled in place of the original value implementing Marshaler.
+</p>
+<p>
+If an error is returned by MarshalYAML, the marshaling procedure stops
+and returns with the provided error.
+</p>
+
+			<pre>type Marshaler interface {
+    MarshalYAML() (interface{}, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TypeError">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=8406:8448#L260">TypeError</a>
+				<a class="permalink" href="index.html#TypeError">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A TypeError is returned by Unmarshal when one or more fields in
+the YAML document cannot be properly decoded into the requested
+types. When this error is returned, the value is still
+unmarshaled partially.
+</p>
+
+			<pre>type TypeError struct {
+<span id="TypeError.Errors"></span>    Errors []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TypeError.Error">func (*TypeError) <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=8450:8484#L264">Error</a>
+					<a class="permalink" href="index.html#TypeError.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#TypeError">TypeError</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Unmarshaler">type <a href="http://localhost:6060/src/gopkg.in/yaml.v2/yaml.go?s=830:916#L22">Unmarshaler</a>
+				<a class="permalink" href="index.html#Unmarshaler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+The Unmarshaler interface may be implemented by types to customize their
+behavior when being unmarshaled from a YAML document. The UnmarshalYAML
+method receives a function that may be called to unmarshal the original
+YAML value into a field or variable. It is safe to call the unmarshal
+function parameter more than once if necessary.
+</p>
+
+			<pre>type Unmarshaler interface {
+    UnmarshalYAML(unmarshal func(interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

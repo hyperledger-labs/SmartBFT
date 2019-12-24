@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ccprovider - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ccprovider
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/common/ccprovider"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ChaincodePackageExists">func ChaincodePackageExists(ccname string, ccversion string) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CheckInstantiationPolicy">func CheckInstantiationPolicy(name, version string, cdLedger *ChaincodeData) error</a></dd>
+			
+				
+				<dd><a href="index.html#ExtractFileEntries">func ExtractFileEntries(tarBytes []byte, databaseType string) (map[string][]*TarFileEntry, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ExtractStatedbArtifactsForChaincode">func ExtractStatedbArtifactsForChaincode(ccname, ccversion string, pr *platforms.Registry) (installed bool, statedbArtifactsTar []byte, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#ExtractStatedbArtifactsFromCCPackage">func ExtractStatedbArtifactsFromCCPackage(ccpackage CCPackage, pr *platforms.Registry) (statedbArtifactsTar []byte, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetChaincodeInstallPathFromViper">func GetChaincodeInstallPathFromViper() string</a></dd>
+			
+				
+				<dd><a href="index.html#GetChaincodePackage">func GetChaincodePackage(ccname string, ccversion string) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetChaincodePackageFromPath">func GetChaincodePackageFromPath(ccname string, ccversion string, ccInstallPath string) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#GetInstalledChaincodes">func GetInstalledChaincodes() (*pb.ChaincodeQueryResponse, error)</a></dd>
+			
+				
+				<dd><a href="index.html#IsChaincodeDeployed">func IsChaincodeDeployed(chainid, ccName, ccVersion string, ccHash []byte, sccp sysccprovider.SystemChaincodeProvider) (bool, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewCCInfoCache">func NewCCInfoCache(cs CCCacheSupport) *ccInfoCacheImpl</a></dd>
+			
+				
+				<dd><a href="index.html#PutChaincodeIntoFS">func PutChaincodeIntoFS(depSpec *pb.ChaincodeDeploymentSpec) error</a></dd>
+			
+				
+				<dd><a href="index.html#SetChaincodesPath">func SetChaincodesPath(path string)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#CCCacheSupport">type CCCacheSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CCContext">type CCContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCContext.GetCanonicalName">func (cccid *CCContext) GetCanonicalName() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CCInfoFSImpl">type CCInfoFSImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCInfoFSImpl.GetChaincode">func (cifs *CCInfoFSImpl) GetChaincode(ccname string, ccversion string) (CCPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCInfoFSImpl.GetChaincodeCodePackage">func (cifs *CCInfoFSImpl) GetChaincodeCodePackage(ccname, ccversion string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCInfoFSImpl.GetChaincodeFromPath">func (*CCInfoFSImpl) GetChaincodeFromPath(ccname string, ccversion string, path string) (CCPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCInfoFSImpl.ListInstalledChaincodes">func (cifs *CCInfoFSImpl) ListInstalledChaincodes(dir string, ls DirEnumerator, ccFromPath ChaincodeExtractor) ([]chaincode.InstalledChaincode, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCInfoFSImpl.PutChaincode">func (*CCInfoFSImpl) PutChaincode(depSpec *pb.ChaincodeDeploymentSpec) (CCPackage, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CCPackage">type CCPackage</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetCCPackage">func GetCCPackage(buf []byte) (CCPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetChaincodeFromFS">func GetChaincodeFromFS(ccname string, ccversion string) (CCPackage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LoadPackage">func LoadPackage(ccname string, ccversion string, path string) (CCPackage, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CDSData">type CDSData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSData.Equals">func (data *CDSData) Equals(other *CDSData) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSData.ProtoMessage">func (*CDSData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSData.Reset">func (data *CDSData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSData.String">func (data *CDSData) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CDSPackage">type CDSPackage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.GetChaincodeData">func (ccpack *CDSPackage) GetChaincodeData() *ChaincodeData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.GetDepSpec">func (ccpack *CDSPackage) GetDepSpec() *pb.ChaincodeDeploymentSpec</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.GetDepSpecBytes">func (ccpack *CDSPackage) GetDepSpecBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.GetId">func (ccpack *CDSPackage) GetId() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.GetPackageObject">func (ccpack *CDSPackage) GetPackageObject() proto.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.InitFromBuffer">func (ccpack *CDSPackage) InitFromBuffer(buf []byte) (*ChaincodeData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.InitFromFS">func (ccpack *CDSPackage) InitFromFS(ccname string, ccversion string) ([]byte, *pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.InitFromPath">func (ccpack *CDSPackage) InitFromPath(ccname string, ccversion string, path string) ([]byte, *pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.PutChaincodeToFS">func (ccpack *CDSPackage) PutChaincodeToFS() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CDSPackage.ValidateCC">func (ccpack *CDSPackage) ValidateCC(ccdata *ChaincodeData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChaincodeContainerInfo">type ChaincodeContainerInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DeploymentSpecToChaincodeContainerInfo">func DeploymentSpecToChaincodeContainerInfo(cds *pb.ChaincodeDeploymentSpec) *ChaincodeContainerInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeData">type ChaincodeData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetChaincodeData">func GetChaincodeData(ccname string, ccversion string) (*ChaincodeData, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.CCName">func (cd *ChaincodeData) CCName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.CCVersion">func (cd *ChaincodeData) CCVersion() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.Endorsement">func (cd *ChaincodeData) Endorsement() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.Hash">func (cd *ChaincodeData) Hash() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.ProtoMessage">func (*ChaincodeData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.Reset">func (cd *ChaincodeData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.String">func (cd *ChaincodeData) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeData.Validation">func (cd *ChaincodeData) Validation() (string, []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChaincodeDefinition">type ChaincodeDefinition</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeExtractor">type ChaincodeExtractor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeProvider">type ChaincodeProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DirEnumerator">type DirEnumerator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignedCDSData">type SignedCDSData</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSData.Equals">func (data *SignedCDSData) Equals(other *SignedCDSData) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSData.ProtoMessage">func (*SignedCDSData) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSData.Reset">func (data *SignedCDSData) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSData.String">func (data *SignedCDSData) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignedCDSPackage">type SignedCDSPackage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetChaincodeData">func (ccpack *SignedCDSPackage) GetChaincodeData() *ChaincodeData</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetDepSpec">func (ccpack *SignedCDSPackage) GetDepSpec() *pb.ChaincodeDeploymentSpec</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetDepSpecBytes">func (ccpack *SignedCDSPackage) GetDepSpecBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetId">func (ccpack *SignedCDSPackage) GetId() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetInstantiationPolicy">func (ccpack *SignedCDSPackage) GetInstantiationPolicy() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.GetPackageObject">func (ccpack *SignedCDSPackage) GetPackageObject() proto.Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.InitFromBuffer">func (ccpack *SignedCDSPackage) InitFromBuffer(buf []byte) (*ChaincodeData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.InitFromFS">func (ccpack *SignedCDSPackage) InitFromFS(ccname string, ccversion string) ([]byte, *pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.InitFromPath">func (ccpack *SignedCDSPackage) InitFromPath(ccname string, ccversion string, path string) ([]byte, *pb.ChaincodeDeploymentSpec, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.PutChaincodeToFS">func (ccpack *SignedCDSPackage) PutChaincodeToFS() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedCDSPackage.ValidateCC">func (ccpack *SignedCDSPackage) ValidateCC(ccdata *ChaincodeData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TarFileEntry">type TarFileEntry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionParams">type TransactionParams</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_info_provider.go">cc_info_provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_statedb_artifacts_provider.go">cc_statedb_artifacts_provider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccinfocache.go">ccinfocache.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go">ccprovider.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go">cdspackage.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/common.go">common.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go">sigcdspackage.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ChaincodePackageExists">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=3436:3510#L100">ChaincodePackageExists</a>
+				<a class="permalink" href="index.html#ChaincodePackageExists">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ChaincodePackageExists(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ChaincodePackageExists returns whether the chaincode package exists in the file system
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CheckInstantiationPolicy">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=8414:8496#L244">CheckInstantiationPolicy</a>
+				<a class="permalink" href="index.html#CheckInstantiationPolicy">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CheckInstantiationPolicy(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cdLedger *<a href="index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ExtractFileEntries">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_statedb_artifacts_provider.go?s=3028:3125#L59">ExtractFileEntries</a>
+				<a class="permalink" href="index.html#ExtractFileEntries">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExtractFileEntries(tarBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, databaseType <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]*<a href="index.html#TarFileEntry">TarFileEntry</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ExtractFileEntries extract file entries from the given `tarBytes`. A file entry is included in the
+returned results only if it is located in a directory under the indicated databaseType directory
+Example for chaincode indexes:
+&#34;META-INF/statedb/couchdb/indexes/indexColorSortName.json&#34;
+Example for collection scoped indexes:
+&#34;META-INF/statedb/couchdb/collections/collectionMarbles/indexes/indexCollMarbles.json&#34;
+An empty string will have the effect of returning all statedb metadata.  This is useful in validating an
+archive in the future with multiple database types
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExtractStatedbArtifactsForChaincode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_statedb_artifacts_provider.go?s=834:980#L24">ExtractStatedbArtifactsForChaincode</a>
+				<a class="permalink" href="index.html#ExtractStatedbArtifactsForChaincode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExtractStatedbArtifactsForChaincode(ccname, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, pr *<a href="../../chaincode/platforms/index.html">platforms</a>.<a href="../../chaincode/platforms/index.html#Registry">Registry</a>) (installed <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, statedbArtifactsTar []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ExtractStatedbArtifactsAsTarbytes extracts the statedb artifacts from the code package tar and create a statedb artifact tar.
+The state db artifacts are expected to contain state db specific artifacts such as index specification in the case of couchdb.
+This function is intended to be used during chaincode instantiate/upgrade so that statedb artifacts can be created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ExtractStatedbArtifactsFromCCPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_statedb_artifacts_provider.go?s=2029:2155#L41">ExtractStatedbArtifactsFromCCPackage</a>
+				<a class="permalink" href="index.html#ExtractStatedbArtifactsFromCCPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ExtractStatedbArtifactsFromCCPackage(ccpackage <a href="index.html#CCPackage">CCPackage</a>, pr *<a href="../../chaincode/platforms/index.html">platforms</a>.<a href="../../chaincode/platforms/index.html#Registry">Registry</a>) (statedbArtifactsTar []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ExtractStatedbArtifactsFromCCPackage extracts the statedb artifacts from the code package tar and create a statedb artifact tar.
+The state db artifacts are expected to contain state db specific artifacts such as index specification in the case of couchdb.
+This function is called during chaincode instantiate/upgrade (from above), and from install, so that statedb artifacts can be created.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetChaincodeInstallPathFromViper">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/common.go?s=264:310#L6">GetChaincodeInstallPathFromViper</a>
+				<a class="permalink" href="index.html#GetChaincodeInstallPathFromViper">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChaincodeInstallPathFromViper() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetChaincodeInstallPathFromViper returns the path where chaincodes are installed
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetChaincodePackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=2485:2558#L74">GetChaincodePackage</a>
+				<a class="permalink" href="index.html#GetChaincodePackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChaincodePackage(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="GetChaincodePackageFromPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=3038:3141#L89">GetChaincodePackageFromPath</a>
+				<a class="permalink" href="index.html#GetChaincodePackageFromPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetChaincodePackageFromPath(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccInstallPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetChaincodePackage returns the chaincode package from the file system
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetInstalledChaincodes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=10735:10800#L318">GetInstalledChaincodes</a>
+				<a class="permalink" href="index.html#GetInstalledChaincodes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetInstalledChaincodes() (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeQueryResponse">ChaincodeQueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+GetInstalledChaincodes returns a map whose key is the chaincode id and
+value is the ChaincodeDeploymentSpec struct for that chaincodes that have
+been installed (but not necessarily instantiated) on the peer by searching
+the chaincode install path
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="IsChaincodeDeployed">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_info_provider.go?s=322:454#L8">IsChaincodeDeployed</a>
+				<a class="permalink" href="index.html#IsChaincodeDeployed">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsChaincodeDeployed(chainid, ccName, ccVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sccp <a href="../sysccprovider/index.html">sysccprovider</a>.<a href="../sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+IsChaincodeDeployed returns true if the chaincode with given name and version is deployed
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewCCInfoCache">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccinfocache.go?s=1034:1089#L26">NewCCInfoCache</a>
+				<a class="permalink" href="index.html#NewCCInfoCache">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewCCInfoCache(cs <a href="index.html#CCCacheSupport">CCCacheSupport</a>) *ccInfoCacheImpl</pre>
+			<p>
+NewCCInfoCache returns a new cache on top of the supplied CCInfoProvider instance
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PutChaincodeIntoFS">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=7980:8046#L233">PutChaincodeIntoFS</a>
+				<a class="permalink" href="index.html#PutChaincodeIntoFS">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PutChaincodeIntoFS(depSpec *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+PutChaincodeIntoFS puts chaincode information in the file system (and
+also in the cache to prime it) if the cache is enabled, or directly
+from the file system otherwise
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="SetChaincodesPath">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=2033:2068#L58">SetChaincodesPath</a>
+				<a class="permalink" href="index.html#SetChaincodesPath">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetChaincodesPath(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			<p>
+SetChaincodesPath sets the chaincode path for this peer
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="CCCacheSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=3703:3864#L110">CCCacheSupport</a>
+				<a class="permalink" href="index.html#CCCacheSupport">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CCCacheSupport interface {
+    <span class="comment">// GetChaincode is needed by the cache to get chaincode data</span>
+    GetChaincode(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CCContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=12755:12897#L373">CCContext</a>
+				<a class="permalink" href="index.html#CCContext">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCContext pass this around instead of string of args
+</p>
+
+			<pre>type CCContext struct {
+<span id="CCContext.Name"></span>    <span class="comment">// Name chaincode name</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="CCContext.Version"></span>    <span class="comment">// Version used to construct the chaincode image and register</span>
+    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CCContext.GetCanonicalName">func (*CCContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=12983:13032#L382">GetCanonicalName</a>
+					<a class="permalink" href="index.html#CCContext.GetCanonicalName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cccid *<a href="index.html#CCContext">CCContext</a>) GetCanonicalName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+GetCanonicalName returns the canonical name associated with the proposal context
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CCInfoFSImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=3980:4006#L117">CCInfoFSImpl</a>
+				<a class="permalink" href="index.html#CCInfoFSImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCInfoFSImpl provides the implementation for CC on the FS and the access to it
+It implements CCCacheSupport
+</p>
+
+			<pre>type CCInfoFSImpl struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CCInfoFSImpl.GetChaincode">func (*CCInfoFSImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=4146:4236#L121">GetChaincode</a>
+					<a class="permalink" href="index.html#CCInfoFSImpl.GetChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cifs *<a href="index.html#CCInfoFSImpl">CCInfoFSImpl</a>) GetChaincode(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeFromFS this is a wrapper for hiding package implementation.
+It calls GetChaincodeFromPath with the chaincodeInstallPath
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CCInfoFSImpl.GetChaincodeCodePackage">func (*CCInfoFSImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=4317:4408#L125">GetChaincodeCodePackage</a>
+					<a class="permalink" href="index.html#CCInfoFSImpl.GetChaincodeCodePackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cifs *<a href="index.html#CCInfoFSImpl">CCInfoFSImpl</a>) GetChaincodeCodePackage(ccname, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="CCInfoFSImpl.GetChaincodeFromPath">func (*CCInfoFSImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=4623:4729#L134">GetChaincodeFromPath</a>
+					<a class="permalink" href="index.html#CCInfoFSImpl.GetChaincodeFromPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CCInfoFSImpl">CCInfoFSImpl</a>) GetChaincodeFromPath(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeFromPath this is a wrapper for hiding package implementation.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CCInfoFSImpl.ListInstalledChaincodes">func (*CCInfoFSImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=5875:6025#L176">ListInstalledChaincodes</a>
+					<a class="permalink" href="index.html#CCInfoFSImpl.ListInstalledChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cifs *<a href="index.html#CCInfoFSImpl">CCInfoFSImpl</a>) ListInstalledChaincodes(dir <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ls <a href="index.html#DirEnumerator">DirEnumerator</a>, ccFromPath <a href="index.html#ChaincodeExtractor">ChaincodeExtractor</a>) ([]<a href="../../../common/chaincode/index.html">chaincode</a>.<a href="../../../common/chaincode/index.html#InstalledChaincode">InstalledChaincode</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListInstalledChaincodes retrieves the installed chaincodes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CCInfoFSImpl.PutChaincode">func (*CCInfoFSImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=5189:5278#L152">PutChaincode</a>
+					<a class="permalink" href="index.html#CCInfoFSImpl.PutChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CCInfoFSImpl">CCInfoFSImpl</a>) PutChaincode(depSpec *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PutChaincodeIntoFS is a wrapper for putting raw ChaincodeDeploymentSpec
+using CDSPackage. This is only used in UTs
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CCPackage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=821:1972#L26">CCPackage</a>
+				<a class="permalink" href="index.html#CCPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CCPackage encapsulates a chaincode package which can be
+</p>
+<pre>raw ChaincodeDeploymentSpec
+SignedChaincodeDeploymentSpec
+</pre>
+<p>
+Attempt to keep the interface at a level with minimal
+interface for possible generalization.
+</p>
+
+			<pre>type CCPackage interface {
+    <span class="comment">//InitFromBuffer initialize the package from bytes</span>
+    InitFromBuffer(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#ChaincodeData">ChaincodeData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// InitFromFS gets the chaincode from the filesystem (includes the raw bytes too)</span>
+    InitFromFS(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// PutChaincodeToFS writes the chaincode to the filesystem</span>
+    PutChaincodeToFS() <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetDepSpec gets the ChaincodeDeploymentSpec from the package</span>
+    GetDepSpec() *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>
+
+    <span class="comment">// GetDepSpecBytes gets the serialized ChaincodeDeploymentSpec from the package</span>
+    GetDepSpecBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// ValidateCC validates and returns the chaincode deployment spec corresponding to</span>
+    <span class="comment">// ChaincodeData. The validation is based on the metadata from ChaincodeData</span>
+    <span class="comment">// One use of this method is to validate the chaincode before launching</span>
+    ValidateCC(ccdata *<a href="index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// GetPackageObject gets the object as a proto.Message</span>
+    GetPackageObject() <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>
+
+    <span class="comment">// GetChaincodeData gets the ChaincodeData</span>
+    GetChaincodeData() *<a href="index.html#ChaincodeData">ChaincodeData</a>
+
+    <span class="comment">// GetId gets the fingerprint of the chaincode based on package computation</span>
+    GetId() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetCCPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=9587:9635#L273">GetCCPackage</a>
+					<a class="permalink" href="index.html#GetCCPackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetCCPackage(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetCCPackage tries each known package implementation one by one
+till the right package is found
+</p>
+
+				
+				
+			
+				
+				<h3 id="GetChaincodeFromFS">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=7664:7739#L226">GetChaincodeFromFS</a>
+					<a class="permalink" href="index.html#GetChaincodeFromFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetChaincodeFromFS(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeFromFS retrieves chaincode information from the file system
+</p>
+
+				
+				
+			
+				
+				<h3 id="LoadPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/common.go?s=453:534#L11">LoadPackage</a>
+					<a class="permalink" href="index.html#LoadPackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func LoadPackage(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LoadPackage loads a chaincode package from the file system
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CDSData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=994:1283#L26">CDSData</a>
+				<a class="permalink" href="index.html#CDSData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CDSData is data stored in the LSCC on instantiation of a CC
+for CDSPackage.  This needs to be serialized for ChaincodeData
+hence the protobuf format
+</p>
+
+			<pre>type CDSData struct {
+    <span class="comment">//CodeHash hash of CodePackage from ChaincodeDeploymentSpec</span>
+<span id="CDSData.CodeHash"></span>    CodeHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=codehash,proto3&#34;`
+
+    <span class="comment">//MetaDataHash hash of Name and Version from ChaincodeDeploymentSpec</span>
+<span id="CDSData.MetaDataHash"></span>    MetaDataHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=metadatahash,proto3&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CDSData.Equals">func (*CDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=1657:1705#L46">Equals</a>
+					<a class="permalink" href="index.html#CDSData.Equals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#CDSData">CDSData</a>) Equals(other *<a href="index.html#CDSData">CDSData</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Equals data equals other
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSData.ProtoMessage">func (*CDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=1595:1625#L43">ProtoMessage</a>
+					<a class="permalink" href="index.html#CDSData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CDSData">CDSData</a>) ProtoMessage()</pre>
+				<p>
+ProtoMessage just exists to make proto happy
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSData.Reset">func (*CDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=1389:1417#L37">Reset</a>
+					<a class="permalink" href="index.html#CDSData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#CDSData">CDSData</a>) Reset()</pre>
+				<p>
+Reset resets
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSData.String">func (*CDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=1469:1505#L40">String</a>
+					<a class="permalink" href="index.html#CDSData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#CDSData">CDSData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String converts to string
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CDSPackage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=1920:2049#L53">CDSPackage</a>
+				<a class="permalink" href="index.html#CDSPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CDSPackage encapsulates ChaincodeDeploymentSpec.
+</p>
+
+			<pre>type CDSPackage struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CDSPackage.GetChaincodeData">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=3398:3457#L102">GetChaincodeData</a>
+					<a class="permalink" href="index.html#CDSPackage.GetChaincodeData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) GetChaincodeData() *<a href="index.html#ChaincodeData">ChaincodeData</a></pre>
+				<p>
+GetChaincodeData gets the ChaincodeData
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.GetDepSpec">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=2526:2592#L77">GetDepSpec</a>
+					<a class="permalink" href="index.html#CDSPackage.GetDepSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) GetDepSpec() *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a></pre>
+				<p>
+GetDepSpec gets the ChaincodeDeploymentSpec from the package
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.GetDepSpecBytes">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=2909:2959#L87">GetDepSpecBytes</a>
+					<a class="permalink" href="index.html#CDSPackage.GetDepSpecBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) GetDepSpecBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetDepSpecBytes gets the serialized ChaincodeDeploymentSpec from the package
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.GetId">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=2205:2245#L67">GetId</a>
+					<a class="permalink" href="index.html#CDSPackage.GetId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) GetId() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetId gets the fingerprint of the chaincode based on package computation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.GetPackageObject">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=3268:3326#L97">GetPackageObject</a>
+					<a class="permalink" href="index.html#CDSPackage.GetPackageObject">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) GetPackageObject() <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+				<p>
+GetPackageObject gets the ChaincodeDeploymentSpec as proto.Message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.InitFromBuffer">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=6452:6528#L203">InitFromBuffer</a>
+					<a class="permalink" href="index.html#CDSPackage.InitFromBuffer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) InitFromBuffer(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#ChaincodeData">ChaincodeData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromBuffer sets the buffer if valid and returns ChaincodeData
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.InitFromFS">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=7633:7747#L250">InitFromFS</a>
+					<a class="permalink" href="index.html#CDSPackage.InitFromFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) InitFromFS(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromFS returns the chaincode and its package from the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.InitFromPath">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=7067:7196#L228">InitFromPath</a>
+					<a class="permalink" href="index.html#CDSPackage.InitFromPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) InitFromPath(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromFS returns the chaincode and its package from the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.PutChaincodeToFS">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=7896:7946#L255">PutChaincodeToFS</a>
+					<a class="permalink" href="index.html#CDSPackage.PutChaincodeToFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) PutChaincodeToFS() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PutChaincodeToFS - serializes chaincode to a package on the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CDSPackage.ValidateCC">func (*CDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cdspackage.go?s=5181:5246#L166">ValidateCC</a>
+					<a class="permalink" href="index.html#CDSPackage.ValidateCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#CDSPackage">CDSPackage</a>) ValidateCC(ccdata *<a href="index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ValidateCC returns error if the chaincode is not found or if its not a
+ChaincodeDeploymentSpec
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChaincodeContainerInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=16712:16958#L483">ChaincodeContainerInfo</a>
+				<a class="permalink" href="index.html#ChaincodeContainerInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeContainerInfo is yet another synonym for the data required to start/stop a chaincode.
+</p>
+
+			<pre>type ChaincodeContainerInfo struct {
+<span id="ChaincodeContainerInfo.Name"></span>    Name        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeContainerInfo.Version"></span>    Version     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeContainerInfo.Path"></span>    Path        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeContainerInfo.Type"></span>    Type        <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ChaincodeContainerInfo.CodePackage"></span>    CodePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+<span id="ChaincodeContainerInfo.ContainerType"></span>    <span class="comment">// ContainerType is not a great name, but &#39;DOCKER&#39; and &#39;SYSTEM&#39; are the valid types</span>
+    ContainerType <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="DeploymentSpecToChaincodeContainerInfo">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=18336:18436#L524">DeploymentSpecToChaincodeContainerInfo</a>
+					<a class="permalink" href="index.html#DeploymentSpecToChaincodeContainerInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func DeploymentSpecToChaincodeContainerInfo(cds *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) *<a href="index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=14407:15293#L415">ChaincodeData</a>
+				<a class="permalink" href="index.html#ChaincodeData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeData defines the datastructure for chaincodes to be serialized by proto
+Type provides an additional check by directing to use a specific package after instantiation
+Data is Type specific (see CDSPackage and SignedCDSPackage)
+</p>
+
+			<pre>type ChaincodeData struct {
+<span id="ChaincodeData.Name"></span>    <span class="comment">// Name of the chaincode</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,1,opt,name=name&#34;`
+
+<span id="ChaincodeData.Version"></span>    <span class="comment">// Version of the chaincode</span>
+    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,2,opt,name=version&#34;`
+
+<span id="ChaincodeData.Escc"></span>    <span class="comment">// Escc for the chaincode instance</span>
+    Escc <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,3,opt,name=escc&#34;`
+
+<span id="ChaincodeData.Vscc"></span>    <span class="comment">// Vscc for the chaincode instance</span>
+    Vscc <a href="http://localhost:6060/pkg/builtin/#string">string</a> `protobuf:&#34;bytes,4,opt,name=vscc&#34;`
+
+<span id="ChaincodeData.Policy"></span>    <span class="comment">// Policy endorsement policy for the chaincode instance</span>
+    Policy []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,5,opt,name=policy,proto3&#34;`
+
+<span id="ChaincodeData.Data"></span>    <span class="comment">// Data data specific to the package</span>
+    Data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,6,opt,name=data,proto3&#34;`
+
+<span id="ChaincodeData.Id"></span>    <span class="comment">// Id of the chaincode that&#39;s the unique fingerprint for the CC This is not</span>
+    <span class="comment">// currently used anywhere but serves as a good eyecatcher</span>
+    Id []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,7,opt,name=id,proto3&#34;`
+
+<span id="ChaincodeData.InstantiationPolicy"></span>    <span class="comment">// InstantiationPolicy for the chaincode</span>
+    InstantiationPolicy []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,8,opt,name=instantiation_policy,proto3&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetChaincodeData">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=8180:8258#L239">GetChaincodeData</a>
+					<a class="permalink" href="index.html#GetChaincodeData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetChaincodeData(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#ChaincodeData">ChaincodeData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetChaincodeData gets chaincode data from cache if there&#39;s one
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChaincodeData.CCName">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=15393:15433#L443">CCName</a>
+					<a class="permalink" href="index.html#ChaincodeData.CCName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) CCName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CCName returns the name of this chaincode (the name it was put in the ChaincodeRegistry with).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.CCVersion">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=15607:15650#L453">CCVersion</a>
+					<a class="permalink" href="index.html#ChaincodeData.CCVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) CCVersion() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+CCVersion returns the version of the chaincode.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.Endorsement">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=16186:16231#L467">Endorsement</a>
+					<a class="permalink" href="index.html#ChaincodeData.Endorsement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) Endorsement() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Endorsement returns how to endorse proposals for this chaincode.
+The string returns is the name of the endorsement method (usually &#39;escc&#39;).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.Hash">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=15498:15536#L448">Hash</a>
+					<a class="permalink" href="index.html#ChaincodeData.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) Hash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Hash returns the hash of the chaincode.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.ProtoMessage">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=16573:16609#L480">ProtoMessage</a>
+					<a class="permalink" href="index.html#ChaincodeData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#ChaincodeData">ChaincodeData</a>) ProtoMessage()</pre>
+				<p>
+ProtoMessage just exists to make proto happy
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.Reset">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=16355:16387#L474">Reset</a>
+					<a class="permalink" href="index.html#ChaincodeData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) Reset()</pre>
+				<p>
+Reset resets
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.String">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=16444:16484#L477">String</a>
+					<a class="permalink" href="index.html#ChaincodeData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String converts to string
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeData.Validation">func (*ChaincodeData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=15953:16007#L461">Validation</a>
+					<a class="permalink" href="index.html#ChaincodeData.Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cd *<a href="index.html#ChaincodeData">ChaincodeData</a>) Validation() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+Validation returns how to validate transactions for this chaincode.
+The string returned is the name of the validation method (usually &#39;vscc&#39;)
+and the bytes returned are the argument to the validation (in the case of
+&#39;vscc&#39;, this is a marshaled pb.VSCCArgs message).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChaincodeDefinition">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=13334:14106#L389">ChaincodeDefinition</a>
+				<a class="permalink" href="index.html#ChaincodeDefinition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+-------- ChaincodeDefinition - interface for ChaincodeData ------
+ChaincodeDefinition describes all of the necessary information for a peer to decide whether to endorse
+a proposal and whether to validate a transaction, for a particular chaincode.
+</p>
+
+			<pre>type ChaincodeDefinition interface {
+    <span class="comment">// CCName returns the name of this chaincode (the name it was put in the ChaincodeRegistry with).</span>
+    CCName() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Hash returns the hash of the chaincode.</span>
+    Hash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// CCVersion returns the version of the chaincode.</span>
+    CCVersion() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Validation returns how to validate transactions for this chaincode.</span>
+    <span class="comment">// The string returned is the name of the validation method (usually &#39;vscc&#39;)</span>
+    <span class="comment">// and the bytes returned are the argument to the validation (in the case of</span>
+    <span class="comment">// &#39;vscc&#39;, this is a marshaled pb.VSCCArgs message).</span>
+    Validation() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+
+    <span class="comment">// Endorsement returns how to endorse proposals for this chaincode.</span>
+    <span class="comment">// The string returns is the name of the endorsement method (usually &#39;escc&#39;).</span>
+    Endorsement() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeExtractor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=5718:5811#L173">ChaincodeExtractor</a>
+				<a class="permalink" href="index.html#ChaincodeExtractor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeExtractor extracts chaincode from a given path
+</p>
+
+			<pre>type ChaincodeExtractor func(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#CCPackage">CCPackage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=17728:18334#L514">ChaincodeProvider</a>
+				<a class="permalink" href="index.html#ChaincodeProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeProvider provides an abstraction layer that is
+used for different packages to interact with code in the
+chaincode package without importing it; more methods
+should be added below if necessary
+</p>
+
+			<pre>type ChaincodeProvider interface {
+    <span class="comment">// Execute executes a standard chaincode invocation for a chaincode and an input</span>
+    Execute(txParams *<a href="index.html#TransactionParams">TransactionParams</a>, cccid *<a href="index.html#CCContext">CCContext</a>, input *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// ExecuteLegacyInit is a special case for executing chaincode deployment specs,</span>
+    <span class="comment">// which are not already in the LSCC, needed for old lifecycle</span>
+    ExecuteLegacyInit(txParams *<a href="index.html#TransactionParams">TransactionParams</a>, cccid *<a href="index.html#CCContext">CCContext</a>, spec *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Response">Response</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    <span class="comment">// Stop stops the chaincode give</span>
+    Stop(ccci *<a href="index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DirEnumerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=5603:5657#L170">DirEnumerator</a>
+				<a class="permalink" href="index.html#DirEnumerator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+DirEnumerator enumerates directories
+</p>
+
+			<pre>type DirEnumerator func(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignedCDSData">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=1113:1330#L28">SignedCDSData</a>
+				<a class="permalink" href="index.html#SignedCDSData">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignedCDSData is data stored in the LSCC on instantiation of a CC
+for SignedCDSPackage. This needs to be serialized for ChaincodeData
+hence the protobuf format
+</p>
+
+			<pre>type SignedCDSData struct {
+<span id="SignedCDSData.CodeHash"></span>    CodeHash      []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,1,opt,name=hash&#34;`
+<span id="SignedCDSData.MetaDataHash"></span>    MetaDataHash  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,2,opt,name=metadatahash&#34;`
+<span id="SignedCDSData.SignatureHash"></span>    SignatureHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `protobuf:&#34;bytes,3,opt,name=signaturehash&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SignedCDSData.Equals">func (*SignedCDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=1728:1788#L46">Equals</a>
+					<a class="permalink" href="index.html#SignedCDSData.Equals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#SignedCDSData">SignedCDSData</a>) Equals(other *<a href="index.html#SignedCDSData">SignedCDSData</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Equals data equals other
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSData.ProtoMessage">func (*SignedCDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=1660:1696#L43">ProtoMessage</a>
+					<a class="permalink" href="index.html#SignedCDSData.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SignedCDSData">SignedCDSData</a>) ProtoMessage()</pre>
+				<p>
+ProtoMessage just exists to make proto happy
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSData.Reset">func (*SignedCDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=1436:1470#L37">Reset</a>
+					<a class="permalink" href="index.html#SignedCDSData.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#SignedCDSData">SignedCDSData</a>) Reset()</pre>
+				<p>
+Reset resets
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSData.String">func (*SignedCDSData) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=1528:1570#L40">String</a>
+					<a class="permalink" href="index.html#SignedCDSData.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (data *<a href="index.html#SignedCDSData">SignedCDSData</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String converts to string
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignedCDSPackage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=2079:2296#L56">SignedCDSPackage</a>
+				<a class="permalink" href="index.html#SignedCDSPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignedCDSPackage encapsulates SignedChaincodeDeploymentSpec.
+</p>
+
+			<pre>type SignedCDSPackage struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SignedCDSPackage.GetChaincodeData">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=4045:4110#L115">GetChaincodeData</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetChaincodeData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetChaincodeData() *<a href="index.html#ChaincodeData">ChaincodeData</a></pre>
+				<p>
+GetChaincodeData gets the ChaincodeData
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.GetDepSpec">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=2791:2863#L82">GetDepSpec</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetDepSpec">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetDepSpec() *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a></pre>
+				<p>
+GetDepSpec gets the ChaincodeDeploymentSpec from the package
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.GetDepSpecBytes">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=3464:3520#L100">GetDepSpecBytes</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetDepSpecBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetDepSpecBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetDepSpecBytes gets the serialized ChaincodeDeploymentSpec from the package
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.GetId">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=2464:2510#L72">GetId</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetId">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetId() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetId gets the fingerprint of the chaincode based on package computation
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.GetInstantiationPolicy">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=3173:3236#L92">GetInstantiationPolicy</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetInstantiationPolicy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetInstantiationPolicy() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+GetInstantiationPolicy gets the instantiation policy from the package
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.GetPackageObject">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=3913:3977#L110">GetPackageObject</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.GetPackageObject">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) GetPackageObject() <a href="../../../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a></pre>
+				<p>
+GetPackageObject gets the ChaincodeDeploymentSpec as proto.Message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.InitFromBuffer">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=8096:8178#L248">InitFromBuffer</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.InitFromBuffer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) InitFromBuffer(buf []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#ChaincodeData">ChaincodeData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromBuffer sets the buffer if valid and returns ChaincodeData
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.InitFromFS">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=9166:9286#L289">InitFromFS</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.InitFromFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) InitFromFS(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromFS returns the chaincode and its package from the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.InitFromPath">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=9435:9570#L294">InitFromPath</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.InitFromPath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) InitFromPath(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+InitFromPath returns the chaincode and its package from the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.PutChaincodeToFS">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=9925:9981#L311">PutChaincodeToFS</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.PutChaincodeToFS">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) PutChaincodeToFS() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+PutChaincodeToFS - serializes chaincode to a package on the file system
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedCDSPackage.ValidateCC">func (*SignedCDSPackage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/sigcdspackage.go?s=6625:6696#L207">ValidateCC</a>
+					<a class="permalink" href="index.html#SignedCDSPackage.ValidateCC">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ccpack *<a href="index.html#SignedCDSPackage">SignedCDSPackage</a>) ValidateCC(ccdata *<a href="index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ValidateCC returns error if the chaincode is not found or if its not a
+ChaincodeDeploymentSpec
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TarFileEntry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/cc_statedb_artifacts_provider.go?s=381:454#L16">TarFileEntry</a>
+				<a class="permalink" href="index.html#TarFileEntry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+tarFileEntry encapsulates a file entry and it&#39;s contents inside a tar
+</p>
+
+			<pre>type TarFileEntry struct {
+<span id="TarFileEntry.FileHeader"></span>    FileHeader  *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Header">Header</a>
+<span id="TarFileEntry.FileContent"></span>    FileContent []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionParams">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/common/ccprovider/ccprovider.go?s=17089:17513#L496">TransactionParams</a>
+				<a class="permalink" href="index.html#TransactionParams">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionParams are parameters which are tied to a particular transaction
+and which are required for invoking chaincode.
+</p>
+
+			<pre>type TransactionParams struct {
+<span id="TransactionParams.TxID"></span>    TxID                 <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TransactionParams.ChannelID"></span>    ChannelID            <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TransactionParams.SignedProp"></span>    SignedProp           *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#SignedProposal">SignedProposal</a>
+<span id="TransactionParams.Proposal"></span>    Proposal             *<a href="../../../protos/peer/index.html">pb</a>.<a href="../../../protos/peer/index.html#Proposal">Proposal</a>
+<span id="TransactionParams.TXSimulator"></span>    TXSimulator          <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#TxSimulator">TxSimulator</a>
+<span id="TransactionParams.HistoryQueryExecutor"></span>    HistoryQueryExecutor <a href="../../ledger/index.html">ledger</a>.<a href="../../ledger/index.html#HistoryQueryExecutor">HistoryQueryExecutor</a>
+<span id="TransactionParams.CollectionStore"></span>    CollectionStore      <a href="../privdata/index.html">privdata</a>.<a href="../privdata/index.html#CollectionStore">CollectionStore</a>
+<span id="TransactionParams.IsInitTransaction"></span>    IsInitTransaction    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// this is additional data passed to the chaincode</span>
+<span id="TransactionParams.ProposalDecorations"></span>    ProposalDecorations map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

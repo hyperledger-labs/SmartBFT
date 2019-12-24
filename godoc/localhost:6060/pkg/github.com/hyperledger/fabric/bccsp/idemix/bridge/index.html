@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>bridge - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package bridge
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/bccsp/idemix/bridge"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+<p>
+Copyright IBM Corp. All Rights Reserved.
+</p>
+<p>
+SPDX-License-Identifier: Apache-2.0
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#NewRandOrPanic">func NewRandOrPanic() *amcl.RAND</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Big">type Big</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Big.Bytes">func (b *Big) Bytes() ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CredRequest">type CredRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.Sign">func (cr *CredRequest) Sign(sk handlers.Big, ipk handlers.IssuerPublicKey, nonce []byte) (res []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CredRequest.Verify">func (*CredRequest) Verify(credentialRequest []byte, ipk handlers.IssuerPublicKey, nonce []byte) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Credential">type Credential</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.Sign">func (c *Credential) Sign(key handlers.IssuerSecretKey, credentialRequest []byte, attributes []bccsp.IdemixAttribute) (res []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Credential.Verify">func (*Credential) Verify(sk handlers.Big, ipk handlers.IssuerPublicKey, credential []byte, attributes []bccsp.IdemixAttribute) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Ecp">type Ecp</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Ecp.Bytes">func (o *Ecp) Bytes() ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Issuer">type Issuer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Issuer.NewKey">func (i *Issuer) NewKey(attributeNames []string) (res handlers.IssuerSecretKey, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Issuer.NewPublicKeyFromBytes">func (*Issuer) NewPublicKeyFromBytes(raw []byte, attributes []string) (res handlers.IssuerPublicKey, err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IssuerPublicKey">type IssuerPublicKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.Bytes">func (o *IssuerPublicKey) Bytes() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerPublicKey.Hash">func (o *IssuerPublicKey) Hash() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#IssuerSecretKey">type IssuerSecretKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerSecretKey.Bytes">func (o *IssuerSecretKey) Bytes() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#IssuerSecretKey.Public">func (o *IssuerSecretKey) Public() handlers.IssuerPublicKey</a></dd>
+				
+			
+				
+				<dd><a href="index.html#NymSignatureScheme">type NymSignatureScheme</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignatureScheme.Sign">func (n *NymSignatureScheme) Sign(sk handlers.Big, Nym handlers.Ecp, RNym handlers.Big, ipk handlers.IssuerPublicKey, digest []byte) (res []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NymSignatureScheme.Verify">func (*NymSignatureScheme) Verify(ipk handlers.IssuerPublicKey, Nym handlers.Ecp, signature, digest []byte) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Revocation">type Revocation</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Revocation.NewKey">func (*Revocation) NewKey() (*ecdsa.PrivateKey, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Revocation.Sign">func (*Revocation) Sign(key *ecdsa.PrivateKey, unrevokedHandles [][]byte, epoch int, alg bccsp.RevocationAlgorithm) (res []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Revocation.Verify">func (*Revocation) Verify(pk *ecdsa.PublicKey, criRaw []byte, epoch int, alg bccsp.RevocationAlgorithm) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignatureScheme">type SignatureScheme</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignatureScheme.Sign">func (s *SignatureScheme) Sign(cred []byte, sk handlers.Big, Nym handlers.Ecp, RNym handlers.Big, ipk handlers.IssuerPublicKey, attributes []bccsp.IdemixAttribute, msg []byte, rhIndex int, criRaw []byte) (res []byte, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignatureScheme.Verify">func (*SignatureScheme) Verify(ipk handlers.IssuerPublicKey, signature, digest []byte, attributes []bccsp.IdemixAttribute, rhIndex int, revocationPublicKey *ecdsa.PublicKey, epoch int) (err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#User">type User</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.MakeNym">func (u *User) MakeNym(sk handlers.Big, ipk handlers.IssuerPublicKey) (r1 handlers.Ecp, r2 handlers.Big, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.NewKey">func (u *User) NewKey() (res handlers.Big, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.NewKeyFromBytes">func (*User) NewKeyFromBytes(raw []byte) (res handlers.Big, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#User.NewPublicNymFromBytes">func (*User) NewPublicNymFromBytes(raw []byte) (r handlers.Ecp, err error)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credential.go">credential.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credrequest.go">credrequest.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go">issuer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/math.go">math.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/nymsignaturescheme.go">nymsignaturescheme.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/rand.go">rand.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/revocation.go">revocation.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/signaturescheme.go">signaturescheme.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go">user.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="NewRandOrPanic">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/rand.go?s=254:286#L4">NewRandOrPanic</a>
+				<a class="permalink" href="index.html#NewRandOrPanic">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewRandOrPanic() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a></pre>
+			<p>
+NewRandOrPanic return a new amcl PRG or panic
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Big">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/math.go?s=242:277#L4">Big</a>
+				<a class="permalink" href="index.html#Big">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Big encapsulate an amcl big integer
+</p>
+
+			<pre>type Big struct {
+<span id="Big.E"></span>    E *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#BIG">BIG</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Big.Bytes">func (*Big) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/math.go?s=279:316#L8">Bytes</a>
+					<a class="permalink" href="index.html#Big.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#Big">Big</a>) Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CredRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credrequest.go?s=559:613#L11">CredRequest</a>
+				<a class="permalink" href="index.html#CredRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CredRequest encapsulates the idemix algorithms to produce (sign) a credential request
+and verify it. Recall that a credential request is produced by a user,
+and it is verified by the issuer at credential creation time.
+</p>
+
+			<pre>type CredRequest struct {
+<span id="CredRequest.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CredRequest.Sign">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credrequest.go?s=727:839#L17">Sign</a>
+					<a class="permalink" href="index.html#CredRequest.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cr *<a href="index.html#CredRequest">CredRequest</a>) Sign(sk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, nonce []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (res []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign produces an idemix credential request. It takes in input a user secret key and
+an issuer public key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CredRequest.Verify">func (*CredRequest) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credrequest.go?s=1634:1742#L50">Verify</a>
+					<a class="permalink" href="index.html#CredRequest.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#CredRequest">CredRequest</a>) Verify(credentialRequest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, nonce []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify checks that the passed credential request is valid with the respect to the passed
+issuer public key.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Credential">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credential.go?s=637:690#L13">Credential</a>
+				<a class="permalink" href="index.html#Credential">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Credential encapsulates the idemix algorithms to produce (sign) a credential
+and verify it. Recall that a credential is produced by the Issuer upon a credential request,
+and it is verified by the requester.
+</p>
+
+			<pre>type Credential struct {
+<span id="Credential.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Credential.Sign">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credential.go?s=998:1139#L21">Sign</a>
+					<a class="permalink" href="index.html#Credential.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Credential">Credential</a>) Sign(key <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerSecretKey">IssuerSecretKey</a>, credentialRequest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, attributes []<a href="../../index.html">bccsp</a>.<a href="../../index.html#IdemixAttribute">IdemixAttribute</a>) (res []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign produces an idemix credential. It takes in input the issuer secret key,
+a serialised  credential request, and a list of attribute values.
+Notice that attributes should not contain attributes whose type is IdemixHiddenAttribute
+cause the credential needs to carry all the attribute values.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Credential.Verify">func (*Credential) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/credential.go?s=2578:2717#L64">Verify</a>
+					<a class="permalink" href="index.html#Credential.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Credential">Credential</a>) Verify(sk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, credential []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, attributes []<a href="../../index.html">bccsp</a>.<a href="../../index.html#IdemixAttribute">IdemixAttribute</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify checks that an idemix credential is cryptographically correct. It takes
+in input the user secret key (sk), the issuer public key (ipk), the serialised credential (credential),
+and a list of attributes. The list of attributes is optional, in case it is specified, Verify
+checks that the credential carries the specified attributes.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Ecp">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/math.go?s=406:441#L13">Ecp</a>
+				<a class="permalink" href="index.html#Ecp">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Ecp encapsulate an amcl elliptic curve point
+</p>
+
+			<pre>type Ecp struct {
+<span id="Ecp.E"></span>    E *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/">FP256BN</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/FP256BN/#ECP">ECP</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Ecp.Bytes">func (*Ecp) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/math.go?s=443:480#L17">Bytes</a>
+					<a class="permalink" href="index.html#Ecp.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#Ecp">Ecp</a>) Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Issuer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=1013:1062#L36">Issuer</a>
+				<a class="permalink" href="index.html#Issuer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Issuer encapsulates the idemix algorithms to generate issuer key-pairs
+</p>
+
+			<pre>type Issuer struct {
+<span id="Issuer.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Issuer.NewKey">func (*Issuer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=1106:1196#L41">NewKey</a>
+					<a class="permalink" href="index.html#Issuer.NewKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (i *<a href="index.html#Issuer">Issuer</a>) NewKey(attributeNames []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (res <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerSecretKey">IssuerSecretKey</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewKey generates a new issuer key-pair
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Issuer.NewPublicKeyFromBytes">func (*Issuer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=1450:1561#L59">NewPublicKeyFromBytes</a>
+					<a class="permalink" href="index.html#Issuer.NewPublicKeyFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Issuer">Issuer</a>) NewPublicKeyFromBytes(raw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, attributes []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (res <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IssuerPublicKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=428:490#L10">IssuerPublicKey</a>
+				<a class="permalink" href="index.html#IssuerPublicKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IssuerPublicKey encapsulate an idemix issuer public key.
+</p>
+
+			<pre>type IssuerPublicKey struct {
+<span id="IssuerPublicKey.PK"></span>    PK *<a href="../../../idemix/index.html">cryptolib</a>.<a href="../../../idemix/index.html#IssuerPublicKey">IssuerPublicKey</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IssuerPublicKey.Bytes">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=492:541#L14">Bytes</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerPublicKey.Hash">func (*IssuerPublicKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=575:614#L18">Hash</a>
+					<a class="permalink" href="index.html#IssuerPublicKey.Hash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#IssuerPublicKey">IssuerPublicKey</a>) Hash() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="IssuerSecretKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=698:754#L23">IssuerSecretKey</a>
+				<a class="permalink" href="index.html#IssuerSecretKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IssuerPublicKey encapsulate an idemix issuer secret key.
+</p>
+
+			<pre>type IssuerSecretKey struct {
+<span id="IssuerSecretKey.SK"></span>    SK *<a href="../../../idemix/index.html">cryptolib</a>.<a href="../../../idemix/index.html#IssuerKey">IssuerKey</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="IssuerSecretKey.Bytes">func (*IssuerSecretKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=756:805#L27">Bytes</a>
+					<a class="permalink" href="index.html#IssuerSecretKey.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#IssuerSecretKey">IssuerSecretKey</a>) Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="IssuerSecretKey.Public">func (*IssuerSecretKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/issuer.go?s=839:898#L31">Public</a>
+					<a class="permalink" href="index.html#IssuerSecretKey.Public">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (o *<a href="index.html#IssuerSecretKey">IssuerSecretKey</a>) Public() <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="NymSignatureScheme">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/nymsignaturescheme.go?s=428:489#L9">NymSignatureScheme</a>
+				<a class="permalink" href="index.html#NymSignatureScheme">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NymSignatureScheme encapsulates the idemix algorithms to sign and verify using an idemix
+pseudonym.
+</p>
+
+			<pre>type NymSignatureScheme struct {
+<span id="NymSignatureScheme.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NymSignatureScheme.Sign">func (*NymSignatureScheme) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/nymsignaturescheme.go?s=679:835#L15">Sign</a>
+					<a class="permalink" href="index.html#NymSignatureScheme.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#NymSignatureScheme">NymSignatureScheme</a>) Sign(sk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, Nym <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Ecp">Ecp</a>, RNym <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (res []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign produces a signature over the passed digest. It takes in input, the user secret key (sk),
+the pseudonym public key (Nym) and secret key (RNym), and the issuer public key (ipk).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NymSignatureScheme.Verify">func (*NymSignatureScheme) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/nymsignaturescheme.go?s=1836:1955#L56">Verify</a>
+					<a class="permalink" href="index.html#NymSignatureScheme.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#NymSignatureScheme">NymSignatureScheme</a>) Verify(ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, Nym <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Ecp">Ecp</a>, signature, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify checks that the passed signatures is valid with the respect to the passed digest, issuer public key,
+and pseudonym public key.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Revocation">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/revocation.go?s=394:420#L9">Revocation</a>
+				<a class="permalink" href="index.html#Revocation">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Revocation encapsulates the idemix algorithms for revocation
+</p>
+
+			<pre>type Revocation struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Revocation.NewKey">func (*Revocation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/revocation.go?s=468:522#L13">NewKey</a>
+					<a class="permalink" href="index.html#Revocation.NewKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Revocation">Revocation</a>) NewKey() (*<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewKey generate a new revocation key-pair.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Revocation.Sign">func (*Revocation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/revocation.go?s=689:828#L18">Sign</a>
+					<a class="permalink" href="index.html#Revocation.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Revocation">Revocation</a>) Sign(key *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, unrevokedHandles [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>, alg <a href="../../index.html">bccsp</a>.<a href="../../index.html#RevocationAlgorithm">RevocationAlgorithm</a>) (res []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign generates a new CRI with the respect to the passed unrevoked handles, epoch, and revocation algorithm.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Revocation.Verify">func (*Revocation) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/revocation.go?s=1479:1594#L40">Verify</a>
+					<a class="permalink" href="index.html#Revocation.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Revocation">Revocation</a>) Verify(pk *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>, criRaw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>, alg <a href="../../index.html">bccsp</a>.<a href="../../index.html#RevocationAlgorithm">RevocationAlgorithm</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify checks that the passed serialised CRI (criRaw) is valid with the respect to the passed revocation public key,
+epoch, and revocation algorithm.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignatureScheme">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/signaturescheme.go?s=529:587#L11">SignatureScheme</a>
+				<a class="permalink" href="index.html#SignatureScheme">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignatureScheme encapsulates the idemix algorithms to sign and verify using an idemix credential.
+</p>
+
+			<pre>type SignatureScheme struct {
+<span id="SignatureScheme.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SignatureScheme.Sign">func (*SignatureScheme) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/signaturescheme.go?s=822:1050#L18">Sign</a>
+					<a class="permalink" href="index.html#SignatureScheme.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#SignatureScheme">SignatureScheme</a>) Sign(cred []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, Nym <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Ecp">Ecp</a>, RNym <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, attributes []<a href="../../index.html">bccsp</a>.<a href="../../index.html#IdemixAttribute">IdemixAttribute</a>,
+    msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, rhIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, criRaw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (res []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign produces an idemix-signature with the respect to the passed serialised credential (cred),
+user secret key (sk), pseudonym public key (Nym) and secret key (RNym), issuer public key (ipk),
+and attributes to be disclosed.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignatureScheme.Verify">func (*SignatureScheme) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/signaturescheme.go?s=2702:2898#L85">Verify</a>
+					<a class="permalink" href="index.html#SignatureScheme.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#SignatureScheme">SignatureScheme</a>) Verify(ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>, signature, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, attributes []<a href="../../index.html">bccsp</a>.<a href="../../index.html#IdemixAttribute">IdemixAttribute</a>, rhIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, revocationPublicKey *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PublicKey">PublicKey</a>, epoch <a href="http://localhost:6060/pkg/builtin/#int">int</a>) (err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify checks that an idemix signature is valid with the respect to the passed issuer public key, digest, attributes,
+revocation index (rhIndex), revocation public key, and epoch.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="User">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go?s=423:470#L7">User</a>
+				<a class="permalink" href="index.html#User">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+User encapsulates the idemix algorithms to generate user secret keys and pseudonym.
+</p>
+
+			<pre>type User struct {
+<span id="User.NewRand"></span>    NewRand func() *<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/">amcl</a>.<a href="http://localhost:6060/pkg/github.com/hyperledger/fabric-amcl/amcl/#RAND">RAND</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="User.MakeNym">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go?s=1137:1252#L36">MakeNym</a>
+					<a class="permalink" href="index.html#User.MakeNym">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) MakeNym(sk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, ipk <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#IssuerPublicKey">IssuerPublicKey</a>) (r1 <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Ecp">Ecp</a>, r2 <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+MakeNym generates a new pseudonym key-pair derived from the passed user secret key (sk) and issuer public key (ipk)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.NewKey">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go?s=518:571#L12">NewKey</a>
+					<a class="permalink" href="index.html#User.NewKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u *<a href="index.html#User">User</a>) NewKey() (res <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewKey generates an idemix user secret key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="User.NewKeyFromBytes">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go?s=751:821#L25">NewKeyFromBytes</a>
+					<a class="permalink" href="index.html#User.NewKeyFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#User">User</a>) NewKeyFromBytes(raw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (res <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Big">Big</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="User.NewPublicNymFromBytes">func (*User) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/bccsp/idemix/bridge/user.go?s=1768:1842#L62">NewPublicNymFromBytes</a>
+					<a class="permalink" href="index.html#User.NewPublicNymFromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#User">User</a>) NewPublicNymFromBytes(raw []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (r <a href="../handlers/index.html">handlers</a>.<a href="../handlers/index.html#Ecp">Ecp</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

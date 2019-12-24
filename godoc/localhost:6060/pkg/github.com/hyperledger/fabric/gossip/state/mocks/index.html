@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mocks - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mocks
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/state/mocks"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#GossipMock">type GossipMock</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.Accept">func (g *GossipMock) Accept(acceptor common.MessageAcceptor, passThrough bool) (&lt;-chan *proto.GossipMessage, &lt;-chan proto.ReceivedMessage)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.Gossip">func (g *GossipMock) Gossip(msg *proto.GossipMessage)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.IdentityInfo">func (g *GossipMock) IdentityInfo() api.PeerIdentitySet</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.JoinChan">func (g *GossipMock) JoinChan(joinMsg api.JoinChannelMessage, chainID common.ChainID)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.LeaveChan">func (g *GossipMock) LeaveChan(_ common.ChainID)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.PeerFilter">func (*GossipMock) PeerFilter(channel common.ChainID, messagePredicate api.SubChannelSelectionCriteria) (filter.RoutingFilter, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.Peers">func (g *GossipMock) Peers() []discovery.NetworkMember</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.PeersOfChannel">func (g *GossipMock) PeersOfChannel(chainID common.ChainID) []discovery.NetworkMember</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.SelfChannelInfo">func (g *GossipMock) SelfChannelInfo(common.ChainID) *proto.SignedGossipMessage</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.SelfMembershipInfo">func (g *GossipMock) SelfMembershipInfo() discovery.NetworkMember</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.Send">func (g *GossipMock) Send(msg *proto.GossipMessage, peers ...*comm.RemotePeer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.SendByCriteria">func (g *GossipMock) SendByCriteria(*proto.SignedGossipMessage, gossip.SendCriteria) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.Stop">func (g *GossipMock) Stop()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.SuspectPeers">func (g *GossipMock) SuspectPeers(s api.PeerSuspector)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.UpdateChaincodes">func (g *GossipMock) UpdateChaincodes(chaincode []*proto.Chaincode, chainID common.ChainID)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.UpdateLedgerHeight">func (g *GossipMock) UpdateLedgerHeight(height uint64, chainID common.ChainID)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GossipMock.UpdateMetadata">func (g *GossipMock) UpdateMetadata(metadata []byte)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go">gossip.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="GossipMock">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=481:518#L10">GossipMock</a>
+				<a class="permalink" href="index.html#GossipMock">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type GossipMock struct {
+    <a href="../../../../../stretchr/testify/mock/index.html">mock</a>.<a href="../../../../../stretchr/testify/mock/index.html#Mock">Mock</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GossipMock.Accept">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1950:2088#L67">Accept</a>
+					<a class="permalink" href="index.html#GossipMock.Accept">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) Accept(acceptor <a href="../../common/index.html">common</a>.<a href="../../common/index.html#MessageAcceptor">MessageAcceptor</a>, passThrough <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (&lt;-chan *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#GossipMessage">GossipMessage</a>, &lt;-chan <a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.Gossip">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1876:1929#L63">Gossip</a>
+					<a class="permalink" href="index.html#GossipMock.Gossip">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) Gossip(msg *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#GossipMessage">GossipMessage</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.IdentityInfo">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=2422:2477#L79">IdentityInfo</a>
+					<a class="permalink" href="index.html#GossipMock.IdentityInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) IdentityInfo() <a href="../../api/index.html">api</a>.<a href="../../api/index.html#PeerIdentitySet">PeerIdentitySet</a></pre>
+				<p>
+IdentityInfo returns information known peer identities
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.JoinChan">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=2273:2358#L75">JoinChan</a>
+					<a class="permalink" href="index.html#GossipMock.JoinChan">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) JoinChan(joinMsg <a href="../../api/index.html">api</a>.<a href="../../api/index.html#JoinChannelMessage">JoinChannelMessage</a>, chainID <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.LeaveChan">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1335:1383#L42">LeaveChan</a>
+					<a class="permalink" href="index.html#GossipMock.LeaveChan">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) LeaveChan(_ <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.PeerFilter">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=722:855#L22">PeerFilter</a>
+					<a class="permalink" href="index.html#GossipMock.PeerFilter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#GossipMock">GossipMock</a>) PeerFilter(channel <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>, messagePredicate <a href="../../api/index.html">api</a>.<a href="../../api/index.html#SubChannelSelectionCriteria">SubChannelSelectionCriteria</a>) (<a href="../../filter/index.html">filter</a>.<a href="../../filter/index.html#RoutingFilter">RoutingFilter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.Peers">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1518:1572#L50">Peers</a>
+					<a class="permalink" href="index.html#GossipMock.Peers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) Peers() []<a href="../../discovery/index.html">discovery</a>.<a href="../../discovery/index.html#NetworkMember">NetworkMember</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.PeersOfChannel">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1632:1717#L54">PeersOfChannel</a>
+					<a class="permalink" href="index.html#GossipMock.PeersOfChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) PeersOfChannel(chainID <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>) []<a href="../../discovery/index.html">discovery</a>.<a href="../../discovery/index.html#NetworkMember">NetworkMember</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.SelfChannelInfo">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=614:693#L18">SelfChannelInfo</a>
+					<a class="permalink" href="index.html#GossipMock.SelfChannelInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) SelfChannelInfo(<a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>) *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.SelfMembershipInfo">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=520:585#L14">SelfMembershipInfo</a>
+					<a class="permalink" href="index.html#GossipMock.SelfMembershipInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) SelfMembershipInfo() <a href="../../discovery/index.html">discovery</a>.<a href="../../discovery/index.html#NetworkMember">NetworkMember</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.Send">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1412:1490#L46">Send</a>
+					<a class="permalink" href="index.html#GossipMock.Send">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) Send(msg *<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#GossipMessage">GossipMessage</a>, peers ...*<a href="../../comm/index.html">comm</a>.<a href="../../comm/index.html#RemotePeer">RemotePeer</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.SendByCriteria">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=2543:2633#L87">SendByCriteria</a>
+					<a class="permalink" href="index.html#GossipMock.SendByCriteria">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) SendByCriteria(*<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>, <a href="../../gossip/index.html">gossip</a>.<a href="../../gossip/index.html#SendCriteria">SendCriteria</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.Stop">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=2509:2536#L83">Stop</a>
+					<a class="permalink" href="index.html#GossipMock.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) Stop()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.SuspectPeers">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=884:938#L26">SuspectPeers</a>
+					<a class="permalink" href="index.html#GossipMock.SuspectPeers">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) SuspectPeers(s <a href="../../api/index.html">api</a>.<a href="../../api/index.html#PeerSuspector">PeerSuspector</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.UpdateChaincodes">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1237:1328#L38">UpdateChaincodes</a>
+					<a class="permalink" href="index.html#GossipMock.UpdateChaincodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) UpdateChaincodes(chaincode []*<a href="../../../protos/gossip/index.html">proto</a>.<a href="../../../protos/gossip/index.html#Chaincode">Chaincode</a>, chainID <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>)</pre>
+				<p>
+UpdateChaincodes updates the chaincodes the peer publishes
+to other peers in the channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.UpdateLedgerHeight">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1057:1135#L32">UpdateLedgerHeight</a>
+					<a class="permalink" href="index.html#GossipMock.UpdateLedgerHeight">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) UpdateLedgerHeight(height <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, chainID <a href="../../common/index.html">common</a>.<a href="../../common/index.html#ChainID">ChainID</a>)</pre>
+				<p>
+UpdateLedgerHeight updates the ledger height the peer
+publishes to other peers in the channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="GossipMock.UpdateMetadata">func (*GossipMock) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/state/mocks/gossip.go?s=1798:1850#L59">UpdateMetadata</a>
+					<a class="permalink" href="index.html#GossipMock.UpdateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#GossipMock">GossipMock</a>) UpdateMetadata(metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

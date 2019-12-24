@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>serial - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package serial
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/cmd/guru/serial"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package serial defines the guru&#39;s schema for -json output.
+</p>
+<p>
+The output of a guru query is a stream of one or more JSON objects.
+This table shows the types of objects in the result stream for each
+query type.
+</p>
+<pre>Query      Result stream
+-----      -------------
+callees    Callees
+callers    Caller ...
+callstack  CallStack
+definition Definition
+describe   Describe
+freevars   FreeVar ...
+implements Implements
+peers      Peers
+pointsto   PointsTo ...
+referrers  ReferrersInitial ReferrersPackage ...
+what       What
+whicherrs  WhichErrs
+</pre>
+<p>
+All &#39;pos&#39; strings in the output are of the form &#34;file:line:col&#34;,
+where line is the 1-based line number and col is the 1-based byte index.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CallStack">type CallStack</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Callee">type Callee</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Callees">type Callees</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Caller">type Caller</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Definition">type Definition</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Describe">type Describe</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DescribeMember">type DescribeMember</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DescribeMethod">type DescribeMethod</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DescribePackage">type DescribePackage</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DescribeType">type DescribeType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#DescribeValue">type DescribeValue</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FreeVar">type FreeVar</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Implements">type Implements</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ImplementsType">type ImplementsType</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Peers">type Peers</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PointsTo">type PointsTo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PointsToLabel">type PointsToLabel</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Ref">type Ref</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReferrersInitial">type ReferrersInitial</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReferrersPackage">type ReferrersPackage</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SyntaxNode">type SyntaxNode</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#What">type What</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#WhichErrs">type WhichErrs</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#WhichErrsType">type WhichErrsType</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go">serial.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CallStack">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=3630:3859#L86">CallStack</a>
+				<a class="permalink" href="index.html#CallStack">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A CallStack is the result of a &#39;callstack&#39; query.
+It indicates an arbitrary path from the root of the callgraph to
+the query function.
+</p>
+<p>
+If the Callers slice is empty, the function was unreachable in this
+analysis scope.
+</p>
+
+			<pre>type CallStack struct {
+<span id="CallStack.Pos"></span>    Pos     <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `json:&#34;pos&#34;`     <span class="comment">// location of the selected function</span>
+<span id="CallStack.Target"></span>    Target  <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `json:&#34;target&#34;`  <span class="comment">// the selected function</span>
+<span id="CallStack.Callers"></span>    Callers []<a href="index.html#Caller">Caller</a> `json:&#34;callers&#34;` <span class="comment">// enclosing calls, innermost first.</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Callee">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=2832:2969#L64">Callee</a>
+				<a class="permalink" href="index.html#Callee">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Callees is the result of a &#39;callees&#39; query.
+</p>
+<p>
+Callees is nonempty unless the call was a dynamic call on a
+provably nil func or interface value.
+</p>
+
+			<pre>type Callee struct {
+<span id="Callee.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;name&#34;` <span class="comment">// full name of called function</span>
+<span id="Callee.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of called function</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Callees">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=2644:2830#L59">Callees</a>
+				<a class="permalink" href="index.html#Callees">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Callees is the result of a &#39;callees&#39; query.
+</p>
+<p>
+Callees is nonempty unless the call was a dynamic call on a
+provably nil func or interface value.
+</p>
+
+			<pre>type Callees struct {
+<span id="Callees.Pos"></span>    Pos     <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `json:&#34;pos&#34;`  <span class="comment">// location of selected call site</span>
+<span id="Callees.Desc"></span>    Desc    <a href="http://localhost:6060/pkg/builtin/#string">string</a>    `json:&#34;desc&#34;` <span class="comment">// description of call site</span>
+<span id="Callees.Callees"></span>    Callees []*<a href="index.html#Callee">Callee</a> `json:&#34;callees&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Caller">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=3158:3391#L74">Caller</a>
+				<a class="permalink" href="index.html#Caller">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Caller is one element of the slice returned by a &#39;callers&#39; query.
+(Callstack also contains a similar slice.)
+</p>
+<p>
+The root of the callgraph has an unspecified &#34;Caller&#34; string.
+</p>
+
+			<pre>type Caller struct {
+<span id="Caller.Pos"></span>    Pos    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos,omitempty&#34;` <span class="comment">// location of the calling function</span>
+<span id="Caller.Desc"></span>    Desc   <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;`          <span class="comment">// description of call site</span>
+<span id="Caller.Caller"></span>    Caller <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;caller&#34;`        <span class="comment">// full name of calling function</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Definition">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=2303:2478#L49">Definition</a>
+				<a class="permalink" href="index.html#Definition">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Definition is the result of a &#39;definition&#39; query.
+</p>
+
+			<pre>type Definition struct {
+<span id="Definition.ObjPos"></span>    ObjPos <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;objpos,omitempty&#34;` <span class="comment">// location of the definition</span>
+<span id="Definition.Desc"></span>    Desc   <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;`             <span class="comment">// description of the denoted object</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Describe">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=10487:11002#L225">Describe</a>
+				<a class="permalink" href="index.html#Describe">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Describe is the result of a &#39;describe&#39; query.
+It may contain an element describing the selected semantic entity
+in detail.
+</p>
+
+			<pre>type Describe struct {
+<span id="Describe.Desc"></span>    Desc   <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;`             <span class="comment">// description of the selected syntax node</span>
+<span id="Describe.Pos"></span>    Pos    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`              <span class="comment">// location of the selected syntax node</span>
+<span id="Describe.Detail"></span>    Detail <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;detail,omitempty&#34;` <span class="comment">// one of {package, type, value}, or &#34;&#34;.</span>
+
+    <span class="comment">// At most one of the following fields is populated:</span>
+    <span class="comment">// the one specified by &#39;detail&#39;.</span>
+<span id="Describe.Package"></span>    Package *<a href="index.html#DescribePackage">DescribePackage</a> `json:&#34;package,omitempty&#34;`
+<span id="Describe.Type"></span>    Type    *<a href="index.html#DescribeType">DescribeType</a>    `json:&#34;type,omitempty&#34;`
+<span id="Describe.Value"></span>    Value   *<a href="index.html#DescribeValue">DescribeValue</a>   `json:&#34;value,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DescribeMember">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=9499:10040#L206">DescribeMember</a>
+				<a class="permalink" href="index.html#DescribeMember">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DescribeMember struct {
+<span id="DescribeMember.Name"></span>    Name    <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;name&#34;`              <span class="comment">// name of member</span>
+<span id="DescribeMember.Type"></span>    Type    <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;type,omitempty&#34;`    <span class="comment">// type of member (underlying, if &#39;type&#39;)</span>
+<span id="DescribeMember.Value"></span>    Value   <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;value,omitempty&#34;`   <span class="comment">// value of member (if &#39;const&#39;)</span>
+<span id="DescribeMember.Pos"></span>    Pos     <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;pos&#34;`               <span class="comment">// location of definition of member</span>
+<span id="DescribeMember.Kind"></span>    Kind    <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;kind&#34;`              <span class="comment">// one of {var,const,func,type}</span>
+<span id="DescribeMember.Methods"></span>    Methods []<a href="index.html#DescribeMethod">DescribeMethod</a> `json:&#34;methods,omitempty&#34;` <span class="comment">// methods (if member is a type)</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DescribeMethod">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=8833:9011#L192">DescribeMethod</a>
+				<a class="permalink" href="index.html#DescribeMethod">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DescribeMethod struct {
+<span id="DescribeMethod.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;name&#34;` <span class="comment">// method name, as defined by types.Selection.String()</span>
+<span id="DescribeMethod.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of the method&#39;s definition</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DescribePackage">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=10145:10351#L217">DescribePackage</a>
+				<a class="permalink" href="index.html#DescribePackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DescribePackage is the additional result of a &#39;describe&#39; if
+the selection indicates a package.
+</p>
+
+			<pre>type DescribePackage struct {
+<span id="DescribePackage.Path"></span>    Path    <a href="http://localhost:6060/pkg/builtin/#string">string</a>            `json:&#34;path&#34;`              <span class="comment">// import path of the package</span>
+<span id="DescribePackage.Members"></span>    Members []*<a href="index.html#DescribeMember">DescribeMember</a> `json:&#34;members,omitempty&#34;` <span class="comment">// accessible members of the package</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DescribeType">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=9116:9497#L199">DescribeType</a>
+				<a class="permalink" href="index.html#DescribeType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DescribeType is the additional result of a &#39;describe&#39; query
+if the selection indicates a type.
+</p>
+
+			<pre>type DescribeType struct {
+<span id="DescribeType.Type"></span>    Type    <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;type&#34;`              <span class="comment">// the string form of the type</span>
+<span id="DescribeType.NamePos"></span>    NamePos <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;namepos,omitempty&#34;` <span class="comment">// location of definition of type, if named</span>
+<span id="DescribeType.NameDef"></span>    NameDef <a href="http://localhost:6060/pkg/builtin/#string">string</a>           `json:&#34;namedef,omitempty&#34;` <span class="comment">// underlying definition of type, if named</span>
+<span id="DescribeType.Methods"></span>    Methods []<a href="index.html#DescribeMethod">DescribeMethod</a> `json:&#34;methods,omitempty&#34;` <span class="comment">// methods of the type</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="DescribeValue">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=8436:8831#L185">DescribeValue</a>
+				<a class="permalink" href="index.html#DescribeValue">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DescribeValue is the additional result of a &#39;describe&#39; query
+if the selection indicates a value or expression.
+</p>
+
+			<pre>type DescribeValue struct {
+<span id="DescribeValue.Type"></span>    Type     <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;type&#34;`               <span class="comment">// type of the expression</span>
+<span id="DescribeValue.Value"></span>    Value    <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;value,omitempty&#34;`    <span class="comment">// value of the expression, if constant</span>
+<span id="DescribeValue.ObjPos"></span>    ObjPos   <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;objpos,omitempty&#34;`   <span class="comment">// location of the definition, if an Ident</span>
+<span id="DescribeValue.TypesPos"></span>    TypesPos []<a href="index.html#Definition">Definition</a> `json:&#34;typespos,omitempty&#34;` <span class="comment">// location of the named types, that type consist of</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FreeVar">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=4043:4327#L95">FreeVar</a>
+				<a class="permalink" href="index.html#FreeVar">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A FreeVar is one element of the slice returned by a &#39;freevars&#39;
+query.  Each one identifies an expression referencing a local
+identifier defined outside the selected region.
+</p>
+
+			<pre>type FreeVar struct {
+<span id="FreeVar.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of the identifier&#39;s definition</span>
+<span id="FreeVar.Kind"></span>    Kind <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;kind&#34;` <span class="comment">// one of {var,func,type,const,label}</span>
+<span id="FreeVar.Ref"></span>    Ref  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;ref&#34;`  <span class="comment">// referring expression (e.g. &#34;x&#34; or &#34;x.y.z&#34;)</span>
+<span id="FreeVar.Type"></span>    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;type&#34;` <span class="comment">// type of the expression</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Implements">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=4602:5547#L107">Implements</a>
+				<a class="permalink" href="index.html#Implements">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Implements contains the result of an &#39;implements&#39; query.
+It describes the queried type, the set of named non-empty interface
+types to which it is assignable, and the set of named/*named types
+(concrete or non-empty interface) which may be assigned to it.
+</p>
+
+			<pre>type Implements struct {
+<span id="Implements.T"></span>    T                 <a href="index.html#ImplementsType">ImplementsType</a>   `json:&#34;type,omitempty&#34;`    <span class="comment">// the queried type</span>
+<span id="Implements.AssignableTo"></span>    AssignableTo      []<a href="index.html#ImplementsType">ImplementsType</a> `json:&#34;to,omitempty&#34;`      <span class="comment">// types assignable to T</span>
+<span id="Implements.AssignableFrom"></span>    AssignableFrom    []<a href="index.html#ImplementsType">ImplementsType</a> `json:&#34;from,omitempty&#34;`    <span class="comment">// interface types assignable from T</span>
+<span id="Implements.AssignableFromPtr"></span>    AssignableFromPtr []<a href="index.html#ImplementsType">ImplementsType</a> `json:&#34;fromptr,omitempty&#34;` <span class="comment">// interface types assignable only from *T</span>
+
+    <span class="comment">// The following fields are set only if the query was a method.</span>
+    <span class="comment">// Assignable{To,From,FromPtr}Method[i] is the corresponding</span>
+    <span class="comment">// method of type Assignable{To,From,FromPtr}[i], or blank</span>
+    <span class="comment">// {&#34;&#34;,&#34;&#34;} if that type lacks the method.</span>
+<span id="Implements.Method"></span>    Method                  *<a href="index.html#DescribeMethod">DescribeMethod</a>  `json:&#34;method,omitempty&#34;` <span class="comment">//  the queried method</span>
+<span id="Implements.AssignableToMethod"></span>    AssignableToMethod      []<a href="index.html#DescribeMethod">DescribeMethod</a> `json:&#34;to_method,omitempty&#34;`
+<span id="Implements.AssignableFromMethod"></span>    AssignableFromMethod    []<a href="index.html#DescribeMethod">DescribeMethod</a> `json:&#34;from_method,omitempty&#34;`
+<span id="Implements.AssignableFromPtrMethod"></span>    AssignableFromPtrMethod []<a href="index.html#DescribeMethod">DescribeMethod</a> `json:&#34;fromptr_method,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ImplementsType">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=5628:5819#L124">ImplementsType</a>
+				<a class="permalink" href="index.html#ImplementsType">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An ImplementsType describes a single type as part of an &#39;implements&#39; query.
+</p>
+
+			<pre>type ImplementsType struct {
+<span id="ImplementsType.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;name&#34;` <span class="comment">// full name of the type</span>
+<span id="ImplementsType.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of its definition</span>
+<span id="ImplementsType.Kind"></span>    Kind <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;kind&#34;` <span class="comment">// &#34;basic&#34;, &#34;array&#34;, etc</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Peers">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=1100:1623#L22">Peers</a>
+				<a class="permalink" href="index.html#Peers">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Peers is the result of a &#39;peers&#39; query.
+If Allocs is empty, the selected channel can&#39;t point to anything.
+</p>
+
+			<pre>type Peers struct {
+<span id="Peers.Pos"></span>    Pos      <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `json:&#34;pos&#34;`                <span class="comment">// location of the selected channel op (&lt;-)</span>
+<span id="Peers.Type"></span>    Type     <a href="http://localhost:6060/pkg/builtin/#string">string</a>   `json:&#34;type&#34;`               <span class="comment">// type of the selected channel</span>
+<span id="Peers.Allocs"></span>    Allocs   []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;allocs,omitempty&#34;`   <span class="comment">// locations of aliased make(chan) ops</span>
+<span id="Peers.Sends"></span>    Sends    []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;sends,omitempty&#34;`    <span class="comment">// locations of aliased ch&lt;-x ops</span>
+<span id="Peers.Receives"></span>    Receives []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;receives,omitempty&#34;` <span class="comment">// locations of aliased &lt;-ch ops</span>
+<span id="Peers.Closes"></span>    Closes   []<a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;closes,omitempty&#34;`   <span class="comment">// locations of aliased close(ch) ops</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PointsTo">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=8044:8315#L177">PointsTo</a>
+				<a class="permalink" href="index.html#PointsTo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PointsTo is one element of the result of a &#39;pointsto&#39; query on an
+expression.  It describes a single pointer: its type and the set of
+&#34;labels&#34; it points to.
+</p>
+<p>
+If the pointer is of interface type, it will have one PTS entry
+describing each concrete type that it may contain.  For each
+concrete type that is a pointer, the PTS entry describes the labels
+it may point to.  The same is true for reflect.Values, except the
+dynamic types needn&#39;t be concrete.
+</p>
+
+			<pre>type PointsTo struct {
+<span id="PointsTo.Type"></span>    Type    <a href="http://localhost:6060/pkg/builtin/#string">string</a>          `json:&#34;type&#34;`              <span class="comment">// (concrete) type of the pointer</span>
+<span id="PointsTo.NamePos"></span>    NamePos <a href="http://localhost:6060/pkg/builtin/#string">string</a>          `json:&#34;namepos,omitempty&#34;` <span class="comment">// location of type defn, if Named</span>
+<span id="PointsTo.Labels"></span>    Labels  []<a href="index.html#PointsToLabel">PointsToLabel</a> `json:&#34;labels,omitempty&#34;`  <span class="comment">// pointed-to objects</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PointsToLabel">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=7400:7559#L162">PointsToLabel</a>
+				<a class="permalink" href="index.html#PointsToLabel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PointsToLabel describes a pointer analysis label.
+</p>
+<p>
+A &#34;label&#34; is an object that may be pointed to by a pointer, map,
+channel, &#39;func&#39;, slice or interface.  Labels include:
+</p>
+<pre>- functions
+- globals
+- arrays created by literals (e.g. []byte(&#34;foo&#34;)) and conversions ([]byte(s))
+- stack- and heap-allocated variables (including composite literals)
+- arrays allocated by append()
+- channels, maps and arrays created by make()
+- and their subelements, e.g. &#34;alloc.y[*].z&#34;
+</pre>
+
+			<pre>type PointsToLabel struct {
+<span id="PointsToLabel.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of syntax that allocated the object</span>
+<span id="PointsToLabel.Desc"></span>    Desc <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;` <span class="comment">// description of the label</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Ref">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=2113:2244#L42">Ref</a>
+				<a class="permalink" href="index.html#Ref">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A &#34;referrers&#34; query emits a ReferrersInitial object followed by zero or
+more ReferrersPackage objects, one per package that contains a reference.
+</p>
+
+			<pre>type Ref struct {
+<span id="Ref.Pos"></span>    Pos  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;pos&#34;`  <span class="comment">// location of all references</span>
+<span id="Ref.Text"></span>    Text <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;text&#34;` <span class="comment">// text of the referring line</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReferrersInitial">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=1785:1964#L34">ReferrersInitial</a>
+				<a class="permalink" href="index.html#ReferrersInitial">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A &#34;referrers&#34; query emits a ReferrersInitial object followed by zero or
+more ReferrersPackage objects, one per package that contains a reference.
+</p>
+
+			<pre>type ReferrersInitial struct {
+<span id="ReferrersInitial.ObjPos"></span>    ObjPos <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;objpos,omitempty&#34;` <span class="comment">// location of the definition</span>
+<span id="ReferrersInitial.Desc"></span>    Desc   <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;`             <span class="comment">// description of the denoted object</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReferrersPackage">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=1966:2111#L38">ReferrersPackage</a>
+				<a class="permalink" href="index.html#ReferrersPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A &#34;referrers&#34; query emits a ReferrersInitial object followed by zero or
+more ReferrersPackage objects, one per package that contains a reference.
+</p>
+
+			<pre>type ReferrersPackage struct {
+<span id="ReferrersPackage.Package"></span>    Package <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;package&#34;`
+<span id="ReferrersPackage.Refs"></span>    Refs    []<a href="index.html#Ref">Ref</a>  `json:&#34;refs&#34;` <span class="comment">// non-empty list of references within this package</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SyntaxNode">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=5911:6121#L132">SyntaxNode</a>
+				<a class="permalink" href="index.html#SyntaxNode">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A SyntaxNode is one element of a stack of enclosing syntax nodes in
+a &#34;what&#34; query.
+</p>
+
+			<pre>type SyntaxNode struct {
+<span id="SyntaxNode.Description"></span>    Description <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;desc&#34;`  <span class="comment">// description of syntax tree</span>
+<span id="SyntaxNode.Start"></span>    Start       <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `json:&#34;start&#34;` <span class="comment">// start byte offset, 0-based</span>
+<span id="SyntaxNode.End"></span>    End         <a href="http://localhost:6060/pkg/builtin/#int">int</a>    `json:&#34;end&#34;`   <span class="comment">// end byte offset</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="What">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=6287:6879#L141">What</a>
+				<a class="permalink" href="index.html#What">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A What is the result of the &#34;what&#34; query, which quickly identifies
+the selection, parsing only a single file.  It is intended for use
+in low-latency GUIs.
+</p>
+
+			<pre>type What struct {
+<span id="What.Enclosing"></span>    Enclosing  []<a href="index.html#SyntaxNode">SyntaxNode</a> `json:&#34;enclosing&#34;`            <span class="comment">// enclosing nodes of syntax tree</span>
+<span id="What.Modes"></span>    Modes      []<a href="http://localhost:6060/pkg/builtin/#string">string</a>     `json:&#34;modes&#34;`                <span class="comment">// query modes enabled for this selection.</span>
+<span id="What.SrcDir"></span>    SrcDir     <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;srcdir,omitempty&#34;`     <span class="comment">// $GOROOT src directory containing queried package</span>
+<span id="What.ImportPath"></span>    ImportPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;importpath,omitempty&#34;` <span class="comment">// import path of queried package</span>
+<span id="What.Object"></span>    Object     <a href="http://localhost:6060/pkg/builtin/#string">string</a>       `json:&#34;object,omitempty&#34;`     <span class="comment">// name of identified object, if any</span>
+<span id="What.SameIDs"></span>    SameIDs    []<a href="http://localhost:6060/pkg/builtin/#string">string</a>     `json:&#34;sameids,omitempty&#34;`    <span class="comment">// locations of references to same object</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WhichErrs">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=11173:11510#L240">WhichErrs</a>
+				<a class="permalink" href="index.html#WhichErrs">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A WhichErrs is the result of a &#39;whicherrs&#39; query.
+It contains the position of the queried error and the possible globals,
+constants, and types it may point to.
+</p>
+
+			<pre>type WhichErrs struct {
+<span id="WhichErrs.ErrPos"></span>    ErrPos    <a href="http://localhost:6060/pkg/builtin/#string">string</a>          `json:&#34;errpos,omitempty&#34;`    <span class="comment">// location of queried error</span>
+<span id="WhichErrs.Globals"></span>    Globals   []<a href="http://localhost:6060/pkg/builtin/#string">string</a>        `json:&#34;globals,omitempty&#34;`   <span class="comment">// locations of globals</span>
+<span id="WhichErrs.Constants"></span>    Constants []<a href="http://localhost:6060/pkg/builtin/#string">string</a>        `json:&#34;constants,omitempty&#34;` <span class="comment">// locations of constants</span>
+<span id="WhichErrs.Types"></span>    Types     []<a href="index.html#WhichErrsType">WhichErrsType</a> `json:&#34;types,omitempty&#34;`     <span class="comment">// Types</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WhichErrsType">type <a href="http://localhost:6060/src/golang.org/x/tools/cmd/guru/serial/serial.go?s=11512:11627#L247">WhichErrsType</a>
+				<a class="permalink" href="index.html#WhichErrsType">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type WhichErrsType struct {
+<span id="WhichErrsType.Type"></span>    Type     <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;type,omitempty&#34;`
+<span id="WhichErrsType.Position"></span>    Position <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;position,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

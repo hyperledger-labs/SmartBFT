@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>util - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package util
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/container/util"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#GetDockerfileFromConfig">func GetDockerfileFromConfig(path string) string</a></dd>
+			
+				
+				<dd><a href="index.html#NewDockerClient">func NewDockerClient() (client *docker.Client, err error)</a></dd>
+			
+				
+				<dd><a href="index.html#ParseDockerfileTemplate">func ParseDockerfileTemplate(template string) string</a></dd>
+			
+				
+				<dd><a href="index.html#WriteBytesToPackage">func WriteBytesToPackage(name string, payload []byte, tw *tar.Writer) error</a></dd>
+			
+				
+				<dd><a href="index.html#WriteFileToPackage">func WriteFileToPackage(localpath string, packagepath string, tw *tar.Writer) error</a></dd>
+			
+				
+				<dd><a href="index.html#WriteFolderToTarPackage">func WriteFolderToTarPackage(tw *tar.Writer, srcPath string, excludeDirs []string, includeFileTypeMap map[string]bool, excludeFileTypeMap map[string]bool) error</a></dd>
+			
+				
+				<dd><a href="index.html#WriteJavaProjectToPackage">func WriteJavaProjectToPackage(tw *tar.Writer, srcPath string) error</a></dd>
+			
+				
+				<dd><a href="index.html#WriteStreamToPackage">func WriteStreamToPackage(is io.Reader, localpath string, packagepath string, tw *tar.Writer) error</a></dd>
+			
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/dockerutil.go">dockerutil.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go">writer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="GetDockerfileFromConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/dockerutil.go?s=1135:1183#L35">GetDockerfileFromConfig</a>
+				<a class="permalink" href="index.html#GetDockerfileFromConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetDockerfileFromConfig(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="NewDockerClient">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/dockerutil.go?s=357:414#L10">NewDockerClient</a>
+				<a class="permalink" href="index.html#NewDockerClient">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewDockerClient() (client *<a href="http://localhost:6060/pkg/github.com/fsouza/go-dockerclient/">docker</a>.<a href="http://localhost:6060/pkg/github.com/fsouza/go-dockerclient/#Client">Client</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewDockerClient creates a docker client
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ParseDockerfileTemplate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/dockerutil.go?s=810:862#L24">ParseDockerfileTemplate</a>
+				<a class="permalink" href="index.html#ParseDockerfileTemplate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ParseDockerfileTemplate(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="WriteBytesToPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go?s=6312:6387#L205">WriteBytesToPackage</a>
+				<a class="permalink" href="index.html#WriteBytesToPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WriteBytesToPackage(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="WriteFileToPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go?s=4862:4945#L160">WriteFileToPackage</a>
+				<a class="permalink" href="index.html#WriteFileToPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WriteFileToPackage(localpath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, packagepath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+WriteFileToPackage writes a file to the tarball
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WriteFolderToTarPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go?s=844:1004#L26">WriteFolderToTarPackage</a>
+				<a class="permalink" href="index.html#WriteFolderToTarPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WriteFolderToTarPackage(tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>, srcPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, excludeDirs []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, includeFileTypeMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, excludeFileTypeMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+WriteFolderToTarPackage writes source files to a tarball.
+This utility is used for node js chaincode packaging, but not golang chaincode.
+Golang chaincode has more sophisticated file packaging, as implemented in golang/platform.go.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WriteJavaProjectToPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go?s=4372:4440#L142">WriteJavaProjectToPackage</a>
+				<a class="permalink" href="index.html#WriteJavaProjectToPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WriteJavaProjectToPackage(tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>, srcPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+Package Java project to tar file from the source path
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="WriteStreamToPackage">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/container/util/writer.go?s=5285:5384#L174">WriteStreamToPackage</a>
+				<a class="permalink" href="index.html#WriteStreamToPackage">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func WriteStreamToPackage(is <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Reader">Reader</a>, localpath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, packagepath <a href="http://localhost:6060/pkg/builtin/#string">string</a>, tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+WriteStreamToPackage writes bytes (from a file reader) to the tarball
+</p>
+
+			
+			
+
+		
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

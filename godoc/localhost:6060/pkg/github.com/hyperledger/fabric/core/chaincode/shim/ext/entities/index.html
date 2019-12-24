@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>entities - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package entities
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode/shim/ext/entities"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#BCCSPEncrypterEntity">type BCCSPEncrypterEntity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewAES256EncrypterEntity">func NewAES256EncrypterEntity(ID string, b bccsp.BCCSP, key, IV []byte) (*BCCSPEncrypterEntity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEncrypterEntity">func NewEncrypterEntity(ID string, bccsp bccsp.BCCSP, eKey bccsp.Key, eOpts bccsp.EncrypterOpts, dOpts bccsp.DecrypterOpts) (*BCCSPEncrypterEntity, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterEntity.Decrypt">func (e *BCCSPEncrypterEntity) Decrypt(ciphertext []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterEntity.Encrypt">func (e *BCCSPEncrypterEntity) Encrypt(plaintext []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterEntity.Equals">func (this *BCCSPEncrypterEntity) Equals(e Entity) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterEntity.Public">func (pe *BCCSPEncrypterEntity) Public() (Entity, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BCCSPEncrypterSignerEntity">type BCCSPEncrypterSignerEntity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewAES256EncrypterECDSASignerEntity">func NewAES256EncrypterECDSASignerEntity(ID string, b bccsp.BCCSP, encKeyBytes, signKeyBytes []byte) (*BCCSPEncrypterSignerEntity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewEncrypterSignerEntity">func NewEncrypterSignerEntity(ID string, bccsp bccsp.BCCSP, eKey, sKey bccsp.Key, eOpts bccsp.EncrypterOpts, dOpts bccsp.DecrypterOpts, sOpts bccsp.SignerOpts, hOpts bccsp.HashOpts) (*BCCSPEncrypterSignerEntity, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterSignerEntity.Equals">func (this *BCCSPEncrypterSignerEntity) Equals(e Entity) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterSignerEntity.ID">func (e *BCCSPEncrypterSignerEntity) ID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEncrypterSignerEntity.Public">func (pe *BCCSPEncrypterSignerEntity) Public() (Entity, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BCCSPEntity">type BCCSPEntity</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPEntity.ID">func (e *BCCSPEntity) ID() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BCCSPSignerEntity">type BCCSPSignerEntity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewECDSASignerEntity">func NewECDSASignerEntity(ID string, b bccsp.BCCSP, signKeyBytes []byte) (*BCCSPSignerEntity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewECDSAVerifierEntity">func NewECDSAVerifierEntity(ID string, b bccsp.BCCSP, signKeyBytes []byte) (*BCCSPSignerEntity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewSignerEntity">func NewSignerEntity(ID string, bccsp bccsp.BCCSP, sKey bccsp.Key, sOpts bccsp.SignerOpts, hOpts bccsp.HashOpts) (*BCCSPSignerEntity, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPSignerEntity.Equals">func (this *BCCSPSignerEntity) Equals(e Entity) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPSignerEntity.Public">func (e *BCCSPSignerEntity) Public() (Entity, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPSignerEntity.Sign">func (e *BCCSPSignerEntity) Sign(msg []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BCCSPSignerEntity.Verify">func (e *BCCSPSignerEntity) Verify(signature, msg []byte) (bool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Encrypter">type Encrypter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EncrypterEntity">type EncrypterEntity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetEncrypterEntityForTest">func GetEncrypterEntityForTest(id string) (EncrypterEntity, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EncrypterSignerEntity">type EncrypterSignerEntity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GetEncrypterSignerEntityForTest">func GetEncrypterSignerEntityForTest(id string) (EncrypterSignerEntity, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Entity">type Entity</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignedMessage">type SignedMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedMessage.FromBytes">func (m *SignedMessage) FromBytes(d []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedMessage.Sign">func (m *SignedMessage) Sign(signer Signer) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedMessage.ToBytes">func (m *SignedMessage) ToBytes() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SignedMessage.Verify">func (m *SignedMessage) Verify(verifier Signer) (bool, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SignerEntity">type SignerEntity</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go">entities.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go">interfaces.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go">message.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/testutils.go">testutils.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="BCCSPEncrypterEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=694:814#L27">BCCSPEncrypterEntity</a>
+				<a class="permalink" href="index.html#BCCSPEncrypterEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSPEncrypterEntity is an implementation of the EncrypterEntity interface
+</p>
+
+			<pre>type BCCSPEncrypterEntity struct {
+    <a href="index.html#BCCSPEntity">BCCSPEntity</a>
+<span id="BCCSPEncrypterEntity.EKey"></span>    EKey  <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#Key">Key</a>
+<span id="BCCSPEncrypterEntity.EOpts"></span>    EOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#EncrypterOpts">EncrypterOpts</a>
+<span id="BCCSPEncrypterEntity.DOpts"></span>    DOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#DecrypterOpts">DecrypterOpts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewAES256EncrypterEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=1311:1413#L48">NewAES256EncrypterEntity</a>
+					<a class="permalink" href="index.html#NewAES256EncrypterEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewAES256EncrypterEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, b <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, key, IV []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewAES256EncrypterEntity returns an encrypter entity that is
+capable of performing AES 256 bit encryption using PKCS#7 padding.
+Optionally, the IV can be provided in which case it is used during
+the encryption; othjerwise, a random one is generated.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewEncrypterEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=2116:2270#L67">NewEncrypterEntity</a>
+					<a class="permalink" href="index.html#NewEncrypterEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEncrypterEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bccsp <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, eKey <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#Key">Key</a>, eOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#EncrypterOpts">EncrypterOpts</a>, dOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#DecrypterOpts">DecrypterOpts</a>) (*<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewEncrypterEntity returns an EncrypterEntity that is capable
+of performing encryption using i) the supplied BCCSP instance;
+ii) the supplied encryption key and iii) the supplied encryption
+and decryption options. The identifier of the entity is supplied
+as an argument as well - it&#39;s the caller&#39;s responsibility to
+choose it in a way that it is meaningful
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BCCSPEncrypterEntity.Decrypt">func (*BCCSPEncrypterEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=6978:7051#L235">Decrypt</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterEntity.Decrypt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>) Decrypt(ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPEncrypterEntity.Encrypt">func (*BCCSPEncrypterEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=6848:6920#L231">Encrypt</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterEntity.Encrypt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>) Encrypt(plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPEncrypterEntity.Equals">func (*BCCSPEncrypterEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=7110:7165#L239">Equals</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterEntity.Equals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>) Equals(e <a href="index.html#Entity">Entity</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPEncrypterEntity.Public">func (*BCCSPEncrypterEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=7290:7346#L247">Public</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterEntity.Public">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pe *<a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>) Public() (<a href="index.html#Entity">Entity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BCCSPEncrypterSignerEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=906:989#L35">BCCSPEncrypterSignerEntity</a>
+				<a class="permalink" href="index.html#BCCSPEncrypterSignerEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSPEncrypterSignerEntity is an implementation of the EncrypterSignerEntity interface
+</p>
+
+			<pre>type BCCSPEncrypterSignerEntity struct {
+    <a href="index.html#BCCSPEncrypterEntity">BCCSPEncrypterEntity</a>
+    <a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewAES256EncrypterECDSASignerEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=4616:4753#L157">NewAES256EncrypterECDSASignerEntity</a>
+					<a class="permalink" href="index.html#NewAES256EncrypterECDSASignerEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewAES256EncrypterECDSASignerEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, b <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, encKeyBytes, signKeyBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#BCCSPEncrypterSignerEntity">BCCSPEncrypterSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewAES256EncrypterECDSASignerEntity returns an encrypter entity that is
+capable of performing AES 256 bit encryption using PKCS#7 padding and
+signing using ECDSA
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewEncrypterSignerEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=5907:6125#L188">NewEncrypterSignerEntity</a>
+					<a class="permalink" href="index.html#NewEncrypterSignerEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewEncrypterSignerEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bccsp <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, eKey, sKey <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#Key">Key</a>, eOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#EncrypterOpts">EncrypterOpts</a>, dOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#DecrypterOpts">DecrypterOpts</a>, sOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#SignerOpts">SignerOpts</a>, hOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#HashOpts">HashOpts</a>) (*<a href="index.html#BCCSPEncrypterSignerEntity">BCCSPEncrypterSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewEncrypterSignerEntity returns an EncrypterSignerEntity
+(which is also an EncrypterEntity) that is capable of
+performing encryption AND of generating signatures using
+i) the supplied BCCSP instance; ii) the supplied encryption
+and signing keys and iii) the supplied encryption, decryption,
+signing and hashing options. The identifier of the entity is
+supplied as an argument as well - it&#39;s the caller&#39;s responsibility
+to choose it in a way that it is meaningful
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BCCSPEncrypterSignerEntity.Equals">func (*BCCSPEncrypterSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=9731:9792#L352">Equals</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterSignerEntity.Equals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#BCCSPEncrypterSignerEntity">BCCSPEncrypterSignerEntity</a>) Equals(e <a href="index.html#Entity">Entity</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPEncrypterSignerEntity.ID">func (*BCCSPEncrypterSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=9966:10014#L360">ID</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterSignerEntity.ID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPEncrypterSignerEntity">BCCSPEncrypterSignerEntity</a>) ID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPEncrypterSignerEntity.Public">func (*BCCSPEncrypterSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=8824:8886#L315">Public</a>
+					<a class="permalink" href="index.html#BCCSPEncrypterSignerEntity.Public">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (pe *<a href="index.html#BCCSPEncrypterSignerEntity">BCCSPEncrypterSignerEntity</a>) Public() (<a href="index.html#Entity">Entity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BCCSPEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=371:431#L13">BCCSPEntity</a>
+				<a class="permalink" href="index.html#BCCSPEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSPEntity is an implementation of the Entity interface
+holding a BCCSP instance
+</p>
+
+			<pre>type BCCSPEntity struct {
+<span id="BCCSPEntity.IDstr"></span>    IDstr <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="BCCSPEntity.BCCSP"></span>    BCCSP <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="BCCSPEntity.ID">func (*BCCSPEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=6793:6826#L227">ID</a>
+					<a class="permalink" href="index.html#BCCSPEntity.ID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPEntity">BCCSPEntity</a>) ID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BCCSPSignerEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=505:614#L19">BCCSPSignerEntity</a>
+				<a class="permalink" href="index.html#BCCSPSignerEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BCCSPSignerEntity is an implementation of the SignerEntity interface
+</p>
+
+			<pre>type BCCSPSignerEntity struct {
+    <a href="index.html#BCCSPEntity">BCCSPEntity</a>
+<span id="BCCSPSignerEntity.SKey"></span>    SKey  <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#Key">Key</a>
+<span id="BCCSPSignerEntity.SOpts"></span>    SOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#SignerOpts">SignerOpts</a>
+<span id="BCCSPSignerEntity.HOpts"></span>    HOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#HashOpts">HashOpts</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewECDSASignerEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=2740:2840#L92">NewECDSASignerEntity</a>
+					<a class="permalink" href="index.html#NewECDSASignerEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewECDSASignerEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, b <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, signKeyBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewECDSASignerEntity returns a signer entity that is capable of signing using ECDSA
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewECDSAVerifierEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=3347:3449#L111">NewECDSAVerifierEntity</a>
+					<a class="permalink" href="index.html#NewECDSAVerifierEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewECDSAVerifierEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, b <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, signKeyBytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewECDSAVerifierEntity returns a verifier entity that is capable of verifying using ECDSA
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewSignerEntity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=3908:4048#L130">NewSignerEntity</a>
+					<a class="permalink" href="index.html#NewSignerEntity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewSignerEntity(ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bccsp <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#BCCSP">BCCSP</a>, sKey <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#Key">Key</a>, sOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#SignerOpts">SignerOpts</a>, hOpts <a href="../../../../../bccsp/index.html">bccsp</a>.<a href="../../../../../bccsp/index.html#HashOpts">HashOpts</a>) (*<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewSignerEntity returns a SignerEntity
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BCCSPSignerEntity.Equals">func (*BCCSPSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=7725:7777#L268">Equals</a>
+					<a class="permalink" href="index.html#BCCSPSignerEntity.Equals">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>) Equals(e <a href="index.html#Entity">Entity</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPSignerEntity.Public">func (*BCCSPSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=7899:7951#L276">Public</a>
+					<a class="permalink" href="index.html#BCCSPSignerEntity.Public">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>) Public() (<a href="index.html#Entity">Entity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPSignerEntity.Sign">func (*BCCSPSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=8320:8380#L297">Sign</a>
+					<a class="permalink" href="index.html#BCCSPSignerEntity.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>) Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BCCSPSignerEntity.Verify">func (*BCCSPSignerEntity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/entities.go?s=8559:8630#L306">Verify</a>
+					<a class="permalink" href="index.html#BCCSPSignerEntity.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#BCCSPSignerEntity">BCCSPSignerEntity</a>) Verify(signature, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Encrypter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=1284:1569#L31">Encrypter</a>
+				<a class="permalink" href="index.html#Encrypter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Encrypter is an interface that provides basic encrypt/decrypt capabilities
+</p>
+
+			<pre>type Encrypter interface {
+    <span class="comment">// Encrypt returns the ciphertext for the supplied plaintext message</span>
+    Encrypt(plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Decrypt returns the plaintext for the supplied ciphertext message</span>
+    Decrypt(ciphertext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (plaintext []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EncrypterEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=1646:1699#L40">EncrypterEntity</a>
+				<a class="permalink" href="index.html#EncrypterEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Encrypter entity is an entity which is capable of performing encryption
+</p>
+
+			<pre>type EncrypterEntity interface {
+    <a href="index.html#Entity">Entity</a>
+    <a href="index.html#Encrypter">Encrypter</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetEncrypterEntityForTest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/testutils.go?s=341:407#L15">GetEncrypterEntityForTest</a>
+					<a class="permalink" href="index.html#GetEncrypterEntityForTest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetEncrypterEntityForTest(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#EncrypterEntity">EncrypterEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="EncrypterSignerEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=1919:1986#L53">EncrypterSignerEntity</a>
+				<a class="permalink" href="index.html#EncrypterSignerEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EncrypterSignerEntity is an entity which is capable of performing
+encryption and of generating signatures
+</p>
+
+			<pre>type EncrypterSignerEntity interface {
+    <a href="index.html#Entity">Entity</a>
+    <a href="index.html#Encrypter">Encrypter</a>
+    <a href="index.html#Signer">Signer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GetEncrypterSignerEntityForTest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/testutils.go?s=841:919#L31">GetEncrypterSignerEntityForTest</a>
+					<a class="permalink" href="index.html#GetEncrypterSignerEntityForTest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GetEncrypterSignerEntityForTest(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#EncrypterSignerEntity">EncrypterSignerEntity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Entity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=222:819#L1">Entity</a>
+				<a class="permalink" href="index.html#Entity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Entity is the basic interface for all crypto entities
+that are used by the library to obtain cc-level encryption
+</p>
+
+			<pre>type Entity interface {
+    <span class="comment">// ID returns an identifier for the entity;</span>
+    <span class="comment">// the identifier can be set arbitrarily by</span>
+    <span class="comment">// the entity&#39;s constructor in a manner that</span>
+    <span class="comment">// is relevant for its usage at the cc-level</span>
+    ID() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Equals compares this entity with the supplied</span>
+    <span class="comment">// one and returns a boolean that is true if the</span>
+    <span class="comment">// two entities are identical. This includes any</span>
+    <span class="comment">// and all key material that the entity uses</span>
+    Equals(<a href="index.html#Entity">Entity</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Public returns the public version of this entity</span>
+    <span class="comment">// in case asymmetric cryptography is used. If not,</span>
+    <span class="comment">// Public returns itself</span>
+    Public() (<a href="index.html#Entity">Entity</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignedMessage">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go?s=324:598#L8">SignedMessage</a>
+				<a class="permalink" href="index.html#SignedMessage">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignedMessage is a simple struct that contains space
+for a payload and a signature over it, and convenience
+functions to sign, verify, marshal and unmarshal
+</p>
+
+			<pre>type SignedMessage struct {
+<span id="SignedMessage.ID"></span>    <span class="comment">// ID contains a description of the entity signing this message</span>
+    ID []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `json:&#34;id&#34;`
+
+<span id="SignedMessage.Payload"></span>    <span class="comment">// Payload contains the message that is signed</span>
+    Payload []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `json:&#34;payload&#34;`
+
+<span id="SignedMessage.Sig"></span>    <span class="comment">// Sig contains a signature over ID and Payload</span>
+    Sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> `json:&#34;sig&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SignedMessage.FromBytes">func (*SignedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go?s=1665:1714#L65">FromBytes</a>
+					<a class="permalink" href="index.html#SignedMessage.FromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedMessage">SignedMessage</a>) FromBytes(d []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+FromBytes populates the instance from the supplied byte array
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedMessage.Sign">func (*SignedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go?s=674:723#L20">Sign</a>
+					<a class="permalink" href="index.html#SignedMessage.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedMessage">SignedMessage</a>) Sign(signer <a href="index.html#Signer">Signer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Sign signs the SignedMessage and stores the signature in the Sig field
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedMessage.ToBytes">func (*SignedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go?s=1521:1570#L60">ToBytes</a>
+					<a class="permalink" href="index.html#SignedMessage.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedMessage">SignedMessage</a>) ToBytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ToBytes serializes the intance to bytes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="SignedMessage.Verify">func (*SignedMessage) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/message.go?s=1121:1182#L40">Verify</a>
+					<a class="permalink" href="index.html#SignedMessage.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#SignedMessage">SignedMessage</a>) Verify(verifier <a href="index.html#Signer">Signer</a>) (<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Verify verifies the signature over Payload stored in Sig
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=892:1204#L21">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Signer is an interface that provides basic sign/verify capabilities
+</p>
+
+			<pre>type Signer interface {
+    <span class="comment">// Sign returns a signature of the supplied message (or an error)</span>
+    Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Verify checks whether the supplied signature</span>
+    <span class="comment">// over the supplied message is valid according to this interface</span>
+    Verify(signature, msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (valid <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SignerEntity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/shim/ext/entities/interfaces.go?s=1758:1805#L46">SignerEntity</a>
+				<a class="permalink" href="index.html#SignerEntity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SignerEntity is an entity which is capable of signing
+</p>
+
+			<pre>type SignerEntity interface {
+    <a href="index.html#Entity">Entity</a>
+    <a href="index.html#Signer">Signer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>golang - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package golang
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode/platforms/golang"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#CodeDescriptor">type CodeDescriptor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Env">type Env</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Paths">type Paths</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Platform">type Platform</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.GenerateDockerBuild">func (goPlatform *Platform) GenerateDockerBuild(path string, code []byte, tw *tar.Writer) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.GenerateDockerfile">func (goPlatform *Platform) GenerateDockerfile() (string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.GetDeploymentPayload">func (goPlatform *Platform) GetDeploymentPayload(path string) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.GetMetadataProvider">func (goPlatform *Platform) GetMetadataProvider(code []byte) platforms.MetadataProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.Name">func (goPlatform *Platform) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.ValidateCodePackage">func (goPlatform *Platform) ValidateCodePackage(code []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Platform.ValidatePath">func (goPlatform *Platform) ValidatePath(rawPath string) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SourceDescriptor">type SourceDescriptor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SourceMap">type SourceMap</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Sources">type Sources</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Sources.Len">func (s Sources) Len() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Sources.Less">func (s Sources) Less(i, j int) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Sources.Swap">func (s Sources) Swap(i, j int)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/env.go">env.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/list.go">list.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go">package.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go">platform.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="CodeDescriptor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=843:913#L36">CodeDescriptor</a>
+				<a class="permalink" href="index.html#CodeDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type CodeDescriptor struct {
+<span id="CodeDescriptor.Gopath"></span>    Gopath, Pkg <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="CodeDescriptor.Cleanup"></span>    Cleanup     func()
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Env">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/env.go?s=659:685#L16">Env</a>
+				<a class="permalink" href="index.html#Env">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Env map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Paths">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/env.go?s=1432:1458#L60">Paths</a>
+				<a class="permalink" href="index.html#Paths">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Paths map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Platform">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=627:651#L22">Platform</a>
+				<a class="permalink" href="index.html#Platform">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Platform for chaincodes written in Go
+</p>
+
+			<pre>type Platform struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Platform.GenerateDockerBuild">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=16591:16686#L491">GenerateDockerBuild</a>
+					<a class="permalink" href="index.html#Platform.GenerateDockerBuild">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) GenerateDockerBuild(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>, code []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, tw *<a href="http://localhost:6060/pkg/archive/tar/">tar</a>.<a href="http://localhost:6060/pkg/archive/tar/#Writer">Writer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Platform.GenerateDockerfile">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=16022:16086#L469">GenerateDockerfile</a>
+					<a class="permalink" href="index.html#Platform.GenerateDockerfile">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) GenerateDockerfile() (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Platform.GetDeploymentPayload">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=7741:7818#L238">GetDeploymentPayload</a>
+					<a class="permalink" href="index.html#Platform.GetDeploymentPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) GetDeploymentPayload(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Generates a deployment payload for GOLANG as a series of src/$pkg entries in .tar.gz format
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Platform.GetMetadataProvider">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=17398:17485#L515">GetMetadataProvider</a>
+					<a class="permalink" href="index.html#Platform.GetMetadataProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) GetMetadataProvider(code []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../index.html">platforms</a>.<a href="../index.html#MetadataProvider">MetadataProvider</a></pre>
+				<p>
+GetMetadataProvider fetches metadata provider given deployment spec
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Platform.Name">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=1918:1959#L82">Name</a>
+					<a class="permalink" href="index.html#Platform.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Name returns the name of this platform
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Platform.ValidateCodePackage">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=2850:2916#L113">ValidateCodePackage</a>
+					<a class="permalink" href="index.html#Platform.ValidateCodePackage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) ValidateCodePackage(code []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Platform.ValidatePath">func (*Platform) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/platform.go?s=2046:2108#L87">ValidatePath</a>
+					<a class="permalink" href="index.html#Platform.ValidatePath">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (goPlatform *<a href="index.html#Platform">Platform</a>) ValidatePath(rawPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+ValidateSpec validates Go chaincodes
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SourceDescriptor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1565:1657#L61">SourceDescriptor</a>
+				<a class="permalink" href="index.html#SourceDescriptor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SourceDescriptor struct {
+<span id="SourceDescriptor.Name"></span>    Name, Path <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="SourceDescriptor.IsMetadata"></span>    IsMetadata <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="SourceDescriptor.Info"></span>    Info       <a href="http://localhost:6060/pkg/os/">os</a>.<a href="http://localhost:6060/pkg/os/#FileInfo">FileInfo</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SourceMap">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1658:1700#L66">SourceMap</a>
+				<a class="permalink" href="index.html#SourceMap">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SourceMap map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="index.html#SourceDescriptor">SourceDescriptor</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Sources">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1702:1733#L68">Sources</a>
+				<a class="permalink" href="index.html#Sources">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Sources []<a href="index.html#SourceDescriptor">SourceDescriptor</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Sources.Len">func (Sources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1735:1761#L70">Len</a>
+					<a class="permalink" href="index.html#Sources.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Sources">Sources</a>) Len() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Sources.Less">func (Sources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1844:1880#L78">Less</a>
+					<a class="permalink" href="index.html#Sources.Less">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Sources">Sources</a>) Less(i, j <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Sources.Swap">func (Sources) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/platforms/golang/package.go?s=1782:1813#L74">Swap</a>
+					<a class="permalink" href="index.html#Sources.Swap">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#Sources">Sources</a>) Swap(i, j <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

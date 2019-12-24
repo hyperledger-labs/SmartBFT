@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>blockledger - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package blockledger
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/ledger/blockledger"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#CreateNextBlock">func CreateNextBlock(rl Reader, messages []*cb.Envelope) *cb.Block</a></dd>
+			
+				
+				<dd><a href="index.html#GetBlock">func GetBlock(rl Reader, index uint64) *cb.Block</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Factory">type Factory</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Iterator">type Iterator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NotFoundErrorIterator">type NotFoundErrorIterator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NotFoundErrorIterator.Close">func (nfei *NotFoundErrorIterator) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NotFoundErrorIterator.Next">func (nfei *NotFoundErrorIterator) Next() (*cb.Block, cb.Status)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NotFoundErrorIterator.ReadyChan">func (nfei *NotFoundErrorIterator) ReadyChan() &lt;-chan struct{}</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ReadWriter">type ReadWriter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Reader">type Reader</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Writer">type Writer</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go">ledger.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="CreateNextBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=1118:1184#L33">CreateNextBlock</a>
+				<a class="permalink" href="index.html#CreateNextBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateNextBlock(rl <a href="index.html#Reader">Reader</a>, messages []*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>) *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+CreateNextBlock provides a utility way to construct the next block from
+contents and metadata for a given ledger
+XXX This will need to be modified to accept marshaled envelopes
+</p>
+<pre>to accommodate non-deterministic marshaling
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=2004:2052#L71">GetBlock</a>
+				<a class="permalink" href="index.html#GetBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetBlock(rl <a href="index.html#Reader">Reader</a>, index <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+GetBlock is a utility method for retrieving a single block
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Factory">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go?s=274:585#L5">Factory</a>
+				<a class="permalink" href="index.html#Factory">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Factory retrieves or creates new ledgers by chainID
+</p>
+
+			<pre>type Factory interface {
+    <span class="comment">// GetOrCreate gets an existing ledger (if it exists)</span>
+    <span class="comment">// or creates it if it does not</span>
+    GetOrCreate(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="index.html#ReadWriter">ReadWriter</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// ChainIDs returns the chain IDs the Factory is aware of</span>
+    ChainIDs() []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Close releases all resources acquired by the factory</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Iterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go?s=665:907#L18">Iterator</a>
+				<a class="permalink" href="index.html#Iterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Iterator is useful for a chain Reader to stream blocks as they are created
+</p>
+
+			<pre>type Iterator interface {
+    <span class="comment">// Next blocks until there is a new block available, or returns an error if</span>
+    <span class="comment">// the next block is no longer retrievable</span>
+    Next() (*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Status">Status</a>)
+    <span class="comment">// Close releases resources acquired by the Iterator</span>
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NotFoundErrorIterator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=506:541#L14">NotFoundErrorIterator</a>
+				<a class="permalink" href="index.html#NotFoundErrorIterator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+NotFoundErrorIterator simply always returns an error of cb.Status_NOT_FOUND,
+and is generally useful for implementations of the Reader interface
+</p>
+
+			<pre>type NotFoundErrorIterator struct{}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NotFoundErrorIterator.Close">func (*NotFoundErrorIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=834:876#L27">Close</a>
+					<a class="permalink" href="index.html#NotFoundErrorIterator.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (nfei *<a href="index.html#NotFoundErrorIterator">NotFoundErrorIterator</a>) Close()</pre>
+				<p>
+Close does nothing
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NotFoundErrorIterator.Next">func (*NotFoundErrorIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=584:648#L17">Next</a>
+					<a class="permalink" href="index.html#NotFoundErrorIterator.Next">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (nfei *<a href="index.html#NotFoundErrorIterator">NotFoundErrorIterator</a>) Next() (*<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Status">Status</a>)</pre>
+				<p>
+Next returns nil, cb.Status_NOT_FOUND
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="NotFoundErrorIterator.ReadyChan">func (*NotFoundErrorIterator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/util.go?s=725:787#L22">ReadyChan</a>
+					<a class="permalink" href="index.html#NotFoundErrorIterator.ReadyChan">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (nfei *<a href="index.html#NotFoundErrorIterator">NotFoundErrorIterator</a>) ReadyChan() &lt;-chan struct{}</pre>
+				<p>
+ReadyChan returns a closed channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ReadWriter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go?s=1512:1557#L44">ReadWriter</a>
+				<a class="permalink" href="index.html#ReadWriter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReadWriter encapsulates the read/write functions of the ledger
+</p>
+
+			<pre>type ReadWriter interface {
+    <a href="index.html#Reader">Reader</a>
+    <a href="index.html#Writer">Writer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Reader">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go?s=959:1220#L27">Reader</a>
+				<a class="permalink" href="index.html#Reader">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Reader allows the caller to inspect the ledger
+</p>
+
+			<pre>type Reader interface {
+    <span class="comment">// Iterator returns an Iterator, as specified by an ab.SeekInfo message, and</span>
+    <span class="comment">// its starting block number</span>
+    Iterator(startType *<a href="../../../protos/orderer/index.html">ab</a>.<a href="../../../protos/orderer/index.html#SeekPosition">SeekPosition</a>) (<a href="index.html#Iterator">Iterator</a>, <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)
+    <span class="comment">// Height returns the number of blocks on the ledger</span>
+    Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Writer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/blockledger/ledger.go?s=1271:1364#L36">Writer</a>
+				<a class="permalink" href="index.html#Writer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Writer allows the caller to modify the ledger
+</p>
+
+			<pre>type Writer interface {
+    <span class="comment">// Append a new block to the ledger</span>
+    Append(block *<a href="../../../protos/common/index.html">cb</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="file/index.html">file</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="json/index.html">json</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="ram/index.html">ram</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

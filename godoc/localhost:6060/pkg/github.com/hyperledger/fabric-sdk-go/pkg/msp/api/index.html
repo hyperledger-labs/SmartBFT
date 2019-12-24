@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>api - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package api
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/msp/api"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#AffiliationInfo">type AffiliationInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AffiliationRequest">type AffiliationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AffiliationResponse">type AffiliationResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Attribute">type Attribute</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#AttributeRequest">type AttributeRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CAClient">type CAClient</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EnrollmentRequest">type EnrollmentRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GetCAInfoResponse">type GetCAInfoResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityInfo">type IdentityInfo</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityRequest">type IdentityRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#IdentityResponse">type IdentityResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ModifyAffiliationRequest">type ModifyAffiliationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReenrollmentRequest">type ReenrollmentRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RegistrationRequest">type RegistrationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RemoveIdentityRequest">type RemoveIdentityRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationRequest">type RevocationRequest</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevocationResponse">type RevocationResponse</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RevokedCert">type RevokedCert</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go">api.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				
+				<pre>var (
+    <span class="comment">// ErrCARegistrarNotFound indicates the CA registrar was not found</span>
+    <span id="ErrCARegistrarNotFound">ErrCARegistrarNotFound</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;CA registrar not found&#34;)
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="AffiliationInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=7152:7265#L218">AffiliationInfo</a>
+				<a class="permalink" href="index.html#AffiliationInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationInfo contains the affiliation name, child affiliation info, and identities
+associated with this affiliation.
+</p>
+
+			<pre>type AffiliationInfo struct {
+<span id="AffiliationInfo.Name"></span>    Name         <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="AffiliationInfo.Affiliations"></span>    Affiliations []<a href="index.html#AffiliationInfo">AffiliationInfo</a>
+<span id="AffiliationInfo.Identities"></span>    Identities   []<a href="index.html#IdentityInfo">IdentityInfo</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AffiliationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=6464:6640#L191">AffiliationRequest</a>
+				<a class="permalink" href="index.html#AffiliationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationRequest represents the request to add/remove affiliation to the fabric-ca-server
+</p>
+
+			<pre>type AffiliationRequest struct {
+<span id="AffiliationRequest.Name"></span>    <span class="comment">// Name of the affiliation</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Creates parent affiliations if they do not exist</span>
+<span id="AffiliationRequest.Force"></span>    Force <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="AffiliationRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AffiliationResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=6957:7024#L211">AffiliationResponse</a>
+				<a class="permalink" href="index.html#AffiliationResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AffiliationResponse contains the response for get, add, modify, and remove an affiliation
+</p>
+
+			<pre>type AffiliationResponse struct {
+    <a href="index.html#AffiliationInfo">AffiliationInfo</a>
+<span id="AffiliationResponse.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Attribute">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=3532:3597#L87">Attribute</a>
+				<a class="permalink" href="index.html#Attribute">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Attribute defines additional attributes that may be passed along during registration
+</p>
+
+			<pre>type Attribute struct {
+<span id="Attribute.Name"></span>    Name  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Attribute.Value"></span>    Value <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Attribute.ECert"></span>    ECert <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AttributeRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=1384:1448#L28">AttributeRequest</a>
+				<a class="permalink" href="index.html#AttributeRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AttributeRequest is a request for an attribute.
+</p>
+
+			<pre>type AttributeRequest struct {
+<span id="AttributeRequest.Name"></span>    Name     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="AttributeRequest.Optional"></span>    Optional <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CAClient">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=344:1331#L9">CAClient</a>
+				<a class="permalink" href="index.html#CAClient">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CAClient provides management of identities in a Fabric network
+</p>
+
+			<pre>type CAClient interface {
+    Enroll(request *<a href="index.html#EnrollmentRequest">EnrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Reenroll(request *<a href="index.html#ReenrollmentRequest">ReenrollmentRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Register(request *<a href="index.html#RegistrationRequest">RegistrationRequest</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Revoke(request *<a href="index.html#RevocationRequest">RevocationRequest</a>) (*<a href="index.html#RevocationResponse">RevocationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetCAInfo() (*<a href="index.html#GetCAInfoResponse">GetCAInfoResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    CreateIdentity(request *<a href="index.html#IdentityRequest">IdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetIdentity(id, caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ModifyIdentity(request *<a href="index.html#IdentityRequest">IdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RemoveIdentity(request *<a href="index.html#RemoveIdentityRequest">RemoveIdentityRequest</a>) (*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAllIdentities(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]*<a href="index.html#IdentityResponse">IdentityResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAffiliation(affiliation, caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    GetAllAffiliations(caname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    AddAffiliation(request *<a href="index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    ModifyAffiliation(request *<a href="index.html#ModifyAffiliationRequest">ModifyAffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    RemoveAffiliation(request *<a href="index.html#AffiliationRequest">AffiliationRequest</a>) (*<a href="index.html#AffiliationResponse">AffiliationResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EnrollmentRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=2314:2908#L55">EnrollmentRequest</a>
+				<a class="permalink" href="index.html#EnrollmentRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EnrollmentRequest is a request to enroll an identity
+</p>
+
+			<pre>type EnrollmentRequest struct {
+    <span class="comment">// The identity name to enroll</span>
+<span id="EnrollmentRequest.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// The secret returned via Register</span>
+<span id="EnrollmentRequest.Secret"></span>    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="EnrollmentRequest.AttrReqs"></span>    <span class="comment">// AttrReqs are requests for attributes to add to the certificate.</span>
+    <span class="comment">// Each attribute is added only if the requestor owns the attribute.</span>
+    AttrReqs []*<a href="index.html#AttributeRequest">AttributeRequest</a>
+<span id="EnrollmentRequest.Profile"></span>    <span class="comment">// Profile is the name of the signing profile to use in issuing the X509 certificate</span>
+    Profile <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="EnrollmentRequest.Label"></span>    <span class="comment">// Label is the label to use in HSM operations</span>
+    Label <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// The type of the enrollment request: x509 or idemix</span>
+    <span class="comment">// The default is a request for an X509 enrollment certificate</span>
+<span id="EnrollmentRequest.Type"></span>    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GetCAInfoResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=7530:7942#L234">GetCAInfoResponse</a>
+				<a class="permalink" href="index.html#GetCAInfoResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GetCAInfoResponse is the response from the GetCAInfo call
+</p>
+
+			<pre>type GetCAInfoResponse struct {
+<span id="GetCAInfoResponse.CAName"></span>    <span class="comment">// CAName is the name of the CA</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="GetCAInfoResponse.CAChain"></span>    <span class="comment">// CAChain is the PEM-encoded bytes of the fabric-ca-server&#39;s CA chain.</span>
+    <span class="comment">// The 1st element of the chain is the root CA cert</span>
+    CAChain []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// Idemix issuer public key of the CA</span>
+<span id="GetCAInfoResponse.IssuerPublicKey"></span>    IssuerPublicKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+    <span class="comment">// Idemix issuer revocation public key of the CA</span>
+<span id="GetCAInfoResponse.IssuerRevocationPublicKey"></span>    IssuerRevocationPublicKey []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="GetCAInfoResponse.Version"></span>    <span class="comment">// Version of the server</span>
+    Version <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityInfo">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=7322:7467#L225">IdentityInfo</a>
+				<a class="permalink" href="index.html#IdentityInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityInfo contains information about an identity
+</p>
+
+			<pre>type IdentityInfo struct {
+<span id="IdentityInfo.ID"></span>    ID             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Type"></span>    Type           <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Affiliation"></span>    Affiliation    <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="IdentityInfo.Attributes"></span>    Attributes     []<a href="index.html#Attribute">Attribute</a>
+<span id="IdentityInfo.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=4894:5544#L127">IdentityRequest</a>
+				<a class="permalink" href="index.html#IdentityRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityRequest represents the request to add/update identity to the fabric-ca-server
+</p>
+
+			<pre>type IdentityRequest struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity (required)</span>
+<span id="IdentityRequest.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identity&#39;s affiliation (required)</span>
+<span id="IdentityRequest.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Array of attributes to assign to the user</span>
+<span id="IdentityRequest.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+
+<span id="IdentityRequest.Type"></span>    <span class="comment">// Type of identity being registered (e.g. &#39;peer, app, user&#39;). Default is &#39;user&#39;.</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The maximum number of times the secret can be reused to enroll (default CA&#39;s Max Enrollment)</span>
+<span id="IdentityRequest.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// The enrollment secret. If not provided, a random secret is generated.</span>
+<span id="IdentityRequest.Secret"></span>    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Name of the CA to send the request to within the Fabric CA server (optional)</span>
+<span id="IdentityRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="IdentityResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=5916:6367#L166">IdentityResponse</a>
+				<a class="permalink" href="index.html#IdentityResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+IdentityResponse is the response from the any read/add/modify/remove identity call
+</p>
+
+			<pre>type IdentityResponse struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity</span>
+<span id="IdentityResponse.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The identity&#39;s affiliation</span>
+<span id="IdentityResponse.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Array of attributes assigned to the user</span>
+<span id="IdentityResponse.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+
+<span id="IdentityResponse.Type"></span>    <span class="comment">// Type of identity (e.g. &#39;peer, app, user&#39;)</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// The maximum number of times the secret can be reused to enroll</span>
+<span id="IdentityResponse.MaxEnrollments"></span>    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// The enrollment secret</span>
+<span id="IdentityResponse.Secret"></span>    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="IdentityResponse.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ModifyAffiliationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=6754:6862#L204">ModifyAffiliationRequest</a>
+				<a class="permalink" href="index.html#ModifyAffiliationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ModifyAffiliationRequest represents the request to modify an existing affiliation on the
+fabric-ca-server
+</p>
+
+			<pre>type ModifyAffiliationRequest struct {
+    <a href="index.html#AffiliationRequest">AffiliationRequest</a>
+    <span class="comment">// New name of the affiliation</span>
+<span id="ModifyAffiliationRequest.NewName"></span>    NewName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReenrollmentRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=3035:3442#L74">ReenrollmentRequest</a>
+				<a class="permalink" href="index.html#ReenrollmentRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReenrollmentRequest is a request to reenroll an identity.
+This is useful to renew a certificate before it has expired.
+</p>
+
+			<pre>type ReenrollmentRequest struct {
+    <span class="comment">// The identity name to enroll</span>
+<span id="ReenrollmentRequest.Name"></span>    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ReenrollmentRequest.Profile"></span>    <span class="comment">// Profile is the name of the signing profile to use in issuing the certificate</span>
+    Profile <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ReenrollmentRequest.Label"></span>    <span class="comment">// Label is the label to use in HSM operations</span>
+    Label <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ReenrollmentRequest.AttrReqs"></span>    <span class="comment">// AttrReqs are requests for attributes to add to the certificate.</span>
+    <span class="comment">// Each attribute is added only if the requestor owns the attribute.</span>
+    AttrReqs []*<a href="index.html#AttributeRequest">AttributeRequest</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RegistrationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=1536:2256#L34">RegistrationRequest</a>
+				<a class="permalink" href="index.html#RegistrationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RegistrationRequest defines the attributes required to register a user with the CA
+</p>
+
+			<pre>type RegistrationRequest struct {
+<span id="RegistrationRequest.Name"></span>    <span class="comment">// Name is the unique name of the identity</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.Type"></span>    <span class="comment">// Type of identity being registered (e.g. &#34;peer, app, user&#34;)</span>
+    Type <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.MaxEnrollments"></span>    <span class="comment">// MaxEnrollments is the number of times the secret can  be reused to enroll.</span>
+    <span class="comment">// if omitted, this defaults to max_enrollments configured on the server</span>
+    MaxEnrollments <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+    <span class="comment">// The identity&#39;s affiliation e.g. org1.department1</span>
+<span id="RegistrationRequest.Affiliation"></span>    Affiliation <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+    <span class="comment">// Optional attributes associated with this identity</span>
+<span id="RegistrationRequest.Attributes"></span>    Attributes []<a href="index.html#Attribute">Attribute</a>
+<span id="RegistrationRequest.CAName"></span>    <span class="comment">// CAName is the name of the CA to connect to</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RegistrationRequest.Secret"></span>    <span class="comment">// Secret is an optional password.  If not specified,</span>
+    <span class="comment">// a random secret is generated.  In both cases, the secret</span>
+    <span class="comment">// is returned from registration.</span>
+    Secret <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RemoveIdentityRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=5654:5828#L153">RemoveIdentityRequest</a>
+				<a class="permalink" href="index.html#RemoveIdentityRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemoveIdentityRequest represents the request to remove an existing identity from the
+fabric-ca-server
+</p>
+
+			<pre>type RemoveIdentityRequest struct {
+
+    <span class="comment">// The enrollment ID which uniquely identifies an identity</span>
+<span id="RemoveIdentityRequest.ID"></span>    ID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="RemoveIdentityRequest.Force"></span>    <span class="comment">// Force delete</span>
+    Force <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// Name of the CA</span>
+<span id="RemoveIdentityRequest.CAName"></span>    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationRequest">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=3686:4291#L94">RevocationRequest</a>
+				<a class="permalink" href="index.html#RevocationRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationRequest defines the attributes required to revoke credentials with the CA
+</p>
+
+			<pre>type RevocationRequest struct {
+<span id="RevocationRequest.Name"></span>    <span class="comment">// Name of the identity whose certificates should be revoked</span>
+    <span class="comment">// If this field is omitted, then Serial and AKI must be specified.</span>
+    Name <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.Serial"></span>    <span class="comment">// Serial number of the certificate to be revoked</span>
+    <span class="comment">// If this is omitted, then Name must be specified</span>
+    Serial <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.AKI"></span>    <span class="comment">// AKI (Authority Key Identifier) of the certificate to be revoked</span>
+    AKI <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.Reason"></span>    <span class="comment">// Reason is the reason for revocation. See https://godoc.org/golang.org/x/crypto/ocsp</span>
+    <span class="comment">// for valid values. The default value is 0 (ocsp.Unspecified).</span>
+    Reason <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevocationRequest.CAName"></span>    <span class="comment">// CAName is the name of the CA to connect to</span>
+    CAName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevocationResponse">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=4376:4619#L111">RevocationResponse</a>
+				<a class="permalink" href="index.html#RevocationResponse">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevocationResponse represents response from the server for a revocation request
+</p>
+
+			<pre>type RevocationResponse struct {
+<span id="RevocationResponse.RevokedCerts"></span>    <span class="comment">// RevokedCerts is an array of certificates that were revoked</span>
+    RevokedCerts []<a href="index.html#RevokedCert">RevokedCert</a>
+<span id="RevocationResponse.CRL"></span>    <span class="comment">// CRL is PEM-encoded certificate revocation list (CRL) that contains all unexpired revoked certificates</span>
+    CRL []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RevokedCert">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/api/api.go?s=4669:4803#L119">RevokedCert</a>
+				<a class="permalink" href="index.html#RevokedCert">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RevokedCert represents a revoked certificate
+</p>
+
+			<pre>type RevokedCert struct {
+<span id="RevokedCert.Serial"></span>    <span class="comment">// Serial number of the revoked certificate</span>
+    Serial <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RevokedCert.AKI"></span>    <span class="comment">// AKI of the revoked certificate</span>
+    AKI <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

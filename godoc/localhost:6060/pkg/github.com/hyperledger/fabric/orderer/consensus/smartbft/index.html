@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>smartbft - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package smartbft
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/orderer/consensus/smartbft"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ConfigurationEnvelop">func ConfigurationEnvelop(configBlock *common.Block) (*common.ConfigEnvelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#LastBlockFromLedgerOrPanic">func LastBlockFromLedgerOrPanic(ledger Ledger, logger PanicLogger) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#LastConfigBlockFromLedgerOrPanic">func LastConfigBlockFromLedgerOrPanic(ledger Ledger, logger PanicLogger) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#New">func New(pmr PolicyManagerRetriever, signerSerializer signerSerializer, clusterDialer *cluster.PredicateDialer, conf *localconfig.TopLevel, srvConf comm.ServerConfig, srv *comm.GRPCServer, r *multichannel.Registrar, metricsProvider metrics.Provider) consensus.Consenter</a></dd>
+			
+				
+				<dd><a href="index.html#PreviousConfigBlockFromLedgerOrPanic">func PreviousConfigBlockFromLedgerOrPanic(ledger Ledger, logger PanicLogger) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ProposalToBlock">func ProposalToBlock(proposal types.Proposal) (*common.Block, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AccessController">type AccessController</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Assembler">type Assembler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Assembler.AssembleProposal">func (a *Assembler) AssembleProposal(metadata []byte, requests [][]byte) (nextProp types.Proposal)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BFTChain">type BFTChain</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChain">func NewChain(config smartbft.Configuration, walDir string, blockPuller BlockPuller, comm cluster.Communicator, signerSerializer signerSerializer, policyManager policies.Manager, remoteNodes []cluster.RemoteNode, id2Identities NodeIdentitiesByID, support consensus.ConsenterSupport, metrics *Metrics) (*BFTChain, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Configure">func (c *BFTChain) Configure(config *common.Envelope, configSeq uint64) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Deliver">func (c *BFTChain) Deliver(proposal types.Proposal, signatures []types.Signature)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Errored">func (c *BFTChain) Errored() &lt;-chan struct{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Halt">func (c *BFTChain) Halt()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.HandleMessage">func (c *BFTChain) HandleMessage(sender uint64, m *smartbftprotos.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.HandleRequest">func (c *BFTChain) HandleRequest(sender uint64, req []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Order">func (c *BFTChain) Order(env *common.Envelope, configSeq uint64) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.Start">func (c *BFTChain) Start()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BFTChain.WaitReady">func (c *BFTChain) WaitReady() error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#BlockPuller">type BlockPuller</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ByteBufferTuple">type ByteBufferTuple</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ByteBufferTuple.FromBytes">func (bbt *ByteBufferTuple) FromBytes(bytes []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ByteBufferTuple.ToBytes">func (bbt *ByteBufferTuple) ToBytes() []byte</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChainGetter">type ChainGetter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Consenter">type Consenter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.HandleChain">func (c *Consenter) HandleChain(support consensus.ConsenterSupport, metadata *common.Metadata) (consensus.Chain, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.ReceiverByChain">func (c *Consenter) ReceiverByChain(channelID string) MessageReceiver</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Consenter.TargetChannel">func (c *Consenter) TargetChannel(message proto2.Message) string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConsenterCertificate">type ConsenterCertificate</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ConsenterCertificate.IsConsenterOfChannel">func (conCert ConsenterCertificate) IsConsenterOfChannel(configBlock *common.Block) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConsenterVerifier">type ConsenterVerifier</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Egress">type Egress</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Egress.Nodes">func (e *Egress) Nodes() []uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Egress.SendConsensus">func (e *Egress) SendConsensus(targetID uint64, m *protos.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Egress.SendTransaction">func (e *Egress) SendTransaction(targetID uint64, request []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Ingreess">type Ingreess</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Ingreess.OnConsensus">func (in *Ingreess) OnConsensus(channel string, sender uint64, request *orderer.ConsensusRequest) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Ingreess.OnSubmit">func (in *Ingreess) OnSubmit(channel string, sender uint64, request *orderer.SubmitRequest) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Ledger">type Ledger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MessageReceiver">type MessageReceiver</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Metrics">type Metrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMetrics">func NewMetrics(p metrics.Provider) *Metrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NodeIdentitiesByID">type NodeIdentitiesByID</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NodeIdentitiesByID.IdentityToID">func (nibd NodeIdentitiesByID) IdentityToID(identity []byte) (uint64, bool)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PanicLogger">type PanicLogger</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PolicyManagerRetriever">type PolicyManagerRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RPC">type RPC</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReceiverGetter">type ReceiverGetter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RequestInspector">type RequestInspector</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RequestInspector.RequestID">func (ri *RequestInspector) RequestID(rawReq []byte) types.RequestInfo</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Sequencer">type Sequencer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Signature">type Signature</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.AsBytes">func (sig Signature) AsBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Marshal">func (sig *Signature) Marshal() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signature.Unmarshal">func (sig *Signature) Unmarshal(bytes []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Signer">type Signer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signer.Sign">func (s *Signer) Sign(msg []byte) []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Signer.SignProposal">func (s *Signer) SignProposal(proposal types.Proposal) *types.Signature</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignerSerializer">type SignerSerializer</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Synchronizer">type Synchronizer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Synchronizer.Close">func (s *Synchronizer) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Synchronizer.Sync">func (s *Synchronizer) Sync() types.Decision</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Verifier">type Verifier</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.VerificationSequence">func (v *Verifier) VerificationSequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.VerifyConsenterSig">func (v *Verifier) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.VerifyProposal">func (v *Verifier) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.VerifyRequest">func (v *Verifier) VerifyRequest(rawRequest []byte) (types.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Verifier.VerifySignature">func (v *Verifier) VerifySignature(signature types.Signature) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#WALConfig">type WALConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#WarningLogger">type WarningLogger</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go">assembler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go">chain.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go">consenter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go">egress.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go">ingress.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/metrics.go">metrics.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go">signature.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signer.go">signer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/synchronizer.go">synchronizer.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go">util.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go">verifier.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ConfigurationEnvelop">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go?s=7593:7677#L211">ConfigurationEnvelop</a>
+				<a class="permalink" href="index.html#ConfigurationEnvelop">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConfigurationEnvelop(configBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#ConfigEnvelope">ConfigEnvelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ConfigurationEnvelop extract configuration envelop
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="LastBlockFromLedgerOrPanic">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=4675:4755#L149">LastBlockFromLedgerOrPanic</a>
+				<a class="permalink" href="index.html#LastBlockFromLedgerOrPanic">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LastBlockFromLedgerOrPanic(ledger <a href="index.html#Ledger">Ledger</a>, logger <a href="index.html#PanicLogger">PanicLogger</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="LastConfigBlockFromLedgerOrPanic">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=3320:3406#L104">LastConfigBlockFromLedgerOrPanic</a>
+				<a class="permalink" href="index.html#LastConfigBlockFromLedgerOrPanic">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func LastConfigBlockFromLedgerOrPanic(ledger <a href="index.html#Ledger">Ledger</a>, logger <a href="index.html#PanicLogger">PanicLogger</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=1884:2164#L54">New</a>
+				<a class="permalink" href="index.html#New">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func New(
+    pmr <a href="index.html#PolicyManagerRetriever">PolicyManagerRetriever</a>,
+    signerSerializer signerSerializer,
+    clusterDialer *<a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#PredicateDialer">PredicateDialer</a>,
+    conf *<a href="../../common/localconfig/index.html">localconfig</a>.<a href="../../common/localconfig/index.html#TopLevel">TopLevel</a>,
+    srvConf <a href="../../../core/comm/index.html">comm</a>.<a href="../../../core/comm/index.html#ServerConfig">ServerConfig</a>,
+    srv *<a href="../../../core/comm/index.html">comm</a>.<a href="../../../core/comm/index.html#GRPCServer">GRPCServer</a>,
+    r *<a href="../../common/multichannel/index.html">multichannel</a>.<a href="../../common/multichannel/index.html#Registrar">Registrar</a>,
+    metricsProvider <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Provider">Provider</a>,
+) <a href="../index.html">consensus</a>.<a href="../index.html#Consenter">Consenter</a></pre>
+			<p>
+New creates Consenter of type smart bft
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PreviousConfigBlockFromLedgerOrPanic">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=3947:4037#L125">PreviousConfigBlockFromLedgerOrPanic</a>
+				<a class="permalink" href="index.html#PreviousConfigBlockFromLedgerOrPanic">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PreviousConfigBlockFromLedgerOrPanic(ledger <a href="index.html#Ledger">Ledger</a>, logger <a href="index.html#PanicLogger">PanicLogger</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ProposalToBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go?s=849:917#L34">ProposalToBlock</a>
+				<a class="permalink" href="index.html#ProposalToBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ProposalToBlock(proposal <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AccessController">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=1337:1528#L37">AccessController</a>
+				<a class="permalink" href="index.html#AccessController">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AccessController is used to determine if a signature of a certain client is valid
+</p>
+
+			<pre>type AccessController interface {
+    <span class="comment">// Evaluate takes a set of SignedData and evaluates whether this set of signatures satisfies the policy</span>
+    Evaluate(signatureSet []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Assembler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=744:915#L23">Assembler</a>
+				<a class="permalink" href="index.html#Assembler">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Assembler struct {
+<span id="Assembler.Logger"></span>    Logger          *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Assembler.VerificationSeq"></span>    VerificationSeq func() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#RWMutex">RWMutex</a>
+<span id="Assembler.LastConfigBlockNum"></span>    LastConfigBlockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Assembler.LastBlock"></span>    LastBlock          *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Assembler.AssembleProposal">func (*Assembler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=917:1015#L31">AssembleProposal</a>
+					<a class="permalink" href="index.html#Assembler.AssembleProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#Assembler">Assembler</a>) AssembleProposal(metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, requests [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (nextProp <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BFTChain">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=2019:2616#L52">BFTChain</a>
+				<a class="permalink" href="index.html#BFTChain">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BFTChain implements Chain interface to wire with
+BFT smart library
+</p>
+
+			<pre>type BFTChain struct {
+<span id="BFTChain.Config"></span>    Config           <a href="../../../../../SmartBFT-Go/consensus/pkg/consensus/index.html">smartbft</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/consensus/index.html#Configuration">Configuration</a>
+<span id="BFTChain.BlockPuller"></span>    BlockPuller      <a href="index.html#BlockPuller">BlockPuller</a>
+<span id="BFTChain.Comm"></span>    Comm             <a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#Communicator">Communicator</a>
+<span id="BFTChain.SignerSerializer"></span>    SignerSerializer signerSerializer
+<span id="BFTChain.PolicyManager"></span>    PolicyManager    <a href="../../../common/policies/index.html">policies</a>.<a href="../../../common/policies/index.html#Manager">Manager</a>
+<span id="BFTChain.RemoteNodes"></span>    RemoteNodes      []<a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#RemoteNode">RemoteNode</a>
+<span id="BFTChain.ID2Identities"></span>    ID2Identities    <a href="index.html#NodeIdentitiesByID">NodeIdentitiesByID</a>
+<span id="BFTChain.Logger"></span>    Logger           *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="BFTChain.WALDir"></span>    WALDir           <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+
+<span id="BFTChain.Metrics"></span>    Metrics *<a href="index.html#Metrics">Metrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChain">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=2658:2990#L79">NewChain</a>
+					<a class="permalink" href="index.html#NewChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChain(
+    config <a href="../../../../../SmartBFT-Go/consensus/pkg/consensus/index.html">smartbft</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/consensus/index.html#Configuration">Configuration</a>,
+    walDir <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    blockPuller <a href="index.html#BlockPuller">BlockPuller</a>,
+    comm <a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#Communicator">Communicator</a>,
+    signerSerializer signerSerializer,
+    policyManager <a href="../../../common/policies/index.html">policies</a>.<a href="../../../common/policies/index.html#Manager">Manager</a>,
+    remoteNodes []<a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#RemoteNode">RemoteNode</a>,
+    id2Identities <a href="index.html#NodeIdentitiesByID">NodeIdentitiesByID</a>,
+    support <a href="../index.html">consensus</a>.<a href="../index.html#ConsenterSupport">ConsenterSupport</a>,
+    metrics *<a href="index.html#Metrics">Metrics</a>,
+) (*<a href="index.html#BFTChain">BFTChain</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewChain creates new BFT Smart chain
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BFTChain.Configure">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=12267:12344#L387">Configure</a>
+					<a class="permalink" href="index.html#BFTChain.Configure">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Configure(config *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>, configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.Deliver">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=9030:9111#L282">Deliver</a>
+					<a class="permalink" href="index.html#BFTChain.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Deliver(proposal <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>, signatures []<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Signature">Signature</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.Errored">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=13172:13216#L417">Errored</a>
+					<a class="permalink" href="index.html#BFTChain.Errored">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Errored() &lt;-chan struct{}</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.Halt">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=13315:13340#L426">Halt</a>
+					<a class="permalink" href="index.html#BFTChain.Halt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Halt()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.HandleMessage">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=8721:8795#L272">HandleMessage</a>
+					<a class="permalink" href="index.html#BFTChain.HandleMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) HandleMessage(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, m *<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html">smartbftprotos</a>.<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.HandleRequest">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=8883:8942#L277">HandleRequest</a>
+					<a class="permalink" href="index.html#BFTChain.HandleRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) HandleRequest(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.Order">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=11860:11930#L375">Order</a>
+					<a class="permalink" href="index.html#BFTChain.Order">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Order(env *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>, configSeq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.Start">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=13262:13288#L422">Start</a>
+					<a class="permalink" href="index.html#BFTChain.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) Start()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="BFTChain.WaitReady">func (*BFTChain) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=13118:13154#L413">WaitReady</a>
+					<a class="permalink" href="index.html#BFTChain.WaitReady">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#BFTChain">BFTChain</a>) WaitReady() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="BlockPuller">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=1150:1275#L29">BlockPuller</a>
+				<a class="permalink" href="index.html#BlockPuller">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockPuller is used to pull blocks from other OSN
+</p>
+
+			<pre>type BlockPuller interface {
+    PullBlock(seq <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+    HeightsByEndpoints() (map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ByteBufferTuple">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=4931:4982#L158">ByteBufferTuple</a>
+				<a class="permalink" href="index.html#ByteBufferTuple">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ByteBufferTuple struct {
+<span id="ByteBufferTuple.A"></span>    A []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ByteBufferTuple.B"></span>    B []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ByteBufferTuple.FromBytes">func (*ByteBufferTuple) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=5115:5172#L171">FromBytes</a>
+					<a class="permalink" href="index.html#ByteBufferTuple.FromBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bbt *<a href="index.html#ByteBufferTuple">ByteBufferTuple</a>) FromBytes(bytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ByteBufferTuple.ToBytes">func (*ByteBufferTuple) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=4984:5028#L163">ToBytes</a>
+					<a class="permalink" href="index.html#ByteBufferTuple.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bbt *<a href="index.html#ByteBufferTuple">ByteBufferTuple</a>) ToBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChainGetter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=1075:1303#L29">ChainGetter</a>
+				<a class="permalink" href="index.html#ChainGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChainGetter obtains instances of ChainSupport for the given channel
+</p>
+
+			<pre>type ChainGetter interface {
+    <span class="comment">// GetChain obtains the ChainSupport for the given channel.</span>
+    <span class="comment">// Returns nil, false when the ChainSupport for the given channel</span>
+    <span class="comment">// isn&#39;t found.</span>
+    GetChain(chainID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../common/multichannel/index.html">multichannel</a>.<a href="../../common/multichannel/index.html#ChainSupport">ChainSupport</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Consenter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=1433:1839#L39">Consenter</a>
+				<a class="permalink" href="index.html#Consenter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Consenter implementation of the BFT smart based consenter
+</p>
+
+			<pre>type Consenter struct {
+<span id="Consenter.GetPolicyManager"></span>    GetPolicyManager <a href="index.html#PolicyManagerRetriever">PolicyManagerRetriever</a>
+<span id="Consenter.Logger"></span>    Logger           *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+<span id="Consenter.Cert"></span>    Cert             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Consenter.Comm"></span>    Comm             *<a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#Comm">Comm</a>
+<span id="Consenter.Chains"></span>    Chains           <a href="index.html#ChainGetter">ChainGetter</a>
+<span id="Consenter.SignerSerializer"></span>    SignerSerializer signerSerializer
+<span id="Consenter.Registrar"></span>    Registrar        *<a href="../../common/multichannel/index.html">multichannel</a>.<a href="../../common/multichannel/index.html#Registrar">Registrar</a>
+<span id="Consenter.WALBaseDir"></span>    WALBaseDir       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Consenter.ClusterDialer"></span>    ClusterDialer    *<a href="../../common/cluster/index.html">cluster</a>.<a href="../../common/cluster/index.html#PredicateDialer">PredicateDialer</a>
+<span id="Consenter.Conf"></span>    Conf             *<a href="../../common/localconfig/index.html">localconfig</a>.<a href="../../common/localconfig/index.html#TopLevel">TopLevel</a>
+<span id="Consenter.Metrics"></span>    Metrics          *<a href="index.html#Metrics">Metrics</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Consenter.HandleChain">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=4660:4779#L136">HandleChain</a>
+					<a class="permalink" href="index.html#Consenter.HandleChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consenter">Consenter</a>) HandleChain(support <a href="../index.html">consensus</a>.<a href="../index.html#ConsenterSupport">ConsenterSupport</a>, metadata *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Metadata">Metadata</a>) (<a href="../index.html">consensus</a>.<a href="../index.html#Chain">Chain</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Consenter.ReceiverByChain">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=4179:4248#L121">ReceiverByChain</a>
+					<a class="permalink" href="index.html#Consenter.ReceiverByChain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consenter">Consenter</a>) ReceiverByChain(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#MessageReceiver">MessageReceiver</a></pre>
+				<p>
+ReceiverByChain returns the MessageReceiver for the given channelID or nil
+if not found.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Consenter.TargetChannel">func (*Consenter) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=8006:8070#L228">TargetChannel</a>
+					<a class="permalink" href="index.html#Consenter.TargetChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Consenter">Consenter</a>) TargetChannel(message <a href="../../../../../golang/protobuf/proto/index.html">proto2</a>.<a href="../../../../../golang/protobuf/proto/index.html#Message">Message</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+TargetChannel extracts the channel from the given proto.Message.
+Returns an empty string on failure.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConsenterCertificate">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go?s=8254:8286#L230">ConsenterCertificate</a>
+				<a class="permalink" href="index.html#ConsenterCertificate">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConsenterCertificate denotes a TLS certificate of a consenter
+</p>
+
+			<pre>type ConsenterCertificate []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ConsenterCertificate.IsConsenterOfChannel">func (ConsenterCertificate) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go?s=8465:8554#L235">IsConsenterOfChannel</a>
+					<a class="permalink" href="index.html#ConsenterCertificate.IsConsenterOfChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (conCert <a href="index.html#ConsenterCertificate">ConsenterCertificate</a>) IsConsenterOfChannel(configBlock *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+IsConsenterOfChannel returns whether the caller is a consenter of a channel
+by inspecting the given configuration block.
+It returns nil if true, else returns an error.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConsenterVerifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=974:1166#L29">ConsenterVerifier</a>
+				<a class="permalink" href="index.html#ConsenterVerifier">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConsenterVerifier is used to determine whether a signature from one of the consenters is valid
+</p>
+
+			<pre>type ConsenterVerifier interface {
+    <span class="comment">// Evaluate takes a set of SignedData and evaluates whether this set of signatures satisfies the policy</span>
+    Evaluate(signatureSet []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#SignedData">SignedData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Egress">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=651:741#L18">Egress</a>
+				<a class="permalink" href="index.html#Egress">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Egress struct {
+<span id="Egress.Channel"></span>    Channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Egress.RPC"></span>    RPC     <a href="index.html#RPC">RPC</a>
+<span id="Egress.Logger"></span>    Logger  <a href="index.html#PanicLogger">PanicLogger</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Egress.Nodes">func (*Egress) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=743:776#L25">Nodes</a>
+					<a class="permalink" href="index.html#Egress.Nodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Egress">Egress</a>) Nodes() []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Egress.SendConsensus">func (*Egress) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=798:864#L29">SendConsensus</a>
+					<a class="permalink" href="index.html#Egress.SendConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Egress">Egress</a>) SendConsensus(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, m *<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html">protos</a>.<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Egress.SendTransaction">func (*Egress) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=935:1000#L33">SendTransaction</a>
+					<a class="permalink" href="index.html#Egress.SendTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (e *<a href="index.html#Egress">Egress</a>) SendTransaction(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Ingreess">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=1068:1151#L28">Ingreess</a>
+				<a class="permalink" href="index.html#Ingreess">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Ingreess dispatches Submit and Step requests to the designated per chain instances
+</p>
+
+			<pre>type Ingreess struct {
+<span id="Ingreess.Logger"></span>    Logger        <a href="index.html#WarningLogger">WarningLogger</a>
+<span id="Ingreess.ChainSelector"></span>    ChainSelector <a href="index.html#ReceiverGetter">ReceiverGetter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Ingreess.OnConsensus">func (*Ingreess) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=1262:1365#L34">OnConsensus</a>
+					<a class="permalink" href="index.html#Ingreess.OnConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (in *<a href="index.html#Ingreess">Ingreess</a>) OnConsensus(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+OnConsensus notifies the Ingreess for a reception of a StepRequest from a given sender on a given channel
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Ingreess.OnSubmit">func (*Ingreess) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=1984:2081#L50">OnSubmit</a>
+					<a class="permalink" href="index.html#Ingreess.OnSubmit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (in *<a href="index.html#Ingreess">Ingreess</a>) OnSubmit(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+OnSubmit notifies the Ingreess for a reception of a SubmitRequest from a given sender on a given channel
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Ledger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/assembler.go?s=485:742#L14">Ledger</a>
+				<a class="permalink" href="index.html#Ledger">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Ledger interface {
+    <span class="comment">// Height returns the number of blocks in the ledger this channel is associated with.</span>
+    Height() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+
+    <span class="comment">// Block returns a block with the given number,</span>
+    <span class="comment">// or nil if such a block doesn&#39;t exist.</span>
+    Block(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MessageReceiver">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=448:573#L10">MessageReceiver</a>
+				<a class="permalink" href="index.html#MessageReceiver">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MessageReceiver receives messages
+</p>
+
+			<pre>type MessageReceiver interface {
+    HandleMessage(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, m *<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html">protos</a>.<a href="../../../../../SmartBFT-Go/consensus/smartbftprotos/index.html#Message">Message</a>)
+    HandleRequest(sender <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Metrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/metrics.go?s=1340:1507#L36">Metrics</a>
+				<a class="permalink" href="index.html#Metrics">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Metrics struct {
+<span id="Metrics.ClusterSize"></span>    ClusterSize          <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.CommittedBlockNumber"></span>    CommittedBlockNumber <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.IsLeader"></span>    IsLeader             <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+<span id="Metrics.LeaderID"></span>    LeaderID             <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Gauge">Gauge</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/metrics.go?s=1509:1553#L43">NewMetrics</a>
+					<a class="permalink" href="index.html#NewMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMetrics(p <a href="../../../common/metrics/index.html">metrics</a>.<a href="../../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#Metrics">Metrics</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="NodeIdentitiesByID">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=1596:1637#L44">NodeIdentitiesByID</a>
+				<a class="permalink" href="index.html#NodeIdentitiesByID">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type NodeIdentitiesByID map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="NodeIdentitiesByID.IdentityToID">func (NodeIdentitiesByID) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=1639:1714#L46">IdentityToID</a>
+					<a class="permalink" href="index.html#NodeIdentitiesByID.IdentityToID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (nibd <a href="index.html#NodeIdentitiesByID">NodeIdentitiesByID</a>) IdentityToID(identity []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PanicLogger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=573:649#L14">PanicLogger</a>
+				<a class="permalink" href="index.html#PanicLogger">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PanicLogger interface {
+    Panicf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PolicyManagerRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/consenter.go?s=1305:1370#L36">PolicyManagerRetriever</a>
+				<a class="permalink" href="index.html#PolicyManagerRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PolicyManagerRetriever func(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../../common/policies/index.html">policies</a>.<a href="../../../common/policies/index.html#Manager">Manager</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RPC">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/egress.go?s=421:571#L9">RPC</a>
+				<a class="permalink" href="index.html#RPC">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type RPC interface {
+    SendConsensus(dest <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, msg *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#ConsensusRequest">ConsensusRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    SendSubmit(dest <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request *<a href="../../../protos/orderer/index.html">orderer</a>.<a href="../../../protos/orderer/index.html#SubmitRequest">SubmitRequest</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReceiverGetter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=731:898#L18">ReceiverGetter</a>
+				<a class="permalink" href="index.html#ReceiverGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReceiverGetter obtains instances of MessageReceiver given a channel ID
+</p>
+
+			<pre>type ReceiverGetter interface {
+    <span class="comment">// ReceiverByChain returns the MessageReceiver if it exists, or nil if it doesn&#39;t</span>
+    ReceiverByChain(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="index.html#MessageReceiver">MessageReceiver</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RequestInspector">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go?s=5748:5852#L143">RequestInspector</a>
+				<a class="permalink" href="index.html#RequestInspector">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RequestInspector inspects incomming requests and validates serialized identity
+</p>
+
+			<pre>type RequestInspector struct {
+<span id="RequestInspector.ValidateIdentityStructure"></span>    ValidateIdentityStructure func(identity *<a href="../../../protos/msp/index.html">msp</a>.<a href="../../../protos/msp/index.html#SerializedIdentity">SerializedIdentity</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RequestInspector.RequestID">func (*RequestInspector) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/util.go?s=5854:5924#L147">RequestID</a>
+					<a class="permalink" href="index.html#RequestInspector.RequestID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ri *<a href="index.html#RequestInspector">RequestInspector</a>) RequestID(rawReq []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#RequestInfo">RequestInfo</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Sequencer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=742:789#L22">Sequencer</a>
+				<a class="permalink" href="index.html#Sequencer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Sequencer returns sequences
+</p>
+
+			<pre>type Sequencer interface {
+    Sequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Signature">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go?s=344:456#L10">Signature</a>
+				<a class="permalink" href="index.html#Signature">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signature struct {
+<span id="Signature.SignatureHeader"></span>    SignatureHeader      []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Signature.BlockHeader"></span>    BlockHeader          []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="Signature.OrdererBlockMetadata"></span>    OrdererBlockMetadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Signature.AsBytes">func (Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go?s=690:727#L29">AsBytes</a>
+					<a class="permalink" href="index.html#Signature.AsBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sig <a href="index.html#Signature">Signature</a>) AsBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.Marshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go?s=565:603#L21">Marshal</a>
+					<a class="permalink" href="index.html#Signature.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sig *<a href="index.html#Signature">Signature</a>) Marshal() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signature.Unmarshal">func (*Signature) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signature.go?s=458:509#L16">Unmarshal</a>
+					<a class="permalink" href="index.html#Signature.Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sig *<a href="index.html#Signature">Signature</a>) Unmarshal(bytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signer.go?s=467:619#L13">Signer</a>
+				<a class="permalink" href="index.html#Signer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Signer struct {
+<span id="Signer.ID"></span>    ID                 <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Signer.SignerSerializer"></span>    SignerSerializer   <a href="index.html#SignerSerializer">SignerSerializer</a>
+<span id="Signer.Logger"></span>    Logger             <a href="index.html#PanicLogger">PanicLogger</a>
+<span id="Signer.LastConfigBlockNum"></span>    LastConfigBlockNum func() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Signer.Sign">func (*Signer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signer.go?s=621:661#L20">Sign</a>
+					<a class="permalink" href="index.html#Signer.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Signer">Signer</a>) Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Signer.SignProposal">func (*Signer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signer.go?s=806:877#L28">SignProposal</a>
+					<a class="permalink" href="index.html#Signer.SignProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Signer">Signer</a>) SignProposal(proposal <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>) *<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Signature">Signature</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignerSerializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/signer.go?s=388:465#L8">SignerSerializer</a>
+				<a class="permalink" href="index.html#SignerSerializer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SignerSerializer interface {
+    <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#Signer">Signer</a>
+    <a href="../../../common/crypto/index.html">crypto</a>.<a href="../../../common/crypto/index.html#IdentitySerializer">IdentitySerializer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Synchronizer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/synchronizer.go?s=439:706#L11">Synchronizer</a>
+				<a class="permalink" href="index.html#Synchronizer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Synchronizer struct {
+<span id="Synchronizer.BlockToDecision"></span>    BlockToDecision func(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>) *<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Decision">Decision</a>
+<span id="Synchronizer.UpdateLastHash"></span>    UpdateLastHash  func(block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>)
+<span id="Synchronizer.Support"></span>    Support         <a href="../index.html">consensus</a>.<a href="../index.html#ConsenterSupport">ConsenterSupport</a>
+<span id="Synchronizer.BlockPuller"></span>    BlockPuller     <a href="index.html#BlockPuller">BlockPuller</a>
+<span id="Synchronizer.ClusterSize"></span>    ClusterSize     <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Synchronizer.Logger"></span>    Logger          *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Synchronizer.Close">func (*Synchronizer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/synchronizer.go?s=708:738#L20">Close</a>
+					<a class="permalink" href="index.html#Synchronizer.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Synchronizer">Synchronizer</a>) Close()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Synchronizer.Sync">func (*Synchronizer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/synchronizer.go?s=767:811#L24">Sync</a>
+					<a class="permalink" href="index.html#Synchronizer.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#Synchronizer">Synchronizer</a>) Sync() <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Decision">Decision</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Verifier">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=2031:2434#L61">Verifier</a>
+				<a class="permalink" href="index.html#Verifier">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Verifier struct {
+<span id="Verifier.ReqInspector"></span>    ReqInspector           *<a href="index.html#RequestInspector">RequestInspector</a>
+<span id="Verifier.Id2Identity"></span>    Id2Identity            <a href="index.html#NodeIdentitiesByID">NodeIdentitiesByID</a>
+<span id="Verifier.ConsenterVerifier"></span>    ConsenterVerifier      <a href="index.html#ConsenterVerifier">ConsenterVerifier</a>
+<span id="Verifier.AccessController"></span>    AccessController       <a href="index.html#AccessController">AccessController</a>
+<span id="Verifier.VerificationSequencer"></span>    VerificationSequencer  <a href="index.html#Sequencer">Sequencer</a>
+<span id="Verifier.Ledger"></span>    Ledger                 <a href="index.html#Ledger">Ledger</a>
+<span id="Verifier.LastCommittedBlockHash"></span>    LastCommittedBlockHash <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Verifier.LastConfigBlockNum"></span>    LastConfigBlockNum     <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="Verifier.Logger"></span>    Logger                 *<a href="../../../common/flogging/index.html">flogging</a>.<a href="../../../common/flogging/index.html#FabricLogger">FabricLogger</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Verifier.VerificationSequence">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=4986:5034#L153">VerificationSequence</a>
+					<a class="permalink" href="index.html#Verifier.VerificationSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) VerificationSequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Verifier.VerifyConsenterSig">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=3921:4012#L125">VerifyConsenterSig</a>
+					<a class="permalink" href="index.html#Verifier.VerifyConsenterSig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) VerifyConsenterSig(signature <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Signature">Signature</a>, prop <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Verifier.VerifyProposal">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=2436:2523#L74">VerifyProposal</a>
+					<a class="permalink" href="index.html#Verifier.VerifyProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) VerifyProposal(proposal <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Proposal">Proposal</a>) ([]<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Verifier.VerifyRequest">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=3430:3508#L108">VerifyRequest</a>
+					<a class="permalink" href="index.html#Verifier.VerifyRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) VerifyRequest(rawRequest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Verifier.VerifySignature">func (*Verifier) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/verifier.go?s=3082:3149#L97">VerifySignature</a>
+					<a class="permalink" href="index.html#Verifier.VerifySignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (v *<a href="index.html#Verifier">Verifier</a>) VerifySignature(signature <a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html">types</a>.<a href="../../../../../SmartBFT-Go/consensus/pkg/types/index.html#Signature">Signature</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="WALConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/chain.go?s=1391:1714#L36">WALConfig</a>
+				<a class="permalink" href="index.html#WALConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+WALConfig consensus specific configuration parameters from orderer.yaml; for SmartBFT only WALDir is relevant.
+</p>
+
+			<pre>type WALConfig struct {
+<span id="WALConfig.WALDir"></span>    WALDir            <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// WAL data of &lt;my-channel&gt; is stored in WALDir/&lt;my-channel&gt;</span>
+<span id="WALConfig.SnapDir"></span>    SnapDir           <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// Snapshots of &lt;my-channel&gt; are stored in SnapDir/&lt;my-channel&gt;</span>
+<span id="WALConfig.EvictionSuspicion"></span>    EvictionSuspicion <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// Duration threshold that the node samples in order to suspect its eviction from the channel.</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="WarningLogger">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/orderer/consensus/smartbft/ingress.go?s=900:980#L23">WarningLogger</a>
+				<a class="permalink" href="index.html#WarningLogger">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type WarningLogger interface {
+    Warningf(template <a href="http://localhost:6060/pkg/builtin/#string">string</a>, args ...interface{})
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

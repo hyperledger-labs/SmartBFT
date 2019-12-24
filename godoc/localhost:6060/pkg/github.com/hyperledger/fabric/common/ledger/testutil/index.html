@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>testutil - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package testutil
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/ledger/testutil"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ConstructBlock">func ConstructBlock(t *testing.T, blockNum uint64, previousHash []byte, simulationResults [][]byte, sign bool) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructBlockFromBlockDetails">func ConstructBlockFromBlockDetails(t *testing.T, blockDetails *BlockDetails, sign bool) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructBlockWithTxid">func ConstructBlockWithTxid(t *testing.T, blockNum uint64, previousHash []byte, simulationResults [][]byte, txids []string, sign bool) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructBytesProposalResponsePayload">func ConstructBytesProposalResponsePayload(version string, simulationResults []byte) ([]byte, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructRandomBytes">func ConstructRandomBytes(t testing.TB, size int) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructTestBlock">func ConstructTestBlock(t *testing.T, blockNum uint64, numTx int, txSize int) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructTestBlocks">func ConstructTestBlocks(t *testing.T, numBlocks int) []*common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructTransaction">func ConstructTransaction(_ *testing.T, simulationResults []byte, txid string, sign bool) (*common.Envelope, string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#ConstructTransactionFromTxDetails">func ConstructTransactionFromTxDetails(txDetails *TxDetails, sign bool) (*common.Envelope, string, error)</a></dd>
+			
+				
+				<dd><a href="index.html#CopyDir">func CopyDir(srcroot, destroot string) error</a></dd>
+			
+				
+				<dd><a href="index.html#CreateTarBytesForTest">func CreateTarBytesForTest(testFiles []*TarFileEntry) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#NewBlock">func NewBlock(env []*common.Envelope, blockNum uint64, previousHash []byte) *common.Block</a></dd>
+			
+				
+				<dd><a href="index.html#SetTxID">func SetTxID(t *testing.T, block *common.Block, txNum int, txID string)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#BlockDetails">type BlockDetails</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#BlockGenerator">type BlockGenerator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewBlockGenerator">func NewBlockGenerator(t *testing.T, ledgerID string, signTxs bool) (*BlockGenerator, *common.Block)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockGenerator.NextBlock">func (bg *BlockGenerator) NextBlock(simulationResults [][]byte) *common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockGenerator.NextBlockWithTxid">func (bg *BlockGenerator) NextBlockWithTxid(simulationResults [][]byte, txids []string) *common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockGenerator.NextTestBlock">func (bg *BlockGenerator) NextTestBlock(numTx int, txSize int) *common.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#BlockGenerator.NextTestBlocks">func (bg *BlockGenerator) NextTestBlocks(numBlocks int) []*common.Block</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TarFileEntry">type TarFileEntry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TxDetails">type TxDetails</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go">test_helper.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_util.go">test_util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ConstructBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=5131:5255#L136">ConstructBlock</a>
+				<a class="permalink" href="index.html#ConstructBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructBlock(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, previousHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, simulationResults [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sign <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+ConstructBlock constructs a single block
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructBlockFromBlockDetails">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=4182:4284#L111">ConstructBlockFromBlockDetails</a>
+				<a class="permalink" href="index.html#ConstructBlockFromBlockDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructBlockFromBlockDetails(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, blockDetails *<a href="index.html#BlockDetails">BlockDetails</a>, sign <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructBlockWithTxid">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=4618:4766#L123">ConstructBlockWithTxid</a>
+				<a class="permalink" href="index.html#ConstructBlockWithTxid">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructBlockWithTxid(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, previousHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, simulationResults [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, txids []<a href="http://localhost:6060/pkg/builtin/#string">string</a>, sign <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructBytesProposalResponsePayload">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=6638:6738#L170">ConstructBytesProposalResponsePayload</a>
+				<a class="permalink" href="index.html#ConstructBytesProposalResponsePayload">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructBytesProposalResponsePayload(version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, simulationResults []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ConstructBytesProposalResponsePayload constructs a ProposalResponse byte with given chaincode version and simulationResults for testing
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructRandomBytes">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_util.go?s=748:804#L20">ConstructRandomBytes</a>
+				<a class="permalink" href="index.html#ConstructRandomBytes">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructRandomBytes(t <a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#TB">TB</a>, size <a href="http://localhost:6060/pkg/builtin/#int">int</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ConstructRandomBytes constructs random bytes of given size
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructTestBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=5638:5729#L149">ConstructTestBlock</a>
+				<a class="permalink" href="index.html#ConstructTestBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructTestBlock(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, numTx <a href="http://localhost:6060/pkg/builtin/#int">int</a>, txSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+ConstructTestBlock constructs a single block with random contents
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructTestBlocks">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=6221:6290#L160">ConstructTestBlocks</a>
+				<a class="permalink" href="index.html#ConstructTestBlocks">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructTestBlocks(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, numBlocks <a href="http://localhost:6060/pkg/builtin/#int">int</a>) []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			<p>
+ConstructTestBlocks returns a series of blocks starting with blockNum=0.
+The first block in the returned array is a config tx block that represents a genesis block
+Except the genesis block, the size of each of the block would be the same.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructTransaction">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=3227:3350#L83">ConstructTransaction</a>
+				<a class="permalink" href="index.html#ConstructTransaction">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructTransaction(_ *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, simulationResults []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, txid <a href="http://localhost:6060/pkg/builtin/#string">string</a>, sign <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ConstructTransaction constructs a transaction for testing
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ConstructTransactionFromTxDetails">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=3555:3660#L95">ConstructTransactionFromTxDetails</a>
+				<a class="permalink" href="index.html#ConstructTransactionFromTxDetails">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConstructTransactionFromTxDetails(txDetails *<a href="index.html#TxDetails">TxDetails</a>, sign <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="CopyDir">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_util.go?s=1729:1773#L61">CopyDir</a>
+				<a class="permalink" href="index.html#CopyDir">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CopyDir(srcroot, destroot <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+CopyDir creates a copy of a dir
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="CreateTarBytesForTest">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_util.go?s=1145:1205#L35">CreateTarBytesForTest</a>
+				<a class="permalink" href="index.html#CreateTarBytesForTest">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func CreateTarBytesForTest(testFiles []*<a href="index.html#TarFileEntry">TarFileEntry</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+CreateTarBytesForTest creates a tar byte array for unit testing
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewBlock">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=6921:7010#L178">NewBlock</a>
+				<a class="permalink" href="index.html#NewBlock">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewBlock(env []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Envelope">Envelope</a>, blockNum <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, previousHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="SetTxID">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=7437:7508#L192">SetTxID</a>
+				<a class="permalink" href="index.html#SetTxID">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SetTxID(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, block *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>, txNum <a href="http://localhost:6060/pkg/builtin/#int">int</a>, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+			
+			
+			
+
+		
+		
+			
+			
+			<h2 id="BlockDetails">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=882:979#L27">BlockDetails</a>
+				<a class="permalink" href="index.html#BlockDetails">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type BlockDetails struct {
+<span id="BlockDetails.BlockNum"></span>    BlockNum     <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="BlockDetails.PreviousHash"></span>    PreviousHash []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="BlockDetails.Txs"></span>    Txs          []*<a href="index.html#TxDetails">TxDetails</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="BlockGenerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=617:733#L14">BlockGenerator</a>
+				<a class="permalink" href="index.html#BlockGenerator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+BlockGenerator generates a series of blocks for testing
+</p>
+
+			<pre>type BlockGenerator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewBlockGenerator">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=1046:1146#L34">NewBlockGenerator</a>
+					<a class="permalink" href="index.html#NewBlockGenerator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewBlockGenerator(t *<a href="http://localhost:6060/pkg/testing/">testing</a>.<a href="http://localhost:6060/pkg/testing/#T">T</a>, ledgerID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, signTxs <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) (*<a href="index.html#BlockGenerator">BlockGenerator</a>, *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a>)</pre>
+				<p>
+NewBlockGenerator instantiates new BlockGenerator for testing
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="BlockGenerator.NextBlock">func (*BlockGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=1553:1630#L42">NextBlock</a>
+					<a class="permalink" href="index.html#BlockGenerator.NextBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bg *<a href="index.html#BlockGenerator">BlockGenerator</a>) NextBlock(simulationResults [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+NextBlock constructs next block in sequence that includes a number of transactions - one per simulationResults
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockGenerator.NextBlockWithTxid">func (*BlockGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=1918:2019#L50">NextBlockWithTxid</a>
+					<a class="permalink" href="index.html#BlockGenerator.NextBlockWithTxid">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bg *<a href="index.html#BlockGenerator">BlockGenerator</a>) NextBlockWithTxid(simulationResults [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, txids []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+NextBlockWithTxid constructs next block in sequence that includes a number of transactions - one per simulationResults
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockGenerator.NextTestBlock">func (*BlockGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=2435:2511#L62">NextTestBlock</a>
+					<a class="permalink" href="index.html#BlockGenerator.NextTestBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bg *<a href="index.html#BlockGenerator">BlockGenerator</a>) NextTestBlock(numTx <a href="http://localhost:6060/pkg/builtin/#int">int</a>, txSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>) *<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+NextTestBlock constructs next block in sequence block with &#39;numTx&#39; number of transactions for testing
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="BlockGenerator.NextTestBlocks">func (*BlockGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=2777:2848#L71">NextTestBlocks</a>
+					<a class="permalink" href="index.html#BlockGenerator.NextTestBlocks">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bg *<a href="index.html#BlockGenerator">BlockGenerator</a>) NextTestBlocks(numBlocks <a href="http://localhost:6060/pkg/builtin/#int">int</a>) []*<a href="../../../protos/common/index.html">common</a>.<a href="../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+NextTestBlocks constructs &#39;numBlocks&#39; number of blocks for testing
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TarFileEntry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_util.go?s=1029:1076#L30">TarFileEntry</a>
+				<a class="permalink" href="index.html#TarFileEntry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TarFileEntry is a structure for adding test index files to an tar
+</p>
+
+			<pre>type TarFileEntry struct {
+<span id="TarFileEntry.Name"></span>    Name, Body <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TxDetails">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/ledger/testutil/test_helper.go?s=735:880#L21">TxDetails</a>
+				<a class="permalink" href="index.html#TxDetails">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TxDetails struct {
+<span id="TxDetails.TxID"></span>    TxID                            <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxDetails.ChaincodeName"></span>    ChaincodeName, ChaincodeVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TxDetails.SimulationResults"></span>    SimulationResults               []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

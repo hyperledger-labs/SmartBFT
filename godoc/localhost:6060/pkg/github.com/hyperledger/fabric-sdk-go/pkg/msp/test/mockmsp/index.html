@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mockmsp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mockmsp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#MockFabricCAServer">type MockFabricCAServer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockFabricCAServer.Running">func (s *MockFabricCAServer) Running() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockFabricCAServer.Start">func (s *MockFabricCAServer) Start(lis net.Listener, cryptoSuite core.CryptoSuite)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockKey">type MockKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockKey.Bytes">func (m *MockKey) Bytes() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockKey.Private">func (m *MockKey) Private() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockKey.PublicKey">func (m *MockKey) PublicKey() (bccsp.Key, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockKey.SKI">func (m *MockKey) SKI() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockKey.Symmetric">func (m *MockKey) Symmetric() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockSigningIdentity">type MockSigningIdentity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockSigningIdentity">func NewMockSigningIdentity(id string, mspid string) *MockSigningIdentity</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.EnrollmentCertificate">func (m *MockSigningIdentity) EnrollmentCertificate() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.Identifier">func (m *MockSigningIdentity) Identifier() *msp.IdentityIdentifier</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.PrivateKey">func (m *MockSigningIdentity) PrivateKey() core.Key</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.PublicVersion">func (m *MockSigningIdentity) PublicVersion() msp.Identity</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.Serialize">func (m *MockSigningIdentity) Serialize() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.SetEnrollmentCertificate">func (m *MockSigningIdentity) SetEnrollmentCertificate(cert []byte)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.SetPrivateKey">func (m *MockSigningIdentity) SetPrivateKey(key core.Key)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.Sign">func (m *MockSigningIdentity) Sign(msg []byte) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockSigningIdentity.Verify">func (m *MockSigningIdentity) Verify(msg []byte, sig []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockUserStore">type MockUserStore</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockUserStore.Load">func (m *MockUserStore) Load(identifier msp.IdentityIdentifier) (*msp.UserData, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockUserStore.Store">func (m *MockUserStore) Store(*msp.UserData) error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockfabriccaserver.go">mockfabriccaserver.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go">mockkey.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go">mockuser.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuserstore.go">mockuserstore.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="MockFabricCAServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockfabriccaserver.go?s=2312:2414#L55">MockFabricCAServer</a>
+				<a class="permalink" href="index.html#MockFabricCAServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockFabricCAServer is a mock for FabricCAServer
+</p>
+
+			<pre>type MockFabricCAServer struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockFabricCAServer.Running">func (*MockFabricCAServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockfabriccaserver.go?s=3412:3455#L103">Running</a>
+					<a class="permalink" href="index.html#MockFabricCAServer.Running">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MockFabricCAServer">MockFabricCAServer</a>) Running() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Running returns the status of the mock server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockFabricCAServer.Start">func (*MockFabricCAServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockfabriccaserver.go?s=2447:2529#L62">Start</a>
+					<a class="permalink" href="index.html#MockFabricCAServer.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s *<a href="index.html#MockFabricCAServer">MockFabricCAServer</a>) Start(lis <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Listener">Listener</a>, cryptoSuite <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#CryptoSuite">CryptoSuite</a>)</pre>
+				<p>
+Start fabric CA mock server
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockKey">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=242:265#L2">MockKey</a>
+				<a class="permalink" href="index.html#MockKey">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockKey mockcore BCCSP key
+</p>
+
+			<pre>type MockKey struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockKey.Bytes">func (*MockKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=280:321#L6">Bytes</a>
+					<a class="permalink" href="index.html#MockKey.Bytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockKey">MockKey</a>) Bytes() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Bytes ...
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockKey.Private">func (*MockKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=533:565#L21">Private</a>
+					<a class="permalink" href="index.html#MockKey.Private">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockKey">MockKey</a>) Private() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Private ...
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockKey.PublicKey">func (*MockKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=601:649#L26">PublicKey</a>
+					<a class="permalink" href="index.html#MockKey.PublicKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockKey">MockKey</a>) PublicKey() (<a href="../../../../internal/github.com/hyperledger/fabric/bccsp/index.html">bccsp</a>.<a href="../../../../internal/github.com/hyperledger/fabric/bccsp/index.html#Key">Key</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PublicKey ...
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockKey.SKI">func (*MockKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=377:407#L11">SKI</a>
+					<a class="permalink" href="index.html#MockKey.SKI">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockKey">MockKey</a>) SKI() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+SKI ...
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockKey.Symmetric">func (*MockKey) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockkey.go?s=464:498#L16">Symmetric</a>
+					<a class="permalink" href="index.html#MockKey.Symmetric">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockKey">MockKey</a>) Symmetric() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Symmetric ...
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockSigningIdentity">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=290:447#L5">MockSigningIdentity</a>
+				<a class="permalink" href="index.html#MockSigningIdentity">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockSigningIdentity ...
+</p>
+
+			<pre>type MockSigningIdentity struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockSigningIdentity">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=506:579#L13">NewMockSigningIdentity</a>
+					<a class="permalink" href="index.html#NewMockSigningIdentity">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockSigningIdentity(id <a href="http://localhost:6060/pkg/builtin/#string">string</a>, mspid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a></pre>
+				<p>
+NewMockSigningIdentity to return mock user with MSPID
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockSigningIdentity.EnrollmentCertificate">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1387:1447#L41">EnrollmentCertificate</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.EnrollmentCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) EnrollmentCertificate() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+EnrollmentCertificate Returns the underlying ECert representing this user’s identity.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.Identifier">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=701:767#L21">Identifier</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.Identifier">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) Identifier() *<a href="../../../common/providers/msp/index.html">msp</a>.<a href="../../../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a></pre>
+				<p>
+Identifier returns the identifier of that identity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.PrivateKey">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1919:1970#L61">PrivateKey</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.PrivateKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) PrivateKey() <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#Key">Key</a></pre>
+				<p>
+PrivateKey returns the crypto suite representation of the private key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.PublicVersion">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1649:1707#L51">PublicVersion</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.PublicVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) PublicVersion() <a href="../../../common/providers/msp/index.html">msp</a>.<a href="../../../common/providers/msp/index.html#Identity">Identity</a></pre>
+				<p>
+PublicVersion returns the public parts of this identity
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.Serialize">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1031:1088#L31">Serialize</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.Serialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Serialize converts an identity to bytes
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.SetEnrollmentCertificate">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1191:1258#L36">SetEnrollmentCertificate</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.SetEnrollmentCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) SetEnrollmentCertificate(cert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+SetEnrollmentCertificate sets yhe enrollment certificate.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.SetPrivateKey">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1763:1820#L56">SetPrivateKey</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.SetPrivateKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) SetPrivateKey(key <a href="../../../common/providers/core/index.html">core</a>.<a href="../../../common/providers/core/index.html#Key">Key</a>)</pre>
+				<p>
+SetPrivateKey sets the private key
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.Sign">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=1505:1567#L46">Sign</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) Sign(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Sign the message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockSigningIdentity.Verify">func (*MockSigningIdentity) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuser.go?s=904:970#L26">Verify</a>
+					<a class="permalink" href="index.html#MockSigningIdentity.Verify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockSigningIdentity">MockSigningIdentity</a>) Verify(msg []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, sig []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Verify a signature over some message using this identity as reference
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockUserStore">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuserstore.go?s=218:247#L4">MockUserStore</a>
+				<a class="permalink" href="index.html#MockUserStore">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockUserStore ...
+</p>
+
+			<pre>type MockUserStore struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockUserStore.Load">func (*MockUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuserstore.go?s=342:428#L13">Load</a>
+					<a class="permalink" href="index.html#MockUserStore.Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockUserStore">MockUserStore</a>) Load(identifier <a href="../../../common/providers/msp/index.html">msp</a>.<a href="../../../common/providers/msp/index.html#IdentityIdentifier">IdentityIdentifier</a>) (*<a href="../../../common/providers/msp/index.html">msp</a>.<a href="../../../common/providers/msp/index.html#UserData">UserData</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Load ...
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockUserStore.Store">func (*MockUserStore) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/pkg/msp/test/mockmsp/mockuserstore.go?s=262:312#L8">Store</a>
+					<a class="permalink" href="index.html#MockUserStore.Store">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockUserStore">MockUserStore</a>) Store(*<a href="../../../common/providers/msp/index.html">msp</a>.<a href="../../../common/providers/msp/index.html#UserData">UserData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Store ...
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

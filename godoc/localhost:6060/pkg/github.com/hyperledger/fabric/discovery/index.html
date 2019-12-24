@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>discovery - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package discovery
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/discovery"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#NewService">func NewService(config Config, sup Support) *service</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AccessControlSupport">type AccessControlSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Config.String">func (c Config) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ConfigSequenceSupport">type ConfigSequenceSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConfigSupport">type ConfigSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#EndorsementSupport">type EndorsementSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#GossipSupport">type GossipSupport</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Support">type Support</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go">api.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/authcache.go">authcache.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/service.go">service.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="NewService">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/service.go?s=1808:1860#L56">NewService</a>
+				<a class="permalink" href="index.html#NewService">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewService(config <a href="index.html#Config">Config</a>, sup <a href="index.html#Support">Support</a>) *service</pre>
+			<p>
+NewService creates a new discovery service instance
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AccessControlSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=446:681#L8">AccessControlSupport</a>
+				<a class="permalink" href="index.html#AccessControlSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AccessControlSupport checks if clients are eligible of being serviced
+</p>
+
+			<pre>type AccessControlSupport interface {
+    <span class="comment">// Eligible returns whether the given peer is eligible for receiving</span>
+    <span class="comment">// service from the discovery service for a given channel</span>
+    EligibleForService(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>, data <a href="../protos/common/index.html">common2</a>.<a href="../protos/common/index.html#SignedData">SignedData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/service.go?s=1186:1350#L37">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Config defines the configuration of the discovery service
+</p>
+
+			<pre>type Config struct {
+<span id="Config.TLS"></span>    TLS                          <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Config.AuthCacheEnabled"></span>    AuthCacheEnabled             <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Config.AuthCacheMaxSize"></span>    AuthCacheMaxSize             <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="Config.AuthCachePurgeRetentionRatio"></span>    AuthCachePurgeRetentionRatio <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Config.String">func (Config) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/service.go?s=1409:1440#L45">String</a>
+					<a class="permalink" href="index.html#Config.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#Config">Config</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a string representation of this Config
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ConfigSequenceSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=757:913#L15">ConfigSequenceSupport</a>
+				<a class="permalink" href="index.html#ConfigSequenceSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigSequenceSupport returns the config sequence of the given channel
+</p>
+
+			<pre>type ConfigSequenceSupport interface {
+    <span class="comment">// ConfigSequence returns the configuration sequence of the a given channel</span>
+    ConfigSequence(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConfigSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=2536:2673#L53">ConfigSupport</a>
+				<a class="permalink" href="index.html#ConfigSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConfigSupport provides access to channel configuration
+</p>
+
+			<pre>type ConfigSupport interface {
+    <span class="comment">// Config returns the channel&#39;s configuration</span>
+    Config(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="../protos/discovery/index.html">discprotos</a>.<a href="../protos/discovery/index.html#ConfigResult">ConfigResult</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="EndorsementSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=1701:2476#L41">EndorsementSupport</a>
+				<a class="permalink" href="index.html#EndorsementSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+EndorsementSupport provides knowledge of endorsement policy selection
+for chaincodes
+</p>
+
+			<pre>type EndorsementSupport interface {
+    <span class="comment">// PeersForEndorsement returns an EndorsementDescriptor for a given set of peers, channel, and chaincode</span>
+    PeersForEndorsement(channel <a href="../gossip/common/index.html">common</a>.<a href="../gossip/common/index.html#ChainID">ChainID</a>, interest *<a href="../protos/discovery/index.html">discprotos</a>.<a href="../protos/discovery/index.html#ChaincodeInterest">ChaincodeInterest</a>) (*<a href="../protos/discovery/index.html">discprotos</a>.<a href="../protos/discovery/index.html#EndorsementDescriptor">EndorsementDescriptor</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// PeersAuthorizedByCriteria returns the peers of the channel that are authorized by the given chaincode interest</span>
+    <span class="comment">// That is - taking in account if the chaincode(s) in the interest are installed on the peers, and also</span>
+    <span class="comment">// taking in account whether the peers are part of the collections of the chaincodes.</span>
+    <span class="comment">// If a nil interest, or an empty interest is passed - no filtering is done.</span>
+    PeersAuthorizedByCriteria(chainID <a href="../gossip/common/index.html">common</a>.<a href="../gossip/common/index.html#ChainID">ChainID</a>, interest *<a href="../protos/discovery/index.html">discprotos</a>.<a href="../protos/discovery/index.html#ChaincodeInterest">ChaincodeInterest</a>) (<a href="../gossip/discovery/index.html">discovery</a>.<a href="../gossip/discovery/index.html#Members">Members</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="GossipSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=1140:1608#L24">GossipSupport</a>
+				<a class="permalink" href="index.html#GossipSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+GossipSupport aggregates abilities that the gossip module
+provides to the discovery service, such as knowing information about peers
+</p>
+
+			<pre>type GossipSupport interface {
+    <span class="comment">// ChannelExists returns whether a given channel exists or not</span>
+    ChannelExists(channel <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// PeersOfChannel returns the NetworkMembers considered alive</span>
+    <span class="comment">// and also subscribed to the channel given</span>
+    PeersOfChannel(<a href="../gossip/common/index.html">common</a>.<a href="../gossip/common/index.html#ChainID">ChainID</a>) <a href="../gossip/discovery/index.html">discovery</a>.<a href="../gossip/discovery/index.html#Members">Members</a>
+
+    <span class="comment">// Peers returns the NetworkMembers considered alive</span>
+    Peers() <a href="../gossip/discovery/index.html">discovery</a>.<a href="../gossip/discovery/index.html#Members">Members</a>
+
+    <span class="comment">// IdentityInfo returns identity information about peers</span>
+    IdentityInfo() <a href="../gossip/api/index.html">api</a>.<a href="../gossip/api/index.html#PeerIdentitySet">PeerIdentitySet</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Support">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/discovery/api.go?s=2798:2919#L60">Support</a>
+				<a class="permalink" href="index.html#Support">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Support defines an interface that allows the discovery service
+to obtain information that other peer components have
+</p>
+
+			<pre>type Support interface {
+    <a href="index.html#AccessControlSupport">AccessControlSupport</a>
+    <a href="index.html#GossipSupport">GossipSupport</a>
+    <a href="index.html#EndorsementSupport">EndorsementSupport</a>
+    <a href="index.html#ConfigSupport">ConfigSupport</a>
+    <a href="index.html#ConfigSequenceSupport">ConfigSequenceSupport</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="client/index.html">client</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="cmd/index.html">cmd</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="cmd/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by mockery v1.0.0.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="endorsement/index.html">endorsement</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="support/index.html">support</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/acl/index.html">acl</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/chaincode/index.html">chaincode</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/config/index.html">config</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/gossip/index.html">gossip</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="support/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

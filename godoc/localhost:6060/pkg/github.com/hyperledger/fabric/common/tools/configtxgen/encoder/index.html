@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>encoder - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package encoder
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/tools/configtxgen/encoder"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#ConfigTemplateFromGroup">func ConfigTemplateFromGroup(conf *localconfig.Profile, cg *cb.ConfigGroup) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#DefaultConfigTemplate">func DefaultConfigTemplate(conf *localconfig.Profile) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#HasSkippedForeignOrgs">func HasSkippedForeignOrgs(conf *localconfig.Profile) error</a></dd>
+			
+				
+				<dd><a href="index.html#MakeChannelCreationTransaction">func MakeChannelCreationTransaction(channelID string, signer SignerSerializer, conf *localconfig.Profile) (*cb.Envelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#MakeChannelCreationTransactionFromTemplate">func MakeChannelCreationTransactionFromTemplate(channelID string, signer SignerSerializer, conf *localconfig.Profile, template *cb.ConfigGroup) (*cb.Envelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#MakeChannelCreationTransactionWithSystemChannelContext">func MakeChannelCreationTransactionWithSystemChannelContext(channelID string, signer SignerSerializer, conf, systemChannelConf *localconfig.Profile) (*cb.Envelope, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewApplicationGroup">func NewApplicationGroup(conf *localconfig.Application) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewApplicationOrgGroup">func NewApplicationOrgGroup(conf *localconfig.Organization) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewChannelCreateConfigUpdate">func NewChannelCreateConfigUpdate(channelID string, conf *localconfig.Profile, templateConfig *cb.ConfigGroup) (*cb.ConfigUpdate, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewChannelGroup">func NewChannelGroup(conf *localconfig.Profile) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewConsortiumGroup">func NewConsortiumGroup(conf *localconfig.Consortium) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewConsortiumOrgGroup">func NewConsortiumOrgGroup(conf *localconfig.Organization) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewConsortiumsGroup">func NewConsortiumsGroup(conf map[string]*localconfig.Consortium) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewOrdererGroup">func NewOrdererGroup(conf *localconfig.Orderer) (*cb.ConfigGroup, error)</a></dd>
+			
+				
+				<dd><a href="index.html#NewOrdererOrgGroup">func NewOrdererOrgGroup(conf *localconfig.Organization) (*cb.ConfigGroup, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#Bootstrapper">type Bootstrapper</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#New">func New(config *localconfig.Profile) *Bootstrapper</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewBootstrapper">func NewBootstrapper(config *localconfig.Profile) (*Bootstrapper, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Bootstrapper.GenesisBlock">func (bs *Bootstrapper) GenesisBlock() *cb.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Bootstrapper.GenesisBlockForChannel">func (bs *Bootstrapper) GenesisBlockForChannel(channelID string) *cb.Block</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LocalSigner">type LocalSigner</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LocalSigner.NewSignatureHeader">func (ls *LocalSigner) NewSignatureHeader() (*cb.SignatureHeader, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LocalSigner.Serialize">func (ls *LocalSigner) Serialize() ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LocalSigner.Sign">func (ls *LocalSigner) Sign(message []byte) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SignerSerializer">type SignerSerializer</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go">encoder.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// ConsensusTypeSolo identifies the solo consensus implementation.</span>
+    <span id="ConsensusTypeSolo">ConsensusTypeSolo</span> = &#34;solo&#34;
+    <span class="comment">// ConsensusTypeKafka identifies the Kafka-based consensus implementation.</span>
+    <span id="ConsensusTypeKafka">ConsensusTypeKafka</span> = &#34;kafka&#34;
+    <span class="comment">// ConsensusTypeKafka identifies the etcdraft-based consensus implementation.</span>
+    <span id="ConsensusTypeEtcdRaft">ConsensusTypeEtcdRaft</span> = &#34;etcdraft&#34;
+    <span class="comment">// ConsensusTypeSmartBFT identifies the SmartBFT-based consensus implementation.</span>
+    <span id="ConsensusTypeSmartBFT">ConsensusTypeSmartBFT</span> = &#34;smartbft&#34;
+
+    <span class="comment">// BlockValidationPolicyKey TODO</span>
+    <span id="BlockValidationPolicyKey">BlockValidationPolicyKey</span> = &#34;BlockValidation&#34;
+
+    <span class="comment">// OrdererAdminsPolicy is the absolute path to the orderer admins policy</span>
+    <span id="OrdererAdminsPolicy">OrdererAdminsPolicy</span> = &#34;/Channel/Orderer/Admins&#34;
+
+    <span class="comment">// SignaturePolicyType is the &#39;Type&#39; string for signature policies</span>
+    <span id="SignaturePolicyType">SignaturePolicyType</span> = &#34;Signature&#34;
+
+    <span class="comment">// ImplicitMetaPolicyType is the &#39;Type&#39; string for implicit meta policies</span>
+    <span id="ImplicitMetaPolicyType">ImplicitMetaPolicyType</span> = &#34;ImplicitMeta&#34;
+
+    <span class="comment">// ImplicitOrdererPolicyType is the &#39;Type&#39; string for implicit orderer policies</span>
+    <span id="ImplicitOrdererPolicyType">ImplicitOrdererPolicyType</span> = &#34;ImplicitOrderer&#34;
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="ConfigTemplateFromGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=21158:21258#L477">ConfigTemplateFromGroup</a>
+				<a class="permalink" href="index.html#ConfigTemplateFromGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ConfigTemplateFromGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>, cg *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="DefaultConfigTemplate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=20605:20683#L461">DefaultConfigTemplate</a>
+				<a class="permalink" href="index.html#DefaultConfigTemplate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DefaultConfigTemplate(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+DefaultConfigTemplate generates a config template based on the assumption that
+the input profile is a channel creation template and no system channel context
+is available.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="HasSkippedForeignOrgs">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=26063:26122#L610">HasSkippedForeignOrgs</a>
+				<a class="permalink" href="index.html#HasSkippedForeignOrgs">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func HasSkippedForeignOrgs(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+			<p>
+HasSkippedForeignOrgs is used to detect whether a configuration includes
+org definitions which should not be parsed because this tool is being
+run in a context where the user does not have access to that org&#39;s info
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MakeChannelCreationTransaction">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=22924:23057#L521">MakeChannelCreationTransaction</a>
+				<a class="permalink" href="index.html#MakeChannelCreationTransaction">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MakeChannelCreationTransaction(
+    channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    signer <a href="index.html#SignerSerializer">SignerSerializer</a>,
+    conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>,
+) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MakeChannelCreationTransaction is a handy utility function for creating transactions for channel creation.
+It assumes the invoker has no system channel context so ignores all but the application section.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MakeChannelCreationTransactionFromTemplate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=24461:24633#L558">MakeChannelCreationTransactionFromTemplate</a>
+				<a class="permalink" href="index.html#MakeChannelCreationTransactionFromTemplate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MakeChannelCreationTransactionFromTemplate(
+    channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    signer <a href="index.html#SignerSerializer">SignerSerializer</a>,
+    conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>,
+    template *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>,
+) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MakeChannelCreationTransactionFromTemplate creates a transaction for creating a channel.  It uses
+the given template to produce the config update set.  Usually, the caller will want to invoke
+MakeChannelCreationTransaction or MakeChannelCreationTransactionWithSystemChannelContext.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="MakeChannelCreationTransactionWithSystemChannelContext">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=23607:23784#L536">MakeChannelCreationTransactionWithSystemChannelContext</a>
+				<a class="permalink" href="index.html#MakeChannelCreationTransactionWithSystemChannelContext">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func MakeChannelCreationTransactionWithSystemChannelContext(
+    channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    signer <a href="index.html#SignerSerializer">SignerSerializer</a>,
+    conf,
+    systemChannelConf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>,
+) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Envelope">Envelope</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+MakeChannelCreationTransactionWithSystemChannelContext is a utility function for creating channel creation txes.
+It requires a configuration representing the orderer system channel to allow more sophisticated channel creation
+transactions modifying pieces of the configuration like the orderer set.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewApplicationGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=14033:14113#L315">NewApplicationGroup</a>
+				<a class="permalink" href="index.html#NewApplicationGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewApplicationGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Application">Application</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewApplicationGroup returns the application component of the channel configuration.  It defines the organizations which are involved
+in application logic like chaincodes, and how these members may interact with the orderer.  It sets the mod_policy of all elements to &#34;Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewApplicationOrgGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=15437:15521#L348">NewApplicationOrgGroup</a>
+				<a class="permalink" href="index.html#NewApplicationOrgGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewApplicationOrgGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Organization">Organization</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewApplicationOrgGroup returns an application org component of the channel configuration.  It defines the crypto material for the organization
+(its MSP) as well as its anchor peers for use by the gossip network.  It sets the mod_policy of all elements to &#34;Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewChannelCreateConfigUpdate">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=19323:19459#L426">NewChannelCreateConfigUpdate</a>
+				<a class="permalink" href="index.html#NewChannelCreateConfigUpdate">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewChannelCreateConfigUpdate(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>, templateConfig *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigUpdate">ConfigUpdate</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewChannelCreateConfigUpdate generates a ConfigUpdate which can be sent to the orderer to create a new channel.  Optionally, the channel group of the
+ordering system channel may be passed in, and the resulting ConfigUpdate will extract the appropriate versions from this file.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewChannelGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=6086:6158#L139">NewChannelGroup</a>
+				<a class="permalink" href="index.html#NewChannelGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewChannelGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewChannelGroup defines the root of the channel configuration.  It defines basic operating principles like the hashing
+algorithm used for the blocks, as well as the location of the ordering service.  It will recursively call into the
+NewOrdererGroup, NewConsortiumsGroup, and NewApplicationGroup depending on whether these sub-elements are set in the
+configuration.  All mod_policy values are set to &#34;Admins&#34; for this group, with the exception of the OrdererAddresses
+value which is set to &#34;/Channel/Orderer/Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewConsortiumGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=18447:18525#L407">NewConsortiumGroup</a>
+				<a class="permalink" href="index.html#NewConsortiumGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewConsortiumGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Consortium">Consortium</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewConsortiums returns a consortiums component of the channel configuration.  Each consortium defines the organizations which may be involved in channel
+creation, as well as the channel creation policy the orderer checks at channel creation time to authorize the action.  It sets the mod_policy of all
+elements to &#34;/Channel/Orderer/Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewConsortiumOrgGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=11335:11418#L261">NewConsortiumOrgGroup</a>
+				<a class="permalink" href="index.html#NewConsortiumOrgGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewConsortiumOrgGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Organization">Organization</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewConsortiumsGroup returns an org component of the channel configuration.  It defines the crypto material for the
+organization (its MSP).  It sets the mod_policy of all elements to &#34;Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewConsortiumsGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=17259:17349#L386">NewConsortiumsGroup</a>
+				<a class="permalink" href="index.html#NewConsortiumsGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewConsortiumsGroup(conf map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Consortium">Consortium</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewConsortiumsGroup returns the consortiums component of the channel configuration.  This element is only defined for the ordering system channel.
+It sets the mod_policy for all elements to &#34;/Channel/Orderer/Admins&#34;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewOrdererGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=8395:8467#L193">NewOrdererGroup</a>
+				<a class="permalink" href="index.html#NewOrdererGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewOrdererGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Orderer">Orderer</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewOrdererGroup returns the orderer component of the channel configuration.  It defines parameters of the ordering service
+about how large blocks should be, how frequently they should be emitted, etc. as well as the organizations of the ordering network.
+It sets the mod_policy of all elements to &#34;Admins&#34;.  This group is always present in any channel configuration.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewOrdererOrgGroup">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=12579:12659#L286">NewOrdererOrgGroup</a>
+				<a class="permalink" href="index.html#NewOrdererOrgGroup">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewOrdererOrgGroup(conf *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Organization">Organization</a>) (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#ConfigGroup">ConfigGroup</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+NewOrdererOrgGroup returns an orderer org component of the channel configuration.  It defines the crypto material for the
+organization (its MSP).  It sets the mod_policy of all elements to &#34;Admins&#34;.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="Bootstrapper">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=26609:26667#L629">Bootstrapper</a>
+				<a class="permalink" href="index.html#Bootstrapper">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Bootstrapper is a wrapper around NewChannelConfigGroup which can produce genesis blocks
+</p>
+
+			<pre>type Bootstrapper struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="New">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=27250:27301#L650">New</a>
+					<a class="permalink" href="index.html#New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func New(config *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>) *<a href="index.html#Bootstrapper">Bootstrapper</a></pre>
+				<p>
+New creates a new Bootstrapper for generating genesis blocks
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewBootstrapper">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=26753:26825#L634">NewBootstrapper</a>
+					<a class="permalink" href="index.html#NewBootstrapper">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewBootstrapper(config *<a href="../localconfig/index.html">localconfig</a>.<a href="../localconfig/index.html#Profile">Profile</a>) (*<a href="index.html#Bootstrapper">Bootstrapper</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewBootstrapper creates a bootstrapper but returns an error instead of panic-ing
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Bootstrapper.GenesisBlock">func (*Bootstrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=27500:27548#L659">GenesisBlock</a>
+					<a class="permalink" href="index.html#Bootstrapper.GenesisBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bs *<a href="index.html#Bootstrapper">Bootstrapper</a>) GenesisBlock() *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+GenesisBlock produces a genesis block for the default test chain id
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Bootstrapper.GenesisBlockForChannel">func (*Bootstrapper) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=27707:27781#L664">GenesisBlockForChannel</a>
+					<a class="permalink" href="index.html#Bootstrapper.GenesisBlockForChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (bs *<a href="index.html#Bootstrapper">Bootstrapper</a>) GenesisBlockForChannel(channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#Block">Block</a></pre>
+				<p>
+GenesisBlockForChannel produces a genesis block for a given channel ID
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LocalSigner">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=28224:28303#L689">LocalSigner</a>
+				<a class="permalink" href="index.html#LocalSigner">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LocalSigner struct {
+<span id="LocalSigner.Signer"></span>    Signer <a href="../../../crypto/index.html">crypto</a>.<a href="../../../crypto/index.html#LocalSigner">LocalSigner</a>
+<span id="LocalSigner.SS"></span>    SS     <a href="index.html#SignerSerializer">SignerSerializer</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LocalSigner.NewSignatureHeader">func (*LocalSigner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=28474:28546#L702">NewSignatureHeader</a>
+					<a class="permalink" href="index.html#LocalSigner.NewSignatureHeader">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ls *<a href="index.html#LocalSigner">LocalSigner</a>) NewSignatureHeader() (*<a href="../../../../protos/common/index.html">cb</a>.<a href="../../../../protos/common/index.html#SignatureHeader">SignatureHeader</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LocalSigner.Serialize">func (*LocalSigner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=28305:28355#L694">Serialize</a>
+					<a class="permalink" href="index.html#LocalSigner.Serialize">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ls *<a href="index.html#LocalSigner">LocalSigner</a>) Serialize() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LocalSigner.Sign">func (*LocalSigner) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=28598:28657#L706">Sign</a>
+					<a class="permalink" href="index.html#LocalSigner.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ls *<a href="index.html#LocalSigner">LocalSigner</a>) Sign(message []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SignerSerializer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/tools/configtxgen/encoder/encoder.go?s=27852:27929#L668">SignerSerializer</a>
+				<a class="permalink" href="index.html#SignerSerializer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type SignerSerializer interface {
+    <a href="../../../crypto/index.html">crypto</a>.<a href="../../../crypto/index.html#Signer">Signer</a>
+    <a href="../../../crypto/index.html">crypto</a>.<a href="../../../crypto/index.html#IdentitySerializer">IdentitySerializer</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

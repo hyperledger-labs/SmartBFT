@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>icmp - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package icmp
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/net/icmp"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+				<dd><a href="index.html#pkg-examples" class="examplesLink">Examples</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package icmp provides basic functions for the manipulation of
+messages used in the Internet Control Message Protocols,
+ICMPv4 and ICMPv6.
+</p>
+<p>
+ICMPv4 and ICMPv6 are defined in RFC 792 and RFC 4443.
+Multi-part message support for ICMP is defined in RFC 4884.
+ICMP extensions for MPLS are defined in RFC 4950.
+ICMP extensions for interface and next-hop identification are
+defined in RFC 5837.
+PROBE: A utility for probing interfaces is defined in RFC 8335.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#IPv6PseudoHeader">func IPv6PseudoHeader(src, dst net.IP) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#ParseIPv4Header">func ParseIPv4Header(b []byte) (*ipv4.Header, error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#DefaultMessageBody">type DefaultMessageBody</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultMessageBody.Len">func (p *DefaultMessageBody) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultMessageBody.Marshal">func (p *DefaultMessageBody) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#DstUnreach">type DstUnreach</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DstUnreach.Len">func (p *DstUnreach) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DstUnreach.Marshal">func (p *DstUnreach) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Echo">type Echo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Echo.Len">func (p *Echo) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Echo.Marshal">func (p *Echo) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ExtendedEchoReply">type ExtendedEchoReply</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtendedEchoReply.Len">func (p *ExtendedEchoReply) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtendedEchoReply.Marshal">func (p *ExtendedEchoReply) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ExtendedEchoRequest">type ExtendedEchoRequest</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtendedEchoRequest.Len">func (p *ExtendedEchoRequest) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ExtendedEchoRequest.Marshal">func (p *ExtendedEchoRequest) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Extension">type Extension</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#InterfaceIdent">type InterfaceIdent</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InterfaceIdent.Len">func (ifi *InterfaceIdent) Len(_ int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InterfaceIdent.Marshal">func (ifi *InterfaceIdent) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InterfaceInfo">type InterfaceInfo</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InterfaceInfo.Len">func (ifi *InterfaceInfo) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#InterfaceInfo.Marshal">func (ifi *InterfaceInfo) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MPLSLabel">type MPLSLabel</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MPLSLabelStack">type MPLSLabelStack</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MPLSLabelStack.Len">func (ls *MPLSLabelStack) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MPLSLabelStack.Marshal">func (ls *MPLSLabelStack) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Message">type Message</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ParseMessage">func ParseMessage(proto int, b []byte) (*Message, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Message.Marshal">func (m *Message) Marshal(psh []byte) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MessageBody">type MessageBody</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PacketConn">type PacketConn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ListenPacket">func ListenPacket(network, address string) (*PacketConn, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.Close">func (c *PacketConn) Close() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.IPv4PacketConn">func (c *PacketConn) IPv4PacketConn() *ipv4.PacketConn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.IPv6PacketConn">func (c *PacketConn) IPv6PacketConn() *ipv6.PacketConn</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.LocalAddr">func (c *PacketConn) LocalAddr() net.Addr</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.ReadFrom">func (c *PacketConn) ReadFrom(b []byte) (int, net.Addr, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.SetDeadline">func (c *PacketConn) SetDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.SetReadDeadline">func (c *PacketConn) SetReadDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.SetWriteDeadline">func (c *PacketConn) SetWriteDeadline(t time.Time) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketConn.WriteTo">func (c *PacketConn) WriteTo(b []byte, dst net.Addr) (int, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#PacketTooBig">type PacketTooBig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketTooBig.Len">func (p *PacketTooBig) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PacketTooBig.Marshal">func (p *PacketTooBig) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ParamProb">type ParamProb</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ParamProb.Len">func (p *ParamProb) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ParamProb.Marshal">func (p *ParamProb) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TimeExceeded">type TimeExceeded</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TimeExceeded.Len">func (p *TimeExceeded) Len(proto int) int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TimeExceeded.Marshal">func (p *TimeExceeded) Marshal(proto int) ([]byte, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Type">type Type</a></dd>
+				
+				
+			
+			
+				
+				<dd><a href="index.html#pkg-note-BUG">Bugs</a></dd>
+				
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+		<div id="pkg-examples">
+			<h3>Examples</h3>
+			<div class="js-expandAll expandAll collapsed">(Expand All)</div>
+			<dl>
+			
+			<dd><a class="exampleLink" href="index.html#example_PacketConn_nonPrivilegedPing">PacketConn (NonPrivilegedPing)</a></dd>
+			
+			</dl>
+		</div>
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/dstunreach.go">dstunreach.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go">echo.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go">endpoint.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/extension.go">extension.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/helper_posix.go">helper_posix.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go">interface.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/ipv4.go">ipv4.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/ipv6.go">ipv6.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/listen_posix.go">listen_posix.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go">message.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/messagebody.go">messagebody.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/mpls.go">mpls.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/multipart.go">multipart.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/packettoobig.go">packettoobig.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/paramprob.go">paramprob.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/net/icmp/timeexceeded.go">timeexceeded.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="IPv6PseudoHeader">func <a href="http://localhost:6060/src/golang.org/x/net/icmp/ipv6.go?s=354:399#L7">IPv6PseudoHeader</a>
+				<a class="permalink" href="index.html#IPv6PseudoHeader">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IPv6PseudoHeader(src, dst <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#IP">IP</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+IPv6PseudoHeader returns an IPv6 pseudo header for checksum
+calculation.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ParseIPv4Header">func <a href="http://localhost:6060/src/golang.org/x/net/icmp/ipv4.go?s=864:916#L20">ParseIPv4Header</a>
+				<a class="permalink" href="index.html#ParseIPv4Header">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ParseIPv4Header(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../ipv4/index.html">ipv4</a>.<a href="../ipv4/index.html#Header">Header</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+ParseIPv4Header returns the IPv4 header of the IPv4 packet that
+triggered an ICMP error message.
+This is found in the Data field of the ICMP error message body.
+</p>
+<p>
+The provided b must be in the format used by a raw ICMP socket on
+the local system.
+This may differ from the wire format, and the format used by a raw
+IP socket, depending on the system.
+</p>
+<p>
+To parse an IPv6 header, use ipv6.ParseHeader.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="DefaultMessageBody">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/messagebody.go?s=645:700#L11">DefaultMessageBody</a>
+				<a class="permalink" href="index.html#DefaultMessageBody">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DefaultMessageBody represents the default message body.
+</p>
+
+			<pre>type DefaultMessageBody struct {
+<span id="DefaultMessageBody.Data"></span>    Data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// data</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DefaultMessageBody.Len">func (*DefaultMessageBody) <a href="http://localhost:6060/src/golang.org/x/net/icmp/messagebody.go?s=761:808#L16">Len</a>
+					<a class="permalink" href="index.html#DefaultMessageBody.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DefaultMessageBody">DefaultMessageBody</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DefaultMessageBody.Marshal">func (*DefaultMessageBody) <a href="http://localhost:6060/src/golang.org/x/net/icmp/messagebody.go?s=930:993#L24">Marshal</a>
+					<a class="permalink" href="index.html#DefaultMessageBody.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DefaultMessageBody">DefaultMessageBody</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="DstUnreach">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/dstunreach.go?s=250:380#L1">DstUnreach</a>
+				<a class="permalink" href="index.html#DstUnreach">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A DstUnreach represents an ICMP destination unreachable message
+body.
+</p>
+
+			<pre>type DstUnreach struct {
+<span id="DstUnreach.Data"></span>    Data       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>      <span class="comment">// data, known as original datagram field</span>
+<span id="DstUnreach.Extensions"></span>    Extensions []<a href="index.html#Extension">Extension</a> <span class="comment">// extensions</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="DstUnreach.Len">func (*DstUnreach) <a href="http://localhost:6060/src/golang.org/x/net/icmp/dstunreach.go?s=441:480#L5">Len</a>
+					<a class="permalink" href="index.html#DstUnreach.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DstUnreach">DstUnreach</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="DstUnreach.Marshal">func (*DstUnreach) <a href="http://localhost:6060/src/golang.org/x/net/icmp/dstunreach.go?s=668:723#L14">Marshal</a>
+					<a class="permalink" href="index.html#DstUnreach.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#DstUnreach">DstUnreach</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Echo">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=266:366#L1">Echo</a>
+				<a class="permalink" href="index.html#Echo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Echo represents an ICMP echo request or reply message body.
+</p>
+
+			<pre>type Echo struct {
+<span id="Echo.ID"></span>    ID   <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// identifier</span>
+<span id="Echo.Seq"></span>    Seq  <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// sequence number</span>
+<span id="Echo.Data"></span>    Data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// data</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Echo.Len">func (*Echo) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=427:460#L7">Len</a>
+					<a class="permalink" href="index.html#Echo.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Echo">Echo</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Echo.Marshal">func (*Echo) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=586:635#L15">Marshal</a>
+					<a class="permalink" href="index.html#Echo.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Echo">Echo</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ExtendedEchoReply">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=2736:3020#L91">ExtendedEchoReply</a>
+				<a class="permalink" href="index.html#ExtendedEchoReply">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An ExtendedEchoReply represents an ICMP extended echo reply message
+body.
+</p>
+
+			<pre>type ExtendedEchoReply struct {
+<span id="ExtendedEchoReply.ID"></span>    ID     <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// identifier</span>
+<span id="ExtendedEchoReply.Seq"></span>    Seq    <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// sequence number</span>
+<span id="ExtendedEchoReply.State"></span>    State  <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// 3-bit state working together with Message.Code</span>
+<span id="ExtendedEchoReply.Active"></span>    Active <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// probed interface is active</span>
+<span id="ExtendedEchoReply.IPv4"></span>    IPv4   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// probed interface runs IPv4</span>
+<span id="ExtendedEchoReply.IPv6"></span>    IPv6   <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// probed interface runs IPv6</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ExtendedEchoReply.Len">func (*ExtendedEchoReply) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=3081:3127#L101">Len</a>
+					<a class="permalink" href="index.html#ExtendedEchoReply.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ExtendedEchoReply">ExtendedEchoReply</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ExtendedEchoReply.Marshal">func (*ExtendedEchoReply) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=3239:3301#L109">Marshal</a>
+					<a class="permalink" href="index.html#ExtendedEchoReply.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ExtendedEchoReply">ExtendedEchoReply</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ExtendedEchoRequest">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=1296:1524#L39">ExtendedEchoRequest</a>
+				<a class="permalink" href="index.html#ExtendedEchoRequest">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An ExtendedEchoRequest represents an ICMP extended echo request
+message body.
+</p>
+
+			<pre>type ExtendedEchoRequest struct {
+<span id="ExtendedEchoRequest.ID"></span>    ID         <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">// identifier</span>
+<span id="ExtendedEchoRequest.Seq"></span>    Seq        <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">// sequence number</span>
+<span id="ExtendedEchoRequest.Local"></span>    Local      <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>        <span class="comment">// must be true when identifying by name or index</span>
+<span id="ExtendedEchoRequest.Extensions"></span>    Extensions []<a href="index.html#Extension">Extension</a> <span class="comment">// extensions</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ExtendedEchoRequest.Len">func (*ExtendedEchoRequest) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=1585:1633#L47">Len</a>
+					<a class="permalink" href="index.html#ExtendedEchoRequest.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ExtendedEchoRequest">ExtendedEchoRequest</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ExtendedEchoRequest.Marshal">func (*ExtendedEchoRequest) <a href="http://localhost:6060/src/golang.org/x/net/icmp/echo.go?s=1819:1883#L56">Marshal</a>
+					<a class="permalink" href="index.html#ExtendedEchoRequest.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ExtendedEchoRequest">ExtendedEchoRequest</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Extension">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/extension.go?s=302:652#L5">Extension</a>
+				<a class="permalink" href="index.html#Extension">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Extension represents an ICMP extension.
+</p>
+
+			<pre>type Extension interface {
+    <span class="comment">// Len returns the length of ICMP extension.</span>
+    <span class="comment">// The provided proto must be either the ICMPv4 or ICMPv6</span>
+    <span class="comment">// protocol number.</span>
+    Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// Marshal returns the binary encoding of ICMP extension.</span>
+    <span class="comment">// The provided proto must be either the ICMPv4 or ICMPv6</span>
+    <span class="comment">// protocol number.</span>
+    Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="InterfaceIdent">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=5789:6087#L233">InterfaceIdent</a>
+				<a class="permalink" href="index.html#InterfaceIdent">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An InterfaceIdent represents interface identification.
+</p>
+
+			<pre>type InterfaceIdent struct {
+<span id="InterfaceIdent.Class"></span>    Class <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// extension object class number</span>
+<span id="InterfaceIdent.Type"></span>    Type  <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// extension object sub-type</span>
+<span id="InterfaceIdent.Name"></span>    Name  <a href="http://localhost:6060/pkg/builtin/#string">string</a> <span class="comment">// interface name</span>
+<span id="InterfaceIdent.Index"></span>    Index <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// interface index</span>
+<span id="InterfaceIdent.AFI"></span>    AFI   <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// address family identifier; see address family numbers in IANA registry</span>
+<span id="InterfaceIdent.Addr"></span>    Addr  []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// address</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InterfaceIdent.Len">func (*InterfaceIdent) <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=6146:6187#L243">Len</a>
+					<a class="permalink" href="index.html#InterfaceIdent.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ifi *<a href="index.html#InterfaceIdent">InterfaceIdent</a>) Len(_ <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of Extension interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="InterfaceIdent.Marshal">func (*InterfaceIdent) <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=6512:6573#L261">Marshal</a>
+					<a class="permalink" href="index.html#InterfaceIdent.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ifi *<a href="index.html#InterfaceIdent">InterfaceIdent</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of Extension interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InterfaceInfo">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=430:600#L17">InterfaceInfo</a>
+				<a class="permalink" href="index.html#InterfaceInfo">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An InterfaceInfo represents interface and next-hop identification.
+</p>
+
+			<pre>type InterfaceInfo struct {
+<span id="InterfaceInfo.Class"></span>    Class     <a href="http://localhost:6060/pkg/builtin/#int">int</a> <span class="comment">// extension object class number</span>
+<span id="InterfaceInfo.Type"></span>    Type      <a href="http://localhost:6060/pkg/builtin/#int">int</a> <span class="comment">// extension object sub-type</span>
+<span id="InterfaceInfo.Interface"></span>    Interface *<a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Interface">Interface</a>
+<span id="InterfaceInfo.Addr"></span>    Addr      *<a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#IPAddr">IPAddr</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InterfaceInfo.Len">func (*InterfaceInfo) <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=1432:1476#L64">Len</a>
+					<a class="permalink" href="index.html#InterfaceInfo.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ifi *<a href="index.html#InterfaceInfo">InterfaceInfo</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of Extension interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="InterfaceInfo.Marshal">func (*InterfaceInfo) <a href="http://localhost:6060/src/golang.org/x/net/icmp/interface.go?s=1589:1649#L70">Marshal</a>
+					<a class="permalink" href="index.html#InterfaceInfo.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ifi *<a href="index.html#InterfaceInfo">InterfaceInfo</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of Extension interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MPLSLabel">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/mpls.go?s=251:418#L1">MPLSLabel</a>
+				<a class="permalink" href="index.html#MPLSLabel">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MPLSLabel represents an MPLS label stack entry.
+</p>
+
+			<pre>type MPLSLabel struct {
+<span id="MPLSLabel.Label"></span>    Label <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// label value</span>
+<span id="MPLSLabel.TC"></span>    TC    <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// traffic class; formerly experimental use</span>
+<span id="MPLSLabel.S"></span>    S     <a href="http://localhost:6060/pkg/builtin/#bool">bool</a> <span class="comment">// bottom of stack</span>
+<span id="MPLSLabel.TTL"></span>    TTL   <a href="http://localhost:6060/pkg/builtin/#int">int</a>  <span class="comment">// time to live</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MPLSLabelStack">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/mpls.go?s=545:681#L13">MPLSLabelStack</a>
+				<a class="permalink" href="index.html#MPLSLabelStack">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MPLSLabelStack represents an MPLS label stack.
+</p>
+
+			<pre>type MPLSLabelStack struct {
+<span id="MPLSLabelStack.Class"></span>    Class  <a href="http://localhost:6060/pkg/builtin/#int">int</a> <span class="comment">// extension object class number</span>
+<span id="MPLSLabelStack.Type"></span>    Type   <a href="http://localhost:6060/pkg/builtin/#int">int</a> <span class="comment">// extension object sub-type</span>
+<span id="MPLSLabelStack.Labels"></span>    Labels []<a href="index.html#MPLSLabel">MPLSLabel</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MPLSLabelStack.Len">func (*MPLSLabelStack) <a href="http://localhost:6060/src/golang.org/x/net/icmp/mpls.go?s=740:784#L20">Len</a>
+					<a class="permalink" href="index.html#MPLSLabelStack.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ls *<a href="index.html#MPLSLabelStack">MPLSLabelStack</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of Extension interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MPLSLabelStack.Marshal">func (*MPLSLabelStack) <a href="http://localhost:6060/src/golang.org/x/net/icmp/mpls.go?s=888:948#L25">Marshal</a>
+					<a class="permalink" href="index.html#MPLSLabelStack.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ls *<a href="index.html#MPLSLabelStack">MPLSLabelStack</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of Extension interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Message">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go?s=1750:1936#L51">Message</a>
+				<a class="permalink" href="index.html#Message">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Message represents an ICMP message.
+</p>
+
+			<pre>type Message struct {
+<span id="Message.Type"></span>    Type     <a href="index.html#Type">Type</a>        <span class="comment">// type, either ipv4.ICMPType or ipv6.ICMPType</span>
+<span id="Message.Code"></span>    Code     <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">// code</span>
+<span id="Message.Checksum"></span>    Checksum <a href="http://localhost:6060/pkg/builtin/#int">int</a>         <span class="comment">// checksum</span>
+<span id="Message.Body"></span>    Body     <a href="index.html#MessageBody">MessageBody</a> <span class="comment">// body</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="ParseMessage">func <a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go?s=4338:4394#L127">ParseMessage</a>
+					<a class="permalink" href="index.html#ParseMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ParseMessage(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>, b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="index.html#Message">Message</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ParseMessage parses b as an ICMP message.
+The provided proto must be either the ICMPv4 or ICMPv6 protocol
+number.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Message.Marshal">func (*Message) <a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go?s=2365:2418#L67">Marshal</a>
+					<a class="permalink" href="index.html#Message.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Message">Message</a>) Marshal(psh []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal returns the binary encoding of the ICMP message m.
+</p>
+<p>
+For an ICMPv4 message, the returned message always contains the
+calculated checksum field.
+</p>
+<p>
+For an ICMPv6 message, the returned message contains the calculated
+checksum field when psh is not nil, otherwise the kernel will
+compute the checksum field during the message transmission.
+When psh is not nil, it must be the pseudo header for IPv6.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MessageBody">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/messagebody.go?s=224:582#L1">MessageBody</a>
+				<a class="permalink" href="index.html#MessageBody">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A MessageBody represents an ICMP message body.
+</p>
+
+			<pre>type MessageBody interface {
+    <span class="comment">// Len returns the length of ICMP message body.</span>
+    <span class="comment">// The provided proto must be either the ICMPv4 or ICMPv6</span>
+    <span class="comment">// protocol number.</span>
+    Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+
+    <span class="comment">// Marshal returns the binary encoding of ICMP message body.</span>
+    <span class="comment">// The provided proto must be either the ICMPv4 or ICMPv6</span>
+    <span class="comment">// protocol number.</span>
+    Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PacketConn">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=392:479#L10">PacketConn</a>
+				<a class="permalink" href="index.html#PacketConn">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PacketConn represents a packet network endpoint that uses either
+ICMPv4 or ICMPv6.
+</p>
+
+			<pre>type PacketConn struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			<div id="example_PacketConn_nonPrivilegedPing" class="toggle">
+	<div class="collapsed">
+		<p class="exampleHeading toggleButton">▹ <span class="text">Example (NonPrivilegedPing)</span></p>
+	</div>
+	<div class="expanded">
+		<p class="exampleHeading toggleButton">▾ <span class="text">Example (NonPrivilegedPing)</span></p>
+		
+		
+		
+			<p>Code:</p>
+			<pre class="code">
+switch runtime.GOOS {
+case &#34;darwin&#34;:
+case &#34;linux&#34;:
+    log.Println(&#34;you may need to adjust the net.ipv4.ping_group_range kernel state&#34;)
+default:
+    log.Println(&#34;not supported on&#34;, runtime.GOOS)
+    return
+}
+
+c, err := icmp.ListenPacket(&#34;udp6&#34;, &#34;fe80::1%en0&#34;)
+if err != nil {
+    log.Fatal(err)
+}
+defer c.Close()
+
+wm := icmp.Message{
+    Type: ipv6.ICMPTypeEchoRequest, Code: 0,
+    Body: &amp;icmp.Echo{
+        ID: os.Getpid() &amp; 0xffff, Seq: 1,
+        Data: []byte(&#34;HELLO-R-U-THERE&#34;),
+    },
+}
+wb, err := wm.Marshal(nil)
+if err != nil {
+    log.Fatal(err)
+}
+if _, err := c.WriteTo(wb, &amp;net.UDPAddr{IP: net.ParseIP(&#34;ff02::1&#34;), Zone: &#34;en0&#34;}); err != nil {
+    log.Fatal(err)
+}
+
+rb := make([]byte, 1500)
+n, peer, err := c.ReadFrom(rb)
+if err != nil {
+    log.Fatal(err)
+}
+rm, err := icmp.ParseMessage(58, rb[:n])
+if err != nil {
+    log.Fatal(err)
+}
+switch rm.Type {
+case ipv6.ICMPTypeEchoReply:
+    log.Printf(&#34;got reflection from %v&#34;, peer)
+default:
+    log.Printf(&#34;got %+v; want echo reply&#34;, rm)
+}
+</pre>
+			
+		
+	</div>
+</div>
+
+			
+			
+
+			
+				
+				<h3 id="ListenPacket">func <a href="http://localhost:6060/src/golang.org/x/net/icmp/listen_posix.go?s=1281:1344#L34">ListenPacket</a>
+					<a class="permalink" href="index.html#ListenPacket">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func ListenPacket(network, address <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#PacketConn">PacketConn</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ListenPacket listens for incoming ICMP packets addressed to
+address. See net.Dial for the syntax of address.
+</p>
+<p>
+For non-privileged datagram-oriented ICMP endpoints, network must
+be &#34;udp4&#34; or &#34;udp6&#34;. The endpoint allows to read, write a few
+limited ICMP messages such as echo request and echo reply.
+Currently only Darwin and Linux support this.
+</p>
+<p>
+Examples:
+</p>
+<pre>ListenPacket(&#34;udp4&#34;, &#34;192.168.0.1&#34;)
+ListenPacket(&#34;udp4&#34;, &#34;0.0.0.0&#34;)
+ListenPacket(&#34;udp6&#34;, &#34;fe80::1%en0&#34;)
+ListenPacket(&#34;udp6&#34;, &#34;::&#34;)
+</pre>
+<p>
+For privileged raw ICMP endpoints, network must be &#34;ip4&#34; or &#34;ip6&#34;
+followed by a colon and an ICMP protocol number or name.
+</p>
+<p>
+Examples:
+</p>
+<pre>ListenPacket(&#34;ip4:icmp&#34;, &#34;192.168.0.1&#34;)
+ListenPacket(&#34;ip4:1&#34;, &#34;0.0.0.0&#34;)
+ListenPacket(&#34;ip6:ipv6-icmp&#34;, &#34;fe80::1%en0&#34;)
+ListenPacket(&#34;ip6:58&#34;, &#34;::&#34;)
+</pre>
+
+				
+				
+			
+
+			
+				
+				<h3 id="PacketConn.Close">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=1810:1844#L63">Close</a>
+					<a class="permalink" href="index.html#PacketConn.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) Close() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Close closes the endpoint.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.IPv4PacketConn">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=667:721#L20">IPv4PacketConn</a>
+					<a class="permalink" href="index.html#PacketConn.IPv4PacketConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) IPv4PacketConn() *<a href="../ipv4/index.html">ipv4</a>.<a href="../ipv4/index.html#PacketConn">PacketConn</a></pre>
+				<p>
+IPv4PacketConn returns the ipv4.PacketConn of c.
+It returns nil when c is not created as the endpoint for ICMPv4.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.IPv6PacketConn">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=890:944#L29">IPv6PacketConn</a>
+					<a class="permalink" href="index.html#PacketConn.IPv6PacketConn">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) IPv6PacketConn() *<a href="../ipv6/index.html">ipv6</a>.<a href="../ipv6/index.html#PacketConn">PacketConn</a></pre>
+				<p>
+IPv6PacketConn returns the ipv6.PacketConn of c.
+It returns nil when c is not created as the endpoint for ICMPv6.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.LocalAddr">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=1959:2000#L71">LocalAddr</a>
+					<a class="permalink" href="index.html#PacketConn.LocalAddr">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) LocalAddr() <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Addr">Addr</a></pre>
+				<p>
+LocalAddr returns the local network address.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.ReadFrom">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=1048:1110#L37">ReadFrom</a>
+					<a class="permalink" href="index.html#PacketConn.ReadFrom">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) ReadFrom(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Addr">Addr</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ReadFrom reads an ICMP message from the connection.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.SetDeadline">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=2142:2193#L80">SetDeadline</a>
+					<a class="permalink" href="index.html#PacketConn.SetDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) SetDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetDeadline sets the read and write deadlines associated with the
+endpoint.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.SetReadDeadline">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=2342:2397#L89">SetReadDeadline</a>
+					<a class="permalink" href="index.html#PacketConn.SetReadDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) SetReadDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetReadDeadline sets the read deadline associated with the
+endpoint.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.SetWriteDeadline">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=2552:2608#L98">SetWriteDeadline</a>
+					<a class="permalink" href="index.html#PacketConn.SetWriteDeadline">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) SetWriteDeadline(t <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+SetWriteDeadline sets the write deadline associated with the
+endpoint.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketConn.WriteTo">func (*PacketConn) <a href="http://localhost:6060/src/golang.org/x/net/icmp/endpoint.go?s=1637:1702#L55">WriteTo</a>
+					<a class="permalink" href="index.html#PacketConn.WriteTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#PacketConn">PacketConn</a>) WriteTo(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, dst <a href="http://localhost:6060/pkg/net/">net</a>.<a href="http://localhost:6060/pkg/net/#Addr">Addr</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+WriteTo writes the ICMP message b to dst.
+The provided dst must be net.UDPAddr when c is a non-privileged
+datagram-oriented ICMP endpoint.
+Otherwise it must be net.IPAddr.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PacketTooBig">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/packettoobig.go?s=266:411#L1">PacketTooBig</a>
+				<a class="permalink" href="index.html#PacketTooBig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A PacketTooBig represents an ICMP packet too big message body.
+</p>
+
+			<pre>type PacketTooBig struct {
+<span id="PacketTooBig.MTU"></span>    MTU  <a href="http://localhost:6060/pkg/builtin/#int">int</a>    <span class="comment">// maximum transmission unit of the nexthop link</span>
+<span id="PacketTooBig.Data"></span>    Data []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a> <span class="comment">// data, known as original datagram field</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PacketTooBig.Len">func (*PacketTooBig) <a href="http://localhost:6060/src/golang.org/x/net/icmp/packettoobig.go?s=472:513#L6">Len</a>
+					<a class="permalink" href="index.html#PacketTooBig.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PacketTooBig">PacketTooBig</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="PacketTooBig.Marshal">func (*PacketTooBig) <a href="http://localhost:6060/src/golang.org/x/net/icmp/packettoobig.go?s=639:696#L14">Marshal</a>
+					<a class="permalink" href="index.html#PacketTooBig.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PacketTooBig">PacketTooBig</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ParamProb">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/paramprob.go?s=305:513#L3">ParamProb</a>
+				<a class="permalink" href="index.html#ParamProb">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ParamProb represents an ICMP parameter problem message body.
+</p>
+
+			<pre>type ParamProb struct {
+<span id="ParamProb.Pointer"></span>    Pointer    <a href="http://localhost:6060/pkg/builtin/#uintptr">uintptr</a>     <span class="comment">// offset within the data where the error was detected</span>
+<span id="ParamProb.Data"></span>    Data       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>      <span class="comment">// data, known as original datagram field</span>
+<span id="ParamProb.Extensions"></span>    Extensions []<a href="index.html#Extension">Extension</a> <span class="comment">// extensions</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ParamProb.Len">func (*ParamProb) <a href="http://localhost:6060/src/golang.org/x/net/icmp/paramprob.go?s=574:612#L10">Len</a>
+					<a class="permalink" href="index.html#ParamProb.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ParamProb">ParamProb</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ParamProb.Marshal">func (*ParamProb) <a href="http://localhost:6060/src/golang.org/x/net/icmp/paramprob.go?s=800:854#L19">Marshal</a>
+					<a class="permalink" href="index.html#ParamProb.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#ParamProb">ParamProb</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TimeExceeded">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/timeexceeded.go?s=239:371#L1">TimeExceeded</a>
+				<a class="permalink" href="index.html#TimeExceeded">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A TimeExceeded represents an ICMP time exceeded message body.
+</p>
+
+			<pre>type TimeExceeded struct {
+<span id="TimeExceeded.Data"></span>    Data       []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>      <span class="comment">// data, known as original datagram field</span>
+<span id="TimeExceeded.Extensions"></span>    Extensions []<a href="index.html#Extension">Extension</a> <span class="comment">// extensions</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TimeExceeded.Len">func (*TimeExceeded) <a href="http://localhost:6060/src/golang.org/x/net/icmp/timeexceeded.go?s=432:473#L4">Len</a>
+					<a class="permalink" href="index.html#TimeExceeded.Len">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#TimeExceeded">TimeExceeded</a>) Len(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Len implements the Len method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TimeExceeded.Marshal">func (*TimeExceeded) <a href="http://localhost:6060/src/golang.org/x/net/icmp/timeexceeded.go?s=661:718#L13">Marshal</a>
+					<a class="permalink" href="index.html#TimeExceeded.Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#TimeExceeded">TimeExceeded</a>) Marshal(proto <a href="http://localhost:6060/pkg/builtin/#int">int</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Marshal implements the Marshal method of MessageBody interface.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Type">type <a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go?s=1668:1707#L46">Type</a>
+				<a class="permalink" href="index.html#Type">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Type represents an ICMP message type.
+</p>
+
+			<pre>type Type interface {
+    Protocol() <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+		
+			<h2 id="pkg-note-BUG">Bugs</h2>
+			<ul style="list-style: none; padding: 0;">
+			
+			<li><a href="http://localhost:6060/src/golang.org/x/net/icmp/message.go?s=821:899#L17" style="float: left;">&#x261e;</a> <p>
+This package is not implemented on AIX, JS, NaCl and
+Plan 9.
+</p>
+</li>
+			
+			</ul>
+		
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

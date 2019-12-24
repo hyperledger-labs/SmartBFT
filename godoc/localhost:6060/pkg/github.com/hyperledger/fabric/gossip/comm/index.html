@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>comm - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package comm
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/gossip/comm"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#GenerateCertificatesOrPanic">func GenerateCertificatesOrPanic() tls.Certificate</a></dd>
+			
+			
+				
+				<dd><a href="index.html#AggregatedSendResult">type AggregatedSendResult</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AggregatedSendResult.AckCount">func (ar AggregatedSendResult) AckCount() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AggregatedSendResult.NackCount">func (ar AggregatedSendResult) NackCount() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#AggregatedSendResult.String">func (ar AggregatedSendResult) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelDeMultiplexer">type ChannelDeMultiplexer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChannelDemultiplexer">func NewChannelDemultiplexer() *ChannelDeMultiplexer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelDeMultiplexer.AddChannel">func (m *ChannelDeMultiplexer) AddChannel(predicate common.MessageAcceptor) chan interface{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelDeMultiplexer.Close">func (m *ChannelDeMultiplexer) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelDeMultiplexer.DeMultiplex">func (m *ChannelDeMultiplexer) DeMultiplex(msg interface{})</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Comm">type Comm</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommInstance">func NewCommInstance(s *grpc.Server, certs *common.TLSCertificates, idStore identity.Mapper, peerIdentity api.PeerIdentityType, secureDialOpts api.PeerSecureDialOpts, sa api.SecurityAdvisor, commMetrics *metrics.CommMetrics, config CommConfig, dialOpts ...grpc.DialOption) (Comm, error)</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CommConfig">type CommConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ConnConfig">type ConnConfig</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ReceivedMessageImpl">type ReceivedMessageImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReceivedMessageImpl.Ack">func (m *ReceivedMessageImpl) Ack(err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReceivedMessageImpl.GetConnectionInfo">func (m *ReceivedMessageImpl) GetConnectionInfo() *proto.ConnectionInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReceivedMessageImpl.GetGossipMessage">func (m *ReceivedMessageImpl) GetGossipMessage() *proto.SignedGossipMessage</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReceivedMessageImpl.GetSourceEnvelope">func (m *ReceivedMessageImpl) GetSourceEnvelope() *proto.Envelope</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ReceivedMessageImpl.Respond">func (m *ReceivedMessageImpl) Respond(msg *proto.GossipMessage)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#RemotePeer">type RemotePeer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RemotePeer.String">func (p *RemotePeer) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SecurityAdvisor">type SecurityAdvisor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#SendResult">type SendResult</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#SendResult.Error">func (sr SendResult) Error() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/ack.go">ack.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go">comm.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm_impl.go">comm_impl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/conn.go">conn.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/crypto.go">crypto.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go">demux.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go">msg.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="DefDialTimeout">DefDialTimeout</span>  = <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 3
+    <span id="DefConnTimeout">DefConnTimeout</span>  = <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a> * 2
+    <span id="DefRecvBuffSize">DefRecvBuffSize</span> = 20
+    <span id="DefSendBuffSize">DefSendBuffSize</span> = 20
+)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="GenerateCertificatesOrPanic">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/crypto.go?s=458:508#L16">GenerateCertificatesOrPanic</a>
+				<a class="permalink" href="index.html#GenerateCertificatesOrPanic">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GenerateCertificatesOrPanic() <a href="http://localhost:6060/pkg/crypto/tls/">tls</a>.<a href="http://localhost:6060/pkg/crypto/tls/#Certificate">Certificate</a></pre>
+			<p>
+GenerateCertificatesOrPanic generates a a random pair of public and private keys
+and return TLS certificate
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="AggregatedSendResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=2262:2300#L69">AggregatedSendResult</a>
+				<a class="permalink" href="index.html#AggregatedSendResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AggregatedSendResult represents a slice of SendResults
+</p>
+
+			<pre>type AggregatedSendResult []<a href="index.html#SendResult">SendResult</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AggregatedSendResult.AckCount">func (AggregatedSendResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=2364:2409#L72">AckCount</a>
+					<a class="permalink" href="index.html#AggregatedSendResult.AckCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ar <a href="index.html#AggregatedSendResult">AggregatedSendResult</a>) AckCount() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+AckCount returns the number of successful acknowledgements
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AggregatedSendResult.NackCount">func (AggregatedSendResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=2562:2608#L83">NackCount</a>
+					<a class="permalink" href="index.html#AggregatedSendResult.NackCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ar <a href="index.html#AggregatedSendResult">AggregatedSendResult</a>) NackCount() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+NackCount returns the number of unsuccessful acknowledgements
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="AggregatedSendResult.String">func (AggregatedSendResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=2726:2772#L89">String</a>
+					<a class="permalink" href="index.html#AggregatedSendResult.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ar <a href="index.html#AggregatedSendResult">AggregatedSendResult</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String returns a JSONed string representation
+of the AggregatedSendResult
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelDeMultiplexer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go?s=373:469#L8">ChannelDeMultiplexer</a>
+				<a class="permalink" href="index.html#ChannelDeMultiplexer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelDeMultiplexer is a struct that can receive channel registrations (AddChannel)
+and publications (DeMultiplex) and it broadcasts the publications to registrations
+according to their predicate
+</p>
+
+			<pre>type ChannelDeMultiplexer struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChannelDemultiplexer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go?s=533:585#L15">NewChannelDemultiplexer</a>
+					<a class="permalink" href="index.html#NewChannelDemultiplexer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChannelDemultiplexer() *<a href="index.html#ChannelDeMultiplexer">ChannelDeMultiplexer</a></pre>
+				<p>
+NewChannelDemultiplexer creates a new ChannelDeMultiplexer
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChannelDeMultiplexer.AddChannel">func (*ChannelDeMultiplexer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go?s=1154:1246#L44">AddChannel</a>
+					<a class="permalink" href="index.html#ChannelDeMultiplexer.AddChannel">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelDeMultiplexer">ChannelDeMultiplexer</a>) AddChannel(predicate <a href="../common/index.html">common</a>.<a href="../common/index.html#MessageAcceptor">MessageAcceptor</a>) chan interface{}</pre>
+				<p>
+AddChannel registers a channel with a certain predicate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelDeMultiplexer.Close">func (*ChannelDeMultiplexer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go?s=927:965#L33">Close</a>
+					<a class="permalink" href="index.html#ChannelDeMultiplexer.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelDeMultiplexer">ChannelDeMultiplexer</a>) Close()</pre>
+				<p>
+Close closes this channel, which makes all channels registered before
+to close as well.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelDeMultiplexer.DeMultiplex">func (*ChannelDeMultiplexer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/demux.go?s=1542:1601#L54">DeMultiplex</a>
+					<a class="permalink" href="index.html#ChannelDeMultiplexer.DeMultiplex">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ChannelDeMultiplexer">ChannelDeMultiplexer</a>) DeMultiplex(msg interface{})</pre>
+				<p>
+DeMultiplex broadcasts the message to all channels that were returned
+by AddChannel calls and that hold the respected predicates.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Comm">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=387:1772#L11">Comm</a>
+				<a class="permalink" href="index.html#Comm">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Comm is an object that enables to communicate with other peers
+that also embed a CommModule.
+</p>
+
+			<pre>type Comm interface {
+
+    <span class="comment">// GetPKIid returns this instance&#39;s PKI id</span>
+    GetPKIid() <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+
+    <span class="comment">// Send sends a message to remote peers</span>
+    Send(msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>, peers ...*<a href="index.html#RemotePeer">RemotePeer</a>)
+
+    <span class="comment">// SendWithAck sends a message to remote peers, waiting for acknowledgement from minAck of them, or until a certain timeout expires</span>
+    SendWithAck(msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>, timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>, minAck <a href="http://localhost:6060/pkg/builtin/#int">int</a>, peers ...*<a href="index.html#RemotePeer">RemotePeer</a>) <a href="index.html#AggregatedSendResult">AggregatedSendResult</a>
+
+    <span class="comment">// Probe probes a remote node and returns nil if its responsive,</span>
+    <span class="comment">// and an error if it&#39;s not.</span>
+    Probe(peer *<a href="index.html#RemotePeer">RemotePeer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+
+    <span class="comment">// Handshake authenticates a remote peer and returns</span>
+    <span class="comment">// (its identity, nil) on success and (nil, error)</span>
+    Handshake(peer *<a href="index.html#RemotePeer">RemotePeer</a>) (<a href="../api/index.html">api</a>.<a href="../api/index.html#PeerIdentityType">PeerIdentityType</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// Accept returns a dedicated read-only channel for messages sent by other nodes that match a certain predicate.</span>
+    <span class="comment">// Each message from the channel can be used to send a reply back to the sender</span>
+    Accept(<a href="../common/index.html">common</a>.<a href="../common/index.html#MessageAcceptor">MessageAcceptor</a>) &lt;-chan <a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#ReceivedMessage">ReceivedMessage</a>
+
+    <span class="comment">// PresumedDead returns a read-only channel for node endpoints that are suspected to be offline</span>
+    PresumedDead() &lt;-chan <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+
+    <span class="comment">// IdentitySwitch returns a read-only channel about identity change events</span>
+    IdentitySwitch() &lt;-chan <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+
+    <span class="comment">// CloseConn closes a connection to a certain endpoint</span>
+    CloseConn(peer *<a href="index.html#RemotePeer">RemotePeer</a>)
+
+    <span class="comment">// Stop stops the module</span>
+    Stop()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCommInstance">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm_impl.go?s=1313:1601#L45">NewCommInstance</a>
+					<a class="permalink" href="index.html#NewCommInstance">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewCommInstance(s *<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#Server">Server</a>, certs *<a href="../common/index.html">common</a>.<a href="../common/index.html#TLSCertificates">TLSCertificates</a>, idStore <a href="../identity/index.html">identity</a>.<a href="../identity/index.html#Mapper">Mapper</a>,
+    peerIdentity <a href="../api/index.html">api</a>.<a href="../api/index.html#PeerIdentityType">PeerIdentityType</a>, secureDialOpts <a href="../api/index.html">api</a>.<a href="../api/index.html#PeerSecureDialOpts">PeerSecureDialOpts</a>, sa <a href="../api/index.html">api</a>.<a href="../api/index.html#SecurityAdvisor">SecurityAdvisor</a>,
+    commMetrics *<a href="../metrics/index.html">metrics</a>.<a href="../metrics/index.html#CommMetrics">CommMetrics</a>, config <a href="index.html#CommConfig">CommConfig</a>, dialOpts ...<a href="http://localhost:6060/pkg/google.golang.org/grpc/">grpc</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/#DialOption">DialOption</a>) (<a href="index.html#Comm">Comm</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+NewCommInstance creates a new comm instance that binds itself to the given gRPC server
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CommConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm_impl.go?s=2774:3021#L86">CommConfig</a>
+				<a class="permalink" href="index.html#CommConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CommConfig is the configuration required to initialize a new comm
+</p>
+
+			<pre>type CommConfig struct {
+<span id="CommConfig.DialTimeout"></span>    DialTimeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> <span class="comment">// Dial timeout</span>
+<span id="CommConfig.ConnTimeout"></span>    ConnTimeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> <span class="comment">// Connection timeout</span>
+<span id="CommConfig.RecvBuffSize"></span>    RecvBuffSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>           <span class="comment">// Buffer size of received messages</span>
+<span id="CommConfig.SendBuffSize"></span>    SendBuffSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>           <span class="comment">// Buffer size of sending messages</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ConnConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/conn.go?s=5922:5984#L217">ConnConfig</a>
+				<a class="permalink" href="index.html#ConnConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ConnConfig is the configuration required to initialize a new conn
+</p>
+
+			<pre>type ConnConfig struct {
+<span id="ConnConfig.RecvBuffSize"></span>    RecvBuffSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="ConnConfig.SendBuffSize"></span>    SendBuffSize <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ReceivedMessageImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=261:400#L7">ReceivedMessageImpl</a>
+				<a class="permalink" href="index.html#ReceivedMessageImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ReceivedMessageImpl is an implementation of ReceivedMessage
+</p>
+
+			<pre>type ReceivedMessageImpl struct {
+    *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ReceivedMessageImpl.Ack">func (*ReceivedMessageImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=1340:1384#L43">Ack</a>
+					<a class="permalink" href="index.html#ReceivedMessageImpl.Ack">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ReceivedMessageImpl">ReceivedMessageImpl</a>) Ack(err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Ack returns to the sender an acknowledgement for the message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ReceivedMessageImpl.GetConnectionInfo">func (*ReceivedMessageImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=1180:1251#L38">GetConnectionInfo</a>
+					<a class="permalink" href="index.html#ReceivedMessageImpl.GetConnectionInfo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ReceivedMessageImpl">ReceivedMessageImpl</a>) GetConnectionInfo() *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#ConnectionInfo">ConnectionInfo</a></pre>
+				<p>
+GetConnectionInfo returns information about the remote peer
+that send the message
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ReceivedMessageImpl.GetGossipMessage">func (*ReceivedMessageImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=981:1056#L32">GetGossipMessage</a>
+					<a class="permalink" href="index.html#ReceivedMessageImpl.GetGossipMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ReceivedMessageImpl">ReceivedMessageImpl</a>) GetGossipMessage() *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#SignedGossipMessage">SignedGossipMessage</a></pre>
+				<p>
+GetGossipMessage returns the inner GossipMessage
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ReceivedMessageImpl.GetSourceEnvelope">func (*ReceivedMessageImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=488:553#L16">GetSourceEnvelope</a>
+					<a class="permalink" href="index.html#ReceivedMessageImpl.GetSourceEnvelope">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ReceivedMessageImpl">ReceivedMessageImpl</a>) GetSourceEnvelope() *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#Envelope">Envelope</a></pre>
+				<p>
+GetSourceEnvelope Returns the Envelope the ReceivedMessage was
+constructed with
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ReceivedMessageImpl.Respond">func (*ReceivedMessageImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/msg.go?s=649:712#L21">Respond</a>
+					<a class="permalink" href="index.html#ReceivedMessageImpl.Respond">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#ReceivedMessageImpl">ReceivedMessageImpl</a>) Respond(msg *<a href="../../protos/gossip/index.html">proto</a>.<a href="../../protos/gossip/index.html#GossipMessage">GossipMessage</a>)</pre>
+				<p>
+Respond sends a msg to the source that sent the ReceivedMessageImpl
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="RemotePeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=1828:1898#L48">RemotePeer</a>
+				<a class="permalink" href="index.html#RemotePeer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RemotePeer defines a peer&#39;s endpoint and its PKIid
+</p>
+
+			<pre>type RemotePeer struct {
+<span id="RemotePeer.Endpoint"></span>    Endpoint <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="RemotePeer.PKIID"></span>    PKIID    <a href="../common/index.html">common</a>.<a href="../common/index.html#PKIidType">PKIidType</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RemotePeer.String">func (*RemotePeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=3168:3204#L111">String</a>
+					<a class="permalink" href="index.html#RemotePeer.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#RemotePeer">RemotePeer</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+String converts a RemotePeer to a string
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SecurityAdvisor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm_impl.go?s=861:1042#L31">SecurityAdvisor</a>
+				<a class="permalink" href="index.html#SecurityAdvisor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SecurityAdvisor defines an external auxiliary object
+that provides security and identity related capabilities
+</p>
+
+			<pre>type SecurityAdvisor interface {
+    <span class="comment">// OrgByPeerIdentity returns the organization identity of the given PeerIdentityType</span>
+    OrgByPeerIdentity(<a href="../api/index.html">api</a>.<a href="../api/index.html#PeerIdentityType">PeerIdentityType</a>) <a href="../api/index.html">api</a>.<a href="../api/index.html#OrgIdentityType">OrgIdentityType</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="SendResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=1958:2003#L54">SendResult</a>
+				<a class="permalink" href="index.html#SendResult">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SendResult defines a result of a send to a remote peer
+</p>
+
+			<pre>type SendResult struct {
+    <a href="index.html#RemotePeer">RemotePeer</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="SendResult.Error">func (SendResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/gossip/comm/comm.go?s=2101:2136#L61">Error</a>
+					<a class="permalink" href="index.html#SendResult.Error">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (sr <a href="index.html#SendResult">SendResult</a>) Error() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Error returns the error of the SendResult, or an empty string
+if an error hasn&#39;t occurred
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

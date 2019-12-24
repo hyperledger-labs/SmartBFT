@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>duration - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package duration
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/golang/protobuf/ptypes/duration"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#Duration">type Duration</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.Descriptor">func (*Duration) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.GetNanos">func (m *Duration) GetNanos() int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.GetSeconds">func (m *Duration) GetSeconds() int64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.ProtoMessage">func (*Duration) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.Reset">func (m *Duration) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.String">func (m *Duration) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_DiscardUnknown">func (m *Duration) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_Marshal">func (m *Duration) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_Merge">func (m *Duration) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_Size">func (m *Duration) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_Unmarshal">func (m *Duration) XXX_Unmarshal(b []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Duration.XXX_WellKnownType">func (*Duration) XXX_WellKnownType() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go">duration.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Duration">type <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=2826:3766#L73">Duration</a>
+				<a class="permalink" href="index.html#Duration">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Duration represents a signed, fixed-length span of time represented
+as a count of seconds and fractions of seconds at nanosecond
+resolution. It is independent of any calendar and concepts like &#34;day&#34;
+or &#34;month&#34;. It is related to Timestamp in that the difference between
+two Timestamp values is a Duration and it can be added or subtracted
+from a Timestamp. Range is approximately +-10,000 years.
+</p>
+<p>
+# Examples
+</p>
+<p>
+Example 1: Compute Duration from two Timestamps in pseudo code.
+</p>
+<pre>Timestamp start = ...;
+Timestamp end = ...;
+Duration duration = ...;
+
+duration.seconds = end.seconds - start.seconds;
+duration.nanos = end.nanos - start.nanos;
+
+if (duration.seconds &lt; 0 &amp;&amp; duration.nanos &gt; 0) {
+  duration.seconds += 1;
+  duration.nanos -= 1000000000;
+} else if (durations.seconds &gt; 0 &amp;&amp; duration.nanos &lt; 0) {
+  duration.seconds -= 1;
+  duration.nanos += 1000000000;
+}
+</pre>
+<p>
+Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.
+</p>
+<pre>Timestamp start = ...;
+Duration duration = ...;
+Timestamp end = ...;
+
+end.seconds = start.seconds + duration.seconds;
+end.nanos = start.nanos + duration.nanos;
+
+if (end.nanos &lt; 0) {
+  end.seconds -= 1;
+  end.nanos += 1000000000;
+} else if (end.nanos &gt;= 1000000000) {
+  end.seconds += 1;
+  end.nanos -= 1000000000;
+}
+</pre>
+<p>
+Example 3: Compute Duration from datetime.timedelta in Python.
+</p>
+<pre>td = datetime.timedelta(days=3, minutes=10)
+duration = Duration()
+duration.FromTimedelta(td)
+</pre>
+<p>
+# JSON Mapping
+</p>
+<p>
+In JSON format, the Duration type is encoded as a string rather than an
+object, where the string ends in the suffix &#34;s&#34; (indicating seconds) and
+is preceded by the number of seconds, with nanoseconds expressed as
+fractional seconds. For example, 3 seconds with 0 nanoseconds should be
+encoded in JSON format as &#34;3s&#34;, while 3 seconds and 1 nanosecond should
+be expressed in JSON format as &#34;3.000000001s&#34;, and 3 seconds and 1
+microsecond should be expressed in JSON format as &#34;3.000001s&#34;.
+</p>
+
+			<pre>type Duration struct {
+    <span class="comment">// Signed seconds of the span of time. Must be from -315,576,000,000</span>
+    <span class="comment">// to +315,576,000,000 inclusive. Note: these bounds are computed from:</span>
+    <span class="comment">// 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years</span>
+<span id="Duration.Seconds"></span>    Seconds <a href="http://localhost:6060/pkg/builtin/#int64">int64</a> `protobuf:&#34;varint,1,opt,name=seconds,proto3&#34; json:&#34;seconds,omitempty&#34;`
+    <span class="comment">// Signed fractions of a second at nanosecond resolution of the span</span>
+    <span class="comment">// of time. Durations less than one second are represented with a 0</span>
+    <span class="comment">// `seconds` field and a positive or negative `nanos` field. For durations</span>
+    <span class="comment">// of one second or more, a non-zero value for the `nanos` field must be</span>
+    <span class="comment">// of the same sign as the `seconds` field. Must be from -999,999,999</span>
+    <span class="comment">// to +999,999,999 inclusive.</span>
+<span id="Duration.Nanos"></span>    Nanos                <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `protobuf:&#34;varint,2,opt,name=nanos,proto3&#34; json:&#34;nanos,omitempty&#34;`
+<span id="Duration.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="Duration.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="Duration.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Duration.Descriptor">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=3934:3979#L93">Descriptor</a>
+					<a class="permalink" href="index.html#Duration.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Duration">Duration</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.GetNanos">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4753:4788#L124">GetNanos</a>
+					<a class="permalink" href="index.html#Duration.GetNanos">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) GetNanos() <a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.GetSeconds">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4663:4700#L117">GetSeconds</a>
+					<a class="permalink" href="index.html#Duration.GetSeconds">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) GetSeconds() <a href="http://localhost:6060/pkg/builtin/#int64">int64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.ProtoMessage">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=3896:3927#L92">ProtoMessage</a>
+					<a class="permalink" href="index.html#Duration.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Duration">Duration</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.Reset">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=3768:3794#L90">Reset</a>
+					<a class="permalink" href="index.html#Duration.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.String">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=3823:3857#L91">String</a>
+					<a class="permalink" href="index.html#Duration.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_DiscardUnknown">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4518:4557#L111">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#Duration.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_Marshal">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4204:4280#L102">XXX_Marshal</a>
+					<a class="permalink" href="index.html#Duration.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_Merge">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4347:4394#L105">XXX_Merge</a>
+					<a class="permalink" href="index.html#Duration.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) XXX_Merge(src <a href="../../proto/index.html">proto</a>.<a href="../../proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_Size">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4439:4472#L108">XXX_Size</a>
+					<a class="permalink" href="index.html#Duration.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_Unmarshal">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4102:4150#L99">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#Duration.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Duration">Duration</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Duration.XXX_WellKnownType">func (*Duration) <a href="http://localhost:6060/src/github.com/golang/protobuf/ptypes/duration/duration.pb.go?s=4035:4078#L97">XXX_WellKnownType</a>
+					<a class="permalink" href="index.html#Duration.XXX_WellKnownType">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#Duration">Duration</a>) XXX_WellKnownType() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

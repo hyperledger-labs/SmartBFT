@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>chaincode - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package chaincode
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/chaincode"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#IsDevMode">func IsDevMode() bool</a></dd>
+			
+				
+				<dd><a href="index.html#NewTxKey">func NewTxKey(channelID, txID string) string</a></dd>
+			
+				
+				<dd><a href="index.html#ParseName">func ParseName(ccName string) *sysccprovider.ChaincodeInstance</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ACLProvider">type ACLProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ActiveTransactions">type ActiveTransactions</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewActiveTransactions">func NewActiveTransactions() *ActiveTransactions</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ActiveTransactions.Add">func (a *ActiveTransactions) Add(channelID, txID string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ActiveTransactions.Remove">func (a *ActiveTransactions) Remove(channelID, txID string)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ApplicationConfigRetriever">type ApplicationConfigRetriever</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#CCProviderImpl">type CCProviderImpl</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewProvider">func NewProvider(cs *ChaincodeSupport) *CCProviderImpl</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCProviderImpl.Execute">func (c *CCProviderImpl) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, input *pb.ChaincodeInput) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCProviderImpl.ExecuteLegacyInit">func (c *CCProviderImpl) ExecuteLegacyInit(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, spec *pb.ChaincodeDeploymentSpec) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CCProviderImpl.Stop">func (c *CCProviderImpl) Stop(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CertGenerator">type CertGenerator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeDefinitionGetter">type ChaincodeDefinitionGetter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ChaincodeSupport">type ChaincodeSupport</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChaincodeSupport">func NewChaincodeSupport(config *Config, peerAddress string, userRunsCC bool, caCert []byte, certGenerator CertGenerator, packageProvider PackageProvider, lifecycle Lifecycle, aclProvider ACLProvider, processor Processor, SystemCCProvider sysccprovider.SystemChaincodeProvider, platformRegistry *platforms.Registry, appConfig ApplicationConfigRetriever, metricsProvider metrics.Provider) *ChaincodeSupport</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.Execute">func (cs *ChaincodeSupport) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, input *pb.ChaincodeInput) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.ExecuteLegacyInit">func (cs *ChaincodeSupport) ExecuteLegacyInit(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, spec *pb.ChaincodeDeploymentSpec) (*pb.Response, *pb.ChaincodeEvent, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.HandleChaincodeStream">func (cs *ChaincodeSupport) HandleChaincodeStream(stream ccintf.ChaincodeStream) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.Invoke">func (cs *ChaincodeSupport) Invoke(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, input *pb.ChaincodeInput) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.InvokeInit">func (cs *ChaincodeSupport) InvokeInit(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, input *pb.ChaincodeInput) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.Launch">func (cs *ChaincodeSupport) Launch(chainID, chaincodeName, chaincodeVersion string, qe ledger.QueryExecutor) (*Handler, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.LaunchInit">func (cs *ChaincodeSupport) LaunchInit(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.Register">func (cs *ChaincodeSupport) Register(stream pb.ChaincodeSupport_RegisterServer) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChaincodeSupport.Stop">func (cs *ChaincodeSupport) Stop(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#CheckInstantiationPolicyFunc">type CheckInstantiationPolicyFunc</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#CheckInstantiationPolicyFunc.CheckInstantiationPolicy">func (c CheckInstantiationPolicyFunc) CheckInstantiationPolicy(name, version string, cd *ccprovider.ChaincodeData) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Config">type Config</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GlobalConfig">func GlobalConfig() *Config</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#ContainerRuntime">type ContainerRuntime</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContainerRuntime.LaunchConfig">func (c *ContainerRuntime) LaunchConfig(cname string, ccType string) (*LaunchConfig, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContainerRuntime.Start">func (c *ContainerRuntime) Start(ccci *ccprovider.ChaincodeContainerInfo, codePackage []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContainerRuntime.Stop">func (c *ContainerRuntime) Stop(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ContainerRuntime.Wait">func (c *ContainerRuntime) Wait(ccci *ccprovider.ChaincodeContainerInfo) (int, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ContextRegistry">type ContextRegistry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Handler">type Handler</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.ChaincodeName">func (h *Handler) ChaincodeName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.Close">func (h *Handler) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.Execute">func (h *Handler) Execute(txParams *ccprovider.TransactionParams, cccid *ccprovider.CCContext, msg *pb.ChaincodeMessage, timeout time.Duration) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleDelState">func (h *Handler) HandleDelState(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetHistoryForKey">func (h *Handler) HandleGetHistoryForKey(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetPrivateDataHash">func (h *Handler) HandleGetPrivateDataHash(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetQueryResult">func (h *Handler) HandleGetQueryResult(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetState">func (h *Handler) HandleGetState(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetStateByRange">func (h *Handler) HandleGetStateByRange(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleGetStateMetadata">func (h *Handler) HandleGetStateMetadata(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleInvokeChaincode">func (h *Handler) HandleInvokeChaincode(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandlePutState">func (h *Handler) HandlePutState(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandlePutStateMetadata">func (h *Handler) HandlePutStateMetadata(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleQueryStateClose">func (h *Handler) HandleQueryStateClose(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleQueryStateNext">func (h *Handler) HandleQueryStateNext(msg *pb.ChaincodeMessage, txContext *TransactionContext) (*pb.ChaincodeMessage, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleRegister">func (h *Handler) HandleRegister(msg *pb.ChaincodeMessage)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.HandleTransaction">func (h *Handler) HandleTransaction(msg *pb.ChaincodeMessage, delegate handleFunc)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.Notify">func (h *Handler) Notify(msg *pb.ChaincodeMessage)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.ProcessStream">func (h *Handler) ProcessStream(stream ccintf.ChaincodeStream) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Handler.State">func (h *Handler) State() State</a></dd>
+				
+			
+				
+				<dd><a href="index.html#HandlerMetrics">type HandlerMetrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewHandlerMetrics">func NewHandlerMetrics(p metrics.Provider) *HandlerMetrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#HandlerRegistry">type HandlerRegistry</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewHandlerRegistry">func NewHandlerRegistry(allowUnsolicitedRegistration bool) *HandlerRegistry</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Deregister">func (r *HandlerRegistry) Deregister(cname string) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Failed">func (r *HandlerRegistry) Failed(cname string, err error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Handler">func (r *HandlerRegistry) Handler(cname string) *Handler</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Launching">func (r *HandlerRegistry) Launching(cname string) (*LaunchState, bool)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Ready">func (r *HandlerRegistry) Ready(cname string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#HandlerRegistry.Register">func (r *HandlerRegistry) Register(h *Handler) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#InstantiationPolicyChecker">type InstantiationPolicyChecker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Invoker">type Invoker</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LaunchConfig">type LaunchConfig</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LaunchConfig.String">func (lc *LaunchConfig) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LaunchMetrics">type LaunchMetrics</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLaunchMetrics">func NewLaunchMetrics(p metrics.Provider) *LaunchMetrics</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LaunchRegistry">type LaunchRegistry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LaunchState">type LaunchState</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLaunchState">func NewLaunchState() *LaunchState</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LaunchState.Done">func (l *LaunchState) Done() &lt;-chan struct{}</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LaunchState.Err">func (l *LaunchState) Err() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LaunchState.Notify">func (l *LaunchState) Notify(err error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Launcher">type Launcher</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#LedgerGetter">type LedgerGetter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Lifecycle">type Lifecycle</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#MessageHandler">type MessageHandler</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PackageProvider">type PackageProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#PendingQueryResult">type PendingQueryResult</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PendingQueryResult.Add">func (p *PendingQueryResult) Add(queryResult commonledger.QueryResult) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PendingQueryResult.Cut">func (p *PendingQueryResult) Cut() []*pb.QueryResultBytes</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#PendingQueryResult.Size">func (p *PendingQueryResult) Size() int</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Processor">type Processor</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResponseBuilder">type QueryResponseBuilder</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#QueryResponseGenerator">type QueryResponseGenerator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#QueryResponseGenerator.BuildQueryResponse">func (q *QueryResponseGenerator) BuildQueryResponse(txContext *TransactionContext, iter commonledger.ResultsIterator, iterID string, isPaginated bool, totalReturnLimit int32) (*pb.QueryResponse, error)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Registry">type Registry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Runtime">type Runtime</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#RuntimeLauncher">type RuntimeLauncher</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#RuntimeLauncher.Launch">func (r *RuntimeLauncher) Launch(ccci *ccprovider.ChaincodeContainerInfo) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#State">type State</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#State.String">func (s State) String() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#SystemCCProvider">type SystemCCProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TransactionContext">type TransactionContext</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.CleanupQueryContext">func (t *TransactionContext) CleanupQueryContext(queryID string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.CleanupQueryContextWithBookmark">func (t *TransactionContext) CleanupQueryContextWithBookmark(queryID string) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.CloseQueryIterators">func (t *TransactionContext) CloseQueryIterators()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.GetPendingQueryResult">func (t *TransactionContext) GetPendingQueryResult(queryID string) *PendingQueryResult</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.GetQueryIterator">func (t *TransactionContext) GetQueryIterator(queryID string) commonledger.ResultsIterator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.GetTotalReturnCount">func (t *TransactionContext) GetTotalReturnCount(queryID string) *int32</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContext.InitializeQueryContext">func (t *TransactionContext) InitializeQueryContext(queryID string, iter commonledger.ResultsIterator)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TransactionContexts">type TransactionContexts</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTransactionContexts">func NewTransactionContexts() *TransactionContexts</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContexts.Close">func (c *TransactionContexts) Close()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContexts.Create">func (c *TransactionContexts) Create(txParams *ccprovider.TransactionParams) (*TransactionContext, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContexts.Delete">func (c *TransactionContexts) Delete(chainID, txID string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TransactionContexts.Get">func (c *TransactionContexts) Get(chainID, txID string) *TransactionContext</a></dd>
+				
+			
+				
+				<dd><a href="index.html#TransactionRegistry">type TransactionRegistry</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UUIDGenerator">type UUIDGenerator</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#UUIDGeneratorFunc">type UUIDGeneratorFunc</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#UUIDGeneratorFunc.New">func (u UUIDGeneratorFunc) New() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go">active_transactions.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go">ccproviderimpl.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go">chaincode_support.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/config.go">config.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go">container_runtime.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go">handler.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go">handler_registry.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/metrics.go">metrics.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/pending_query_result.go">pending_query_result.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/query_response_generator.go">query_response_generator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/runtime_launcher.go">runtime_launcher.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go">transaction_context.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go">transaction_contexts.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span class="comment">// Mutual TLS auth client key and cert paths in the chaincode container</span>
+    <span id="TLSClientKeyPath">TLSClientKeyPath</span>      <a href="http://localhost:6060/pkg/builtin/#string">string</a> = &#34;/etc/hyperledger/fabric/client.key&#34;
+    <span id="TLSClientCertPath">TLSClientCertPath</span>     <a href="http://localhost:6060/pkg/builtin/#string">string</a> = &#34;/etc/hyperledger/fabric/client.crt&#34;
+    <span id="TLSClientRootCertPath">TLSClientRootCertPath</span> <a href="http://localhost:6060/pkg/builtin/#string">string</a> = &#34;/etc/hyperledger/fabric/peer.crt&#34;
+)</pre>
+			
+				
+				<pre>const (
+    <span class="comment">// TXSimulatorKey is the context key used to provide a ledger.TxSimulator</span>
+    <span class="comment">// from the endorser to the chaincode.</span>
+    <span id="TXSimulatorKey">TXSimulatorKey</span> key = &#34;txsimulatorkey&#34;
+
+    <span class="comment">// HistoryQueryExecutorKey is the context key used to provide a</span>
+    <span class="comment">// ledger.HistoryQueryExecutor from the endorser to the chaincode.</span>
+    <span id="HistoryQueryExecutorKey">HistoryQueryExecutorKey</span> key = &#34;historyqueryexecutorkey&#34;
+)</pre>
+			
+				<p>
+DevModeUserRunsChaincode enables chaincode execution in a development
+environment
+</p>
+
+				<pre>const <span id="DevModeUserRunsChaincode">DevModeUserRunsChaincode</span> <a href="http://localhost:6060/pkg/builtin/#string">string</a> = &#34;dev&#34;</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="IsDevMode">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/config.go?s=2222:2243#L80">IsDevMode</a>
+				<a class="permalink" href="index.html#IsDevMode">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func IsDevMode() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+			<p>
+IsDevMode returns true if the peer was configured with development-mode
+enabled.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NewTxKey">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go?s=119:163#L1">NewTxKey</a>
+				<a class="permalink" href="index.html#NewTxKey">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NewTxKey(channelID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			
+			
+			
+
+		
+			
+			
+			<h2 id="ParseName">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=11225:11287#L293">ParseName</a>
+				<a class="permalink" href="index.html#ParseName">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ParseName(ccName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#ChaincodeInstance">ChaincodeInstance</a></pre>
+			<p>
+ParseName parses a chaincode name into a ChaincodeInstance. The name should
+be of the form &#34;chaincode-name:version/channel-name&#34; with optional elements.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ACLProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1049:1149#L28">ACLProvider</a>
+				<a class="permalink" href="index.html#ACLProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An ACLProvider performs access control checks when invoking
+chaincode.
+</p>
+
+			<pre>type ACLProvider interface {
+    CheckACL(resName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, channelID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, idinfo interface{}) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ActiveTransactions">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go?s=193:272#L3">ActiveTransactions</a>
+				<a class="permalink" href="index.html#ActiveTransactions">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type ActiveTransactions struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewActiveTransactions">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go?s=274:322#L8">NewActiveTransactions</a>
+					<a class="permalink" href="index.html#NewActiveTransactions">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewActiveTransactions() *<a href="index.html#ActiveTransactions">ActiveTransactions</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="ActiveTransactions.Add">func (*ActiveTransactions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go?s=390:451#L14">Add</a>
+					<a class="permalink" href="index.html#ActiveTransactions.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#ActiveTransactions">ActiveTransactions</a>) Add(channelID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ActiveTransactions.Remove">func (*ActiveTransactions) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/active_transactions.go?s=618:677#L26">Remove</a>
+					<a class="permalink" href="index.html#ActiveTransactions.Remove">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#ActiveTransactions">ActiveTransactions</a>) Remove(channelID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ApplicationConfigRetriever">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3753:3991#L104">ApplicationConfigRetriever</a>
+				<a class="permalink" href="index.html#ApplicationConfigRetriever">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ApplicationConfigRetriever to retrieve the application configuration for a channel
+</p>
+
+			<pre>type ApplicationConfigRetriever interface {
+    <span class="comment">// GetApplicationConfig returns the channelconfig.Application for the channel</span>
+    <span class="comment">// and whether the Application config exists</span>
+    GetApplicationConfig(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (<a href="../../common/channelconfig/index.html">channelconfig</a>.<a href="../../common/channelconfig/index.html#Application">Application</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="CCProviderImpl">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go?s=305:357#L5">CCProviderImpl</a>
+				<a class="permalink" href="index.html#CCProviderImpl">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ccProviderImpl is an implementation of the ccprovider.ChaincodeProvider interface
+</p>
+
+			<pre>type CCProviderImpl struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go?s=359:413#L9">NewProvider</a>
+					<a class="permalink" href="index.html#NewProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewProvider(cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) *<a href="index.html#CCProviderImpl">CCProviderImpl</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="CCProviderImpl.Execute">func (*CCProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go?s=531:700#L14">Execute</a>
+					<a class="permalink" href="index.html#CCProviderImpl.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CCProviderImpl">CCProviderImpl</a>) Execute(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Execute executes the chaincode given context and spec (invocation or deploy)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CCProviderImpl.ExecuteLegacyInit">func (*CCProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go?s=824:1011#L19">ExecuteLegacyInit</a>
+					<a class="permalink" href="index.html#CCProviderImpl.ExecuteLegacyInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CCProviderImpl">CCProviderImpl</a>) ExecuteLegacyInit(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, spec *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ExecuteLegacyInit executes a chaincode which is not in the LSCC table
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CCProviderImpl.Stop">func (*CCProviderImpl) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/ccproviderimpl.go?s=1122:1198#L24">Stop</a>
+					<a class="permalink" href="index.html#CCProviderImpl.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#CCProviderImpl">CCProviderImpl</a>) Stop(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Stop stops the chaincode given context and spec
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CertGenerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=698:927#L20">CertGenerator</a>
+				<a class="permalink" href="index.html#CertGenerator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+CertGenerator generates client certificates for chaincode.
+</p>
+
+			<pre>type CertGenerator interface {
+    <span class="comment">// Generate returns a certificate and private key and associates</span>
+    <span class="comment">// the hash of the certificates with the given chaincode name</span>
+    Generate(ccName <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="accesscontrol/index.html">accesscontrol</a>.<a href="accesscontrol/index.html#CertAndPrivKeyPair">CertAndPrivKeyPair</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeDefinitionGetter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3170:3325#L86">ChaincodeDefinitionGetter</a>
+				<a class="permalink" href="index.html#ChaincodeDefinitionGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeDefinitionGetter is responsible for retrieving a chaincode definition
+from the system. The definition is used by the InstantiationPolicyChecker.
+</p>
+
+			<pre>type ChaincodeDefinitionGetter interface {
+    ChaincodeDefinition(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, txSim <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="ChaincodeSupport">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=1648:2081#L38">ChaincodeSupport</a>
+				<a class="permalink" href="index.html#ChaincodeSupport">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChaincodeSupport responsible for providing interfacing with chaincodes from the Peer.
+</p>
+
+			<pre>type ChaincodeSupport struct {
+<span id="ChaincodeSupport.Keepalive"></span>    Keepalive        <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="ChaincodeSupport.ExecuteTimeout"></span>    ExecuteTimeout   <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="ChaincodeSupport.UserRunsCC"></span>    UserRunsCC       <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="ChaincodeSupport.Runtime"></span>    Runtime          <a href="index.html#Runtime">Runtime</a>
+<span id="ChaincodeSupport.ACLProvider"></span>    ACLProvider      <a href="index.html#ACLProvider">ACLProvider</a>
+<span id="ChaincodeSupport.HandlerRegistry"></span>    HandlerRegistry  *<a href="index.html#HandlerRegistry">HandlerRegistry</a>
+<span id="ChaincodeSupport.Launcher"></span>    Launcher         <a href="index.html#Launcher">Launcher</a>
+<span id="ChaincodeSupport.SystemCCProvider"></span>    SystemCCProvider <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>
+<span id="ChaincodeSupport.Lifecycle"></span>    Lifecycle        <a href="index.html#Lifecycle">Lifecycle</a>
+
+<span id="ChaincodeSupport.HandlerMetrics"></span>    HandlerMetrics *<a href="index.html#HandlerMetrics">HandlerMetrics</a>
+<span id="ChaincodeSupport.LaunchMetrics"></span>    LaunchMetrics  *<a href="index.html#LaunchMetrics">LaunchMetrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChaincodeSupport">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=2147:2568#L54">NewChaincodeSupport</a>
+					<a class="permalink" href="index.html#NewChaincodeSupport">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChaincodeSupport(
+    config *<a href="index.html#Config">Config</a>,
+    peerAddress <a href="http://localhost:6060/pkg/builtin/#string">string</a>,
+    userRunsCC <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>,
+    caCert []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>,
+    certGenerator <a href="index.html#CertGenerator">CertGenerator</a>,
+    packageProvider <a href="index.html#PackageProvider">PackageProvider</a>,
+    lifecycle <a href="index.html#Lifecycle">Lifecycle</a>,
+    aclProvider <a href="index.html#ACLProvider">ACLProvider</a>,
+    processor <a href="index.html#Processor">Processor</a>,
+    SystemCCProvider <a href="../common/sysccprovider/index.html">sysccprovider</a>.<a href="../common/sysccprovider/index.html#SystemChaincodeProvider">SystemChaincodeProvider</a>,
+    platformRegistry *<a href="platforms/index.html">platforms</a>.<a href="platforms/index.html#Registry">Registry</a>,
+    appConfig <a href="index.html#ApplicationConfigRetriever">ApplicationConfigRetriever</a>,
+    metricsProvider <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>,
+) *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a></pre>
+				<p>
+NewChaincodeSupport creates a new ChaincodeSupport instance.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChaincodeSupport.Execute">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=8534:8706#L228">Execute</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) Execute(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Execute invokes chaincode and returns the original response.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.ExecuteLegacyInit">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=7675:7865#L208">ExecuteLegacyInit</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.ExecuteLegacyInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) ExecuteLegacyInit(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, spec *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeDeploymentSpec">ChaincodeDeploymentSpec</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Response">Response</a>, *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeEvent">ChaincodeEvent</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ExecuteLegacyInit is a temporary method which should be removed once the old style lifecycle
+is entirely deprecated.  Ideally one release after the introduction of the new lifecycle.
+It does not attempt to start the chaincode based on the information from lifecycle, but instead
+accepts the container information directly in the form of a ChaincodeDeploymentSpec.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.HandleChaincodeStream">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=5704:5790#L162">HandleChaincodeStream</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.HandleChaincodeStream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) HandleChaincodeStream(stream <a href="../container/ccintf/index.html">ccintf</a>.<a href="../container/ccintf/index.html#ChaincodeStream">ChaincodeStream</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+HandleChaincodeStream implements ccintf.HandleChaincodeStream for all vms to call with appropriate stream
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.Invoke">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=10338:10497#L274">Invoke</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.Invoke">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) Invoke(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Invoke will invoke chaincode and return the message containing the response.
+The chaincode will be launched if it is not already running.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.InvokeInit">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=9824:9987#L263">InvokeInit</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.InvokeInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) InvokeInit(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, input *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.Launch">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=4350:4476#L126">Launch</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.Launch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) Launch(chainID, chaincodeName, chaincodeVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (*<a href="index.html#Handler">Handler</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Launch starts executing chaincode if it is not already running. This method
+blocks until the peer side handler gets into ready state or encounters a fatal
+error. If the chaincode is already running, it simply returns.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.LaunchInit">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=3894:3979#L114">LaunchInit</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.LaunchInit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) LaunchInit(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+LaunchInit bypasses getting the chaincode spec from the LSCC table
+as in the case of v1.0-v1.2 lifecycle, the chaincode will not yet be
+defined in the LSCC table
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.Register">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=6759:6844#L185">Register</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) Register(stream <a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeSupport_RegisterServer">ChaincodeSupport_RegisterServer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Register the bidi stream entry point called by chaincode to register with the Peer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChaincodeSupport.Stop">func (*ChaincodeSupport) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=5480:5559#L157">Stop</a>
+					<a class="permalink" href="index.html#ChaincodeSupport.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cs *<a href="index.html#ChaincodeSupport">ChaincodeSupport</a>) Stop(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Stop stops a chaincode if running.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="CheckInstantiationPolicyFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=2419:2515#L71">CheckInstantiationPolicyFunc</a>
+				<a class="permalink" href="index.html#CheckInstantiationPolicyFunc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Adapter from function to InstantiationPolicyChecker interface.
+</p>
+
+			<pre>type CheckInstantiationPolicyFunc func(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cd *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="CheckInstantiationPolicyFunc.CheckInstantiationPolicy">func (CheckInstantiationPolicyFunc) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=2517:2637#L73">CheckInstantiationPolicy</a>
+					<a class="permalink" href="index.html#CheckInstantiationPolicyFunc.CheckInstantiationPolicy">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c <a href="index.html#CheckInstantiationPolicyFunc">CheckInstantiationPolicyFunc</a>) CheckInstantiationPolicy(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cd *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Config">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/config.go?s=356:558#L14">Config</a>
+				<a class="permalink" href="index.html#Config">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Config struct {
+<span id="Config.TLSEnabled"></span>    TLSEnabled     <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Config.Keepalive"></span>    Keepalive      <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Config.ExecuteTimeout"></span>    ExecuteTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Config.StartupTimeout"></span>    StartupTimeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Config.LogFormat"></span>    LogFormat      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Config.LogLevel"></span>    LogLevel       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Config.ShimLogLevel"></span>    ShimLogLevel   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="GlobalConfig">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/config.go?s=560:587#L24">GlobalConfig</a>
+					<a class="permalink" href="index.html#GlobalConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func GlobalConfig() *<a href="index.html#Config">Config</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="ContainerRuntime">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=1002:1209#L27">ContainerRuntime</a>
+				<a class="permalink" href="index.html#ContainerRuntime">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ContainerRuntime is responsible for managing containerized chaincode.
+</p>
+
+			<pre>type ContainerRuntime struct {
+<span id="ContainerRuntime.CertGenerator"></span>    CertGenerator    <a href="index.html#CertGenerator">CertGenerator</a>
+<span id="ContainerRuntime.Processor"></span>    Processor        <a href="index.html#Processor">Processor</a>
+<span id="ContainerRuntime.CACert"></span>    CACert           []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="ContainerRuntime.CommonEnv"></span>    CommonEnv        []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ContainerRuntime.PeerAddress"></span>    PeerAddress      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="ContainerRuntime.PlatformRegistry"></span>    PlatformRegistry *<a href="platforms/index.html">platforms</a>.<a href="platforms/index.html#Registry">Registry</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="ContainerRuntime.LaunchConfig">func (*ContainerRuntime) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=4209:4300#L146">LaunchConfig</a>
+					<a class="permalink" href="index.html#ContainerRuntime.LaunchConfig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ContainerRuntime">ContainerRuntime</a>) LaunchConfig(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccType <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#LaunchConfig">LaunchConfig</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+LaunchConfig creates the LaunchConfig for chaincode running in a container.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ContainerRuntime.Start">func (*ContainerRuntime) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=1265:1364#L37">Start</a>
+					<a class="permalink" href="index.html#ContainerRuntime.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ContainerRuntime">ContainerRuntime</a>) Start(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>, codePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Start launches chaincode in a runtime environment.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ContainerRuntime.Stop">func (*ContainerRuntime) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=2381:2459#L75">Stop</a>
+					<a class="permalink" href="index.html#ContainerRuntime.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ContainerRuntime">ContainerRuntime</a>) Stop(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Stop terminates chaincode and its container runtime environment.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ContainerRuntime.Wait">func (*ContainerRuntime) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=2819:2904#L93">Wait</a>
+					<a class="permalink" href="index.html#ContainerRuntime.Wait">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#ContainerRuntime">ContainerRuntime</a>) Wait(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Wait waits for the container runtime to terminate.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ContextRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1949:2146#L58">ContextRegistry</a>
+				<a class="permalink" href="index.html#ContextRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A ContextRegistry is responsible for managing transaction contexts.
+</p>
+
+			<pre>type ContextRegistry interface {
+    Create(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>) (*<a href="index.html#TransactionContext">TransactionContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Get(chainID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#TransactionContext">TransactionContext</a>
+    Delete(chainID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+    Close()
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Handler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=4054:6439#L111">Handler</a>
+				<a class="permalink" href="index.html#Handler">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Handler implements the peer side of the chaincode stream.
+</p>
+
+			<pre>type Handler struct {
+<span id="Handler.Keepalive"></span>    <span class="comment">// Keepalive specifies the interval at which keep-alive messages are sent.</span>
+    Keepalive <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="Handler.SystemCCVersion"></span>    <span class="comment">// SystemCCVersion specifies the current system chaincode version</span>
+    SystemCCVersion <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Handler.DefinitionGetter"></span>    <span class="comment">// DefinitionGetter is used to retrieve the chaincode definition from the</span>
+    <span class="comment">// Lifecycle System Chaincode.</span>
+    DefinitionGetter <a href="index.html#ChaincodeDefinitionGetter">ChaincodeDefinitionGetter</a>
+<span id="Handler.Invoker"></span>    <span class="comment">// Invoker is used to invoke chaincode.</span>
+    Invoker <a href="index.html#Invoker">Invoker</a>
+<span id="Handler.Registry"></span>    <span class="comment">// Registry is used to track active handlers.</span>
+    Registry <a href="index.html#Registry">Registry</a>
+<span id="Handler.ACLProvider"></span>    <span class="comment">// ACLProvider is used to check if a chaincode invocation should be allowed.</span>
+    ACLProvider <a href="index.html#ACLProvider">ACLProvider</a>
+<span id="Handler.TXContexts"></span>    <span class="comment">// TXContexts is a collection of TransactionContext instances</span>
+    <span class="comment">// that are accessed by channel name and transaction ID.</span>
+    TXContexts <a href="index.html#ContextRegistry">ContextRegistry</a>
+    <span class="comment">// activeTransactions holds active transaction identifiers.</span>
+<span id="Handler.ActiveTransactions"></span>    ActiveTransactions <a href="index.html#TransactionRegistry">TransactionRegistry</a>
+<span id="Handler.SystemCCProvider"></span>    <span class="comment">// SystemCCProvider provides access to system chaincode metadata</span>
+    SystemCCProvider <a href="index.html#SystemCCProvider">SystemCCProvider</a>
+<span id="Handler.InstantiationPolicyChecker"></span>    <span class="comment">// InstantiationPolicyChecker is used to evaluate the chaincode instantiation policies.</span>
+    InstantiationPolicyChecker <a href="index.html#InstantiationPolicyChecker">InstantiationPolicyChecker</a>
+    <span class="comment">// QueryResponeBuilder is used to build query responses</span>
+<span id="Handler.QueryResponseBuilder"></span>    QueryResponseBuilder <a href="index.html#QueryResponseBuilder">QueryResponseBuilder</a>
+<span id="Handler.LedgerGetter"></span>    <span class="comment">// LedgerGetter is used to get the ledger associated with a channel</span>
+    LedgerGetter <a href="index.html#LedgerGetter">LedgerGetter</a>
+<span id="Handler.UUIDGenerator"></span>    <span class="comment">// UUIDGenerator is used to generate UUIDs</span>
+    UUIDGenerator <a href="index.html#UUIDGenerator">UUIDGenerator</a>
+<span id="Handler.AppConfig"></span>    <span class="comment">// AppConfig is used to retrieve the application config for a channel</span>
+    AppConfig <a href="index.html#ApplicationConfigRetriever">ApplicationConfigRetriever</a>
+<span id="Handler.Metrics"></span>    <span class="comment">// Metrics holds chaincode handler metrics</span>
+    Metrics *<a href="index.html#HandlerMetrics">HandlerMetrics</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Handler.ChaincodeName">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=11535:11575#L309">ChaincodeName</a>
+					<a class="permalink" href="index.html#Handler.ChaincodeName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) ChaincodeName() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.Close">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=45585:45610#L1286">Close</a>
+					<a class="permalink" href="index.html#Handler.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) Close()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.Execute">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=43691:43864#L1230">Execute</a>
+					<a class="permalink" href="index.html#Handler.Execute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) Execute(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, timeout <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleDelState">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=38908:39027#L1097">HandleDelState</a>
+					<a class="permalink" href="index.html#Handler.HandleDelState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleDelState(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetHistoryForKey">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=32565:32692#L917">HandleGetHistoryForKey</a>
+					<a class="permalink" href="index.html#Handler.HandleGetHistoryForKey">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetHistoryForKey(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger history db
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetPrivateDataHash">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=22854:22983#L655">HandleGetPrivateDataHash</a>
+					<a class="permalink" href="index.html#Handler.HandleGetPrivateDataHash">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetPrivateDataHash(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetQueryResult">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=30274:30399#L852">HandleGetQueryResult</a>
+					<a class="permalink" href="index.html#Handler.HandleGetQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetQueryResult(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger to execute query state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetState">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=21451:21570#L621">HandleGetState</a>
+					<a class="permalink" href="index.html#Handler.HandleGetState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetState(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger to get state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetStateByRange">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=25850:25976#L727">HandleGetStateByRange</a>
+					<a class="permalink" href="index.html#Handler.HandleGetStateByRange">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetStateByRange(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger to rage query state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleGetStateMetadata">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=24089:24216#L681">HandleGetStateMetadata</a>
+					<a class="permalink" href="index.html#Handler.HandleGetStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleGetStateMetadata(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger to get state metadata
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleInvokeChaincode">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=39835:39961#L1123">HandleInvokeChaincode</a>
+					<a class="permalink" href="index.html#Handler.HandleInvokeChaincode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleInvokeChaincode(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles requests that modify ledger state
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandlePutState">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=36927:37046#L1041">HandlePutState</a>
+					<a class="permalink" href="index.html#Handler.HandlePutState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandlePutState(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandlePutStateMetadata">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=37794:37921#L1065">HandlePutStateMetadata</a>
+					<a class="permalink" href="index.html#Handler.HandlePutStateMetadata">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandlePutStateMetadata(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleQueryStateClose">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=29474:29600#L830">HandleQueryStateClose</a>
+					<a class="permalink" href="index.html#Handler.HandleQueryStateClose">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleQueryStateClose(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles the closing of a state iterator
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleQueryStateNext">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=28408:28533#L800">HandleQueryStateNext</a>
+					<a class="permalink" href="index.html#Handler.HandleQueryStateNext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleQueryStateNext(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, txContext *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Handles query to ledger for query state next
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleRegister">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=17201:17259#L498">HandleRegister</a>
+					<a class="permalink" href="index.html#Handler.HandleRegister">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleRegister(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>)</pre>
+				<p>
+handleRegister is invoked when chaincode tries to register.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.HandleTransaction">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=9325:9407#L241">HandleTransaction</a>
+					<a class="permalink" href="index.html#Handler.HandleTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) HandleTransaction(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, delegate handleFunc)</pre>
+				<p>
+HandleTransaction is a middleware function that obtains and verifies a transaction
+context prior to forwarding the message to the provided delegate. Response messages
+returned by the delegate are sent to the chat stream. Any errors returned by the
+delegate are packaged as chaincode error messages.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Handler.Notify">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=18412:18462#L534">Notify</a>
+					<a class="permalink" href="index.html#Handler.Notify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) Notify(msg *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.ProcessStream">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=14248:14316#L392">ProcessStream</a>
+					<a class="permalink" href="index.html#Handler.ProcessStream">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) ProcessStream(stream <a href="../container/ccintf/index.html">ccintf</a>.<a href="../container/ccintf/index.html#ChaincodeStream">ChaincodeStream</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Handler.State">func (*Handler) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=45534:45565#L1285">State</a>
+					<a class="permalink" href="index.html#Handler.State">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (h *<a href="index.html#Handler">Handler</a>) State() <a href="index.html#State">State</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="HandlerMetrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/metrics.go?s=2196:2384#L54">HandlerMetrics</a>
+				<a class="permalink" href="index.html#HandlerMetrics">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type HandlerMetrics struct {
+<span id="HandlerMetrics.ShimRequestsReceived"></span>    ShimRequestsReceived  <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="HandlerMetrics.ShimRequestsCompleted"></span>    ShimRequestsCompleted <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="HandlerMetrics.ShimRequestDuration"></span>    ShimRequestDuration   <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Histogram">Histogram</a>
+<span id="HandlerMetrics.ExecuteTimeouts"></span>    ExecuteTimeouts       <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewHandlerMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/metrics.go?s=2386:2444#L61">NewHandlerMetrics</a>
+					<a class="permalink" href="index.html#NewHandlerMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewHandlerMetrics(p <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#HandlerMetrics">HandlerMetrics</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="HandlerRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=208:522#L6">HandlerRegistry</a>
+				<a class="permalink" href="index.html#HandlerRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+HandlerRegistry maintains chaincode Handler instances.
+</p>
+
+			<pre>type HandlerRegistry struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewHandlerRegistry">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=1089:1164#L49">NewHandlerRegistry</a>
+					<a class="permalink" href="index.html#NewHandlerRegistry">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewHandlerRegistry(allowUnsolicitedRegistration <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="index.html#HandlerRegistry">HandlerRegistry</a></pre>
+				<p>
+NewHandlerRegistry constructs a HandlerRegistry.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="HandlerRegistry.Deregister">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=4211:4267#L143">Deregister</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Deregister">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Deregister(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Deregister clears references to state associated specified chaincode.
+As part of the cleanup, it closes the handler so it can cleanup any state.
+If the registry does not contain the provided handler, an error is returned.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HandlerRegistry.Failed">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=2594:2651#L96">Failed</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Failed">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Failed(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Failed indicates that registration of a launched chaincode has failed.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HandlerRegistry.Handler">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=2849:2905#L107">Handler</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Handler">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Handler(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Handler">Handler</a></pre>
+				<p>
+Handler retrieves the handler for a chaincode instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HandlerRegistry.Launching">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=1644:1714#L61">Launching</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Launching">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Launching(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#LaunchState">LaunchState</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				<p>
+Launching indicates that chaincode is being launched. The LaunchState that
+is returned provides mechanisms to determine when the operation has
+completed and whether or not it failed. The bool indicates whether or not
+the chaincode has already been started.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HandlerRegistry.Ready">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=2336:2381#L85">Ready</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Ready">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Ready(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Ready indicates that the chaincode registration has completed and the
+READY response has been sent to the chaincode.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="HandlerRegistry.Register">func (*HandlerRegistry) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=3248:3300#L118">Register</a>
+					<a class="permalink" href="index.html#HandlerRegistry.Register">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#HandlerRegistry">HandlerRegistry</a>) Register(h *<a href="index.html#Handler">Handler</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Register adds a chaincode handler to the registry.
+An error will be returned if a handler is already registered for the
+chaincode. An error will also be returned if the chaincode has not already
+been &#34;launched&#34;, and unsolicited registration is not allowed.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InstantiationPolicyChecker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=2222:2351#L66">InstantiationPolicyChecker</a>
+				<a class="permalink" href="index.html#InstantiationPolicyChecker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+InstantiationPolicyChecker is used to evaluate instantiation policies.
+</p>
+
+			<pre>type InstantiationPolicyChecker interface {
+    CheckInstantiationPolicy(name, version <a href="http://localhost:6060/pkg/builtin/#string">string</a>, cd *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeData">ChaincodeData</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Invoker">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1377:1535#L41">Invoker</a>
+				<a class="permalink" href="index.html#Invoker">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An Invoker invokes chaincode.
+</p>
+
+			<pre>type Invoker interface {
+    Invoke(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>, cccid *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#CCContext">CCContext</a>, spec *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeInput">ChaincodeInput</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LaunchConfig">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=4043:4128#L139">LaunchConfig</a>
+				<a class="permalink" href="index.html#LaunchConfig">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LaunchConfig holds chaincode launch arguments, environment variables, and files.
+</p>
+
+			<pre>type LaunchConfig struct {
+<span id="LaunchConfig.Args"></span>    Args  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="LaunchConfig.Envs"></span>    Envs  []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="LaunchConfig.Files"></span>    Files map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LaunchConfig.String">func (*LaunchConfig) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=5864:5903#L188">String</a>
+					<a class="permalink" href="index.html#LaunchConfig.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (lc *<a href="index.html#LaunchConfig">LaunchConfig</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LaunchMetrics">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/metrics.go?s=2719:2846#L70">LaunchMetrics</a>
+				<a class="permalink" href="index.html#LaunchMetrics">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LaunchMetrics struct {
+<span id="LaunchMetrics.LaunchDuration"></span>    LaunchDuration <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Histogram">Histogram</a>
+<span id="LaunchMetrics.LaunchFailures"></span>    LaunchFailures <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+<span id="LaunchMetrics.LaunchTimeouts"></span>    LaunchTimeouts <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Counter">Counter</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLaunchMetrics">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/metrics.go?s=2848:2904#L76">NewLaunchMetrics</a>
+					<a class="permalink" href="index.html#NewLaunchMetrics">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLaunchMetrics(p <a href="../../common/metrics/index.html">metrics</a>.<a href="../../common/metrics/index.html#Provider">Provider</a>) *<a href="index.html#LaunchMetrics">LaunchMetrics</a></pre>
+				
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="LaunchRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/runtime_launcher.go?s=338:469#L9">LaunchRegistry</a>
+				<a class="permalink" href="index.html#LaunchRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LaunchRegistry tracks launching chaincode instances.
+</p>
+
+			<pre>type LaunchRegistry interface {
+    Launching(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (launchState *<a href="index.html#LaunchState">LaunchState</a>, started <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)
+    Deregister(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LaunchState">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=524:627#L14">LaunchState</a>
+				<a class="permalink" href="index.html#LaunchState">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LaunchState struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLaunchState">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=629:663#L21">NewLaunchState</a>
+					<a class="permalink" href="index.html#NewLaunchState">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLaunchState() *<a href="index.html#LaunchState">LaunchState</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="LaunchState.Done">func (*LaunchState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=723:767#L27">Done</a>
+					<a class="permalink" href="index.html#LaunchState.Done">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LaunchState">LaunchState</a>) Done() &lt;-chan struct{}</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LaunchState.Err">func (*LaunchState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=788:821#L31">Err</a>
+					<a class="permalink" href="index.html#LaunchState.Err">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LaunchState">LaunchState</a>) Err() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LaunchState.Notify">func (*LaunchState) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler_registry.go?s=887:926#L38">Notify</a>
+					<a class="permalink" href="index.html#LaunchState.Notify">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (l *<a href="index.html#LaunchState">LaunchState</a>) Notify(err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Launcher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=973:1055#L24">Launcher</a>
+				<a class="permalink" href="index.html#Launcher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Launcher is used to launch chaincode runtimes.
+</p>
+
+			<pre>type Launcher interface {
+    Launch(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="LedgerGetter">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3381:3453#L91">LedgerGetter</a>
+				<a class="permalink" href="index.html#LedgerGetter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+LedgerGetter is used to get ledgers for chaincode.
+</p>
+
+			<pre>type LedgerGetter interface {
+    GetLedger(cid <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#PeerLedger">PeerLedger</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Lifecycle">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=1158:1557#L29">Lifecycle</a>
+				<a class="permalink" href="index.html#Lifecycle">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Lifecycle provides a way to retrieve chaincode definitions and the packages necessary to run them
+</p>
+
+			<pre>type Lifecycle interface {
+    <span class="comment">// ChaincodeDefinition returns the details for a chaincode by name</span>
+    ChaincodeDefinition(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeDefinition">ChaincodeDefinition</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+
+    <span class="comment">// ChaincodeContainerInfo returns the package necessary to launch a chaincode</span>
+    ChaincodeContainerInfo(chaincodeName <a href="http://localhost:6060/pkg/builtin/#string">string</a>, qe <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#QueryExecutor">QueryExecutor</a>) (*<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="MessageHandler">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=8803:8917#L231">MessageHandler</a>
+				<a class="permalink" href="index.html#MessageHandler">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type MessageHandler interface {
+    Handle(*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, *<a href="index.html#TransactionContext">TransactionContext</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PackageProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/runtime_launcher.go?s=535:643#L15">PackageProvider</a>
+				<a class="permalink" href="index.html#PackageProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+PackageProvider gets chaincode packages from the filesystem.
+</p>
+
+			<pre>type PackageProvider interface {
+    GetChaincodeCodePackage(ccname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, ccversion <a href="http://localhost:6060/pkg/builtin/#string">string</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="PendingQueryResult">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/pending_query_result.go?s=260:324#L5">PendingQueryResult</a>
+				<a class="permalink" href="index.html#PendingQueryResult">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type PendingQueryResult struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="PendingQueryResult.Add">func (*PendingQueryResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/pending_query_result.go?s=436:512#L15">Add</a>
+					<a class="permalink" href="index.html#PendingQueryResult.Add">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PendingQueryResult">PendingQueryResult</a>) Add(queryResult <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#QueryResult">QueryResult</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PendingQueryResult.Cut">func (*PendingQueryResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/pending_query_result.go?s=326:383#L9">Cut</a>
+					<a class="permalink" href="index.html#PendingQueryResult.Cut">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PendingQueryResult">PendingQueryResult</a>) Cut() []*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#QueryResultBytes">QueryResultBytes</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="PendingQueryResult.Size">func (*PendingQueryResult) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/pending_query_result.go?s=780:819#L25">Size</a>
+					<a class="permalink" href="index.html#PendingQueryResult.Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#PendingQueryResult">PendingQueryResult</a>) Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Processor">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/container_runtime.go?s=554:634#L15">Processor</a>
+				<a class="permalink" href="index.html#Processor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Processor processes vm and container requests.
+</p>
+
+			<pre>type Processor interface {
+    Process(vmtype <a href="http://localhost:6060/pkg/builtin/#string">string</a>, req <a href="../container/index.html">container</a>.<a href="../container/index.html#VMCReq">VMCReq</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResponseBuilder">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=2797:3008#L79">QueryResponseBuilder</a>
+				<a class="permalink" href="index.html#QueryResponseBuilder">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+QueryResponseBuilder is responsible for building QueryResponse messages for query
+transactions initiated by chaincode.
+</p>
+
+			<pre>type QueryResponseBuilder interface {
+    BuildQueryResponse(txContext *<a href="index.html#TransactionContext">TransactionContext</a>, iter <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>,
+        iterID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, isPaginated <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, totalReturnLimit <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#QueryResponse">QueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="QueryResponseGenerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/query_response_generator.go?s=260:318#L5">QueryResponseGenerator</a>
+				<a class="permalink" href="index.html#QueryResponseGenerator">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type QueryResponseGenerator struct {
+<span id="QueryResponseGenerator.MaxResultLimit"></span>    MaxResultLimit <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="QueryResponseGenerator.BuildQueryResponse">func (*QueryResponseGenerator) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/query_response_generator.go?s=403:605#L10">BuildQueryResponse</a>
+					<a class="permalink" href="index.html#QueryResponseGenerator.BuildQueryResponse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (q *<a href="index.html#QueryResponseGenerator">QueryResponseGenerator</a>) BuildQueryResponse(txContext *<a href="index.html#TransactionContext">TransactionContext</a>, iter <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>,
+    iterID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, isPaginated <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>, totalReturnLimit <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>) (*<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#QueryResponse">QueryResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+BuildQueryResponse takes an iterator and fetch state to construct QueryResponse
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Registry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1203:1342#L33">Registry</a>
+				<a class="permalink" href="index.html#Registry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Registry is responsible for tracking handlers.
+</p>
+
+			<pre>type Registry interface {
+    Register(*<a href="index.html#Handler">Handler</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Ready(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+    Failed(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    Deregister(cname <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Runtime">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/chaincode_support.go?s=708:921#L17">Runtime</a>
+				<a class="permalink" href="index.html#Runtime">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Runtime is used to manage chaincode runtime instances.
+</p>
+
+			<pre>type Runtime interface {
+    Start(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>, codePackage []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Stop(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+    Wait(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) (<a href="http://localhost:6060/pkg/builtin/#int">int</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="RuntimeLauncher">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/runtime_launcher.go?s=713:897#L20">RuntimeLauncher</a>
+				<a class="permalink" href="index.html#RuntimeLauncher">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+RuntimeLauncher is responsible for launching chaincode runtimes.
+</p>
+
+			<pre>type RuntimeLauncher struct {
+<span id="RuntimeLauncher.Runtime"></span>    Runtime         <a href="index.html#Runtime">Runtime</a>
+<span id="RuntimeLauncher.Registry"></span>    Registry        <a href="index.html#LaunchRegistry">LaunchRegistry</a>
+<span id="RuntimeLauncher.PackageProvider"></span>    PackageProvider <a href="index.html#PackageProvider">PackageProvider</a>
+<span id="RuntimeLauncher.StartupTimeout"></span>    StartupTimeout  <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>
+<span id="RuntimeLauncher.Metrics"></span>    Metrics         *<a href="index.html#LaunchMetrics">LaunchMetrics</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="RuntimeLauncher.Launch">func (*RuntimeLauncher) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/runtime_launcher.go?s=899:978#L28">Launch</a>
+					<a class="permalink" href="index.html#RuntimeLauncher.Launch">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r *<a href="index.html#RuntimeLauncher">RuntimeLauncher</a>) Launch(ccci *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#ChaincodeContainerInfo">ChaincodeContainerInfo</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="State">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=45643:45657#L1288">State</a>
+				<a class="permalink" href="index.html#State">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type State <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+
+			
+				
+				<pre>const (
+    <span id="Created">Created</span> <a href="index.html#State">State</a> = <a href="http://localhost:6060/pkg/builtin/#iota">iota</a>
+    <span id="Established">Established</span>
+    <span id="Ready">Ready</span>
+)</pre>
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="State.String">func (State) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=45712:45742#L1296">String</a>
+					<a class="permalink" href="index.html#State.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (s <a href="index.html#State">State</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="SystemCCProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1593:1702#L46">SystemCCProvider</a>
+				<a class="permalink" href="index.html#SystemCCProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+SystemCCProvider provides system chaincode metadata.
+</p>
+
+			<pre>type SystemCCProvider interface {
+    IsSysCC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    IsSysCCAndNotInvokableCC2CC(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionContext">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=332:1221#L8">TransactionContext</a>
+				<a class="permalink" href="index.html#TransactionContext">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TransactionContext struct {
+<span id="TransactionContext.ChainID"></span>    ChainID              <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="TransactionContext.SignedProp"></span>    SignedProp           *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#SignedProposal">SignedProposal</a>
+<span id="TransactionContext.Proposal"></span>    Proposal             *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#Proposal">Proposal</a>
+<span id="TransactionContext.ResponseNotifier"></span>    ResponseNotifier     chan *<a href="../../protos/peer/index.html">pb</a>.<a href="../../protos/peer/index.html#ChaincodeMessage">ChaincodeMessage</a>
+<span id="TransactionContext.TXSimulator"></span>    TXSimulator          <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#TxSimulator">TxSimulator</a>
+<span id="TransactionContext.HistoryQueryExecutor"></span>    HistoryQueryExecutor <a href="../ledger/index.html">ledger</a>.<a href="../ledger/index.html#HistoryQueryExecutor">HistoryQueryExecutor</a>
+<span id="TransactionContext.CollectionStore"></span>    CollectionStore      <a href="../common/privdata/index.html">privdata</a>.<a href="../common/privdata/index.html#CollectionStore">CollectionStore</a>
+<span id="TransactionContext.IsInitTransaction"></span>    IsInitTransaction    <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+
+    <span class="comment">// cache used to save the result of collection acl</span>
+    <span class="comment">// as a transactionContext is created for every chaincode</span>
+    <span class="comment">// invoke (even in case of chaincode-calling-chaincode,</span>
+    <span class="comment">// we do not need to store the namespace in the map and</span>
+    <span class="comment">// collection alone is sufficient.</span>
+<span id="TransactionContext.AllowedCollectionAccess"></span>    AllowedCollectionAccess map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]<a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="TransactionContext.CleanupQueryContext">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=2365:2429#L71">CleanupQueryContext</a>
+					<a class="permalink" href="index.html#TransactionContext.CleanupQueryContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) CleanupQueryContext(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.CleanupQueryContextWithBookmark">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=2672:2755#L83">CleanupQueryContextWithBookmark</a>
+					<a class="permalink" href="index.html#TransactionContext.CleanupQueryContextWithBookmark">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) CleanupQueryContextWithBookmark(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.CloseQueryIterators">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=3155:3205#L99">CloseQueryIterators</a>
+					<a class="permalink" href="index.html#TransactionContext.CloseQueryIterators">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) CloseQueryIterators()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.GetPendingQueryResult">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=1997:2083#L57">GetPendingQueryResult</a>
+					<a class="permalink" href="index.html#TransactionContext.GetPendingQueryResult">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) GetPendingQueryResult(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#PendingQueryResult">PendingQueryResult</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.GetQueryIterator">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=1807:1897#L50">GetQueryIterator</a>
+					<a class="permalink" href="index.html#TransactionContext.GetQueryIterator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) GetQueryIterator(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.GetTotalReturnCount">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=2190:2261#L64">GetTotalReturnCount</a>
+					<a class="permalink" href="index.html#TransactionContext.GetTotalReturnCount">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) GetTotalReturnCount(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="http://localhost:6060/pkg/builtin/#int32">int32</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionContext.InitializeQueryContext">func (*TransactionContext) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_context.go?s=1223:1325#L32">InitializeQueryContext</a>
+					<a class="permalink" href="index.html#TransactionContext.InitializeQueryContext">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (t *<a href="index.html#TransactionContext">TransactionContext</a>) InitializeQueryContext(queryID <a href="http://localhost:6060/pkg/builtin/#string">string</a>, iter <a href="../../common/ledger/index.html">commonledger</a>.<a href="../../common/ledger/index.html#ResultsIterator">ResultsIterator</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TransactionContexts">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=819:916#L23">TransactionContexts</a>
+				<a class="permalink" href="index.html#TransactionContexts">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionContexts maintains active transaction contexts for a Handler.
+</p>
+
+			<pre>type TransactionContexts struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTransactionContexts">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=996:1046#L29">NewTransactionContexts</a>
+					<a class="permalink" href="index.html#NewTransactionContexts">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTransactionContexts() *<a href="index.html#TransactionContexts">TransactionContexts</a></pre>
+				<p>
+NewTransactionContexts creates a registry for active transaction contexts.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TransactionContexts.Close">func (*TransactionContexts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=3462:3499#L106">Close</a>
+					<a class="permalink" href="index.html#TransactionContexts.Close">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#TransactionContexts">TransactionContexts</a>) Close()</pre>
+				<p>
+Close closes all query iterators assocated with the context.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionContexts.Create">func (*TransactionContexts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=1486:1591#L43">Create</a>
+					<a class="permalink" href="index.html#TransactionContexts.Create">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#TransactionContexts">TransactionContexts</a>) Create(txParams *<a href="../common/ccprovider/index.html">ccprovider</a>.<a href="../common/ccprovider/index.html#TransactionParams">TransactionParams</a>) (*<a href="index.html#TransactionContext">TransactionContext</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+Create creates a new TransactionContext for the specified chain and
+transaction ID. An error is returned when a transaction context has already
+been created for the specified chain and transaction ID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionContexts.Delete">func (*TransactionContexts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=3238:3296#L98">Delete</a>
+					<a class="permalink" href="index.html#TransactionContexts.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#TransactionContexts">TransactionContexts</a>) Delete(chainID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+Delete removes the transaction context associated with the specified chain
+and transaction ID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionContexts.Get">func (*TransactionContexts) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/transaction_contexts.go?s=2951:3026#L88">Get</a>
+					<a class="permalink" href="index.html#TransactionContexts.Get">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#TransactionContexts">TransactionContexts</a>) Get(chainID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#TransactionContext">TransactionContext</a></pre>
+				<p>
+Get retrieves the transaction context associated with the chain and
+transaction ID.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TransactionRegistry">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=1772:1876#L52">TransactionRegistry</a>
+				<a class="permalink" href="index.html#TransactionRegistry">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TransactionRegistry tracks active transactions for each channel.
+</p>
+
+			<pre>type TransactionRegistry interface {
+    Add(channelID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+    Remove(channelID, txID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UUIDGenerator">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3526:3572#L96">UUIDGenerator</a>
+				<a class="permalink" href="index.html#UUIDGenerator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+UUIDGenerator is responsible for creating unique query identifiers.
+</p>
+
+			<pre>type UUIDGenerator interface {
+    New() <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="UUIDGeneratorFunc">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3573:3609#L99">UUIDGeneratorFunc</a>
+				<a class="permalink" href="index.html#UUIDGeneratorFunc">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type UUIDGeneratorFunc func() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="UUIDGeneratorFunc.New">func (UUIDGeneratorFunc) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/chaincode/handler.go?s=3611:3650#L101">New</a>
+					<a class="permalink" href="index.html#UUIDGeneratorFunc.New">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (u <a href="index.html#UUIDGeneratorFunc">UUIDGeneratorFunc</a>) New() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="accesscontrol/index.html">accesscontrol</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="fake/index.html">fake</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="lib/index.html">lib</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="lib/cid/index.html">cid</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="lifecycle/index.html">lifecycle</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="lifecycle/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="persistence/index.html">persistence</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="persistence/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="platforms/index.html">platforms</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/car/index.html">car</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						# Copyright State Street Corp.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/ccmetadata/index.html">ccmetadata</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						# Copyright State Street Corp.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/golang/index.html">golang</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/java/index.html">java</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/mock/index.html">mock</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Code generated by counterfeiter.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/node/index.html">node</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="platforms/util/index.html">util</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="shim/index.html">shim</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package shim provides APIs for the chaincode to access its state variables, transaction context and call other chaincodes.
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="shim/ext/index.html">ext</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="shim/ext/attrmgr/index.html">attrmgr</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="shim/ext/cid/index.html">cid</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="shim/ext/entities/index.html">entities</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="shim/ext/statebased/index.html">statebased</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

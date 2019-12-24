@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>capabilities - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package capabilities
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/common/capabilities"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#ApplicationProvider">type ApplicationProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewApplicationProvider">func NewApplicationProvider(capabilities map[string]*cb.Capability) *ApplicationProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.ACLs">func (ap *ApplicationProvider) ACLs() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.CollectionUpgrade">func (ap ApplicationProvider) CollectionUpgrade() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.FabToken">func (ap *ApplicationProvider) FabToken() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.ForbidDuplicateTXIdInBlock">func (ap *ApplicationProvider) ForbidDuplicateTXIdInBlock() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.HasCapability">func (ap *ApplicationProvider) HasCapability(capability string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.KeyLevelEndorsement">func (ap *ApplicationProvider) KeyLevelEndorsement() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.MetadataLifecycle">func (ap *ApplicationProvider) MetadataLifecycle() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.PrivateChannelData">func (ap *ApplicationProvider) PrivateChannelData() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.StorePvtDataOfInvalidTx">func (ap *ApplicationProvider) StorePvtDataOfInvalidTx() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.Supported">func (r ApplicationProvider) Supported() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.Type">func (ap *ApplicationProvider) Type() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.V1_1Validation">func (ap *ApplicationProvider) V1_1Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.V1_2Validation">func (ap *ApplicationProvider) V1_2Validation() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ApplicationProvider.V1_3Validation">func (ap *ApplicationProvider) V1_3Validation() bool</a></dd>
+				
+			
+				
+				<dd><a href="index.html#ChannelProvider">type ChannelProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewChannelProvider">func NewChannelProvider(capabilities map[string]*cb.Capability) *ChannelProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.ConsensusTypeMigration">func (cp *ChannelProvider) ConsensusTypeMigration() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.HasCapability">func (cp *ChannelProvider) HasCapability(capability string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.MSPVersion">func (cp *ChannelProvider) MSPVersion() msp.MSPVersion</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.OrgSpecificOrdererEndpoints">func (cp *ChannelProvider) OrgSpecificOrdererEndpoints() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.Supported">func (r ChannelProvider) Supported() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#ChannelProvider.Type">func (cp *ChannelProvider) Type() string</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OrdererProvider">type OrdererProvider</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewOrdererProvider">func NewOrdererProvider(capabilities map[string]*cb.Capability) *OrdererProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.ConsensusTypeMigration">func (cp *OrdererProvider) ConsensusTypeMigration() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.ExpirationCheck">func (cp *OrdererProvider) ExpirationCheck() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.HasCapability">func (cp *OrdererProvider) HasCapability(capability string) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.PredictableChannelTemplate">func (cp *OrdererProvider) PredictableChannelTemplate() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.Resubmission">func (cp *OrdererProvider) Resubmission() bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.Supported">func (r OrdererProvider) Supported() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#OrdererProvider.Type">func (cp *OrdererProvider) Type() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go">application.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/capabilities.go">capabilities.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go">channel.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go">orderer.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+
+    <span class="comment">// ApplicationV1_1 is the capabilties string for standard new non-backwards compatible fabric v1.1 application capabilities.</span>
+    <span id="ApplicationV1_1">ApplicationV1_1</span> = &#34;V1_1&#34;
+
+    <span class="comment">// ApplicationV1_2 is the capabilties string for standard new non-backwards compatible fabric v1.2 application capabilities.</span>
+    <span id="ApplicationV1_2">ApplicationV1_2</span> = &#34;V1_2&#34;
+
+    <span class="comment">// ApplicationV1_3 is the capabilties string for standard new non-backwards compatible fabric v1.3 application capabilities.</span>
+    <span id="ApplicationV1_3">ApplicationV1_3</span> = &#34;V1_3&#34;
+
+    <span class="comment">// ApplicationV1_4_2 is the capabilties string for standard new non-backwards compatible fabric v1.4.2 application capabilities.</span>
+    <span id="ApplicationV1_4_2">ApplicationV1_4_2</span> = &#34;V1_4_2&#34;
+
+    <span class="comment">// ApplicationPvtDataExperimental is the capabilties string for private data using the experimental feature of collections/sideDB.</span>
+    <span id="ApplicationPvtDataExperimental">ApplicationPvtDataExperimental</span> = &#34;V1_1_PVTDATA_EXPERIMENTAL&#34;
+
+    <span class="comment">// ApplicationResourcesTreeExperimental is the capabilties string for private data using the experimental feature of collections/sideDB.</span>
+    <span id="ApplicationResourcesTreeExperimental">ApplicationResourcesTreeExperimental</span> = &#34;V1_1_RESOURCETREE_EXPERIMENTAL&#34;
+)</pre>
+			
+				
+				<pre>const (
+
+    <span class="comment">// ChannelV1_1 is the capabilities string for standard new non-backwards compatible fabric v1.1 channel capabilities.</span>
+    <span id="ChannelV1_1">ChannelV1_1</span> = &#34;V1_1&#34;
+
+    <span class="comment">// ChannelV1_3 is the capabilities string for standard new non-backwards compatible fabric v1.3 channel capabilities.</span>
+    <span id="ChannelV1_3">ChannelV1_3</span> = &#34;V1_3&#34;
+
+    <span class="comment">// ChannelV1_4_2 is the capabilities string for standard new non-backwards compatible fabric v1.4.2 channel capabilities.</span>
+    <span id="ChannelV1_4_2">ChannelV1_4_2</span> = &#34;V1_4_2&#34;
+
+    <span class="comment">// ChannelV1_4_3 is the capabilities string for standard new non-backwards compatible fabric v1.4.3 channel capabilities.</span>
+    <span id="ChannelV1_4_3">ChannelV1_4_3</span> = &#34;V1_4_3&#34;
+)</pre>
+			
+				
+				<pre>const (
+
+    <span class="comment">// OrdererV1_1 is the capabilities string for standard new non-backwards compatible Fabric v1.1 orderer capabilities.</span>
+    <span id="OrdererV1_1">OrdererV1_1</span> = &#34;V1_1&#34;
+
+    <span class="comment">// OrdererV1_4_2 is the capabilities string for standard new non-backwards compatible Fabric v1.4.2 orderer capabilities.</span>
+    <span id="OrdererV1_4_2">OrdererV1_4_2</span> = &#34;V1_4_2&#34;
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="ApplicationProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=1331:1522#L26">ApplicationProvider</a>
+				<a class="permalink" href="index.html#ApplicationProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ApplicationProvider provides capabilities information for application level config.
+</p>
+
+			<pre>type ApplicationProvider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewApplicationProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=1595:1683#L36">NewApplicationProvider</a>
+					<a class="permalink" href="index.html#NewApplicationProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewApplicationProvider(capabilities map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Capability">Capability</a>) *<a href="index.html#ApplicationProvider">ApplicationProvider</a></pre>
+				<p>
+NewApplicationProvider creates a application capabilities provider.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ApplicationProvider.ACLs">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=2244:2286#L53">ACLs</a>
+					<a class="permalink" href="index.html#ApplicationProvider.ACLs">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) ACLs() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ACLs returns whether ACLs may be specified in the channel application config
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.CollectionUpgrade">func (ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=3190:3244#L72">CollectionUpgrade</a>
+					<a class="permalink" href="index.html#ApplicationProvider.CollectionUpgrade">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap <a href="index.html#ApplicationProvider">ApplicationProvider</a>) CollectionUpgrade() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+CollectionUpgrade returns true if this channel is configured to allow updates to
+existing collection or add new collections through chaincode upgrade (as introduced in v1.2)
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.FabToken">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=4608:4654#L108">FabToken</a>
+					<a class="permalink" href="index.html#ApplicationProvider.FabToken">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) FabToken() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+There is no fabtoken support in v1.4, so always return false
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.ForbidDuplicateTXIdInBlock">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=2516:2580#L59">ForbidDuplicateTXIdInBlock</a>
+					<a class="permalink" href="index.html#ApplicationProvider.ForbidDuplicateTXIdInBlock">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) ForbidDuplicateTXIdInBlock() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ForbidDuplicateTXIdInBlock specifies whether two transactions with the same TXId are permitted
+in the same block or whether we mark the second one as TxValidationCode_DUPLICATE_TXID
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.HasCapability">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=4941:5009#L119">HasCapability</a>
+					<a class="permalink" href="index.html#ApplicationProvider.HasCapability">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) HasCapability(capability <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasCapability returns true if the capability is supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.KeyLevelEndorsement">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=4455:4512#L103">KeyLevelEndorsement</a>
+					<a class="permalink" href="index.html#ApplicationProvider.KeyLevelEndorsement">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) KeyLevelEndorsement() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+KeyLevelEndorsement returns true if this channel supports endorsement
+policies expressible at a ledger key granularity, as described in FAB-8812
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.MetadataLifecycle">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=4229:4284#L97">MetadataLifecycle</a>
+					<a class="permalink" href="index.html#ApplicationProvider.MetadataLifecycle">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) MetadataLifecycle() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+MetadataLifecycle indicates whether the peer should use the deprecated and problematic
+v1.0/v1.1/v1.2 lifecycle, or whether it should use the newer per channel peer local chaincode
+metadata package approach planned for release with Fabric v1.3
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.PrivateChannelData">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=2883:2939#L66">PrivateChannelData</a>
+					<a class="permalink" href="index.html#ApplicationProvider.PrivateChannelData">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) PrivateChannelData() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+PrivateChannelData returns true if support for private channel data (a.k.a. collections) is enabled.
+In v1.1, the private channel data is experimental and has to be enabled explicitly.
+In v1.2, the private channel data is enabled by default.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.StorePvtDataOfInvalidTx">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=4781:4842#L114">StorePvtDataOfInvalidTx</a>
+					<a class="permalink" href="index.html#ApplicationProvider.StorePvtDataOfInvalidTx">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) StorePvtDataOfInvalidTx() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+StorePvtDataOfInvalidTx returns true if the peer needs to store
+the pvtData of invalid transactions.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.Supported">func (ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/capabilities.go?s=1046:1082#L31">Supported</a>
+					<a class="permalink" href="index.html#ApplicationProvider.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#ApplicationProvider">ApplicationProvider</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported checks that all of the required capabilities are supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.Type">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=2086:2130#L48">Type</a>
+					<a class="permalink" href="index.html#ApplicationProvider.Type">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) Type() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Type returns a descriptive string for logging purposes.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.V1_1Validation">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=3422:3474#L78">V1_1Validation</a>
+					<a class="permalink" href="index.html#ApplicationProvider.V1_1Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) V1_1Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_1Validation returns true is this channel is configured to perform stricter validation
+of transactions (as introduced in v1.1).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.V1_2Validation">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=3662:3714#L84">V1_2Validation</a>
+					<a class="permalink" href="index.html#ApplicationProvider.V1_2Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) V1_2Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_2Validation returns true if this channel is configured to perform stricter validation
+of transactions (as introduced in v1.2).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ApplicationProvider.V1_3Validation">func (*ApplicationProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/application.go?s=3892:3944#L90">V1_3Validation</a>
+					<a class="permalink" href="index.html#ApplicationProvider.V1_3Validation">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (ap *<a href="index.html#ApplicationProvider">ApplicationProvider</a>) V1_3Validation() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+V1_3Validation returns true if this channel is configured to perform stricter validation
+of transactions (as introduced in v1.3).
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="ChannelProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=909:995#L21">ChannelProvider</a>
+				<a class="permalink" href="index.html#ChannelProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+ChannelProvider provides capabilities information for channel level config.
+</p>
+
+			<pre>type ChannelProvider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewChannelProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=1060:1140#L30">NewChannelProvider</a>
+					<a class="permalink" href="index.html#NewChannelProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewChannelProvider(capabilities map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Capability">Capability</a>) *<a href="index.html#ChannelProvider">ChannelProvider</a></pre>
+				<p>
+NewChannelProvider creates a channel capabilities provider.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="ChannelProvider.ConsensusTypeMigration">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=2325:2381#L79">ConsensusTypeMigration</a>
+					<a class="permalink" href="index.html#ChannelProvider.ConsensusTypeMigration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) ConsensusTypeMigration() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ConsensusTypeMigration return true if consensus-type migration is supported and permitted in both orderer and peer.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.HasCapability">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=1596:1660#L46">HasCapability</a>
+					<a class="permalink" href="index.html#ChannelProvider.HasCapability">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) HasCapability(capability <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasCapability returns true if the capability is supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.MSPVersion">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=1958:2012#L63">MSPVersion</a>
+					<a class="permalink" href="index.html#ChannelProvider.MSPVersion">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) MSPVersion() <a href="../../msp/index.html">msp</a>.<a href="../../msp/index.html#MSPVersion">MSPVersion</a></pre>
+				<p>
+MSPVersion returns the level of MSP support required by this channel.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.OrgSpecificOrdererEndpoints">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=2532:2593#L84">OrgSpecificOrdererEndpoints</a>
+					<a class="permalink" href="index.html#ChannelProvider.OrgSpecificOrdererEndpoints">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) OrgSpecificOrdererEndpoints() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+OrgSpecificOrdererEndpoints allows for individual orderer orgs to specify their external addresses for their OSNs.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.Supported">func (ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/capabilities.go?s=1046:1082#L31">Supported</a>
+					<a class="permalink" href="index.html#ChannelProvider.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#ChannelProvider">ChannelProvider</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported checks that all of the required capabilities are supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="ChannelProvider.Type">func (*ChannelProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/channel.go?s=1449:1489#L41">Type</a>
+					<a class="permalink" href="index.html#ChannelProvider.Type">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#ChannelProvider">ChannelProvider</a>) Type() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Type returns a descriptive string for logging purposes.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OrdererProvider">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=580:658#L14">OrdererProvider</a>
+				<a class="permalink" href="index.html#OrdererProvider">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+OrdererProvider provides capabilities information for orderer level config.
+</p>
+
+			<pre>type OrdererProvider struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewOrdererProvider">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=724:804#L21">NewOrdererProvider</a>
+					<a class="permalink" href="index.html#NewOrdererProvider">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewOrdererProvider(capabilities map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>]*<a href="../../protos/common/index.html">cb</a>.<a href="../../protos/common/index.html#Capability">Capability</a>) *<a href="index.html#OrdererProvider">OrdererProvider</a></pre>
+				<p>
+NewOrdererProvider creates an orderer capabilities provider.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="OrdererProvider.ConsensusTypeMigration">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=2486:2542#L70">ConsensusTypeMigration</a>
+					<a class="permalink" href="index.html#OrdererProvider.ConsensusTypeMigration">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) ConsensusTypeMigration() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ConsensusTypeMigration checks whether the orderer permits a consensus-type migration.
+</p>
+<p>
+A Kafka-based Ordering Service Node requires these capabilities in order to receive and process a config update
+with consensus-type migration change. Migration is supported from Kafka to Raft only.
+If not present, these config updates will be rejected.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.ExpirationCheck">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=2043:2092#L61">ExpirationCheck</a>
+					<a class="permalink" href="index.html#OrdererProvider.ExpirationCheck">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) ExpirationCheck() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+ExpirationCheck specifies whether the orderer checks for identity expiration checks
+when validating messages
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.HasCapability">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=1187:1251#L35">HasCapability</a>
+					<a class="permalink" href="index.html#OrdererProvider.HasCapability">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) HasCapability(capability <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+HasCapability returns true if the capability is supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.PredictableChannelTemplate">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=1607:1667#L49">PredictableChannelTemplate</a>
+					<a class="permalink" href="index.html#OrdererProvider.PredictableChannelTemplate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) PredictableChannelTemplate() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+PredictableChannelTemplate specifies whether the v1.0 undesirable behavior of setting the /Channel
+group&#39;s mod_policy to &#34;&#34; and copying versions from the channel config should be fixed or not.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.Resubmission">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=1842:1888#L55">Resubmission</a>
+					<a class="permalink" href="index.html#OrdererProvider.Resubmission">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) Resubmission() <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Resubmission specifies whether the v1.0 non-deterministic commitment of tx should be fixed by re-submitting
+the re-validated tx.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.Supported">func (OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/capabilities.go?s=1046:1082#L31">Supported</a>
+					<a class="permalink" href="index.html#OrdererProvider.Supported">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (r <a href="index.html#OrdererProvider">OrdererProvider</a>) Supported() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Supported checks that all of the required capabilities are supported by this binary.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="OrdererProvider.Type">func (*OrdererProvider) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/common/capabilities/orderer.go?s=1040:1080#L30">Type</a>
+					<a class="permalink" href="index.html#OrdererProvider.Type">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (cp *<a href="index.html#OrdererProvider">OrdererProvider</a>) Type() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Type returns a descriptive string for logging purposes.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

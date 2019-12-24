@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>test - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package test
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/SmartBFT-Go/consensus/test"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#App">type App</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.AssembleProposal">func (a *App) AssembleProposal(metadata []byte, requests [][]byte) types.Proposal</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.ClearMutateSend">func (a *App) ClearMutateSend(target uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Connect">func (a *App) Connect()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.ConnectTo">func (a *App) ConnectTo(target uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Deliver">func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Disconnect">func (a *App) Disconnect()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.DisconnectFrom">func (a *App) DisconnectFrom(target uint64)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.MutateSend">func (a *App) MutateSend(target uint64, mutating func(uint64, *smartbftprotos.Message))</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Mute">func (a *App) Mute()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.RequestID">func (a *App) RequestID(req []byte) types.RequestInfo</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Restart">func (a *App) Restart()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Sign">func (a *App) Sign([]byte) []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.SignProposal">func (a *App) SignProposal(types.Proposal) *types.Signature</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Submit">func (a *App) Submit(req Request)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.Sync">func (a *App) Sync() types.Decision</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.UnMute">func (a *App) UnMute()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.VerificationSequence">func (a *App) VerificationSequence() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.VerifyConsenterSig">func (a *App) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.VerifyProposal">func (a *App) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.VerifyRequest">func (a *App) VerifyRequest(val []byte) (types.RequestInfo, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#App.VerifySignature">func (a *App) VerifySignature(signature types.Signature) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#AppRecord">type AppRecord</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FwdMessage">type FwdMessage</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.Descriptor">func (*FwdMessage) Descriptor() ([]byte, []int)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.GetPayload">func (m *FwdMessage) GetPayload() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.GetSender">func (m *FwdMessage) GetSender() uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.ProtoMessage">func (*FwdMessage) ProtoMessage()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.Reset">func (m *FwdMessage) Reset()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.String">func (m *FwdMessage) String() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_DiscardUnknown">func (m *FwdMessage) XXX_DiscardUnknown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Marshal">func (m *FwdMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Merge">func (m *FwdMessage) XXX_Merge(src proto.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Size">func (m *FwdMessage) XXX_Size() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FwdMessage.XXX_Unmarshal">func (m *FwdMessage) XXX_Unmarshal(b []byte) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Network">type Network</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Network.AddOrUpdateNode">func (n Network) AddOrUpdateNode(id uint64, h handler, app *App)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Network.Shutdown">func (n Network) Shutdown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Network.StartServe">func (n Network) StartServe()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Network.StopServe">func (n Network) StopServe()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Node">type Node</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.Nodes">func (node *Node) Nodes() []uint64</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.SendConsensus">func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Node.SendTransaction">func (node *Node) SendTransaction(targetID uint64, request []byte)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Request">type Request</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Request.ToBytes">func (txn Request) ToBytes() []byte</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go">network.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go">test_app.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go">test_messages.pb.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="App">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=1126:1546#L31">App</a>
+				<a class="permalink" href="index.html#App">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+App implements all interfaces required by an application using this library
+</p>
+
+			<pre>type App struct {
+<span id="App.ID"></span>    ID        <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>
+<span id="App.Delivered"></span>    Delivered chan *<a href="index.html#AppRecord">AppRecord</a>
+<span id="App.Consensus"></span>    Consensus *<a href="../pkg/consensus/index.html">consensus</a>.<a href="../pkg/consensus/index.html#Consensus">Consensus</a>
+<span id="App.Setup"></span>    Setup     func()
+<span id="App.Node"></span>    Node      *<a href="index.html#Node">Node</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="App.AssembleProposal">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=5389:5470#L181">AssembleProposal</a>
+					<a class="permalink" href="index.html#App.AssembleProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) AssembleProposal(metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, requests [][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Proposal">Proposal</a></pre>
+				<p>
+AssembleProposal assembles a new proposal from the given requests
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.ClearMutateSend">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=3603:3647#L122">ClearMutateSend</a>
+					<a class="permalink" href="index.html#App.ClearMutateSend">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) ClearMutateSend(target <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				<p>
+ClearMutateSend clears any mutating function called before sending a message to the target node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Connect">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=3071:3094#L108">Connect</a>
+					<a class="permalink" href="index.html#App.Connect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Connect()</pre>
+				<p>
+Connect connects the node to the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.ConnectTo">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=2869:2907#L101">ConnectTo</a>
+					<a class="permalink" href="index.html#App.ConnectTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) ConnectTo(target <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				<p>
+ConnectTo connects the node to a specific node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Deliver">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=5613:5689#L189">Deliver</a>
+					<a class="permalink" href="index.html#App.Deliver">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Deliver(proposal <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Proposal">Proposal</a>, signatures []<a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Signature">Signature</a>)</pre>
+				<p>
+Deliver delivers the given proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Disconnect">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=2468:2494#L87">Disconnect</a>
+					<a class="permalink" href="index.html#App.Disconnect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Disconnect()</pre>
+				<p>
+Disconnect disconnects the node from the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.DisconnectFrom">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=2658:2701#L94">DisconnectFrom</a>
+					<a class="permalink" href="index.html#App.DisconnectFrom">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) DisconnectFrom(target <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>)</pre>
+				<p>
+DisconnectFrom disconnects the node from a specific node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.MutateSend">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=3295:3382#L115">MutateSend</a>
+					<a class="permalink" href="index.html#App.MutateSend">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) MutateSend(target <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, mutating func(<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, *<a href="../smartbftprotos/index.html">smartbftprotos</a>.<a href="../smartbftprotos/index.html#Message">Message</a>))</pre>
+				<p>
+MutateSend set the mutating function to be called before sending a message to the target node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Mute">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=1570:1590#L48">Mute</a>
+					<a class="permalink" href="index.html#App.Mute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Mute()</pre>
+				<p>
+Mute mutes the log
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.RequestID">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=3816:3869#L129">RequestID</a>
+					<a class="permalink" href="index.html#App.RequestID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) RequestID(req []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#RequestInfo">RequestInfo</a></pre>
+				<p>
+RequestID returns info about the given request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Restart">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=2205:2228#L76">Restart</a>
+					<a class="permalink" href="index.html#App.Restart">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Restart()</pre>
+				<p>
+Restart restarts the node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Sign">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=5125:5158#L171">Sign</a>
+					<a class="permalink" href="index.html#App.Sign">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Sign([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Sign signs on the given value
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.SignProposal">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=5220:5279#L176">SignProposal</a>
+					<a class="permalink" href="index.html#App.SignProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) SignProposal(<a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Proposal">Proposal</a>) *<a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Signature">Signature</a></pre>
+				<p>
+SignProposal signs on the given proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Submit">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=1769:1802#L58">Submit</a>
+					<a class="permalink" href="index.html#App.Submit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Submit(req <a href="index.html#Request">Request</a>)</pre>
+				<p>
+Submit submits the client request
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.Sync">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=1903:1938#L63">Sync</a>
+					<a class="permalink" href="index.html#App.Sync">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) Sync() <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Decision">Decision</a></pre>
+				<p>
+Sync synchronizes and returns the latest decision
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.UnMute">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=1663:1685#L53">UnMute</a>
+					<a class="permalink" href="index.html#App.UnMute">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) UnMute()</pre>
+				<p>
+UnMute unmutes the log
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.VerificationSequence">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=5033:5076#L166">VerificationSequence</a>
+					<a class="permalink" href="index.html#App.VerificationSequence">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) VerificationSequence() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+VerificationSequence returns the current verification sequence
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.VerifyConsenterSig">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=4743:4829#L156">VerifyConsenterSig</a>
+					<a class="permalink" href="index.html#App.VerifyConsenterSig">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) VerifyConsenterSig(signature <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Signature">Signature</a>, prop <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Proposal">Proposal</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifyConsenterSig verifies a nodes signature on the given proposal
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.VerifyProposal">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=4061:4143#L138">VerifyProposal</a>
+					<a class="permalink" href="index.html#App.VerifyProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) VerifyProposal(proposal <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Proposal">Proposal</a>) ([]<a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+VerifyProposal verifies the given proposal and returns the included requests
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.VerifyRequest">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=4503:4569#L150">VerifyRequest</a>
+					<a class="permalink" href="index.html#App.VerifyRequest">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) VerifyRequest(val []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#RequestInfo">RequestInfo</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+VerifyRequest verifies the given request and returns its info
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="App.VerifySignature">func (*App) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=4887:4949#L161">VerifySignature</a>
+					<a class="permalink" href="index.html#App.VerifySignature">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (a *<a href="index.html#App">App</a>) VerifySignature(signature <a href="../pkg/types/index.html">types</a>.<a href="../pkg/types/index.html#Signature">Signature</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+VerifySignature verifies a signature
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="AppRecord">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=7796:7855#L293">AppRecord</a>
+				<a class="permalink" href="index.html#AppRecord">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+AppRecord represents a committed batch and metadata
+</p>
+
+			<pre>type AppRecord struct {
+<span id="AppRecord.Batch"></span>    Batch    *batch
+<span id="AppRecord.Metadata"></span>    Metadata []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FwdMessage">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=626:979#L14">FwdMessage</a>
+				<a class="permalink" href="index.html#FwdMessage">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FwdMessage struct {
+<span id="FwdMessage.Sender"></span>    Sender               <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>   `protobuf:&#34;varint,1,opt,name=sender,proto3&#34; json:&#34;sender,omitempty&#34;`
+<span id="FwdMessage.Payload"></span>    Payload              []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `protobuf:&#34;bytes,2,opt,name=payload,proto3&#34; json:&#34;payload,omitempty&#34;`
+<span id="FwdMessage.XXX_NoUnkeyedLiteral"></span>    XXX_NoUnkeyedLiteral struct{} `json:&#34;-&#34;`
+<span id="FwdMessage.XXX_unrecognized"></span>    XXX_unrecognized     []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>   `json:&#34;-&#34;`
+<span id="FwdMessage.XXX_sizecache"></span>    XXX_sizecache        <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>    `json:&#34;-&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FwdMessage.Descriptor">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1155:1202#L25">Descriptor</a>
+					<a class="permalink" href="index.html#FwdMessage.Descriptor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FwdMessage">FwdMessage</a>) Descriptor() ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, []<a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.GetPayload">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1932:1972#L54">GetPayload</a>
+					<a class="permalink" href="index.html#FwdMessage.GetPayload">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) GetPayload() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.GetSender">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1841:1880#L47">GetSender</a>
+					<a class="permalink" href="index.html#FwdMessage.GetSender">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) GetSender() <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.ProtoMessage">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1115:1148#L24">ProtoMessage</a>
+					<a class="permalink" href="index.html#FwdMessage.ProtoMessage">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (*<a href="index.html#FwdMessage">FwdMessage</a>) ProtoMessage()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.Reset">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=981:1009#L22">Reset</a>
+					<a class="permalink" href="index.html#FwdMessage.Reset">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) Reset()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.String">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1040:1076#L23">String</a>
+					<a class="permalink" href="index.html#FwdMessage.String">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) String() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_DiscardUnknown">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1690:1731#L41">XXX_DiscardUnknown</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_DiscardUnknown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_DiscardUnknown()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Marshal">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1364:1442#L32">XXX_Marshal</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Marshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Marshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, deterministic <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) ([]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Merge">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1511:1560#L35">XXX_Merge</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Merge">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Merge(src <a href="../../../golang/protobuf/proto/index.html">proto</a>.<a href="../../../golang/protobuf/proto/index.html#Message">Message</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Size">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1607:1642#L38">XXX_Size</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Size">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Size() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FwdMessage.XXX_Unmarshal">func (*FwdMessage) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_messages.pb.go?s=1258:1308#L29">XXX_Unmarshal</a>
+					<a class="permalink" href="index.html#FwdMessage.XXX_Unmarshal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#FwdMessage">FwdMessage</a>) XXX_Unmarshal(b []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Network">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=555:584#L28">Network</a>
+				<a class="permalink" href="index.html#Network">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Network is a map of ids and nodes
+</p>
+
+			<pre>type Network map[<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>]*<a href="index.html#Node">Node</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Network.AddOrUpdateNode">func (Network) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=643:707#L31">AddOrUpdateNode</a>
+					<a class="permalink" href="index.html#Network.AddOrUpdateNode">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#Network">Network</a>) AddOrUpdateNode(id <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, h handler, app *<a href="index.html#App">App</a>)</pre>
+				<p>
+AddOrUpdateNode adds or updates a node in the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Network.Shutdown">func (Network) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=1607:1634#L70">Shutdown</a>
+					<a class="permalink" href="index.html#Network.Shutdown">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#Network">Network</a>) Shutdown()</pre>
+				<p>
+Shutdown stops all nodes in the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Network.StartServe">func (Network) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=1228:1257#L53">StartServe</a>
+					<a class="permalink" href="index.html#Network.StartServe">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#Network">Network</a>) StartServe()</pre>
+				<p>
+StartServe calls serve on all nodes in the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Network.StopServe">func (Network) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=1386:1414#L61">StopServe</a>
+					<a class="permalink" href="index.html#Network.StopServe">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n <a href="index.html#Network">Network</a>) StopServe()</pre>
+				<p>
+StopServe stops serve for all nodes in the network
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Node">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=2488:2985#L114">Node</a>
+				<a class="permalink" href="index.html#Node">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Node represents a node in a network
+</p>
+
+			<pre>type Node struct {
+    <a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#RWMutex">RWMutex</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Node.Nodes">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=3653:3687#L150">Nodes</a>
+					<a class="permalink" href="index.html#Node.Nodes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (node *<a href="index.html#Node">Node</a>) Nodes() []<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a></pre>
+				<p>
+Nodes returns the ids of all nodes in the network
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Node.SendConsensus">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=3055:3130#L132">SendConsensus</a>
+					<a class="permalink" href="index.html#Node.SendConsensus">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (node *<a href="index.html#Node">Node</a>) SendConsensus(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, m *<a href="../smartbftprotos/index.html">smartbftprotos</a>.<a href="../smartbftprotos/index.html#Message">Message</a>)</pre>
+				<p>
+SendConsensus sends a consensus related message to a target node
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Node.SendTransaction">func (*Node) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/network.go?s=3465:3531#L145">SendTransaction</a>
+					<a class="permalink" href="index.html#Node.SendTransaction">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (node *<a href="index.html#Node">Node</a>) SendTransaction(targetID <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, request []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>)</pre>
+				<p>
+SendTransaction sends a client&#39;s request to a target node
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Request">type <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=7120:7177#L254">Request</a>
+				<a class="permalink" href="index.html#Request">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Request represents a client&#39;s request
+</p>
+
+			<pre>type Request struct {
+<span id="Request.ClientID"></span>    ClientID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Request.ID"></span>    ID       <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Request.ToBytes">func (Request) <a href="http://localhost:6060/src/github.com/SmartBFT-Go/consensus/test/test_app.go?s=7241:7276#L260">ToBytes</a>
+					<a class="permalink" href="index.html#Request.ToBytes">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (txn <a href="index.html#Request">Request</a>) ToBytes() []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+				<p>
+ToBytes returns a byte array representation of the request
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

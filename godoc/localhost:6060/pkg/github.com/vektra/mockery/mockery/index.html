@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>mockery - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package mockery
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/vektra/mockery/mockery"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+			
+				
+				<dd><a href="index.html#Cleanup">type Cleanup</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#FileOutputStreamProvider">type FileOutputStreamProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FileOutputStreamProvider.GetWriter">func (this *FileOutputStreamProvider) GetWriter(iface *Interface) (io.Writer, error, Cleanup)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Generator">type Generator</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewGenerator">func NewGenerator(iface *Interface, pkg string, inPackage bool) *Generator</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.Generate">func (g *Generator) Generate() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.GeneratePrologue">func (g *Generator) GeneratePrologue(pkg string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.GeneratePrologueNote">func (g *Generator) GeneratePrologueNote(note string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Generator.Write">func (g *Generator) Write(w io.Writer) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#GeneratorVisitor">type GeneratorVisitor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#GeneratorVisitor.VisitWalk">func (this *GeneratorVisitor) VisitWalk(iface *Interface) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Interface">type Interface</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#NodeVisitor">type NodeVisitor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewNodeVisitor">func NewNodeVisitor() *NodeVisitor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NodeVisitor.DeclaredInterfaces">func (n *NodeVisitor) DeclaredInterfaces() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NodeVisitor.Visit">func (nv *NodeVisitor) Visit(node ast.Node) ast.Visitor</a></dd>
+				
+			
+				
+				<dd><a href="index.html#OutputStreamProvider">type OutputStreamProvider</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Parser">type Parser</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewParser">func NewParser(buildTags []string) *Parser</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Find">func (p *Parser) Find(name string) (*Interface, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Interfaces">func (p *Parser) Interfaces() []*Interface</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Load">func (p *Parser) Load() error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Parser.Parse">func (p *Parser) Parse(path string) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#StdoutStreamProvider">type StdoutStreamProvider</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#StdoutStreamProvider.GetWriter">func (this *StdoutStreamProvider) GetWriter(iface *Interface) (io.Writer, error, Cleanup)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Walker">type Walker</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Walker.Walk">func (this *Walker) Walk(visitor WalkerVisitor) (generated bool)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#WalkerVisitor">type WalkerVisitor</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go">generator.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/mockery.go">mockery.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go">outputter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go">parse.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go">walker.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="SemVer">SemVer</span> = &#34;1.0.0&#34;
+)</pre>
+			
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+ErrNotInterface is returned when the given type is not an interface
+type.
+</p>
+
+				<pre>var <span id="ErrNotInterface">ErrNotInterface</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;expression not an interface&#34;)</pre>
+			
+				<p>
+ErrNotSetup is returned when the generator is not configured.
+</p>
+
+				<pre>var <span id="ErrNotSetup">ErrNotSetup</span> = <a href="http://localhost:6060/pkg/errors/">errors</a>.<a href="http://localhost:6060/pkg/errors/#New">New</a>(&#34;not setup&#34;)</pre>
+			
+		
+		
+		
+			
+			
+			<h2 id="Cleanup">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=86:111#L2">Cleanup</a>
+				<a class="permalink" href="index.html#Cleanup">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Cleanup func() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="FileOutputStreamProvider">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=396:634#L15">FileOutputStreamProvider</a>
+				<a class="permalink" href="index.html#FileOutputStreamProvider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type FileOutputStreamProvider struct {
+<span id="FileOutputStreamProvider.BaseDir"></span>    BaseDir                   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="FileOutputStreamProvider.InPackage"></span>    InPackage                 <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="FileOutputStreamProvider.TestOnly"></span>    TestOnly                  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="FileOutputStreamProvider.Case"></span>    Case                      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="FileOutputStreamProvider.KeepTree"></span>    KeepTree                  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="FileOutputStreamProvider.KeepTreeOriginalDirectory"></span>    KeepTreeOriginalDirectory <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="FileOutputStreamProvider.GetWriter">func (*FileOutputStreamProvider) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=636:729#L24">GetWriter</a>
+					<a class="permalink" href="index.html#FileOutputStreamProvider.GetWriter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#FileOutputStreamProvider">FileOutputStreamProvider</a>) GetWriter(iface *<a href="index.html#Interface">Interface</a>) (<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>, <a href="index.html#Cleanup">Cleanup</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Generator">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=671:990#L29">Generator</a>
+				<a class="permalink" href="index.html#Generator">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+Generator is responsible for generating the string containing
+imports and the mock struct that will later be written out as file.
+</p>
+
+			<pre>type Generator struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewGenerator">func <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=1028:1102#L46">NewGenerator</a>
+					<a class="permalink" href="index.html#NewGenerator">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewGenerator(iface *<a href="index.html#Interface">Interface</a>, pkg <a href="http://localhost:6060/pkg/builtin/#string">string</a>, inPackage <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>) *<a href="index.html#Generator">Generator</a></pre>
+				<p>
+NewGenerator builds a Generator.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Generator.Generate">func (*Generator) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=11521:11557#L469">Generate</a>
+					<a class="permalink" href="index.html#Generator.Generate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) Generate() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				<p>
+Generate builds a string that constitutes a valid go source file
+containing the mock of the relevant interface.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.GeneratePrologue">func (*Generator) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=6456:6504#L246">GeneratePrologue</a>
+					<a class="permalink" href="index.html#Generator.GeneratePrologue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) GeneratePrologue(pkg <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+GeneratePrologue generates the prologue of the mock.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.GeneratePrologueNote">func (*Generator) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=6756:6809#L260">GeneratePrologueNote</a>
+					<a class="permalink" href="index.html#Generator.GeneratePrologueNote">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) GeneratePrologueNote(note <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+GeneratePrologueNote adds a note after the prologue to the output
+string.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Generator.Write">func (*Generator) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/generator.go?s=16291:16335#L625">Write</a>
+					<a class="permalink" href="index.html#Generator.Write">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (g *<a href="index.html#Generator">Generator</a>) Write(w <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="GeneratorVisitor">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go?s=1582:1780#L80">GeneratorVisitor</a>
+				<a class="permalink" href="index.html#GeneratorVisitor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type GeneratorVisitor struct {
+<span id="GeneratorVisitor.InPackage"></span>    InPackage <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="GeneratorVisitor.Note"></span>    Note      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="GeneratorVisitor.Osp"></span>    Osp       <a href="index.html#OutputStreamProvider">OutputStreamProvider</a>
+    <span class="comment">// The name of the output package, if InPackage is false (defaults to &#34;mocks&#34;)</span>
+<span id="GeneratorVisitor.PackageName"></span>    PackageName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="GeneratorVisitor.VisitWalk">func (*GeneratorVisitor) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go?s=1782:1845#L88">VisitWalk</a>
+					<a class="permalink" href="index.html#GeneratorVisitor.VisitWalk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#GeneratorVisitor">GeneratorVisitor</a>) VisitWalk(iface *<a href="index.html#Interface">Interface</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Interface">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=3715:3921#L159">Interface</a>
+				<a class="permalink" href="index.html#Interface">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Interface struct {
+<span id="Interface.Name"></span>    Name          <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Interface.QualifiedName"></span>    QualifiedName <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Interface.FileName"></span>    FileName      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Interface.File"></span>    File          *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>
+<span id="Interface.Pkg"></span>    Pkg           *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Package">Package</a>
+<span id="Interface.Type"></span>    Type          *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Interface">Interface</a>
+<span id="Interface.NamedType"></span>    NamedType     *<a href="http://localhost:6060/pkg/go/types/">types</a>.<a href="http://localhost:6060/pkg/go/types/#Named">Named</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="NodeVisitor">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=2601:2657#L106">NodeVisitor</a>
+				<a class="permalink" href="index.html#NodeVisitor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type NodeVisitor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewNodeVisitor">func <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=2659:2693#L110">NewNodeVisitor</a>
+					<a class="permalink" href="index.html#NewNodeVisitor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewNodeVisitor() *<a href="index.html#NodeVisitor">NodeVisitor</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="NodeVisitor.DeclaredInterfaces">func (*NodeVisitor) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=2765:2816#L116">DeclaredInterfaces</a>
+					<a class="permalink" href="index.html#NodeVisitor.DeclaredInterfaces">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (n *<a href="index.html#NodeVisitor">NodeVisitor</a>) DeclaredInterfaces() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="NodeVisitor.Visit">func (*NodeVisitor) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=2851:2906#L120">Visit</a>
+					<a class="permalink" href="index.html#NodeVisitor.Visit">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (nv *<a href="index.html#NodeVisitor">NodeVisitor</a>) Visit(node <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>) <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Visitor">Visitor</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="OutputStreamProvider">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=113:209#L4">OutputStreamProvider</a>
+				<a class="permalink" href="index.html#OutputStreamProvider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type OutputStreamProvider interface {
+    GetWriter(iface *<a href="index.html#Interface">Interface</a>) (<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>, <a href="index.html#Cleanup">Cleanup</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Parser">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=271:480#L13">Parser</a>
+				<a class="permalink" href="index.html#Parser">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Parser struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewParser">func <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=482:524#L21">NewParser</a>
+					<a class="permalink" href="index.html#NewParser">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewParser(buildTags []<a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#Parser">Parser</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Parser.Find">func (*Parser) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=3360:3414#L145">Find</a>
+					<a class="permalink" href="index.html#Parser.Find">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Find(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#Interface">Interface</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Parser.Interfaces">func (*Parser) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=4193:4235#L183">Interfaces</a>
+					<a class="permalink" href="index.html#Parser.Interfaces">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Interfaces() []*<a href="index.html#Interface">Interface</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Parser.Load">func (*Parser) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=3096:3125#L130">Load</a>
+					<a class="permalink" href="index.html#Parser.Load">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Load() <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Parser.Parse">func (*Parser) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/parse.go?s=828:869#L34">Parse</a>
+					<a class="permalink" href="index.html#Parser.Parse">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#Parser">Parser</a>) Parse(path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="StdoutStreamProvider">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=211:247#L8">StdoutStreamProvider</a>
+				<a class="permalink" href="index.html#StdoutStreamProvider">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type StdoutStreamProvider struct {
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="StdoutStreamProvider.GetWriter">func (*StdoutStreamProvider) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/outputter.go?s=249:338#L11">GetWriter</a>
+					<a class="permalink" href="index.html#StdoutStreamProvider.GetWriter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#StdoutStreamProvider">StdoutStreamProvider</a>) GetWriter(iface *<a href="index.html#Interface">Interface</a>) (<a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>, <a href="index.html#Cleanup">Cleanup</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Walker">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go?s=99:217#L3">Walker</a>
+				<a class="permalink" href="index.html#Walker">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Walker struct {
+<span id="Walker.BaseDir"></span>    BaseDir   <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Walker.Recursive"></span>    Recursive <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Walker.Filter"></span>    Filter    *<a href="http://localhost:6060/pkg/regexp/">regexp</a>.<a href="http://localhost:6060/pkg/regexp/#Regexp">Regexp</a>
+<span id="Walker.LimitOne"></span>    LimitOne  <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="Walker.BuildTags"></span>    BuildTags []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Walker.Walk">func (*Walker) <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go?s=282:346#L15">Walk</a>
+					<a class="permalink" href="index.html#Walker.Walk">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (this *<a href="index.html#Walker">Walker</a>) Walk(visitor <a href="index.html#WalkerVisitor">WalkerVisitor</a>) (generated <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="WalkerVisitor">type <a href="http://localhost:6060/src/github.com/vektra/mockery/mockery/walker.go?s=219:280#L11">WalkerVisitor</a>
+				<a class="permalink" href="index.html#WalkerVisitor">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type WalkerVisitor interface {
+    VisitWalk(*<a href="index.html#Interface">Interface</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="fixtures/index.html">fixtures</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="fixtures/buildtag/index.html">buildtag</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="fixtures/buildtag/comment/index.html">comment</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="fixtures/buildtag/filename/index.html">filename</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="fixtures/http/index.html">http</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="fixtures/mocks/index.html">mocks</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="fixtures/test/index.html">test</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

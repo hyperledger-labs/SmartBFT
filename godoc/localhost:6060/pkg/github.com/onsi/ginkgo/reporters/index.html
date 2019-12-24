@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>reporters - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package reporters
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/onsi/ginkgo/reporters"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Ginkgo&#39;s Default Reporter
+</p>
+<p>
+A number of command line flags are available to tweak Ginkgo&#39;s default output.
+</p>
+<p>
+These are documented [here](<a href="http://onsi.github.io/ginkgo/#running_tests">http://onsi.github.io/ginkgo/#running_tests</a>)
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#DefaultReporter">type DefaultReporter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewDefaultReporter">func NewDefaultReporter(config config.DefaultReporterConfigType, stenographer stenographer.Stenographer) *DefaultReporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.AfterSuiteDidRun">func (reporter *DefaultReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.BeforeSuiteDidRun">func (reporter *DefaultReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.SpecDidComplete">func (reporter *DefaultReporter) SpecDidComplete(specSummary *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.SpecSuiteDidEnd">func (reporter *DefaultReporter) SpecSuiteDidEnd(summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.SpecSuiteWillBegin">func (reporter *DefaultReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#DefaultReporter.SpecWillRun">func (reporter *DefaultReporter) SpecWillRun(specSummary *types.SpecSummary)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#FakeReporter">type FakeReporter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewFakeReporter">func NewFakeReporter() *FakeReporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.AfterSuiteDidRun">func (fakeR *FakeReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.BeforeSuiteDidRun">func (fakeR *FakeReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.SpecDidComplete">func (fakeR *FakeReporter) SpecDidComplete(specSummary *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.SpecSuiteDidEnd">func (fakeR *FakeReporter) SpecSuiteDidEnd(summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.SpecSuiteWillBegin">func (fakeR *FakeReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#FakeReporter.SpecWillRun">func (fakeR *FakeReporter) SpecWillRun(specSummary *types.SpecSummary)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#JUnitFailureMessage">type JUnitFailureMessage</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#JUnitReporter">type JUnitReporter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewJUnitReporter">func NewJUnitReporter(filename string) *JUnitReporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.AfterSuiteDidRun">func (reporter *JUnitReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.BeforeSuiteDidRun">func (reporter *JUnitReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.SpecDidComplete">func (reporter *JUnitReporter) SpecDidComplete(specSummary *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.SpecSuiteDidEnd">func (reporter *JUnitReporter) SpecSuiteDidEnd(summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.SpecSuiteWillBegin">func (reporter *JUnitReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#JUnitReporter.SpecWillRun">func (reporter *JUnitReporter) SpecWillRun(specSummary *types.SpecSummary)</a></dd>
+				
+			
+				
+				<dd><a href="index.html#JUnitSkipped">type JUnitSkipped</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#JUnitTestCase">type JUnitTestCase</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#JUnitTestSuite">type JUnitTestSuite</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Reporter">type Reporter</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#TeamCityReporter">type TeamCityReporter</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTeamCityReporter">func NewTeamCityReporter(writer io.Writer) *TeamCityReporter</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.AfterSuiteDidRun">func (reporter *TeamCityReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.BeforeSuiteDidRun">func (reporter *TeamCityReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.SpecDidComplete">func (reporter *TeamCityReporter) SpecDidComplete(specSummary *types.SpecSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.SpecSuiteDidEnd">func (reporter *TeamCityReporter) SpecSuiteDidEnd(summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.SpecSuiteWillBegin">func (reporter *TeamCityReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TeamCityReporter.SpecWillRun">func (reporter *TeamCityReporter) SpecWillRun(specSummary *types.SpecSummary)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go">default_reporter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go">fake_reporter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go">junit_reporter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/reporter.go">reporter.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go">teamcity_reporter.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+		
+			
+			
+			<h2 id="DefaultReporter">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=331:487#L6">DefaultReporter</a>
+				<a class="permalink" href="index.html#DefaultReporter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type DefaultReporter struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewDefaultReporter">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=489:610#L12">NewDefaultReporter</a>
+					<a class="permalink" href="index.html#NewDefaultReporter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewDefaultReporter(config <a href="../config/index.html">config</a>.<a href="../config/index.html#DefaultReporterConfigType">DefaultReporterConfigType</a>, stenographer <a href="stenographer/index.html">stenographer</a>.<a href="stenographer/index.html#Stenographer">Stenographer</a>) *<a href="index.html#DefaultReporter">DefaultReporter</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="DefaultReporter.AfterSuiteDidRun">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=1505:1588#L34">AfterSuiteDidRun</a>
+					<a class="permalink" href="index.html#DefaultReporter.AfterSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) AfterSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DefaultReporter.BeforeSuiteDidRun">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=1244:1328#L28">BeforeSuiteDidRun</a>
+					<a class="permalink" href="index.html#DefaultReporter.BeforeSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) BeforeSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DefaultReporter.SpecDidComplete">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=2059:2139#L46">SpecDidComplete</a>
+					<a class="permalink" href="index.html#DefaultReporter.SpecDidComplete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) SpecDidComplete(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DefaultReporter.SpecSuiteDidEnd">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=3392:3469#L71">SpecSuiteDidEnd</a>
+					<a class="permalink" href="index.html#DefaultReporter.SpecSuiteDidEnd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) SpecSuiteDidEnd(summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DefaultReporter.SpecSuiteWillBegin">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=699:811#L19">SpecSuiteWillBegin</a>
+					<a class="permalink" href="index.html#DefaultReporter.SpecSuiteWillBegin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) SpecSuiteWillBegin(config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>, summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="DefaultReporter.SpecWillRun">func (*DefaultReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/default_reporter.go?s=1764:1840#L40">SpecWillRun</a>
+					<a class="permalink" href="index.html#DefaultReporter.SpecWillRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#DefaultReporter">DefaultReporter</a>) SpecWillRun(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="FakeReporter">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=142:574#L1">FakeReporter</a>
+				<a class="permalink" href="index.html#FakeReporter">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+FakeReporter is useful for testing purposes
+</p>
+
+			<pre>type FakeReporter struct {
+<span id="FakeReporter.Config"></span>    Config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>
+
+<span id="FakeReporter.BeginSummary"></span>    BeginSummary         *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>
+<span id="FakeReporter.BeforeSuiteSummary"></span>    BeforeSuiteSummary   *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>
+<span id="FakeReporter.SpecWillRunSummaries"></span>    SpecWillRunSummaries []*<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>
+<span id="FakeReporter.SpecSummaries"></span>    SpecSummaries        []*<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>
+<span id="FakeReporter.AfterSuiteSummary"></span>    AfterSuiteSummary    *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>
+<span id="FakeReporter.EndSummary"></span>    EndSummary           *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>
+
+<span id="FakeReporter.SpecWillRunStub"></span>    SpecWillRunStub     func(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)
+<span id="FakeReporter.SpecDidCompleteStub"></span>    SpecDidCompleteStub func(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewFakeReporter">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=576:612#L13">NewFakeReporter</a>
+					<a class="permalink" href="index.html#NewFakeReporter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewFakeReporter() *<a href="index.html#FakeReporter">FakeReporter</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="FakeReporter.AfterSuiteDidRun">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=1500:1577#L43">AfterSuiteDidRun</a>
+					<a class="permalink" href="index.html#FakeReporter.AfterSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) AfterSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeReporter.BeforeSuiteDidRun">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=919:997#L25">BeforeSuiteDidRun</a>
+					<a class="permalink" href="index.html#FakeReporter.BeforeSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) BeforeSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeReporter.SpecDidComplete">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=1273:1347#L36">SpecDidComplete</a>
+					<a class="permalink" href="index.html#FakeReporter.SpecDidComplete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) SpecDidComplete(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeReporter.SpecSuiteDidEnd">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=1623:1694#L47">SpecSuiteDidEnd</a>
+					<a class="permalink" href="index.html#FakeReporter.SpecSuiteDidEnd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) SpecSuiteDidEnd(summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeReporter.SpecSuiteWillBegin">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=754:860#L20">SpecSuiteWillBegin</a>
+					<a class="permalink" href="index.html#FakeReporter.SpecSuiteWillBegin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) SpecSuiteWillBegin(config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>, summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="FakeReporter.SpecWillRun">func (*FakeReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/fake_reporter.go?s=1044:1114#L29">SpecWillRun</a>
+					<a class="permalink" href="index.html#FakeReporter.SpecWillRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (fakeR *<a href="index.html#FakeReporter">FakeReporter</a>) SpecWillRun(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="JUnitFailureMessage">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1013:1116#L31">JUnitFailureMessage</a>
+				<a class="permalink" href="index.html#JUnitFailureMessage">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type JUnitFailureMessage struct {
+<span id="JUnitFailureMessage.Type"></span>    Type    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `xml:&#34;type,attr&#34;`
+<span id="JUnitFailureMessage.Message"></span>    Message <a href="http://localhost:6060/pkg/builtin/#string">string</a> `xml:&#34;,chardata&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="JUnitReporter">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1182:1285#L40">JUnitReporter</a>
+				<a class="permalink" href="index.html#JUnitReporter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type JUnitReporter struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewJUnitReporter">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1391:1444#L47">NewJUnitReporter</a>
+					<a class="permalink" href="index.html#NewJUnitReporter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewJUnitReporter(filename <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#JUnitReporter">JUnitReporter</a></pre>
+				<p>
+NewJUnitReporter creates a new JUnit XML reporter.  The XML will be stored in the passed in filename.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="JUnitReporter.AfterSuiteDidRun">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=2000:2081#L68">AfterSuiteDidRun</a>
+					<a class="permalink" href="index.html#JUnitReporter.AfterSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) AfterSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JUnitReporter.BeforeSuiteDidRun">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1854:1936#L64">BeforeSuiteDidRun</a>
+					<a class="permalink" href="index.html#JUnitReporter.BeforeSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) BeforeSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JUnitReporter.SpecDidComplete">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=2906:2984#L93">SpecDidComplete</a>
+					<a class="permalink" href="index.html#JUnitReporter.SpecDidComplete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) SpecDidComplete(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JUnitReporter.SpecSuiteDidEnd">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=3739:3814#L112">SpecSuiteDidEnd</a>
+					<a class="permalink" href="index.html#JUnitReporter.SpecSuiteDidEnd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) SpecSuiteDidEnd(summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JUnitReporter.SpecSuiteWillBegin">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1499:1609#L53">SpecSuiteWillBegin</a>
+					<a class="permalink" href="index.html#JUnitReporter.SpecSuiteWillBegin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) SpecSuiteWillBegin(config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>, summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="JUnitReporter.SpecWillRun">func (*JUnitReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1774:1848#L61">SpecWillRun</a>
+					<a class="permalink" href="index.html#JUnitReporter.SpecWillRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#JUnitReporter">JUnitReporter</a>) SpecWillRun(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="JUnitSkipped">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=1118:1180#L36">JUnitSkipped</a>
+				<a class="permalink" href="index.html#JUnitSkipped">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type JUnitSkipped struct {
+<span id="JUnitSkipped.XMLName"></span>    XMLName <a href="http://localhost:6060/pkg/encoding/xml/">xml</a>.<a href="http://localhost:6060/pkg/encoding/xml/#Name">Name</a> `xml:&#34;skipped&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="JUnitTestCase">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=620:1011#L22">JUnitTestCase</a>
+				<a class="permalink" href="index.html#JUnitTestCase">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type JUnitTestCase struct {
+<span id="JUnitTestCase.Name"></span>    Name           <a href="http://localhost:6060/pkg/builtin/#string">string</a>               `xml:&#34;name,attr&#34;`
+<span id="JUnitTestCase.ClassName"></span>    ClassName      <a href="http://localhost:6060/pkg/builtin/#string">string</a>               `xml:&#34;classname,attr&#34;`
+<span id="JUnitTestCase.FailureMessage"></span>    FailureMessage *<a href="index.html#JUnitFailureMessage">JUnitFailureMessage</a> `xml:&#34;failure,omitempty&#34;`
+<span id="JUnitTestCase.Skipped"></span>    Skipped        *<a href="index.html#JUnitSkipped">JUnitSkipped</a>        `xml:&#34;skipped,omitempty&#34;`
+<span id="JUnitTestCase.Time"></span>    Time           <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>              `xml:&#34;time,attr&#34;`
+<span id="JUnitTestCase.SystemOut"></span>    SystemOut      <a href="http://localhost:6060/pkg/builtin/#string">string</a>               `xml:&#34;system-out,omitempty&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="JUnitTestSuite">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/junit_reporter.go?s=267:618#L12">JUnitTestSuite</a>
+				<a class="permalink" href="index.html#JUnitTestSuite">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type JUnitTestSuite struct {
+<span id="JUnitTestSuite.XMLName"></span>    XMLName   <a href="http://localhost:6060/pkg/encoding/xml/">xml</a>.<a href="http://localhost:6060/pkg/encoding/xml/#Name">Name</a>        `xml:&#34;testsuite&#34;`
+<span id="JUnitTestSuite.TestCases"></span>    TestCases []<a href="index.html#JUnitTestCase">JUnitTestCase</a> `xml:&#34;testcase&#34;`
+<span id="JUnitTestSuite.Name"></span>    Name      <a href="http://localhost:6060/pkg/builtin/#string">string</a>          `xml:&#34;name,attr&#34;`
+<span id="JUnitTestSuite.Tests"></span>    Tests     <a href="http://localhost:6060/pkg/builtin/#int">int</a>             `xml:&#34;tests,attr&#34;`
+<span id="JUnitTestSuite.Failures"></span>    Failures  <a href="http://localhost:6060/pkg/builtin/#int">int</a>             `xml:&#34;failures,attr&#34;`
+<span id="JUnitTestSuite.Errors"></span>    Errors    <a href="http://localhost:6060/pkg/builtin/#int">int</a>             `xml:&#34;errors,attr&#34;`
+<span id="JUnitTestSuite.Time"></span>    Time      <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>         `xml:&#34;time,attr&#34;`
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Reporter">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/reporter.go?s=96:449#L1">Reporter</a>
+				<a class="permalink" href="index.html#Reporter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Reporter interface {
+    SpecSuiteWillBegin(config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>, summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)
+    BeforeSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)
+    SpecWillRun(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)
+    SpecDidComplete(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)
+    AfterSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)
+    SpecSuiteDidEnd(summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TeamCityReporter">type <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=383:462#L14">TeamCityReporter</a>
+				<a class="permalink" href="index.html#TeamCityReporter">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type TeamCityReporter struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTeamCityReporter">func <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=464:524#L19">NewTeamCityReporter</a>
+					<a class="permalink" href="index.html#NewTeamCityReporter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTeamCityReporter(writer <a href="http://localhost:6060/pkg/io/">io</a>.<a href="http://localhost:6060/pkg/io/#Writer">Writer</a>) *<a href="index.html#TeamCityReporter">TeamCityReporter</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="TeamCityReporter.AfterSuiteDidRun">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=1004:1088#L34">AfterSuiteDidRun</a>
+					<a class="permalink" href="index.html#TeamCityReporter.AfterSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) AfterSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TeamCityReporter.BeforeSuiteDidRun">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=855:940#L30">BeforeSuiteDidRun</a>
+					<a class="permalink" href="index.html#TeamCityReporter.BeforeSuiteDidRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) BeforeSuiteDidRun(setupSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SetupSummary">SetupSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TeamCityReporter.SpecDidComplete">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=2084:2165#L55">SpecDidComplete</a>
+					<a class="permalink" href="index.html#TeamCityReporter.SpecDidComplete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) SpecDidComplete(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TeamCityReporter.SpecSuiteDidEnd">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=3001:3079#L71">SpecSuiteDidEnd</a>
+					<a class="permalink" href="index.html#TeamCityReporter.SpecSuiteDidEnd">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) SpecSuiteDidEnd(summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TeamCityReporter.SpecSuiteWillBegin">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=578:691#L25">SpecSuiteWillBegin</a>
+					<a class="permalink" href="index.html#TeamCityReporter.SpecSuiteWillBegin">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) SpecSuiteWillBegin(config <a href="../config/index.html">config</a>.<a href="../config/index.html#GinkgoConfigType">GinkgoConfigType</a>, summary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SuiteSummary">SuiteSummary</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TeamCityReporter.SpecWillRun">func (*TeamCityReporter) <a href="http://localhost:6060/src/github.com/onsi/ginkgo/reporters/teamcity_reporter.go?s=1850:1927#L50">SpecWillRun</a>
+					<a class="permalink" href="index.html#TeamCityReporter.SpecWillRun">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (reporter *<a href="index.html#TeamCityReporter">TeamCityReporter</a>) SpecWillRun(specSummary *<a href="../types/index.html">types</a>.<a href="../types/index.html#SpecSummary">SpecSummary</a>)</pre>
+				
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="stenographer/index.html">stenographer</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 20px;">
+						<a href="stenographer/support/index.html">support</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="stenographer/support/go-colorable/index.html">go-colorable</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 40px;">
+						<a href="stenographer/support/go-isatty/index.html">go-isatty</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						Package isatty implements interface to isatty
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

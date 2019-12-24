@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>util - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package util
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric/core/ledger/util"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#ComputeHash">func ComputeHash(input []byte) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#ComputeStringHash">func ComputeStringHash(input string) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#DecodeReverseOrderVarUint64">func DecodeReverseOrderVarUint64(bytes []byte) (uint64, int)</a></dd>
+			
+				
+				<dd><a href="index.html#EncodeReverseOrderVarUint64">func EncodeReverseOrderVarUint64(number uint64) []byte</a></dd>
+			
+				
+				<dd><a href="index.html#GetSortedKeys">func GetSortedKeys(m interface{}) []string</a></dd>
+			
+				
+				<dd><a href="index.html#GetValuesBySortedKeys">func GetValuesBySortedKeys(mapPtr interface{}, listPtr interface{})</a></dd>
+			
+			
+				
+				<dd><a href="index.html#TxValidationFlags">type TxValidationFlags</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTxValidationFlags">func NewTxValidationFlags(size int) TxValidationFlags</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewTxValidationFlagsSetValue">func NewTxValidationFlagsSetValue(size int, value peer.TxValidationCode) TxValidationFlags</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidationFlags.Flag">func (obj TxValidationFlags) Flag(txIndex int) peer.TxValidationCode</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidationFlags.IsInvalid">func (obj TxValidationFlags) IsInvalid(txIndex int) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidationFlags.IsSetTo">func (obj TxValidationFlags) IsSetTo(txIndex int, flag peer.TxValidationCode) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidationFlags.IsValid">func (obj TxValidationFlags) IsValid(txIndex int) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#TxValidationFlags.SetFlag">func (obj TxValidationFlags) SetFlag(txIndex int, flag peer.TxValidationCode)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go">txvalidationflags.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/uint64_encoding.go">uint64_encoding.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="ComputeHash">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/util.go?s=2315:2352#L78">ComputeHash</a>
+				<a class="permalink" href="index.html#ComputeHash">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ComputeHash(input []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ComputeHash computes the hash of the given bytes
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="ComputeStringHash">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/util.go?s=2179:2222#L73">ComputeStringHash</a>
+				<a class="permalink" href="index.html#ComputeStringHash">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func ComputeStringHash(input <a href="http://localhost:6060/pkg/builtin/#string">string</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+ComputeStringHash computes the hash of the given string
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DecodeReverseOrderVarUint64">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/uint64_encoding.go?s=1198:1258#L30">DecodeReverseOrderVarUint64</a>
+				<a class="permalink" href="index.html#DecodeReverseOrderVarUint64">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DecodeReverseOrderVarUint64(bytes []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (<a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>, <a href="http://localhost:6060/pkg/builtin/#int">int</a>)</pre>
+			<p>
+DecodeReverseOrderVarUint64 decodes the number from the bytes obtained from function &#39;EncodeReverseOrderVarUint64&#39;.
+Also, returns the number of bytes that are consumed in the process
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="EncodeReverseOrderVarUint64">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/uint64_encoding.go?s=585:639#L11">EncodeReverseOrderVarUint64</a>
+				<a class="permalink" href="index.html#EncodeReverseOrderVarUint64">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func EncodeReverseOrderVarUint64(number <a href="http://localhost:6060/pkg/builtin/#uint64">uint64</a>) []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a></pre>
+			<p>
+EncodeReverseOrderVarUint64 returns a byte-representation for a uint64 number such that
+the number is first subtracted from MaxUint64 and then all the leading 0xff bytes
+are trimmed and replaced by the number of such trimmed bytes. This helps in reducing the size.
+In the byte order comparison this encoding ensures that EncodeReverseOrderVarUint64(A) &gt; EncodeReverseOrderVarUint64(B),
+If B &gt; A
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetSortedKeys">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/util.go?s=779:821#L17">GetSortedKeys</a>
+				<a class="permalink" href="index.html#GetSortedKeys">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetSortedKeys(m interface{}) []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+GetSortedKeys returns the keys of the map in a sorted order. This function assumes that the keys are string
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="GetValuesBySortedKeys">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/util.go?s=1363:1430#L31">GetValuesBySortedKeys</a>
+				<a class="permalink" href="index.html#GetValuesBySortedKeys">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func GetValuesBySortedKeys(mapPtr interface{}, listPtr interface{})</pre>
+			<p>
+GetValuesBySortedKeys returns the values of the map (mapPtr) in the list (listPtr) in the sorted order of key of the map
+This function assumes that the mapPtr is a pointer to a map and listPtr is is a pointer to a list. Further type of keys of the
+map are assumed to be string and the types of the values of the maps and the list are same
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="TxValidationFlags">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=262:292#L4">TxValidationFlags</a>
+				<a class="permalink" href="index.html#TxValidationFlags">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+TxValidationFlags is array of transaction validation codes. It is used when committer validates block.
+</p>
+
+			<pre>type TxValidationFlags []<a href="http://localhost:6060/pkg/builtin/#uint8">uint8</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTxValidationFlags">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=430:483#L8">NewTxValidationFlags</a>
+					<a class="permalink" href="index.html#NewTxValidationFlags">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTxValidationFlags(size <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="index.html#TxValidationFlags">TxValidationFlags</a></pre>
+				<p>
+NewTxValidationFlags Create new object-array of validation codes with target size.
+Default values: TxValidationCode_NOT_VALIDATED
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewTxValidationFlagsSetValue">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=689:779#L14">NewTxValidationFlagsSetValue</a>
+					<a class="permalink" href="index.html#NewTxValidationFlagsSetValue">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewTxValidationFlagsSetValue(size <a href="http://localhost:6060/pkg/builtin/#int">int</a>, value <a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>) <a href="index.html#TxValidationFlags">TxValidationFlags</a></pre>
+				<p>
+NewTxValidationFlagsSetValue Creates new object-array of validation codes with target size
+and the supplied value
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TxValidationFlags.Flag">func (TxValidationFlags) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=1263:1331#L33">Flag</a>
+					<a class="permalink" href="index.html#TxValidationFlags.Flag">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (obj <a href="index.html#TxValidationFlags">TxValidationFlags</a>) Flag(txIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a></pre>
+				<p>
+Flag returns validation code at specified transaction
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxValidationFlags.IsInvalid">func (TxValidationFlags) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=1607:1663#L43">IsInvalid</a>
+					<a class="permalink" href="index.html#TxValidationFlags.IsInvalid">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (obj <a href="index.html#TxValidationFlags">TxValidationFlags</a>) IsInvalid(txIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsInvalid checks if specified transaction is invalid
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxValidationFlags.IsSetTo">func (TxValidationFlags) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=1782:1864#L48">IsSetTo</a>
+					<a class="permalink" href="index.html#TxValidationFlags.IsSetTo">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (obj <a href="index.html#TxValidationFlags">TxValidationFlags</a>) IsSetTo(txIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, flag <a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsSetTo returns true if the specified transaction equals flag; false otherwise.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxValidationFlags.IsValid">func (TxValidationFlags) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=1433:1487#L38">IsValid</a>
+					<a class="permalink" href="index.html#TxValidationFlags.IsValid">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (obj <a href="index.html#TxValidationFlags">TxValidationFlags</a>) IsValid(txIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				<p>
+IsValid checks if specified transaction is valid
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TxValidationFlags.SetFlag">func (TxValidationFlags) <a href="http://localhost:6060/src/github.com/hyperledger/fabric/core/ledger/util/txvalidationflags.go?s=1095:1172#L28">SetFlag</a>
+					<a class="permalink" href="index.html#TxValidationFlags.SetFlag">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (obj <a href="index.html#TxValidationFlags">TxValidationFlags</a>) SetFlag(txIndex <a href="http://localhost:6060/pkg/builtin/#int">int</a>, flag <a href="../../../protos/peer/index.html">peer</a>.<a href="../../../protos/peer/index.html#TxValidationCode">TxValidationCode</a>)</pre>
+				<p>
+SetFlag assigns validation code to specified transaction
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+	
+	
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+	
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+			
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+			
+
+			
+				<tr>
+				
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="couchdb/index.html">couchdb</a>
+					</td>
+				
+					<td class="pkg-synopsis">
+						
+					</td>
+				</tr>
+			
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

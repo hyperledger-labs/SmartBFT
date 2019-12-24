@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>ratelimiter - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package ratelimiter
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hpcloud/tail/ratelimiter"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package ratelimiter implements the Leaky Bucket ratelimiting algorithm with memcached and in-memory backends.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="index.html#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="index.html#LeakyBucket">type LeakyBucket</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewLeakyBucket">func NewLeakyBucket(size uint16, leakInterval time.Duration) *LeakyBucket</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucket.DrainedAt">func (b *LeakyBucket) DrainedAt() time.Time</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucket.Pour">func (b *LeakyBucket) Pour(amount uint16) bool</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucket.Serialise">func (b *LeakyBucket) Serialise() *LeakyBucketSer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucket.TimeSinceLastUpdate">func (b *LeakyBucket) TimeSinceLastUpdate() time.Duration</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucket.TimeToDrain">func (b *LeakyBucket) TimeToDrain() time.Duration</a></dd>
+				
+			
+				
+				<dd><a href="index.html#LeakyBucketSer">type LeakyBucketSer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#LeakyBucketSer.DeSerialise">func (b *LeakyBucketSer) DeSerialise() *LeakyBucket</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Memory">type Memory</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemory">func NewMemory() *Memory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Memory.GarbageCollect">func (m *Memory) GarbageCollect()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Memory.GetBucketFor">func (m *Memory) GetBucketFor(key string) (*LeakyBucket, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Memory.SetBucketFor">func (m *Memory) SetBucketFor(key string, bucket LeakyBucket) error</a></dd>
+				
+			
+				
+				<dd><a href="index.html#Storage">type Storage</a></dd>
+				
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go">leakybucket.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go">memory.go</a>
+			
+				<a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/storage.go">storage.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				
+				<pre>const (
+    <span id="GC_SIZE">GC_SIZE</span>   <a href="http://localhost:6060/pkg/builtin/#int">int</a>           = 100
+    <span id="GC_PERIOD">GC_PERIOD</span> <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> = 60 * <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Second">Second</a>
+)</pre>
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="LeakyBucket">type <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=154:351#L1">LeakyBucket</a>
+				<a class="permalink" href="index.html#LeakyBucket">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LeakyBucket struct {
+<span id="LeakyBucket.Size"></span>    Size         <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="LeakyBucket.Fill"></span>    Fill         <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+<span id="LeakyBucket.LeakInterval"></span>    LeakInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> <span class="comment">// time.Duration for 1 unit of size to leak</span>
+<span id="LeakyBucket.Lastupdate"></span>    Lastupdate   <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="LeakyBucket.Now"></span>    Now          func() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewLeakyBucket">func <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=353:426#L6">NewLeakyBucket</a>
+					<a class="permalink" href="index.html#NewLeakyBucket">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewLeakyBucket(size <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>, leakInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a>) *<a href="index.html#LeakyBucket">LeakyBucket</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="LeakyBucket.DrainedAt">func (*LeakyBucket) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1085:1128#L46">DrainedAt</a>
+					<a class="permalink" href="index.html#LeakyBucket.DrainedAt">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucket">LeakyBucket</a>) DrainedAt() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a></pre>
+				<p>
+The time at which this bucket will be completely drained
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="LeakyBucket.Pour">func (*LeakyBucket) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=824:870#L31">Pour</a>
+					<a class="permalink" href="index.html#LeakyBucket.Pour">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucket">LeakyBucket</a>) Pour(amount <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LeakyBucket.Serialise">func (*LeakyBucket) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1622:1671#L66">Serialise</a>
+					<a class="permalink" href="index.html#LeakyBucket.Serialise">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucket">LeakyBucket</a>) Serialise() *<a href="index.html#LeakyBucketSer">LeakyBucketSer</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LeakyBucket.TimeSinceLastUpdate">func (*LeakyBucket) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1354:1411#L55">TimeSinceLastUpdate</a>
+					<a class="permalink" href="index.html#LeakyBucket.TimeSinceLastUpdate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucket">LeakyBucket</a>) TimeSinceLastUpdate() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a></pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="LeakyBucket.TimeToDrain">func (*LeakyBucket) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1264:1313#L51">TimeToDrain</a>
+					<a class="permalink" href="index.html#LeakyBucket.TimeToDrain">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucket">LeakyBucket</a>) TimeToDrain() <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a></pre>
+				<p>
+The duration until this bucket is completely drained
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="LeakyBucketSer">type <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1451:1620#L59">LeakyBucketSer</a>
+				<a class="permalink" href="index.html#LeakyBucketSer">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type LeakyBucketSer struct {
+<span id="LeakyBucketSer.Size"></span>    Size         <a href="http://localhost:6060/pkg/builtin/#uint16">uint16</a>
+<span id="LeakyBucketSer.Fill"></span>    Fill         <a href="http://localhost:6060/pkg/builtin/#float64">float64</a>
+<span id="LeakyBucketSer.LeakInterval"></span>    LeakInterval <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Duration">Duration</a> <span class="comment">// time.Duration for 1 unit of size to leak</span>
+<span id="LeakyBucketSer.Lastupdate"></span>    Lastupdate   <a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="LeakyBucketSer.DeSerialise">func (*LeakyBucketSer) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/leakybucket.go?s=1834:1885#L77">DeSerialise</a>
+					<a class="permalink" href="index.html#LeakyBucketSer.DeSerialise">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (b *<a href="index.html#LeakyBucketSer">LeakyBucketSer</a>) DeSerialise() *<a href="index.html#LeakyBucket">LeakyBucket</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Memory">type <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go?s=137:226#L3">Memory</a>
+				<a class="permalink" href="index.html#Memory">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Memory struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMemory">func <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go?s=228:252#L8">NewMemory</a>
+					<a class="permalink" href="index.html#NewMemory">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMemory() *<a href="index.html#Memory">Memory</a></pre>
+				
+				
+				
+			
+
+			
+				
+				<h3 id="Memory.GarbageCollect">func (*Memory) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go?s=688:721#L36">GarbageCollect</a>
+					<a class="permalink" href="index.html#Memory.GarbageCollect">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Memory">Memory</a>) GarbageCollect()</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Memory.GetBucketFor">func (*Memory) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go?s=358:421#L15">GetBucketFor</a>
+					<a class="permalink" href="index.html#Memory.GetBucketFor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Memory">Memory</a>) GetBucketFor(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#LeakyBucket">LeakyBucket</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="Memory.SetBucketFor">func (*Memory) <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/memory.go?s=524:591#L25">SetBucketFor</a>
+					<a class="permalink" href="index.html#Memory.SetBucketFor">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#Memory">Memory</a>) SetBucketFor(key <a href="http://localhost:6060/pkg/builtin/#string">string</a>, bucket <a href="index.html#LeakyBucket">LeakyBucket</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a></pre>
+				
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Storage">type <a href="http://localhost:6060/src/github.com/hpcloud/tail/ratelimiter/storage.go?s=21:132#L1">Storage</a>
+				<a class="permalink" href="index.html#Storage">&#xb6;</a>
+				
+				
+			</h2>
+			
+			<pre>type Storage interface {
+    GetBucketFor(<a href="http://localhost:6060/pkg/builtin/#string">string</a>) (*<a href="index.html#LeakyBucket">LeakyBucket</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)
+    SetBucketFor(<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="index.html#LeakyBucket">LeakyBucket</a>) <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+}</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

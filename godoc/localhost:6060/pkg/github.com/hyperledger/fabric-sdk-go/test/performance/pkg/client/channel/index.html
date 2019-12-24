@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>channel - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package channel
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+				<dd><a href="index.html#pkg-variables">Variables</a></dd>
+			
+			
+				
+				<dd><a href="index.html#SignECDSA">func SignECDSA(k *ecdsa.PrivateKey, digest []byte) (signature []byte, err error)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#MockEndorserServer">type MockEndorserServer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndorserServer.GetMockPeer">func (m *MockEndorserServer) GetMockPeer() *MockPeer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndorserServer.ProcessProposal">func (m *MockEndorserServer) ProcessProposal(context context.Context, proposal *pb.SignedProposal) (*pb.ProposalResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndorserServer.SetMockPeer">func (m *MockEndorserServer) SetMockPeer(mPeer *MockPeer)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndorserServer.Start">func (m *MockEndorserServer) Start(address string, filteredChannel chan *pb.FilteredBlock) string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockEndorserServer.Stop">func (m *MockEndorserServer) Stop()</a></dd>
+				
+			
+				
+				<dd><a href="index.html#MockPeer">type MockPeer</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMockPeer">func NewMockPeer(name string, url string) *MockPeer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.EnrollmentCertificate">func (p *MockPeer) EnrollmentCertificate() *pem.Block</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.MSPID">func (p *MockPeer) MSPID() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.Name">func (p MockPeer) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.ProcessTransactionProposal">func (p *MockPeer) ProcessTransactionProposal(tp fab.TransactionProposal, funcName []byte) (*fab.TransactionProposalResponse, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.Roles">func (p *MockPeer) Roles() []string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.SetEnrollmentCertificate">func (p *MockPeer) SetEnrollmentCertificate(pem *pem.Block)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.SetMSPID">func (p *MockPeer) SetMSPID(mspID string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.SetName">func (p *MockPeer) SetName(name string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.SetRoles">func (p *MockPeer) SetRoles(roles []string)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#MockPeer.URL">func (p *MockPeer) URL() string</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go">mockendorserserver.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+			<h2 id="pkg-variables">Variables</h2>
+			
+				<p>
+CertPem certificate
+</p>
+
+				<pre>var <span id="CertPem">CertPem</span> = `-----BEGIN CERTIFICATE-----
+MIICCjCCAbGgAwIBAgIQOcq9Om9VwUe9hGN0TTGw1DAKBggqhkjOPQQDAjBYMQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
+YW5jaXNjbzENMAsGA1UEChMET3JnMTENMAsGA1UEAxMET3JnMTAeFw0xNzA1MDgw
+OTMwMzRaFw0yNzA1MDYwOTMwMzRaMGUxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpD
+YWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRUwEwYDVQQKEwxPcmcx
+LXNlcnZlcjExEjAQBgNVBAMTCWxvY2FsaG9zdDBZMBMGByqGSM49AgEGCCqGSM49
+AwEHA0IABAm+2CZhbmsnA+HKQynXKz7fVZvvwlv/DdNg3Mdg7lIcP2z0b07/eAZ5
+0chdJNcjNAd/QAj/mmGG4dObeo4oTKGjUDBOMA4GA1UdDwEB/wQEAwIFoDAdBgNV
+HSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAPBgNVHSME
+CDAGgAQBAgMEMAoGCCqGSM49BAMCA0cAMEQCIG55RvN4Boa0WS9UcIb/tI2YrAT8
+EZd/oNnZYlbxxyvdAiB6sU9xAn4oYIW9xtrrOISv3YRg8rkCEATsagQfH8SiLg==
+-----END CERTIFICATE-----`</pre>
+			
+				<p>
+KeyPem ec private key
+</p>
+
+				<pre>var <span id="KeyPem">KeyPem</span> = []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>(`-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEICfXQtVmdQAlp/l9umWJqCXNTDurmciDNmGHPpxHwUK/oAoGCCqGSM49
+AwEHoUQDQgAECb7YJmFuaycD4cpDKdcrPt9Vm+/CW/8N02Dcx2DuUhw/bPRvTv94
+BnnRyF0k1yM0B39ACP+aYYbh05t6jihMoQ==
+-----END EC PRIVATE KEY-----`)</pre>
+			
+		
+		
+			
+			
+			<h2 id="SignECDSA">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=9624:9704#L330">SignECDSA</a>
+				<a class="permalink" href="index.html#SignECDSA">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func SignECDSA(k *<a href="http://localhost:6060/pkg/crypto/ecdsa/">ecdsa</a>.<a href="http://localhost:6060/pkg/crypto/ecdsa/#PrivateKey">PrivateKey</a>, digest []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (signature []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>, err <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+			<p>
+SignECDSA sign with ec key
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="MockEndorserServer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=1437:1759#L28">MockEndorserServer</a>
+				<a class="permalink" href="index.html#MockEndorserServer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockEndorserServer mock endorser server to process endorsement proposals
+</p>
+
+			<pre>type MockEndorserServer struct {
+<span id="MockEndorserServer.ProposalError"></span>    ProposalError <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+<span id="MockEndorserServer.Creds"></span>    Creds         <a href="http://localhost:6060/pkg/google.golang.org/grpc/credentials/">credentials</a>.<a href="http://localhost:6060/pkg/google.golang.org/grpc/credentials/#TransportCredentials">TransportCredentials</a>
+
+<span id="MockEndorserServer.AddkvWrite"></span>    AddkvWrite          <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockEndorserServer.DeliveriesListener"></span>    DeliveriesListener  chan *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html">cb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/common/index.html#Block">Block</a>
+<span id="MockEndorserServer.FilteredDelListener"></span>    FilteredDelListener chan *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#FilteredBlock">FilteredBlock</a>
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="MockEndorserServer.GetMockPeer">func (*MockEndorserServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=4267:4319#L135">GetMockPeer</a>
+					<a class="permalink" href="index.html#MockEndorserServer.GetMockPeer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndorserServer">MockEndorserServer</a>) GetMockPeer() *<a href="index.html#MockPeer">MockPeer</a></pre>
+				<p>
+GetMockPeer will return the mock endorser&#39;s mock peer in a thread safe way
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndorserServer.ProcessProposal">func (*MockEndorserServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=1878:2007#L41">ProcessProposal</a>
+					<a class="permalink" href="index.html#MockEndorserServer.ProcessProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndorserServer">MockEndorserServer</a>) ProcessProposal(context <a href="../../../../../../../../golang.org/x/net/context/index.html">context</a>.<a href="../../../../../../../../golang.org/x/net/context/index.html#Context">Context</a>,
+    proposal *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#SignedProposal">SignedProposal</a>) (*<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#ProposalResponse">ProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessProposal mock implementation that returns success (through mockPeer) if error is not set
+error if it is
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndorserServer.SetMockPeer">func (*MockEndorserServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=4500:4557#L146">SetMockPeer</a>
+					<a class="permalink" href="index.html#MockEndorserServer.SetMockPeer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndorserServer">MockEndorserServer</a>) SetMockPeer(mPeer *<a href="index.html#MockPeer">MockPeer</a>)</pre>
+				<p>
+SetMockPeer will write the mock endorser&#39;s mock peer in a thread safe way
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndorserServer.Start">func (*MockEndorserServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=3105:3202#L87">Start</a>
+					<a class="permalink" href="index.html#MockEndorserServer.Start">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndorserServer">MockEndorserServer</a>) Start(address <a href="http://localhost:6060/pkg/builtin/#string">string</a>, filteredChannel chan *<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html">pb</a>.<a href="../../../../../third_party/github.com/hyperledger/fabric/protos/peer/index.html#FilteredBlock">FilteredBlock</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Start the mock endorser server
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockEndorserServer.Stop">func (*MockEndorserServer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=4043:4078#L124">Stop</a>
+					<a class="permalink" href="index.html#MockEndorserServer.Stop">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (m *<a href="index.html#MockEndorserServer">MockEndorserServer</a>) Stop()</pre>
+				<p>
+Stop the mock broadcast server and wait for completion.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="MockPeer">type <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=5385:5803#L180">MockPeer</a>
+				<a class="permalink" href="index.html#MockPeer">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+MockPeer is a mock fabricsdk.Peer
+</p>
+
+			<pre>type MockPeer struct {
+<span id="MockPeer.RWLock"></span>    RWLock               *<a href="http://localhost:6060/pkg/sync/">sync</a>.<a href="http://localhost:6060/pkg/sync/#RWMutex">RWMutex</a>
+<span id="MockPeer.Error"></span>    Error                <a href="http://localhost:6060/pkg/builtin/#error">error</a>
+<span id="MockPeer.MockName"></span>    MockName             <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockPeer.MockURL"></span>    MockURL              <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockPeer.MockRoles"></span>    MockRoles            []<a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockPeer.MockCert"></span>    MockCert             *<a href="http://localhost:6060/pkg/encoding/pem/">pem</a>.<a href="http://localhost:6060/pkg/encoding/pem/#Block">Block</a>
+<span id="MockPeer.Payload"></span>    Payload              map[<a href="http://localhost:6060/pkg/builtin/#string">string</a>][]<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+<span id="MockPeer.ResponseMessage"></span>    ResponseMessage      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockPeer.MockMSP"></span>    MockMSP              <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="MockPeer.Status"></span>    Status               <a href="http://localhost:6060/pkg/builtin/#int32">int32</a>
+<span id="MockPeer.KVWrite"></span>    KVWrite              <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>
+<span id="MockPeer.ProcessProposalCalls"></span>    ProcessProposalCalls <a href="http://localhost:6060/pkg/builtin/#int">int</a>
+<span id="MockPeer.Endorser"></span>    Endorser             []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewMockPeer">func <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=5844:5895#L197">NewMockPeer</a>
+					<a class="permalink" href="index.html#NewMockPeer">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func NewMockPeer(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>, url <a href="http://localhost:6060/pkg/builtin/#string">string</a>) *<a href="index.html#MockPeer">MockPeer</a></pre>
+				<p>
+NewMockPeer creates basic mock peer
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="MockPeer.EnrollmentCertificate">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6683:6736#L233">EnrollmentCertificate</a>
+					<a class="permalink" href="index.html#MockPeer.EnrollmentCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) EnrollmentCertificate() *<a href="http://localhost:6060/pkg/encoding/pem/">pem</a>.<a href="http://localhost:6060/pkg/encoding/pem/#Block">Block</a></pre>
+				<p>
+EnrollmentCertificate returns the mock peer&#39;s mock enrollment certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.MSPID">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6231:6264#L213">MSPID</a>
+					<a class="permalink" href="index.html#MockPeer.MSPID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) MSPID() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+MSPID gets the Peer mspID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.Name">func (MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6039:6070#L203">Name</a>
+					<a class="permalink" href="index.html#MockPeer.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p <a href="index.html#MockPeer">MockPeer</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Name returns the mock peer&#39;s mock name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.ProcessTransactionProposal">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=7121:7253#L248">ProcessTransactionProposal</a>
+					<a class="permalink" href="index.html#MockPeer.ProcessTransactionProposal">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) ProcessTransactionProposal(tp <a href="../../../../../pkg/common/providers/fab/index.html">fab</a>.<a href="../../../../../pkg/common/providers/fab/index.html#TransactionProposal">TransactionProposal</a>, funcName []<a href="http://localhost:6060/pkg/builtin/#byte">byte</a>) (*<a href="../../../../../pkg/common/providers/fab/index.html">fab</a>.<a href="../../../../../pkg/common/providers/fab/index.html#TransactionProposalResponse">TransactionProposalResponse</a>, <a href="http://localhost:6060/pkg/builtin/#error">error</a>)</pre>
+				<p>
+ProcessTransactionProposal does not send anything anywhere but returns an empty mock ProposalResponse
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.Roles">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6431:6466#L223">Roles</a>
+					<a class="permalink" href="index.html#MockPeer.Roles">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) Roles() []<a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Roles returns the mock peer&#39;s mock roles
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.SetEnrollmentCertificate">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6838:6897#L238">SetEnrollmentCertificate</a>
+					<a class="permalink" href="index.html#MockPeer.SetEnrollmentCertificate">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) SetEnrollmentCertificate(pem *<a href="http://localhost:6060/pkg/encoding/pem/">pem</a>.<a href="http://localhost:6060/pkg/encoding/pem/#Block">Block</a>)</pre>
+				<p>
+SetEnrollmentCertificate sets the mock peer&#39;s mock enrollment certificate
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.SetMSPID">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6321:6362#L218">SetMSPID</a>
+					<a class="permalink" href="index.html#MockPeer.SetMSPID">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) SetMSPID(mspID <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetMSPID sets the Peer mspID.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.SetName">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6137:6176#L208">SetName</a>
+					<a class="permalink" href="index.html#MockPeer.SetName">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) SetName(name <a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetName sets the mock peer&#39;s mock name
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.SetRoles">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6536:6579#L228">SetRoles</a>
+					<a class="permalink" href="index.html#MockPeer.SetRoles">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) SetRoles(roles []<a href="http://localhost:6060/pkg/builtin/#string">string</a>)</pre>
+				<p>
+SetRoles sets the mock peer&#39;s mock roles
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="MockPeer.URL">func (*MockPeer) <a href="http://localhost:6060/src/github.com/hyperledger/fabric-sdk-go/test/performance/pkg/client/channel/mockendorserserver.go?s=6961:6992#L243">URL</a>
+					<a class="permalink" href="index.html#MockPeer.URL">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (p *<a href="index.html#MockPeer">MockPeer</a>) URL() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+URL returns the mock peer&#39;s mock URL
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+

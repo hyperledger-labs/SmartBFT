@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>astutil - The Go Programming Language</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+
+<script>window.initFuncs = [];</script>
+
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.11.5";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/">The Go Programming Language</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/">Go</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+<a href="http://localhost:6060/doc/">Documents</a>
+<a href="../../../../../../index.html">Packages</a>
+<a href="http://localhost:6060/project/">The Project</a>
+<a href="http://localhost:6060/help/">Help</a>
+
+<a href="http://localhost:6060/blog/">Blog</a>
+
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package astutil
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "golang.org/x/tools/go/ast/astutil"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package astutil contains common utilities for working with the Go AST.
+</p>
+
+				
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+				
+				<dd><a href="index.html#AddImport">func AddImport(fset *token.FileSet, f *ast.File, path string) (added bool)</a></dd>
+			
+				
+				<dd><a href="index.html#AddNamedImport">func AddNamedImport(fset *token.FileSet, f *ast.File, name, path string) (added bool)</a></dd>
+			
+				
+				<dd><a href="index.html#Apply">func Apply(root ast.Node, pre, post ApplyFunc) (result ast.Node)</a></dd>
+			
+				
+				<dd><a href="index.html#DeleteImport">func DeleteImport(fset *token.FileSet, f *ast.File, path string) (deleted bool)</a></dd>
+			
+				
+				<dd><a href="index.html#DeleteNamedImport">func DeleteNamedImport(fset *token.FileSet, f *ast.File, name, path string) (deleted bool)</a></dd>
+			
+				
+				<dd><a href="index.html#Imports">func Imports(fset *token.FileSet, f *ast.File) [][]*ast.ImportSpec</a></dd>
+			
+				
+				<dd><a href="index.html#NodeDescription">func NodeDescription(n ast.Node) string</a></dd>
+			
+				
+				<dd><a href="index.html#PathEnclosingInterval">func PathEnclosingInterval(root *ast.File, start, end token.Pos) (path []ast.Node, exact bool)</a></dd>
+			
+				
+				<dd><a href="index.html#RewriteImport">func RewriteImport(fset *token.FileSet, f *ast.File, oldPath, newPath string) (rewrote bool)</a></dd>
+			
+				
+				<dd><a href="index.html#Unparen">func Unparen(e ast.Expr) ast.Expr</a></dd>
+			
+				
+				<dd><a href="index.html#UsesImport">func UsesImport(f *ast.File, path string) (used bool)</a></dd>
+			
+			
+				
+				<dd><a href="index.html#ApplyFunc">type ApplyFunc</a></dd>
+				
+				
+			
+				
+				<dd><a href="index.html#Cursor">type Cursor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Delete">func (c *Cursor) Delete()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Index">func (c *Cursor) Index() int</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.InsertAfter">func (c *Cursor) InsertAfter(n ast.Node)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.InsertBefore">func (c *Cursor) InsertBefore(n ast.Node)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Name">func (c *Cursor) Name() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Node">func (c *Cursor) Node() ast.Node</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Parent">func (c *Cursor) Parent() ast.Node</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="index.html#Cursor.Replace">func (c *Cursor) Replace(n ast.Node)</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/enclosing.go">enclosing.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go">imports.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go">rewrite.go</a>
+			
+				<a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/util.go">util.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		
+
+		
+		
+		
+			
+			
+			<h2 id="AddImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=420:494#L7">AddImport</a>
+				<a class="permalink" href="index.html#AddImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AddImport(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (added <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+AddImport adds the import path to the file f, if absent.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="AddNamedImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=795:880#L18">AddNamedImport</a>
+				<a class="permalink" href="index.html#AddNamedImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func AddNamedImport(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, name, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (added <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+AddNamedImport adds the import with the given name and path to the file f, if absent.
+If name is not empty, it is used to rename the import.
+</p>
+<p>
+For example, calling
+</p>
+<pre>AddNamedImport(fset, f, &#34;pathpkg&#34;, &#34;path&#34;)
+</pre>
+<p>
+adds
+</p>
+<pre>import pathpkg &#34;path&#34;
+</pre>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Apply">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=1513:1577#L33">Apply</a>
+				<a class="permalink" href="index.html#Apply">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Apply(root <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>, pre, post <a href="index.html#ApplyFunc">ApplyFunc</a>) (result <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>)</pre>
+			<p>
+Apply traverses a syntax tree recursively, starting with root,
+and calling pre and post for each node as described below.
+Apply returns the syntax tree, possibly modified.
+</p>
+<p>
+If pre is not nil, it is called for each node before the node&#39;s
+children are traversed (pre-order). If pre returns false, no
+children are traversed, and post is not called for that node.
+</p>
+<p>
+If post is not nil, and a prior call of pre didn&#39;t return false,
+post is called for each node after its children are traversed
+(post-order). If post returns false, traversal is terminated and
+Apply returns immediately.
+</p>
+<p>
+Only fields that refer to AST nodes are considered children;
+i.e., token.Pos, Scopes, Objects, and fields of basic types
+(strings, etc.) are ignored.
+</p>
+<p>
+Children are traversed in the order in which they appear in the
+respective node&#39;s struct definition. A package&#39;s files are
+traversed in the filenames&#39; alphabetical order.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DeleteImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=6064:6143#L191">DeleteImport</a>
+				<a class="permalink" href="index.html#DeleteImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeleteImport(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (deleted <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+DeleteImport deletes the import path from the file f, if present.
+If there are duplicate import declarations, all matching ones are deleted.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="DeleteNamedImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=6370:6460#L197">DeleteNamedImport</a>
+				<a class="permalink" href="index.html#DeleteNamedImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func DeleteNamedImport(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, name, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (deleted <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+DeleteNamedImport deletes the import with the given name and path from the file f, if present.
+If there are duplicate import declarations, all matching ones are deleted.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Imports">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=12861:12927#L444">Imports</a>
+				<a class="permalink" href="index.html#Imports">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Imports(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>) [][]*<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#ImportSpec">ImportSpec</a></pre>
+			<p>
+Imports returns the file imports grouped by paragraph.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="NodeDescription">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/enclosing.go?s=12325:12364#L472">NodeDescription</a>
+				<a class="permalink" href="index.html#NodeDescription">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func NodeDescription(n <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>) <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+			<p>
+NodeDescription returns a description of the concrete type of n suitable
+for a user interface.
+</p>
+<p>
+TODO(adonovan): in some cases (e.g. Field, FieldList, Ident,
+StarExpr) we could be much more specific given the path to the AST
+root.  Perhaps we should do that.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="PathEnclosingInterval">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/enclosing.go?s=2129:2223#L51">PathEnclosingInterval</a>
+				<a class="permalink" href="index.html#PathEnclosingInterval">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func PathEnclosingInterval(root *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, start, end <a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#Pos">Pos</a>) (path []<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>, exact <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+PathEnclosingInterval returns the node that encloses the source
+interval [start, end), and all its ancestors up to the AST root.
+</p>
+<p>
+The definition of &#34;enclosing&#34; used by this function considers
+additional whitespace abutting a node to be enclosed by it.
+In this example:
+</p>
+<pre>z := x + y // add them
+     &lt;-A-&gt;
+    &lt;----B-----&gt;
+</pre>
+<p>
+the ast.BinaryExpr(+) node is considered to enclose interval B
+even though its [Pos()..End()) is actually only interval A.
+This behaviour makes user interfaces more tolerant of imperfect
+input.
+</p>
+<p>
+This function treats tokens as nodes, though they are not included
+in the result. e.g. PathEnclosingInterval(&#34;+&#34;) returns the
+enclosing ast.BinaryExpr(&#34;x + y&#34;).
+</p>
+<p>
+If start==end, the 1-char interval following start is used instead.
+</p>
+<p>
+The &#39;exact&#39; result is true if the interval contains only path[0]
+and perhaps some adjacent whitespace.  It is false if the interval
+overlaps multiple children of path[0], or if it contains only
+interior whitespace of path[0].
+In this example:
+</p>
+<pre>z := x + y // add them
+  &lt;--C--&gt;     &lt;---E--&gt;
+    ^
+    D
+</pre>
+<p>
+intervals C, D and E are inexact.  C is contained by the
+z-assignment statement, because it spans three of its children (:=,
+x, +).  So too is the 1-char interval D, because it contains only
+interior whitespace of the assignment.  E is considered interior
+whitespace of the BlockStmt containing the assignment.
+</p>
+<p>
+Precondition: [start, end) both lie within the same file as root.
+TODO(adonovan): return (nil, false) in this case and remove precond.
+Requires FileSet; see loader.tokenFileContainsPos.
+</p>
+<p>
+Postcondition: path is never nil; it always contains at least &#39;root&#39;.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="RewriteImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=9957:10049#L319">RewriteImport</a>
+				<a class="permalink" href="index.html#RewriteImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func RewriteImport(fset *<a href="http://localhost:6060/pkg/go/token/">token</a>.<a href="http://localhost:6060/pkg/go/token/#FileSet">FileSet</a>, f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, oldPath, newPath <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (rewrote <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+RewriteImport rewrites any import of path oldPath to path newPath.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="Unparen">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/util.go?s=96:129#L1">Unparen</a>
+				<a class="permalink" href="index.html#Unparen">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func Unparen(e <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Expr">Expr</a>) <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Expr">Expr</a></pre>
+			<p>
+Unparen returns e with any enclosing parentheses stripped.
+</p>
+
+			
+			
+
+		
+			
+			
+			<h2 id="UsesImport">func <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/imports.go?s=10379:10432#L333">UsesImport</a>
+				<a class="permalink" href="index.html#UsesImport">&#xb6;</a>
+				
+				
+			</h2>
+			<pre>func UsesImport(f *<a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#File">File</a>, path <a href="http://localhost:6060/pkg/builtin/#string">string</a>) (used <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>
+UsesImport reports whether a given import is used.
+</p>
+
+			
+			
+
+		
+		
+			
+			
+			<h2 id="ApplyFunc">type <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=516:549#L10">ApplyFunc</a>
+				<a class="permalink" href="index.html#ApplyFunc">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+An ApplyFunc is invoked by Apply for each node n, even if n is nil,
+before and/or after the node&#39;s children, using a Cursor describing
+the current node and providing operations on it.
+</p>
+<p>
+The return value of ApplyFunc controls the syntax tree traversal.
+See Apply for details.
+</p>
+
+			<pre>type ApplyFunc func(*<a href="index.html#Cursor">Cursor</a>) <a href="http://localhost:6060/pkg/builtin/#bool">bool</a></pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="Cursor">type <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=2440:2549#L61">Cursor</a>
+				<a class="permalink" href="index.html#Cursor">&#xb6;</a>
+				
+				
+			</h2>
+			<p>
+A Cursor describes a node encountered during Apply.
+Information about the node and its parent is available
+from the Node, Parent, Name, and Index methods.
+</p>
+<p>
+If p is a variable of type and value of the current parent node
+c.Parent(), and f is the field identifier with name c.Name(),
+the following invariants hold:
+</p>
+<pre>p.f            == c.Node()  if c.Index() &lt;  0
+p.f[c.Index()] == c.Node()  if c.Index() &gt;= 0
+</pre>
+<p>
+The methods Replace, Delete, InsertBefore, and InsertAfter
+can be used to change the AST without disrupting Apply.
+</p>
+
+			<pre>type Cursor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}
+</pre>
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Cursor.Delete">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=4183:4208#L118">Delete</a>
+					<a class="permalink" href="index.html#Cursor.Delete">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Delete()</pre>
+				<p>
+Delete deletes the current Node from its containing slice.
+If the current Node is not part of a slice, Delete panics.
+As a special case, if the current node is a package file,
+Delete removes it from the package&#39;s Files map.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.Index">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=3257:3285#L83">Index</a>
+					<a class="permalink" href="index.html#Cursor.Index">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Index() <a href="http://localhost:6060/pkg/builtin/#int">int</a></pre>
+				<p>
+Index reports the index &gt;= 0 of the current Node in the slice of Nodes that
+contains it, or a value &lt; 0 if the current Node is not part of a slice.
+The index of the current node changes if InsertBefore is called while
+processing the current node.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.InsertAfter">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=4715:4755#L139">InsertAfter</a>
+					<a class="permalink" href="index.html#Cursor.InsertAfter">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) InsertAfter(n <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>)</pre>
+				<p>
+InsertAfter inserts n after the current Node in its containing slice.
+If the current Node is not part of a slice, InsertAfter panics.
+Apply does not walk n.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.InsertBefore">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=5202:5243#L155">InsertBefore</a>
+					<a class="permalink" href="index.html#Cursor.InsertBefore">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) InsertBefore(n <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>)</pre>
+				<p>
+InsertBefore inserts n before the current Node in its containing slice.
+If the current Node is not part of a slice, InsertBefore panics.
+Apply will not walk n.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.Name">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=2948:2978#L77">Name</a>
+					<a class="permalink" href="index.html#Cursor.Name">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Name() <a href="http://localhost:6060/pkg/builtin/#string">string</a></pre>
+				<p>
+Name returns the name of the parent Node field that contains the current Node.
+If the parent is a *ast.Package and the current Node is a *ast.File, Name returns
+the filename for the current Node.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.Node">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=2585:2617#L69">Node</a>
+					<a class="permalink" href="index.html#Cursor.Node">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Node() <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a></pre>
+				<p>
+Node returns the current Node.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.Parent">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=2687:2721#L72">Parent</a>
+					<a class="permalink" href="index.html#Cursor.Parent">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Parent() <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a></pre>
+				<p>
+Parent returns the parent of the current Node.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Cursor.Replace">func (*Cursor) <a href="http://localhost:6060/src/golang.org/x/tools/go/ast/astutil/rewrite.go?s=3612:3648#L97">Replace</a>
+					<a class="permalink" href="index.html#Cursor.Replace">&#xb6;</a>
+					
+					
+				</h3>
+				<pre>func (c *<a href="index.html#Cursor">Cursor</a>) Replace(n <a href="http://localhost:6060/pkg/go/ast/">ast</a>.<a href="http://localhost:6060/pkg/go/ast/#Node">Node</a>)</pre>
+				<p>
+Replace replaces the current Node with n.
+The replacement node is not walked by Apply.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.11.5.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="http://localhost:6060/doc/tos.html">Terms of Service</a> |
+<a href="http://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+
+</body>
+</html>
+
