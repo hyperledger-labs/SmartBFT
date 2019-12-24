@@ -8,7 +8,7 @@ echo "web server started with pid $pid"
 sleep 5
 
 echo "Downloading files..."
-wget  --directory-prefix godoc  -r -np -N -E -p -k http://localhost:6060/pkg/ &> gen.log || true
+wget --no-host-directories  --directory-prefix godoc  -r -np -N -E -p -k http://localhost:6060/pkg/ &> gen.log || true
 
 echo "Killing http server..."
 
