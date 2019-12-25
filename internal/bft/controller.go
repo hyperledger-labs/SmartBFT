@@ -362,8 +362,6 @@ func (c *Controller) Sync() {
 
 // AbortView makes the controller abort the current view
 func (c *Controller) AbortView(view uint64) {
-	c.StartedWG.Wait()
-
 	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
 
 	c.Batcher.Close()

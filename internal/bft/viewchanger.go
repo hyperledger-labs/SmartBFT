@@ -100,6 +100,8 @@ type ViewChanger struct {
 	stopOnce sync.Once
 	stopChan chan struct{}
 	vcDone   sync.WaitGroup
+
+	ControllerStartedWG *sync.WaitGroup
 }
 
 // Start the view changer
@@ -131,6 +133,7 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 
 	go func() {
 		defer v.vcDone.Done()
+		v.ControllerStartedWG.Wait()
 		v.run()
 	}()
 
