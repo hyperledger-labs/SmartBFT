@@ -7,6 +7,7 @@ package consensus
 
 import (
 	"sort"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -185,6 +186,10 @@ func (c *Consensus) Start() error {
 			seq = viewSeq.Seq
 		}
 	}
+
+	controllerStartedWG := sync.WaitGroup{}
+	controllerStartedWG.Add(1)
+	c.controller.StartedWG = &controllerStartedWG
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.

@@ -121,6 +121,8 @@ type Controller struct {
 	controllerDone sync.WaitGroup
 
 	ViewSequences *atomic.Value
+
+	StartedWG *sync.WaitGroup
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
@@ -360,6 +362,8 @@ func (c *Controller) Sync() {
 
 // AbortView makes the controller abort the current view
 func (c *Controller) AbortView(view uint64) {
+	c.StartedWG.Wait()
+
 	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
 
 	c.Batcher.Close()
@@ -620,6 +624,8 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 		defer c.controllerDone.Done()
 		c.run()
 	}()
+
+	c.StartedWG.Done()
 }
 
 func (c *Controller) close() {
