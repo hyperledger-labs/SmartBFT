@@ -41,6 +41,9 @@ func TestControllerBasic(t *testing.T) {
 	comm := &mocks.CommMock{}
 	comm.On("SendConsensus", mock.Anything, mock.Anything)
 
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
 	controller := &bft.Controller{
 		Batcher:       batcher,
 		RequestPool:   pool,
@@ -51,6 +54,7 @@ func TestControllerBasic(t *testing.T) {
 		Logger:        log,
 		Application:   app,
 		Comm:          comm,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -88,6 +92,9 @@ func TestControllerLeaderBasic(t *testing.T) {
 	commMock := &mocks.CommMock{}
 	commMock.On("SendConsensus", mock.Anything, mock.Anything)
 
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
 	controller := &bft.Controller{
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
@@ -97,6 +104,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 		Logger:        log,
 		Batcher:       batcher,
 		Comm:          commMock,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -176,6 +184,9 @@ func TestLeaderPropose(t *testing.T) {
 	}
 	collector.Start()
 
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
 	controller := &bft.Controller{
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
@@ -194,6 +205,7 @@ func TestLeaderPropose(t *testing.T) {
 		ViewChanger:   &bft.ViewChanger{},
 		Synchronizer:  synchronizer,
 		Collector:     &collector,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -303,6 +315,9 @@ func TestViewChanged(t *testing.T) {
 	}
 	collector.Start()
 
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
 	controller := &bft.Controller{
 		Signer:        signer,
 		WAL:           wal,
@@ -318,6 +333,7 @@ func TestViewChanged(t *testing.T) {
 		LeaderMonitor: leaderMon,
 		Synchronizer:  synchronizer,
 		Collector:     &collector,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -415,6 +431,9 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			collector.Start()
 			defer collector.Stop()
 
+			startedWG := sync.WaitGroup{}
+			startedWG.Add(1)
+
 			controller := &bft.Controller{
 				RequestPool:   pool,
 				LeaderMonitor: leaderMon,
@@ -427,6 +446,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				Verifier:      verifier,
 				Synchronizer:  synchronizer,
 				Collector:     &collector,
+				StartedWG:     &startedWG,
 			}
 
 			configureProposerBuilder(controller)
@@ -557,16 +577,19 @@ func TestSyncInform(t *testing.T) {
 	collector.Start()
 
 	vc := &bft.ViewChanger{
-		SelfID:        2,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
-		Comm:          commWithChan,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		Controller:    controllerMock,
-		InMsqQSize:    100,
+		SelfID:              2,
+		N:                   4,
+		NodesList:           []uint64{0, 1, 2, 3},
+		Logger:              log,
+		Comm:                commWithChan,
+		RequestsTimer:       reqTimer,
+		Ticker:              make(chan time.Time),
+		Controller:          controllerMock,
+		InMsqQSize:          100,
+		ControllerStartedWG: sync.WaitGroup{},
 	}
+
+	vc.ControllerStartedWG.Add(1)
 
 	controller := &bft.Controller{
 		Signer:        signer,
@@ -585,14 +608,11 @@ func TestSyncInform(t *testing.T) {
 		ViewChanger:   vc,
 		Checkpoint:    &types.Checkpoint{},
 		Collector:     &collector,
+		StartedWG:     &vc.ControllerStartedWG,
 	}
 	configureProposerBuilder(controller)
 
 	vc.Start(1)
-	vc.StartViewChange(1, true)
-	msg := <-msgChan
-	assert.NotNil(t, msg.GetViewChange())
-	assert.Equal(t, uint64(2), msg.GetViewChange().NextView) // view number as expected
 
 	synchronizerWG.Add(1)
 	commWG.Add(9)
@@ -601,7 +621,7 @@ func TestSyncInform(t *testing.T) {
 	commWG.Wait()
 
 	vc.StartViewChange(2, true)
-	msg = <-msgChan
+	msg := <-msgChan
 	assert.NotNil(t, msg.GetViewChange())
 	assert.Equal(t, syncToView+1, msg.GetViewChange().NextView) // view number did change according to info
 
