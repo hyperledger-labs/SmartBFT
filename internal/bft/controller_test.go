@@ -576,8 +576,6 @@ func TestSyncInform(t *testing.T) {
 	}
 	collector.Start()
 
-	startedWG := sync.WaitGroup{}
-
 	vc := &bft.ViewChanger{
 		SelfID:              2,
 		N:                   4,
@@ -588,7 +586,7 @@ func TestSyncInform(t *testing.T) {
 		Ticker:              make(chan time.Time),
 		Controller:          controllerMock,
 		InMsqQSize:          100,
-		ControllerStartedWG: startedWG,
+		ControllerStartedWG: sync.WaitGroup{},
 	}
 
 	vc.ControllerStartedWG.Add(1)
