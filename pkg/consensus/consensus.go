@@ -187,10 +187,9 @@ func (c *Consensus) Start() error {
 		}
 	}
 
-	controllerStartedWG := sync.WaitGroup{}
-	controllerStartedWG.Add(1)
-	c.controller.StartedWG = &controllerStartedWG
-	c.viewChanger.ControllerStartedWG = &controllerStartedWG
+	c.viewChanger.ControllerStartedWG = sync.WaitGroup{}
+	c.viewChanger.ControllerStartedWG.Add(1)
+	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
 
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.

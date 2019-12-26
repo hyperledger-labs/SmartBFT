@@ -101,7 +101,7 @@ type ViewChanger struct {
 	stopChan chan struct{}
 	vcDone   sync.WaitGroup
 
-	ControllerStartedWG *sync.WaitGroup
+	ControllerStartedWG sync.WaitGroup
 }
 
 // Start the view changer

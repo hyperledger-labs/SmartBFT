@@ -577,7 +577,6 @@ func TestSyncInform(t *testing.T) {
 	collector.Start()
 
 	startedWG := sync.WaitGroup{}
-	startedWG.Add(1)
 
 	vc := &bft.ViewChanger{
 		SelfID:              2,
@@ -589,8 +588,10 @@ func TestSyncInform(t *testing.T) {
 		Ticker:              make(chan time.Time),
 		Controller:          controllerMock,
 		InMsqQSize:          100,
-		ControllerStartedWG: &startedWG,
+		ControllerStartedWG: startedWG,
 	}
+
+	vc.ControllerStartedWG.Add(1)
 
 	controller := &bft.Controller{
 		Signer:        signer,
@@ -609,7 +610,7 @@ func TestSyncInform(t *testing.T) {
 		ViewChanger:   vc,
 		Checkpoint:    &types.Checkpoint{},
 		Collector:     &collector,
-		StartedWG:     &startedWG,
+		StartedWG:     &vc.ControllerStartedWG,
 	}
 	configureProposerBuilder(controller)
 
