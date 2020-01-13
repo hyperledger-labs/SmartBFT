@@ -438,6 +438,8 @@ func TestFollowerBehindSync(t *testing.T) {
 	hm.ChangeRole(bft.Follower, 10, 12)
 
 	hm.ProcessMsg(12, heartbeat)
+	hm.ProcessMsg(12, heartbeat)
+
 	start := time.Now()
 	scheduler <- start
 
