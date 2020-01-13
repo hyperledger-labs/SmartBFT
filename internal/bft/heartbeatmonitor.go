@@ -68,10 +68,14 @@ type HeartbeatMonitor struct {
 	viewSequences       *atomic.Value
 	sentHeartbeat       chan struct{}
 	artificialHeartbeat chan incMsg
+	behindSeq           uint64
+	behindCounter       uint64
+	behindNumOfTicks    uint64
+	followerBehind      bool
 }
 
 // NewHeartbeatMonitor creates a new HeartbeatMonitor
-func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount uint64, comm Comm, numberOfNodes uint64, handler HeartbeatEventHandler, viewSequences *atomic.Value) *HeartbeatMonitor {
+func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount uint64, comm Comm, numberOfNodes uint64, handler HeartbeatEventHandler, viewSequences *atomic.Value, numOfTicksBehindBeforeSyncing uint64) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
 		stopChan:            make(chan struct{}),
 		inc:                 make(chan incMsg),
@@ -87,6 +91,7 @@ func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbea
 		viewSequences:       viewSequences,
 		sentHeartbeat:       make(chan struct{}, 1),
 		artificialHeartbeat: make(chan incMsg, 1),
+		behindNumOfTicks:    numOfTicksBehindBeforeSyncing,
 	}
 	return hm
 }
@@ -211,10 +216,25 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	if hm.viewActiveButBehindLeader(hb) && !artificial {
-		hm.logger.Debugf("Heartbeat sequence is bigger than expected, syncing and ignoring")
-		hm.handler.Sync()
-		return
+	active, ourSeq := hm.viewActive(hb)
+	if active && !artificial {
+		if ourSeq+1 < hb.Seq {
+			hm.logger.Debugf("Heartbeat sequence is bigger than expected, leader's sequence is %d and ours is %d, syncing and ignoring", hb.Seq, ourSeq)
+			hm.handler.Sync()
+			return
+		}
+		if ourSeq+1 == hb.Seq {
+			hm.followerBehind = true
+			hm.logger.Debugf("Our sequence is behind the heartbeat sequence, leader's sequence is %d and ours is %d", hb.Seq, ourSeq)
+			if ourSeq > hm.behindSeq {
+				hm.behindSeq = ourSeq
+				hm.behindCounter = 0
+			}
+		} else {
+			hm.followerBehind = false
+		}
+	} else {
+		hm.followerBehind = false
 	}
 
 	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
@@ -262,27 +282,19 @@ func (hm *HeartbeatMonitor) sendHeartBeatResponse(target uint64) {
 	hm.logger.Debugf("Sent HeartBeatResponse view: %d; to %d", hm.view, target)
 }
 
-func (hm *HeartbeatMonitor) viewActiveButBehindLeader(hbMsg *smartbftprotos.HeartBeat) bool {
+func (hm *HeartbeatMonitor) viewActive(hbMsg *smartbftprotos.HeartBeat) (bool, uint64) {
 	vs := hm.viewSequences.Load()
 	// View isn't initialized
 	if vs == nil {
-		return false
+		return false, 0
 	}
 
 	viewSeq := vs.(ViewSequence)
 	if !viewSeq.ViewActive {
-		return false
+		return false, 0
 	}
 
-	ourSeq := viewSeq.ProposalSeq
-
-	areWeBehind := ourSeq+1 < hbMsg.Seq
-
-	if areWeBehind {
-		hm.logger.Debugf("Leader's sequence is %d and ours is %d", hbMsg.Seq, ourSeq)
-	}
-
-	return areWeBehind
+	return true, viewSeq.ProposalSeq
 }
 
 func (hm *HeartbeatMonitor) tick(now time.Time) {
@@ -358,6 +370,16 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 	}
 
 	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
+
+	if hm.followerBehind {
+		hm.behindCounter++
+		if hm.behindCounter >= hm.behindNumOfTicks {
+			hm.logger.Warnf("Syncing since the follower with seq %d is behind the leader for the last %d ticks", hm.behindSeq, hm.behindNumOfTicks)
+			hm.handler.Sync()
+			hm.behindCounter = 0
+			return
+		}
+	}
 }
 
 // HeartbeatWasSent tells the monitor to skip sending a heartbeat
