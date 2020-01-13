@@ -57,6 +57,9 @@ type Configuration struct {
 	// LeaderHeartbeatCount is the number of heartbeats per LeaderHeartbeatTimeout that the leader should emit.
 	// The heartbeat-interval is equal to: LeaderHeartbeatTimeout/LeaderHeartbeatCount.
 	LeaderHeartbeatCount uint64
+	// NumOfTicksBehindBeforeSyncing is the number of follower ticks where the follower is behind the leader
+	// by one sequence before starting a sync
+	NumOfTicksBehindBeforeSyncing uint64
 
 	// CollectTimeout is the interval after which the node stops listening to StateTransferResponse messages,
 	// stops collecting information about view metadata from remote nodes.
@@ -76,21 +79,22 @@ type Configuration struct {
 // and between clients to nodes, is approximately 10ms.
 // Set the SelfID.
 var DefaultConfig = Configuration{
-	RequestBatchMaxCount:      100,
-	RequestBatchMaxBytes:      10 * 1024 * 1024,
-	RequestBatchMaxInterval:   50 * time.Millisecond,
-	IncomingMessageBufferSize: 200,
-	RequestPoolSize:           400,
-	RequestForwardTimeout:     2 * time.Second,
-	RequestComplainTimeout:    20 * time.Second,
-	RequestAutoRemoveTimeout:  3 * time.Minute,
-	ViewChangeResendInterval:  5 * time.Second,
-	ViewChangeTimeout:         20 * time.Second,
-	LeaderHeartbeatTimeout:    time.Minute,
-	LeaderHeartbeatCount:      10,
-	CollectTimeout:            time.Second,
-	SyncOnStart:               false,
-	SpeedUpViewChange:         false,
+	RequestBatchMaxCount:          100,
+	RequestBatchMaxBytes:          10 * 1024 * 1024,
+	RequestBatchMaxInterval:       50 * time.Millisecond,
+	IncomingMessageBufferSize:     200,
+	RequestPoolSize:               400,
+	RequestForwardTimeout:         2 * time.Second,
+	RequestComplainTimeout:        20 * time.Second,
+	RequestAutoRemoveTimeout:      3 * time.Minute,
+	ViewChangeResendInterval:      5 * time.Second,
+	ViewChangeTimeout:             20 * time.Second,
+	LeaderHeartbeatTimeout:        time.Minute,
+	LeaderHeartbeatCount:          10,
+	NumOfTicksBehindBeforeSyncing: 10,
+	CollectTimeout:                time.Second,
+	SyncOnStart:                   false,
+	SpeedUpViewChange:             false,
 }
 
 func (c Configuration) Validate() error {
@@ -133,6 +137,9 @@ func (c Configuration) Validate() error {
 	}
 	if !(c.LeaderHeartbeatCount > 0) {
 		return errors.Errorf("LeaderHeartbeatCount should be greater than zero")
+	}
+	if !(c.NumOfTicksBehindBeforeSyncing > 0) {
+		return errors.Errorf("NumOfTicksBehindBeforeSyncing should be greater than zero")
 	}
 	if !(c.CollectTimeout > 0) {
 		return errors.Errorf("CollectTimeout should be greater than zero")
