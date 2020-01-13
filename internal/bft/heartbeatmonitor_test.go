@@ -40,7 +40,7 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 	handler := &mocks.HeartbeatEventHandler{}
 
 	scheduler := make(chan time.Time)
-	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, &atomic.Value{})
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, &atomic.Value{}, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 	assert.NotNil(t, hm)
 	hm.Close()
 }
@@ -56,7 +56,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 
 	vs := &atomic.Value{}
 	vs.Store(bft.ViewSequence{ViewActive: true})
-	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs)
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	var heartBeatsSent uint32
 	var heartBeatsSentUntilViewBecomesInactive uint32
@@ -204,7 +204,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 				ViewActive:  testCase.viewActive,
 				ProposalSeq: testCase.proposalSeqInView,
 			})
-			hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, viewSequence)
+			hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, viewSequence, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 			hm.ChangeRole(bft.Follower, 10, 12)
 
@@ -242,13 +242,13 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	handler1 := &mocks.HeartbeatEventHandler{}
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 4, handler1, vs1)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 4, handler1, vs1, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm2 := &mocks.CommMock{}
 	handler2 := &mocks.HeartbeatEventHandler{}
 	vs2 := &atomic.Value{}
 	vs2.Store(bft.ViewSequence{ViewActive: true})
-	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm2, 4, handler2, vs2)
+	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm2, 4, handler2, vs2, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
@@ -306,7 +306,7 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 	handler1 := &mocks.HeartbeatEventHandler{}
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
@@ -377,7 +377,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	})
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, consensus.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	respWG := &sync.WaitGroup{}
 	respWG.Add(1)
@@ -414,6 +414,48 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	syncWG.Wait()
 
 	hm1.Close()
+}
+
+func TestFollowerBehindSync(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	scheduler := make(chan time.Time)
+
+	comm := &mocks.CommMock{}
+	handler := &mocks.HeartbeatEventHandler{}
+	syncWG := &sync.WaitGroup{}
+	syncWG.Add(1)
+	handler.On("Sync").Run(func(args mock.Arguments) {
+		syncWG.Done()
+	})
+
+	vs := &atomic.Value{}
+	vs.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 9})
+	hm := bft.NewHeartbeatMonitor(scheduler, log, consensus.DefaultConfig.LeaderHeartbeatTimeout, consensus.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, 3)
+
+	hm.ChangeRole(bft.Follower, 10, 12)
+
+	hm.ProcessMsg(12, heartbeat)
+	hm.ProcessMsg(12, heartbeat)
+
+	start := time.Now()
+	scheduler <- start
+
+	scheduler <- start.Add(time.Second)
+	handler.AssertNotCalled(t, "Sync")
+
+	scheduler <- start.Add(2 * time.Second)
+	syncWG.Wait()
+	handler.AssertCalled(t, "Sync")
+
+	scheduler <- start.Add(3 * time.Second)
+	scheduler <- start.Add(4 * time.Second)
+
+	hm.Close()
+	handler.AssertNumberOfCalls(t, "Sync", 1)
+
 }
 
 type fakeTime struct {

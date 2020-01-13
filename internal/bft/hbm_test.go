@@ -73,7 +73,7 @@ func TestHeartbeatWasSent(t *testing.T) {
 
 	vs := &atomic.Value{}
 	vs.Store(ViewSequence{ViewActive: true})
-	hm := NewHeartbeatMonitor(scheduler, log, heartbeatTimeout, heartbeatCount, comm, 4, handler, vs)
+	hm := NewHeartbeatMonitor(scheduler, log, heartbeatTimeout, heartbeatCount, comm, 4, handler, vs, 10)
 
 	toWG.Add(2)
 
