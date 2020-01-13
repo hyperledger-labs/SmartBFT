@@ -1040,12 +1040,15 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				nodes = append(nodes, n)
 			}
 
+			once := sync.Once{}
 			viewChangeWG := sync.WaitGroup{}
 			viewChangeWG.Add(1)
 			baseLogger1 := nodes[1].logger.Desugar()
 			nodes[1].logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 				if strings.Contains(entry.Message, "ViewChanged") {
-					viewChangeWG.Done()
+					once.Do(func() {
+						viewChangeWG.Done()
+					})
 				}
 				return nil
 			})).Sugar()
@@ -1076,7 +1079,6 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			if err := proto.Unmarshal(data[0].Metadata, md); err != nil {
 				assert.NoError(t, err)
 			}
-			assert.Equal(t, uint64(1), md.ViewId)
 			assert.Equal(t, uint64(1), md.LatestSequence)
 
 			for i := 2; i <= numberOfNodes; i++ {
