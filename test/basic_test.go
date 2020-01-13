@@ -1019,10 +1019,11 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				if m.GetPrePrepare() == nil {
 					return
 				}
-				m.GetPrePrepare().Proposal.VerificationSequence = 2
+				m.GetPrePrepare().Proposal.VerificationSequence = 3
 			},
 		},
 	} {
+		test := test
 		t.Run(test.description, func(t *testing.T) {
 			t.Parallel()
 			network := make(Network)
