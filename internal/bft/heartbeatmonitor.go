@@ -45,53 +45,53 @@ type heartbeatResponseCollector map[uint64]uint64
 
 // HeartbeatMonitor implements LeaderMonitor
 type HeartbeatMonitor struct {
-	scheduler           <-chan time.Time
-	inc                 chan incMsg
-	stopChan            chan struct{}
-	commandChan         chan roleChange
-	logger              api.Logger
-	hbTimeout           time.Duration
-	hbCount             uint64
-	comm                Comm
-	numberOfNodes       uint64
-	handler             HeartbeatEventHandler
-	view                uint64
-	leaderID            uint64
-	follower            Role
-	lastHeartbeat       time.Time
-	lastTick            time.Time
-	hbRespCollector     heartbeatResponseCollector
-	running             sync.WaitGroup
-	runOnce             sync.Once
-	timedOut            bool
-	syncReq             bool
-	viewSequences       *atomic.Value
-	sentHeartbeat       chan struct{}
-	artificialHeartbeat chan incMsg
-	behindSeq           uint64
-	behindCounter       uint64
-	behindNumOfTicks    uint64
-	followerBehind      bool
+	scheduler                     <-chan time.Time
+	inc                           chan incMsg
+	stopChan                      chan struct{}
+	commandChan                   chan roleChange
+	logger                        api.Logger
+	hbTimeout                     time.Duration
+	hbCount                       uint64
+	comm                          Comm
+	numberOfNodes                 uint64
+	handler                       HeartbeatEventHandler
+	view                          uint64
+	leaderID                      uint64
+	follower                      Role
+	lastHeartbeat                 time.Time
+	lastTick                      time.Time
+	hbRespCollector               heartbeatResponseCollector
+	running                       sync.WaitGroup
+	runOnce                       sync.Once
+	timedOut                      bool
+	syncReq                       bool
+	viewSequences                 *atomic.Value
+	sentHeartbeat                 chan struct{}
+	artificialHeartbeat           chan incMsg
+	behindSeq                     uint64
+	behindCounter                 uint64
+	numOfTicksBehindBeforeSyncing uint64
+	followerBehind                bool
 }
 
 // NewHeartbeatMonitor creates a new HeartbeatMonitor
 func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount uint64, comm Comm, numberOfNodes uint64, handler HeartbeatEventHandler, viewSequences *atomic.Value, numOfTicksBehindBeforeSyncing uint64) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
-		stopChan:            make(chan struct{}),
-		inc:                 make(chan incMsg),
-		commandChan:         make(chan roleChange),
-		scheduler:           scheduler,
-		logger:              logger,
-		hbTimeout:           heartbeatTimeout,
-		hbCount:             heartbeatCount,
-		comm:                comm,
-		numberOfNodes:       numberOfNodes,
-		handler:             handler,
-		hbRespCollector:     make(heartbeatResponseCollector),
-		viewSequences:       viewSequences,
-		sentHeartbeat:       make(chan struct{}, 1),
-		artificialHeartbeat: make(chan incMsg, 1),
-		behindNumOfTicks:    numOfTicksBehindBeforeSyncing,
+		stopChan:                      make(chan struct{}),
+		inc:                           make(chan incMsg),
+		commandChan:                   make(chan roleChange),
+		scheduler:                     scheduler,
+		logger:                        logger,
+		hbTimeout:                     heartbeatTimeout,
+		hbCount:                       heartbeatCount,
+		comm:                          comm,
+		numberOfNodes:                 numberOfNodes,
+		handler:                       handler,
+		hbRespCollector:               make(heartbeatResponseCollector),
+		viewSequences:                 viewSequences,
+		sentHeartbeat:                 make(chan struct{}, 1),
+		artificialHeartbeat:           make(chan incMsg, 1),
+		numOfTicksBehindBeforeSyncing: numOfTicksBehindBeforeSyncing,
 	}
 	return hm
 }
@@ -371,14 +371,16 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 
 	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
 
-	if hm.followerBehind {
-		hm.behindCounter++
-		if hm.behindCounter >= hm.behindNumOfTicks {
-			hm.logger.Warnf("Syncing since the follower with seq %d is behind the leader for the last %d ticks", hm.behindSeq, hm.behindNumOfTicks)
-			hm.handler.Sync()
-			hm.behindCounter = 0
-			return
-		}
+	if !hm.followerBehind {
+		return
+	}
+
+	hm.behindCounter++
+	if hm.behindCounter >= hm.numOfTicksBehindBeforeSyncing {
+		hm.logger.Warnf("Syncing since the follower with seq %d is behind the leader for the last %d ticks", hm.behindSeq, hm.numOfTicksBehindBeforeSyncing)
+		hm.handler.Sync()
+		hm.behindCounter = 0
+		return
 	}
 }
 
