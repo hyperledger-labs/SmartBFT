@@ -314,7 +314,14 @@ func (c *Controller) startView(proposalSequence uint64) {
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
-	if !c.abortView(c.getCurrentViewNumber()) {
+
+	latestView := c.getCurrentViewNumber()
+	if latestView > newViewNumber {
+		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
+		return
+	}
+
+	if !c.abortView(latestView) {
 		return
 	}
 
