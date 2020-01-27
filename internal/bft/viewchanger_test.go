@@ -14,7 +14,6 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
-	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -1646,7 +1645,7 @@ func TestCommitInFlight(t *testing.T) {
 		Checkpoint:    &checkpoint,
 		ViewSequences: &atomic.Value{},
 		State:         &bft.StateRecorder{},
-		InMsqQSize:    int(consensus.DefaultConfig.IncomingMessageBufferSize),
+		InMsqQSize:    int(types.DefaultConfig.IncomingMessageBufferSize),
 		Application:   app,
 		Pruner:        pruner,
 	}
