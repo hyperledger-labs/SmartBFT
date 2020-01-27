@@ -21,7 +21,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var fastConfig = consensus.Configuration{
+var fastConfig = types.Configuration{
 	RequestBatchMaxCount:          10,
 	RequestBatchMaxBytes:          10 * 1024 * 1024,
 	RequestBatchMaxInterval:       10 * time.Millisecond,

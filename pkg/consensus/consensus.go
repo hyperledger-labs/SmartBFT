@@ -22,7 +22,7 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	Config            Configuration
+	Config            types.Configuration
 	Application       bft.Application
 	Assembler         bft.Assembler
 	WAL               bft.WriteAheadLog
