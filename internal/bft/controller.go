@@ -314,18 +314,9 @@ func (c *Controller) startView(proposalSequence uint64) {
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64) {
-	// Drain the leader token in case we held it,
-	// so we won't start proposing after view change.
-	c.relinquishLeaderToken()
-
-	latestView := c.getCurrentViewNumber()
-	if latestView > newViewNumber {
-		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
+	if !c.abortView(c.getCurrentViewNumber()) {
 		return
 	}
-	// Kill current view
-	c.Logger.Debugf("Aborting current view with number %d", latestView)
-	c.currView.Abort()
 
 	c.setCurrentViewNumber(newViewNumber)
 	c.startView(newProposalSequence)
@@ -337,10 +328,11 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	}
 }
 
-func (c *Controller) abortView(view uint64) {
-	if view < c.currViewNumber {
-		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, c.currViewNumber)
-		return
+func (c *Controller) abortView(view uint64) bool {
+	currView := c.getCurrentViewNumber()
+	if view < currView {
+		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
+		return false
 	}
 
 	// Drain the leader token in case we held it,
@@ -350,6 +342,8 @@ func (c *Controller) abortView(view uint64) {
 	// Kill current view
 	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
 	c.currView.Abort()
+
+	return true
 }
 
 // Sync initiates a synchronization
@@ -417,19 +411,7 @@ func (c *Controller) run() {
 	for {
 		select {
 		case d := <-c.decisionChan:
-			c.Application.Deliver(d.proposal, d.signatures)
-			c.Checkpoint.Set(d.proposal, d.signatures)
-			c.Logger.Debugf("Node %d delivered proposal", c.ID)
-			c.removeDeliveredFromPool(d)
-			select {
-			case c.deliverChan <- struct{}{}:
-			case <-c.stopChan:
-				return
-			}
-			c.MaybePruneRevokedRequests()
-			if iAm, _ := c.iAmTheLeader(); iAm {
-				c.acquireLeaderToken()
-			}
+			c.decide(d)
 		case newView := <-c.viewChange:
 			c.changeView(newView.viewNumber, newView.proposalSeq)
 		case view := <-c.abortViewChan:
@@ -442,6 +424,22 @@ func (c *Controller) run() {
 			c.sync()
 			c.MaybePruneRevokedRequests()
 		}
+	}
+}
+
+func (c *Controller) decide(d decision) {
+	c.Application.Deliver(d.proposal, d.signatures)
+	c.Checkpoint.Set(d.proposal, d.signatures)
+	c.Logger.Debugf("Node %d delivered proposal", c.ID)
+	c.removeDeliveredFromPool(d)
+	select {
+	case c.deliverChan <- struct{}{}:
+	case <-c.stopChan:
+		return
+	}
+	c.MaybePruneRevokedRequests()
+	if iAm, _ := c.iAmTheLeader(); iAm {
+		c.acquireLeaderToken()
 	}
 }
 

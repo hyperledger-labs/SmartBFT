@@ -39,19 +39,33 @@ type Consensus struct {
 	Scheduler         <-chan time.Time
 	ViewChangerTicker <-chan time.Time
 
+	submittedChan chan struct{}
+	inFlight      *algorithm.InFlightData
+	checkpoint    *types.Checkpoint
+	pool          *algorithm.Pool
 	viewChanger   *algorithm.ViewChanger
 	controller    *algorithm.Controller
 	collector     *algorithm.StateCollector
 	state         *algorithm.PersistedState
 	numberOfNodes uint64
 	nodes         []uint64
+
+	consensusDone sync.WaitGroup
+	stopOnce      sync.Once
+	stopChan      chan struct{}
+
+	consensusLock sync.RWMutex
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
+	c.consensusLock.RLock()
+	defer c.consensusLock.RUnlock()
 	c.viewChanger.StartViewChange(viewNum, stopView)
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) {
+	c.consensusLock.RLock()
+	defer c.consensusLock.RUnlock()
 	c.Application.Deliver(proposal, signatures)
 }
 
@@ -60,25 +74,25 @@ func (c *Consensus) Start() error {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
 
-	nodes := c.Comm.Nodes()
-	c.numberOfNodes = uint64(len(nodes))
-	c.nodes = make([]uint64, c.numberOfNodes)
-	copy(c.nodes, nodes)
-	sort.Slice(c.nodes, func(i, j int) bool {
-		return c.nodes[i] < c.nodes[j]
-	})
+	c.consensusDone.Add(1)
+	c.stopOnce = sync.Once{}
+	c.stopChan = make(chan struct{})
+	c.consensusLock.Lock()
+	defer c.consensusLock.Unlock()
 
-	inFlight := algorithm.InFlightData{}
+	c.setNodes(c.Comm.Nodes())
+
+	c.inFlight = &algorithm.InFlightData{}
 
 	c.state = &algorithm.PersistedState{
-		InFlightProposal: &inFlight,
+		InFlightProposal: c.inFlight,
 		Entries:          c.WALInitialContent,
 		Logger:           c.Logger,
 		WAL:              c.WAL,
 	}
 
-	cpt := types.Checkpoint{}
-	cpt.Set(c.LastProposal, c.LastSignatures)
+	c.checkpoint = &types.Checkpoint{}
+	c.checkpoint.Set(c.LastProposal, c.LastSignatures)
 
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:            c.Config.SelfID,
@@ -89,8 +103,8 @@ func (c *Consensus) Start() error {
 		Signer:            c.Signer,
 		Verifier:          c.Verifier,
 		Application:       c,
-		Checkpoint:        &cpt,
-		InFlight:          &inFlight,
+		Checkpoint:        c.checkpoint,
+		InFlight:          c.inFlight,
 		State:             c.state,
 		// Controller later
 		// RequestsTimer later
@@ -108,7 +122,7 @@ func (c *Consensus) Start() error {
 	}
 
 	c.controller = &algorithm.Controller{
-		Checkpoint:       &cpt,
+		Checkpoint:       c.checkpoint,
 		WAL:              c.WAL,
 		ID:               c.Config.SelfID,
 		N:                c.numberOfNodes,
@@ -139,17 +153,17 @@ func (c *Consensus) Start() error {
 		ComplainTimeout:   c.Config.RequestComplainTimeout,
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
-	submittedChan := make(chan struct{}, 1)
-	pool := algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, submittedChan)
-	batchBuilder := algorithm.NewBatchBuilder(pool, submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
+	c.submittedChan = make(chan struct{}, 1)
+	c.pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
+	batchBuilder := algorithm.NewBatchBuilder(c.pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
 	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
-	c.controller.RequestPool = pool
+	c.controller.RequestPool = c.pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
 
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.Pruner = c.controller
-	c.viewChanger.RequestsTimer = pool
+	c.viewChanger.RequestsTimer = c.pool
 	c.viewChanger.ViewSequences = c.controller.ViewSequences
 
 	view := c.Metadata.ViewId
@@ -163,7 +177,7 @@ func (c *Consensus) Start() error {
 		c.Logger.Debugf("No view change to restore")
 	} else {
 		// Check if the application has a newer view
-		if viewChange.NextView >= c.Metadata.ViewId {
+		if viewChange.NextView >= view {
 			c.Logger.Debugf("Restoring from view change with view %d, while application has view %d and seq %d", viewChange.NextView, c.Metadata.ViewId, c.Metadata.LatestSequence)
 			view = viewChange.NextView
 			restoreChan := make(chan struct{}, 1)
@@ -180,7 +194,7 @@ func (c *Consensus) Start() error {
 		c.Logger.Debugf("No new view to restore")
 	} else {
 		// Check if metadata should be taken from the restored new view or from the application
-		if viewSeq.Seq >= c.Metadata.LatestSequence {
+		if viewSeq.Seq >= seq {
 			c.Logger.Debugf("Restoring from new view with view %d and seq %d, while application has view %d and seq %d", viewSeq.View, viewSeq.Seq, c.Metadata.ViewId, c.Metadata.LatestSequence)
 			view = viewSeq.View
 			seq = viewSeq.Seq
@@ -191,6 +205,11 @@ func (c *Consensus) Start() error {
 	c.viewChanger.ControllerStartedWG.Add(1)
 	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
 
+	go func() {
+		defer c.consensusDone.Done()
+		c.run()
+	}()
+
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
 	c.collector.Start()
@@ -199,21 +218,55 @@ func (c *Consensus) Start() error {
 	return nil
 }
 
+func (c *Consensus) run() {
+	defer func() {
+		c.Logger.Infof("Exiting")
+	}()
+
+	for {
+		select {
+		case <-c.stopChan:
+			return
+		}
+	}
+}
+
+func (c *Consensus) close() {
+	c.stopOnce.Do(
+		func() {
+			select {
+			case <-c.stopChan:
+				return
+			default:
+				close(c.stopChan)
+			}
+		},
+	)
+}
+
 func (c *Consensus) Stop() {
 	c.viewChanger.Stop()
 	c.controller.Stop()
 	c.collector.Stop()
+	c.close()
+	c.consensusDone.Wait()
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
+	c.consensusLock.RLock()
+	defer c.consensusLock.RUnlock()
 	c.controller.ProcessMessages(sender, m)
 }
 
 func (c *Consensus) HandleRequest(sender uint64, req []byte) {
+	c.consensusLock.RLock()
+	defer c.consensusLock.RUnlock()
 	c.controller.HandleRequest(sender, req)
 }
 
 func (c *Consensus) SubmitRequest(req []byte) error {
+	c.consensusLock.RLock()
+	defer c.consensusLock.RUnlock()
 	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
 	return c.controller.SubmitRequest(req)
 }
@@ -258,4 +311,18 @@ func (c *Consensus) ValidateConfiguration() error {
 	}
 
 	return nil
+}
+
+func (c *Consensus) setNodes(nodes []uint64) {
+	c.numberOfNodes = uint64(len(nodes))
+	c.nodes = sortNodes(nodes)
+}
+
+func sortNodes(nodes []uint64) []uint64 {
+	sorted := make([]uint64, len(nodes))
+	copy(sorted, nodes)
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i] < sorted[j]
+	})
+	return sorted
 }
