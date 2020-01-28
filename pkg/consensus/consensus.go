@@ -72,6 +72,7 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 	defer c.consensusLock.RUnlock()
 	reconfig := c.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
+		c.Logger.Debugf("Detected a reconfig")
 		c.reconfigChan <- reconfig
 		return true
 	}
@@ -244,6 +245,7 @@ func (c *Consensus) run() {
 }
 
 func (c *Consensus) reconfig(reconfig types.Reconfig) {
+	c.Logger.Debugf("Starting reconfig")
 	c.consensusLock.Lock()
 	defer c.consensusLock.Unlock()
 
@@ -379,7 +381,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.pool.RestartTimers()
 
 	// TODO handle reconfiguration of timeouts in the pool
-
+	c.Logger.Debugf("Reconfig is done")
 }
 
 func (c *Consensus) close() {

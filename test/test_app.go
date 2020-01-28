@@ -213,6 +213,14 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 	}
 	a.Delivered <- record
 
+	for _, req := range record.Batch.Requests {
+		request := requestFromBytes(req)
+		if request.Reconfig.InLatestDecision {
+			reconfig := request.Reconfig.recconfigToUint(a.ID)
+			return types.Reconfig{InLatestDecision: true, CurrentNodes: reconfig.CurrentNodes, CurrentConfig: reconfig.CurrentConfig}
+		}
+	}
+
 	return types.Reconfig{InLatestDecision: false}
 }
 
@@ -267,6 +275,7 @@ func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppReco
 type Request struct {
 	ClientID string
 	ID       string
+	Reconfig ReconfigInt
 }
 
 // ToBytes returns a byte array representation of the request
