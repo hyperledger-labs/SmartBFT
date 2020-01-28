@@ -32,13 +32,13 @@ func TestBasicReconfig(t *testing.T) {
 		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
 	}
 
-	data1 := make([]*AppRecord, 0)
+	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
-		data1 = append(data1, d)
+		data = append(data, d)
 	}
 	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data1[i], data1[i+1])
+		assert.Equal(t, data[i], data[i+1])
 	}
 
 	newConfig := fastConfig
@@ -54,61 +54,17 @@ func TestBasicReconfig(t *testing.T) {
 		},
 	})
 
-	data2 := make([]*AppRecord, 0)
+	data = make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
-		data2 = append(data2, d)
+		data = append(data, d)
 	}
 	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data2[i], data2[i+1])
+		assert.Equal(t, data[i], data[i+1])
 	}
 
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
-	data3 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data3 = append(data3, d)
-	}
-	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data3[i], data3[i+1])
-	}
-
-	newNode := newNode(5, network, t.Name(), testDir)
-
-	nodes[0].Submit(Request{
-		ClientID: "reconfig",
-		ID:       "20",
-		Reconfig: Reconfig{
-			InLatestDecision: true,
-			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
-		},
-	})
-
-	data4 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data4 = append(data4, d)
-	}
-	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data4[i], data4[i+1])
-	}
-
-	nodes = append(nodes, newNode)
-	startNodes(nodes[4:], &network)
-
-	d := <-nodes[4].Delivered
-	assert.Equal(t, data1[0], d)
-	d = <-nodes[4].Delivered
-	assert.Equal(t, data2[0], d)
-	d = <-nodes[4].Delivered
-	assert.Equal(t, data3[0], d)
-	d = <-nodes[4].Delivered
-	assert.Equal(t, data4[0], d)
-
-	nodes[0].Submit(Request{ID: "21", ClientID: "alice"})
-	numberOfNodes = 5
-	data := make([]*AppRecord, 0)
+	data = make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
