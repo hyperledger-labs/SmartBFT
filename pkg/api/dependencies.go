@@ -14,7 +14,8 @@ import (
 type Application interface {
 	// Deliver delivers the given proposal and signatures.
 	// After the call returns we assume that this proposal is stored in persistent memory.
-	Deliver(proposal bft.Proposal, signature []bft.Signature)
+	// It returns whether this proposal was a reconfiguration and the current config.
+	Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig
 }
 
 // Comm enables the communications between the nodes.

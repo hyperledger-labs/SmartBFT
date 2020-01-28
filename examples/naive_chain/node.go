@@ -121,7 +121,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	n.out[int(targetID)] <- msg
 }
 
-func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
+func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig {
 	blockData := BlockDataFromBytes(proposal.Payload)
 	var txns []Transaction
 	for _, rawTxn := range blockData.Transactions {
@@ -135,13 +135,15 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) {
 
 	select {
 	case <-n.stopChan:
-		return
+		return bft.Reconfig{InLatestDecision: false}
 	case n.deliverChan <- &Block{
 		Sequence:     uint64(header.Sequence),
 		PrevHash:     header.PrevHash,
 		Transactions: txns,
 	}:
 	}
+
+	return bft.Reconfig{InLatestDecision: false}
 }
 
 func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions, testDir string) *Node {

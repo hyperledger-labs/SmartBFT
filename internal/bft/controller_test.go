@@ -29,7 +29,7 @@ func TestControllerBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	app := &mocks.ApplicationMock{}
+	app := &mocks.Application{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -151,11 +151,11 @@ func TestLeaderPropose(t *testing.T) {
 		ID:    17,
 		Value: []byte{4},
 	})
-	app := &mocks.ApplicationMock{}
+	app := &mocks.Application{}
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		appWG.Done()
-	})
+	}).Return(false)
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")

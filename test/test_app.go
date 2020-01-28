@@ -197,7 +197,7 @@ func (a *App) AssembleProposal(metadata []byte, requests [][]byte) types.Proposa
 }
 
 // Deliver delivers the given proposal
-func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) {
+func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
 	record := &AppRecord{
 		Metadata: proposal.Metadata,
 		Batch:    batchFromBytes(proposal.Payload),
@@ -212,6 +212,8 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) {
 		panic(err)
 	}
 	a.Delivered <- record
+
+	return types.Reconfig{InLatestDecision: false}
 }
 
 type committedBatches struct {

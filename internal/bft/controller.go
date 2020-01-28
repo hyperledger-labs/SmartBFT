@@ -87,7 +87,7 @@ type Controller struct {
 	Verifier         api.Verifier
 	Logger           api.Logger
 	Assembler        api.Assembler
-	Application      api.Application
+	Application      Application
 	FailureDetector  FailureDetector
 	Synchronizer     api.Synchronizer
 	Signer           api.Signer
@@ -435,7 +435,9 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) decide(d decision) {
-	c.Application.Deliver(d.proposal, d.signatures)
+	if c.Application.Deliver(d.proposal, d.signatures) {
+		c.close()
+	}
 	c.Checkpoint.Set(d.proposal, d.signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
@@ -649,6 +651,23 @@ func (c *Controller) Stop() {
 	c.close()
 	c.Batcher.Close()
 	c.RequestPool.Close()
+	c.LeaderMonitor.Close()
+
+	// Drain the leader token if we hold it.
+	select {
+	case <-c.leaderToken:
+	default:
+		// Do nothing
+	}
+
+	c.controllerDone.Wait()
+}
+
+// Stop the controller but only stop the requests pool timers
+func (c *Controller) StopWithPoolPause() {
+	c.close()
+	c.Batcher.Close()
+	c.RequestPool.StopTimers()
 	c.LeaderMonitor.Close()
 
 	// Drain the leader token if we hold it.

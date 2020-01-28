@@ -7,6 +7,7 @@ package bft
 
 import (
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
@@ -24,10 +25,10 @@ type AssemblerMock interface {
 	api.Assembler
 }
 
-// ApplicationMock mock for the Application interface
-//go:generate mockery -dir . -name ApplicationMock -case underscore -output ./mocks/
-type ApplicationMock interface {
-	api.Application
+// Application mock for the Application interface with a boolean as a return value
+//go:generate mockery -dir . -name Application -case underscore -output ./mocks/
+type Application interface {
+	Deliver(proposal types.Proposal, signature []types.Signature) bool
 }
 
 // CommMock mock for the Comm interface
