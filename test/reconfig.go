@@ -6,7 +6,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 )
 
-type ConfigurationInt struct {
+type Configuration struct {
 	// SelfID is added by the application
 	RequestBatchMaxCount          int64
 	RequestBatchMaxBytes          int64
@@ -26,13 +26,13 @@ type ConfigurationInt struct {
 	SpeedUpViewChange             bool
 }
 
-type ReconfigInt struct {
+type Reconfig struct {
 	InLatestDecision bool
 	CurrentNodes     []int64
-	CurrentConfig    ConfigurationInt
+	CurrentConfig    Configuration
 }
 
-func (r ReconfigInt) recconfigToUint(id uint64) types.Reconfig {
+func (r Reconfig) recconfigToUint(id uint64) types.Reconfig {
 	return types.Reconfig{
 		InLatestDecision: r.InLatestDecision,
 		CurrentNodes:     nodesToUint(r.CurrentNodes),
@@ -58,11 +58,11 @@ func (r ReconfigInt) recconfigToUint(id uint64) types.Reconfig {
 	}
 }
 
-func recconfigToInt(reconfig types.Reconfig) ReconfigInt {
-	return ReconfigInt{
+func recconfigToInt(reconfig types.Reconfig) Reconfig {
+	return Reconfig{
 		InLatestDecision: reconfig.InLatestDecision,
 		CurrentNodes:     nodesToInt(reconfig.CurrentNodes),
-		CurrentConfig: ConfigurationInt{
+		CurrentConfig: Configuration{
 			RequestBatchMaxCount:          int64(reconfig.CurrentConfig.RequestBatchMaxCount),
 			RequestBatchMaxBytes:          int64(reconfig.CurrentConfig.RequestBatchMaxBytes),
 			RequestBatchMaxInterval:       reconfig.CurrentConfig.RequestBatchMaxInterval,

@@ -275,7 +275,7 @@ func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppReco
 type Request struct {
 	ClientID string
 	ID       string
-	Reconfig ReconfigInt
+	Reconfig Reconfig
 }
 
 // ToBytes returns a byte array representation of the request

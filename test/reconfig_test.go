@@ -47,7 +47,7 @@ func TestBasicReconfig(t *testing.T) {
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
 		ID:       "10",
-		Reconfig: ReconfigInt{
+		Reconfig: Reconfig{
 			InLatestDecision: true,
 			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
 			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
