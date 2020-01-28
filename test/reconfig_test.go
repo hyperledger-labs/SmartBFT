@@ -32,13 +32,13 @@ func TestBasicReconfig(t *testing.T) {
 		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
 	}
 
-	data := make([]*AppRecord, 0)
+	data1 := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
-		data = append(data, d)
+		data1 = append(data1, d)
 	}
 	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data[i], data[i+1])
+		assert.Equal(t, data1[i], data1[i+1])
 	}
 
 	newConfig := fastConfig
@@ -54,7 +54,61 @@ func TestBasicReconfig(t *testing.T) {
 		},
 	})
 
-	data = make([]*AppRecord, 0)
+	data2 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data2 = append(data2, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data2[i], data2[i+1])
+	}
+
+	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
+	data3 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data3 = append(data3, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data3[i], data3[i+1])
+	}
+
+	newNode := newNode(5, network, t.Name(), testDir)
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "20",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
+		},
+	})
+
+	data4 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data4 = append(data4, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data4[i], data4[i+1])
+	}
+
+	nodes = append(nodes, newNode)
+	startNodes(nodes[4:], &network)
+
+	d := <-nodes[4].Delivered
+	assert.Equal(t, data1[0], d)
+	d = <-nodes[4].Delivered
+	assert.Equal(t, data2[0], d)
+	d = <-nodes[4].Delivered
+	assert.Equal(t, data3[0], d)
+	d = <-nodes[4].Delivered
+	assert.Equal(t, data4[0], d)
+
+	nodes[0].Submit(Request{ID: "21", ClientID: "alice"})
+	numberOfNodes = 5
+	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
@@ -62,9 +116,70 @@ func TestBasicReconfig(t *testing.T) {
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
+}
+
+func TestBasicAddNode(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	for i := 1; i < 5; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+	}
+
+	data1 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data1 = append(data1, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data1[i], data1[i+1])
+	}
+
+	newNode := newNode(5, network, t.Name(), testDir)
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "10",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+		},
+	})
+
+	data2 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data2 = append(data2, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data2[i], data2[i+1])
+	}
+
+	nodes = append(nodes, newNode)
+	startNodes(nodes[4:], &network)
+
+	d := <-nodes[4].Delivered
+	assert.Equal(t, data1[0], d)
+	d = <-nodes[4].Delivered
+	assert.Equal(t, data2[0], d)
 
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
-	data = make([]*AppRecord, 0)
+	numberOfNodes = 5
+	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
