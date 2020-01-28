@@ -796,8 +796,8 @@ func TestCommitLastDecision(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
-	app := &mocks.Application{}
-	app.On("Deliver", mock.Anything, mock.Anything).Return(false)
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything).Return(types.Reconfig{InLatestDecision: false})
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)
 	pruner := &mocks.Pruner{}
@@ -892,7 +892,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
-	app := &mocks.Application{}
+	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
@@ -1621,12 +1621,12 @@ func TestCommitInFlight(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
-	app := &mocks.Application{}
+	app := &mocks.ApplicationMock{}
 	appChan := make(chan types.Proposal)
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		prop := args.Get(0).(types.Proposal)
 		appChan <- prop
-	}).Return(false)
+	}).Return(types.Reconfig{InLatestDecision: false})
 	pruner := &mocks.Pruner{}
 	pruner.On("MaybePruneRevokedRequests")
 
@@ -1743,7 +1743,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	}).Return(nil).Once()
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("RestartTimers")
-	app := &mocks.Application{}
+	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)

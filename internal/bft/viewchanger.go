@@ -58,7 +58,7 @@ type ViewChanger struct {
 	Comm         Comm
 	Signer       api.Signer
 	Verifier     api.Verifier
-	Application  Application
+	Application  api.Application
 	Synchronizer Synchronizer
 
 	Checkpoint *types.Checkpoint
@@ -887,7 +887,8 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 
 func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
 	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
-	if v.Application.Deliver(proposal, signatures) {
+	reconfig := v.Application.Deliver(proposal, signatures)
+	if reconfig.InLatestDecision {
 		v.close()
 	}
 	v.Checkpoint.Set(proposal, signatures)
@@ -993,7 +994,8 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
 	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
-	if v.Application.Deliver(proposal, signatures) {
+	reconfig := v.Application.Deliver(proposal, signatures)
+	if reconfig.InLatestDecision {
 		v.close()
 	}
 	v.Checkpoint.Set(proposal, signatures)

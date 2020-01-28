@@ -67,16 +67,15 @@ func (c *Consensus) Complain(viewNum uint64, stopView bool) {
 	c.viewChanger.StartViewChange(viewNum, stopView)
 }
 
-func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) bool {
+func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
 	reconfig := c.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		c.Logger.Debugf("Detected a reconfig")
 		c.reconfigChan <- reconfig
-		return true
 	}
-	return false
+	return reconfig
 }
 
 func (c *Consensus) Start() error {

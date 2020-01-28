@@ -87,7 +87,7 @@ type Controller struct {
 	Verifier         api.Verifier
 	Logger           api.Logger
 	Assembler        api.Assembler
-	Application      Application
+	Application      api.Application
 	FailureDetector  FailureDetector
 	Synchronizer     api.Synchronizer
 	Signer           api.Signer
@@ -435,7 +435,8 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) decide(d decision) {
-	if c.Application.Deliver(d.proposal, d.signatures) {
+	reconfig := c.Application.Deliver(d.proposal, d.signatures)
+	if reconfig.InLatestDecision {
 		c.close()
 	}
 	c.Checkpoint.Set(d.proposal, d.signatures)
