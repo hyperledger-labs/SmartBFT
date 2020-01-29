@@ -104,59 +104,7 @@ func (c *Consensus) Start() error {
 	c.checkpoint = &types.Checkpoint{}
 	c.checkpoint.Set(c.LastProposal, c.LastSignatures)
 
-	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:            c.Config.SelfID,
-		N:                 c.numberOfNodes,
-		NodesList:         c.nodes,
-		SpeedUpViewChange: c.Config.SpeedUpViewChange,
-		Logger:            c.Logger,
-		Signer:            c.Signer,
-		Verifier:          c.Verifier,
-		Application:       c,
-		Checkpoint:        c.checkpoint,
-		InFlight:          c.inFlight,
-		State:             c.state,
-		// Controller later
-		// RequestsTimer later
-		Ticker:            c.ViewChangerTicker,
-		ResendTimeout:     c.Config.ViewChangeResendInterval,
-		ViewChangeTimeout: c.Config.ViewChangeTimeout,
-		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
-	}
-
-	c.collector = &algorithm.StateCollector{
-		SelfID:         c.Config.SelfID,
-		N:              c.numberOfNodes,
-		Logger:         c.Logger,
-		CollectTimeout: c.Config.CollectTimeout,
-	}
-
-	c.controller = &algorithm.Controller{
-		Checkpoint:       c.checkpoint,
-		WAL:              c.WAL,
-		ID:               c.Config.SelfID,
-		N:                c.numberOfNodes,
-		NodesList:        c.nodes,
-		Verifier:         c.Verifier,
-		Logger:           c.Logger,
-		Assembler:        c.Assembler,
-		Application:      c,
-		FailureDetector:  c,
-		Synchronizer:     c.Synchronizer,
-		Comm:             c.Comm,
-		Signer:           c.Signer,
-		RequestInspector: c.RequestInspector,
-		ViewChanger:      c.viewChanger,
-		ViewSequences:    &atomic.Value{},
-		Collector:        c.collector,
-		State:            c.state,
-	}
-
-	c.viewChanger.Comm = c.controller
-	c.viewChanger.Synchronizer = c.controller
-
-	c.controller.ProposerBuilder = c.proposalMaker()
-
+	c.createComponents()
 	opts := algorithm.PoolOptions{
 		QueueSize:         int64(c.Config.RequestPoolSize),
 		ForwardTimeout:    c.Config.RequestForwardTimeout,
@@ -165,66 +113,20 @@ func (c *Consensus) Start() error {
 	}
 	c.submittedChan = make(chan struct{}, 1)
 	c.pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
-	batchBuilder := algorithm.NewBatchBuilder(c.pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
-	c.controller.RequestPool = c.pool
-	c.controller.Batcher = batchBuilder
-	c.controller.LeaderMonitor = leaderMonitor
+	c.continueCreateComponents()
 
-	c.viewChanger.Controller = c.controller
-	c.viewChanger.Pruner = c.controller
-	c.viewChanger.RequestsTimer = c.pool
-	c.viewChanger.ViewSequences = c.controller.ViewSequences
+	c.Logger.Debugf("Application started with view %d and seq %d", c.Metadata.ViewId, c.Metadata.LatestSequence)
+	view, seq := c.setViewAndSeq(c.Metadata.ViewId, c.Metadata.LatestSequence)
 
-	view := c.Metadata.ViewId
-	seq := c.Metadata.LatestSequence
-
-	viewChange, err := c.state.LoadViewChangeIfApplicable()
-	if err != nil {
-		c.Logger.Panicf("Failed loading view change, error: %v", err)
-	}
-	if viewChange == nil {
-		c.Logger.Debugf("No view change to restore")
-	} else {
-		// Check if the application has a newer view
-		if viewChange.NextView >= view {
-			c.Logger.Debugf("Restoring from view change with view %d, while application has view %d and seq %d", viewChange.NextView, c.Metadata.ViewId, c.Metadata.LatestSequence)
-			view = viewChange.NextView
-			restoreChan := make(chan struct{}, 1)
-			restoreChan <- struct{}{}
-			c.viewChanger.Restore = restoreChan
-		}
-	}
-
-	viewSeq, err := c.state.LoadNewViewIfApplicable()
-	if err != nil {
-		c.Logger.Panicf("Failed loading new view, error: %v", err)
-	}
-	if viewSeq == nil {
-		c.Logger.Debugf("No new view to restore")
-	} else {
-		// Check if metadata should be taken from the restored new view or from the application
-		if viewSeq.Seq >= seq {
-			c.Logger.Debugf("Restoring from new view with view %d and seq %d, while application has view %d and seq %d", viewSeq.View, viewSeq.Seq, c.Metadata.ViewId, c.Metadata.LatestSequence)
-			view = viewSeq.View
-			seq = viewSeq.Seq
-		}
-	}
-
-	c.viewChanger.ControllerStartedWG = sync.WaitGroup{}
-	c.viewChanger.ControllerStartedWG.Add(1)
-	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
+	c.waitForEachOther()
 
 	go func() {
 		defer c.consensusDone.Done()
 		c.run()
 	}()
 
-	// If we delivered to the application proposal with sequence i,
-	// then we are expecting to be proposed a proposal with sequence i+1.
-	c.collector.Start()
-	c.viewChanger.Start(view)
-	c.controller.Start(view, seq+1, c.Config.SyncOnStart)
+	c.startComponents(view, seq, true)
+
 	return nil
 }
 
@@ -260,123 +162,22 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.setNodes(reconfig.CurrentNodes)
 
-	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:            c.Config.SelfID,
-		N:                 c.numberOfNodes,
-		NodesList:         c.nodes,
-		SpeedUpViewChange: c.Config.SpeedUpViewChange,
-		Logger:            c.Logger,
-		Signer:            c.Signer,
-		Verifier:          c.Verifier,
-		Application:       c,
-		Checkpoint:        c.checkpoint,
-		InFlight:          c.inFlight,
-		State:             c.state,
-		// Controller later
-		// RequestsTimer later
-		Ticker:            c.ViewChangerTicker,
-		ResendTimeout:     c.Config.ViewChangeResendInterval,
-		ViewChangeTimeout: c.Config.ViewChangeTimeout,
-		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
-	}
-
-	c.collector = &algorithm.StateCollector{
-		SelfID:         c.Config.SelfID,
-		N:              c.numberOfNodes,
-		Logger:         c.Logger,
-		CollectTimeout: c.Config.CollectTimeout,
-	}
-
-	c.controller = &algorithm.Controller{
-		Checkpoint:       c.checkpoint,
-		WAL:              c.WAL,
-		ID:               c.Config.SelfID,
-		N:                c.numberOfNodes,
-		NodesList:        c.nodes,
-		Verifier:         c.Verifier,
-		Logger:           c.Logger,
-		Assembler:        c.Assembler,
-		Application:      c,
-		FailureDetector:  c,
-		Synchronizer:     c.Synchronizer,
-		Comm:             c.Comm,
-		Signer:           c.Signer,
-		RequestInspector: c.RequestInspector,
-		ViewChanger:      c.viewChanger,
-		ViewSequences:    &atomic.Value{},
-		Collector:        c.collector,
-		State:            c.state,
-	}
-
-	c.viewChanger.Comm = c.controller
-	c.viewChanger.Synchronizer = c.controller
-
-	c.controller.ProposerBuilder = c.proposalMaker()
-
-	batchBuilder := algorithm.NewBatchBuilder(c.pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
-	c.controller.RequestPool = c.pool
-	c.controller.Batcher = batchBuilder
-	c.controller.LeaderMonitor = leaderMonitor
-
-	c.viewChanger.Controller = c.controller
-	c.viewChanger.Pruner = c.controller
-	c.viewChanger.RequestsTimer = c.pool
-	c.viewChanger.ViewSequences = c.controller.ViewSequences
-
-	c.viewChanger.Controller = c.controller
-	c.viewChanger.Pruner = c.controller
-	c.viewChanger.RequestsTimer = c.pool
-	c.viewChanger.ViewSequences = c.controller.ViewSequences
+	c.createComponents()
+	c.continueCreateComponents()
 
 	proposal, _ := c.checkpoint.Get()
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
 		c.Logger.Panicf("Couldn't unmarshal the checkpoint metadata, error: %v", err)
 	}
+	c.Logger.Debugf("Checkpoint with view %d and seq %d", md.ViewId, md.LatestSequence)
 
-	view := md.ViewId
-	seq := md.LatestSequence
+	view, seq := c.setViewAndSeq(md.ViewId, md.LatestSequence)
 
-	viewChange, err := c.state.LoadViewChangeIfApplicable()
-	if err != nil {
-		c.Logger.Panicf("Failed loading view change, error: %v", err)
-	}
-	if viewChange == nil {
-		c.Logger.Debugf("No view change to restore")
-	} else {
-		// Check if the checkpoint has a newer view
-		if viewChange.NextView >= view {
-			c.Logger.Debugf("Restoring from view change with view %d, while checkpoint has view %d and seq %d", viewChange.NextView, c.Metadata.ViewId, c.Metadata.LatestSequence)
-			view = viewChange.NextView
-			restoreChan := make(chan struct{}, 1)
-			restoreChan <- struct{}{}
-			c.viewChanger.Restore = restoreChan
-		}
-	}
+	c.waitForEachOther()
 
-	viewSeq, err := c.state.LoadNewViewIfApplicable()
-	if err != nil {
-		c.Logger.Panicf("Failed loading new view, error: %v", err)
-	}
-	if viewSeq == nil {
-		c.Logger.Debugf("No new view to restore")
-	} else {
-		// Check if metadata should be taken from the restored new view or from the checkpoint
-		if viewSeq.Seq >= seq {
-			c.Logger.Debugf("Restoring from new view with view %d and seq %d, while checkpoint has view %d and seq %d", viewSeq.View, viewSeq.Seq, c.Metadata.ViewId, c.Metadata.LatestSequence)
-			view = viewSeq.View
-			seq = viewSeq.Seq
-		}
-	}
+	c.startComponents(view, seq, false)
 
-	c.viewChanger.ControllerStartedWG = sync.WaitGroup{}
-	c.viewChanger.ControllerStartedWG.Add(1)
-	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
-
-	c.collector.Start()
-	c.viewChanger.Start(view)
-	c.controller.Start(view, seq+1, c.Config.SyncOnStart)
 	c.pool.RestartTimers()
 
 	// TODO handle reconfiguration of timeouts in the pool
@@ -477,4 +278,127 @@ func sortNodes(nodes []uint64) []uint64 {
 		return sorted[i] < sorted[j]
 	})
 	return sorted
+}
+
+func (c *Consensus) createComponents() {
+	c.viewChanger = &algorithm.ViewChanger{
+		SelfID:            c.Config.SelfID,
+		N:                 c.numberOfNodes,
+		NodesList:         c.nodes,
+		SpeedUpViewChange: c.Config.SpeedUpViewChange,
+		Logger:            c.Logger,
+		Signer:            c.Signer,
+		Verifier:          c.Verifier,
+		Application:       c,
+		Checkpoint:        c.checkpoint,
+		InFlight:          c.inFlight,
+		State:             c.state,
+		// Controller later
+		// RequestsTimer later
+		Ticker:            c.ViewChangerTicker,
+		ResendTimeout:     c.Config.ViewChangeResendInterval,
+		ViewChangeTimeout: c.Config.ViewChangeTimeout,
+		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
+	}
+
+	c.collector = &algorithm.StateCollector{
+		SelfID:         c.Config.SelfID,
+		N:              c.numberOfNodes,
+		Logger:         c.Logger,
+		CollectTimeout: c.Config.CollectTimeout,
+	}
+
+	c.controller = &algorithm.Controller{
+		Checkpoint:       c.checkpoint,
+		WAL:              c.WAL,
+		ID:               c.Config.SelfID,
+		N:                c.numberOfNodes,
+		NodesList:        c.nodes,
+		Verifier:         c.Verifier,
+		Logger:           c.Logger,
+		Assembler:        c.Assembler,
+		Application:      c,
+		FailureDetector:  c,
+		Synchronizer:     c.Synchronizer,
+		Comm:             c.Comm,
+		Signer:           c.Signer,
+		RequestInspector: c.RequestInspector,
+		ViewChanger:      c.viewChanger,
+		ViewSequences:    &atomic.Value{},
+		Collector:        c.collector,
+		State:            c.state,
+	}
+
+	c.viewChanger.Comm = c.controller
+	c.viewChanger.Synchronizer = c.controller
+
+	c.controller.ProposerBuilder = c.proposalMaker()
+}
+
+func (c *Consensus) continueCreateComponents() {
+	batchBuilder := algorithm.NewBatchBuilder(c.pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
+	c.controller.RequestPool = c.pool
+	c.controller.Batcher = batchBuilder
+	c.controller.LeaderMonitor = leaderMonitor
+
+	c.viewChanger.Controller = c.controller
+	c.viewChanger.Pruner = c.controller
+	c.viewChanger.RequestsTimer = c.pool
+	c.viewChanger.ViewSequences = c.controller.ViewSequences
+}
+
+func (c *Consensus) setViewAndSeq(view, seq uint64) (newView, newSeq uint64) {
+	newView = view
+	newSeq = seq
+	viewChange, err := c.state.LoadViewChangeIfApplicable()
+	if err != nil {
+		c.Logger.Panicf("Failed loading view change, error: %v", err)
+	}
+	if viewChange == nil {
+		c.Logger.Debugf("No view change to restore")
+	} else {
+		// Check if the view change has a newer view
+		if viewChange.NextView >= view {
+			c.Logger.Debugf("Restoring from view change with view %d", viewChange.NextView)
+			newView = viewChange.NextView
+			restoreChan := make(chan struct{}, 1)
+			restoreChan <- struct{}{}
+			c.viewChanger.Restore = restoreChan
+		}
+	}
+
+	viewSeq, err := c.state.LoadNewViewIfApplicable()
+	if err != nil {
+		c.Logger.Panicf("Failed loading new view, error: %v", err)
+	}
+	if viewSeq == nil {
+		c.Logger.Debugf("No new view to restore")
+	} else {
+		// Check if metadata should be taken from the restored new view
+		if viewSeq.Seq >= seq {
+			c.Logger.Debugf("Restoring from new view with view %d and seq %d", viewSeq.View, viewSeq.Seq)
+			newView = viewSeq.View
+			newSeq = viewSeq.Seq
+		}
+	}
+	return newView, newSeq
+}
+
+func (c *Consensus) waitForEachOther() {
+	c.viewChanger.ControllerStartedWG = sync.WaitGroup{}
+	c.viewChanger.ControllerStartedWG.Add(1)
+	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
+}
+
+func (c *Consensus) startComponents(view, seq uint64, configSync bool) {
+	// If we delivered to the application proposal with sequence i,
+	// then we are expecting to be proposed a proposal with sequence i+1.
+	c.collector.Start()
+	c.viewChanger.Start(view)
+	if configSync {
+		c.controller.Start(view, seq+1, c.Config.SyncOnStart)
+	} else {
+		c.controller.Start(view, seq+1, false)
+	}
 }
