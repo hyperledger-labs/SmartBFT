@@ -163,6 +163,12 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.setNodes(reconfig.CurrentNodes)
 
 	c.createComponents()
+	opts := algorithm.PoolOptions{
+		ForwardTimeout:    c.Config.RequestForwardTimeout,
+		ComplainTimeout:   c.Config.RequestComplainTimeout,
+		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
+	}
+	c.pool.ChangeTimeouts(opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()
 
 	proposal, _ := c.checkpoint.Get()
@@ -180,7 +186,6 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.pool.RestartTimers()
 
-	// TODO handle reconfiguration of timeouts in the pool
 	c.Logger.Debugf("Reconfig is done")
 }
 
