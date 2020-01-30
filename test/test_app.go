@@ -71,7 +71,7 @@ func (a *App) Submit(req Request) {
 }
 
 // Sync synchronizes and returns the latest decision
-func (a *App) Sync() types.Decision {
+func (a *App) Sync() types.SyncResponse {
 	records := a.Node.cb.readAll(*a.latestMD)
 	for _, record := range records {
 		proposal := types.Proposal{
@@ -80,7 +80,7 @@ func (a *App) Sync() types.Decision {
 		}
 		a.Deliver(proposal, nil)
 	}
-	return *a.lastDecision
+	return types.SyncResponse{Latest: *a.lastDecision, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}}
 }
 
 // Restart restarts the node

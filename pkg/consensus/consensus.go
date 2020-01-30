@@ -68,14 +68,25 @@ func (c *Consensus) Complain(viewNum uint64, stopView bool) {
 }
 
 func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
-	c.consensusLock.RLock()
-	defer c.consensusLock.RUnlock()
 	reconfig := c.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
-		c.Logger.Debugf("Detected a reconfig")
+		c.Logger.Debugf("Detected a reconfig in deliver")
 		c.reconfigChan <- reconfig
 	}
 	return reconfig
+}
+
+func (c *Consensus) Sync() types.SyncResponse {
+	syncResponse := c.Synchronizer.Sync()
+	if syncResponse.Reconfig.InReplicatedDecisions {
+		c.Logger.Debugf("Detected a reconfig in sync")
+		c.reconfigChan <- types.Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     syncResponse.Reconfig.CurrentNodes,
+			CurrentConfig:    syncResponse.Reconfig.CurrentConfig,
+		}
+	}
+	return syncResponse
 }
 
 func (c *Consensus) Start() error {
@@ -126,7 +137,6 @@ func (c *Consensus) Start() error {
 	}()
 
 	c.startComponents(view, seq, true)
-
 	return nil
 }
 
@@ -324,7 +334,7 @@ func (c *Consensus) createComponents() {
 		Assembler:        c.Assembler,
 		Application:      c,
 		FailureDetector:  c,
-		Synchronizer:     c.Synchronizer,
+		Synchronizer:     c,
 		Comm:             c.Comm,
 		Signer:           c.Signer,
 		RequestInspector: c.RequestInspector,

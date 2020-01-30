@@ -43,7 +43,7 @@ type Node struct {
 	consensus   *smartbft.Consensus
 }
 
-func (*Node) Sync() bft.Decision {
+func (*Node) Sync() bft.SyncResponse {
 	panic("implement me")
 }
 

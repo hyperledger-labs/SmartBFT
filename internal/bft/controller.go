@@ -461,7 +461,12 @@ func (c *Controller) sync() {
 	// we were syncing.
 	defer c.relinquishSyncToken()
 
-	decision := c.Synchronizer.Sync()
+	syncResponse := c.Synchronizer.Sync()
+	if syncResponse.Reconfig.InReplicatedDecisions {
+		c.close()
+		c.ViewChanger.close()
+	}
+	decision := syncResponse.Latest
 	if decision.Proposal.Metadata == nil {
 		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
 		response := c.fetchState()
@@ -582,6 +587,7 @@ func (c *Controller) relinquishLeaderToken() {
 
 func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence uint64) viewInfo {
 	c.sync()
+	c.MaybePruneRevokedRequests()
 	info := viewInfo{startViewNumber, startProposalSequence}
 	select {
 	case newViewSeq := <-c.viewChange:

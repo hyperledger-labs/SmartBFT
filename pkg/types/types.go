@@ -110,3 +110,14 @@ type Reconfig struct {
 	CurrentNodes     []uint64
 	CurrentConfig    Configuration
 }
+
+type SyncResponse struct {
+	Latest   Decision
+	Reconfig ReconfigSync
+}
+
+type ReconfigSync struct {
+	InReplicatedDecisions bool
+	CurrentNodes          []uint64
+	CurrentConfig         Configuration
+}

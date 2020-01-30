@@ -13,14 +13,14 @@ type SynchronizerMock struct {
 }
 
 // Sync provides a mock function with given fields:
-func (_m *SynchronizerMock) Sync() types.Decision {
+func (_m *SynchronizerMock) Sync() types.SyncResponse {
 	ret := _m.Called()
 
-	var r0 types.Decision
-	if rf, ok := ret.Get(0).(func() types.Decision); ok {
+	var r0 types.SyncResponse
+	if rf, ok := ret.Get(0).(func() types.SyncResponse); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(types.Decision)
+		r0 = ret.Get(0).(types.SyncResponse)
 	}
 
 	return r0

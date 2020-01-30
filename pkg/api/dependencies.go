@@ -74,8 +74,8 @@ type RequestInspector interface {
 // Synchronizer reaches the cluster nodes and fetches blocks in order to sync the replica's state.
 type Synchronizer interface {
 	// Sync blocks indefinitely until the replica's state is synchronized to the latest decision,
-	// and returns it.
-	Sync() bft.Decision
+	// and returns it with info about reconfiguration.
+	Sync() bft.SyncResponse
 }
 
 // Logger defines the contract for logging.
