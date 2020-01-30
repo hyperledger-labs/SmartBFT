@@ -74,7 +74,7 @@ func TestBasicReconfig(t *testing.T) {
 	}
 }
 
-func TestBasicAddNode(t *testing.T) {
+func TestBasicAddNodes(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -104,7 +104,8 @@ func TestBasicAddNode(t *testing.T) {
 		assert.Equal(t, data1[i], data1[i+1])
 	}
 
-	newNode := newNode(5, network, t.Name(), testDir)
+	newNode1 := newNode(5, network, t.Name(), testDir)
+	newNode2 := newNode(6, network, t.Name(), testDir)
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -125,16 +126,20 @@ func TestBasicAddNode(t *testing.T) {
 		assert.Equal(t, data2[i], data2[i+1])
 	}
 
-	nodes = append(nodes, newNode)
+	nodes = append(nodes, newNode1, newNode2)
 	startNodes(nodes[4:], &network)
 
-	d := <-nodes[4].Delivered
-	assert.Equal(t, data1[0], d)
-	d = <-nodes[4].Delivered
-	assert.Equal(t, data2[0], d)
+	d1 := <-nodes[4].Delivered
+	d2 := <-nodes[5].Delivered
+	assert.Equal(t, data1[0], d1)
+	assert.Equal(t, data1[0], d2)
+	d1 = <-nodes[4].Delivered
+	d2 = <-nodes[5].Delivered
+	assert.Equal(t, data2[0], d1)
+	assert.Equal(t, data2[0], d2)
 
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
-	numberOfNodes = 5
+	numberOfNodes = 6
 	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
