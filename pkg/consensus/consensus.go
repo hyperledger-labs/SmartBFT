@@ -7,6 +7,7 @@ package consensus
 
 import (
 	"sort"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -90,7 +91,7 @@ func (c *Consensus) Sync() types.SyncResponse {
 }
 
 func (c *Consensus) Start() error {
-	if err := c.ValidateConfiguration(); err != nil {
+	if err := c.ValidateConfiguration(c.Comm.Nodes()); err != nil {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
 
@@ -166,8 +167,14 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.collector.Stop()
 
 	c.Config = reconfig.CurrentConfig
-	if err := c.ValidateConfiguration(); err != nil {
-		c.Logger.Panicf("Configuration is invalid, error: %v", err)
+	if err := c.ValidateConfiguration(reconfig.CurrentNodes); err != nil {
+		if strings.Contains(err.Error(), "Nodes does not contain the SelfID") {
+			c.close()
+			c.Logger.Infof("Closing consensus")
+			return
+		} else {
+			c.Logger.Panicf("Configuration is invalid, error: %v", err)
+		}
 	}
 
 	c.setNodes(reconfig.CurrentNodes)
@@ -256,26 +263,25 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 	}
 }
 
-func (c *Consensus) ValidateConfiguration() error {
+func (c *Consensus) ValidateConfiguration(nodes []uint64) error {
 	if err := c.Config.Validate(); err != nil {
 		return errors.Wrap(err, "bad configuration")
 	}
 
-	nodes := c.Comm.Nodes()
 	nodeSet := make(map[uint64]bool)
 	for _, val := range nodes {
 		if val == 0 {
-			return errors.Errorf("Comm.Nodes() contains node id 0 which is not permitted, nodes: %v", nodes)
+			return errors.Errorf("Nodes contains node id 0 which is not permitted, nodes: %v", nodes)
 		}
 		nodeSet[val] = true
 	}
 
 	if !nodeSet[c.Config.SelfID] {
-		return errors.Errorf("Comm.Nodes() does not contain the SelfID: %d, nodes: %v", c.Config.SelfID, nodes)
+		return errors.Errorf("Nodes does not contain the SelfID: %d, nodes: %v", c.Config.SelfID, nodes)
 	}
 
 	if len(nodeSet) != len(nodes) {
-		return errors.Errorf("Comm.Nodes() contains duplicate IDs, nodes: %v", nodes)
+		return errors.Errorf("Nodes contains duplicate IDs, nodes: %v", nodes)
 	}
 
 	return nil
