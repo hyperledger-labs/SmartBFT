@@ -170,7 +170,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	if err := c.ValidateConfiguration(reconfig.CurrentNodes); err != nil {
 		if strings.Contains(err.Error(), "Nodes does not contain the SelfID") {
 			c.close()
-			c.Logger.Infof("Closing consensus")
+			c.Logger.Infof("Closing consensus since this node is not in the current set of nodes")
 			return
 		} else {
 			c.Logger.Panicf("Configuration is invalid, error: %v", err)
@@ -271,17 +271,17 @@ func (c *Consensus) ValidateConfiguration(nodes []uint64) error {
 	nodeSet := make(map[uint64]bool)
 	for _, val := range nodes {
 		if val == 0 {
-			return errors.Errorf("Nodes contains node id 0 which is not permitted, nodes: %v", nodes)
+			return errors.Errorf("nodes contains node id 0 which is not permitted, nodes: %v", nodes)
 		}
 		nodeSet[val] = true
 	}
 
 	if !nodeSet[c.Config.SelfID] {
-		return errors.Errorf("Nodes does not contain the SelfID: %d, nodes: %v", c.Config.SelfID, nodes)
+		return errors.Errorf("nodes does not contain the SelfID: %d, nodes: %v", c.Config.SelfID, nodes)
 	}
 
 	if len(nodeSet) != len(nodes) {
-		return errors.Errorf("Nodes contains duplicate IDs, nodes: %v", nodes)
+		return errors.Errorf("nodes contains duplicate IDs, nodes: %v", nodes)
 	}
 
 	return nil
