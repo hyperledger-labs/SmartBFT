@@ -151,6 +151,10 @@ func TestBasicAddNodes(t *testing.T) {
 }
 
 func TestBasicRemoveNodes(t *testing.T) {
+	// In the beginning there are 7 nodes and the quorum size is 5,
+	// after removing 3 nodes the new quorum size should be 4,
+	// so transactions can be committed after the reconfiguration only if it was successful.
+
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -159,7 +163,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
-	numberOfNodes := 6
+	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
 		n := newNode(uint64(i), network, t.Name(), testDir)
@@ -201,6 +205,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 
 	nodes[4].Disconnect()
 	nodes[5].Disconnect()
+	nodes[6].Disconnect()
 
 	numberOfNodes = 4
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
