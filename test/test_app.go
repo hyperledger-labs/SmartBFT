@@ -73,14 +73,26 @@ func (a *App) Submit(req Request) {
 // Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.SyncResponse {
 	records := a.Node.cb.readAll(*a.latestMD)
+	reconfigSync := types.ReconfigSync{InReplicatedDecisions: false}
 	for _, record := range records {
 		proposal := types.Proposal{
 			Payload:  record.Batch.toBytes(),
 			Metadata: record.Metadata,
 		}
 		a.Deliver(proposal, nil)
+		for _, req := range record.Batch.Requests {
+			request := requestFromBytes(req)
+			if request.Reconfig.InLatestDecision {
+				reconfig := request.Reconfig.recconfigToUint(a.ID)
+				reconfigSync = types.ReconfigSync{
+					InReplicatedDecisions: true,
+					CurrentNodes:          reconfig.CurrentNodes,
+					CurrentConfig:         reconfig.CurrentConfig,
+				}
+			}
+		}
 	}
-	return types.SyncResponse{Latest: *a.lastDecision, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}}
+	return types.SyncResponse{Latest: *a.lastDecision, Reconfig: reconfigSync}
 }
 
 // Restart restarts the node
