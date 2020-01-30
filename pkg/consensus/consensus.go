@@ -168,7 +168,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.Config = reconfig.CurrentConfig
 	if err := c.ValidateConfiguration(reconfig.CurrentNodes); err != nil {
-		if strings.Contains(err.Error(), "Nodes does not contain the SelfID") {
+		if strings.Contains(err.Error(), "nodes does not contain the SelfID") {
 			c.close()
 			c.Logger.Infof("Closing consensus since this node is not in the current set of nodes")
 			return
