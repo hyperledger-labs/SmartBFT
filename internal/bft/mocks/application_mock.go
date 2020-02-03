@@ -13,6 +13,15 @@ type ApplicationMock struct {
 }
 
 // Deliver provides a mock function with given fields: proposal, signature
-func (_m *ApplicationMock) Deliver(proposal types.Proposal, signature []types.Signature) {
-	_m.Called(proposal, signature)
+func (_m *ApplicationMock) Deliver(proposal types.Proposal, signature []types.Signature) types.Reconfig {
+	ret := _m.Called(proposal, signature)
+
+	var r0 types.Reconfig
+	if rf, ok := ret.Get(0).(func(types.Proposal, []types.Signature) types.Reconfig); ok {
+		r0 = rf(proposal, signature)
+	} else {
+		r0 = ret.Get(0).(types.Reconfig)
+	}
+
+	return r0
 }

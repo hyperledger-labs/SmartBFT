@@ -14,7 +14,8 @@ import (
 type Application interface {
 	// Deliver delivers the given proposal and signatures.
 	// After the call returns we assume that this proposal is stored in persistent memory.
-	Deliver(proposal bft.Proposal, signature []bft.Signature)
+	// It returns whether this proposal was a reconfiguration and the current config.
+	Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig
 }
 
 // Comm enables the communications between the nodes.
@@ -73,8 +74,8 @@ type RequestInspector interface {
 // Synchronizer reaches the cluster nodes and fetches blocks in order to sync the replica's state.
 type Synchronizer interface {
 	// Sync blocks indefinitely until the replica's state is synchronized to the latest decision,
-	// and returns it.
-	Sync() bft.Decision
+	// and returns it with info about reconfiguration.
+	Sync() bft.SyncResponse
 }
 
 // Logger defines the contract for logging.

@@ -155,7 +155,7 @@ func TestLeaderPropose(t *testing.T) {
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		appWG.Done()
-	})
+	}).Return(types.Reconfig{InLatestDecision: false})
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
@@ -171,10 +171,10 @@ func TestLeaderPropose(t *testing.T) {
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
-	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.SyncResponse{Latest: types.Decision{
 		Proposal:   types.Proposal{VerificationSequence: 0},
 		Signatures: nil,
-	})
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
 		SelfID:         0,
@@ -285,6 +285,7 @@ func TestViewChanged(t *testing.T) {
 		commWG.Done()
 	})
 	reqPool := &mocks.RequestPool{}
+	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything)
@@ -302,10 +303,10 @@ func TestViewChanged(t *testing.T) {
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
-	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.SyncResponse{Latest: types.Decision{
 		Proposal:   types.Proposal{VerificationSequence: 0},
 		Signatures: nil,
-	})
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
 		SelfID:         0,
@@ -415,12 +416,13 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyRequest", mock.Anything).Return(types.RequestInfo{}, testCase.verifyReqReturns)
+			verifier.On("VerificationSequence").Return(uint64(0))
 
 			synchronizer := &mocks.SynchronizerMock{}
-			synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.Decision{
+			synchronizer.On("Sync").Run(func(args mock.Arguments) {}).Return(types.SyncResponse{Latest: types.Decision{
 				Proposal:   types.Proposal{VerificationSequence: 0},
 				Signatures: nil,
-			})
+			}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 			collector := bft.StateCollector{
 				SelfID:         0,
@@ -552,7 +554,7 @@ func TestSyncInform(t *testing.T) {
 	syncToView := uint64(2)
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
 		synchronizerWG.Done()
-	}).Return(types.Decision{
+	}).Return(types.SyncResponse{Latest: types.Decision{
 		Proposal: types.Proposal{
 			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
 				LatestSequence: 1,
@@ -560,7 +562,7 @@ func TestSyncInform(t *testing.T) {
 			}),
 			VerificationSequence: 1},
 		Signatures: nil,
-	})
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")

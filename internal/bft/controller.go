@@ -435,7 +435,10 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) decide(d decision) {
-	c.Application.Deliver(d.proposal, d.signatures)
+	reconfig := c.Application.Deliver(d.proposal, d.signatures)
+	if reconfig.InLatestDecision {
+		c.close()
+	}
 	c.Checkpoint.Set(d.proposal, d.signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
@@ -458,7 +461,12 @@ func (c *Controller) sync() {
 	// we were syncing.
 	defer c.relinquishSyncToken()
 
-	decision := c.Synchronizer.Sync()
+	syncResponse := c.Synchronizer.Sync()
+	if syncResponse.Reconfig.InReplicatedDecisions {
+		c.close()
+		c.ViewChanger.close()
+	}
+	decision := syncResponse.Latest
 	if decision.Proposal.Metadata == nil {
 		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
 		response := c.fetchState()
@@ -579,6 +587,7 @@ func (c *Controller) relinquishLeaderToken() {
 
 func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence uint64) viewInfo {
 	c.sync()
+	c.MaybePruneRevokedRequests()
 	info := viewInfo{startViewNumber, startProposalSequence}
 	select {
 	case newViewSeq := <-c.viewChange:
@@ -649,6 +658,23 @@ func (c *Controller) Stop() {
 	c.close()
 	c.Batcher.Close()
 	c.RequestPool.Close()
+	c.LeaderMonitor.Close()
+
+	// Drain the leader token if we hold it.
+	select {
+	case <-c.leaderToken:
+	default:
+		// Do nothing
+	}
+
+	c.controllerDone.Wait()
+}
+
+// Stop the controller but only stop the requests pool timers
+func (c *Controller) StopWithPoolPause() {
+	c.close()
+	c.Batcher.Close()
+	c.RequestPool.StopTimers()
 	c.LeaderMonitor.Close()
 
 	// Drain the leader token if we hold it.

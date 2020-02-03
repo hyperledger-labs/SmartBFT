@@ -797,7 +797,7 @@ func TestCommitLastDecision(t *testing.T) {
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	app := &mocks.ApplicationMock{}
-	app.On("Deliver", mock.Anything, mock.Anything)
+	app.On("Deliver", mock.Anything, mock.Anything).Return(types.Reconfig{InLatestDecision: false})
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)
 	pruner := &mocks.Pruner{}
@@ -1626,7 +1626,7 @@ func TestCommitInFlight(t *testing.T) {
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		prop := args.Get(0).(types.Proposal)
 		appChan <- prop
-	})
+	}).Return(types.Reconfig{InLatestDecision: false})
 	pruner := &mocks.Pruner{}
 	pruner.On("MaybePruneRevokedRequests")
 

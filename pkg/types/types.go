@@ -104,3 +104,20 @@ func (c *Checkpoint) Set(proposal Proposal, signatures []Signature) {
 	c.proposal = proposal
 	c.signatures = signatures
 }
+
+type Reconfig struct {
+	InLatestDecision bool
+	CurrentNodes     []uint64
+	CurrentConfig    Configuration
+}
+
+type SyncResponse struct {
+	Latest   Decision
+	Reconfig ReconfigSync
+}
+
+type ReconfigSync struct {
+	InReplicatedDecisions bool
+	CurrentNodes          []uint64
+	CurrentConfig         Configuration
+}
