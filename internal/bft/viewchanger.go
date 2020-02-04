@@ -886,7 +886,7 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 }
 
 func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
-	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Logger.Debugf("Delivering to app the last decision proposal")
 	v.Application.Deliver(proposal, signatures)
 	v.Checkpoint.Set(proposal, signatures)
 	requests, err := v.Verifier.VerifyProposal(proposal)
@@ -990,7 +990,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 // Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
-	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Logger.Debugf("Delivering to app the last decision proposal")
 	v.Application.Deliver(proposal, signatures)
 	v.Checkpoint.Set(proposal, signatures)
 	for _, reqInfo := range requests {
