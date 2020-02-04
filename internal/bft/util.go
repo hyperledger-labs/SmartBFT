@@ -307,7 +307,7 @@ func viewDataToString(svd *protos.SignedViewData) string {
 		return fmt.Sprintf("<malformed viewdata from %d>", svd.Signer)
 	}
 
-	return fmt.Sprintf("<ViewData from %d with NextView: %d",
+	return fmt.Sprintf("<ViewData signed by %d with NextView: %d>",
 		svd.Signer, vd.NextView)
 }
 
