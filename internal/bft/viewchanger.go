@@ -450,11 +450,11 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 
 func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint64) bool {
 	if vd.Signer != sender {
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but signer %d is not the sender %d", v.SelfID, vd, sender, vd.Signer, sender)
+		v.Logger.Warnf("Node %d got %s from %d, but signer %d is not the sender %d", v.SelfID, viewDataToString(vd), sender, vd.Signer, sender)
 		return false
 	}
 	if err := v.Verifier.VerifySignature(types.Signature{ID: vd.Signer, Value: vd.Signature, Msg: vd.RawViewData}); err != nil {
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but signature is invalid, error: %v", v.SelfID, vd, sender, err)
+		v.Logger.Warnf("Node %d got %s from %d, but signature is invalid, error: %v", v.SelfID, viewDataToString(vd), sender, err)
 		return false
 	}
 	rvd := &protos.ViewData{}
@@ -463,24 +463,24 @@ func (v *ViewChanger) validateViewDataMsg(vd *protos.SignedViewData, sender uint
 		return false
 	}
 	if rvd.NextView != v.currView {
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but %d is in view %d", v.SelfID, rvd, sender, v.SelfID, v.currView)
+		v.Logger.Warnf("Node %d got %s from %d, but %d is in view %d", v.SelfID, viewDataToString(vd), sender, v.SelfID, v.currView)
 		return false
 	}
 	if getLeaderID(rvd.NextView, v.N, v.NodesList) != v.SelfID { // check if I am the next leader
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but %d is not the next leader", v.SelfID, rvd, sender, v.SelfID)
+		v.Logger.Warnf("Node %d got %s from %d, but %d is not the next leader", v.SelfID, viewDataToString(vd), sender, v.SelfID)
 		return false
 	}
 	lastSequence, err := ValidateLastDecision(rvd, v.quorum, v.N, v.Verifier)
 	if err != nil {
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but the last decision is invalid, reason: %v", v.SelfID, rvd, sender, err)
+		v.Logger.Warnf("Node %d got %s from %d, but the last decision is invalid, reason: %v", v.SelfID, viewDataToString(vd), sender, err)
 		return false
 	}
-	v.Logger.Debugf("Node %d got viewData message %v from %d, the last decision with sequence %d is valid", v.SelfID, rvd, sender, lastSequence)
+	v.Logger.Debugf("Node %d got %s from %d, the last decision with sequence %d is valid", v.SelfID, viewDataToString(vd), sender, lastSequence)
 	if err := ValidateInFlight(rvd.InFlightProposal, lastSequence); err != nil {
-		v.Logger.Warnf("Node %d got viewData message %v from %d, but the in flight proposal is invalid, reason: %v", v.SelfID, rvd, sender, err)
+		v.Logger.Warnf("Node %d got %v from %d, but the in flight proposal is invalid, reason: %v", v.SelfID, viewDataToString(vd), sender, err)
 		return false
 	}
-	v.Logger.Debugf("Node %d got viewData message %v from %d, the in flight proposal is valid", v.SelfID, rvd, sender)
+	v.Logger.Debugf("Node %d got %s from %d, the in flight proposal is valid", v.SelfID, viewDataToString(vd), sender)
 	return true
 }
 
@@ -741,7 +741,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		nodesMap[svd.Signer] = struct{}{}
 
 		if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
-			v.Logger.Warnf("Node %d is processing newView message, but signature of viewData %v is invalid, error: %v", v.SelfID, svd, err)
+			v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, error: %v", v.SelfID, viewDataToString(svd), err)
 			continue
 		}
 
@@ -752,22 +752,22 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		}
 
 		if vd.NextView != v.currView {
-			v.Logger.Warnf("Node %d is processing newView message, but nextView of viewData %v is %d, while the currView is %d", v.SelfID, vd, vd.NextView, v.currView)
+			v.Logger.Warnf("Node %d is processing newView message, but nextView of %s is %d, while the currView is %d", v.SelfID, viewDataToString(svd), vd.NextView, v.currView)
 			continue
 		}
 
 		lastSequence, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
 		if err != nil {
-			v.Logger.Warnf("Node %d is processing newView message, but the last decision in viewData %v is invalid, reason: %v", v.SelfID, vd, err)
+			v.Logger.Warnf("Node %d is processing newView message, but the last decision in %s is invalid, reason: %v", v.SelfID, viewDataToString(svd), err)
 			continue
 		}
 
 		if err := ValidateInFlight(vd.InFlightProposal, lastSequence); err != nil {
-			v.Logger.Warnf("Node %d is processing newView message, but the in flight in viewData %v is invalid, reason: %v", v.SelfID, vd, err)
+			v.Logger.Warnf("Node %d is processing newView message, but the in flight in %s is invalid, reason: %v", v.SelfID, viewDataToString(svd), err)
 			continue
 		}
 
-		v.Logger.Debugf("Current max sequence is %d and this viewData %v last decision sequence is %d", maxLastDecisionSequence, vd, lastSequence)
+		v.Logger.Debugf("Current max sequence is %d and in %s the last decision sequence is %d", maxLastDecisionSequence, viewDataToString(svd), lastSequence)
 		if lastSequence > maxLastDecisionSequence {
 			maxLastDecisionSequence = lastSequence
 			maxLastDecision = vd.LastDecision
@@ -886,7 +886,7 @@ func (v *ViewChanger) sync(targetSeq uint64) {
 }
 
 func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
-	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Logger.Debugf("Delivering to app the last decision proposal")
 	v.Application.Deliver(proposal, signatures)
 	v.Checkpoint.Set(proposal, signatures)
 	requests, err := v.Verifier.VerifyProposal(proposal)
@@ -990,7 +990,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) {
 // Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
-	v.Logger.Debugf("Delivering to app the last decision proposal %v", proposal)
+	v.Logger.Debugf("Delivering to app the last decision proposal")
 	v.Application.Deliver(proposal, signatures)
 	v.Checkpoint.Set(proposal, signatures)
 	for _, reqInfo := range requests {
