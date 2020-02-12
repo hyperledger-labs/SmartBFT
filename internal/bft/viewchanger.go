@@ -791,31 +791,45 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		}
 
 		viewToChange := v.currView
-		v.Logger.Debugf("Changing to view %d with sequence %d and last decision %v", v.currView, maxLastDecisionSequence+1, maxLastDecision)
 		calledSync := v.commitLastDecision(maxLastDecisionSequence, maxLastDecision, maxLastDecisionSigs)
 
 		if !noInFlight && !calledSync {
 			v.commitInFlightProposal(inFlightProposal)
 		}
 
+		mySequence := v.getMySequence()
+
 		if viewToChange == v.currView { // commitLastDecision did not cause a sync that cause an increase in the view
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
 					NewView: &protos.ViewMetadata{
 						ViewId:         v.currView,
-						LatestSequence: maxLastDecisionSequence,
+						LatestSequence: mySequence,
 					},
 				},
 			}
 			if err := v.State.Save(newViewToSave); err != nil {
 				v.Logger.Panicf("Failed to save message to state, error: %v", err)
 			}
-			v.Controller.ViewChanged(v.currView, maxLastDecisionSequence+1)
+			v.Logger.Debugf("Changing to view %d with sequence %d", v.currView, mySequence+1)
+			v.Controller.ViewChanged(v.currView, mySequence+1)
 		}
 		v.RequestsTimer.RestartTimers()
 		v.checkTimeout = false
 		v.backOffFactor = 1 // reset
 	}
+}
+
+func (v *ViewChanger) getMySequence() uint64 {
+	myLastDecision, _ := v.Checkpoint.Get()
+	if myLastDecision.Metadata == nil { // I am at genesis proposal
+		return 0
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(myLastDecision.Metadata, md); err != nil {
+		v.Logger.Panicf("Node %d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err)
+	}
+	return md.LatestSequence
 }
 
 func (v *ViewChanger) commitLastDecision(lastDecisionSequence uint64, lastDecision *protos.Proposal, lastDecisionSigs []*protos.Signature) (calledSync bool) {

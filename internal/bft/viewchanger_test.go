@@ -897,9 +897,6 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	app.On("Deliver", mock.Anything, mock.Anything)
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
-	synchronizer.On("Sync").Run(func(args mock.Arguments) {
-		synchronizerWG.Done()
-	})
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)
 
@@ -963,6 +960,11 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 			},
 		},
 	}
+
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+		checkpoint.Set(decisionAhead, lastDecisionSignatures)
+	})
 
 	synchronizerWG.Add(2)
 
@@ -1718,7 +1720,7 @@ func TestCommitInFlight(t *testing.T) {
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
 	num = <-seqNumChan
-	assert.Equal(t, uint64(2), num)
+	assert.Equal(t, uint64(3), num)
 
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
 	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
@@ -1816,7 +1818,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
 	num = <-seqNumChan
-	assert.Equal(t, uint64(2), num)
+	assert.Equal(t, uint64(3), num)
 
 	vc.Stop()
 
