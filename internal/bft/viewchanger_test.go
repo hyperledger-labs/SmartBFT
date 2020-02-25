@@ -487,6 +487,7 @@ func TestBadViewDataMessage(t *testing.T) {
 		mutateVerifySig       func(*mocks.VerifierMock)
 		expectedMessageLogged string
 		notLeader             bool
+		deliver               bool
 	}{
 		{
 			description:           "wrong leader",
@@ -511,6 +512,95 @@ func TestBadViewDataMessage(t *testing.T) {
 			},
 		},
 		{
+			description:           "nil last decision",
+			expectedMessageLogged: "the last decision is not set",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView:     1,
+					LastDecision: nil,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "genesis",
+			expectedMessageLogged: "the last decision seq (0) is lower than",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: nil,
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "wrong last decision view",
+			expectedMessageLogged: "is greater or equal to requested next view",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         1,
+						}),
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "greater last decision sequence",
+			expectedMessageLogged: "greater than this node's current sequence",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 3,
+							ViewId:         0,
+						}),
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "deliver last decision",
+			expectedMessageLogged: "Delivering to app the last decision proposal",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 2,
+							ViewId:         0,
+						}),
+					},
+					LastDecisionSignatures: lastDecisionSignaturesProtos,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			deliver: true,
+		},
+		{
 			description:           "wrong signer",
 			expectedMessageLogged: "is not the sender",
 			mutateViewData: func(m *protos.Message) {
@@ -528,6 +618,25 @@ func TestBadViewDataMessage(t *testing.T) {
 				verifierMock.On("VerifySignature", mock.Anything).Return(errors.New(""))
 			},
 		},
+		{
+			description:           "last decision not equal",
+			expectedMessageLogged: "the last decisions are not equal",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
 	} {
 		t.Run(test.description, func(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
@@ -543,6 +652,16 @@ func TestBadViewDataMessage(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			app := &mocks.ApplicationMock{}
+			var deliverWG sync.WaitGroup
+			deliverWG.Add(1)
+			app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				deliverWG.Done()
+			})
+			pruner := &mocks.Pruner{}
+			pruner.On("MaybePruneRevokedRequests")
 			checkpoint := types.Checkpoint{}
 			checkpoint.Set(lastDecision, lastDecisionSignatures)
 
@@ -552,14 +671,16 @@ func TestBadViewDataMessage(t *testing.T) {
 			}
 
 			vc := &bft.ViewChanger{
-				SelfID:     uint64(selfId),
-				N:          4,
-				NodesList:  []uint64{0, 1, 2, 3},
-				Logger:     log,
-				Verifier:   verifier,
-				Checkpoint: &checkpoint,
-				Ticker:     make(chan time.Time),
-				InMsqQSize: 100,
+				SelfID:      uint64(selfId),
+				N:           4,
+				NodesList:   []uint64{0, 1, 2, 3},
+				Logger:      log,
+				Verifier:    verifier,
+				Checkpoint:  &checkpoint,
+				Application: app,
+				Pruner:      pruner,
+				Ticker:      make(chan time.Time),
+				InMsqQSize:  100,
 			}
 
 			vc.Start(1)
@@ -569,6 +690,10 @@ func TestBadViewDataMessage(t *testing.T) {
 
 			vc.HandleMessage(0, msg)
 			warningMsgLogged.Wait()
+
+			if test.deliver {
+				deliverWG.Wait()
+			}
 
 			vc.Stop()
 		})

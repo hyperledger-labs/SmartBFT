@@ -509,7 +509,7 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 		return false, 0
 	}
 
-	v.Logger.Debugf("Node %d got %s from %d, the last decision seq is %d and this node's current sequence %d", v.SelfID, signedViewDataToString(svd), sender, lastDecisionMD.LatestSequence, mySequence)
+	v.Logger.Debugf("Node %d got %s from %d, the last decision seq is %d and this node's current sequence is %d", v.SelfID, signedViewDataToString(svd), sender, lastDecisionMD.LatestSequence, mySequence)
 
 	if lastDecisionMD.LatestSequence > mySequence+1 { // this is a decision in the future, ignoring since the node might not have the right configuration to validate
 		v.Logger.Debugf("Node %d got %s from %d, but the last decision seq %d is greater than this node's current sequence %d", v.SelfID, signedViewDataToString(svd), sender, lastDecisionMD.LatestSequence, mySequence)
