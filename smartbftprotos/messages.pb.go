@@ -1128,7 +1128,9 @@ func init() {
 	proto.RegisterType((*StateTransferResponse)(nil), "smartbftprotos.StateTransferResponse")
 }
 
-func init() { proto.RegisterFile("smartbftprotos/messages.proto", fileDescriptor_0d30f2fcdff47131) }
+func init() {
+	proto.RegisterFile("smartbftprotos/messages.proto", fileDescriptor_0d30f2fcdff47131)
+}
 
 var fileDescriptor_0d30f2fcdff47131 = []byte{
 	// 934 bytes of a gzipped FileDescriptorProto

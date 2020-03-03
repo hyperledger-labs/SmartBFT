@@ -468,6 +468,31 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
+
+	start := time.Now()
+	for _, n := range nodes {
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+	}
+
+	done := make(chan struct{})
+	viewChangeFinishWG := sync.WaitGroup{}
+	viewChangeFinishWG.Add(1)
+	viewChangeFinishOnce := sync.Once{}
+	baseLogger := nodes[3].logger.Desugar()
+	nodes[3].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
+			viewChangeFinishOnce.Do(func() {
+				viewChangeFinishWG.Done()
+			})
+		}
+		return nil
+	})).Sugar()
+
+	for _, n := range nodes {
+		n.Setup()
+	}
+
 	startNodes(nodes, &network)
 
 	nodes[3].Disconnect() // will need to catch up
@@ -490,8 +515,13 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
 	}
 
+	accelerateTime(nodes, done, false, true)
+
 	data3 := <-nodes[3].Delivered // from catch up
 	assert.Equal(t, data[0], data3)
+
+	viewChangeFinishWG.Wait()
+	close(done)
 
 	data = make([]*AppRecord, 0)
 	for i := 1; i < numberOfNodes; i++ {
@@ -1184,6 +1214,69 @@ func TestGradualStart(t *testing.T) {
 	assert.Equal(t, d0, d1)
 	d2 = <-n2.Delivered
 	assert.Equal(t, d0, d2)
+
+}
+
+func TestReconfigAndViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 2; i <= numberOfNodes+1; i++ { // add 4 nodes with ids starting at 2
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+
+	startNodes(nodes, &network)
+
+	for i := 1; i < 5; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+	}
+
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	for i := 0; i < numberOfNodes; i++ {
+		nodes[i].Consensus.Stop() // stop all nodes
+	}
+
+	newNode := newNode(1, network, t.Name(), testDir) // add node with id 1, should be the leader
+	nodes = append(nodes, newNode)
+	startNodes(nodes[4:], &network)
+
+	for i := 0; i < numberOfNodes; i++ {
+		nodes[i].Restart() // restart all stopped nodes
+	}
+
+	d := <-nodes[4].Delivered
+	assert.Equal(t, d, data[0]) // make sure the new added node (leader) is synced
+
+	nodes[4].Disconnect() // leader in partition
+
+	for i := 0; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "10", ClientID: "alice"}) // submit while leader in partition will cause a view change
+	}
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
 
 }
 
