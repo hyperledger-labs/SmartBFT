@@ -252,10 +252,6 @@ func TestViewDataProcess(t *testing.T) {
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
 		verifierSigWG.Done()
 	}).Return(nil)
-	verifierConsenterSigWG := sync.WaitGroup{}
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		verifierConsenterSigWG.Done()
-	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	seqNumChan := make(chan uint64)
@@ -265,6 +261,8 @@ func TestViewDataProcess(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	reqTimer := &mocks.RequestsTimer{}
@@ -282,6 +280,8 @@ func TestViewDataProcess(t *testing.T) {
 		Controller:    controller,
 		Ticker:        make(chan time.Time),
 		Checkpoint:    &checkpoint,
+		InFlight:      &bft.InFlightData{},
+		Signer:        signer,
 		RequestsTimer: reqTimer,
 		InMsqQSize:    100,
 		State:         state,
@@ -290,34 +290,24 @@ func TestViewDataProcess(t *testing.T) {
 	vc.Start(1)
 
 	verifierSigWG.Add(1)
-	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(0, viewDataMsg1)
 	verifierSigWG.Wait()
-	verifierConsenterSigWG.Wait()
 
 	msg1 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg1.GetViewData().Signer = 1
 
 	verifierSigWG.Add(1)
-	verifierConsenterSigWG.Add(3)
 	vc.HandleMessage(1, msg1)
 	verifierSigWG.Wait()
-	verifierConsenterSigWG.Wait()
 
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
 	verifierSigWG.Add(4)
-	// VerifyConsenterSig is called 3 times (3 signatures) during validation of the view data message
-	// 9 times after getting 3 view data messages and checking the in flight
-	// 9 times during validation of the new view message
-	// and 9 times when checking the in flight after validating the new view message
-	verifierConsenterSigWG.Add(30)
 	vc.HandleMessage(2, msg2)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetNewView())
 	verifierSigWG.Wait()
-	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(1), num)
 	num = <-seqNumChan
@@ -338,10 +328,6 @@ func TestNewViewProcess(t *testing.T) {
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
 		verifierSigWG.Done()
-	}).Return(nil)
-	verifierConsenterSigWG := sync.WaitGroup{}
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		verifierConsenterSigWG.Done()
 	}).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
@@ -402,13 +388,8 @@ func TestNewViewProcess(t *testing.T) {
 	}
 
 	verifierSigWG.Add(3)
-	// VerifyConsenterSig is called 9 times during validation of the new view message, there are 3 view date messages
-	// inside the new view message, each with 3 signatures on the last decision
-	// and 9 times when checking the in flight after validating the new view message
-	verifierConsenterSigWG.Add(18)
 	vc.HandleMessage(2, msg)
 	verifierSigWG.Wait()
-	verifierConsenterSigWG.Wait()
 	num := <-viewNumChan
 	assert.Equal(t, uint64(2), num)
 	num = <-seqNumChan
@@ -504,7 +485,120 @@ func TestBadViewDataMessage(t *testing.T) {
 		mutateViewData        func(*protos.Message)
 		mutateVerifySig       func(*mocks.VerifierMock)
 		expectedMessageLogged string
+		notLeader             bool
+		deliver               bool
 	}{
+		{
+			description:           "wrong leader",
+			expectedMessageLogged: "is not the next leader",
+			mutateViewData: func(m *protos.Message) {
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			notLeader: true,
+		},
+		{
+			description:           "wrong view",
+			expectedMessageLogged: "is in view",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 10,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "nil last decision",
+			expectedMessageLogged: "the last decision is not set",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView:     1,
+					LastDecision: nil,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "genesis",
+			expectedMessageLogged: "the last decision seq (0) is lower than",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: nil,
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "wrong last decision view",
+			expectedMessageLogged: "is greater or equal to requested next view",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         1,
+						}),
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "greater last decision sequence",
+			expectedMessageLogged: "greater than this node's current sequence",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 3,
+							ViewId:         0,
+						}),
+					},
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+		},
+		{
+			description:           "deliver last decision",
+			expectedMessageLogged: "Delivering to app the last decision proposal",
+			mutateViewData: func(m *protos.Message) {
+				vd := &protos.ViewData{
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 2,
+							ViewId:         0,
+						}),
+					},
+					LastDecisionSignatures: lastDecisionSignaturesProtos,
+				}
+				vdBytes := bft.MarshalOrPanic(vd)
+				m.GetViewData().RawViewData = vdBytes
+			},
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			deliver: true,
+		},
 		{
 			description:           "wrong signer",
 			expectedMessageLogged: "is not the sender",
@@ -524,22 +618,20 @@ func TestBadViewDataMessage(t *testing.T) {
 			},
 		},
 		{
-			description:           "wrong view",
-			expectedMessageLogged: "is in view",
+			description:           "last decision not equal",
+			expectedMessageLogged: "the last decisions are not equal",
 			mutateViewData: func(m *protos.Message) {
 				vd := &protos.ViewData{
-					NextView: 10,
+					NextView: 1,
+					LastDecision: &protos.Proposal{
+						Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+							LatestSequence: 1,
+							ViewId:         0,
+						}),
+					},
 				}
 				vdBytes := bft.MarshalOrPanic(vd)
 				m.GetViewData().RawViewData = vdBytes
-			},
-			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
-			},
-		},
-		{
-			description:           "wrong leader",
-			expectedMessageLogged: "is not the next leader",
-			mutateViewData: func(m *protos.Message) {
 			},
 			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
 			},
@@ -559,14 +651,35 @@ func TestBadViewDataMessage(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			app := &mocks.ApplicationMock{}
+			var deliverWG sync.WaitGroup
+			deliverWG.Add(1)
+			app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				deliverWG.Done()
+			})
+			pruner := &mocks.Pruner{}
+			pruner.On("MaybePruneRevokedRequests")
+			checkpoint := types.Checkpoint{}
+			checkpoint.Set(lastDecision, lastDecisionSignatures)
+
+			selfId := 1
+			if test.notLeader {
+				selfId = 2
+			}
+
 			vc := &bft.ViewChanger{
-				SelfID:     2,
-				N:          4,
-				NodesList:  []uint64{0, 1, 2, 3},
-				Logger:     log,
-				Verifier:   verifier,
-				Ticker:     make(chan time.Time),
-				InMsqQSize: 100,
+				SelfID:      uint64(selfId),
+				N:           4,
+				NodesList:   []uint64{0, 1, 2, 3},
+				Logger:      log,
+				Verifier:    verifier,
+				Checkpoint:  &checkpoint,
+				Application: app,
+				Pruner:      pruner,
+				Ticker:      make(chan time.Time),
+				InMsqQSize:  100,
 			}
 
 			vc.Start(1)
@@ -577,9 +690,265 @@ func TestBadViewDataMessage(t *testing.T) {
 			vc.HandleMessage(0, msg)
 			warningMsgLogged.Wait()
 
+			if test.deliver {
+				deliverWG.Wait()
+			}
+
 			vc.Stop()
 		})
 
+	}
+}
+
+func TestBadNewViewMessage(t *testing.T) {
+	for _, test := range []struct {
+		description           string
+		expectedMessageLogged string
+		notLeader             bool
+		sync                  bool
+		deliver               bool
+		mutateVerifySig       func(*mocks.VerifierMock)
+		mutateNewView         func(*protos.Message)
+	}{
+		{
+			description:           "wrong leader",
+			expectedMessageLogged: "expected sender to be",
+			notLeader:             true,
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+			},
+		},
+		{
+			description:           "wrong view",
+			expectedMessageLogged: "while the currView is",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.NextView = 2
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+		},
+		{
+			description:           "invalid signature",
+			expectedMessageLogged: "but signature of",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+				verifierMock.On("VerifySignature", mock.Anything).Return(errors.New(""))
+			},
+			mutateNewView: func(m *protos.Message) {
+			},
+		},
+		{
+			description:           "different last decision",
+			expectedMessageLogged: "is with the same sequence but is not equal",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.LastDecision.Payload = nil
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+		},
+		{
+			description:           "sync",
+			expectedMessageLogged: "requested a sync",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.LastDecision.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 3,
+					ViewId:         0,
+				})
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+			sync: true,
+		},
+		{
+			description:           "invalid last decision sequence",
+			expectedMessageLogged: "greater or equal to requested next view",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.LastDecision.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 1,
+					ViewId:         1,
+				})
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+		},
+		{
+			description:           "last decision not set",
+			expectedMessageLogged: "is not set",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.LastDecision = nil
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+		},
+		{
+			description:           "deliver",
+			expectedMessageLogged: "but signature of",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+				verifierMock.On("VerifySignature", mock.Anything).Return(errors.New(""))
+			},
+			mutateNewView: func(m *protos.Message) {
+				viewData := proto.Clone(vd).(*protos.ViewData)
+				viewData.LastDecision.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+					LatestSequence: 2,
+					ViewId:         0,
+				})
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(viewData),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+			deliver: true,
+		},
+		{
+			description:           "not enough",
+			expectedMessageLogged: "valid view data messages while the quorum is",
+			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
+			},
+			mutateNewView: func(m *protos.Message) {
+				signed := make([]*protos.SignedViewData, 0)
+				signed = append(signed, &protos.SignedViewData{
+					RawViewData: bft.MarshalOrPanic(vd),
+					Signer:      0,
+					Signature:   nil,
+				})
+				m.GetNewView().SignedViewData = signed
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			var warningMsgLogged sync.WaitGroup
+			warningMsgLogged.Add(1)
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, test.expectedMessageLogged) {
+					warningMsgLogged.Done()
+				}
+				return nil
+			})).Sugar()
+			verifier := &mocks.VerifierMock{}
+			test.mutateVerifySig(verifier)
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			app := &mocks.ApplicationMock{}
+			var deliverWG sync.WaitGroup
+			deliverWG.Add(1)
+			app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				deliverWG.Done()
+			})
+			pruner := &mocks.Pruner{}
+			pruner.On("MaybePruneRevokedRequests")
+			checkpoint := types.Checkpoint{}
+			checkpoint.Set(lastDecision, lastDecisionSignatures)
+			synchronizer := &mocks.Synchronizer{}
+			synchronizerWG := sync.WaitGroup{}
+			synchronizerWG.Add(1)
+			synchronizer.On("Sync").Run(func(args mock.Arguments) {
+				synchronizerWG.Done()
+			})
+
+			vc := &bft.ViewChanger{
+				SelfID:       3,
+				N:            4,
+				NodesList:    []uint64{0, 1, 2, 3},
+				Logger:       log,
+				Checkpoint:   &checkpoint,
+				Verifier:     verifier,
+				Synchronizer: synchronizer,
+				Application:  app,
+				Pruner:       pruner,
+				Ticker:       make(chan time.Time),
+				InMsqQSize:   100,
+			}
+
+			vc.Start(1)
+
+			vdBytes := bft.MarshalOrPanic(vd)
+			signed := make([]*protos.SignedViewData, 0)
+			for len(signed) < 3 { // quorum = 3
+				msg := &protos.Message{
+					Content: &protos.Message_ViewData{
+						ViewData: &protos.SignedViewData{
+							RawViewData: vdBytes,
+							Signer:      uint64(len(signed)),
+							Signature:   nil,
+						},
+					},
+				}
+				signed = append(signed, msg.GetViewData())
+			}
+			msg := &protos.Message{
+				Content: &protos.Message_NewView{
+					NewView: &protos.NewView{
+						SignedViewData: signed,
+					},
+				},
+			}
+			test.mutateNewView(msg)
+
+			if test.notLeader {
+				vc.HandleMessage(0, msg)
+			} else {
+				vc.HandleMessage(1, msg)
+			}
+
+			if test.sync {
+				synchronizerWG.Wait()
+			}
+
+			if test.deliver {
+				deliverWG.Wait()
+			}
+
+			warningMsgLogged.Wait()
+
+			vc.Stop()
+
+		})
 	}
 }
 
@@ -862,59 +1231,27 @@ func TestCommitLastDecision(t *testing.T) {
 func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	// Scenario: a node gets a newView message with last decision with seq 3,
 	// while its checkpoint shows that its last decision is only at seq 1,
-	// the node calls sync to catch up and waits for it to come back (via inform),
-	// the first sync informs on seq 2 and so sync is called again,
-	// which informs on seq 3 as expected.
+	// the node calls sync to catch up.
 
-	comm := &mocks.CommMock{}
-	comm.On("BroadcastConsensus", mock.Anything)
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	signer := &mocks.SignerMock{}
-	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	verifier := &mocks.VerifierMock{}
-	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-	controller := &mocks.ViewController{}
-	viewNumChan := make(chan uint64)
-	seqNumChan := make(chan uint64)
-	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
-		num := args.Get(0).(uint64)
-		viewNumChan <- num
-		num = args.Get(1).(uint64)
-		seqNumChan <- num
-	}).Return(nil).Once()
-	controller.On("AbortView", mock.Anything)
-	reqTimer := &mocks.RequestsTimer{}
-	reqTimer.On("StopTimers")
-	reqTimer.On("RestartTimers")
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
-	app := &mocks.ApplicationMock{}
-	app.On("Deliver", mock.Anything, mock.Anything)
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
-	state := &mocks.State{}
-	state.On("Save", mock.Anything).Return(nil)
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	})
 
 	vc := &bft.ViewChanger{
-		SelfID:        3,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		InFlight:      &bft.InFlightData{},
-		Application:   app,
-		Checkpoint:    &checkpoint,
-		Synchronizer:  synchronizer,
-		State:         state,
+		SelfID:       3,
+		N:            4,
+		NodesList:    []uint64{0, 1, 2, 3},
+		Logger:       log,
+		Ticker:       make(chan time.Time),
+		Checkpoint:   &checkpoint,
+		Synchronizer: synchronizer,
 	}
 
 	decisionAhead := types.Proposal{
@@ -960,27 +1297,11 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		},
 	}
 
-	synchronizer.On("Sync").Run(func(args mock.Arguments) {
-		synchronizerWG.Done()
-		checkpoint.Set(decisionAhead, lastDecisionSignatures)
-	})
-
-	synchronizerWG.Add(2)
-
 	vc.Start(1)
 
+	synchronizerWG.Add(1)
 	vc.HandleMessage(1, msg)
-
-	vc.InformNewView(0, 2) // lower sequence, will cause another sync
-
 	synchronizerWG.Wait()
-
-	vc.InformNewView(0, 3)
-
-	num := <-viewNumChan
-	assert.Equal(t, uint64(1), num)
-	num = <-seqNumChan
-	assert.Equal(t, uint64(4), num)
 
 	vc.Stop()
 }

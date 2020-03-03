@@ -260,7 +260,7 @@ func MsgToString(m *protos.Message) string {
 	case *protos.Message_NewView:
 		return newViewToString(m.GetNewView())
 	case *protos.Message_ViewData:
-		return viewDataToString(m.GetViewData())
+		return signedViewDataToString(m.GetViewData())
 	case *protos.Message_HeartBeat:
 		return heartBeatToString(m.GetHeartBeat())
 	case *protos.Message_HeartBeatResponse:
@@ -288,7 +288,7 @@ func newViewToString(nv *protos.NewView) string {
 	buff := bytes.Buffer{}
 	buff.WriteString("< NewView with ")
 	for i, svd := range nv.SignedViewData {
-		buff.WriteString(viewDataToString(svd))
+		buff.WriteString(signedViewDataToString(svd))
 		if i == len(nv.SignedViewData)-1 {
 			break
 		}
@@ -298,7 +298,7 @@ func newViewToString(nv *protos.NewView) string {
 	return buff.String()
 }
 
-func viewDataToString(svd *protos.SignedViewData) string {
+func signedViewDataToString(svd *protos.SignedViewData) string {
 	if svd == nil {
 		return "empty ViewData"
 	}
