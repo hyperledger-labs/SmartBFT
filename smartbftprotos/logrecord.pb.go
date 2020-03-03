@@ -109,7 +109,9 @@ func init() {
 	proto.RegisterType((*LogRecord)(nil), "smartbftprotos.LogRecord")
 }
 
-func init() { proto.RegisterFile("smartbftprotos/logrecord.proto", fileDescriptor_d6f88cf2e7d665db) }
+func init() {
+	proto.RegisterFile("smartbftprotos/logrecord.proto", fileDescriptor_d6f88cf2e7d665db)
+}
 
 var fileDescriptor_d6f88cf2e7d665db = []byte{
 	// 193 bytes of a gzipped FileDescriptorProto
