@@ -549,7 +549,7 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 		return false, 0
 	}
 
-	// lastDecisionMD.LatestSequence == mySequence+1
+	// This node is one sequence behind, validate the last decision and deliver
 
 	_, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
 	if err != nil {
