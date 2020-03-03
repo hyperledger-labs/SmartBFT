@@ -374,10 +374,8 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 		v.viewChangeMsgs.clear(v.N)
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
-		msg := v.prepareViewDataMsg()
-		if v.leader == v.SelfID {
-			v.processMsg(v.SelfID, msg)
-		} else {
+		if v.leader != v.SelfID {
+			msg := v.prepareViewDataMsg()
 			v.Comm.SendConsensus(v.leader, msg)
 		}
 		v.Logger.Debugf("Node %d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, v.leader)
@@ -666,11 +664,18 @@ func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) er
 }
 
 func (v *ViewChanger) processViewDataMsg() {
-	if len(v.viewDataMsgs.voted) < v.quorum {
+	if len(v.viewDataMsgs.voted) < v.quorum-1 {
 		return // need enough (quorum) data to continue
 	}
 	v.Logger.Debugf("Node %d got a quorum of viewData messages", v.SelfID)
-	ok, _, _, err := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier)
+	vdMsgs := v.getViewDataMessages()
+	myMsg := v.prepareViewDataMsg()
+	myVd := &protos.ViewData{}
+	if err := proto.Unmarshal(myMsg.GetViewData().RawViewData, myVd); err != nil {
+		v.Logger.Panicf("Node %d was unable to unmarshal its own viewData message, error: %v", v.SelfID, err)
+	}
+	vdMsgs = append(vdMsgs, myVd)
+	ok, _, _, err := CheckInFlight(vdMsgs, v.f, v.quorum, v.N, v.Verifier)
 	if err != nil {
 		v.Logger.Panicf("Node %d checked the in flight and it got an error: %v", v.SelfID, err)
 	}
@@ -681,13 +686,9 @@ func (v *ViewChanger) processViewDataMsg() {
 	v.Logger.Debugf("Node %d checked the in flight and it was valid", v.SelfID)
 	// create the new view message
 	var signedMsgs []*protos.SignedViewData
-	myMsg := v.prepareViewDataMsg()                      // since it might have changed by now
 	signedMsgs = append(signedMsgs, myMsg.GetViewData()) // leader's message will always be the first
 	close(v.viewDataMsgs.votes)
 	for vote := range v.viewDataMsgs.votes {
-		if vote.sender == v.SelfID {
-			continue // ignore my old message
-		}
 		signedMsgs = append(signedMsgs, vote.GetViewData())
 	}
 	msg := &protos.Message{
@@ -707,7 +708,7 @@ func (v *ViewChanger) processViewDataMsg() {
 
 func (v *ViewChanger) getViewDataMessages() []*protos.ViewData {
 	num := len(v.viewDataMsgs.votes)
-	messages := make([]*protos.ViewData, 0)
+	var messages []*protos.ViewData
 	for i := 0; i < num; i++ {
 		vote := <-v.viewDataMsgs.votes
 		vd := &protos.ViewData{}

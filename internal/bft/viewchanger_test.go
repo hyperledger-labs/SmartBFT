@@ -294,13 +294,6 @@ func TestViewDataProcess(t *testing.T) {
 	vc.HandleMessage(0, viewDataMsg1)
 	verifierSigWG.Wait()
 
-	msg1 := proto.Clone(viewDataMsg1).(*protos.Message)
-	msg1.GetViewData().Signer = 1
-
-	verifierSigWG.Add(1)
-	vc.HandleMessage(1, msg1)
-	verifierSigWG.Wait()
-
 	msg2 := proto.Clone(viewDataMsg1).(*protos.Message)
 	msg2.GetViewData().Signer = 2
 
