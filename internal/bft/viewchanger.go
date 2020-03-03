@@ -470,10 +470,14 @@ func (v *ViewChanger) validateViewDataMsg(svd *protos.SignedViewData, sender uin
 		return false
 	}
 
+	v.Logger.Debugf("Node %d got %s from %d, and it passed the last decision check", v.SelfID, signedViewDataToString(svd), sender)
+
 	if err := ValidateInFlight(vd.InFlightProposal, lastDecisionSequence); err != nil {
 		v.Logger.Warnf("Node %d got %v from %d, but the in flight proposal is invalid, reason: %v", v.SelfID, signedViewDataToString(svd), sender, err)
 		return false
 	}
+
+	v.Logger.Debugf("Node %d got %s from %d, and the in flight proposal is valid", v.SelfID, signedViewDataToString(svd), sender)
 
 	return true
 }
@@ -540,43 +544,46 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 		return true, lastDecisionMD.LatestSequence
 	}
 
-	if lastDecisionMD.LatestSequence == mySequence+1 {
-		_, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
-		if err != nil {
-			v.Logger.Warnf("Node %d got %s from %d, but the last decision is invalid, reason: %v", v.SelfID, signedViewDataToString(svd), sender, err)
-			return false, 0
-		}
-
-		proposal := types.Proposal{
-			Header:               vd.LastDecision.Header,
-			Metadata:             vd.LastDecision.Metadata,
-			Payload:              vd.LastDecision.Payload,
-			VerificationSequence: int64(vd.LastDecision.VerificationSequence),
-		}
-		signatures := make([]types.Signature, 0)
-		for _, sig := range vd.LastDecisionSignatures {
-			signature := types.Signature{
-				ID:    sig.Signer,
-				Value: sig.Value,
-				Msg:   sig.Msg,
-			}
-			signatures = append(signatures, signature)
-		}
-		v.deliverDecision(proposal, signatures)
-
-		if svd.Signer != sender {
-			v.Logger.Warnf("Node %d got %s from %d, but signer %d is not the sender %d", v.SelfID, signedViewDataToString(svd), sender, svd.Signer, sender)
-			return false, 0
-		}
-		if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
-			v.Logger.Warnf("Node %d got %s from %d, but signature is invalid, error: %v", v.SelfID, signedViewDataToString(svd), sender, err)
-			return false, 0
-		}
-
-		return true, lastDecisionMD.LatestSequence
+	if lastDecisionMD.LatestSequence != mySequence+1 {
+		v.Logger.Warnf("Node %d got %s from %d, the last decision sequence is not equal to this node's sequence + 1", v.SelfID, signedViewDataToString(svd), sender)
+		return false, 0
 	}
 
-	return false, 0
+	// lastDecisionMD.LatestSequence == mySequence+1
+
+	_, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
+	if err != nil {
+		v.Logger.Warnf("Node %d got %s from %d, but the last decision is invalid, reason: %v", v.SelfID, signedViewDataToString(svd), sender, err)
+		return false, 0
+	}
+
+	proposal := types.Proposal{
+		Header:               vd.LastDecision.Header,
+		Metadata:             vd.LastDecision.Metadata,
+		Payload:              vd.LastDecision.Payload,
+		VerificationSequence: int64(vd.LastDecision.VerificationSequence),
+	}
+	var signatures []types.Signature
+	for _, sig := range vd.LastDecisionSignatures {
+		signature := types.Signature{
+			ID:    sig.Signer,
+			Value: sig.Value,
+			Msg:   sig.Msg,
+		}
+		signatures = append(signatures, signature)
+	}
+	v.deliverDecision(proposal, signatures)
+
+	if svd.Signer != sender {
+		v.Logger.Warnf("Node %d got %s from %d, but signer %d is not the sender %d", v.SelfID, signedViewDataToString(svd), sender, svd.Signer, sender)
+		return false, 0
+	}
+	if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
+		v.Logger.Warnf("Node %d got %s from %d, but signature is invalid, error: %v", v.SelfID, signedViewDataToString(svd), sender, err)
+		return false, 0
+	}
+
+	return true, lastDecisionMD.LatestSequence
 }
 
 func (v *ViewChanger) extractCurrentSequence() (uint64, *protos.Proposal) {
@@ -673,7 +680,7 @@ func (v *ViewChanger) processViewDataMsg() {
 	}
 	v.Logger.Debugf("Node %d checked the in flight and it was valid", v.SelfID)
 	// create the new view message
-	signedMsgs := make([]*protos.SignedViewData, 0)
+	var signedMsgs []*protos.SignedViewData
 	myMsg := v.prepareViewDataMsg()                      // since it might have changed by now
 	signedMsgs = append(signedMsgs, myMsg.GetViewData()) // leader's message will always be the first
 	close(v.viewDataMsgs.votes)
@@ -726,7 +733,7 @@ type proposalAndMetadata struct {
 
 // CheckInFlight checks if there is an in-flight proposal that needs to be decided on (because a node might decided on it already)
 func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal, err error) {
-	expectedSequence := maxLastDecisionSequence(messages, quorum, N, verifier) + 1
+	expectedSequence := maxLastDecisionSequence(messages) + 1
 	possibleProposals := make([]*possibleProposal, 0)
 	proposalsAndMetadata := make([]*proposalAndMetadata, 0)
 	noInFlightCount := 0
@@ -824,7 +831,8 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 	return false, false, nil, nil
 }
 
-func maxLastDecisionSequence(messages []*protos.ViewData, quorum int, N uint64, verifier api.Verifier) uint64 {
+// returns the highest sequence of a last decision within the given view data messages
+func maxLastDecisionSequence(messages []*protos.ViewData) uint64 {
 	max := uint64(0)
 	for _, vd := range messages {
 		if vd.LastDecision == nil {
@@ -1026,11 +1034,9 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		return
 	}
 
-	if !noInFlight {
-		if !v.commitInFlightProposal(inFlightProposal) {
-			v.Logger.Warnf("Node %d was unable to commit the in flight proposal, not changing the view", v.SelfID)
-			return
-		}
+	if !noInFlight && !v.commitInFlightProposal(inFlightProposal) {
+		v.Logger.Warnf("Node %d was unable to commit the in flight proposal, not changing the view", v.SelfID)
+		return
 	}
 
 	mySequence, _ := v.extractCurrentSequence()

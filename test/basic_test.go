@@ -1228,7 +1228,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
-	for i := 2; i <= numberOfNodes+1; i++ {
+	for i := 2; i <= numberOfNodes+1; i++ { // add 4 nodes with ids starting at 2
 		n := newNode(uint64(i), network, t.Name(), testDir)
 		nodes = append(nodes, n)
 	}
@@ -1249,24 +1249,24 @@ func TestReconfigAndViewChange(t *testing.T) {
 	}
 
 	for i := 0; i < numberOfNodes; i++ {
-		nodes[i].Consensus.Stop()
+		nodes[i].Consensus.Stop() // stop all nodes
 	}
 
-	newNode := newNode(1, network, t.Name(), testDir)
+	newNode := newNode(1, network, t.Name(), testDir) // add node with id 1, should be the leader
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], &network)
 
 	for i := 0; i < numberOfNodes; i++ {
-		nodes[i].Restart()
+		nodes[i].Restart() // restart all stopped nodes
 	}
 
 	d := <-nodes[4].Delivered
-	assert.Equal(t, d, data[0])
+	assert.Equal(t, d, data[0]) // make sure the new added node (leader) is synced
 
-	nodes[4].Disconnect()
+	nodes[4].Disconnect() // leader in partition
 
 	for i := 0; i < numberOfNodes; i++ {
-		nodes[i].Submit(Request{ID: "10", ClientID: "alice"})
+		nodes[i].Submit(Request{ID: "10", ClientID: "alice"}) // submit while leader in partition will cause a view change
 	}
 
 	data = make([]*AppRecord, 0)
