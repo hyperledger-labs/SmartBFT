@@ -658,7 +658,7 @@ func TestBadViewDataMessage(t *testing.T) {
 			deliverWG.Add(1)
 			app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 				deliverWG.Done()
-			})
+			}).Return(types.Reconfig{InLatestDecision: false})
 			pruner := &mocks.Pruner{}
 			pruner.On("MaybePruneRevokedRequests")
 			checkpoint := types.Checkpoint{}
@@ -879,7 +879,7 @@ func TestBadNewViewMessage(t *testing.T) {
 			deliverWG.Add(1)
 			app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 				deliverWG.Done()
-			})
+			}).Return(types.Reconfig{InLatestDecision: false})
 			pruner := &mocks.Pruner{}
 			pruner.On("MaybePruneRevokedRequests")
 			checkpoint := types.Checkpoint{}
