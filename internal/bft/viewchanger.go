@@ -1117,10 +1117,7 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 		v.close()
 	}
 	v.Checkpoint.Set(proposal, signatures)
-	requests, err := v.Verifier.VerifyProposal(proposal)
-	if err != nil {
-		v.Logger.Panicf("Node %d is unable to verify the last decision proposal, err: %v", v.SelfID, err)
-	}
+	requests := v.Verifier.RequestsFromProposal(proposal)
 	for _, reqInfo := range requests {
 		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {
 			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)

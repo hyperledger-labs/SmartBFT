@@ -63,6 +63,8 @@ type Verifier interface {
 	VerifySignature(signature bft.Signature) error
 	// VerificationSequence returns the current verification sequence.
 	VerificationSequence() uint64
+	// RequestsFromProposal returns from the given proposal the included requests' info
+	RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo
 }
 
 // RequestInspector extracts info (i.e. request id and client id) from a given request.

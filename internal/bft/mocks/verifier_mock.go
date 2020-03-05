@@ -12,6 +12,22 @@ type VerifierMock struct {
 	mock.Mock
 }
 
+// RequestsFromProposal provides a mock function with given fields: proposal
+func (_m *VerifierMock) RequestsFromProposal(proposal types.Proposal) []types.RequestInfo {
+	ret := _m.Called(proposal)
+
+	var r0 []types.RequestInfo
+	if rf, ok := ret.Get(0).(func(types.Proposal) []types.RequestInfo); ok {
+		r0 = rf(proposal)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]types.RequestInfo)
+		}
+	}
+
+	return r0
+}
+
 // VerificationSequence provides a mock function with given fields:
 func (_m *VerifierMock) VerificationSequence() uint64 {
 	ret := _m.Called()

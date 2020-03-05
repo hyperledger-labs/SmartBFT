@@ -66,6 +66,17 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	return requests, nil
 }
 
+func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
+	blockData := BlockDataFromBytes(proposal.Payload)
+	requests := make([]bft.RequestInfo, 0)
+	for _, t := range blockData.Transactions {
+		tx := TransactionFromBytes(t)
+		reqInfo := bft.RequestInfo{ID: tx.ID, ClientID: tx.ClientID}
+		requests = append(requests, reqInfo)
+	}
+	return requests
+}
+
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	return bft.RequestInfo{}, nil
 }
