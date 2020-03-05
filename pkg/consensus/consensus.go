@@ -220,9 +220,11 @@ func (c *Consensus) close() {
 }
 
 func (c *Consensus) Stop() {
+	c.consensusLock.RLock()
 	c.viewChanger.Stop()
 	c.controller.Stop()
 	c.collector.Stop()
+	c.consensusLock.RUnlock()
 	c.close()
 	c.consensusDone.Wait()
 }

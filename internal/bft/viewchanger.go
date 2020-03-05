@@ -589,6 +589,12 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 	}
 	v.deliverDecision(proposal, signatures)
 
+	select { // if there was a delivery with a reconfig we need to stop here before verify signature
+	case <-v.stopChan:
+		return false, 0
+	default:
+	}
+
 	if svd.Signer != sender {
 		v.Logger.Warnf("Node %d got %s from %d, but signer %d is not the sender %d", v.SelfID, signedViewDataToString(svd), sender, svd.Signer, sender)
 		return false, 0
@@ -1006,6 +1012,12 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 		}
 		v.deliverDecision(proposal, signatures)
 
+		select { // if there was a delivery with a reconfig we need to stop here before verify signature
+		case <-v.stopChan:
+			return false, false, false
+		default:
+		}
+
 		if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
 			return false, false, false
@@ -1083,6 +1095,13 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	if err := v.State.Save(newViewToSave); err != nil {
 		v.Logger.Panicf("Failed to save message to state, error: %v", err)
 	}
+
+	select { // if there was a delivery or sync with a reconfig when committing the in-flight proposal we should stop
+	case <-v.stopChan:
+		return
+	default:
+	}
+
 	v.Controller.ViewChanged(v.currView, mySequence+1)
 
 	v.RequestsTimer.RestartTimers()
