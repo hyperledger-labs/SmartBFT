@@ -703,7 +703,7 @@ func (v *ViewChanger) processViewDataMsg() {
 		if vote.sender == v.SelfID {
 			continue // ignore my old message
 		}
-		signedMsgs = append(signedMsgs, vote.GetViewData()) // leader's message was never included in votes
+		signedMsgs = append(signedMsgs, vote.GetViewData())
 	}
 	msg := &protos.Message{
 		Content: &protos.Message_NewView{
