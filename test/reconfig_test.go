@@ -1,7 +1,6 @@
 package test
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -28,9 +27,7 @@ func TestBasicReconfig(t *testing.T) {
 	}
 	startNodes(nodes, &network)
 
-	for i := 1; i < 5; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-	}
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
@@ -91,9 +88,7 @@ func TestBasicAddNodes(t *testing.T) {
 	}
 	startNodes(nodes, &network)
 
-	for i := 1; i < 5; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-	}
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data1 := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
@@ -152,7 +147,7 @@ func TestBasicAddNodes(t *testing.T) {
 
 func TestBasicRemoveNodes(t *testing.T) {
 	// In the beginning there are 7 nodes and the quorum size is 5,
-	// after removing 3 nodes the new quorum size should be 4,
+	// after removing 3 nodes the new quorum size should be 3,
 	// so transactions can be committed after the reconfiguration only if it was successful.
 
 	t.Parallel()
@@ -171,9 +166,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 	}
 	startNodes(nodes, &network)
 
-	for i := 1; i < 5; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-	}
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
@@ -240,9 +233,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	}
 	startNodes(nodes, &network)
 
-	for i := 1; i < 5; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-	}
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
