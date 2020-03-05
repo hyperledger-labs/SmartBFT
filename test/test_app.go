@@ -169,6 +169,18 @@ func (a *App) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, erro
 	return requests, nil
 }
 
+// RequestsFromProposal returns from the given proposal the included requests' info
+func (a *App) RequestsFromProposal(proposal types.Proposal) []types.RequestInfo {
+	blockData := batchFromBytes(proposal.Payload)
+	requests := make([]types.RequestInfo, 0)
+	for _, t := range blockData.Requests {
+		req := requestFromBytes(t)
+		reqInfo := types.RequestInfo{ID: req.ID, ClientID: req.ClientID}
+		requests = append(requests, reqInfo)
+	}
+	return requests
+}
+
 // VerifyRequest verifies the given request and returns its info
 func (a *App) VerifyRequest(val []byte) (types.RequestInfo, error) {
 	req := requestFromBytes(val)

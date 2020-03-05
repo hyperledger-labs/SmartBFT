@@ -652,7 +652,8 @@ func TestBadViewDataMessage(t *testing.T) {
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+			verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 			app := &mocks.ApplicationMock{}
 			var deliverWG sync.WaitGroup
 			deliverWG.Add(1)
@@ -873,7 +874,8 @@ func TestBadNewViewMessage(t *testing.T) {
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
-			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+			verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 			app := &mocks.ApplicationMock{}
 			var deliverWG sync.WaitGroup
 			deliverWG.Add(1)
@@ -1149,7 +1151,8 @@ func TestCommitLastDecision(t *testing.T) {
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
-	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
+	verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	seqNumChan := make(chan uint64)
