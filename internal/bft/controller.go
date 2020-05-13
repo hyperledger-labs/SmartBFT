@@ -432,6 +432,12 @@ func (c *Controller) run() {
 			c.MaybePruneRevokedRequests()
 			if view > 0 || seq > 0 {
 				c.changeView(view, seq)
+			} else {
+				vs := c.ViewSequences.Load()
+				if vs == nil {
+					c.Logger.Panicf("ViewSequences is nil")
+				}
+				c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq)
 			}
 		}
 	}
