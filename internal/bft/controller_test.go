@@ -48,9 +48,9 @@ func TestControllerBasic(t *testing.T) {
 		Batcher:       batcher,
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
-		ID:            4, // not the leader
+		ID:            1, // not the leader
 		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
+		NodesList:     []uint64{1, 2, 3, 4},
 		Logger:        log,
 		Application:   app,
 		Comm:          comm,
@@ -60,8 +60,8 @@ func TestControllerBasic(t *testing.T) {
 
 	controller.Start(1, 0, false)
 
-	leaderMon.On("ProcessMsg", uint64(1), heartbeat)
-	controller.ProcessMessages(1, heartbeat)
+	leaderMon.On("ProcessMsg", uint64(2), heartbeat)
+	controller.ProcessMessages(2, heartbeat)
 	controller.ViewChanged(2, 1)
 	controller.ViewChanged(3, 2)
 	controller.AbortView(3)
@@ -98,9 +98,9 @@ func TestControllerLeaderBasic(t *testing.T) {
 	controller := &bft.Controller{
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
-		ID:            1, // the leader
+		ID:            2, // the leader
 		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
+		NodesList:     []uint64{1, 2, 3, 4},
 		Logger:        log,
 		Batcher:       batcher,
 		Comm:          commMock,
@@ -177,7 +177,7 @@ func TestLeaderPropose(t *testing.T) {
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
-		SelfID:         0,
+		SelfID:         11,
 		N:              4,
 		Logger:         log,
 		CollectTimeout: 100 * time.Millisecond,
@@ -214,17 +214,20 @@ func TestLeaderPropose(t *testing.T) {
 	commWG.Wait() // propose + state request
 
 	commWG.Add(3)
-	controller.ProcessMessages(2, prepare)
-	controller.ProcessMessages(3, prepare)
+	controller.ProcessMessages(23, prepare)
+	controller.ProcessMessages(37, prepare)
 	commWG.Wait()
 
-	controller.ProcessMessages(2, commit2)
-	commit3 := proto.Clone(commit2).(*protos.Message)
-	commit3Get := commit3.GetCommit()
-	commit3Get.Signature.Signer = 23
+	commit23 := proto.Clone(commit2).(*protos.Message)
+	commit23Get := commit23.GetCommit()
+	commit23Get.Signature.Signer = 23
+	controller.ProcessMessages(23, commit23)
+	commit37 := proto.Clone(commit3).(*protos.Message)
+	commit37Get := commit37.GetCommit()
+	commit37Get.Signature.Signer = 37
 	appWG.Add(1)  // deliver
 	commWG.Add(6) // next proposal
-	controller.ProcessMessages(23, commit3)
+	controller.ProcessMessages(37, commit37)
 	appWG.Wait()
 	commWG.Wait()
 
@@ -246,9 +249,9 @@ func TestLeaderPropose(t *testing.T) {
 		signaturesBySigners[sig.Signer] = *sig
 	}
 	assert.Equal(t, map[uint64]protos.Signature{
-		2:  {Signer: 2, Value: []byte{4}},
 		17: {Signer: 17, Value: []byte{4}},
 		23: {Signer: 23, Value: []byte{4}},
+		37: {Signer: 37, Value: []byte{4}},
 	}, signaturesBySigners)
 
 	controller.Stop()
@@ -309,7 +312,7 @@ func TestViewChanged(t *testing.T) {
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
-		SelfID:         0,
+		SelfID:         1,
 		N:              4,
 		Logger:         log,
 		CollectTimeout: 100 * time.Millisecond,
@@ -322,9 +325,9 @@ func TestViewChanged(t *testing.T) {
 	controller := &bft.Controller{
 		Signer:        signer,
 		WAL:           wal,
-		ID:            2, // the next leader
+		ID:            3, // the next leader
 		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
+		NodesList:     []uint64{1, 2, 3, 4},
 		Logger:        log,
 		Batcher:       batcher,
 		Verifier:      verifier,
