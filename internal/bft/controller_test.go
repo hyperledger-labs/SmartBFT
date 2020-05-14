@@ -354,6 +354,152 @@ func TestViewChanged(t *testing.T) {
 	wal.Close()
 }
 
+func TestSyncPrevView(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	app := &mocks.ApplicationMock{}
+	appWG := sync.WaitGroup{}
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		appWG.Done()
+	}).Return(types.Reconfig{InLatestDecision: false})
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+	pool := &mocks.RequestPool{}
+	pool.On("Close")
+	pool.On("Prune", mock.Anything)
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("InjectArtificialHeartbeat", mock.Anything, mock.Anything)
+	leaderMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		leaderMonWG.Done()
+	})
+	leaderMon.On("Close")
+	comm := &mocks.CommMock{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	signer := &mocks.SignerMock{}
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		ID:    4,
+		Value: []byte{4},
+	})
+	fd := &mocks.FailureDetector{}
+	fd.On("Complain", mock.Anything, mock.Anything)
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizerWG := sync.WaitGroup{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	}).Return(types.SyncResponse{Latest: types.Decision{
+		Proposal: types.Proposal{
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence: 1,
+				ViewId:         0, // previous view number
+			}),
+			VerificationSequence: 1},
+		Signatures: nil,
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
+
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+
+	controller := &bft.Controller{
+		Batcher:         batcher,
+		RequestPool:     pool,
+		LeaderMonitor:   leaderMon,
+		ID:              4, // not the leader
+		N:               4,
+		NodesList:       []uint64{1, 2, 3, 4},
+		Logger:          log,
+		Application:     app,
+		Comm:            comm,
+		ViewChanger:     &bft.ViewChanger{},
+		Checkpoint:      &types.Checkpoint{},
+		FailureDetector: fd,
+		Synchronizer:    synchronizer,
+		Verifier:        verifier,
+		Signer:          signer,
+		WAL:             wal,
+		StartedWG:       &startedWG,
+	}
+
+	vs := configureProposerBuilder(controller)
+	controller.ViewSequences = vs
+
+	leaderMonWG.Add(1)
+	controller.Start(1, 0, false)
+	leaderMonWG.Wait()
+
+	appWG.Add(1)
+	controller.ProcessMessages(2, prePrepare)
+	controller.ProcessMessages(2, prepare)
+	controller.ProcessMessages(3, prepare)
+	controller.ProcessMessages(2, commit2)
+	controller.ProcessMessages(3, commit3)
+
+	appWG.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 1)
+
+	synchronizerWG.Add(1)
+	leaderMonWG.Add(1)
+	wrongViewMsg := proto.Clone(prePrepare).(*protos.Message)
+	wrongViewMsgGet := wrongViewMsg.GetPrePrepare()
+	wrongViewMsgGet.View = 2
+	controller.ProcessMessages(2, wrongViewMsg)
+	synchronizerWG.Wait()
+	leaderMonWG.Wait() // wait for view to start before sending messages
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 1,
+		ViewId:         1,
+	})
+	controller.ProcessMessages(2, prePrepareNext)
+
+	nextProp := types.Proposal{
+		Header:               prePrepareNextGet.Proposal.Header,
+		Payload:              prePrepareNextGet.Proposal.Payload,
+		Metadata:             prePrepareNextGet.Proposal.Metadata,
+		VerificationSequence: 1,
+	}
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = nextProp.Digest()
+	controller.ProcessMessages(2, prepareNext)
+	controller.ProcessMessages(3, prepareNext)
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+	commit2NextGet.Digest = nextProp.Digest()
+
+	commit3Next := proto.Clone(commit3).(*protos.Message)
+	commit3NextGet := commit3Next.GetCommit()
+	commit3NextGet.Seq = 1
+	commit3NextGet.Digest = nextProp.Digest()
+
+	appWG.Add(1)
+	controller.ProcessMessages(2, commit2Next)
+	controller.ProcessMessages(3, commit3Next)
+
+	appWG.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 2)
+
+	controller.Stop()
+	wal.Close()
+}
+
 func TestControllerLeaderRequestHandling(t *testing.T) {
 	for _, testCase := range []struct {
 		description      string
@@ -465,7 +611,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 	}
 }
 
-func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int) *bft.View {
+func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int, vs *atomic.Value) *bft.View {
 	return &bft.View{
 		N:                c.N,
 		LeaderID:         leader,
@@ -480,19 +626,21 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
-		ViewSequences:    &atomic.Value{},
+		ViewSequences:    vs,
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:       int(c.N * 10),
 	}
 }
 
-func configureProposerBuilder(controller *bft.Controller) {
+func configureProposerBuilder(controller *bft.Controller) *atomic.Value {
 	pb := &mocks.ProposerBuilder{}
+	vs := &atomic.Value{}
 	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		Return(func(a uint64, b uint64, c uint64, d int) bft.Proposer {
-			return createView(controller, a, b, c, d)
+			return createView(controller, a, b, c, d, vs)
 		})
 	controller.ProposerBuilder = pb
+	return vs
 }
 
 func TestSyncInform(t *testing.T) {
