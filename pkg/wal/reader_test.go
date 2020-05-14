@@ -11,10 +11,10 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"reflect"
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -267,6 +267,6 @@ func assertReadRecord(t *testing.T, r *LogRecordReader, expRec *smartbftprotos.L
 	record, err := r.Read()
 	assert.NoError(t, err)
 	assert.NotNil(t, record)
-	assert.True(t, reflect.DeepEqual(record, expRec))
+	assert.True(t, proto.Equal(record, expRec))
 	assert.Equal(t, expCRC, r.CRC())
 }

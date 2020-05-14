@@ -279,7 +279,7 @@ func TestBadPrePrepare(t *testing.T) {
 		},
 		{
 			description: "corrupt metadata in proposal",
-			expectedErr: "received bad proposal from 1: proto: smartbftprotos.ViewMetadata: illegal tag 0 (wire type 1)",
+			expectedErr: "received bad proposal from 1: proto:",
 			sender:      1,
 			setup: func() {
 				syncWG.Add(1)
