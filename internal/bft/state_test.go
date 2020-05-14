@@ -81,7 +81,7 @@ func TestStateRestore(t *testing.T) {
 			description: "malformed record",
 			WALContent:  [][]byte{{1, 2, 3}},
 			expectedError: "failed unmarshaling last entry from WAL:" +
-				" proto: smartbftprotos.SavedMessage: illegal tag 0 (wire type 1)",
+				" proto:",
 		},
 		{
 			description:   "unidentified record",
@@ -150,7 +150,7 @@ func TestStateRestore(t *testing.T) {
 				bft.MarshalOrPanic(preparedProof),
 			},
 			expectedError: "failed unmarshaling last entry from WAL: " +
-				"proto: smartbftprotos.SavedMessage: illegal tag 0 (wire type 1)",
+				"proto:",
 		},
 		{
 			description:   "malformed prepared but empty commit",
@@ -188,7 +188,7 @@ func TestStateRestore(t *testing.T) {
 				assert.Equal(t, testCase.expectedInFlightProposal, state.InFlightProposal.InFlightProposal())
 				assert.Equal(t, testCase.expectedInFlightPrepared, state.InFlightProposal.IsInFlightPrepared())
 			} else {
-				assert.EqualError(t, err, testCase.expectedError)
+				assert.Contains(t, err.Error(), testCase.expectedError)
 			}
 		})
 	}
