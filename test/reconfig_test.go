@@ -212,6 +212,131 @@ func TestBasicRemoveNodes(t *testing.T) {
 	}
 }
 
+func TestAddRemoveNodes(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+	data1 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data1 = append(data1, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data1[i], data1[i+1])
+	}
+
+	for i := 5; i <= 10; i++ {
+		newNode := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, newNode)
+	}
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "10",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+		},
+	})
+
+	data2 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data2 = append(data2, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data2[i], data2[i+1])
+	}
+
+	startNodes(nodes[4:], &network)
+
+	numberOfNodes = 10
+	// make sure both decisions were delivered by the new nodes
+	data := make([]*AppRecord, 0)
+	for i := 4; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-4; i++ {
+		assert.Equal(t, data[i], data1[0])
+	}
+	data = make([]*AppRecord, 0)
+	for i := 4; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-4; i++ {
+		assert.Equal(t, data[i], data2[0])
+	}
+
+	nodes[9].Submit(Request{ID: "11", ClientID: "alice"})
+	data3 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data3 = append(data3, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data3[i], data3[i+1])
+	}
+
+	nodesToRemove := 4
+	// remove nodes one by one, starting from first
+	for r := 1; r <= nodesToRemove; r++ {
+		currentNodes := make([]int64, 0)
+		for i := r + 1; i <= numberOfNodes; i++ {
+			currentNodes = append(currentNodes, int64(i))
+		}
+
+		nodes[9].Submit(Request{
+			ClientID: "reconfig",
+			ID:       "10",
+			Reconfig: Reconfig{
+				InLatestDecision: true,
+				CurrentNodes:     currentNodes,
+				CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			},
+		})
+
+		data = make([]*AppRecord, 0)
+		for i := r - 1; i < numberOfNodes; i++ {
+			d := <-nodes[i].Delivered
+			data = append(data, d)
+		}
+		for i := 0; i < numberOfNodes-r; i++ {
+			assert.Equal(t, data[i], data[i+1])
+		}
+
+		nodes[r-1].Disconnect()
+	}
+
+	nodes[9].Submit(Request{ID: "12", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := nodesToRemove; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-nodesToRemove-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+}
+
 func TestViewChangeAfterReconfig(t *testing.T) {
 	// The initial nodes ids are {2,3,4,5}
 	// After reconfiguration a fifth node is added with id 1

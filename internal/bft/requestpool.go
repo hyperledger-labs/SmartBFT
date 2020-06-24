@@ -96,7 +96,7 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 }
 
 // ChangeTimeouts changes the timeout of the pool
-func (rp *Pool) ChangeTimeouts(options PoolOptions) {
+func (rp *Pool) ChangeTimeouts(th RequestTimeoutHandler, options PoolOptions) {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
 
@@ -118,6 +118,8 @@ func (rp *Pool) ChangeTimeouts(options PoolOptions) {
 	rp.options.ForwardTimeout = options.ForwardTimeout
 	rp.options.ComplainTimeout = options.ComplainTimeout
 	rp.options.AutoRemoveTimeout = options.AutoRemoveTimeout
+
+	rp.timeoutHandler = th
 
 	rp.logger.Debugf("Changed pool timeouts")
 }
