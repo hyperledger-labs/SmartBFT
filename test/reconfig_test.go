@@ -240,12 +240,10 @@ func TestAddRemoveNodes(t *testing.T) {
 		assert.Equal(t, data1[i], data1[i+1])
 	}
 
-	newNode1 := newNode(5, network, t.Name(), testDir)
-	newNode2 := newNode(6, network, t.Name(), testDir)
-	newNode3 := newNode(7, network, t.Name(), testDir)
-	newNode4 := newNode(8, network, t.Name(), testDir)
-	newNode5 := newNode(9, network, t.Name(), testDir)
-	newNode6 := newNode(10, network, t.Name(), testDir)
+	for i := 5; i <= 10; i++ {
+		newNode := newNode(uint64(i), network, t.Name(), testDir)
+		nodes = append(nodes, newNode)
+	}
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -266,36 +264,28 @@ func TestAddRemoveNodes(t *testing.T) {
 		assert.Equal(t, data2[i], data2[i+1])
 	}
 
-	nodes = append(nodes, newNode1, newNode2, newNode3, newNode4, newNode5, newNode6)
 	startNodes(nodes[4:], &network)
 
-	d4 := <-nodes[4].Delivered
-	d5 := <-nodes[5].Delivered
-	d6 := <-nodes[6].Delivered
-	d7 := <-nodes[7].Delivered
-	d8 := <-nodes[8].Delivered
-	d9 := <-nodes[9].Delivered
-	assert.Equal(t, data1[0], d4)
-	assert.Equal(t, data1[0], d5)
-	assert.Equal(t, data1[0], d6)
-	assert.Equal(t, data1[0], d7)
-	assert.Equal(t, data1[0], d8)
-	assert.Equal(t, data1[0], d9)
-	d4 = <-nodes[4].Delivered
-	d5 = <-nodes[5].Delivered
-	d6 = <-nodes[6].Delivered
-	d7 = <-nodes[7].Delivered
-	d8 = <-nodes[8].Delivered
-	d9 = <-nodes[9].Delivered
-	assert.Equal(t, data2[0], d4)
-	assert.Equal(t, data2[0], d5)
-	assert.Equal(t, data2[0], d6)
-	assert.Equal(t, data2[0], d7)
-	assert.Equal(t, data2[0], d8)
-	assert.Equal(t, data2[0], d9)
+	numberOfNodes = 10
+	// make sure both decisions were delivered by the new nodes
+	data := make([]*AppRecord, 0)
+	for i := 4; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-4; i++ {
+		assert.Equal(t, data[i], data1[0])
+	}
+	data = make([]*AppRecord, 0)
+	for i := 4; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-4; i++ {
+		assert.Equal(t, data[i], data2[0])
+	}
 
 	nodes[9].Submit(Request{ID: "11", ClientID: "alice"})
-	numberOfNodes = 10
 	data3 := make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
@@ -305,97 +295,44 @@ func TestAddRemoveNodes(t *testing.T) {
 		assert.Equal(t, data3[i], data3[i+1])
 	}
 
-	nodes[9].Submit(Request{
-		ClientID: "reconfig",
-		ID:       "20",
-		Reconfig: Reconfig{
-			InLatestDecision: true,
-			CurrentNodes:     []int64{2, 3, 4, 5, 6, 7, 8, 9, 10},
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
-		},
-	})
+	nodesToRemove := 4
+	// remove nodes one by one, starting from first
+	for r := 1; r <= nodesToRemove; r++ {
+		currentNodes := make([]int64, 0)
+		for i := r + 1; i <= numberOfNodes; i++ {
+			currentNodes = append(currentNodes, int64(i))
+		}
 
-	data4 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+		nodes[9].Submit(Request{
+			ClientID: "reconfig",
+			ID:       "10",
+			Reconfig: Reconfig{
+				InLatestDecision: true,
+				CurrentNodes:     currentNodes,
+				CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			},
+		})
+
+		data = make([]*AppRecord, 0)
+		for i := r - 1; i < numberOfNodes; i++ {
+			d := <-nodes[i].Delivered
+			data = append(data, d)
+		}
+		for i := 0; i < numberOfNodes-r; i++ {
+			assert.Equal(t, data[i], data[i+1])
+		}
+
+		nodes[r-1].Disconnect()
+	}
+
+	nodes[9].Submit(Request{ID: "12", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := nodesToRemove; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
-		data4 = append(data4, d)
+		data = append(data, d)
 	}
-	for i := 0; i < numberOfNodes-1; i++ {
-		assert.Equal(t, data4[i], data4[i+1])
-	}
-
-	nodes[0].Disconnect()
-
-	nodes[9].Submit(Request{ID: "21", ClientID: "alice"})
-	data5 := make([]*AppRecord, 0)
-	for i := 1; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data5 = append(data5, d)
-	}
-	for i := 0; i < numberOfNodes-2; i++ {
-		assert.Equal(t, data5[i], data5[i+1])
-	}
-
-	nodes[9].Submit(Request{
-		ClientID: "reconfig",
-		ID:       "30",
-		Reconfig: Reconfig{
-			InLatestDecision: true,
-			CurrentNodes:     []int64{3, 4, 5, 6, 7, 8, 9, 10},
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
-		},
-	})
-
-	data6 := make([]*AppRecord, 0)
-	for i := 1; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data6 = append(data6, d)
-	}
-	for i := 0; i < numberOfNodes-2; i++ {
-		assert.Equal(t, data6[i], data6[i+1])
-	}
-
-	nodes[1].Disconnect()
-
-	nodes[9].Submit(Request{ID: "31", ClientID: "alice"})
-	data7 := make([]*AppRecord, 0)
-	for i := 2; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data7 = append(data7, d)
-	}
-	for i := 0; i < numberOfNodes-3; i++ {
-		assert.Equal(t, data7[i], data7[i+1])
-	}
-
-	nodes[9].Submit(Request{
-		ClientID: "reconfig",
-		ID:       "40",
-		Reconfig: Reconfig{
-			InLatestDecision: true,
-			CurrentNodes:     []int64{4, 5, 6, 7, 8, 9, 10},
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
-		},
-	})
-
-	data8 := make([]*AppRecord, 0)
-	for i := 2; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data8 = append(data8, d)
-	}
-	for i := 0; i < numberOfNodes-3; i++ {
-		assert.Equal(t, data6[i], data6[i+1])
-	}
-
-	nodes[2].Disconnect()
-
-	nodes[9].Submit(Request{ID: "41", ClientID: "alice"})
-	data9 := make([]*AppRecord, 0)
-	for i := 3; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data9 = append(data9, d)
-	}
-	for i := 0; i < numberOfNodes-4; i++ {
-		assert.Equal(t, data9[i], data9[i+1])
+	for i := 0; i < numberOfNodes-nodesToRemove-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
 	}
 
 }
