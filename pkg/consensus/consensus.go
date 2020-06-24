@@ -185,7 +185,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 		ComplainTimeout:   c.Config.RequestComplainTimeout,
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
-	c.pool.ChangeTimeouts(opts) // TODO handle reconfiguration of queue size in the pool
+	c.pool.ChangeTimeouts(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()
 
 	proposal, _ := c.checkpoint.Get()
