@@ -22,8 +22,8 @@ cd $BUILDDIR
 PROTOC_ZIP=protoc-3.8.0-linux-x86_64.zip
 if [ ! -f "$PROTOC_ZIP" ]; then
     echo "$PROTOC_ZIP does not exist"
-    wget https://github.com/protocolbuffers/protobuf/releases/download/v3.11.4/protoc-3.11.4-linux-x86_64.zip
-    unzip protoc-3.11.4-linux-x86_64.zip
+    wget https://github.com/protocolbuffers/protobuf/releases/download/v3.12.3/protoc-3.12.3-linux-x86_64.zip
+    unzip protoc-3.12.3-linux-x86_64.zip
 fi
 
 export PATH=$PATH:$BUILDDIR/bin/
@@ -55,6 +55,7 @@ git status | grep "pb.go" | grep -q "modified"
 if [ $? -eq 0 ];then
 	git status
 	err "protobuf not up to date"
+	git diff
 	exit 1
 fi
 
