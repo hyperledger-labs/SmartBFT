@@ -38,6 +38,12 @@ type ViewAndSeq struct {
 	Seq  uint64
 }
 
+type ViewAndSeqAndDecisions struct {
+	View      uint64
+	Seq       uint64
+	Decisions uint64
+}
+
 type RequestInfo struct {
 	ClientID string
 	ID       string

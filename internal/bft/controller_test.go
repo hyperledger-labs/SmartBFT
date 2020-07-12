@@ -58,7 +58,7 @@ func TestControllerBasic(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 
 	leaderMon.On("ProcessMsg", uint64(2), heartbeat)
 	controller.ProcessMessages(2, heartbeat)
@@ -108,7 +108,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 	<-batcherChan
 	controller.Stop()
 	batcher.AssertCalled(t, "NextBatch")
@@ -210,7 +210,7 @@ func TestLeaderPropose(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	commWG.Add(9)
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	commWG.Wait() // propose + state request
 
 	commWG.Add(3)
@@ -342,7 +342,7 @@ func TestViewChanged(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	commWG.Add(3) // state request
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	commWG.Wait()
 
 	commWG.Add(6) // propose
@@ -438,7 +438,7 @@ func TestSyncPrevView(t *testing.T) {
 	controller.ViewSequences = vs
 
 	leaderMonWG.Add(1)
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 	leaderMonWG.Wait()
 
 	appWG.Add(1)
@@ -601,7 +601,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			}
 
 			configureProposerBuilder(controller)
-			controller.Start(testCase.startViewNum, 0, true)
+			controller.Start(testCase.startViewNum, 0, 0, true)
 
 			controller.HandleRequest(3, []byte{1, 2, 3})
 
@@ -765,11 +765,11 @@ func TestSyncInform(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	vc.Start(1)
+	vc.Start(1, 0)
 
 	synchronizerWG.Add(1)
 	commWG.Add(9)
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	synchronizerWG.Wait()
 	commWG.Wait()
 

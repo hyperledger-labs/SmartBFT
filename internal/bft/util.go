@@ -73,8 +73,12 @@ func MarshalOrPanic(msg proto.Message) []byte {
 	return b
 }
 
-func getLeaderID(view uint64, N uint64, nodes []uint64) uint64 {
-	return nodes[view%N] // assuming this is sorted
+func getLeaderID(view uint64, N uint64, nodes []uint64, leaderRotation bool, decisionsInView uint64, decisionsPerLeader uint64) uint64 {
+	// assuming nodes are sorted
+	if leaderRotation {
+		return nodes[(view+(decisionsInView/decisionsPerLeader))%N]
+	}
+	return nodes[view%N]
 }
 
 type vote struct {

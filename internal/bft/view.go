@@ -701,11 +701,12 @@ func (v *View) startNextSeq() {
 }
 
 // GetMetadata returns the current sequence and view number (in a marshaled ViewMetadata protobuf message)
-func (v *View) GetMetadata() []byte {
+func (v *View) GetMetadata(decisionsInView uint64) []byte {
 	propSeq := v.ProposalSequence
 	md := &protos.ViewMetadata{
-		ViewId:         v.Number,
-		LatestSequence: propSeq,
+		ViewId:          v.Number,
+		LatestSequence:  propSeq,
+		DecisionsInView: decisionsInView,
 	}
 	metadata, err := proto.Marshal(md)
 	if err != nil {

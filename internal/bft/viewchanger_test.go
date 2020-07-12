@@ -77,7 +77,7 @@ func TestViewChangerBasic(t *testing.T) {
 		InMsqQSize: 100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	vc.Stop()
 	vc.Stop()
@@ -110,7 +110,7 @@ func TestStartViewChange(t *testing.T) {
 		InMsqQSize:    100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	vc.StartViewChange(0, true)
 	msg := <-msgChan
@@ -180,7 +180,7 @@ func TestViewChangeProcess(t *testing.T) {
 				SpeedUpViewChange: testCase.speedup,
 			}
 
-			vc.Start(0)
+			vc.Start(0, 0)
 
 			vc.HandleMessage(1, viewChangeMsg)
 			vc.HandleMessage(2, viewChangeMsg)
@@ -287,7 +287,7 @@ func TestViewDataProcess(t *testing.T) {
 		State:         state,
 	}
 
-	vc.Start(1)
+	vc.Start(1, 0)
 
 	verifierSigWG.Add(1)
 	vc.HandleMessage(0, viewDataMsg1)
@@ -359,7 +359,7 @@ func TestNewViewProcess(t *testing.T) {
 		State:         state,
 	}
 
-	vc.Start(2)
+	vc.Start(2, 0)
 
 	// create a valid viewData message
 	vd2 := proto.Clone(vd).(*protos.ViewData)
@@ -452,7 +452,7 @@ func TestNormalProcess(t *testing.T) {
 		State:         state,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	vc.HandleMessage(2, viewChangeMsg)
 	vc.HandleMessage(3, viewChangeMsg)
@@ -683,7 +683,7 @@ func TestBadViewDataMessage(t *testing.T) {
 				InMsqQSize:  100,
 			}
 
-			vc.Start(1)
+			vc.Start(1, 0)
 
 			msg := proto.Clone(viewDataMsg1).(*protos.Message)
 			test.mutateViewData(msg)
@@ -907,7 +907,7 @@ func TestBadNewViewMessage(t *testing.T) {
 				InMsqQSize:   100,
 			}
 
-			vc.Start(1)
+			vc.Start(1, 0)
 
 			vdBytes := bft.MarshalOrPanic(vd)
 			signed := make([]*protos.SignedViewData, 0)
@@ -983,7 +983,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		InMsqQSize:        100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 	startTime := time.Now()
 
 	vc.StartViewChange(0, true)
@@ -1048,7 +1048,7 @@ func TestViewChangerTimeout(t *testing.T) {
 		InMsqQSize:        100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 	startTime := time.Now()
 
 	controllerWG.Add(1)
@@ -1108,7 +1108,7 @@ func TestBackOff(t *testing.T) {
 		InMsqQSize:        100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 	startTime := time.Now()
 
 	controllerWG.Add(1)
@@ -1194,7 +1194,7 @@ func TestCommitLastDecision(t *testing.T) {
 		Pruner:        pruner,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	vc.HandleMessage(2, viewChangeMsg)
 	vc.HandleMessage(3, viewChangeMsg)
@@ -1300,7 +1300,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		},
 	}
 
-	vc.Start(1)
+	vc.Start(1, 0)
 
 	synchronizerWG.Add(1)
 	vc.HandleMessage(1, msg)
@@ -1389,7 +1389,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 				State:         state,
 			}
 
-			vc.Start(0)
+			vc.Start(0, 0)
 			vc.HandleMessage(1, viewChangeMsg)
 			vc.HandleMessage(2, viewChangeMsg)
 			m := <-broadcastChan
@@ -1600,11 +1600,11 @@ func TestInformViewChanger(t *testing.T) {
 		InMsqQSize:    100,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	info := uint64(2)
-	vc.InformNewView(info, 1) // increase the view number
-	vc.InformNewView(info, 1) // make sure that inform happened (channel size is 1)
+	vc.InformNewView(info, 1, 0) // increase the view number
+	vc.InformNewView(info, 1, 0) // make sure that inform happened (channel size is 1)
 
 	vc.StartViewChange(2, true)
 	msg := <-msgChan
@@ -1659,7 +1659,7 @@ func TestRestoreViewChange(t *testing.T) {
 	restoreChan <- struct{}{}
 	vc.Restore = restoreChan
 
-	vc.Start(5)
+	vc.Start(5, 0)
 	m := <-broadcastChan
 	assert.NotNil(t, m.GetViewChange())
 	assert.Equal(t, uint64(6), m.GetViewChange().NextView)
@@ -1976,7 +1976,7 @@ func TestCommitInFlight(t *testing.T) {
 		Pruner:        pruner,
 	}
 
-	vc.Start(0)
+	vc.Start(0, 0)
 
 	vc.HandleMessage(2, viewChangeMsg)
 	vc.HandleMessage(3, viewChangeMsg)
@@ -2134,7 +2134,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	checkpoint.Set(inFlightProposal, lastDecisionSignatures)
 	vc.Checkpoint = &checkpoint
 
-	vc.Start(1)
+	vc.Start(1, 0)
 
 	vc.HandleMessage(1, msg)
 
