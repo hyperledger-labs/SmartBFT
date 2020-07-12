@@ -353,6 +353,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 
 	c.setCurrentViewNumber(newViewNumber)
 	c.setCurrentDecisionsInView(newDecisionsInView)
+	c.Logger.Debugf("Starting view after setting decisions in view to %d", newDecisionsInView)
 	c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
@@ -429,7 +430,6 @@ func (c *Controller) propose() {
 		// the batcher is stopped and so are we.
 		return
 	}
-	c.incrementCurrentDecisionsInView()
 	metadata := c.currView.GetMetadata(c.getCurrentDecisionsInView())
 	proposal := c.Assembler.AssembleProposal(metadata, nextBatch)
 	c.currView.Propose(proposal)
@@ -447,13 +447,6 @@ func (c *Controller) run() {
 		select {
 		case d := <-c.decisionChan:
 			c.decide(d)
-			if c.checkIfRotate() {
-				vs := c.ViewSequences.Load()
-				if vs == nil {
-					c.Logger.Panicf("ViewSequences is nil")
-				}
-				c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
-			}
 		case newView := <-c.viewChange:
 			c.changeView(newView.viewNumber, newView.proposalSeq, 0)
 		case view := <-c.abortViewChan:
@@ -490,6 +483,15 @@ func (c *Controller) decide(d decision) {
 	case c.deliverChan <- struct{}{}:
 	case <-c.stopChan:
 		return
+	}
+	c.incrementCurrentDecisionsInView()
+	if c.checkIfRotate() {
+		vs := c.ViewSequences.Load()
+		if vs == nil {
+			c.Logger.Panicf("ViewSequences is nil")
+		}
+		c.Logger.Debugf("Restarting view to rotate the leader")
+		c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq+1, c.getCurrentDecisionsInView())
 	}
 	c.MaybePruneRevokedRequests()
 	if iAm, _ := c.iAmTheLeader(); iAm {
@@ -670,6 +672,8 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
+
+	c.verificationSequence = c.Verifier.VerificationSequence()
 
 	if syncOnStart {
 		startViewNumber, startProposalSequence, startDecisionsInView = c.syncOnStart(startViewNumber, startProposalSequence, startDecisionsInView)
