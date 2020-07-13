@@ -539,7 +539,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 			if err := c.State.Save(newViewToSave); err != nil {
 				c.Logger.Panicf("Failed to save message to state, error: %v", err)
 			}
-			c.ViewChanger.InformNewView(response.View, 0, 0)
+			c.ViewChanger.InformNewView(response.View)
 			return response.View, 1, 0
 		}
 		return 0, 0, 0
@@ -580,7 +580,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.Checkpoint.Set(decision.Proposal, decision.Signatures)
 	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
 	c.Logger.Debugf("Node %d is informing the view changer after sync of view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
-	c.ViewChanger.InformNewView(view, md.LatestSequence, md.DecisionsInView)
+	c.ViewChanger.InformNewView(view)
 	return view, md.LatestSequence + 1, md.DecisionsInView
 }
 

@@ -771,7 +771,7 @@ func TestSyncInform(t *testing.T) {
 	}
 	configureProposerBuilder(controller)
 
-	vc.Start(1, 0)
+	vc.Start(1)
 
 	synchronizerWG.Add(1)
 	commWG.Add(9)

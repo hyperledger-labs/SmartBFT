@@ -95,9 +95,8 @@ type ViewChanger struct {
 	viewDataMsgs    *voteSet
 	currView        uint64
 	nextView        uint64
-	leader          uint64
 	startChangeChan chan *change
-	informChan      chan *types.ViewAndSeqAndDecisions
+	informChan      chan uint64
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -107,10 +106,10 @@ type ViewChanger struct {
 }
 
 // Start the view changer
-func (v *ViewChanger) Start(startViewNumber uint64, decisionsInView uint64) {
+func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
 	v.startChangeChan = make(chan *change, 1)
-	v.informChan = make(chan *types.ViewAndSeqAndDecisions, 1)
+	v.informChan = make(chan uint64, 1)
 
 	v.quorum, v.f = computeQuorum(v.N)
 
@@ -123,7 +122,6 @@ func (v *ViewChanger) Start(startViewNumber uint64, decisionsInView uint64) {
 	// set without locking
 	v.currView = startViewNumber
 	v.nextView = v.currView
-	v.leader = getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, decisionsInView, v.DecisionsPerLeader)
 
 	v.lastTick = time.Now()
 	v.lastResend = v.lastTick
@@ -275,8 +273,9 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// newView message
 	if nv := m.GetNewView(); nv != nil {
 		v.Logger.Debugf("Node %d is processing a new view message %s from %d", v.SelfID, MsgToString(m), sender)
-		if sender != v.leader {
-			v.Logger.Warnf("Node %d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, MsgToString(m), sender, v.leader)
+		leader := getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+		if sender != leader {
+			v.Logger.Warnf("Node %d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, MsgToString(m), sender, leader)
 			return
 		}
 		v.processNewViewMsg(nv)
@@ -284,20 +283,15 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 }
 
 // InformNewView tells the view changer to advance to a new view number
-func (v *ViewChanger) InformNewView(view uint64, seq uint64, dec uint64) {
+func (v *ViewChanger) InformNewView(view uint64) {
 	select {
-	case v.informChan <- &types.ViewAndSeqAndDecisions{
-		View:      view,
-		Seq:       seq,
-		Decisions: dec,
-	}:
+	case v.informChan <- view:
 	case <-v.stopChan:
 		return
 	}
 }
 
-func (v *ViewChanger) informNewView(info *types.ViewAndSeqAndDecisions) {
-	view := info.View
+func (v *ViewChanger) informNewView(view uint64) {
 	if view < v.currView {
 		v.Logger.Debugf("Node %d was informed of view %d, but the current view is %d", v.SelfID, view, v.currView)
 		return
@@ -305,7 +299,6 @@ func (v *ViewChanger) informNewView(info *types.ViewAndSeqAndDecisions) {
 	v.Logger.Debugf("Node %d was informed of a new view %d", v.SelfID, view)
 	v.currView = view
 	v.nextView = v.currView
-	v.leader = getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, info.Decisions, v.DecisionsPerLeader)
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
@@ -373,17 +366,17 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 			}
 		}
 		v.currView = v.nextView
-		v.leader = getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
 		v.viewChangeMsgs.clear(v.N)
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
 		msg := v.prepareViewDataMsg()
-		if v.leader == v.SelfID {
+		leader := getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+		if leader == v.SelfID {
 			v.viewDataMsgs.registerVote(v.SelfID, msg)
 		} else {
-			v.Comm.SendConsensus(v.leader, msg)
+			v.Comm.SendConsensus(leader, msg)
 		}
-		v.Logger.Debugf("Node %d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, v.leader)
+		v.Logger.Debugf("Node %d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, leader)
 	}
 }
 
