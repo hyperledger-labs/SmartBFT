@@ -61,6 +61,7 @@ type View struct {
 	Verifier         api.Verifier
 	Signer           api.Signer
 	ProposalSequence uint64
+	DecisionsInView  uint64
 	State            State
 	Phase            Phase
 	InMsgQSize       int
@@ -517,6 +518,11 @@ func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, err
 		return nil, errors.New("invalid proposal sequence")
 	}
 
+	if md.DecisionsInView != v.DecisionsInView {
+		v.Logger.Warnf("Expected decisions in view %d but got %d", v.DecisionsInView, md.DecisionsInView)
+		return nil, errors.New("invalid decisions in view")
+	}
+
 	expectedSeq := v.Verifier.VerificationSequence()
 	if uint64(proposal.VerificationSequence) != expectedSeq {
 		v.Logger.Warnf("Expected verification sequence %d but got %d", expectedSeq, proposal.VerificationSequence)
@@ -672,6 +678,7 @@ func (v *View) startNextSeq() {
 	prevSeq := v.ProposalSequence
 
 	v.ProposalSequence++
+	v.DecisionsInView++
 
 	nextSeq := v.ProposalSequence
 
@@ -701,12 +708,11 @@ func (v *View) startNextSeq() {
 }
 
 // GetMetadata returns the current sequence and view number (in a marshaled ViewMetadata protobuf message)
-func (v *View) GetMetadata(decisionsInView uint64) []byte {
-	propSeq := v.ProposalSequence
+func (v *View) GetMetadata() []byte {
 	md := &protos.ViewMetadata{
 		ViewId:          v.Number,
-		LatestSequence:  propSeq,
-		DecisionsInView: decisionsInView,
+		LatestSequence:  v.ProposalSequence,
+		DecisionsInView: v.DecisionsInView,
 	}
 	metadata, err := proto.Marshal(md)
 	if err != nil {

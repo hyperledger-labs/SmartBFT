@@ -527,8 +527,9 @@ func TestNormalPath(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 
 	nextProp := types.Proposal{
@@ -642,8 +643,9 @@ func TestNormalPath(t *testing.T) {
 	dProp = <-decidedProposal
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	assert.Equal(t, secondProposal, dProp)
 	dSigs = <-decidedSigs
@@ -717,8 +719,9 @@ func TestTwoSequences(t *testing.T) {
 		Header:  []byte{0},
 		Payload: []byte{1},
 		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-			LatestSequence: 1,
-			ViewId:         1,
+			DecisionsInView: 1,
+			LatestSequence:  1,
+			ViewId:          1,
 		}),
 		VerificationSequence: 1,
 	}
@@ -1118,8 +1121,9 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 
 	loggedEntries := make(chan string, 100)
@@ -1268,8 +1272,9 @@ func TestViewLaggingCatchup(t *testing.T) {
 			Header:  []byte{0},
 			Payload: []byte{1},
 			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-				LatestSequence: 1,
-				ViewId:         1,
+				DecisionsInView: 1,
+				LatestSequence:  1,
+				ViewId:          1,
 			}),
 			VerificationSequence: 1,
 		}

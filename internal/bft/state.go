@@ -172,6 +172,11 @@ func (ps *PersistedState) recoverProposed(lastPersistedMessage *protos.ProposedR
 	v.Phase = PROPOSED
 	v.Number = prp.View
 	v.ProposalSequence = prp.Seq
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
+		ps.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+	}
+	v.DecisionsInView = md.DecisionsInView
 	ps.Logger.Infof("Restored proposal with sequence %d", lastPersistedMessage.GetPrePrepare().Seq)
 	return nil
 }
@@ -223,6 +228,11 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 	v.Phase = PREPARED
 	v.Number = prePrepareFromWAL.View
 	v.ProposalSequence = prePrepareFromWAL.Seq
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
+		ps.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+	}
+	v.DecisionsInView = md.DecisionsInView
 
 	// Restore signature
 	signatureInLastSentCommit := v.lastBroadcastSent.GetCommit().Signature

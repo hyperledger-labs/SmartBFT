@@ -64,14 +64,14 @@ type Proposer interface {
 	Propose(proposal types.Proposal)
 	Start()
 	Abort()
-	GetMetadata(decisionsInView uint64) []byte
+	GetMetadata() []byte
 	HandleMessage(sender uint64, m *protos.Message)
 }
 
 // ProposerBuilder builds a new Proposer
 //go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
 type ProposerBuilder interface {
-	NewProposer(leader, proposalSequence, viewNum uint64, quorumSize int) Proposer
+	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer
 }
 
 // Controller controls the entire flow of the consensus
@@ -323,7 +323,7 @@ func (c *Controller) convertViewMessageToHeartbeat(m *protos.Message) *protos.Me
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
-	view := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.quorum)
+	view := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.currDecisionsInView, c.quorum)
 
 	c.currViewLock.Lock()
 	c.currView = view
@@ -336,7 +336,7 @@ func (c *Controller) startView(proposalSequence uint64) {
 		role = Leader
 	}
 	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
-	c.Logger.Infof("Starting view with number %d and sequence %d", c.currViewNumber, proposalSequence)
+	c.Logger.Infof("Starting view with number %d, sequence %d, and decisions %d", c.currViewNumber, proposalSequence, c.currDecisionsInView)
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64, newDecisionsInView uint64) {
@@ -430,7 +430,7 @@ func (c *Controller) propose() {
 		// the batcher is stopped and so are we.
 		return
 	}
-	metadata := c.currView.GetMetadata(c.getCurrentDecisionsInView())
+	metadata := c.currView.GetMetadata()
 	proposal := c.Assembler.AssembleProposal(metadata, nextBatch)
 	c.currView.Propose(proposal)
 }
@@ -555,6 +555,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.Logger.Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
 
 	view := md.ViewId
+	newView := false
 
 	response := c.fetchState()
 	if response != nil {
@@ -566,13 +567,14 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 					NewView: &protos.ViewMetadata{
 						ViewId:          view,
 						LatestSequence:  md.LatestSequence,
-						DecisionsInView: md.DecisionsInView,
+						DecisionsInView: 0,
 					},
 				},
 			}
 			if err := c.State.Save(newViewToSave); err != nil {
 				c.Logger.Panicf("Failed to save message to state, error: %v", err)
 			}
+			newView = true
 		}
 	}
 
@@ -581,7 +583,10 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
 	c.Logger.Debugf("Node %d is informing the view changer after sync of view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
 	c.ViewChanger.InformNewView(view)
-	return view, md.LatestSequence + 1, md.DecisionsInView
+	if md.LatestSequence == 0 || newView {
+		return view, md.LatestSequence + 1, 0
+	}
+	return view, md.LatestSequence + 1, md.DecisionsInView + 1
 }
 
 func (c *Controller) fetchState() *types.ViewAndSeq {
@@ -646,6 +651,7 @@ func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence u
 	c.MaybePruneRevokedRequests()
 	viewNum = startViewNumber
 	seq = startProposalSequence
+	decisions = startDecisionsInView
 	if syncView > startViewNumber {
 		viewNum = syncView
 		decisions = syncDecsions
@@ -659,6 +665,7 @@ func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence u
 
 // Start the controller
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64, startDecisionsInView uint64, syncOnStart bool) {
+	c.Logger.Debugf("Starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
 	c.controllerDone.Add(1)
 	c.stopOnce = sync.Once{}
 	c.syncChan = make(chan struct{}, 1)
@@ -677,6 +684,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 
 	if syncOnStart {
 		startViewNumber, startProposalSequence, startDecisionsInView = c.syncOnStart(startViewNumber, startProposalSequence, startDecisionsInView)
+		c.Logger.Debugf("After sync starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
 	}
 
 	c.currViewNumber = startViewNumber

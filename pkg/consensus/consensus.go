@@ -127,7 +127,7 @@ func (c *Consensus) Start() error {
 	c.pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
-	c.Logger.Debugf("Application started with view %d and seq %d", c.Metadata.ViewId, c.Metadata.LatestSequence)
+	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
 	view, seq, dec := c.setViewAndSeq(c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
 
 	c.waitForEachOther()
@@ -378,7 +378,14 @@ func (c *Consensus) continueCreateComponents() {
 func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDec uint64) {
 	newView = view
 	newSeq = seq
-	newDec = dec
+	// decisions in view is incremented after delivery,
+	// so if we delivered to the application proposal with decisions i,
+	// then we are expecting to be proposed a proposal with decisions i+1,
+	// unless this is the genesis block, or after a view change
+	newDec = dec + 1
+	if seq == 0 {
+		newDec = 0
+	}
 	viewChange, err := c.state.LoadViewChangeIfApplicable()
 	if err != nil {
 		c.Logger.Panicf("Failed loading view change, error: %v", err)

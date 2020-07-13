@@ -74,7 +74,7 @@ func TestRestartFollowers(t *testing.T) {
 	startViewWG.Add(1)
 	baseLogger := nodes[2].logger.Desugar()
 	nodes[2].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Starting view with number 0 and sequence 2") {
+		if strings.Contains(entry.Message, "Starting view with number 0, sequence 2") {
 			startViewWG.Done()
 		}
 		return nil

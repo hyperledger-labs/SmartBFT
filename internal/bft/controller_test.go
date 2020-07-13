@@ -142,8 +142,9 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
@@ -470,8 +471,9 @@ func TestSyncPrevView(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	controller.ProcessMessages(2, prePrepareNext)
 
@@ -620,7 +622,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 	}
 }
 
-func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int, vs *atomic.Value) *bft.View {
+func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int, vs *atomic.Value) *bft.View {
 	return &bft.View{
 		N:                c.N,
 		LeaderID:         leader,
@@ -635,6 +637,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
+		DecisionsInView:  decisionsInView,
 		ViewSequences:    vs,
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:       int(c.N * 10),
@@ -644,9 +647,9 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 func configureProposerBuilder(controller *bft.Controller) *atomic.Value {
 	pb := &mocks.ProposerBuilder{}
 	vs := &atomic.Value{}
-	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		Return(func(a uint64, b uint64, c uint64, d int) bft.Proposer {
-			return createView(controller, a, b, c, d, vs)
+	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(func(a uint64, b uint64, c uint64, d uint64, e int) bft.Proposer {
+			return createView(controller, a, b, c, d, e, vs)
 		})
 	controller.ProposerBuilder = pb
 	return vs
@@ -669,8 +672,9 @@ func TestSyncInform(t *testing.T) {
 
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 2,
-		ViewId:         2,
+		DecisionsInView: 1,
+		LatestSequence:  2,
+		ViewId:          2,
 	})
 
 	assembler := &mocks.AssemblerMock{}
@@ -900,8 +904,9 @@ func TestBasicLeaderRotation(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	commWG.Add(3) // sending prepare
 	controller.ProcessMessages(3, prePrepareNext)
