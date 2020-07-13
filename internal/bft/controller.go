@@ -486,12 +486,12 @@ func (c *Controller) decide(d decision) {
 	}
 	c.incrementCurrentDecisionsInView()
 	if c.checkIfRotate() {
-		vs := c.ViewSequences.Load()
-		if vs == nil {
-			c.Logger.Panicf("ViewSequences is nil")
+		md := &protos.ViewMetadata{}
+		if err := proto.Unmarshal(d.proposal.Metadata, md); err != nil {
+			c.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
 		}
 		c.Logger.Debugf("Restarting view to rotate the leader")
-		c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq+1, c.getCurrentDecisionsInView())
+		c.changeView(c.getCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
 	}
 	c.MaybePruneRevokedRequests()
 	if iAm, _ := c.iAmTheLeader(); iAm {
