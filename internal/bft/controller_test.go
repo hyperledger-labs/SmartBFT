@@ -799,7 +799,7 @@ func TestSyncInform(t *testing.T) {
 	wal.Close()
 }
 
-func TestBasicLeaderRotation(t *testing.T) {
+func TestRotateFromLeaderToFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
@@ -946,4 +946,158 @@ func TestBasicLeaderRotation(t *testing.T) {
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
 	controller.Stop()
+}
+
+func TestRotateFromFollowerToLeader(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+	defer wal.Close()
+
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Prune", mock.Anything)
+	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		leaderMonWG.Done()
+	})
+	followerMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		followerMonWG.Done()
+	})
+	leaderMon.On("HeartbeatWasSent")
+	leaderMon.On("InjectArtificialHeartbeat", uint64(2), mock.Anything)
+	leaderMon.On("Close")
+	req := []byte{1}
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+	batcher.On("Reset")
+	batcher.On("Closed").Return(false)
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("PopRemainder").Return([][]byte{})
+	batcher.On("BatchRemainder", mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+	nextMD := bft.MarshalOrPanic(&protos.ViewMetadata{
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
+	})
+	nextProp := types.Proposal{
+		Header:               proposal.Header,
+		Payload:              proposal.Payload,
+		Metadata:             nextMD,
+		VerificationSequence: 1,
+	}
+
+	assembler := &mocks.AssemblerMock{}
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(nextProp, [][]byte{}).Once()
+	comm := &mocks.CommMock{}
+	commWG := sync.WaitGroup{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		commWG.Done()
+	})
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		ID:    2,
+		Value: []byte{4},
+	})
+	app := &mocks.ApplicationMock{}
+	appWG := sync.WaitGroup{}
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		appWG.Done()
+	}).Return(types.Reconfig{InLatestDecision: false})
+
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
+	controller := &bft.Controller{
+		RequestPool:        reqPool,
+		LeaderMonitor:      leaderMon,
+		WAL:                wal,
+		ID:                 3, // the second leader
+		N:                  4,
+		NodesList:          []uint64{1, 2, 3, 4},
+		Logger:             log,
+		Batcher:            batcher,
+		Verifier:           verifier,
+		Assembler:          assembler,
+		Comm:               comm,
+		Signer:             signer,
+		Application:        app,
+		Checkpoint:         &types.Checkpoint{},
+		ViewChanger:        &bft.ViewChanger{},
+		StartedWG:          &startedWG,
+		LeaderRotation:     true,
+		DecisionsPerLeader: 1,
+	}
+	vs := configureProposerBuilder(controller)
+	controller.ViewSequences = vs
+
+	followerMonWG.Add(1) // change role
+	controller.Start(1, 0, 0, false)
+	followerMonWG.Wait()
+
+	commWG.Add(3)
+	controller.ProcessMessages(2, prePrepare)
+	commWG.Wait() // prepare
+
+	commWG.Add(3)
+	controller.ProcessMessages(1, prepare)
+	controller.ProcessMessages(4, prepare)
+	commWG.Wait() // commit
+
+	controller.ProcessMessages(1, commit1)
+	appWG.Add(1)       // deliver
+	leaderMonWG.Add(1) // change role
+	commWG.Add(6)      // propose + prepare
+	controller.ProcessMessages(2, commit2)
+	appWG.Wait()
+	leaderMonWG.Wait()
+	commWG.Wait()
+
+	// leader rotation (now 3 is the leader)
+
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = nextProp.Digest()
+	commWG.Add(3) // sending commit
+	controller.ProcessMessages(1, prepareNext)
+	controller.ProcessMessages(4, prepareNext)
+	commWG.Wait()
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+	commit1NextGet.Digest = nextProp.Digest()
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+	commit2NextGet.Digest = nextProp.Digest()
+
+	appWG.Add(1)
+	followerMonWG.Add(1)
+	controller.ProcessMessages(1, commit1Next)
+	controller.ProcessMessages(2, commit2Next)
+	followerMonWG.Wait()
+	appWG.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 2)
+
+	controller.Stop()
+
 }
