@@ -500,8 +500,9 @@ func (c *Controller) decide(d decision) {
 }
 
 func (c *Controller) checkIfRotate() bool {
-	currLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader)
-	nextLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView()+1, c.DecisionsPerLeader)
+	// called after increment
+	currLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView()-1, c.DecisionsPerLeader)
+	nextLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader)
 	return currLeader != nextLeader
 }
 
