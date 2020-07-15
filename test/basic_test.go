@@ -16,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -1050,6 +1051,19 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 					return
 				}
 				m.GetPrePrepare().Proposal.VerificationSequence = 3
+			},
+		},
+		{
+			description: "wrong number of decisions",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				m.GetPrePrepare().Proposal.Metadata = bft.MarshalOrPanic(&smartbftprotos.ViewMetadata{
+					DecisionsInView: 1, // instead of 0
+					LatestSequence:  1,
+					ViewId:          0,
+				})
 			},
 		},
 	} {
