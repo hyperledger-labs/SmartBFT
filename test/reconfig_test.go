@@ -22,7 +22,7 @@ func TestBasicReconfig(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -83,7 +83,7 @@ func TestBasicAddNodes(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -99,8 +99,8 @@ func TestBasicAddNodes(t *testing.T) {
 		assert.Equal(t, data1[i], data1[i+1])
 	}
 
-	newNode1 := newNode(5, network, t.Name(), testDir)
-	newNode2 := newNode(6, network, t.Name(), testDir)
+	newNode1 := newNode(5, network, t.Name(), testDir, true)
+	newNode2 := newNode(6, network, t.Name(), testDir, true)
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -161,7 +161,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -224,7 +224,7 @@ func TestAddRemoveNodes(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -241,7 +241,7 @@ func TestAddRemoveNodes(t *testing.T) {
 	}
 
 	for i := 5; i <= 10; i++ {
-		newNode := newNode(uint64(i), network, t.Name(), testDir)
+		newNode := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, newNode)
 	}
 
@@ -353,7 +353,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 2; i <= numberOfNodes+1; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -369,7 +369,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	newNode := newNode(1, network, t.Name(), testDir)
+	newNode := newNode(1, network, t.Name(), testDir, true)
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], &network)
 	nodes[4].Disconnect()
