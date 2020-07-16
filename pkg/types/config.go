@@ -101,7 +101,7 @@ var DefaultConfig = Configuration{
 	SyncOnStart:                   false,
 	SpeedUpViewChange:             false,
 	LeaderRotation:                true,
-	DecisionsPerLeader:            10,
+	DecisionsPerLeader:            3,
 }
 
 func (c Configuration) Validate() error {

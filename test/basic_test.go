@@ -829,10 +829,12 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	nodes[3].Disconnect() // will need to catch up
 
 	for i := 1; i <= 10; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-nodes[0].Delivered // Wait for leader to commit
-		<-nodes[1].Delivered // Wait for follower to commit
-		<-nodes[2].Delivered // Wait for follower to commit
+		for j := 0; j <= 2; j++ {
+			nodes[j].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		}
+		for j := 0; j <= 2; j++ {
+			<-nodes[j].Delivered
+		}
 	}
 
 	nodes[3].Connect()
@@ -890,10 +892,12 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	nodes[3].Disconnect() // will need to catch up
 
 	for i := 1; i <= 10; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-nodes[0].Delivered // Wait for leader to commit
-		<-nodes[1].Delivered // Wait for follower to commit
-		<-nodes[2].Delivered // Wait for follower to commit
+		for j := 0; j <= 2; j++ {
+			nodes[j].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		}
+		for j := 0; j <= 2; j++ {
+			<-nodes[j].Delivered
+		}
 	}
 
 	nodes[3].Connect()
