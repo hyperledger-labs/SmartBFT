@@ -209,6 +209,10 @@ func (v *ViewChanger) run() {
 	}
 }
 
+func (v *ViewChanger) getLeader() uint64 {
+	return getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+}
+
 func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 	nextTimeout := v.lastResend.Add(v.ResendTimeout)
 	if nextTimeout.After(now) { // check if it is time to resend
@@ -273,7 +277,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	// newView message
 	if nv := m.GetNewView(); nv != nil {
 		v.Logger.Debugf("Node %d is processing a new view message %s from %d", v.SelfID, MsgToString(m), sender)
-		leader := getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+		leader := v.getLeader()
 		if sender != leader {
 			v.Logger.Warnf("Node %d got newView message %v from %d, expected sender to be %d the next leader", v.SelfID, MsgToString(m), sender, leader)
 			return
@@ -370,7 +374,7 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 		v.viewDataMsgs.clear(v.N) // clear because currView changed
 
 		msg := v.prepareViewDataMsg()
-		leader := getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+		leader := v.getLeader()
 		if leader == v.SelfID {
 			v.viewDataMsgs.registerVote(v.SelfID, msg)
 		} else {
@@ -445,7 +449,7 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 }
 
 func (v *ViewChanger) validateViewDataMsg(svd *protos.SignedViewData, sender uint64) bool {
-	if getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader) != v.SelfID { // check if I am the next leader
+	if v.getLeader() != v.SelfID { // check if I am the next leader
 		v.Logger.Warnf("Node %d got %s from %d, but %d is not the next leader of view %d", v.SelfID, signedViewDataToString(svd), sender, v.SelfID, v.currView)
 		return false
 	}
