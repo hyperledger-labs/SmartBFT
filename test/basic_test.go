@@ -36,7 +36,7 @@ func TestBasic(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -67,7 +67,7 @@ func TestRestartFollowers(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -130,7 +130,7 @@ func TestLeaderInPartition(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -163,7 +163,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -232,7 +232,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -296,7 +296,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -343,7 +343,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -404,7 +404,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -466,7 +466,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -604,7 +604,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -672,7 +672,7 @@ func TestRestoringViewChange(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -751,7 +751,7 @@ func TestLeaderForwarding(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -952,7 +952,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -1088,7 +1088,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			numberOfNodes := 4
 			nodes := make([]*App, 0)
 			for i := 1; i <= numberOfNodes; i++ {
-				n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+				n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 				nodes = append(nodes, n)
 			}
 
@@ -1155,7 +1155,7 @@ func TestGradualStart(t *testing.T) {
 	defer os.RemoveAll(testDir)
 
 	// start with only one node
-	n0 := newNode(uint64(1), network, t.Name(), testDir, true, 3)
+	n0 := newNode(uint64(1), network, t.Name(), testDir, false, 0)
 
 	if err := n0.Consensus.Start(); err != nil {
 		n0.logger.Panicf("Consensus returned an error : %v", err)
@@ -1176,7 +1176,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a second node
-	n1 := newNode(uint64(2), network, t.Name(), testDir, true, 3)
+	n1 := newNode(uint64(2), network, t.Name(), testDir, false, 0)
 
 	if err := n1.Consensus.Start(); err != nil {
 		n1.logger.Panicf("Consensus returned an error : %v", err)
@@ -1206,7 +1206,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a third node
-	n2 := newNode(uint64(3), network, t.Name(), testDir, true, 3)
+	n2 := newNode(uint64(3), network, t.Name(), testDir, false, 0)
 
 	if err := n2.Consensus.Start(); err != nil {
 		n2.logger.Panicf("Consensus returned an error : %v", err)
@@ -1251,7 +1251,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 2; i <= numberOfNodes+1; i++ { // add 4 nodes with ids starting at 2
-		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -1274,7 +1274,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 		nodes[i].Consensus.Stop() // stop all nodes
 	}
 
-	newNode := newNode(1, network, t.Name(), testDir, true, 3) // add node with id 1, should be the leader
+	newNode := newNode(1, network, t.Name(), testDir, false, 0) // add node with id 1, should be the leader
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], &network)
 
