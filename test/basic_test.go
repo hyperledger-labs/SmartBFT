@@ -1322,21 +1322,32 @@ func TestRotateAndViewChange(t *testing.T) {
 	for _, n := range nodes {
 		n.heartbeatTime = make(chan time.Time, 1)
 		n.heartbeatTime <- start
-		n.Setup()
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
 	}
 
-	// make sure a view change occurred
-	done := make(chan struct{})
+	syncedWG := sync.WaitGroup{}
+	syncedWG.Add(1)
+	baseLogger3 := nodes[3].logger.Desugar()
+	nodes[3].logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The collected state") {
+			syncedWG.Done()
+		}
+		return nil
+	})).Sugar()
+
 	viewChangeWG := sync.WaitGroup{}
-	viewChangeWG.Add(numberOfNodes - 1)
+	viewChangeWG.Add(1)
+	baseLogger1 := nodes[1].logger.Desugar()
+	nodes[1].logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+
 	for _, n := range nodes {
-		baseLogger := n.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-			if strings.Contains(entry.Message, "ViewChanged") {
-				viewChangeWG.Done()
-			}
-			return nil
-		})).Sugar()
+		n.Setup()
 	}
 
 	startNodes(nodes, &network)
@@ -1363,18 +1374,7 @@ func TestRotateAndViewChange(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	nodes[2].Disconnect() // third leader in partition
-
-	// Accelerate the time until a view change because of heartbeat timeout
-	accelerateTime(nodes, done, true, false)
-
-	// wait for view change
-	viewChangeWG.Wait()
-	close(done)
-
-	nodes[2].Connect()
-
-	nodes[1].Submit(Request{ID: "3", ClientID: "alice"}) // submit to current leader
+	nodes[2].Submit(Request{ID: "3", ClientID: "alice"}) // submit to third leader
 
 	data = make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
@@ -1385,7 +1385,18 @@ func TestRotateAndViewChange(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	nodes[2].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
+	nodes[3].Disconnect() // fourth leader in partition
+
+	// Accelerate the time until a view change
+	done := make(chan struct{})
+	accelerateTime(nodes, done, true, true)
+
+	viewChangeWG.Wait()
+	nodes[3].Connect()
+	syncedWG.Wait()
+	close(done)
+
+	nodes[1].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
 
 	data = make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {
