@@ -343,7 +343,7 @@ type AppRecord struct {
 	Metadata []byte
 }
 
-func newNode(id uint64, network Network, testName string, testDir string, rotateLeader bool) *App {
+func newNode(id uint64, network Network, testName string, testDir string, rotateLeader bool, decisionsPerLeader uint64) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
@@ -364,7 +364,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	config.SelfID = id
 	config.SyncOnStart = true
 	config.LeaderRotation = rotateLeader
-	config.DecisionsPerLeader = types.DefaultConfig.DecisionsPerLeader
+	config.DecisionsPerLeader = decisionsPerLeader
 
 	app.Setup = func() {
 		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
