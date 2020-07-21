@@ -1302,6 +1302,102 @@ func TestReconfigAndViewChange(t *testing.T) {
 
 }
 
+func TestRotateAndViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, true, 1)
+		nodes = append(nodes, n)
+	}
+
+	start := time.Now()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.Setup()
+	}
+
+	// make sure a view change occurred
+	done := make(chan struct{})
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(numberOfNodes - 1)
+	for _, n := range nodes {
+		baseLogger := n.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "ViewChanged") {
+				viewChangeWG.Done()
+			}
+			return nil
+		})).Sugar()
+	}
+
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to first leader
+
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[1].Submit(Request{ID: "2", ClientID: "alice"}) // submit to second leader
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[2].Disconnect() // third leader in partition
+
+	// Accelerate the time until a view change because of heartbeat timeout
+	accelerateTime(nodes, done, true, false)
+
+	// wait for view change
+	viewChangeWG.Wait()
+	close(done)
+
+	nodes[2].Connect()
+
+	nodes[1].Submit(Request{ID: "3", ClientID: "alice"}) // submit to current leader
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[2].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+}
+
 func countCommittedBatches(n *App) int {
 	var numBatchesCreated int
 	for {
