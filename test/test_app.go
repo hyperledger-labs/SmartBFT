@@ -36,8 +36,7 @@ var fastConfig = types.Configuration{
 	LeaderHeartbeatCount:          10,
 	NumOfTicksBehindBeforeSyncing: 10,
 	CollectTimeout:                200 * time.Millisecond,
-	LeaderRotation:                true,
-	DecisionsPerLeader:            3,
+	LeaderRotation:                false,
 }
 
 // App implements all interfaces required by an application using this library

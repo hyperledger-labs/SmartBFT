@@ -1155,7 +1155,7 @@ func TestGradualStart(t *testing.T) {
 	defer os.RemoveAll(testDir)
 
 	// start with only one node
-	n0 := newNode(uint64(1), network, t.Name(), testDir, false, 0)
+	n0 := newNode(uint64(1), network, t.Name(), testDir, true, 1)
 
 	if err := n0.Consensus.Start(); err != nil {
 		n0.logger.Panicf("Consensus returned an error : %v", err)
@@ -1176,7 +1176,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a second node
-	n1 := newNode(uint64(2), network, t.Name(), testDir, false, 0)
+	n1 := newNode(uint64(2), network, t.Name(), testDir, true, 1)
 
 	if err := n1.Consensus.Start(); err != nil {
 		n1.logger.Panicf("Consensus returned an error : %v", err)
@@ -1206,7 +1206,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a third node
-	n2 := newNode(uint64(3), network, t.Name(), testDir, false, 0)
+	n2 := newNode(uint64(3), network, t.Name(), testDir, true, 1)
 
 	if err := n2.Consensus.Start(); err != nil {
 		n2.logger.Panicf("Consensus returned an error : %v", err)
