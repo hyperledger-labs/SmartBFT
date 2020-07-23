@@ -1603,8 +1603,8 @@ func TestInformViewChanger(t *testing.T) {
 	vc.Start(0)
 
 	info := uint64(2)
-	vc.InformNewView(info, 1) // increase the view number
-	vc.InformNewView(info, 1) // make sure that inform happened (channel size is 1)
+	vc.InformNewView(info) // increase the view number
+	vc.InformNewView(info) // make sure that inform happened (channel size is 1)
 
 	vc.StartViewChange(2, true)
 	msg := <-msgChan

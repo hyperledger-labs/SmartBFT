@@ -127,8 +127,8 @@ func (c *Consensus) Start() error {
 	c.pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
-	c.Logger.Debugf("Application started with view %d and seq %d", c.Metadata.ViewId, c.Metadata.LatestSequence)
-	view, seq := c.setViewAndSeq(c.Metadata.ViewId, c.Metadata.LatestSequence)
+	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
+	view, seq, dec := c.setViewAndSeq(c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
 
 	c.waitForEachOther()
 
@@ -137,7 +137,7 @@ func (c *Consensus) Start() error {
 		c.run()
 	}()
 
-	c.startComponents(view, seq, true)
+	c.startComponents(view, seq, dec, true)
 	return nil
 }
 
@@ -195,11 +195,11 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	}
 	c.Logger.Debugf("Checkpoint with view %d and seq %d", md.ViewId, md.LatestSequence)
 
-	view, seq := c.setViewAndSeq(md.ViewId, md.LatestSequence)
+	view, seq, dec := c.setViewAndSeq(md.ViewId, md.LatestSequence, md.DecisionsInView)
 
 	c.waitForEachOther()
 
-	c.startComponents(view, seq, false)
+	c.startComponents(view, seq, dec, false)
 
 	c.pool.RestartTimers()
 
@@ -305,17 +305,19 @@ func sortNodes(nodes []uint64) []uint64 {
 
 func (c *Consensus) createComponents() {
 	c.viewChanger = &algorithm.ViewChanger{
-		SelfID:            c.Config.SelfID,
-		N:                 c.numberOfNodes,
-		NodesList:         c.nodes,
-		SpeedUpViewChange: c.Config.SpeedUpViewChange,
-		Logger:            c.Logger,
-		Signer:            c.Signer,
-		Verifier:          c.Verifier,
-		Application:       c,
-		Checkpoint:        c.checkpoint,
-		InFlight:          c.inFlight,
-		State:             c.state,
+		SelfID:             c.Config.SelfID,
+		N:                  c.numberOfNodes,
+		NodesList:          c.nodes,
+		LeaderRotation:     c.Config.LeaderRotation,
+		DecisionsPerLeader: c.Config.DecisionsPerLeader,
+		SpeedUpViewChange:  c.Config.SpeedUpViewChange,
+		Logger:             c.Logger,
+		Signer:             c.Signer,
+		Verifier:           c.Verifier,
+		Application:        c,
+		Checkpoint:         c.checkpoint,
+		InFlight:           c.inFlight,
+		State:              c.state,
 		// Controller later
 		// RequestsTimer later
 		Ticker:            c.ViewChangerTicker,
@@ -332,24 +334,26 @@ func (c *Consensus) createComponents() {
 	}
 
 	c.controller = &algorithm.Controller{
-		Checkpoint:       c.checkpoint,
-		WAL:              c.WAL,
-		ID:               c.Config.SelfID,
-		N:                c.numberOfNodes,
-		NodesList:        c.nodes,
-		Verifier:         c.Verifier,
-		Logger:           c.Logger,
-		Assembler:        c.Assembler,
-		Application:      c,
-		FailureDetector:  c,
-		Synchronizer:     c,
-		Comm:             c.Comm,
-		Signer:           c.Signer,
-		RequestInspector: c.RequestInspector,
-		ViewChanger:      c.viewChanger,
-		ViewSequences:    &atomic.Value{},
-		Collector:        c.collector,
-		State:            c.state,
+		Checkpoint:         c.checkpoint,
+		WAL:                c.WAL,
+		ID:                 c.Config.SelfID,
+		N:                  c.numberOfNodes,
+		NodesList:          c.nodes,
+		LeaderRotation:     c.Config.LeaderRotation,
+		DecisionsPerLeader: c.Config.DecisionsPerLeader,
+		Verifier:           c.Verifier,
+		Logger:             c.Logger,
+		Assembler:          c.Assembler,
+		Application:        c,
+		FailureDetector:    c,
+		Synchronizer:       c,
+		Comm:               c.Comm,
+		Signer:             c.Signer,
+		RequestInspector:   c.RequestInspector,
+		ViewChanger:        c.viewChanger,
+		ViewSequences:      &atomic.Value{},
+		Collector:          c.collector,
+		State:              c.state,
 	}
 
 	c.viewChanger.Comm = c.controller
@@ -371,9 +375,17 @@ func (c *Consensus) continueCreateComponents() {
 	c.viewChanger.ViewSequences = c.controller.ViewSequences
 }
 
-func (c *Consensus) setViewAndSeq(view, seq uint64) (newView, newSeq uint64) {
+func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDec uint64) {
 	newView = view
 	newSeq = seq
+	// decisions in view is incremented after delivery,
+	// so if we delivered to the application proposal with decisions i,
+	// then we are expecting to be proposed a proposal with decisions i+1,
+	// unless this is the genesis block, or after a view change
+	newDec = dec + 1
+	if seq == 0 {
+		newDec = 0
+	}
 	viewChange, err := c.state.LoadViewChangeIfApplicable()
 	if err != nil {
 		c.Logger.Panicf("Failed loading view change, error: %v", err)
@@ -403,9 +415,10 @@ func (c *Consensus) setViewAndSeq(view, seq uint64) (newView, newSeq uint64) {
 			c.Logger.Debugf("Restoring from new view with view %d and seq %d", viewSeq.View, viewSeq.Seq)
 			newView = viewSeq.View
 			newSeq = viewSeq.Seq
+			newDec = 0
 		}
 	}
-	return newView, newSeq
+	return newView, newSeq, newDec
 }
 
 func (c *Consensus) waitForEachOther() {
@@ -414,14 +427,14 @@ func (c *Consensus) waitForEachOther() {
 	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
 }
 
-func (c *Consensus) startComponents(view, seq uint64, configSync bool) {
+func (c *Consensus) startComponents(view, seq, dec uint64, configSync bool) {
 	// If we delivered to the application proposal with sequence i,
 	// then we are expecting to be proposed a proposal with sequence i+1.
 	c.collector.Start()
 	c.viewChanger.Start(view)
 	if configSync {
-		c.controller.Start(view, seq+1, c.Config.SyncOnStart)
+		c.controller.Start(view, seq+1, dec, c.Config.SyncOnStart)
 	} else {
-		c.controller.Start(view, seq+1, false)
+		c.controller.Start(view, seq+1, dec, false)
 	}
 }

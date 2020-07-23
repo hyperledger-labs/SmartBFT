@@ -16,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -35,7 +36,7 @@ func TestBasic(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -66,7 +67,7 @@ func TestRestartFollowers(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -74,7 +75,7 @@ func TestRestartFollowers(t *testing.T) {
 	startViewWG.Add(1)
 	baseLogger := nodes[2].logger.Desugar()
 	nodes[2].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "Starting view with number 0 and sequence 2") {
+		if strings.Contains(entry.Message, "Starting view with number 0, sequence 2") {
 			startViewWG.Done()
 		}
 		return nil
@@ -129,7 +130,7 @@ func TestLeaderInPartition(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -162,7 +163,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -231,7 +232,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -295,7 +296,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -342,7 +343,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -403,7 +404,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -465,7 +466,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -545,7 +546,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -603,7 +604,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -671,7 +672,7 @@ func TestRestoringViewChange(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -750,7 +751,7 @@ func TestLeaderForwarding(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -788,7 +789,7 @@ func TestLeaderExclusion(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -820,7 +821,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -828,18 +829,24 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	nodes[3].Disconnect() // will need to catch up
 
 	for i := 1; i <= 10; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-nodes[0].Delivered // Wait for leader to commit
-		<-nodes[1].Delivered // Wait for follower to commit
-		<-nodes[2].Delivered // Wait for follower to commit
+		for j := 0; j <= 2; j++ {
+			nodes[j].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		}
+		for j := 0; j <= 2; j++ {
+			<-nodes[j].Delivered
+		}
 	}
 
 	nodes[3].Connect()
 
 	// We create new batches until it catches up the quorum.
 	for reqID := 11; reqID < 100; reqID++ {
-		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
-		<-nodes[1].Delivered // Wait for follower to commit
+		for j := 0; j <= 2; j++ {
+			nodes[j].Submit(Request{ID: fmt.Sprintf("%d", reqID), ClientID: "alice"})
+		}
+		for j := 0; j <= 2; j++ {
+			<-nodes[j].Delivered
+		}
 		caughtUp := waitForCatchup(reqID, nodes[3].Delivered)
 		if caughtUp {
 			return
@@ -860,7 +867,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true, 3)
 		nodes = append(nodes, n)
 	}
 
@@ -888,11 +895,13 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 
 	nodes[3].Disconnect() // will need to catch up
 
-	for i := 1; i <= 10; i++ {
-		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
-		<-nodes[0].Delivered // Wait for leader to commit
-		<-nodes[1].Delivered // Wait for follower to commit
-		<-nodes[2].Delivered // Wait for follower to commit
+	for i := 1; i <= 5; i++ {
+		for j := 0; j <= 2; j++ {
+			nodes[j].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		}
+		for j := 0; j <= 2; j++ {
+			<-nodes[j].Delivered
+		}
 	}
 
 	nodes[3].Connect()
@@ -914,7 +923,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 		}
 	}()
 
-	for i := 1; i <= 10; i++ {
+	for i := 1; i <= 5; i++ {
 		select {
 		case <-nodes[3].Delivered:
 		case <-time.After(time.Second * 10):
@@ -943,7 +952,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -1052,6 +1061,19 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				m.GetPrePrepare().Proposal.VerificationSequence = 3
 			},
 		},
+		{
+			description: "wrong number of decisions",
+			mutatingFunc: func(target uint64, m *smartbftprotos.Message) {
+				if m.GetPrePrepare() == nil {
+					return
+				}
+				m.GetPrePrepare().Proposal.Metadata = bft.MarshalOrPanic(&smartbftprotos.ViewMetadata{
+					DecisionsInView: 1, // instead of 0
+					LatestSequence:  1,
+					ViewId:          0,
+				})
+			},
+		},
 	} {
 		test := test
 		t.Run(test.description, func(t *testing.T) {
@@ -1066,7 +1088,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			numberOfNodes := 4
 			nodes := make([]*App, 0)
 			for i := 1; i <= numberOfNodes; i++ {
-				n := newNode(uint64(i), network, t.Name(), testDir)
+				n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 				nodes = append(nodes, n)
 			}
 
@@ -1133,7 +1155,7 @@ func TestGradualStart(t *testing.T) {
 	defer os.RemoveAll(testDir)
 
 	// start with only one node
-	n0 := newNode(uint64(1), network, t.Name(), testDir)
+	n0 := newNode(uint64(1), network, t.Name(), testDir, true, 1)
 
 	if err := n0.Consensus.Start(); err != nil {
 		n0.logger.Panicf("Consensus returned an error : %v", err)
@@ -1154,7 +1176,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a second node
-	n1 := newNode(uint64(2), network, t.Name(), testDir)
+	n1 := newNode(uint64(2), network, t.Name(), testDir, true, 1)
 
 	if err := n1.Consensus.Start(); err != nil {
 		n1.logger.Panicf("Consensus returned an error : %v", err)
@@ -1184,7 +1206,7 @@ func TestGradualStart(t *testing.T) {
 	network.StopServe()
 
 	// add a third node
-	n2 := newNode(uint64(3), network, t.Name(), testDir)
+	n2 := newNode(uint64(3), network, t.Name(), testDir, true, 1)
 
 	if err := n2.Consensus.Start(); err != nil {
 		n2.logger.Panicf("Consensus returned an error : %v", err)
@@ -1229,7 +1251,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 2; i <= numberOfNodes+1; i++ { // add 4 nodes with ids starting at 2
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 
@@ -1252,7 +1274,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 		nodes[i].Consensus.Stop() // stop all nodes
 	}
 
-	newNode := newNode(1, network, t.Name(), testDir) // add node with id 1, should be the leader
+	newNode := newNode(1, network, t.Name(), testDir, false, 0) // add node with id 1, should be the leader
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], &network)
 
@@ -1268,6 +1290,113 @@ func TestReconfigAndViewChange(t *testing.T) {
 	for i := 0; i < numberOfNodes; i++ {
 		nodes[i].Submit(Request{ID: "10", ClientID: "alice"}) // submit while leader in partition will cause a view change
 	}
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+}
+
+func TestRotateAndViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, true, 1)
+		nodes = append(nodes, n)
+	}
+
+	start := time.Now()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+	}
+
+	syncedWG := sync.WaitGroup{}
+	syncedWG.Add(1)
+	baseLogger3 := nodes[3].logger.Desugar()
+	nodes[3].logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "The collected state") {
+			syncedWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(1)
+	baseLogger1 := nodes[1].logger.Desugar()
+	nodes[1].logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "ViewChanged") {
+			viewChangeWG.Done()
+		}
+		return nil
+	})).Sugar()
+
+	for _, n := range nodes {
+		n.Setup()
+	}
+
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to first leader
+
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[1].Submit(Request{ID: "2", ClientID: "alice"}) // submit to second leader
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[2].Submit(Request{ID: "3", ClientID: "alice"}) // submit to third leader
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[3].Disconnect() // fourth leader in partition
+
+	// Accelerate the time until a view change
+	done := make(chan struct{})
+	accelerateTime(nodes, done, true, true)
+
+	viewChangeWG.Wait()
+	nodes[3].Connect()
+	syncedWG.Wait()
+	close(done)
+
+	nodes[1].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
 
 	data = make([]*AppRecord, 0)
 	for i := 0; i < numberOfNodes; i++ {

@@ -18,9 +18,13 @@ import (
 func TestStateRestore(t *testing.T) {
 	prePrepare := &protos.PrePrepare{
 		Proposal: &protos.Proposal{
-			Header:               []byte{1},
-			Payload:              []byte{1},
-			Metadata:             []byte{1},
+			Header:  []byte{1},
+			Payload: []byte{1},
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				DecisionsInView: 0,
+				LatestSequence:  0,
+				ViewId:          1,
+			}),
 			VerificationSequence: 100,
 		},
 		Seq:  200,

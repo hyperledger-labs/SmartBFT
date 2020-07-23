@@ -72,6 +72,11 @@ type Configuration struct {
 	// the view change (hence speeds up the view change process), or it waits for a quorum before joining.
 	// Waiting only for f+1 is considered less safe.
 	SpeedUpViewChange bool
+
+	// LeaderRotation is a flag indicating whether leader rotation is active.
+	LeaderRotation bool
+	// DecisionsPerLeader is the number of decisions reached by a leader before there is a leader rotation.
+	DecisionsPerLeader uint64
 }
 
 // DefaultConfig contains reasonable values for a small cluster that resides on the same geography (or "Region"), but
@@ -95,6 +100,8 @@ var DefaultConfig = Configuration{
 	CollectTimeout:                time.Second,
 	SyncOnStart:                   false,
 	SpeedUpViewChange:             false,
+	LeaderRotation:                true,
+	DecisionsPerLeader:            3,
 }
 
 func (c Configuration) Validate() error {
@@ -155,6 +162,9 @@ func (c Configuration) Validate() error {
 	}
 	if c.ViewChangeResendInterval > c.ViewChangeTimeout {
 		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
+	}
+	if c.LeaderRotation && c.DecisionsPerLeader <= 0 {
+		return errors.Errorf("DecisionsPerLeader should be greater than zero when leader rotation is active")
 	}
 
 	return nil

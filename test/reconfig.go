@@ -24,6 +24,8 @@ type Configuration struct {
 	CollectTimeout                time.Duration
 	SyncOnStart                   bool
 	SpeedUpViewChange             bool
+	LeaderRotation                bool
+	DecisionsPerLeader            int64
 }
 
 type Reconfig struct {
@@ -54,6 +56,8 @@ func (r Reconfig) recconfigToUint(id uint64) types.Reconfig {
 			CollectTimeout:                r.CurrentConfig.CollectTimeout,
 			SyncOnStart:                   r.CurrentConfig.SyncOnStart,
 			SpeedUpViewChange:             r.CurrentConfig.SpeedUpViewChange,
+			LeaderRotation:                r.CurrentConfig.LeaderRotation,
+			DecisionsPerLeader:            uint64(r.CurrentConfig.DecisionsPerLeader),
 		},
 	}
 }
@@ -79,6 +83,8 @@ func recconfigToInt(reconfig types.Reconfig) Reconfig {
 			CollectTimeout:                reconfig.CurrentConfig.CollectTimeout,
 			SyncOnStart:                   reconfig.CurrentConfig.SyncOnStart,
 			SpeedUpViewChange:             reconfig.CurrentConfig.SpeedUpViewChange,
+			LeaderRotation:                reconfig.CurrentConfig.LeaderRotation,
+			DecisionsPerLeader:            int64(reconfig.CurrentConfig.DecisionsPerLeader),
 		},
 	}
 }

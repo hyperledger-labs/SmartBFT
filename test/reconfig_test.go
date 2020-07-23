@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -19,10 +20,12 @@ func TestBasicReconfig(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
+	decisions := uint64(1)
+
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -40,6 +43,8 @@ func TestBasicReconfig(t *testing.T) {
 
 	newConfig := fastConfig
 	newConfig.CollectTimeout = fastConfig.CollectTimeout * 2
+	newConfig.LeaderRotation = true
+	newConfig.DecisionsPerLeader = decisions
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -80,10 +85,12 @@ func TestBasicAddNodes(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
+	decisions := uint64(1)
+
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -99,8 +106,12 @@ func TestBasicAddNodes(t *testing.T) {
 		assert.Equal(t, data1[i], data1[i+1])
 	}
 
-	newNode1 := newNode(5, network, t.Name(), testDir)
-	newNode2 := newNode(6, network, t.Name(), testDir)
+	newNode1 := newNode(5, network, t.Name(), testDir, true, decisions)
+	newNode2 := newNode(6, network, t.Name(), testDir, true, decisions)
+
+	newConfig := fastConfig
+	newConfig.LeaderRotation = true
+	newConfig.DecisionsPerLeader = decisions
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -108,7 +119,7 @@ func TestBasicAddNodes(t *testing.T) {
 		Reconfig: Reconfig{
 			InLatestDecision: true,
 			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
 		},
 	})
 
@@ -158,10 +169,12 @@ func TestBasicRemoveNodes(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
+	decisions := uint64(1)
+
 	numberOfNodes := 7
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -177,13 +190,17 @@ func TestBasicRemoveNodes(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
+	newConfig := fastConfig
+	newConfig.LeaderRotation = true
+	newConfig.DecisionsPerLeader = decisions
+
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
 		ID:       "10",
 		Reconfig: Reconfig{
 			InLatestDecision: true,
 			CurrentNodes:     []int64{1, 2, 3, 4},
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
 		},
 	})
 
@@ -221,10 +238,12 @@ func TestAddRemoveNodes(t *testing.T) {
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
+	decisions := uint64(1)
+
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 1; i <= numberOfNodes; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -241,9 +260,13 @@ func TestAddRemoveNodes(t *testing.T) {
 	}
 
 	for i := 5; i <= 10; i++ {
-		newNode := newNode(uint64(i), network, t.Name(), testDir)
+		newNode := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, newNode)
 	}
+
+	newConfig := fastConfig
+	newConfig.LeaderRotation = true
+	newConfig.DecisionsPerLeader = decisions
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -251,7 +274,7 @@ func TestAddRemoveNodes(t *testing.T) {
 		Reconfig: Reconfig{
 			InLatestDecision: true,
 			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
 		},
 	})
 
@@ -309,7 +332,7 @@ func TestAddRemoveNodes(t *testing.T) {
 			Reconfig: Reconfig{
 				InLatestDecision: true,
 				CurrentNodes:     currentNodes,
-				CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+				CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
 			},
 		})
 
@@ -353,7 +376,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	numberOfNodes := 4
 	nodes := make([]*App, 0)
 	for i := 2; i <= numberOfNodes+1; i++ {
-		n := newNode(uint64(i), network, t.Name(), testDir)
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
 	startNodes(nodes, &network)
@@ -369,10 +392,14 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	newNode := newNode(1, network, t.Name(), testDir)
+	newNode := newNode(1, network, t.Name(), testDir, false, 0)
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], &network)
 	nodes[4].Disconnect()
+
+	newConfig := fastConfig
+	newConfig.LeaderRotation = false
+	newConfig.DecisionsPerLeader = 0
 
 	nodes[0].Submit(Request{
 		ClientID: "reconfig",
@@ -380,7 +407,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 		Reconfig: Reconfig{
 			InLatestDecision: true,
 			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
-			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: fastConfig}).CurrentConfig,
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
 		},
 	})
 
@@ -404,4 +431,93 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
+}
+
+func TestAddNodeAfterManyRotations(t *testing.T) {
+
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	decisions := uint64(1)
+
+	numberOfNodes := 4
+	blocksNum := 4 + 2
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	// deliver many blocks and rotate after each block
+	blocks := make([]*AppRecord, 0)
+	for j := 1; j <= blocksNum; j++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", j), ClientID: "alice"})
+		data := make([]*AppRecord, 0)
+		for i := 0; i < numberOfNodes; i++ {
+			d := <-nodes[i].Delivered
+			data = append(data, d)
+		}
+		for i := 0; i < numberOfNodes-1; i++ {
+			assert.Equal(t, data[i], data[i+1])
+		}
+		blocks = append(blocks, data[0])
+	}
+
+	// add a new node
+	newNode := newNode(5, network, t.Name(), testDir, true, decisions)
+
+	newConfig := fastConfig
+	newConfig.LeaderRotation = true
+	newConfig.DecisionsPerLeader = decisions
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "10",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
+		},
+	})
+
+	reconfigBlock := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		reconfigBlock = append(reconfigBlock, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, reconfigBlock[i], reconfigBlock[i+1])
+	}
+
+	nodes = append(nodes, newNode)
+	startNodes(nodes[4:], &network)
+
+	// make sure the new node synced with the many delivered blocks
+	for j := 1; j <= blocksNum; j++ {
+		d := <-nodes[4].Delivered
+		assert.Equal(t, blocks[j-1], d)
+	}
+
+	// make sure the new node synced with the reconfig block
+	d := <-nodes[4].Delivered
+	assert.Equal(t, reconfigBlock[0], d)
+
+	// submit another transaction and make sure all got it
+	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
+	numberOfNodes = 5
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
 }

@@ -40,6 +40,8 @@ func TestControllerBasic(t *testing.T) {
 	leaderMon.On("Close")
 	comm := &mocks.CommMock{}
 	comm.On("SendConsensus", mock.Anything, mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 
 	startedWG := sync.WaitGroup{}
 	startedWG.Add(1)
@@ -54,11 +56,12 @@ func TestControllerBasic(t *testing.T) {
 		Logger:        log,
 		Application:   app,
 		Comm:          comm,
+		Verifier:      verifier,
 		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 
 	leaderMon.On("ProcessMsg", uint64(2), heartbeat)
 	controller.ProcessMessages(2, heartbeat)
@@ -91,6 +94,8 @@ func TestControllerLeaderBasic(t *testing.T) {
 	leaderMon.On("Close")
 	commMock := &mocks.CommMock{}
 	commMock.On("SendConsensus", mock.Anything, mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerificationSequence").Return(uint64(1))
 
 	startedWG := sync.WaitGroup{}
 	startedWG.Add(1)
@@ -104,11 +109,12 @@ func TestControllerLeaderBasic(t *testing.T) {
 		Logger:        log,
 		Batcher:       batcher,
 		Comm:          commMock,
+		Verifier:      verifier,
 		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 	<-batcherChan
 	controller.Stop()
 	batcher.AssertCalled(t, "NextBatch")
@@ -136,8 +142,9 @@ func TestLeaderPropose(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
@@ -210,7 +217,7 @@ func TestLeaderPropose(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	commWG.Add(9)
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	commWG.Wait() // propose + state request
 
 	commWG.Add(3)
@@ -342,7 +349,7 @@ func TestViewChanged(t *testing.T) {
 	configureProposerBuilder(controller)
 
 	commWG.Add(3) // state request
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	commWG.Wait()
 
 	commWG.Add(6) // propose
@@ -438,7 +445,7 @@ func TestSyncPrevView(t *testing.T) {
 	controller.ViewSequences = vs
 
 	leaderMonWG.Add(1)
-	controller.Start(1, 0, false)
+	controller.Start(1, 0, 0, false)
 	leaderMonWG.Wait()
 
 	appWG.Add(1)
@@ -464,8 +471,9 @@ func TestSyncPrevView(t *testing.T) {
 	prePrepareNextGet := prePrepareNext.GetPrePrepare()
 	prePrepareNextGet.Seq = 1
 	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 1,
-		ViewId:         1,
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
 	})
 	controller.ProcessMessages(2, prePrepareNext)
 
@@ -601,7 +609,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			}
 
 			configureProposerBuilder(controller)
-			controller.Start(testCase.startViewNum, 0, true)
+			controller.Start(testCase.startViewNum, 0, 0, true)
 
 			controller.HandleRequest(3, []byte{1, 2, 3})
 
@@ -614,7 +622,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 	}
 }
 
-func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quorumSize int, vs *atomic.Value) *bft.View {
+func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int, vs *atomic.Value) *bft.View {
 	return &bft.View{
 		N:                c.N,
 		LeaderID:         leader,
@@ -629,6 +637,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 		Verifier:         c.Verifier,
 		Signer:           c.Signer,
 		ProposalSequence: proposalSequence,
+		DecisionsInView:  decisionsInView,
 		ViewSequences:    vs,
 		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:       int(c.N * 10),
@@ -638,9 +647,9 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum uint64, quo
 func configureProposerBuilder(controller *bft.Controller) *atomic.Value {
 	pb := &mocks.ProposerBuilder{}
 	vs := &atomic.Value{}
-	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-		Return(func(a uint64, b uint64, c uint64, d int) bft.Proposer {
-			return createView(controller, a, b, c, d, vs)
+	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(func(a uint64, b uint64, c uint64, d uint64, e int) bft.Proposer {
+			return createView(controller, a, b, c, d, e, vs)
 		})
 	controller.ProposerBuilder = pb
 	return vs
@@ -663,8 +672,9 @@ func TestSyncInform(t *testing.T) {
 
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
-		LatestSequence: 2,
-		ViewId:         2,
+		DecisionsInView: 1,
+		LatestSequence:  2,
+		ViewId:          2,
 	})
 
 	assembler := &mocks.AssemblerMock{}
@@ -769,7 +779,7 @@ func TestSyncInform(t *testing.T) {
 
 	synchronizerWG.Add(1)
 	commWG.Add(9)
-	controller.Start(1, 0, true)
+	controller.Start(1, 0, 0, true)
 	synchronizerWG.Wait()
 	commWG.Wait()
 
@@ -787,4 +797,307 @@ func TestSyncInform(t *testing.T) {
 	vc.Stop()
 	collector.Stop()
 	wal.Close()
+}
+
+func TestRotateFromLeaderToFollower(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+	defer wal.Close()
+
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Prune", mock.Anything)
+	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything)
+	leaderMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		leaderMonWG.Done()
+	})
+	leaderMon.On("HeartbeatWasSent")
+	leaderMon.On("InjectArtificialHeartbeat", uint64(3), mock.Anything)
+	leaderMon.On("Close")
+	req := []byte{1}
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+	batcher.On("Closed").Return(false)
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("PopRemainder").Return([][]byte{})
+	batcher.On("BatchRemainder", mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	assembler := &mocks.AssemblerMock{}
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
+	comm := &mocks.CommMock{}
+	commWG := sync.WaitGroup{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		commWG.Done()
+	})
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		ID:    2,
+		Value: []byte{4},
+	})
+	app := &mocks.ApplicationMock{}
+	appWG := sync.WaitGroup{}
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		appWG.Done()
+	}).Return(types.Reconfig{InLatestDecision: false})
+
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
+	controller := &bft.Controller{
+		RequestPool:        reqPool,
+		LeaderMonitor:      leaderMon,
+		WAL:                wal,
+		ID:                 2, // the first leader
+		N:                  4,
+		NodesList:          []uint64{1, 2, 3, 4},
+		Logger:             log,
+		Batcher:            batcher,
+		Verifier:           verifier,
+		Assembler:          assembler,
+		Comm:               comm,
+		Signer:             signer,
+		Application:        app,
+		Checkpoint:         &types.Checkpoint{},
+		ViewChanger:        &bft.ViewChanger{},
+		StartedWG:          &startedWG,
+		LeaderRotation:     true,
+		DecisionsPerLeader: 1,
+	}
+	vs := configureProposerBuilder(controller)
+	controller.ViewSequences = vs
+
+	commWG.Add(6)
+	controller.Start(1, 0, 0, false)
+	commWG.Wait() // propose (pre-prepare + prepare)
+
+	commWG.Add(3)
+	controller.ProcessMessages(3, prepare)
+	controller.ProcessMessages(4, prepare)
+	commWG.Wait() // commit
+
+	controller.ProcessMessages(1, commit1)
+	appWG.Add(1)       // deliver
+	leaderMonWG.Add(1) // change role
+	controller.ProcessMessages(3, commit3)
+	appWG.Wait()
+	commWG.Wait()
+	leaderMonWG.Wait()
+
+	// leader rotation (now 3 is the leader)
+
+	prePrepareNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextGet := prePrepareNext.GetPrePrepare()
+	prePrepareNextGet.Seq = 1
+	prePrepareNextGet.GetProposal().Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
+	})
+	commWG.Add(3) // sending prepare
+	controller.ProcessMessages(3, prePrepareNext)
+	commWG.Wait()
+
+	nextProp := types.Proposal{
+		Header:               prePrepareNextGet.Proposal.Header,
+		Payload:              prePrepareNextGet.Proposal.Payload,
+		Metadata:             prePrepareNextGet.Proposal.Metadata,
+		VerificationSequence: 1,
+	}
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = nextProp.Digest()
+	commWG.Add(3) // sending commit
+	controller.ProcessMessages(3, prepareNext)
+	controller.ProcessMessages(4, prepareNext)
+	commWG.Wait()
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+	commit1NextGet.Digest = nextProp.Digest()
+
+	commit3Next := proto.Clone(commit3).(*protos.Message)
+	commit3NextGet := commit3Next.GetCommit()
+	commit3NextGet.Seq = 1
+	commit3NextGet.Digest = nextProp.Digest()
+
+	appWG.Add(1)
+	leaderMonWG.Add(1)
+	controller.ProcessMessages(1, commit1Next)
+	controller.ProcessMessages(3, commit3Next)
+	leaderMonWG.Wait()
+	appWG.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 2)
+
+	controller.Stop()
+}
+
+func TestRotateFromFollowerToLeader(t *testing.T) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	testDir, err := ioutil.TempDir("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+	defer wal.Close()
+
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Prune", mock.Anything)
+	reqPool.On("Close")
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		leaderMonWG.Done()
+	})
+	followerMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		followerMonWG.Done()
+	})
+	leaderMon.On("HeartbeatWasSent")
+	leaderMon.On("InjectArtificialHeartbeat", uint64(2), mock.Anything)
+	leaderMon.On("Close")
+	req := []byte{1}
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+	batcher.On("Reset")
+	batcher.On("Closed").Return(false)
+	batcher.On("NextBatch").Return([][]byte{req}).Once()
+	batcher.On("PopRemainder").Return([][]byte{})
+	batcher.On("BatchRemainder", mock.Anything)
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+	nextMD := bft.MarshalOrPanic(&protos.ViewMetadata{
+		DecisionsInView: 1,
+		LatestSequence:  1,
+		ViewId:          1,
+	})
+	nextProp := types.Proposal{
+		Header:               proposal.Header,
+		Payload:              proposal.Payload,
+		Metadata:             nextMD,
+		VerificationSequence: 1,
+	}
+
+	assembler := &mocks.AssemblerMock{}
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(nextProp, [][]byte{}).Once()
+	comm := &mocks.CommMock{}
+	commWG := sync.WaitGroup{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		commWG.Done()
+	})
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
+	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+		ID:    2,
+		Value: []byte{4},
+	})
+	app := &mocks.ApplicationMock{}
+	appWG := sync.WaitGroup{}
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		appWG.Done()
+	}).Return(types.Reconfig{InLatestDecision: false})
+
+	startedWG := sync.WaitGroup{}
+	startedWG.Add(1)
+
+	controller := &bft.Controller{
+		RequestPool:        reqPool,
+		LeaderMonitor:      leaderMon,
+		WAL:                wal,
+		ID:                 3, // the second leader
+		N:                  4,
+		NodesList:          []uint64{1, 2, 3, 4},
+		Logger:             log,
+		Batcher:            batcher,
+		Verifier:           verifier,
+		Assembler:          assembler,
+		Comm:               comm,
+		Signer:             signer,
+		Application:        app,
+		Checkpoint:         &types.Checkpoint{},
+		ViewChanger:        &bft.ViewChanger{},
+		StartedWG:          &startedWG,
+		LeaderRotation:     true,
+		DecisionsPerLeader: 1,
+	}
+	vs := configureProposerBuilder(controller)
+	controller.ViewSequences = vs
+
+	followerMonWG.Add(1) // change role
+	controller.Start(1, 0, 0, false)
+	followerMonWG.Wait()
+
+	commWG.Add(3)
+	controller.ProcessMessages(2, prePrepare)
+	commWG.Wait() // prepare
+
+	commWG.Add(3)
+	controller.ProcessMessages(1, prepare)
+	controller.ProcessMessages(4, prepare)
+	commWG.Wait() // commit
+
+	controller.ProcessMessages(1, commit1)
+	appWG.Add(1)       // deliver
+	leaderMonWG.Add(1) // change role
+	commWG.Add(6)      // propose + prepare
+	controller.ProcessMessages(2, commit2)
+	appWG.Wait()
+	leaderMonWG.Wait()
+	commWG.Wait()
+
+	// leader rotation (now 3 is the leader)
+
+	prepareNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextGet := prepareNext.GetPrepare()
+	prepareNextGet.Seq = 1
+	prepareNextGet.Digest = nextProp.Digest()
+	commWG.Add(3) // sending commit
+	controller.ProcessMessages(1, prepareNext)
+	controller.ProcessMessages(4, prepareNext)
+	commWG.Wait()
+
+	commit1Next := proto.Clone(commit1).(*protos.Message)
+	commit1NextGet := commit1Next.GetCommit()
+	commit1NextGet.Seq = 1
+	commit1NextGet.Digest = nextProp.Digest()
+
+	commit2Next := proto.Clone(commit2).(*protos.Message)
+	commit2NextGet := commit2Next.GetCommit()
+	commit2NextGet.Seq = 1
+	commit2NextGet.Digest = nextProp.Digest()
+
+	appWG.Add(1)
+	followerMonWG.Add(1)
+	controller.ProcessMessages(1, commit1Next)
+	controller.ProcessMessages(2, commit2Next)
+	followerMonWG.Wait()
+	appWG.Wait()
+	app.AssertNumberOfCalls(t, "Deliver", 2)
+
+	controller.Stop()
+
 }

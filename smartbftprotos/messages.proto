@@ -100,6 +100,7 @@ message Proposal {
 message ViewMetadata {
     uint64 view_id = 1;
     uint64 latest_sequence = 2;
+    uint64 decisions_in_view = 3;
 }
 
 message SavedMessage {
