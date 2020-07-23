@@ -626,6 +626,9 @@ func (w *WriteAheadLogFile) recycleOrCreateFile() error {
 func (w *WriteAheadLogFile) saveCRC() error {
 	anchorRecord := &protos.LogRecord{Type: protos.LogRecord_CRC_ANCHOR, TruncateTo: false}
 	b, err := proto.Marshal(anchorRecord)
+	if err != nil {
+		return err
+	}
 	recordLength := len(b)
 	padSize, padBytes := getPadBytes(recordLength)
 	if padSize != 0 {
