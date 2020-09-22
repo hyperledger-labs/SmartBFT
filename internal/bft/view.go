@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"bytes"
 	"fmt"
 	"sync"
 	"sync/atomic"
@@ -45,26 +46,30 @@ type Comm interface {
 	BroadcastConsensus(m *protos.Message)
 }
 
+type CheckpointRetriever func() (protos.Proposal, []*protos.Signature)
+
 // View is responsible for running the view protocol
 type View struct {
 	// Configuration
-	SelfID           uint64
-	N                uint64
-	LeaderID         uint64
-	Quorum           int
-	Number           uint64
-	Decider          Decider
-	FailureDetector  FailureDetector
-	Sync             Synchronizer
-	Logger           api.Logger
-	Comm             Comm
-	Verifier         api.Verifier
-	Signer           api.Signer
-	ProposalSequence uint64
-	DecisionsInView  uint64
-	State            State
-	Phase            Phase
-	InMsgQSize       int
+	DecisionsPerLeader uint64
+	RetrieveCheckpoint CheckpointRetriever
+	SelfID             uint64
+	N                  uint64
+	LeaderID           uint64
+	Quorum             int
+	Number             uint64
+	Decider            Decider
+	FailureDetector    FailureDetector
+	Sync               Synchronizer
+	Logger             api.Logger
+	Comm               Comm
+	Verifier           api.Verifier
+	Signer             api.Signer
+	ProposalSequence   uint64
+	DecisionsInView    uint64
+	State              State
+	Phase              Phase
+	InMsgQSize         int
 	// Runtime
 	lastVotedProposalByID map[uint64]protos.Commit
 	incMsgs               chan *incMsg
@@ -88,9 +93,10 @@ type View struct {
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
 
-	abortChan chan struct{}
-	stopOnce  sync.Once
-	viewEnded sync.WaitGroup
+	blacklistSupported bool
+	abortChan          chan struct{}
+	stopOnce           sync.Once
+	viewEnded          sync.WaitGroup
 
 	ViewSequences *atomic.Value
 }
@@ -319,6 +325,7 @@ func (v *View) processProposal() Phase {
 
 	var proposal types.Proposal
 	var receivedProposal *protos.Message
+	var prevCommits []*protos.Signature
 
 	var gotPrePrepare bool
 	for !gotPrePrepare {
@@ -330,7 +337,9 @@ func (v *View) processProposal() Phase {
 		case msg := <-v.prePrepare:
 			gotPrePrepare = true
 			receivedProposal = msg
-			prop := msg.GetPrePrepare().Proposal
+			prePrepare := msg.GetPrePrepare()
+			prop := prePrepare.Proposal
+			prevCommits = prePrepare.PrevCommitSignatures
 			proposal = types.Proposal{
 				VerificationSequence: int64(prop.VerificationSequence),
 				Metadata:             prop.Metadata,
@@ -340,7 +349,7 @@ func (v *View) processProposal() Phase {
 		}
 	}
 
-	requests, err := v.verifyProposal(proposal)
+	requests, err := v.verifyProposal(proposal, prevCommits)
 	if err != nil {
 		v.Logger.Warnf("%d received bad proposal from %d: %v", v.SelfID, v.LeaderID, err)
 		v.FailureDetector.Complain(v.Number, false)
@@ -422,7 +431,17 @@ func (v *View) processPrepares() Phase {
 	// Msg: A succinct representation of the proposal that binds this proposal unequivocally.
 
 	// The block proof consists of the aggregation of all these signatures from 2f+1 commits of different nodes.
-	v.myProposalSig = v.Signer.SignProposal(*proposal)
+
+	prpFrom := &protos.PreparesFrom{
+		Ids: voterIDs,
+	}
+
+	prpFromRaw, err := proto.Marshal(prpFrom)
+	if err != nil {
+		v.Logger.Panicf("Failed marshaling prepares from: %v", err)
+	}
+
+	v.myProposalSig = v.Signer.SignProposal(*proposal, prpFromRaw)
 
 	seq := v.ProposalSequence
 
@@ -494,7 +513,7 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 	return signatures, COMMITTED
 }
 
-func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
+func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Signature) ([]types.RequestInfo, error) {
 	// Verify proposal has correct structure and contains authorized requests.
 	requests, err := v.Verifier.VerifyProposal(proposal)
 	if err != nil {
@@ -529,7 +548,101 @@ func (v *View) verifyProposal(proposal types.Proposal) ([]types.RequestInfo, err
 		return nil, errors.New("verification sequence mismatch")
 	}
 
+	if err := v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList); err != nil {
+		return nil, err
+	}
+
+	// Check that the metadata contains a digest of the previous commit signatures
+	prevCommitDigest := CommitSignaturesDigest(prevCommits)
+	if !bytes.Equal(prevCommitDigest, md.PrevCommitSignatureDigest) && v.DecisionsPerLeader > 0 {
+		return nil, errors.Errorf("prev commit signatures received from leader mismatches the metadata digest")
+	}
+
 	return requests, nil
+}
+
+func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64, pendingBlacklist []uint64) error {
+	if v.DecisionsPerLeader == 0 {
+		v.Logger.Debugf("DecisionsPerLeader is 0, hence leader rotation is inactive")
+		if len(pendingBlacklist) > 0 {
+			v.Logger.Warnf("Blacklist cannot be non-empty (%v) if rotation is inactive", pendingBlacklist)
+			return errors.Errorf("rotation is inactive but blacklist is not empty: %v", pendingBlacklist)
+		}
+		return nil
+	}
+
+	prevPropRaw, myLastCommitSignatures := v.RetrieveCheckpoint()
+	prevProposalMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prevPropRaw.Metadata, prevProposalMetadata); err != nil {
+		v.Logger.Panicf("Couldn't unmarshal the previous persisted proposal metadata: %v", err)
+	}
+
+	v.Logger.Debugf("Previous proposal verification sequence: %d, current verification sequence: %d", prevPropRaw.VerificationSequence, currVerificationSeq)
+	if prevPropRaw.VerificationSequence != currVerificationSeq {
+		// If there has been a reconfiguration, black list should remain the same
+		if !equalIntLists(prevProposalMetadata.BlackList, pendingBlacklist) {
+			return errors.Errorf("blacklist changed during reconfiguration")
+		}
+		v.Logger.Infof("Skipping verifying prev commits due to verification sequence advancing from %d to %d",
+			prevPropRaw.VerificationSequence, currVerificationSeq)
+		return nil
+	}
+
+	prepareAcknowledgements := make(map[uint64]*protos.PreparesFrom)
+
+	prevProp := types.Proposal{
+		VerificationSequence: int64(prevPropRaw.VerificationSequence),
+		Metadata:             prevPropRaw.Metadata,
+		Payload:              prevPropRaw.Payload,
+		Header:               prevPropRaw.Header,
+	}
+
+	_, f := computeQuorum(v.N)
+
+	if v.blacklistingSupported(f, myLastCommitSignatures) && len(prevCommitSignatures) < len(myLastCommitSignatures) {
+		return errors.Errorf("only %d out of %d required previous commits is included in pre-prepare",
+			len(prevCommitSignatures), len(myLastCommitSignatures))
+	}
+
+	// All previous commit signatures should be verifiable
+	for _, sig := range prevCommitSignatures {
+		aux, err := v.Verifier.VerifyConsenterSig(types.Signature{
+			ID:    sig.Signer,
+			Msg:   sig.Msg,
+			Value: sig.Value,
+		}, prevProp)
+		if err != nil {
+			return errors.Errorf("failed verifying consenter signature of %d: %v", sig.Signer, err)
+		}
+		prpf := &protos.PreparesFrom{}
+		if err := proto.Unmarshal(aux, prpf); err != nil {
+			return errors.Errorf("failed unmarshaling auxiliary input from %d: %v", sig.Signer, err)
+		}
+		prepareAcknowledgements[sig.Signer] = prpf
+	}
+
+	// We verified the previous commit signatures, now we need to ensure that the blacklist
+	// of this proposal is obtained by applying the deterministic blacklist maintenance algorithm
+	// on the blacklist of the previous proposal which has been committed.
+
+	blacklist := &blacklist{
+		leaderRotation:     v.DecisionsPerLeader > 0,
+		n:                  v.N,
+		prevMD:             prevProposalMetadata,
+		decisionsPerLeader: v.DecisionsPerLeader,
+		preparesFrom:       prepareAcknowledgements,
+		f:                  f,
+		logger:             v.Logger,
+		nodes:              v.Comm.Nodes(),
+		currView:           v.Number,
+	}
+
+	expectedBlacklist := blacklist.computeUpdate()
+	if !equalIntLists(pendingBlacklist, expectedBlacklist) {
+		return errors.Errorf("proposed blacklist %v differs from expected %v blacklist", pendingBlacklist, expectedBlacklist)
+	}
+
+	return nil
 }
 
 func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Message) {
@@ -648,7 +761,7 @@ func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 		return
 	}
 
-	err := vv.v.Verifier.VerifyConsenterSig(types.Signature{
+	_, err := vv.v.Verifier.VerifyConsenterSig(types.Signature{
 		ID:    commit.Signature.Signer,
 		Value: commit.Signature.Value,
 		Msg:   commit.Signature.Msg,
@@ -723,6 +836,23 @@ func (v *View) GetMetadata() []byte {
 
 // Propose broadcasts a prePrepare message with the given proposal
 func (v *View) Propose(proposal types.Proposal) {
+	var prevSigs []*protos.Signature
+	var prevProp protos.Proposal
+	verificationSeq := v.Verifier.VerificationSequence()
+
+	prevProp, prevSigs = v.RetrieveCheckpoint()
+
+	if verificationSeq == prevProp.VerificationSequence {
+		v.Logger.Debugf("Proposing proposal %d with verification sequence of %d and %d commit signatures",
+			v.ProposalSequence, verificationSeq, len(prevSigs))
+		v.updateBlacklist(&proposal, prevSigs, prevProp.Metadata)
+	} else {
+		v.Logger.Infof("Skipping updating blacklist due to verification sequence changing from %d to %d",
+			prevProp.VerificationSequence, verificationSeq)
+	}
+
+	v.bindCommitSignaturesToProposal(&proposal, prevSigs)
+
 	seq := v.ProposalSequence
 	msg := &protos.Message{
 		Content: &protos.Message_PrePrepare{
@@ -735,6 +865,7 @@ func (v *View) Propose(proposal types.Proposal) {
 					Metadata:             proposal.Metadata,
 					VerificationSequence: uint64(proposal.VerificationSequence),
 				},
+				PrevCommitSignatures: prevSigs,
 			},
 		},
 	}
@@ -742,6 +873,24 @@ func (v *View) Propose(proposal types.Proposal) {
 	// it in the WAL before sending it to other nodes.
 	v.HandleMessage(v.LeaderID, msg)
 	v.Logger.Debugf("Proposing proposal sequence %d in view %d", seq, v.Number)
+}
+
+func (v *View) bindCommitSignaturesToProposal(proposal *types.Proposal, prevSigs []*protos.Signature) {
+	if v.DecisionsPerLeader == 0 {
+		v.Logger.Debugf("Leader rotation is disabled, will not bind signatures to proposals")
+		return
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+		v.Logger.Panicf("Failed unmarshaling metadata we constructed ourselves: %v", err)
+	}
+	md.PrevCommitSignatureDigest = CommitSignaturesDigest(prevSigs)
+	if len(md.PrevCommitSignatureDigest) == 0 {
+		v.Logger.Debugf("No previous commit signatures detected")
+	} else {
+		v.Logger.Debugf("Bound %d commit signatures to proposal", len(prevSigs))
+	}
+	proposal.Metadata = MarshalOrPanic(md)
 }
 
 func (v *View) stop() {
@@ -766,4 +915,76 @@ func (v *View) stopped() bool {
 	default:
 		return false
 	}
+}
+
+func (v *View) updateBlacklist(proposal *types.Proposal, prevSigs []*protos.Signature, prevMetadata []byte) {
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+		v.Logger.Panicf("Attempted to propose a proposal with invalid view metadata: %v", err)
+	}
+
+	if v.DecisionsPerLeader == 0 {
+		v.Logger.Debugf("Rotation is disabled, setting blacklist to be empty")
+		md.BlackList = nil
+		proposal.Metadata = MarshalOrPanic(md)
+		return
+	}
+
+	preparesFrom := make(map[uint64]*protos.PreparesFrom)
+
+	for _, sig := range prevSigs {
+		aux := v.Verifier.AuxiliaryData(sig.Msg)
+		prpf := &protos.PreparesFrom{}
+		if err := proto.Unmarshal(aux, prpf); err != nil {
+			v.Logger.Panicf("Failed unmarshalling auxiliary data from previously persisted signatures: %v", err)
+		}
+		preparesFrom[sig.Signer] = prpf
+	}
+
+	prevMD := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prevMetadata, prevMD); err != nil {
+		v.Logger.Panicf("Attempted to propose a proposal with invalid previous proposal view metadata: %v", err)
+	}
+
+	_, f := computeQuorum(v.N)
+
+	blacklist := &blacklist{
+		leaderRotation:     v.DecisionsPerLeader > 0,
+		currView:           md.ViewId,
+		prevMD:             prevMD,
+		nodes:              v.Comm.Nodes(),
+		f:                  f,
+		n:                  v.N,
+		logger:             v.Logger,
+		preparesFrom:       preparesFrom,
+		decisionsPerLeader: v.DecisionsPerLeader,
+	}
+	md.BlackList = blacklist.computeUpdate()
+	proposal.Metadata = MarshalOrPanic(md)
+}
+
+func (v *View) blacklistingSupported(f int, myLastCommitSignatures []*protos.Signature) bool {
+	// Once we blacklist, there is no way back. This is a one way trip, unless we downgrade the version
+	// in all nodes and view change.
+	if v.blacklistSupported {
+		return true
+	}
+	// We wish to find whether there are f+1 witnesses for blacklisting being
+	// activated among the signed commits of the previous proposal.
+	var count int
+	for _, commitSig := range myLastCommitSignatures {
+		aux := v.Verifier.AuxiliaryData(commitSig.Value)
+		if len(aux) > 0 {
+			count++
+		}
+	}
+
+	v.Logger.Debugf("Found %d out of %d required witnesses for auxiliary data", count, f+1)
+
+	blacklistSupported := count > f
+
+	// We cache the result in case it is 'true'.
+	// Subsequent invocations will skip the parsing.
+	v.blacklistSupported = v.blacklistSupported || blacklistSupported
+	return blacklistSupported
 }

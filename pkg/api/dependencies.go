@@ -48,7 +48,7 @@ type Signer interface {
 	// Sign signs on the given data and returns the signature.
 	Sign([]byte) []byte
 	// SignProposal signs on the given proposal and returns a composite Signature.
-	SignProposal(bft.Proposal) *bft.Signature
+	SignProposal(proposal bft.Proposal, auxiliaryInput []byte) *bft.Signature
 }
 
 // Verifier validates data and verifies signatures.
@@ -58,13 +58,16 @@ type Verifier interface {
 	// VerifyRequest verifies the given request and returns its info.
 	VerifyRequest(val []byte) (bft.RequestInfo, error)
 	// VerifyConsenterSig verifies the signature for the given proposal.
-	VerifyConsenterSig(signature bft.Signature, prop bft.Proposal) error
+	// It returns the auxiliary data in the signature.
+	VerifyConsenterSig(signature bft.Signature, prop bft.Proposal) ([]byte, error)
 	// VerifySignature verifies the signature.
 	VerifySignature(signature bft.Signature) error
 	// VerificationSequence returns the current verification sequence.
 	VerificationSequence() uint64
 	// RequestsFromProposal returns from the given proposal the included requests' info
 	RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo
+	// AuxiliaryData extracts the auxiliary data from a signature's message
+	AuxiliaryData([]byte) []byte
 }
 
 // RequestInspector extracts info (i.e. request id and client id) from a given request.

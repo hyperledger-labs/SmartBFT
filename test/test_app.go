@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
@@ -41,19 +42,26 @@ var fastConfig = types.Configuration{
 
 // App implements all interfaces required by an application using this library
 type App struct {
-	ID             uint64
-	Delivered      chan *AppRecord
-	Consensus      *consensus.Consensus
-	Setup          func()
-	Node           *Node
-	logLevel       zap.AtomicLevel
-	latestMD       *smartbftprotos.ViewMetadata
-	lastDecision   *types.Decision
-	clock          *time.Ticker
-	heartbeatTime  chan time.Time
-	viewChangeTime chan time.Time
-	secondClock    *time.Ticker
-	logger         *zap.SugaredLogger
+	ID              uint64
+	Delivered       chan *AppRecord
+	Consensus       *consensus.Consensus
+	Setup           func()
+	Node            *Node
+	logLevel        zap.AtomicLevel
+	latestMD        *smartbftprotos.ViewMetadata
+	lastDecision    *types.Decision
+	clock           *time.Ticker
+	heartbeatTime   chan time.Time
+	viewChangeTime  chan time.Time
+	secondClock     *time.Ticker
+	logger          *zap.SugaredLogger
+	lastRecord      lastRecord
+	verificationSeq uint64
+}
+
+type lastRecord struct {
+	proposal   types.Proposal
+	signatures []types.Signature
 }
 
 // Mute mutes the log
@@ -189,18 +197,22 @@ func (a *App) VerifyRequest(val []byte) (types.RequestInfo, error) {
 }
 
 // VerifyConsenterSig verifies a nodes signature on the given proposal
-func (a *App) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error {
-	return nil
+func (a *App) VerifyConsenterSig(signature types.Signature, _ types.Proposal) ([]byte, error) {
+	return signature.Msg, nil
+}
+
+func (a *App) AuxiliaryData(msg []byte) []byte {
+	return msg
 }
 
 // VerifySignature verifies a signature
-func (a *App) VerifySignature(signature types.Signature) error {
+func (a *App) VerifySignature(_ types.Signature) error {
 	return nil
 }
 
 // VerificationSequence returns the current verification sequence
 func (a *App) VerificationSequence() uint64 {
-	return 0
+	return atomic.LoadUint64(&a.verificationSeq)
 }
 
 // Sign signs on the given value
@@ -209,20 +221,30 @@ func (a *App) Sign([]byte) []byte {
 }
 
 // SignProposal signs on the given proposal
-func (a *App) SignProposal(types.Proposal) *types.Signature {
-	return &types.Signature{ID: a.ID}
+func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
+	if len(aux) == 0 && len(a.Node.n) > 1 {
+		panic(fmt.Sprintf("didn't receive prepares from anyone, n=%d", len(a.Node.n)))
+	}
+	return &types.Signature{ID: a.ID, Msg: aux}
 }
 
 // AssembleProposal assembles a new proposal from the given requests
 func (a *App) AssembleProposal(metadata []byte, requests [][]byte) types.Proposal {
 	return types.Proposal{
-		Payload:  batch{Requests: requests}.toBytes(),
-		Metadata: metadata,
+		VerificationSequence: int64(atomic.LoadUint64(&a.verificationSeq)),
+		Payload:              batch{Requests: requests}.toBytes(),
+		Metadata:             metadata,
 	}
 }
 
 // Deliver delivers the given proposal
 func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
+	defer func() {
+		a.lastRecord = lastRecord{
+			proposal:   proposal,
+			signatures: signatures,
+		}
+	}()
 	record := &AppRecord{
 		Metadata: proposal.Metadata,
 		Batch:    batchFromBytes(proposal.Payload),
@@ -370,6 +392,14 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
+
+		if app.Consensus != nil && app.Consensus.Config.DecisionsPerLeader > 0 {
+			config.DecisionsPerLeader = app.Consensus.Config.DecisionsPerLeader
+		}
+		if app.Consensus != nil && app.Consensus.Config.LeaderRotation {
+			config.LeaderRotation = true
+		}
+
 		c := &consensus.Consensus{
 			Config:            config,
 			ViewChangerTicker: app.secondClock.C,
@@ -384,8 +414,8 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			Synchronizer:      app,
 			Application:       app,
 			WALInitialContent: walInitialEntries,
-			LastProposal:      types.Proposal{},
-			LastSignatures:    []types.Signature{},
+			LastProposal:      app.lastRecord.proposal,
+			LastSignatures:    app.lastRecord.signatures,
 		}
 		if app.heartbeatTime != nil {
 			app.clock.Stop()

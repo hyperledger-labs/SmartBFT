@@ -8,6 +8,7 @@ package test
 import (
 	"fmt"
 	"math/rand"
+	"sort"
 	"sync"
 	"time"
 
@@ -158,10 +159,12 @@ func (node *Node) SendTransaction(targetID uint64, request []byte) {
 
 // Nodes returns the ids of all nodes in the network
 func (node *Node) Nodes() []uint64 {
-	var res []uint64
+	var res nodes
 	for _, n := range node.n {
 		res = append(res, n.id)
 	}
+
+	res.Sort()
 	return res
 }
 
@@ -194,3 +197,12 @@ func (node *Node) createCommittedBatches(network Network) {
 	}
 	node.cb = &committedBatches{}
 }
+
+type nodes []uint64
+
+func (p nodes) Len() int           { return len(p) }
+func (p nodes) Less(i, j int) bool { return p[i] < p[j] }
+func (p nodes) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+
+// Sort is a convenience method.
+func (p nodes) Sort() { sort.Sort(p) }

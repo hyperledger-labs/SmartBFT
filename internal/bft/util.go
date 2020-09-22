@@ -7,6 +7,8 @@ package bft
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/asn1"
 	"encoding/base64"
 	"fmt"
 	"math"
@@ -73,12 +75,26 @@ func MarshalOrPanic(msg proto.Message) []byte {
 	return b
 }
 
-func getLeaderID(view uint64, N uint64, nodes []uint64, leaderRotation bool, decisionsInView uint64, decisionsPerLeader uint64) uint64 {
-	// assuming nodes are sorted
-	if leaderRotation {
-		return nodes[(view+(decisionsInView/decisionsPerLeader))%N]
+func getLeaderID(view uint64, N uint64, nodes []uint64, leaderRotation bool, decisionsInView uint64, decisionsPerLeader uint64, blacklist []uint64) uint64 {
+	blackListed := make(map[uint64]struct{})
+	for _, n := range blacklist {
+		blackListed[n] = struct{}{}
 	}
-	return nodes[view%N]
+
+	if !leaderRotation {
+		return nodes[view%N]
+	}
+
+	for i := 0; i < len(nodes); i++ {
+		index := (view + (decisionsInView / decisionsPerLeader)) + uint64(i)
+		node := nodes[index%N]
+		_, exists := blackListed[node]
+		if !exists {
+			return node
+		}
+	}
+
+	panic(fmt.Sprintf("all %d nodes are blacklisted", len(nodes)))
 }
 
 type vote struct {
@@ -188,6 +204,7 @@ func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 
 // ProposalMaker implements ProposerBuilder
 type ProposalMaker struct {
+	DecisionsPerLeader uint64
 	N                  uint64
 	SelfID             uint64
 	Decider            Decider
@@ -201,28 +218,31 @@ type ProposalMaker struct {
 	InMsqQSize         int
 	ViewSequences      *atomic.Value
 	restoreOnceFromWAL sync.Once
+	Checkpoint         *types.Checkpoint
 }
 
 // NewProposer returns a new view
 func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer {
 	view := &View{
-		N:                pm.N,
-		LeaderID:         leader,
-		SelfID:           pm.SelfID,
-		Quorum:           quorumSize,
-		Number:           viewNum,
-		Decider:          pm.Decider,
-		FailureDetector:  pm.FailureDetector,
-		Sync:             pm.Sync,
-		Logger:           pm.Logger,
-		Comm:             pm.Comm,
-		Verifier:         pm.Verifier,
-		Signer:           pm.Signer,
-		ProposalSequence: proposalSequence,
-		DecisionsInView:  decisionsInView,
-		State:            pm.State,
-		InMsgQSize:       pm.InMsqQSize,
-		ViewSequences:    pm.ViewSequences,
+		RetrieveCheckpoint: pm.Checkpoint.Get,
+		DecisionsPerLeader: pm.DecisionsPerLeader,
+		N:                  pm.N,
+		LeaderID:           leader,
+		SelfID:             pm.SelfID,
+		Quorum:             quorumSize,
+		Number:             viewNum,
+		Decider:            pm.Decider,
+		FailureDetector:    pm.FailureDetector,
+		Sync:               pm.Sync,
+		Logger:             pm.Logger,
+		Comm:               pm.Comm,
+		Verifier:           pm.Verifier,
+		Signer:             pm.Signer,
+		ProposalSequence:   proposalSequence,
+		DecisionsInView:    decisionsInView,
+		State:              pm.State,
+		InMsgQSize:         pm.InMsqQSize,
+		ViewSequences:      pm.ViewSequences,
 	}
 
 	view.ViewSequences.Store(ViewSequence{
@@ -332,4 +352,147 @@ func heartBeatResponseToString(hbr *protos.HeartBeatResponse) string {
 	}
 
 	return fmt.Sprintf("<HeartBeatResponse with view: %d", hbr.View)
+}
+
+type blacklist struct {
+	leaderRotation     bool
+	prevMD             *protos.ViewMetadata
+	n                  uint64
+	nodes              []uint64
+	currView           uint64
+	preparesFrom       map[uint64]*protos.PreparesFrom
+	logger             api.Logger
+	f                  int
+	decisionsPerLeader uint64
+}
+
+func (bl blacklist) computeUpdate() []uint64 {
+	newBlacklist := bl.prevMD.BlackList
+	viewBeforeViewChanges := bl.prevMD.ViewId
+
+	bl.logger.Debugf("view before: %d, current view: %d", viewBeforeViewChanges, bl.currView)
+
+	if viewBeforeViewChanges != bl.currView {
+		// In case the previous view is different from this view, then we had a view change.
+		// Thus, we need to add some nodes to the blacklist.
+
+		// Locate every leader of all views previous to this views.
+		for viewPreviousToThisView := viewBeforeViewChanges; viewPreviousToThisView < bl.currView; viewPreviousToThisView++ {
+			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
+				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
+			leaderID := getLeaderID(viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
+			// Add that leader to the blacklist, because it did not drive any proposal, hence we skipped it because of view changes.
+			newBlacklist = append(newBlacklist, leaderID)
+			bl.logger.Infof("Blacklisting %d", leaderID)
+		}
+	} else {
+		// We are in the same view, hence we can remove some nodes from the blacklist, if applicable,
+		// because they helped us drive from the previous sequence to this sequence.
+		// Compute the new blacklist according to your collected attestations on prepares sent
+		// in previous round.
+		newBlacklist = pruneBlacklist(newBlacklist, bl.preparesFrom, bl.f, bl.nodes, bl.logger)
+	}
+
+	// If blacklist is too big, remove items from its beginning
+	for len(newBlacklist) > bl.f {
+		bl.logger.Infof("Removing %d from % sized blacklist due to size constraint", newBlacklist[0], len(newBlacklist))
+		newBlacklist = newBlacklist[1:]
+	}
+
+	if len(bl.prevMD.BlackList) != len(newBlacklist) {
+		bl.logger.Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
+	}
+
+	return newBlacklist
+}
+
+// pruneBlacklist receives the previous blacklist, prepare acknowledgements from nodes, and returns
+// the new blacklist such that a node that was observed by more than f observers is removed from the blacklist,
+// and all nodes that no longer exist are also removed from the blacklist.
+func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.PreparesFrom, f int, nodes []uint64, logger api.Logger) []uint64 {
+	if len(prevBlacklist) == 0 {
+		logger.Debugf("Blacklist empty, nothing to prune")
+		return prevBlacklist
+	}
+	logger.Debugf("Pruning blacklist %v with %d acknowledgements, f=%d, n=%d", prevBlacklist, len(preparesFrom), f, len(nodes))
+	// Build a set of all nodes
+	currentNodeIDs := make(map[uint64]struct{})
+	for _, n := range nodes {
+		currentNodeIDs[n] = struct{}{}
+	}
+
+	// For each sender of a prepare, count the number of commit signatures which acknowledge receiving a prepare from it.
+	nodeID2Acks := make(map[uint64]int)
+	for from, gotPrepareFrom := range preparesFrom {
+		logger.Debugf("%d observed prepares from %v", from, gotPrepareFrom)
+		for _, prepareSender := range gotPrepareFrom.Ids {
+			nodeID2Acks[prepareSender]++
+		}
+	}
+
+	var newBlackList []uint64
+	for _, blackListedNode := range prevBlacklist {
+		// Purge nodes that were removed by a reconfiguration
+		if _, exists := currentNodeIDs[blackListedNode]; !exists {
+			logger.Infof("Node %d no longer exists, removing it from the blacklist", blackListedNode)
+			continue
+		}
+
+		// Purge nodes that have enough attestations of being alive
+		observers := nodeID2Acks[blackListedNode]
+		if observers > f {
+			logger.Infof("Node %d was observed sending a prepare by %d nodes, removing it from blacklist", blackListedNode, observers)
+			continue
+		}
+		newBlackList = append(newBlackList, blackListedNode)
+	}
+
+	return newBlackList
+}
+
+func equalIntLists(a, b []uint64) bool {
+	if len(a) != len(b) {
+		return false
+	}
+
+	for i := 0; i < len(a); i++ {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+func CommitSignaturesDigest(sigs []*protos.Signature) []byte {
+	if len(sigs) == 0 {
+		return nil
+	}
+	idb := IntDoubleBytes{}
+	for _, sig := range sigs {
+		s := IntDoubleByte{
+			A: int64(sig.Signer),
+			B: sig.Value,
+			C: sig.Msg,
+		}
+		idb.A = append(idb.A, s)
+	}
+
+	serializedSignatures, err := asn1.Marshal(idb)
+	if err != nil {
+		panic(fmt.Sprintf("failed serializing signatures: %v", err))
+	}
+
+	h := sha256.New()
+	h.Write(serializedSignatures)
+	return h.Sum(nil)
+}
+
+type IntDoubleByte struct {
+	A    int64
+	B, C []byte
+}
+
+type IntDoubleBytes struct {
+	A []IntDoubleByte
 }

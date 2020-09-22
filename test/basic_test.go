@@ -6,6 +6,8 @@
 package test
 
 import (
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -1177,11 +1179,13 @@ func TestGradualStart(t *testing.T) {
 
 	// add a second node
 	n1 := newNode(uint64(2), network, t.Name(), testDir, true, 1)
+	atomic.AddUint64(&n1.verificationSeq, 1)
 
 	if err := n1.Consensus.Start(); err != nil {
 		n1.logger.Panicf("Consensus returned an error : %v", err)
 	}
 
+	atomic.AddUint64(&n0.verificationSeq, 1)
 	n0.Restart()
 
 	network.StartServe()
@@ -1207,11 +1211,14 @@ func TestGradualStart(t *testing.T) {
 
 	// add a third node
 	n2 := newNode(uint64(3), network, t.Name(), testDir, true, 1)
+	atomic.AddUint64(&n2.verificationSeq, 2)
 
 	if err := n2.Consensus.Start(); err != nil {
 		n2.logger.Panicf("Consensus returned an error : %v", err)
 	}
 
+	atomic.AddUint64(&n1.verificationSeq, 1)
+	atomic.AddUint64(&n0.verificationSeq, 1)
 	n0.Restart()
 	n1.Restart()
 
@@ -1407,6 +1414,245 @@ func TestRotateAndViewChange(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
+}
+
+func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	var nodes []*App
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		nodes = append(nodes, n)
+	}
+
+	var leaderRotationDisabled uint64
+	var boundCommitSignatures uint64
+
+	setupLogger := func(node *App) {
+		node.logger = node.logger.Desugar().WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Bound 3 commit signatures to proposal") {
+				atomic.AddUint64(&boundCommitSignatures, 1)
+			}
+			if strings.Contains(entry.Message, "Leader rotation is disabled, will not bind signatures to proposals") {
+				atomic.AddUint64(&leaderRotationDisabled, 1)
+			}
+			return nil
+		})).Sugar()
+	}
+
+	for _, n := range nodes {
+		setupLogger(n)
+		n.Setup()
+	}
+
+	t.Run("No leader rotation", func(t *testing.T) {
+		startNodes(nodes, &network)
+
+		nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(1), atomic.LoadUint64(&leaderRotationDisabled))
+		assert.Equal(t, uint64(0), atomic.LoadUint64(&boundCommitSignatures))
+
+		nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&leaderRotationDisabled))
+		assert.Equal(t, uint64(0), atomic.LoadUint64(&boundCommitSignatures))
+	})
+
+	t.Run("Activate leader rotation", func(t *testing.T) {
+		network.StopServe()
+
+		for _, n := range nodes {
+			n.Consensus.Config.DecisionsPerLeader = 1
+			n.Consensus.Config.LeaderRotation = true
+			n.Restart()
+		}
+
+		network.StartServe()
+
+		nodes[0].Submit(Request{ID: "3", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&leaderRotationDisabled))
+		assert.Equal(t, uint64(1), atomic.LoadUint64(&boundCommitSignatures))
+
+		nodes[0].Submit(Request{ID: "4", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&leaderRotationDisabled))
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
+	})
+
+	return
+
+	t.Run("Deactivate leader rotation", func(t *testing.T) {
+		network.StopServe()
+
+		for _, n := range nodes {
+			n.Consensus.Config.DecisionsPerLeader = 0
+			n.Consensus.Config.LeaderRotation = false
+			n.Restart()
+		}
+
+		network.StartServe()
+
+		nodes[0].Submit(Request{ID: "5", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
+
+		nodes[0].Submit(Request{ID: "6", ClientID: "alice"})
+
+		for i := 0; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+
+		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
+
+	})
+}
+
+func TestBlacklistNoReconfig(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 10
+	var nodes []*App
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, true, 1)
+		nodes = append(nodes, n)
+	}
+
+	var viewChangedWG sync.WaitGroup
+	viewChangedWG.Add(len(nodes) - 1)
+
+	var blacklistPrunedWG sync.WaitGroup
+	blacklistPrunedWG.Add(len(nodes) + 1) // Once at proposing, n times at verification
+
+	var redemptionWG sync.WaitGroup
+	redemptionWG.Add(len(nodes))
+
+	start := time.Now()
+	for _, n := range nodes {
+		l := n.logger.Desugar()
+		n.logger = l.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Starting view with number 1, sequence 1,") {
+				viewChangedWG.Done()
+			}
+			if strings.Contains(entry.Message, "Blacklist changed: [1] --> []") {
+				blacklistPrunedWG.Done()
+			}
+			if strings.Contains(entry.Message, "Rotating leader from 10 to 1") {
+				redemptionWG.Done()
+			}
+			return nil
+		})).Sugar()
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
+	}
+
+	startNodes(nodes, &network)
+
+	nodes[0].Disconnect() // Leader is in partition
+
+	// Accelerate the time until a view change
+	done := make(chan struct{})
+	accelerateTime(nodes[1:], done, true, true)
+
+	// Wait for view change
+	viewChangedWG.Wait()
+	close(done)
+
+	// Rotate the leader and ensure the view doesn't change, which proves
+	// node 1 never became the leader again
+	for j := 0; j < numberOfNodes; j++ {
+		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", j), ClientID: "alice"})
+		for i := 1; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+	}
+
+	// Ensure we remain on view 1, and that node 1 is in the blacklist
+	md := &smartbftprotos.ViewMetadata{}
+	err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
+	assert.NoError(t, err)
+	assert.Equal(t, uint64(1), md.ViewId)
+	assert.Equal(t, []uint64{1}, md.BlackList)
+
+	// Next, re-connect node 1
+	nodes[0].Connect()
+
+	// Accelerate time to wait for it to synchronize
+	done = make(chan struct{})
+	accelerateTime(nodes, done, true, true)
+	for j := 0; j < numberOfNodes; j++ {
+		<-nodes[0].Delivered
+	}
+	close(done)
+
+	// Rotate the leader and ensure the view doesn't change,
+	// but this time we want to ensure that node 1 became the leader
+	// again at some point, and that it has been deleted from the blacklist.
+	stop := make(chan struct{})
+	f := func() {
+		txID := make([]byte, 15)
+		rand.Read(txID)
+		nodes[1].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
+		for i := 0; i < len(nodes); i++ {
+			<-nodes[i].Delivered
+		}
+		md := &smartbftprotos.ViewMetadata{}
+		err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
+		assert.NoError(t, err)
+		assert.Equal(t, uint64(1), md.ViewId)
+	}
+	go doInBackground(f, stop)
+	blacklistPrunedWG.Wait()
+	redemptionWG.Wait()
+	close(stop)
+}
+
+func doInBackground(f func(), stop <-chan struct{}) {
+	for {
+		select {
+		case <-stop:
+			return
+		default:
+			f()
+		}
+	}
 }
 
 func countCommittedBatches(n *App) int {

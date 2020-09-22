@@ -128,15 +128,16 @@ func TestViewBasic(t *testing.T) {
 	log := basicLog.Sugar()
 	state := &bft.StateRecorder{}
 	view := &bft.View{
-		ViewSequences:    &atomic.Value{},
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		ViewSequences:      &atomic.Value{},
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		InMsgQSize:         40,
 	}
 	view.Start()
 	view.Abort()
@@ -410,26 +411,27 @@ func TestBadPrepare(t *testing.T) {
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-			signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+			signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 				ID:    4,
 				Value: []byte{4},
 			})
 			state := &bft.StateRecorder{}
 			view := &bft.View{
-				State:            state,
-				Logger:           log,
-				N:                4,
-				LeaderID:         1,
-				Quorum:           3,
-				Number:           1,
-				ProposalSequence: 0,
-				Sync:             synchronizer,
-				FailureDetector:  fd,
-				Comm:             comm,
-				Verifier:         verifier,
-				Signer:           signer,
-				ViewSequences:    &atomic.Value{},
-				InMsgQSize:       40,
+				RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+				State:              state,
+				Logger:             log,
+				N:                  4,
+				LeaderID:           1,
+				Quorum:             3,
+				Number:             1,
+				ProposalSequence:   0,
+				Sync:               synchronizer,
+				FailureDetector:    fd,
+				Comm:               comm,
+				Verifier:           verifier,
+				Signer:             signer,
+				ViewSequences:      &atomic.Value{},
+				InMsgQSize:         40,
 			}
 			view.Start()
 
@@ -477,27 +479,28 @@ func TestBadCommit(t *testing.T) {
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(errors.New(""))
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, errors.New(""))
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    4,
 		Value: []byte{4},
 	})
 	state := &bft.StateRecorder{}
 	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Comm:             comm,
-		Verifier:         verifier,
-		Signer:           signer,
-		ViewSequences:    &atomic.Value{},
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		Comm:               comm,
+		Verifier:           verifier,
+		Signer:             signer,
+		ViewSequences:      &atomic.Value{},
+		InMsgQSize:         40,
 	}
 	view.Start()
 
@@ -561,31 +564,32 @@ func TestNormalPath(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	signer := &mocks.SignerMock{}
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    4,
 		Value: []byte{4},
 	})
 	viewSeq := &atomic.Value{}
 	state := &bft.StateRecorder{}
 	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		SelfID:           1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Comm:             comm,
-		Decider:          decider,
-		Verifier:         verifier,
-		Signer:           signer,
-		ViewSequences:    viewSeq,
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		SelfID:             1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		Comm:               comm,
+		Decider:            decider,
+		Verifier:           verifier,
+		Signer:             signer,
+		ViewSequences:      viewSeq,
+		InMsgQSize:         40,
 	}
 	view.Start()
 
@@ -685,29 +689,30 @@ func TestTwoSequences(t *testing.T) {
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    4,
 		Value: []byte{4},
 	})
 	state := &bft.StateRecorder{}
 	view := &bft.View{
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		Comm:             comm,
-		Decider:          decider,
-		Verifier:         verifier,
-		Signer:           signer,
-		ViewSequences:    &atomic.Value{},
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		Comm:               comm,
+		Decider:            decider,
+		Verifier:           verifier,
+		Signer:             signer,
+		ViewSequences:      &atomic.Value{},
+		InMsgQSize:         40,
 	}
 	view.Start()
 
@@ -815,7 +820,7 @@ func TestViewPersisted(t *testing.T) {
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
 			verifier.On("VerificationSequence").Return(uint64(1))
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 
 			var prepareSent sync.WaitGroup
 			var commitSent sync.WaitGroup
@@ -845,7 +850,7 @@ func TestViewPersisted(t *testing.T) {
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-			signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 2})
+			signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 2})
 
 			var deciderWG sync.WaitGroup
 			deciderWG.Add(1)
@@ -858,20 +863,21 @@ func TestViewPersisted(t *testing.T) {
 
 			constructView := func() *bft.View {
 				return &bft.View{
-					Signer:           signer,
-					Decider:          decider,
-					Comm:             comm,
-					Verifier:         verifier,
-					SelfID:           2,
-					State:            state,
-					Logger:           log,
-					N:                4,
-					LeaderID:         1,
-					Quorum:           3,
-					Number:           1,
-					ProposalSequence: 0,
-					ViewSequences:    &atomic.Value{},
-					InMsgQSize:       40,
+					RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+					Signer:             signer,
+					Decider:            decider,
+					Comm:               comm,
+					Verifier:           verifier,
+					SelfID:             2,
+					State:              state,
+					Logger:             log,
+					N:                  4,
+					LeaderID:           1,
+					Quorum:             3,
+					Number:             1,
+					ProposalSequence:   0,
+					ViewSequences:      &atomic.Value{},
+					InMsgQSize:         40,
 				}
 			}
 
@@ -1075,15 +1081,16 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 			synchronizer := &mocks.Synchronizer{}
 
 			view := &bft.View{
-				Logger:           basicLog.Sugar(),
-				N:                4,
-				LeaderID:         1,
-				Quorum:           3,
-				Number:           5,
-				ProposalSequence: 10,
-				Sync:             synchronizer,
-				ViewSequences:    &atomic.Value{},
-				InMsgQSize:       40,
+				RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+				Logger:             basicLog.Sugar(),
+				N:                  4,
+				LeaderID:           1,
+				Quorum:             3,
+				Number:             5,
+				ProposalSequence:   10,
+				Sync:               synchronizer,
+				ViewSequences:      &atomic.Value{},
+				InMsgQSize:         40,
 			}
 
 			var syncCalled sync.WaitGroup
@@ -1143,7 +1150,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 3})
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: 3})
 
 	var broadcastSent sync.WaitGroup
 	comm := &mocks.CommMock{}
@@ -1152,24 +1159,25 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 	})
 
 	verifier := &mocks.VerifierMock{}
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 
 	view := &bft.View{
-		Decider:          decider,
-		Comm:             comm,
-		Signer:           signer,
-		Verifier:         verifier,
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		ViewSequences:    &atomic.Value{},
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		Decider:            decider,
+		Comm:               comm,
+		Signer:             signer,
+		Verifier:           verifier,
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		ViewSequences:      &atomic.Value{},
+		InMsgQSize:         40,
 	}
 
 	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
@@ -1378,8 +1386,8 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 
 	tv := &testedView{}
 
@@ -1402,7 +1410,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: selfID})
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: selfID})
 
 	decider := &mocks.Decider{}
 	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
@@ -1413,20 +1421,21 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 	state.On("Save", mock.Anything).Return(nil)
 
 	tv.View = &bft.View{
-		Signer:           signer,
-		Decider:          decider,
-		Comm:             comm,
-		Verifier:         verifier,
-		SelfID:           selfID,
-		State:            state,
-		Logger:           log,
-		N:                4,
-		LeaderID:         1,
-		Quorum:           3,
-		Number:           1,
-		ProposalSequence: 0,
-		ViewSequences:    &atomic.Value{},
-		InMsgQSize:       40,
+		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
+		Signer:             signer,
+		Decider:            decider,
+		Comm:               comm,
+		Verifier:           verifier,
+		SelfID:             selfID,
+		State:              state,
+		Logger:             log,
+		N:                  4,
+		LeaderID:           1,
+		Quorum:             3,
+		Number:             1,
+		ProposalSequence:   0,
+		ViewSequences:      &atomic.Value{},
+		InMsgQSize:         40,
 	}
 
 	return tv

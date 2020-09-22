@@ -30,6 +30,7 @@ message PrePrepare {
     uint64 view = 1;
     uint64 seq = 2;
     Proposal proposal = 3;
+    repeated Signature prev_commit_signatures = 4;
 }
 
 message Prepare {
@@ -50,6 +51,10 @@ message Commit {
     string digest = 3;
     Signature signature = 4;
     bool assist = 5;
+}
+
+message PreparesFrom {
+    repeated uint64 ids = 1;
 }
 
 message ViewChange {
@@ -101,6 +106,8 @@ message ViewMetadata {
     uint64 view_id = 1;
     uint64 latest_sequence = 2;
     uint64 decisions_in_view = 3;
+    repeated uint64 black_list = 4;
+    bytes prev_commit_signature_digest = 5;
 }
 
 message SavedMessage {
