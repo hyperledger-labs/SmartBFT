@@ -210,7 +210,7 @@ func (v *ViewChanger) run() {
 }
 
 func (v *ViewChanger) getLeader() uint64 {
-	return getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader)
+	return getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader, v.blacklist())
 }
 
 func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
@@ -657,7 +657,7 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, N uint64, verifier ap
 			Metadata:             vd.LastDecision.Metadata,
 			VerificationSequence: int64(vd.LastDecision.VerificationSequence),
 		}
-		if err := verifier.VerifyConsenterSig(signature, proposal); err != nil {
+		if _, err := verifier.VerifyConsenterSig(signature, proposal); err != nil {
 			return 0, errors.Errorf("last decision signature is invalid, error: %v", err)
 		}
 		validSig++
@@ -1159,23 +1159,25 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 
 	v.inFlightViewLock.Lock()
 	v.inFlightView = &View{
-		SelfID:           v.SelfID,
-		N:                v.N,
-		Number:           proposalMD.ViewId,
-		LeaderID:         v.SelfID, // so that no byzantine leader will cause a complain
-		Quorum:           v.quorum,
-		Decider:          v,
-		FailureDetector:  v,
-		Sync:             v,
-		Logger:           v.Logger,
-		Comm:             v.Comm,
-		Verifier:         v.Verifier,
-		Signer:           v.Signer,
-		ProposalSequence: proposalMD.LatestSequence,
-		State:            v.State,
-		InMsgQSize:       v.InMsqQSize,
-		ViewSequences:    v.ViewSequences,
-		Phase:            PREPARED,
+		RetrieveCheckpoint: v.Checkpoint.Get,
+		DecisionsPerLeader: v.DecisionsPerLeader,
+		SelfID:             v.SelfID,
+		N:                  v.N,
+		Number:             proposalMD.ViewId,
+		LeaderID:           v.SelfID, // so that no byzantine leader will cause a complain
+		Quorum:             v.quorum,
+		Decider:            v,
+		FailureDetector:    v,
+		Sync:               v,
+		Logger:             v.Logger,
+		Comm:               v.Comm,
+		Verifier:           v.Verifier,
+		Signer:             v.Signer,
+		ProposalSequence:   proposalMD.LatestSequence,
+		State:              v.State,
+		InMsgQSize:         v.InMsqQSize,
+		ViewSequences:      v.ViewSequences,
+		Phase:              PREPARED,
 	}
 
 	v.inFlightView.inFlightProposal = &types.Proposal{
@@ -1184,7 +1186,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		Payload:              proposal.Payload,
 		Header:               proposal.Header,
 	}
-	v.inFlightView.myProposalSig = v.Signer.SignProposal(*v.inFlightView.inFlightProposal)
+	v.inFlightView.myProposalSig = v.Signer.SignProposal(*v.inFlightView.inFlightProposal, nil)
 	v.inFlightView.lastBroadcastSent = &protos.Message{
 		Content: &protos.Message_Commit{
 			Commit: &protos.Commit{
@@ -1257,4 +1259,13 @@ func (v *ViewChanger) HandleViewMessage(sender uint64, m *protos.Message) {
 		v.Logger.Debugf("Node %d is passing a message to the in flight view", v.SelfID)
 		view.HandleMessage(sender, m)
 	}
+}
+
+func (v *ViewChanger) blacklist() []uint64 {
+	prop, _ := v.Checkpoint.Get()
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
+		v.Logger.Panicf("Failed unmarshalling metadata: %v", err)
+	}
+	return md.BlackList
 }

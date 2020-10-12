@@ -47,6 +47,7 @@ func TestControllerBasic(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		Checkpoint:    &types.Checkpoint{},
 		Batcher:       batcher,
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
@@ -101,6 +102,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		Checkpoint:    &types.Checkpoint{},
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
 		ID:            2, // the leader
@@ -137,7 +139,10 @@ func TestLeaderPropose(t *testing.T) {
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("AuxiliaryData", mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{11, 23},
+	}))
 	assembler := &mocks.AssemblerMock{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
 	secondProposal := proposal
@@ -152,9 +157,10 @@ func TestLeaderPropose(t *testing.T) {
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
+	comm.On("Nodes").Return([]uint64{11, 17, 23, 37})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    17,
 		Value: []byte{4},
 	})
@@ -330,6 +336,7 @@ func TestViewChanged(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		Checkpoint:    &types.Checkpoint{},
 		Signer:        signer,
 		WAL:           wal,
 		ID:            3, // the next leader
@@ -390,9 +397,9 @@ func TestSyncPrevView(t *testing.T) {
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
 	signer := &mocks.SignerMock{}
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    4,
 		Value: []byte{4},
 	})
@@ -594,6 +601,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			startedWG.Add(1)
 
 			controller := &bft.Controller{
+				Checkpoint:    &types.Checkpoint{},
 				RequestPool:   pool,
 				LeaderMonitor: leaderMon,
 				ID:            1,
@@ -624,23 +632,24 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 
 func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int, vs *atomic.Value) *bft.View {
 	return &bft.View{
-		N:                c.N,
-		LeaderID:         leader,
-		SelfID:           c.ID,
-		Quorum:           quorumSize,
-		Number:           viewNum,
-		Decider:          c,
-		FailureDetector:  c.FailureDetector,
-		Sync:             c,
-		Logger:           c.Logger,
-		Comm:             c,
-		Verifier:         c.Verifier,
-		Signer:           c.Signer,
-		ProposalSequence: proposalSequence,
-		DecisionsInView:  decisionsInView,
-		ViewSequences:    vs,
-		State:            &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
-		InMsgQSize:       int(c.N * 10),
+		RetrieveCheckpoint: c.Checkpoint.Get,
+		N:                  c.N,
+		LeaderID:           leader,
+		SelfID:             c.ID,
+		Quorum:             quorumSize,
+		Number:             viewNum,
+		Decider:            c,
+		FailureDetector:    c.FailureDetector,
+		Sync:               c,
+		Logger:             c.Logger,
+		Comm:               c,
+		Verifier:           c.Verifier,
+		Signer:             c.Signer,
+		ProposalSequence:   proposalSequence,
+		DecisionsInView:    decisionsInView,
+		ViewSequences:      vs,
+		State:              &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
+		InMsgQSize:         int(c.N * 10),
 	}
 }
 
@@ -669,6 +678,12 @@ func TestSyncInform(t *testing.T) {
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("AuxiliaryData", mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{1},
+	}))
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{1},
+	}), nil)
 
 	secondProposal := proposal
 	secondProposal.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
@@ -678,13 +693,14 @@ func TestSyncInform(t *testing.T) {
 	})
 
 	assembler := &mocks.AssemblerMock{}
-	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal, [][]byte{}).Once()
+	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(secondProposal).Once()
 
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
+	comm.On("Nodes").Return([]uint64{0, 1, 2, 3})
 
 	commWithChan := &mocks.CommMock{}
 	msgChan := make(chan *protos.Message)
@@ -722,7 +738,9 @@ func TestSyncInform(t *testing.T) {
 				ViewId:         syncToView,
 			}),
 			VerificationSequence: 1},
-		Signatures: nil,
+		Signatures: []types.Signature{
+			{ID: 1}, {ID: 2}, {ID: 3},
+		},
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	reqTimer := &mocks.RequestsTimer{}
@@ -774,6 +792,8 @@ func TestSyncInform(t *testing.T) {
 		StartedWG:     &vc.ControllerStartedWG,
 	}
 	configureProposerBuilder(controller)
+
+	controller.Checkpoint.Set(proposal, []types.Signature{{ID: 1}, {ID: 2}, {ID: 3}})
 
 	vc.Start(1)
 
@@ -835,7 +855,11 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("AuxiliaryData", mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{1, 3},
+	}))
+
 	assembler := &mocks.AssemblerMock{}
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(proposal, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
@@ -845,7 +869,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
 		ID:    2,
 		Value: []byte{4},
 	})
@@ -988,12 +1012,20 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	verifier.On("VerifyRequest", req).Return(types.RequestInfo{}, nil)
 	verifier.On("VerificationSequence").Return(uint64(1))
 	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("AuxiliaryData", mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{1, 3},
+	}))
 
 	nextMD := bft.MarshalOrPanic(&protos.ViewMetadata{
 		DecisionsInView: 1,
 		LatestSequence:  1,
 		ViewId:          1,
+		PrevCommitSignatureDigest: bft.CommitSignaturesDigest([]*protos.Signature{
+			commit1.GetCommit().Signature,
+			commit2.GetCommit().Signature,
+			commit3.GetCommit().Signature,
+		}),
 	})
 	nextProp := types.Proposal{
 		Header:               proposal.Header,
@@ -1006,13 +1038,14 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	assembler.On("AssembleProposal", mock.Anything, [][]byte{req}).Return(nextProp, [][]byte{}).Once()
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
+	comm.On("Nodes").Return([]uint64{1, 2, 3, 4})
 	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		commWG.Done()
 	})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
-	signer.On("SignProposal", mock.Anything).Return(&types.Signature{
-		ID:    2,
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
+		ID:    3,
 		Value: []byte{4},
 	})
 	app := &mocks.ApplicationMock{}
@@ -1061,6 +1094,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	commWG.Wait() // commit
 
 	controller.ProcessMessages(1, commit1)
+	time.Sleep(time.Second)
 	appWG.Add(1)       // deliver
 	leaderMonWG.Add(1) // change role
 	commWG.Add(6)      // propose + prepare

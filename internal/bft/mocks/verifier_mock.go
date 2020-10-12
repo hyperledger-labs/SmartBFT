@@ -12,6 +12,22 @@ type VerifierMock struct {
 	mock.Mock
 }
 
+// AuxiliaryData provides a mock function with given fields: _a0
+func (_m *VerifierMock) AuxiliaryData(_a0 []byte) []byte {
+	ret := _m.Called(_a0)
+
+	var r0 []byte
+	if rf, ok := ret.Get(0).(func([]byte) []byte); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]byte)
+		}
+	}
+
+	return r0
+}
+
 // RequestsFromProposal provides a mock function with given fields: proposal
 func (_m *VerifierMock) RequestsFromProposal(proposal types.Proposal) []types.RequestInfo {
 	ret := _m.Called(proposal)
@@ -43,17 +59,26 @@ func (_m *VerifierMock) VerificationSequence() uint64 {
 }
 
 // VerifyConsenterSig provides a mock function with given fields: signature, prop
-func (_m *VerifierMock) VerifyConsenterSig(signature types.Signature, prop types.Proposal) error {
+func (_m *VerifierMock) VerifyConsenterSig(signature types.Signature, prop types.Proposal) ([]byte, error) {
 	ret := _m.Called(signature, prop)
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(types.Signature, types.Proposal) error); ok {
+	var r0 []byte
+	if rf, ok := ret.Get(0).(func(types.Signature, types.Proposal) []byte); ok {
 		r0 = rf(signature, prop)
 	} else {
-		r0 = ret.Error(0)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]byte)
+		}
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.Signature, types.Proposal) error); ok {
+		r1 = rf(signature, prop)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // VerifyProposal provides a mock function with given fields: proposal

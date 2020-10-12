@@ -416,7 +416,7 @@ func TestNormalProcess(t *testing.T) {
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	seqNumChan := make(chan uint64)
@@ -651,7 +651,7 @@ func TestBadViewDataMessage(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
-			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 			verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 			app := &mocks.ApplicationMock{}
@@ -873,7 +873,7 @@ func TestBadNewViewMessage(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
-			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 			verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 			app := &mocks.ApplicationMock{}
@@ -1150,7 +1150,7 @@ func TestCommitLastDecision(t *testing.T) {
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("VerifyProposal", mock.Anything).Return(nil, nil)
 	verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
@@ -1480,7 +1480,7 @@ func TestValidateLastDecision(t *testing.T) {
 				LastDecisionSignatures: lastDecisionSignaturesProtos,
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
-				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(errors.New(""))
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, errors.New(""))
 			},
 		},
 		{
@@ -1493,7 +1493,7 @@ func TestValidateLastDecision(t *testing.T) {
 				LastDecisionSignatures: []*protos.Signature{{Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 0, Value: []byte{4}, Msg: []byte{5}}, {Signer: 1, Value: []byte{4}, Msg: []byte{5}}},
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
-				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			},
 		},
 		{
@@ -1506,7 +1506,7 @@ func TestValidateLastDecision(t *testing.T) {
 				LastDecisionSignatures: lastDecisionSignaturesProtos,
 			},
 			mutateVerify: func(verifier *mocks.VerifierMock) {
-				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+				verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			},
 			valid:    true,
 			sequence: 1,
@@ -1735,7 +1735,7 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 	} {
 		t.Run(test.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
-			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			messages := make([]*protos.ViewData, 0)
 			for i := 0; i < 4; i++ {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
@@ -1895,7 +1895,7 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 	} {
 		t.Run(test.description, func(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
-			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			messages := make([]*protos.ViewData, 0)
 			for i := 0; i < 4; i++ {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
@@ -1923,7 +1923,7 @@ func TestCommitInFlight(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
-	signer.On("SignProposal", mock.Anything).Run(func(args mock.Arguments) {
+	signer.On("SignProposal", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		signWG.Done()
 	}).Return(&types.Signature{
 		ID:    1,
@@ -1931,7 +1931,7 @@ func TestCommitInFlight(t *testing.T) {
 	})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	seqNumChan := make(chan uint64)
@@ -2057,7 +2057,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	log := basicLog.Sugar()
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
-	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	controller := &mocks.ViewController{}
 	viewNumChan := make(chan uint64)
 	seqNumChan := make(chan uint64)

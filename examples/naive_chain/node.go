@@ -47,6 +47,10 @@ func (*Node) Sync() bft.SyncResponse {
 	panic("implement me")
 }
 
+func (*Node) AuxiliaryData(_ []byte) []byte {
+	return nil
+}
+
 func (*Node) RequestID(req []byte) bft.RequestInfo {
 	txn := TransactionFromBytes(req)
 	return bft.RequestInfo{
@@ -81,8 +85,8 @@ func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	return bft.RequestInfo{}, nil
 }
 
-func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) error {
-	return nil
+func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) ([]byte, error) {
+	return nil, nil
 }
 
 func (*Node) VerifySignature(signature bft.Signature) error {
@@ -97,7 +101,7 @@ func (*Node) Sign(msg []byte) []byte {
 	return nil
 }
 
-func (n *Node) SignProposal(bft.Proposal) *bft.Signature {
+func (n *Node) SignProposal(bft.Proposal, []byte) *bft.Signature {
 	return &bft.Signature{
 		ID: n.id,
 	}

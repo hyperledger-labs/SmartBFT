@@ -130,6 +130,16 @@ type Controller struct {
 	StartedWG *sync.WaitGroup
 }
 
+func (c *Controller) blacklist() []uint64 {
+	prop, _ := c.Checkpoint.Get()
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
+		c.Logger.Panicf("Failed unmarshalling metadata: %v", err)
+	}
+
+	return md.BlackList
+}
+
 func (c *Controller) getCurrentViewNumber() uint64 {
 	c.currViewLock.RLock()
 	defer c.currViewLock.RUnlock()
@@ -173,7 +183,7 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 
 // thread safe
 func (c *Controller) leaderID() uint64 {
-	return getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader)
+	return getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, c.blacklist())
 }
 
 // HandleRequest handles a request from the client
@@ -485,11 +495,13 @@ func (c *Controller) decide(d decision) {
 		return
 	}
 	c.incrementCurrentDecisionsInView()
-	if c.checkIfRotate() {
-		md := &protos.ViewMetadata{}
-		if err := proto.Unmarshal(d.proposal.Metadata, md); err != nil {
-			c.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
-		}
+
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(d.proposal.Metadata, md); err != nil {
+		c.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+	}
+
+	if c.checkIfRotate(md.BlackList) {
 		c.Logger.Debugf("Restarting view to rotate the leader")
 		c.changeView(c.getCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
 	}
@@ -499,11 +511,16 @@ func (c *Controller) decide(d decision) {
 	}
 }
 
-func (c *Controller) checkIfRotate() bool {
+func (c *Controller) checkIfRotate(blacklist []uint64) bool {
 	// called after increment
-	currLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView()-1, c.DecisionsPerLeader)
-	nextLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader)
-	return currLeader != nextLeader
+	currLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView()-1, c.DecisionsPerLeader, blacklist)
+	nextLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, blacklist)
+	shouldWeRotate := currLeader != nextLeader
+	if shouldWeRotate {
+		c.Logger.Infof("Rotating leader from %d to %d", currLeader, nextLeader)
+	}
+
+	return shouldWeRotate
 }
 
 func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
@@ -783,7 +800,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 func (c *Controller) removeDeliveredFromPool(d decision) {
 	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
-			c.Logger.Debugf("Error during remove of request %s from the pool : %s", reqInfo, err)
+			c.Logger.Debugf("Request %s wasn't found in the pool : %s", reqInfo, err)
 		}
 	}
 }

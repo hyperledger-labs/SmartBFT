@@ -28,13 +28,13 @@ func (_m *SignerMock) Sign(_a0 []byte) []byte {
 	return r0
 }
 
-// SignProposal provides a mock function with given fields: _a0
-func (_m *SignerMock) SignProposal(_a0 types.Proposal) *types.Signature {
-	ret := _m.Called(_a0)
+// SignProposal provides a mock function with given fields: proposal, auxiliaryInput
+func (_m *SignerMock) SignProposal(proposal types.Proposal, auxiliaryInput []byte) *types.Signature {
+	ret := _m.Called(proposal, auxiliaryInput)
 
 	var r0 *types.Signature
-	if rf, ok := ret.Get(0).(func(types.Proposal) *types.Signature); ok {
-		r0 = rf(_a0)
+	if rf, ok := ret.Get(0).(func(types.Proposal, []byte) *types.Signature); ok {
+		r0 = rf(proposal, auxiliaryInput)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*types.Signature)

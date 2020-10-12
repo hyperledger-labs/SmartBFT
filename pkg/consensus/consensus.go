@@ -250,18 +250,20 @@ func (c *Consensus) SubmitRequest(req []byte) error {
 
 func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 	return &algorithm.ProposalMaker{
-		State:           c.state,
-		Comm:            c.controller,
-		Decider:         c.controller,
-		Logger:          c.Logger,
-		Signer:          c.Signer,
-		SelfID:          c.Config.SelfID,
-		Sync:            c.controller,
-		FailureDetector: c,
-		Verifier:        c.Verifier,
-		N:               c.numberOfNodes,
-		InMsqQSize:      int(c.Config.IncomingMessageBufferSize),
-		ViewSequences:   c.controller.ViewSequences,
+		DecisionsPerLeader: c.Config.DecisionsPerLeader,
+		Checkpoint:         c.checkpoint,
+		State:              c.state,
+		Comm:               c.controller,
+		Decider:            c.controller,
+		Logger:             c.Logger,
+		Signer:             c.Signer,
+		SelfID:             c.Config.SelfID,
+		Sync:               c.controller,
+		FailureDetector:    c,
+		Verifier:           c.Verifier,
+		N:                  c.numberOfNodes,
+		InMsqQSize:         int(c.Config.IncomingMessageBufferSize),
+		ViewSequences:      c.controller.ViewSequences,
 	}
 }
 
