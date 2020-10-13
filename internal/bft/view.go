@@ -822,36 +822,39 @@ func (v *View) startNextSeq() {
 
 // GetMetadata returns the current sequence and view number (in a marshaled ViewMetadata protobuf message)
 func (v *View) GetMetadata() []byte {
-	md := &protos.ViewMetadata{
+	metadata := &protos.ViewMetadata{
 		ViewId:          v.Number,
 		LatestSequence:  v.ProposalSequence,
 		DecisionsInView: v.DecisionsInView,
 	}
-	metadata, err := proto.Marshal(md)
-	if err != nil {
-		v.Logger.Panicf("Failed marshaling metadata: %v", err)
-	}
-	return metadata
-}
 
-// Propose broadcasts a prePrepare message with the given proposal
-func (v *View) Propose(proposal types.Proposal) {
 	var prevSigs []*protos.Signature
 	var prevProp protos.Proposal
 	verificationSeq := v.Verifier.VerificationSequence()
 
 	prevProp, prevSigs = v.RetrieveCheckpoint()
 
+	metadata = v.metadataWithUpdatedBlacklist(metadata, verificationSeq, prevProp, prevSigs)
+	metadata = v.bindCommitSignaturesToProposalMetadata(metadata, prevSigs)
+
+	return MarshalOrPanic(metadata)
+}
+
+func (v *View) metadataWithUpdatedBlacklist(metadata *protos.ViewMetadata, verificationSeq uint64, prevProp protos.Proposal, prevSigs []*protos.Signature) *protos.ViewMetadata {
 	if verificationSeq == prevProp.VerificationSequence {
 		v.Logger.Debugf("Proposing proposal %d with verification sequence of %d and %d commit signatures",
 			v.ProposalSequence, verificationSeq, len(prevSigs))
-		v.updateBlacklist(&proposal, prevSigs, prevProp.Metadata)
-	} else {
-		v.Logger.Infof("Skipping updating blacklist due to verification sequence changing from %d to %d",
-			prevProp.VerificationSequence, verificationSeq)
+		return v.updateBlacklistMetadata(metadata, prevSigs, prevProp.Metadata)
 	}
 
-	v.bindCommitSignaturesToProposal(&proposal, prevSigs)
+	v.Logger.Infof("Skipping updating blacklist due to verification sequence changing from %d to %d",
+		prevProp.VerificationSequence, verificationSeq)
+	return metadata
+}
+
+// Propose broadcasts a prePrepare message with the given proposal
+func (v *View) Propose(proposal types.Proposal) {
+	_, prevSigs := v.RetrieveCheckpoint()
 
 	seq := v.ProposalSequence
 	msg := &protos.Message{
@@ -875,22 +878,19 @@ func (v *View) Propose(proposal types.Proposal) {
 	v.Logger.Debugf("Proposing proposal sequence %d in view %d", seq, v.Number)
 }
 
-func (v *View) bindCommitSignaturesToProposal(proposal *types.Proposal, prevSigs []*protos.Signature) {
+func (v *View) bindCommitSignaturesToProposalMetadata(metadata *protos.ViewMetadata, prevSigs []*protos.Signature) *protos.ViewMetadata {
 	if v.DecisionsPerLeader == 0 {
 		v.Logger.Debugf("Leader rotation is disabled, will not bind signatures to proposals")
-		return
+		return metadata
 	}
-	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
-		v.Logger.Panicf("Failed unmarshaling metadata we constructed ourselves: %v", err)
-	}
-	md.PrevCommitSignatureDigest = CommitSignaturesDigest(prevSigs)
-	if len(md.PrevCommitSignatureDigest) == 0 {
+	metadata.PrevCommitSignatureDigest = CommitSignaturesDigest(prevSigs)
+
+	if len(metadata.PrevCommitSignatureDigest) == 0 {
 		v.Logger.Debugf("No previous commit signatures detected")
 	} else {
 		v.Logger.Debugf("Bound %d commit signatures to proposal", len(prevSigs))
 	}
-	proposal.Metadata = MarshalOrPanic(md)
+	return metadata
 }
 
 func (v *View) stop() {
@@ -917,17 +917,11 @@ func (v *View) stopped() bool {
 	}
 }
 
-func (v *View) updateBlacklist(proposal *types.Proposal, prevSigs []*protos.Signature, prevMetadata []byte) {
-	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
-		v.Logger.Panicf("Attempted to propose a proposal with invalid view metadata: %v", err)
-	}
-
+func (v *View) updateBlacklistMetadata(metadata *protos.ViewMetadata, prevSigs []*protos.Signature, prevMetadata []byte) *protos.ViewMetadata {
 	if v.DecisionsPerLeader == 0 {
 		v.Logger.Debugf("Rotation is disabled, setting blacklist to be empty")
-		md.BlackList = nil
-		proposal.Metadata = MarshalOrPanic(md)
-		return
+		metadata.BlackList = nil
+		return metadata
 	}
 
 	preparesFrom := make(map[uint64]*protos.PreparesFrom)
@@ -950,7 +944,7 @@ func (v *View) updateBlacklist(proposal *types.Proposal, prevSigs []*protos.Sign
 
 	blacklist := &blacklist{
 		leaderRotation:     v.DecisionsPerLeader > 0,
-		currView:           md.ViewId,
+		currView:           metadata.ViewId,
 		prevMD:             prevMD,
 		nodes:              v.Comm.Nodes(),
 		f:                  f,
@@ -959,8 +953,8 @@ func (v *View) updateBlacklist(proposal *types.Proposal, prevSigs []*protos.Sign
 		preparesFrom:       preparesFrom,
 		decisionsPerLeader: v.DecisionsPerLeader,
 	}
-	md.BlackList = blacklist.computeUpdate()
-	proposal.Metadata = MarshalOrPanic(md)
+	metadata.BlackList = blacklist.computeUpdate()
+	return metadata
 }
 
 func (v *View) blacklistingSupported(f int, myLastCommitSignatures []*protos.Signature) bool {
