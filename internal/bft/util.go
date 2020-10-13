@@ -372,15 +372,22 @@ func (bl blacklist) computeUpdate() []uint64 {
 
 	bl.logger.Debugf("view before: %d, current view: %d", viewBeforeViewChanges, bl.currView)
 
+	// In case the previous view is different from this view, then we had a view change.
+	// Thus, we need to add some nodes to the blacklist.
 	if viewBeforeViewChanges != bl.currView {
-		// In case the previous view is different from this view, then we had a view change.
-		// Thus, we need to add some nodes to the blacklist.
+		// If we are in the first proposal, then the leader ID of the previous view is not computed with an offset.
+		// However, if we are in any subsequent proposal, then the previous leader's ID was computed by adding 1 to the
+		// latest decisions in view that was committed.
+		offset := uint64(1)
+		if bl.prevMD.LatestSequence == 0 {
+			offset = 0
+		}
 
 		// Locate every leader of all views previous to this views.
 		for viewPreviousToThisView := viewBeforeViewChanges; viewPreviousToThisView < bl.currView; viewPreviousToThisView++ {
 			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
 				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
-			leaderID := getLeaderID(viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
+			leaderID := getLeaderID(viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView+offset, bl.decisionsPerLeader, bl.prevMD.BlackList)
 			// Add that leader to the blacklist, because it did not drive any proposal, hence we skipped it because of view changes.
 			newBlacklist = append(newBlacklist, leaderID)
 			bl.logger.Infof("Blacklisting %d", leaderID)

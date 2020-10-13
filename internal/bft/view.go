@@ -967,7 +967,7 @@ func (v *View) blacklistingSupported(f int, myLastCommitSignatures []*protos.Sig
 	// activated among the signed commits of the previous proposal.
 	var count int
 	for _, commitSig := range myLastCommitSignatures {
-		aux := v.Verifier.AuxiliaryData(commitSig.Value)
+		aux := v.Verifier.AuxiliaryData(commitSig.Msg)
 		if len(aux) > 0 {
 			count++
 		}

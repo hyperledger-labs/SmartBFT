@@ -27,14 +27,28 @@ func TestBlacklist(t *testing.T) {
 		name               string
 	}{
 		{
-			name:               "Node added to blacklist",
-			expected:           []uint64{3},
+			name:               "Node added to blacklist not first proposal",
+			expected:           []uint64{getLeaderID(1, 4, []uint64{1, 2, 3, 4}, true, 2, 1, []uint64{1, 2})},
 			decisionsPerLeader: 1,
 			leaderRotation:     true,
 			currView:           2,
 			prevMD: &protos.ViewMetadata{
 				ViewId:          1,
 				LatestSequence:  1,
+				DecisionsInView: 1,
+				BlackList:       []uint64{1, 2}, // Blacklist is already over capacity
+			},
+			preparesFrom: map[uint64]*protos.PreparesFrom{},
+		},
+		{
+			name:               "Node added to blacklist first proposal",
+			expected:           []uint64{getLeaderID(1, 4, []uint64{1, 2, 3, 4}, true, 0, 1, []uint64{1, 2})},
+			decisionsPerLeader: 1,
+			leaderRotation:     true,
+			currView:           2,
+			prevMD: &protos.ViewMetadata{
+				ViewId:          1,
+				LatestSequence:  0,
 				DecisionsInView: 1,
 				BlackList:       []uint64{1, 2}, // Blacklist is already over capacity
 			},
