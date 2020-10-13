@@ -851,6 +851,8 @@ func (v *View) Propose(proposal types.Proposal) {
 			prevProp.VerificationSequence, verificationSeq)
 	}
 
+	v.bindCommitSignaturesToProposal(&proposal, prevSigs)
+
 	seq := v.ProposalSequence
 	msg := &protos.Message{
 		Content: &protos.Message_PrePrepare{
@@ -871,6 +873,24 @@ func (v *View) Propose(proposal types.Proposal) {
 	// it in the WAL before sending it to other nodes.
 	v.HandleMessage(v.LeaderID, msg)
 	v.Logger.Debugf("Proposing proposal sequence %d in view %d", seq, v.Number)
+}
+
+func (v *View) bindCommitSignaturesToProposal(proposal *types.Proposal, prevSigs []*protos.Signature) {
+	if v.DecisionsPerLeader == 0 {
+		v.Logger.Debugf("Leader rotation is disabled, will not bind signatures to proposals")
+		return
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+		v.Logger.Panicf("Failed unmarshaling metadata we constructed ourselves: %v", err)
+	}
+	md.PrevCommitSignatureDigest = CommitSignaturesDigest(prevSigs)
+	if len(md.PrevCommitSignatureDigest) == 0 {
+		v.Logger.Debugf("No previous commit signatures detected")
+	} else {
+		v.Logger.Debugf("Bound %d commit signatures to proposal", len(prevSigs))
+	}
+	proposal.Metadata = MarshalOrPanic(md)
 }
 
 func (v *View) stop() {
