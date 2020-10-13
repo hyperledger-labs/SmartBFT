@@ -441,8 +441,29 @@ func (c *Controller) propose() {
 		return
 	}
 	metadata := c.currView.GetMetadata()
+	metadata = c.bindCommitSignaturesToProposalMetadata(metadata)
 	proposal := c.Assembler.AssembleProposal(metadata, nextBatch)
 	c.currView.Propose(proposal)
+}
+
+func (c *Controller) bindCommitSignaturesToProposalMetadata(metadata []byte) []byte {
+	_, prevSigs := c.Checkpoint.Get()
+
+	if c.DecisionsPerLeader == 0 {
+		c.Logger.Debugf("Leader rotation is disabled, will not bind signatures to proposals")
+		return metadata
+	}
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(metadata, md); err != nil {
+		c.Logger.Panicf("Failed unmarshaling metadata we constructed ourselves: %v", err)
+	}
+	md.PrevCommitSignatureDigest = CommitSignaturesDigest(prevSigs)
+	if len(md.PrevCommitSignatureDigest) == 0 {
+		c.Logger.Debugf("No previous commit signatures detected")
+	} else {
+		c.Logger.Debugf("Bound %d commit signatures to proposal", len(prevSigs))
+	}
+	return MarshalOrPanic(md)
 }
 
 func (c *Controller) run() {
