@@ -626,6 +626,7 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 	// on the blacklist of the previous proposal which has been committed.
 
 	blacklist := &blacklist{
+		currentLeader:      v.LeaderID,
 		leaderRotation:     v.DecisionsPerLeader > 0,
 		n:                  v.N,
 		prevMD:             prevProposalMetadata,
@@ -943,6 +944,7 @@ func (v *View) updateBlacklistMetadata(metadata *protos.ViewMetadata, prevSigs [
 	_, f := computeQuorum(v.N)
 
 	blacklist := &blacklist{
+		currentLeader:      v.LeaderID,
 		leaderRotation:     v.DecisionsPerLeader > 0,
 		currView:           metadata.ViewId,
 		prevMD:             prevMD,
