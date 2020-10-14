@@ -320,7 +320,9 @@ func TestMultiLeadersPartition(t *testing.T) {
 
 	done := make(chan struct{})
 	defer close(done)
-	accelerateTime(nodes, done, false, true)
+
+	var counter uint64
+	accelerateTime(nodes, done, false, true, &counter)
 
 	data := make([]*AppRecord, 0)
 	for i := 2; i < numberOfNodes; i++ {
@@ -375,7 +377,8 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	nodes[0].Disconnect() // leader in partition
 
 	// Accelerate the time until a view change because of heartbeat timeout
-	accelerateTime(nodes, done, true, false)
+	var counter uint64
+	accelerateTime(nodes, done, true, false, &counter)
 
 	viewChangeWG.Wait()
 	close(done)
@@ -438,7 +441,8 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
 
-	accelerateTime(nodes, done, true, true)
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
 	viewChangeWG.Wait()
 	close(done)
 
@@ -518,7 +522,8 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to other nodes
 	}
 
-	accelerateTime(nodes, done, false, true)
+	var counter uint64
+	accelerateTime(nodes, done, false, true, &counter)
 
 	data3 := <-nodes[3].Delivered // from catch up
 	assert.Equal(t, data[0], data3)
@@ -640,7 +645,8 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 
 	nodes[0].Disconnect()
 
-	accelerateTime(nodes, done, true, false)
+	var counter uint64
+	accelerateTime(nodes, done, true, false, &counter)
 
 	viewChangeWG.Wait()
 	close(done)
@@ -717,7 +723,8 @@ func TestRestoringViewChange(t *testing.T) {
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
 
-	accelerateTime(nodes, done, true, true)
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
 
 	viewChangeWG.Wait()
 	nodes[6].Disconnect()
@@ -997,7 +1004,9 @@ func TestFollowerStateTransfer(t *testing.T) {
 
 	// Accelerate the time until a view change
 	done := make(chan struct{})
-	accelerateTime(nodes, done, true, true)
+
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
 
 	viewChangeWG.Wait()
 	nodes[6].Connect()
@@ -1396,7 +1405,8 @@ func TestRotateAndViewChange(t *testing.T) {
 
 	// Accelerate the time until a view change
 	done := make(chan struct{})
-	accelerateTime(nodes, done, true, true)
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
 
 	viewChangeWG.Wait()
 	nodes[3].Connect()
@@ -1536,7 +1546,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 	})
 }
 
-func TestBlacklistNoReconfig(t *testing.T) {
+func TestBlacklistAndRedemption(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -1589,7 +1599,8 @@ func TestBlacklistNoReconfig(t *testing.T) {
 
 	// Accelerate the time until a view change
 	done := make(chan struct{})
-	accelerateTime(nodes[1:], done, true, true)
+	var counter uint64
+	accelerateTime(nodes[1:], done, true, true, &counter)
 
 	// Wait for view change
 	viewChangedWG.Wait()
@@ -1616,7 +1627,7 @@ func TestBlacklistNoReconfig(t *testing.T) {
 
 	// Accelerate time to wait for it to synchronize
 	done = make(chan struct{})
-	accelerateTime(nodes, done, true, true)
+	accelerateTime(nodes, done, true, true, &counter)
 	for j := 0; j < numberOfNodes; j++ {
 		<-nodes[0].Delivered
 	}
@@ -1641,6 +1652,126 @@ func TestBlacklistNoReconfig(t *testing.T) {
 	go doInBackground(f, stop)
 	blacklistPrunedWG.Wait()
 	redemptionWG.Wait()
+	close(stop)
+}
+
+func TestBlacklistMultipleViewChanges(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 10
+	var nodes []*App
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, true, 1)
+		nodes = append(nodes, n)
+	}
+
+	var viewChangedWG sync.WaitGroup
+	viewChangedWG.Add(len(nodes) - 2)
+
+	var node2RemovedFromBlacklist sync.WaitGroup
+	node2RemovedFromBlacklist.Add(len(nodes) + 1)
+
+	var node3RemovedFromBlacklist sync.WaitGroup
+	node3RemovedFromBlacklist.Add(len(nodes) + 1)
+
+	start := time.Now()
+	for _, n := range nodes {
+		l := n.logger.Desugar()
+		n.logger = l.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Starting view with number 3, sequence 2,") {
+				viewChangedWG.Done()
+			}
+			if strings.Contains(entry.Message, "Node 2 was observed sending a prepare") && strings.Contains(entry.Message, "removing it from blacklist") {
+				node2RemovedFromBlacklist.Done()
+			}
+			if strings.Contains(entry.Message, "Node 3 was observed sending a prepare") && strings.Contains(entry.Message, "removing it from blacklist") {
+				node3RemovedFromBlacklist.Done()
+			}
+			return nil
+		})).Sugar()
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
+	}
+
+	startNodes(nodes, &network)
+
+	// Put a single decision
+	nodes[0].Submit(Request{ID: "genesis", ClientID: "alice"})
+	for i := 0; i < numberOfNodes; i++ {
+		<-nodes[i].Delivered
+	}
+
+	// Put the next and the next next nodes in partition
+	nodes[1].Disconnect()
+	nodes[2].Disconnect()
+
+	// Accelerate the time until a view change
+	done := make(chan struct{})
+	var acceleratedNodes []*App
+	acceleratedNodes = append(acceleratedNodes, nodes[0])
+	acceleratedNodes = append(acceleratedNodes, nodes[2:]...)
+	var counter uint64
+	accelerateTime(acceleratedNodes, done, true, true, &counter)
+
+	// Wait for two view changes
+	viewChangedWG.Wait()
+	close(done)
+
+	// Rotate the leader and ensure the view doesn't change, which proves
+	// nodes 2 and 3 never became the leader again
+	for j := 0; j < numberOfNodes; j++ {
+		nodes[5].Submit(Request{ID: fmt.Sprintf("%d", j), ClientID: "alice"})
+		for i := 3; i < numberOfNodes; i++ {
+			<-nodes[i].Delivered
+		}
+	}
+
+	// Ensure we remain on view 2, and that nodes 2,3 are in the blacklist
+	md := &smartbftprotos.ViewMetadata{}
+	err = proto.Unmarshal(nodes[5].lastDecision.Proposal.Metadata, md)
+	assert.NoError(t, err)
+	assert.Equal(t, uint64(3), md.ViewId)
+	assert.Equal(t, []uint64{2, 3}, md.BlackList)
+
+	// Next, re-connect nodes 2,3
+	nodes[1].Connect()
+	nodes[2].Connect()
+
+	// Accelerate time to wait for them to synchronize
+	done = make(chan struct{})
+	accelerateTime(nodes, done, true, true, &counter)
+	for j := 0; j < numberOfNodes; j++ {
+		<-nodes[1].Delivered
+		<-nodes[2].Delivered
+	}
+	close(done)
+
+	// Rotate the leader and ensure the view doesn't change,
+	stop := make(chan struct{})
+	f := func() {
+		txID := make([]byte, 15)
+		rand.Read(txID)
+		nodes[3].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
+		for i := 0; i < len(nodes); i++ {
+			<-nodes[i].Delivered
+		}
+		md := &smartbftprotos.ViewMetadata{}
+		err = proto.Unmarshal(nodes[3].lastDecision.Proposal.Metadata, md)
+		assert.NoError(t, err)
+		assert.Equal(t, uint64(3), md.ViewId)
+	}
+	go doInBackground(f, stop)
+	node2RemovedFromBlacklist.Wait()
+	node3RemovedFromBlacklist.Wait()
 	close(stop)
 }
 
@@ -1685,21 +1816,21 @@ func waitForCatchup(targetReqID int, out chan *AppRecord) bool {
 	}
 }
 
-func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeTime bool) {
+func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeTime bool, counter *uint64) {
 	go func() {
-		var i int
 		for {
-			i++
+			atomic.AddUint64(counter, 1)
+			newTime := time.Now().Add(time.Second * time.Duration(2*atomic.LoadUint64(counter)))
 			select {
 			case <-done:
 				return
 			case <-time.After(time.Millisecond * 100):
 				for _, n := range nodes {
 					if heartbeatTime {
-						n.heartbeatTime <- time.Now().Add(time.Second * time.Duration(2*i))
+						n.heartbeatTime <- newTime
 					}
 					if viewChangeTime {
-						n.viewChangeTime <- time.Now().Add(time.Second * time.Duration(2*i))
+						n.viewChangeTime <- newTime
 					}
 				}
 			}

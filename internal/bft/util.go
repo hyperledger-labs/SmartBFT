@@ -75,7 +75,15 @@ func MarshalOrPanic(msg proto.Message) []byte {
 	return b
 }
 
-func getLeaderID(view uint64, N uint64, nodes []uint64, leaderRotation bool, decisionsInView uint64, decisionsPerLeader uint64, blacklist []uint64) uint64 {
+func getLeaderID(
+	view uint64,
+	N uint64,
+	nodes []uint64,
+	leaderRotation bool,
+	decisionsInView uint64,
+	decisionsPerLeader uint64,
+	blacklist []uint64,
+) uint64 {
 	blackListed := make(map[uint64]struct{})
 	for _, n := range blacklist {
 		blackListed[n] = struct{}{}
@@ -355,6 +363,7 @@ func heartBeatResponseToString(hbr *protos.HeartBeatResponse) string {
 }
 
 type blacklist struct {
+	currentLeader      uint64
 	leaderRotation     bool
 	prevMD             *protos.ViewMetadata
 	n                  uint64
@@ -388,6 +397,10 @@ func (bl blacklist) computeUpdate() []uint64 {
 			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
 				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
 			leaderID := getLeaderID(viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView+offset, bl.decisionsPerLeader, bl.prevMD.BlackList)
+			if leaderID == bl.currentLeader {
+				bl.logger.Debugf("Skipping blacklisting current node (%d)", leaderID)
+				continue
+			}
 			// Add that leader to the blacklist, because it did not drive any proposal, hence we skipped it because of view changes.
 			newBlacklist = append(newBlacklist, leaderID)
 			bl.logger.Infof("Blacklisting %d", leaderID)
@@ -402,7 +415,7 @@ func (bl blacklist) computeUpdate() []uint64 {
 
 	// If blacklist is too big, remove items from its beginning
 	for len(newBlacklist) > bl.f {
-		bl.logger.Infof("Removing %d from % sized blacklist due to size constraint", newBlacklist[0], len(newBlacklist))
+		bl.logger.Infof("Removing %d from %d sized blacklist due to size constraint", newBlacklist[0], len(newBlacklist))
 		newBlacklist = newBlacklist[1:]
 	}
 

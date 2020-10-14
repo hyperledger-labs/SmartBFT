@@ -22,21 +22,25 @@ func TestBlacklist(t *testing.T) {
 		prevMD             *protos.ViewMetadata
 		decisionsPerLeader uint64
 		currView           uint64
+		currentLeader      uint64
 		leaderRotation     bool
 		expected           []uint64
+		nodes              []uint64
 		name               string
 	}{
 		{
-			name:               "Node added to blacklist not first proposal",
-			expected:           []uint64{getLeaderID(1, 4, []uint64{1, 2, 3, 4}, true, 2, 1, []uint64{1, 2})},
+			name:               "Node added to blacklist not first proposal and dont blacklist current leader",
+			expected:           []uint64{2, 3},
 			decisionsPerLeader: 1,
+			nodes:              []uint64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 			leaderRotation:     true,
-			currView:           2,
+			currView:           3,
+			currentLeader:      4,
 			prevMD: &protos.ViewMetadata{
-				ViewId:          1,
+				ViewId:          0,
 				LatestSequence:  1,
-				DecisionsInView: 1,
-				BlackList:       []uint64{1, 2}, // Blacklist is already over capacity
+				DecisionsInView: 0,
+				BlackList:       nil,
 			},
 			preparesFrom: map[uint64]*protos.PreparesFrom{},
 		},
@@ -44,6 +48,7 @@ func TestBlacklist(t *testing.T) {
 			name:               "Node added to blacklist first proposal",
 			expected:           []uint64{getLeaderID(1, 4, []uint64{1, 2, 3, 4}, true, 0, 1, []uint64{1, 2})},
 			decisionsPerLeader: 1,
+			nodes:              []uint64{1, 2, 3, 4},
 			leaderRotation:     true,
 			currView:           2,
 			prevMD: &protos.ViewMetadata{
@@ -58,6 +63,7 @@ func TestBlacklist(t *testing.T) {
 			name:               "Node removed from blacklist due to attestations",
 			expected:           nil,
 			decisionsPerLeader: 1,
+			nodes:              []uint64{1, 2, 3, 4},
 			leaderRotation:     true,
 			currView:           1,
 			prevMD: &protos.ViewMetadata{
@@ -76,6 +82,7 @@ func TestBlacklist(t *testing.T) {
 			expected:           nil,
 			decisionsPerLeader: 1,
 			leaderRotation:     true,
+			nodes:              []uint64{1, 2, 3, 4},
 			currView:           1,
 			prevMD: &protos.ViewMetadata{
 				ViewId:          1,
@@ -91,10 +98,11 @@ func TestBlacklist(t *testing.T) {
 			logger, _ := logConfig.Build()
 
 			bl := blacklist{
-				n:                  4,
-				nodes:              []uint64{1, 2, 3, 4},
+				currentLeader:      tst.currentLeader,
+				n:                  uint64(len(tst.nodes)),
+				nodes:              tst.nodes,
 				logger:             logger.Sugar(),
-				f:                  1,
+				f:                  (len(tst.nodes) - 1) / 3,
 				currView:           tst.currView,
 				preparesFrom:       tst.preparesFrom,
 				prevMD:             tst.prevMD,

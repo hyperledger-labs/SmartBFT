@@ -512,9 +512,13 @@ func (c *Controller) decide(d decision) {
 }
 
 func (c *Controller) checkIfRotate(blacklist []uint64) bool {
+	view := c.getCurrentViewNumber()
+	decisionsInView := c.getCurrentDecisionsInView()
+	c.Logger.Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
+		view, decisionsInView, c.DecisionsPerLeader, c.N, blacklist)
 	// called after increment
-	currLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView()-1, c.DecisionsPerLeader, blacklist)
-	nextLeader := getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, blacklist)
+	currLeader := getLeaderID(view, c.N, c.NodesList, c.LeaderRotation, decisionsInView-1, c.DecisionsPerLeader, blacklist)
+	nextLeader := getLeaderID(view, c.N, c.NodesList, c.LeaderRotation, decisionsInView, c.DecisionsPerLeader, blacklist)
 	shouldWeRotate := currLeader != nextLeader
 	if shouldWeRotate {
 		c.Logger.Infof("Rotating leader from %d to %d", currLeader, nextLeader)
