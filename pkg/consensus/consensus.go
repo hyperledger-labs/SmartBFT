@@ -94,8 +94,6 @@ func (c *Consensus) Sync() types.SyncResponse {
 
 // GetLeaderID returns the current leader ID or zero if Consensus is not running
 func (c *Consensus) GetLeaderID() uint64 {
-	c.consensusLock.RLock()
-	defer c.consensusLock.RUnlock()
 	if atomic.LoadUint64(&c.running) == 0 {
 		return 0
 	}
