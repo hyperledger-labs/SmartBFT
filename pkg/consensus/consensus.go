@@ -61,7 +61,7 @@ type Consensus struct {
 
 	reconfigChan chan types.Reconfig
 
-	running bool
+	running uint64
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
@@ -96,7 +96,7 @@ func (c *Consensus) Sync() types.SyncResponse {
 func (c *Consensus) GetLeaderID() uint64 {
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
-	if !c.running {
+	if atomic.LoadUint64(&c.running) == 0 {
 		return 0
 	}
 	return c.controller.GetLeaderID()
@@ -151,7 +151,7 @@ func (c *Consensus) Start() error {
 
 	c.startComponents(view, seq, dec, true)
 
-	c.running = true
+	atomic.StoreUint64(&c.running, 1)
 
 	return nil
 }
@@ -236,7 +236,7 @@ func (c *Consensus) close() {
 
 func (c *Consensus) Stop() {
 	c.consensusLock.RLock()
-	c.running = false
+	atomic.StoreUint64(&c.running, 0)
 	c.viewChanger.Stop()
 	c.controller.Stop()
 	c.collector.Stop()
