@@ -135,7 +135,10 @@ func TestLeaderInPartition(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
+
+	assert.Equal(t, uint64(0), nodes[2].Consensus.GetLeaderID())
 	startNodes(nodes, &network)
+	assert.Equal(t, uint64(1), nodes[2].Consensus.GetLeaderID())
 
 	nodes[0].Disconnect() // leader in partition
 
@@ -151,6 +154,7 @@ func TestLeaderInPartition(t *testing.T) {
 	for i := 0; i < numberOfNodes-2; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
+	assert.Equal(t, uint64(2), nodes[2].Consensus.GetLeaderID())
 }
 
 func TestAfterDecisionLeaderInPartition(t *testing.T) {
@@ -308,8 +312,9 @@ func TestMultiLeadersPartition(t *testing.T) {
 		n.viewChangeTime <- start
 		n.Setup()
 	}
-
+	assert.Equal(t, uint64(0), nodes[0].Consensus.GetLeaderID())
 	startNodes(nodes, &network)
+	assert.Equal(t, uint64(1), nodes[0].Consensus.GetLeaderID())
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -331,6 +336,10 @@ func TestMultiLeadersPartition(t *testing.T) {
 	}
 	for i := 0; i < numberOfNodes-3; i++ {
 		assert.Equal(t, data[i], data[i+1])
+	}
+
+	for i := 2; i < numberOfNodes; i++ {
+		assert.Equal(t, uint64(3), nodes[i].Consensus.GetLeaderID())
 	}
 
 }
