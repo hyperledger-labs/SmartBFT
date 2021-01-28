@@ -13,6 +13,8 @@ echo -e "\nTesting commit: ------${ANSI_GREEN}" $(git log -1 --no-merges | head 
 go get -u golang.org/x/tools/cmd/goimports
 go get -u github.com/golang/protobuf/protoc-gen-go
 
+
+
 BUILDDIR=.build
 if [ ! -d "$BUILDDIR" ]; then
     mkdir $BUILDDIR
@@ -59,7 +61,7 @@ if [ $? -eq 0 ];then
 	exit 1
 fi
 
-( sleep 120; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
+#( sleep 200; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
 
 go test -count 1 -race ./... 
 if [[ $? -ne 0 ]];then
