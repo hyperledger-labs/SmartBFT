@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  pull_request:
+    
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
+    - name: Prepare Env
+      run: bash scripts/prepare_environ.sh
+
+    - name: Test
+      working-directory: /home/runner/go/src/github.com/SmartBFT-Go/consensus
+      run:  make all
+
+    - name: Post
+      working-directory: /home/runner/go/src/github.com/SmartBFT-Go/consensus
+      run: ./scripts/post.sh
