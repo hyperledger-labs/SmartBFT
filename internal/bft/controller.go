@@ -186,6 +186,10 @@ func (c *Controller) leaderID() uint64 {
 	return getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, c.blacklist())
 }
 
+func (c *Controller) GetLeaderID() uint64 {
+	return c.leaderID()
+}
+
 // HandleRequest handles a request from the client
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
 	iAm, leaderID := c.iAmTheLeader()
