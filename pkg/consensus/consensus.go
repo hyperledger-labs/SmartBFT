@@ -60,6 +60,8 @@ type Consensus struct {
 	consensusLock sync.RWMutex
 
 	reconfigChan chan types.Reconfig
+
+	running uint64
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
@@ -88,6 +90,14 @@ func (c *Consensus) Sync() types.SyncResponse {
 		}
 	}
 	return syncResponse
+}
+
+// GetLeaderID returns the current leader ID or zero if Consensus is not running
+func (c *Consensus) GetLeaderID() uint64 {
+	if atomic.LoadUint64(&c.running) == 0 {
+		return 0
+	}
+	return c.controller.GetLeaderID()
 }
 
 func (c *Consensus) Start() error {
@@ -138,6 +148,9 @@ func (c *Consensus) Start() error {
 	}()
 
 	c.startComponents(view, seq, dec, true)
+
+	atomic.StoreUint64(&c.running, 1)
+
 	return nil
 }
 
@@ -221,6 +234,7 @@ func (c *Consensus) close() {
 
 func (c *Consensus) Stop() {
 	c.consensusLock.RLock()
+	atomic.StoreUint64(&c.running, 0)
 	c.viewChanger.Stop()
 	c.controller.Stop()
 	c.collector.Stop()
