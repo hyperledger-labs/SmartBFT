@@ -548,7 +548,12 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 		return nil, errors.New("verification sequence mismatch")
 	}
 
-	if err := v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList); err != nil {
+	prepareAcknowledgements, err := v.verifyPrevCommitSignatures(prevCommits, expectedSeq)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList, prepareAcknowledgements); err != nil {
 		return nil, err
 	}
 
@@ -561,7 +566,50 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 	return requests, nil
 }
 
-func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64, pendingBlacklist []uint64) error {
+func (v *View) verifyPrevCommitSignatures(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64) (map[uint64]*protos.PreparesFrom, error) {
+	prevPropRaw, _ := v.RetrieveCheckpoint()
+	prevProposalMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prevPropRaw.Metadata, prevProposalMetadata); err != nil {
+		v.Logger.Panicf("Couldn't unmarshal the previous persisted proposal metadata: %v", err)
+	}
+
+	v.Logger.Debugf("Previous proposal verification sequence: %d, current verification sequence: %d", prevPropRaw.VerificationSequence, currVerificationSeq)
+	if prevPropRaw.VerificationSequence != currVerificationSeq {
+		v.Logger.Infof("Skipping verifying prev commit signatures due to verification sequence advancing from %d to %d",
+			prevPropRaw.VerificationSequence, currVerificationSeq)
+		return nil, nil
+	}
+
+	prepareAcknowledgements := make(map[uint64]*protos.PreparesFrom)
+
+	prevProp := types.Proposal{
+		VerificationSequence: int64(prevPropRaw.VerificationSequence),
+		Metadata:             prevPropRaw.Metadata,
+		Payload:              prevPropRaw.Payload,
+		Header:               prevPropRaw.Header,
+	}
+
+	// All previous commit signatures should be verifiable
+	for _, sig := range prevCommitSignatures {
+		aux, err := v.Verifier.VerifyConsenterSig(types.Signature{
+			ID:    sig.Signer,
+			Msg:   sig.Msg,
+			Value: sig.Value,
+		}, prevProp)
+		if err != nil {
+			return nil, errors.Errorf("failed verifying consenter signature of %d: %v", sig.Signer, err)
+		}
+		prpf := &protos.PreparesFrom{}
+		if err := proto.Unmarshal(aux, prpf); err != nil {
+			return nil, errors.Errorf("failed unmarshaling auxiliary input from %d: %v", sig.Signer, err)
+		}
+		prepareAcknowledgements[sig.Signer] = prpf
+	}
+
+	return prepareAcknowledgements, nil
+}
+
+func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64, pendingBlacklist []uint64, prepareAcknowledgements map[uint64]*protos.PreparesFrom) error {
 	if v.DecisionsPerLeader == 0 {
 		v.Logger.Debugf("DecisionsPerLeader is 0, hence leader rotation is inactive")
 		if len(pendingBlacklist) > 0 {
@@ -588,15 +636,6 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 		return nil
 	}
 
-	prepareAcknowledgements := make(map[uint64]*protos.PreparesFrom)
-
-	prevProp := types.Proposal{
-		VerificationSequence: int64(prevPropRaw.VerificationSequence),
-		Metadata:             prevPropRaw.Metadata,
-		Payload:              prevPropRaw.Payload,
-		Header:               prevPropRaw.Header,
-	}
-
 	_, f := computeQuorum(v.N)
 
 	if v.blacklistingSupported(f, myLastCommitSignatures) && len(prevCommitSignatures) < len(myLastCommitSignatures) {
@@ -604,24 +643,7 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 			len(prevCommitSignatures), len(myLastCommitSignatures))
 	}
 
-	// All previous commit signatures should be verifiable
-	for _, sig := range prevCommitSignatures {
-		aux, err := v.Verifier.VerifyConsenterSig(types.Signature{
-			ID:    sig.Signer,
-			Msg:   sig.Msg,
-			Value: sig.Value,
-		}, prevProp)
-		if err != nil {
-			return errors.Errorf("failed verifying consenter signature of %d: %v", sig.Signer, err)
-		}
-		prpf := &protos.PreparesFrom{}
-		if err := proto.Unmarshal(aux, prpf); err != nil {
-			return errors.Errorf("failed unmarshaling auxiliary input from %d: %v", sig.Signer, err)
-		}
-		prepareAcknowledgements[sig.Signer] = prpf
-	}
-
-	// We verified the previous commit signatures, now we need to ensure that the blacklist
+	// We previously verified the previous commit signatures, now we need to ensure that the blacklist
 	// of this proposal is obtained by applying the deterministic blacklist maintenance algorithm
 	// on the blacklist of the previous proposal which has been committed.
 
