@@ -45,7 +45,7 @@ type Consensus struct {
 	submittedChan chan struct{}
 	inFlight      *algorithm.InFlightData
 	checkpoint    *types.Checkpoint
-	pool          *algorithm.Pool
+	Pool          *algorithm.Pool
 	viewChanger   *algorithm.ViewChanger
 	controller    *algorithm.Controller
 	collector     *algorithm.StateCollector
@@ -134,7 +134,7 @@ func (c *Consensus) Start() error {
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
 	c.submittedChan = make(chan struct{}, 1)
-	c.pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
+	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
 	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
@@ -198,7 +198,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 		ComplainTimeout:   c.Config.RequestComplainTimeout,
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 	}
-	c.pool.ChangeTimeouts(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
+	c.Pool.ChangeTimeouts(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()
 
 	proposal, _ := c.checkpoint.Get()
@@ -214,7 +214,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.startComponents(view, seq, dec, false)
 
-	c.pool.RestartTimers()
+	c.Pool.RestartTimers()
 
 	c.Logger.Debugf("Reconfig is done")
 }
@@ -379,15 +379,15 @@ func (c *Consensus) createComponents() {
 }
 
 func (c *Consensus) continueCreateComponents() {
-	batchBuilder := algorithm.NewBatchBuilder(c.pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
+	batchBuilder := algorithm.NewBatchBuilder(c.Pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
 	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
-	c.controller.RequestPool = c.pool
+	c.controller.RequestPool = c.Pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
 
 	c.viewChanger.Controller = c.controller
 	c.viewChanger.Pruner = c.controller
-	c.viewChanger.RequestsTimer = c.pool
+	c.viewChanger.RequestsTimer = c.Pool
 	c.viewChanger.ViewSequences = c.controller.ViewSequences
 }
 
