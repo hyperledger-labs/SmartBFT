@@ -52,6 +52,7 @@ type Consensus struct {
 	state         *algorithm.PersistedState
 	numberOfNodes uint64
 	nodes         []uint64
+	nodeMap       sync.Map
 
 	consensusDone sync.WaitGroup
 	stopOnce      sync.Once
@@ -244,6 +245,10 @@ func (c *Consensus) Stop() {
 }
 
 func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
+	if _, exists := c.nodeMap.Load(sender); !exists {
+		c.Logger.Warnf("Received message from unexpected node %d", sender)
+		return
+	}
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
 	c.controller.ProcessMessages(sender, m)
@@ -306,8 +311,15 @@ func (c *Consensus) ValidateConfiguration(nodes []uint64) error {
 }
 
 func (c *Consensus) setNodes(nodes []uint64) {
+	for _, n := range c.nodes {
+		c.nodeMap.Delete(n)
+	}
+
 	c.numberOfNodes = uint64(len(nodes))
 	c.nodes = sortNodes(nodes)
+	for _, n := range nodes {
+		c.nodeMap.Store(n, struct{}{})
+	}
 }
 
 func sortNodes(nodes []uint64) []uint64 {
