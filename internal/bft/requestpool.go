@@ -151,7 +151,7 @@ func (rp *Pool) Submit(request []byte) error {
 	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
 		errStr := fmt.Sprintf("request %s already exists in the pool", reqInfo)
-		rp.logger.Errorf(errStr)
+		rp.logger.Debugf(errStr)
 		return errors.New(errStr)
 	}
 
