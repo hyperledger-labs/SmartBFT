@@ -568,10 +568,6 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 
 func (v *View) verifyPrevCommitSignatures(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64) (map[uint64]*protos.PreparesFrom, error) {
 	prevPropRaw, _ := v.RetrieveCheckpoint()
-	prevProposalMetadata := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(prevPropRaw.Metadata, prevProposalMetadata); err != nil {
-		v.Logger.Panicf("Couldn't unmarshal the previous persisted proposal metadata: %v", err)
-	}
 
 	v.Logger.Debugf("Previous proposal verification sequence: %d, current verification sequence: %d", prevPropRaw.VerificationSequence, currVerificationSeq)
 	if prevPropRaw.VerificationSequence != currVerificationSeq {
