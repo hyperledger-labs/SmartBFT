@@ -263,6 +263,9 @@ func (c *Consensus) HandleRequest(sender uint64, req []byte) {
 func (c *Consensus) SubmitRequest(req []byte) error {
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
+	if c.GetLeaderID() == 0 {
+		return errors.Errorf("no leader")
+	}
 	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
 	return c.controller.SubmitRequest(req)
 }
