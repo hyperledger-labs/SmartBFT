@@ -143,10 +143,7 @@ func (c *Consensus) Start() error {
 
 	c.waitForEachOther()
 
-	go func() {
-		defer c.consensusDone.Done()
-		c.run()
-	}()
+	go c.run()
 
 	c.startComponents(view, seq, dec, true)
 
@@ -158,7 +155,11 @@ func (c *Consensus) Start() error {
 func (c *Consensus) run() {
 	defer func() {
 		c.Logger.Infof("Exiting")
+		atomic.StoreUint64(&c.running, 0)
+		c.Stop()
 	}()
+
+	defer c.consensusDone.Done()
 
 	for {
 		select {
@@ -179,6 +180,20 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.viewChanger.Stop()
 	c.controller.StopWithPoolPause()
 	c.collector.Stop()
+
+	var exist bool
+	for _, n := range reconfig.CurrentNodes {
+		if c.Config.SelfID == n {
+			exist = true
+			break
+		}
+	}
+
+	if !exist {
+		c.Logger.Infof("Evicted in reconfiguration, shutting down")
+		c.close()
+		return
+	}
 
 	c.Config = reconfig.CurrentConfig
 	if err := c.ValidateConfiguration(reconfig.CurrentNodes); err != nil {
@@ -235,7 +250,6 @@ func (c *Consensus) close() {
 
 func (c *Consensus) Stop() {
 	c.consensusLock.RLock()
-	atomic.StoreUint64(&c.running, 0)
 	c.viewChanger.Stop()
 	c.controller.Stop()
 	c.collector.Stop()
