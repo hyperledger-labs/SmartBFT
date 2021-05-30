@@ -631,6 +631,8 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 }
 
 func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int, vs *atomic.Value) *bft.View {
+	mn := &mocks.MembershipNotifierMock{}
+	mn.On("MembershipChange").Return(false)
 	return &bft.View{
 		RetrieveCheckpoint: c.Checkpoint.Get,
 		N:                  c.N,
@@ -645,6 +647,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		Comm:               c,
 		Verifier:           c.Verifier,
 		Signer:             c.Signer,
+		MembershipNotifier: mn,
 		ProposalSequence:   proposalSequence,
 		DecisionsInView:    decisionsInView,
 		ViewSequences:      vs,

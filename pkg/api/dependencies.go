@@ -70,6 +70,12 @@ type Verifier interface {
 	AuxiliaryData([]byte) []byte
 }
 
+// MembershipNotifier notifies if there was a membership change in the last proposal.
+type MembershipNotifier interface {
+	//MembershipChange returns true if there was a membership change in the last proposal.
+	MembershipChange() bool
+}
+
 // RequestInspector extracts info (i.e. request id and client id) from a given request.
 type RequestInspector interface {
 	// RequestID returns info about the given request.
