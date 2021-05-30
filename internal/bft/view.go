@@ -569,6 +569,10 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 
 func (v *View) verifyPrevCommitSignatures(prevCommitSignatures []*protos.Signature, currVerificationSeq uint64) (map[uint64]*protos.PreparesFrom, error) {
 	prevPropRaw, _ := v.RetrieveCheckpoint()
+	prevProposalMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prevPropRaw.Metadata, prevProposalMetadata); err != nil {
+		v.Logger.Panicf("Couldn't unmarshal the previous persisted proposal metadata: %v", err)
+	}
 
 	v.Logger.Debugf("Previous proposal verification sequence: %d, current verification sequence: %d", prevPropRaw.VerificationSequence, currVerificationSeq)
 	if prevPropRaw.VerificationSequence != currVerificationSeq {
@@ -626,7 +630,7 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 	if prevPropRaw.VerificationSequence != currVerificationSeq {
 		// If there has been a reconfiguration, black list should remain the same
 		if !equalIntLists(prevProposalMetadata.BlackList, pendingBlacklist) {
-			return errors.Errorf("blacklist changed during reconfiguration")
+			return errors.Errorf("blacklist changed (%v --> %v) during reconfiguration", prevProposalMetadata.BlackList, pendingBlacklist)
 		}
 		v.Logger.Infof("Skipping verifying prev commits due to verification sequence advancing from %d to %d",
 			prevPropRaw.VerificationSequence, currVerificationSeq)
@@ -853,6 +857,13 @@ func (v *View) GetMetadata() []byte {
 	verificationSeq := v.Verifier.VerificationSequence()
 
 	prevProp, prevSigs = v.RetrieveCheckpoint()
+
+	prevMD := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prevProp.Metadata, prevMD); err != nil {
+		v.Logger.Panicf("Attempted to propose a proposal with invalid unchanged previous proposal view metadata: %v", err)
+	}
+
+	metadata.BlackList = prevMD.BlackList
 
 	metadata = v.metadataWithUpdatedBlacklist(metadata, verificationSeq, prevProp, prevSigs)
 	metadata = v.bindCommitSignaturesToProposalMetadata(metadata, prevSigs)
