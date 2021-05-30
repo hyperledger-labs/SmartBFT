@@ -237,6 +237,10 @@ func (a *App) AssembleProposal(metadata []byte, requests [][]byte) types.Proposa
 	}
 }
 
+func (a *App) MembershipChange() bool {
+	return false
+}
+
 // Deliver delivers the given proposal
 func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
 	defer func() {
@@ -401,21 +405,22 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 		}
 
 		c := &consensus.Consensus{
-			Config:            config,
-			ViewChangerTicker: app.secondClock.C,
-			Scheduler:         app.clock.C,
-			Logger:            app.logger,
-			WAL:               writeAheadLog,
-			Metadata:          *app.latestMD,
-			Verifier:          app,
-			Signer:            app,
-			RequestInspector:  app,
-			Assembler:         app,
-			Synchronizer:      app,
-			Application:       app,
-			WALInitialContent: walInitialEntries,
-			LastProposal:      app.lastRecord.proposal,
-			LastSignatures:    app.lastRecord.signatures,
+			Config:             config,
+			ViewChangerTicker:  app.secondClock.C,
+			Scheduler:          app.clock.C,
+			Logger:             app.logger,
+			WAL:                writeAheadLog,
+			Metadata:           *app.latestMD,
+			Verifier:           app,
+			Signer:             app,
+			MembershipNotifier: app,
+			RequestInspector:   app,
+			Assembler:          app,
+			Synchronizer:       app,
+			Application:        app,
+			WALInitialContent:  walInitialEntries,
+			LastProposal:       app.lastRecord.proposal,
+			LastSignatures:     app.lastRecord.signatures,
 		}
 		if app.heartbeatTime != nil {
 			app.clock.Stop()

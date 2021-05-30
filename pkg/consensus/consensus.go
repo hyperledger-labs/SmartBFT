@@ -25,22 +25,23 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	Config            types.Configuration
-	Application       bft.Application
-	Assembler         bft.Assembler
-	WAL               bft.WriteAheadLog
-	WALInitialContent [][]byte
-	Comm              bft.Comm
-	Signer            bft.Signer
-	Verifier          bft.Verifier
-	RequestInspector  bft.RequestInspector
-	Synchronizer      bft.Synchronizer
-	Logger            bft.Logger
-	Metadata          protos.ViewMetadata
-	LastProposal      types.Proposal
-	LastSignatures    []types.Signature
-	Scheduler         <-chan time.Time
-	ViewChangerTicker <-chan time.Time
+	Config             types.Configuration
+	Application        bft.Application
+	Assembler          bft.Assembler
+	WAL                bft.WriteAheadLog
+	WALInitialContent  [][]byte
+	Comm               bft.Comm
+	Signer             bft.Signer
+	Verifier           bft.Verifier
+	MembershipNotifier bft.MembershipNotifier
+	RequestInspector   bft.RequestInspector
+	Synchronizer       bft.Synchronizer
+	Logger             bft.Logger
+	Metadata           protos.ViewMetadata
+	LastProposal       types.Proposal
+	LastSignatures     []types.Signature
+	Scheduler          <-chan time.Time
+	ViewChangerTicker  <-chan time.Time
 
 	submittedChan chan struct{}
 	inFlight      *algorithm.InFlightData
@@ -293,6 +294,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Decider:            c.controller,
 		Logger:             c.Logger,
 		Signer:             c.Signer,
+		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
 		Sync:               c.controller,
 		FailureDetector:    c,

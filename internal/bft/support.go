@@ -49,6 +49,12 @@ type SignerMock interface {
 	api.Signer
 }
 
+// MembershipNotifierMock mock for the MembershipNotifier interface
+//go:generate mockery -dir . -name MembershipNotifierMock -case underscore -output ./mocks/
+type MembershipNotifierMock interface {
+	api.MembershipNotifier
+}
+
 // Synchronizer mock for the Synchronizer interface (no return value)
 //go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
 type Synchronizer interface {

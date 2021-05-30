@@ -65,6 +65,7 @@ type View struct {
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
+	MembershipNotifier api.MembershipNotifier
 	ProposalSequence   uint64
 	DecisionsInView    uint64
 	State              State
@@ -860,14 +861,21 @@ func (v *View) GetMetadata() []byte {
 }
 
 func (v *View) metadataWithUpdatedBlacklist(metadata *protos.ViewMetadata, verificationSeq uint64, prevProp protos.Proposal, prevSigs []*protos.Signature) *protos.ViewMetadata {
-	if verificationSeq == prevProp.VerificationSequence {
+	membershipChange := v.MembershipNotifier.MembershipChange()
+	if verificationSeq == prevProp.VerificationSequence && !membershipChange {
 		v.Logger.Debugf("Proposing proposal %d with verification sequence of %d and %d commit signatures",
 			v.ProposalSequence, verificationSeq, len(prevSigs))
 		return v.updateBlacklistMetadata(metadata, prevSigs, prevProp.Metadata)
 	}
 
-	v.Logger.Infof("Skipping updating blacklist due to verification sequence changing from %d to %d",
-		prevProp.VerificationSequence, verificationSeq)
+	if verificationSeq != prevProp.VerificationSequence {
+		v.Logger.Infof("Skipping updating blacklist due to verification sequence changing from %d to %d",
+			prevProp.VerificationSequence, verificationSeq)
+	}
+	if membershipChange {
+		v.Logger.Infof("Skipping updating blacklist due to membership change")
+	}
+
 	return metadata
 }
 

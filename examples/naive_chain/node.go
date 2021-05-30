@@ -136,6 +136,10 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	n.out[int(targetID)] <- msg
 }
 
+func (n *Node) MembershipChange() bool {
+	return false
+}
+
 func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig {
 	blockData := BlockDataFromBytes(proposal.Payload)
 	var txns []Transaction
@@ -184,18 +188,19 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 	config.RequestBatchMaxCount = opts.BatchSize
 
 	node.consensus = &smartbft.Consensus{
-		Config:            config,
-		ViewChangerTicker: node.secondClock.C,
-		Scheduler:         node.clock.C,
-		Logger:            logger,
-		Comm:              node,
-		Signer:            node,
-		Verifier:          node,
-		Application:       node,
-		Assembler:         node,
-		RequestInspector:  node,
-		Synchronizer:      node,
-		WAL:               writeAheadLog,
+		Config:             config,
+		ViewChangerTicker:  node.secondClock.C,
+		Scheduler:          node.clock.C,
+		Logger:             logger,
+		Comm:               node,
+		Signer:             node,
+		MembershipNotifier: node,
+		Verifier:           node,
+		Application:        node,
+		Assembler:          node,
+		RequestInspector:   node,
+		Synchronizer:       node,
+		WAL:                writeAheadLog,
 		Metadata: smartbftprotos.ViewMetadata{
 			LatestSequence: 0,
 			ViewId:         0,
