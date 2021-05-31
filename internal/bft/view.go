@@ -637,6 +637,15 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 		return nil
 	}
 
+	if v.MembershipNotifier.MembershipChange() {
+		// If there has been a membership change, black list should remain the same
+		if !equalIntLists(prevProposalMetadata.BlackList, pendingBlacklist) {
+			return errors.Errorf("blacklist changed (%v --> %v) during membership change", prevProposalMetadata.BlackList, pendingBlacklist)
+		}
+		v.Logger.Infof("Skipping verifying prev commits due to membership change")
+		return nil
+	}
+
 	_, f := computeQuorum(v.N)
 
 	if v.blacklistingSupported(f, myLastCommitSignatures) && len(prevCommitSignatures) < len(myLastCommitSignatures) {
