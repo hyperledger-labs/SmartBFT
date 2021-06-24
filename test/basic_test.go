@@ -1262,6 +1262,21 @@ func TestGradualStart(t *testing.T) {
 	d2 = <-n2.Delivered
 	assert.Equal(t, d0, d2)
 
+	n0.Disconnect() // disconnect the leader
+
+	n1.Submit(Request{ID: fmt.Sprintf("%d", 4), ClientID: "alice"})
+	n2.Submit(Request{ID: fmt.Sprintf("%d", 4), ClientID: "alice"})
+
+	d1 = <-n1.Delivered
+	md = &smartbftprotos.ViewMetadata{}
+	if err := proto.Unmarshal(d1.Metadata, md); err != nil {
+		assert.NoError(t, err)
+	}
+	assert.Equal(t, uint64(1), md.ViewId) // view was changed
+	assert.Equal(t, uint64(4), md.LatestSequence)
+
+	d2 = <-n2.Delivered
+	assert.Equal(t, d1, d2)
 }
 
 func TestReconfigAndViewChange(t *testing.T) {
