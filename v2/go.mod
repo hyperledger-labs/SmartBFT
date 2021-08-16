@@ -12,5 +12,3 @@ require (
 	golang.org/x/tools v0.0.0-20201201210846-92771a23d8e3 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 )
-
-replace github.com/SmartBFT-Go/consensus/v2 => ./v2
