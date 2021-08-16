@@ -42,7 +42,7 @@ else
     exit 1
 fi
 
-unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xargs goimports -l)
+unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "^./v2" | grep -v "pb.go" | xargs goimports -l)
 
 if [[ $unformatted == "" ]];then
     echo "goimports checks passed"
