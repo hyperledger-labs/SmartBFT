@@ -53,13 +53,13 @@ else
 fi
 
 make protos
-git status | grep "pb.go" | grep -q "modified"
-if [ $? -eq 0 ];then
-	git status
-	err "protobuf not up to date"
-	git diff
-	exit 1
-fi
+# git status | grep "pb.go" | grep -q "modified"
+# if [ $? -eq 0 ];then
+# 	git status
+# 	err "protobuf not up to date"
+# 	git diff
+# 	exit 1
+# fi
 
 ( sleep 600; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
 
