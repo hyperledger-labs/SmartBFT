@@ -11,7 +11,7 @@ err() {
 echo -e "\nTesting commit: ------${ANSI_GREEN}" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "${ANSI_RESET}------\n"
 
 go get -u golang.org/x/tools/cmd/goimports
-go get -u github.com/golang/protobuf/protoc-gen-go
+go get -u github.com/golang/protobuf/protoc-gen-go@v1.3.5
 
 
 
@@ -42,7 +42,7 @@ else
     exit 1
 fi
 
-unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "^./v2" | grep -v "pb.go" | xargs goimports -l)
+unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xargs goimports -l)
 
 if [[ $unformatted == "" ]];then
     echo "goimports checks passed"
@@ -53,13 +53,13 @@ else
 fi
 
 make protos
-# git status | grep "pb.go" | grep -q "modified"
-# if [ $? -eq 0 ];then
-# 	git status
-# 	err "protobuf not up to date"
-# 	git diff
-# 	exit 1
-# fi
+git status | grep "pb.go" | grep -q "modified"
+if [ $? -eq 0 ];then
+	git status
+	err "protobuf not up to date"
+	git diff
+	exit 1
+fi
 
 ( sleep 600; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
 

@@ -1,0 +1,13 @@
+// Copyright IBM Corp. All Rights Reserved.
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+syntax = "proto3";
+
+package naive;
+
+message FwdMessage {
+    uint64 sender = 1;
+    bytes payload = 2;
+}
