@@ -42,7 +42,7 @@ else
     exit 1
 fi
 
-unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "^./v2" | grep -v "pb.go" | xargs goimports -l)
+unformatted=$(find . -name "*.go" | grep -v "^./vendor" | grep -v "pb.go" | xargs goimports -l)
 
 if [[ $unformatted == "" ]];then
     echo "goimports checks passed"
@@ -62,6 +62,8 @@ make protos
 # fi
 
 ( sleep 600; ps -ef | grep test | grep -v "go test" | grep -v grep | awk '{print $2}' | xargs kill -SIGABRT ) & 
+
+go mod tidy && go mod vendor
 
 go test -count 1 -race ./... 
 if [[ $? -ne 0 ]];then
