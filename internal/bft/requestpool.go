@@ -368,20 +368,18 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	if !rp.contains(reqInfo) {
 		return
 	}
-	// may take time, in case Comm channel to leader is full; hence w/o the lock.
-	rp.logger.Debugf("Request %s timeout expired, going to send to leader", reqInfo)
-	rp.timeoutHandler.OnRequestTimeout(request, reqInfo)
 
 	rp.lock.Lock()
-	defer rp.lock.Unlock()
 
 	element, contains := rp.existMap[reqInfo]
 	if !contains {
+		rp.lock.Unlock()
 		rp.logger.Debugf("Request %s no longer in pool", reqInfo)
 		return
 	}
 
 	if rp.closed || rp.stopped {
+		rp.lock.Unlock()
 		rp.logger.Debugf("Pool stopped, will NOT start a leader-forwarding timeout")
 		return
 	}
@@ -393,6 +391,12 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
 	)
 	rp.logger.Debugf("Request %s; started a leader-forwarding timeout: %s", reqInfo, rp.options.ComplainTimeout)
+
+	rp.lock.Unlock()
+
+	// may take time, in case Comm channel to leader is full; hence w/o the lock.
+	rp.logger.Debugf("Request %s timeout expired, going to send to leader", reqInfo)
+	rp.timeoutHandler.OnRequestTimeout(request, reqInfo)
 }
 
 // called by the goroutine spawned by time.AfterFunc
@@ -400,20 +404,18 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	if !rp.contains(reqInfo) {
 		return
 	}
-	// may take time, in case Comm channel is full; hence w/o the lock.
-	rp.logger.Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
-	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request, reqInfo)
 
 	rp.lock.Lock()
-	defer rp.lock.Unlock()
 
 	element, contains := rp.existMap[reqInfo]
 	if !contains {
+		rp.lock.Unlock()
 		rp.logger.Debugf("Request %s no longer in pool", reqInfo)
 		return
 	}
 
 	if rp.closed || rp.stopped {
+		rp.lock.Unlock()
 		rp.logger.Debugf("Pool stopped, will NOT start auto-remove timeout")
 		return
 	}
@@ -425,6 +427,12 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 		func() { rp.onAutoRemoveTO(reqInfo) },
 	)
 	rp.logger.Debugf("Request %s; started auto-remove timeout: %s", reqInfo, rp.options.AutoRemoveTimeout)
+
+	rp.lock.Unlock()
+
+	// may take time, in case Comm channel is full; hence w/o the lock.
+	rp.logger.Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
+	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request, reqInfo)
 }
 
 // called by the goroutine spawned by time.AfterFunc
