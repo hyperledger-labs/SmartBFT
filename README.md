@@ -19,3 +19,9 @@ The source code files are made available under the Apache License, Version 2.0 (
 * Hagar Meir - [hagar.meir@ibm.com](mailto:hagar.meir@ibm.com)
 * Artem Barger - [bartem@il.ibm.com](mailto:bartem@il.ibm.com)
 * Yoav Tock - [tock@il.ibm.com](mailto:tock@il.ibm.com)
+
+## Ownership
+
+The library development was sponsored by __[Idea](https://scientificideas.org/)__ - The Interdisciplinary Blockchain Research and Expertise center. 
+
+* Gennadiy Muzykantov - [repository admin](mailto:g@muzykantov.me)
