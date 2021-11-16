@@ -471,7 +471,7 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		pool.RestartTimers()
 		err = pool.Submit(byteReq2)
-		assert.EqualError(t, err, "request {2 2} already exists in the pool")
+		assert.Equal(t, bft.ErrReqAlreadyExists, err)
 		pool.StopTimers()
 		pool.RestartTimers()
 
