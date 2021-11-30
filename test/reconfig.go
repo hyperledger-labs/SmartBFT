@@ -26,6 +26,8 @@ type Configuration struct {
 	SpeedUpViewChange             bool
 	LeaderRotation                bool
 	DecisionsPerLeader            int64
+	RequestMaxBytes               int64
+	RequestPoolSubmitTimeout      time.Duration
 }
 
 type Reconfig struct {
@@ -58,6 +60,8 @@ func (r Reconfig) recconfigToUint(id uint64) types.Reconfig {
 			SpeedUpViewChange:             r.CurrentConfig.SpeedUpViewChange,
 			LeaderRotation:                r.CurrentConfig.LeaderRotation,
 			DecisionsPerLeader:            uint64(r.CurrentConfig.DecisionsPerLeader),
+			RequestMaxBytes:               uint64(r.CurrentConfig.RequestBatchMaxBytes),
+			RequestPoolSubmitTimeout:      r.CurrentConfig.RequestPoolSubmitTimeout,
 		},
 	}
 }
@@ -85,6 +89,8 @@ func recconfigToInt(reconfig types.Reconfig) Reconfig {
 			SpeedUpViewChange:             reconfig.CurrentConfig.SpeedUpViewChange,
 			LeaderRotation:                reconfig.CurrentConfig.LeaderRotation,
 			DecisionsPerLeader:            int64(reconfig.CurrentConfig.DecisionsPerLeader),
+			RequestMaxBytes:               int64(reconfig.CurrentConfig.RequestBatchMaxBytes),
+			RequestPoolSubmitTimeout:      reconfig.CurrentConfig.RequestPoolSubmitTimeout,
 		},
 	}
 }
