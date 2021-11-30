@@ -216,6 +216,8 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 		ForwardTimeout:    c.Config.RequestForwardTimeout,
 		ComplainTimeout:   c.Config.RequestComplainTimeout,
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
+		RequestMaxBytes:   c.Config.RequestMaxBytes,
+		SubmitTimeout:     c.Config.RequestPoolSubmitTimeout,
 	}
 	c.Pool.ChangeTimeouts(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()

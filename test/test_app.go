@@ -38,6 +38,8 @@ var fastConfig = types.Configuration{
 	NumOfTicksBehindBeforeSyncing: 10,
 	CollectTimeout:                200 * time.Millisecond,
 	LeaderRotation:                false,
+	RequestMaxBytes:               10 * 1024,
+	RequestPoolSubmitTimeout:      5 * time.Second,
 }
 
 // App implements all interfaces required by an application using this library
