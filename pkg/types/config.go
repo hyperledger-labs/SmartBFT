@@ -6,7 +6,6 @@
 package types
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/pkg/errors"
@@ -178,8 +177,7 @@ func (c Configuration) Validate() error {
 	}
 
 	if !(c.RequestMaxBytes > 0) {
-		panic(fmt.Sprintf("%v", c))
-		// return errors.Errorf("RequestMaxBytes should be greater than zero")
+		return errors.Errorf("RequestMaxBytes should be greater than zero")
 	}
 
 	if !(c.RequestPoolSubmitTimeout > 0) {
