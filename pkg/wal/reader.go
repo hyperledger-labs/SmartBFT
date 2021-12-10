@@ -108,7 +108,7 @@ func (r *LogRecordReader) Read() (*protos.LogRecord, error) {
 	var record = &protos.LogRecord{}
 	err = proto.Unmarshal(payload[:recLen], record)
 	if err != nil {
-		return nil, fmt.Errorf("wal: failed to unmarshal payload: %s", err)
+		return nil, ErrWALUnmarshalPayload //fmt.Errorf("wal: failed to unmarshal payload: %w", err)
 	}
 
 	switch record.Type {
