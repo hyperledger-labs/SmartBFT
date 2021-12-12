@@ -39,9 +39,10 @@ const (
 )
 
 var (
-	ErrCRC       = errors.New("wal: crc verification failed")
-	ErrWriteOnly = errors.New("wal: in WRITE mode")
-	ErrReadOnly  = errors.New("wal: in READ mode")
+	ErrCRC                 = errors.New("wal: crc verification failed")
+	ErrWALUnmarshalPayload = errors.New("wal: failed to unmarshal payload")
+	ErrWriteOnly           = errors.New("wal: in WRITE mode")
+	ErrReadOnly            = errors.New("wal: in READ mode")
 
 	ErrWALAlreadyExists = errors.New("wal: is already exists")
 
@@ -500,7 +501,10 @@ FileLoop:
 			continue FileLoop
 		}
 
-		if index == lastIndex && (readErr == io.ErrUnexpectedEOF || readErr == ErrCRC) {
+		if index == lastIndex &&
+			(errors.Is(readErr, io.ErrUnexpectedEOF) ||
+				errors.Is(readErr, ErrCRC) ||
+				errors.Is(readErr, ErrWALUnmarshalPayload)) {
 			w.logger.Warnf("Received an error in the last file, this can possibly be repaired; file: %s; error: %s", r.fileName, readErr)
 			// This error is returned when the WAL can possibly be repaired
 			return nil, io.ErrUnexpectedEOF

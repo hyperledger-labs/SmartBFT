@@ -110,7 +110,7 @@ func TestLogRecordReader(t *testing.T) {
 		assert.NoError(t, err)
 		_, err = f.Seek(0, io.SeekStart)
 		assert.NoError(t, err)
-		h[7] = ^h[7] //a CRC byte
+		h[7] = ^h[7] // a CRC byte
 		_, err = f.Write(h)
 		assert.NoError(t, err)
 		err = f.Close()
@@ -226,7 +226,7 @@ func TestLogRecordReader(t *testing.T) {
 	})
 
 	t.Run("corrupt record", func(t *testing.T) {
-		testFile := filepath.Join(testDir, "test5.wal")
+		testFile := filepath.Join(testDir, "test6.wal")
 		copyFile(fileName, testFile)
 		r, err := NewLogRecordReader(logger, fileName)
 		assert.NoError(t, err)
@@ -258,7 +258,7 @@ func TestLogRecordReader(t *testing.T) {
 		assertReadRecord(t, r, rec2, crc2)
 
 		record, err := r.Read()
-		assert.Contains(t, err.Error(), "wal: failed to unmarshal payload:")
+		assert.Contains(t, err.Error(), "wal: failed to unmarshal payload")
 		assert.Nil(t, record)
 	})
 }
