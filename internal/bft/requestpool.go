@@ -376,9 +376,10 @@ func (rp *Pool) RestartTimers() {
 	for reqInfo, element := range rp.existMap {
 		item := element.Value.(*requestItem)
 		item.timeout.Stop()
+		ri := reqInfo
 		to := time.AfterFunc(
 			rp.options.ForwardTimeout,
-			func() { rp.onRequestTO(item.request, reqInfo) },
+			func() { rp.onRequestTO(item.request, ri) },
 		)
 		item.timeout = to
 	}
@@ -414,7 +415,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 		return
 	}
 
-	//start a second timeout
+	// start a second timeout
 	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
 		rp.options.ComplainTimeout,
@@ -450,7 +451,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 		return
 	}
 
-	//start a third timeout
+	// start a third timeout
 	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
 		rp.options.AutoRemoveTimeout,
