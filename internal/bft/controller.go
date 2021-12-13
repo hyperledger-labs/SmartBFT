@@ -508,6 +508,8 @@ func (c *Controller) decide(d decision) {
 	if c.checkIfRotate(md.BlackList) {
 		c.Logger.Debugf("Restarting view to rotate the leader")
 		c.changeView(c.getCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
+		c.Logger.Debugf("Restarting timers in request pool due to leader rotation")
+		c.RequestPool.RestartTimers()
 	}
 	c.MaybePruneRevokedRequests()
 	if iAm, _ := c.iAmTheLeader(); iAm {
