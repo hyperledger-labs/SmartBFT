@@ -7,6 +7,7 @@ package bft_test
 
 import (
 	"bytes"
+	"crypto/rand"
 	"encoding/binary"
 	"fmt"
 	"sync"
@@ -291,6 +292,33 @@ func TestReqPoolTimeout(t *testing.T) {
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 
+	t.Run("request size too big", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
+
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Return()
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Return()
+		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq1)).Return()
+
+		pool := bft.NewPool(log, insp, timeoutHandler,
+			bft.PoolOptions{
+				QueueSize:         3,
+				ForwardTimeout:    10 * time.Millisecond,
+				ComplainTimeout:   time.Hour,
+				AutoRemoveTimeout: time.Hour,
+				RequestMaxBytes:   1024,
+			},
+			nil,
+		)
+		defer pool.Close()
+
+		payload := make([]byte, 2048)
+		rand.Read(payload)
+		request := makeTestRequest("1", "1", string(payload))
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(request)
+		assert.Equal(t, err, bft.ErrRequestTooBig)
+
+	})
 	t.Run("request timeout", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
@@ -471,7 +499,7 @@ func TestReqPoolTimeout(t *testing.T) {
 
 		pool.RestartTimers()
 		err = pool.Submit(byteReq2)
-		assert.EqualError(t, err, "request {2 2} already exists in the pool")
+		assert.Equal(t, bft.ErrReqAlreadyExists, err)
 		pool.StopTimers()
 		pool.RestartTimers()
 

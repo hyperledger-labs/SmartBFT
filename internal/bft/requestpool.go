@@ -20,6 +20,13 @@ import (
 
 const (
 	defaultRequestTimeout = 10 * time.Second // for unit tests only
+	defaultMaxBytes       = 100 * 1024       // default max request size would be of size 100Kb
+)
+
+var (
+	ErrReqAlreadyExists = fmt.Errorf("request already exists")
+	ErrRequestTooBig    = fmt.Errorf("submitted request is too big")
+	ErrSubmitTimeout    = fmt.Errorf("timeout submitting to request pool")
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
@@ -46,7 +53,7 @@ type Pool struct {
 	inspector api.RequestInspector
 	options   PoolOptions
 
-	lock           sync.Mutex
+	lock           sync.RWMutex
 	fifo           *list.List
 	semaphore      *semaphore.Weighted
 	existMap       map[types.RequestInfo]*list.Element
@@ -69,6 +76,8 @@ type PoolOptions struct {
 	ForwardTimeout    time.Duration
 	ComplainTimeout   time.Duration
 	AutoRemoveTimeout time.Duration
+	RequestMaxBytes   uint64
+	SubmitTimeout     time.Duration
 }
 
 // NewPool constructs new requests pool
@@ -81,6 +90,12 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 	}
 	if options.AutoRemoveTimeout == 0 {
 		options.AutoRemoveTimeout = defaultRequestTimeout
+	}
+	if options.RequestMaxBytes == 0 {
+		options.RequestMaxBytes = defaultMaxBytes
+	}
+	if options.SubmitTimeout == 0 {
+		options.SubmitTimeout = defaultRequestTimeout
 	}
 
 	return &Pool{
@@ -138,8 +153,23 @@ func (rp *Pool) Submit(request []byte) error {
 		return errors.Errorf("pool closed, request rejected: %s", reqInfo)
 	}
 
+	if uint64(len(request)) > rp.options.RequestMaxBytes {
+		return ErrRequestTooBig
+	}
+
+	rp.lock.RLock()
+	_, alreadyExists := rp.existMap[reqInfo]
+	rp.lock.RUnlock()
+
+	if alreadyExists {
+		rp.logger.Debugf("request %s already exists in the pool", reqInfo)
+		return ErrReqAlreadyExists
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), rp.options.SubmitTimeout)
+	defer cancel()
 	// do not wait for a semaphore with a lock, as it will prevent draining the pool.
-	if err := rp.semaphore.Acquire(context.Background(), 1); err != nil {
+	if err := rp.semaphore.Acquire(ctx, 1); err != nil {
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
 
@@ -150,9 +180,9 @@ func (rp *Pool) Submit(request []byte) error {
 
 	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
-		errStr := fmt.Sprintf("request %s already exists in the pool", reqInfo)
+		errStr := fmt.Sprintf("request %s has been already added to the pool", reqInfo)
 		rp.logger.Debugf(errStr)
-		return errors.New(errStr)
+		return ErrReqAlreadyExists
 	}
 
 	to := time.AfterFunc(
