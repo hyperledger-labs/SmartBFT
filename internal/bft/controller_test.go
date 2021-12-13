@@ -834,7 +834,12 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	assert.NoError(t, err)
 	defer wal.Close()
 
+	var restartTimersWG sync.WaitGroup
+	restartTimersWG.Add(2)
 	reqPool := &mocks.RequestPool{}
+	reqPool.On("RestartTimers").Run(func(args mock.Arguments) {
+		restartTimersWG.Done()
+	})
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
 	leaderMon := &mocks.LeaderMonitor{}
@@ -969,6 +974,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	controller.ProcessMessages(1, commit1Next)
 	controller.ProcessMessages(3, commit3Next)
 	leaderMonWG.Wait()
+	restartTimersWG.Wait()
 	appWG.Wait()
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
@@ -987,9 +993,14 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	assert.NoError(t, err)
 	defer wal.Close()
 
+	var restartTimersWG sync.WaitGroup
+	restartTimersWG.Add(2)
 	reqPool := &mocks.RequestPool{}
 	reqPool.On("Prune", mock.Anything)
 	reqPool.On("Close")
+	reqPool.On("RestartTimers").Run(func(args mock.Arguments) {
+		restartTimersWG.Done()
+	})
 	leaderMon := &mocks.LeaderMonitor{}
 	leaderMonWG := sync.WaitGroup{}
 	leaderMon.On("ChangeRole", bft.Leader, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -1132,6 +1143,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	controller.ProcessMessages(1, commit1Next)
 	controller.ProcessMessages(2, commit2Next)
 	followerMonWG.Wait()
+	restartTimersWG.Wait()
 	appWG.Wait()
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
