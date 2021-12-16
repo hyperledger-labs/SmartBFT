@@ -22,6 +22,7 @@ import (
 func TestWALUtil(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
+
 	logger := basicLog.Sugar()
 
 	t.Run("read wal names", func(t *testing.T) {
@@ -88,76 +89,50 @@ func TestWALUtil(t *testing.T) {
 
 		make8LogFiles(t, logger, testDir)
 
-		//All good
+		// All good
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		indexes, err = checkWalFiles(logger, testDir, names)
+		assert.NoError(t, err)
 		assert.Equal(t, 8, len(indexes))
 		for i := 1; i <= 8; i++ {
 			assert.Equal(t, uint64(i), indexes[i-1])
 		}
 
-		//Dir does not exist
+		// Dir does not exist
 		indexes, err = checkWalFiles(logger, testDir+".does-not-exist", names)
 		assert.Contains(t, err.Error(), "no such file or directory")
 		assert.Nil(t, indexes)
 
-		//Gap in sequence
+		// Gap in sequence
 		fn4 := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 4))
 		err = os.Remove(fn4)
 		assert.NoError(t, err)
 		names, err = dirReadWalNames(testDir)
 		assert.NoError(t, err)
-		indexes, err = checkWalFiles(logger, testDir, names)
+		_, err = checkWalFiles(logger, testDir, names)
 		assert.EqualError(t, err, "wal: files not in sequence")
 
-		//File does not exist
+		// File does not exist
 		names = append(names, fmt.Sprintf(walFileTemplate, 4))
-		indexes, err = checkWalFiles(logger, testDir, names)
+		_, err = checkWalFiles(logger, testDir, names)
 		assert.Contains(t, err.Error(), "no such file or directory")
 		assert.Contains(t, err.Error(), "wal: failed to create reader for file:")
 
-		//Error in the last file
+		// Error in the last file
 		for i := 1; i <= 3; i++ {
 			fn := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, i))
 			err = os.Remove(fn)
 			assert.NoError(t, err)
 		}
-		f, err := os.Create(filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 9))) //No anchor
+		f, err := os.Create(filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 9))) // No anchor
 		assert.NoError(t, err)
 		err = f.Close()
 		assert.NoError(t, err)
 
 		names, err = dirReadWalNames(testDir)
 		assert.NoError(t, err)
-		indexes, err = checkWalFiles(logger, testDir, names)
-		assert.EqualError(t, err, io.ErrUnexpectedEOF.Error())
-	})
-
-	t.Run("rename-reset", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
-		assert.NoErrorf(t, err, "generate temporary test dir")
-		defer os.RemoveAll(testDir)
-
-		make8LogFiles(t, logger, testDir)
-		names, err := dirReadWalNames(testDir)
-		assert.NoError(t, err)
-		indexes, err := checkWalFiles(logger, testDir, names)
-		assert.Equal(t, 8, len(indexes))
-		nextFileName := fmt.Sprintf(walFileTemplate, indexes[len(indexes)-1]+1)
-		err = renameResetWalFile(filepath.Join(testDir, names[0]), filepath.Join(testDir, nextFileName))
-		assert.NoError(t, err)
-
-		names, err = dirReadWalNames(testDir)
-		assert.NoError(t, err)
-		indexes, err = checkWalFiles(logger, testDir, names[:len(names)-1])
-		assert.NoError(t, err)
-		for i := 0; i <= 6; i++ {
-			assert.Equal(t, uint64(i+2), indexes[i])
-		}
-
-		//Last file has no CRC-Anchor
-		indexes, err = checkWalFiles(logger, testDir, names)
+		_, err = checkWalFiles(logger, testDir, names)
 		assert.EqualError(t, err, io.ErrUnexpectedEOF.Error())
 	})
 
@@ -171,7 +146,6 @@ func TestWALUtil(t *testing.T) {
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.NoError(t, err)
-
 	})
 
 	t.Run("scan-repair-short", func(t *testing.T) {
@@ -179,7 +153,7 @@ func TestWALUtil(t *testing.T) {
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
-		//first its fine
+		// first its fine
 		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
@@ -187,11 +161,11 @@ func TestWALUtil(t *testing.T) {
 		assert.NoError(t, err)
 
 		lastFile := filepath.Join(testDir, names[len(names)-1])
-		//repair a good file
+		// repair a good file
 		err = scanRepairFile(logger, lastFile)
 		assert.NoError(t, err)
 
-		//truncate last record in the last file
+		// truncate last record in the last file
 		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
 		offset, err := f.Seek(-1, io.SeekEnd)
@@ -205,7 +179,7 @@ func TestWALUtil(t *testing.T) {
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.EqualError(t, err, io.ErrUnexpectedEOF.Error())
 
-		//repair is good
+		// repair is good
 		err = scanRepairFile(logger, lastFile)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -217,14 +191,14 @@ func TestWALUtil(t *testing.T) {
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
-		//first its fine
+		// first its fine
 		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.NoError(t, err)
 
-		//add tail to last file
+		// add tail to last file
 		lastFile := filepath.Join(testDir, names[len(names)-1])
 		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
@@ -239,7 +213,7 @@ func TestWALUtil(t *testing.T) {
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.EqualError(t, err, ErrCRC.Error())
 
-		//repair is good
+		// repair is good
 		err = scanRepairFile(logger, lastFile)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -251,14 +225,14 @@ func TestWALUtil(t *testing.T) {
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
-		//first its fine
+		// first its fine
 		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.NoError(t, err)
 
-		//override crc anchor of last file
+		// override crc anchor of last file
 		lastFile := filepath.Join(testDir, names[len(names)-1])
 		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
@@ -273,7 +247,7 @@ func TestWALUtil(t *testing.T) {
 		err = scanVerifyFiles(logger, testDir, names)
 		assert.Contains(t, err.Error(), "failed reading CRC-Anchor from log file:")
 
-		//repair is good
+		// repair is good
 		err = scanRepairFile(logger, lastFile)
 		assert.NoError(t, err)
 		names, err = dirReadWalNames(testDir)
@@ -285,18 +259,20 @@ func TestWALUtil(t *testing.T) {
 }
 
 func arrayToSet(array []string) map[string]bool {
-	set := make(map[string]bool, 0)
+	set := make(map[string]bool)
 	for _, n := range array {
 		set[n] = true
 	}
+
 	return set
 }
 
-// create 8 wal files, 000000000000000000001.wal - 000000000000000000008.wal
+// create 8 wal files, 000000000000000000001.wal - 000000000000000000008.wal.
 func make8LogFiles(t *testing.T, logger api.Logger, testDir string) {
 	wal, err := Create(logger, testDir, &Options{FileSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
+
 	if wal == nil {
 		return
 	}
@@ -311,5 +287,6 @@ func make8LogFiles(t *testing.T, logger api.Logger, testDir string) {
 		err = wal.Append(rec1.Data, rec1.TruncateTo)
 		assert.NoError(t, err)
 	}
+
 	_ = wal.Close()
 }

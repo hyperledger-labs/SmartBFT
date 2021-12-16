@@ -22,15 +22,18 @@ import (
 func TestLogRecordReader(t *testing.T) {
 	testDir, err := ioutil.TempDir("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
+
 	defer os.RemoveAll(testDir)
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
+
 	logger := basicLog.Sugar()
 
 	wal, err := Create(logger, testDir, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
+
 	if wal == nil {
 		return
 	}
@@ -42,17 +45,18 @@ func TestLogRecordReader(t *testing.T) {
 	}
 	err = wal.Append(rec1.Data, rec1.TruncateTo)
 	assert.NoError(t, err)
-	crc1 := wal.CRC()
 
+	crc1 := wal.CRC()
 	rec2 := &smartbftprotos.LogRecord{
 		Type:       smartbftprotos.LogRecord_ENTRY,
 		TruncateTo: false,
 		Data:       []byte{5, 6, 7, 8, 9, 10, 11, 12},
 	}
+
 	err = wal.Append(rec2.Data, rec2.TruncateTo)
 	assert.NoError(t, err)
-	crc2 := wal.CRC()
 
+	crc2 := wal.CRC()
 	rec3 := &smartbftprotos.LogRecord{
 		Type:       smartbftprotos.LogRecord_ENTRY,
 		TruncateTo: false,
@@ -60,6 +64,7 @@ func TestLogRecordReader(t *testing.T) {
 	}
 	err = wal.Append(rec3.Data, rec3.TruncateTo)
 	assert.NoError(t, err)
+
 	crc3 := wal.CRC()
 	wal.Close()
 
@@ -81,7 +86,8 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("bad anchor", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test1.wal")
-		copyFile(fileName, testFile)
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		f, err := os.OpenFile(testFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
 		_, err = f.Seek(0, io.SeekStart)
@@ -98,8 +104,10 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("corrupt anchor crc", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test2.wal")
-		copyFile(fileName, testFile)
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		f, err := os.OpenFile(fileName, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
 		h := make([]byte, 8)
 		_, err = f.Read(h)
 		assert.NoError(t, err)
@@ -130,8 +138,8 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("file with tail", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test3.wal")
-		copyFile(fileName, testFile)
-
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		f, err := os.OpenFile(testFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
 		_, err = f.Seek(0, io.SeekEnd)
@@ -159,8 +167,8 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("partial record", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test4.wal")
-		copyFile(fileName, testFile)
-
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		f, err := os.OpenFile(testFile, os.O_RDWR, walFilePermPrivateRW)
 		assert.NoError(t, err)
 		offset, err := f.Seek(-1, io.SeekEnd)
@@ -187,15 +195,16 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("corrupt record pad", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test5.wal")
-		copyFile(fileName, testFile)
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		r, err := NewLogRecordReader(logger, fileName)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 		assertReadRecord(t, r, rec1, crc1)
 		assertReadRecord(t, r, rec2, crc2)
-		len, _, err := r.readHeader()
+		length, _, err := r.readHeader()
 		assert.NoError(t, err)
-		assert.True(t, getPadSize(int(len)) > 0)
+		assert.True(t, getPadSize(int(length)) > 0)
 		_ = r.Close()
 
 		f, err := os.OpenFile(testFile, os.O_RDWR, walFilePermPrivateRW)
@@ -205,7 +214,7 @@ func TestLogRecordReader(t *testing.T) {
 		b := []byte{0}
 		_, err = f.Read(b)
 		assert.NoError(t, err)
-		b[0] = b[0] ^ 0x01
+		b[0] ^= 0x01
 		_, err = f.Seek(-1, io.SeekEnd)
 		assert.NoError(t, err)
 		_, err = f.Write(b)
@@ -227,7 +236,8 @@ func TestLogRecordReader(t *testing.T) {
 
 	t.Run("corrupt record", func(t *testing.T) {
 		testFile := filepath.Join(testDir, "test6.wal")
-		copyFile(fileName, testFile)
+		err = copyFile(fileName, testFile)
+		assert.NoError(t, err)
 		r, err := NewLogRecordReader(logger, fileName)
 		assert.NoError(t, err)
 		assertReadRecord(t, r, rec1, crc1)
