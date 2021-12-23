@@ -93,6 +93,7 @@ type View struct {
 	nextPrePrepare chan *protos.Message
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
+	futuredMsg     map[uint64][]*vote
 
 	blacklistSupported bool
 	abortChan          chan struct{}
@@ -112,6 +113,7 @@ func (v *View) Start() {
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
+	v.futuredMsg = make(map[uint64][]*vote)
 
 	v.setupVotes()
 
@@ -202,6 +204,21 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
 		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
+
+		if msgProposalSeq > v.ProposalSequence {
+			fv, ok := v.futuredMsg[msgProposalSeq]
+			if !ok {
+				fv = make([]*vote, 0, 1)
+			}
+
+			fv = append(fv, &vote{
+				Message: m,
+				sender:  sender,
+			})
+
+			v.futuredMsg[msgProposalSeq] = fv
+		}
+
 		v.discoverIfSyncNeeded(sender, m)
 		return
 	}
@@ -851,6 +868,34 @@ func (v *View) startNextSeq() {
 	v.commits = v.nextCommits
 	tmpVotes.clear(v.N)
 	v.nextCommits = tmpVotes
+
+	if fv, ok := v.futuredMsg[v.ProposalSequence+1]; ok {
+		for _, vt := range fv {
+			if pp := vt.Message.GetPrePrepare(); pp != nil {
+				v.processPrePrepare(pp, vt.Message, true, vt.sender)
+			}
+
+			// Else, it's a prepare or a commit.
+			// Ignore votes from ourselves.
+			if vt.sender == v.SelfID {
+				vt.Message = nil
+
+				continue
+			}
+
+			if prp := vt.Message.GetPrepare(); prp != nil {
+				v.nextPrepares.registerVote(vt.sender, vt.Message)
+			}
+
+			if cmt := vt.Message.GetCommit(); cmt != nil {
+				v.nextCommits.registerVote(vt.sender, vt.Message)
+			}
+
+			vt.Message = nil
+		}
+
+		delete(v.futuredMsg, v.ProposalSequence+1)
+	}
 }
 
 // GetMetadata returns the current sequence and view number (in a marshaled ViewMetadata protobuf message)

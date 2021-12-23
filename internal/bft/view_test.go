@@ -663,7 +663,7 @@ func TestNormalPath(t *testing.T) {
 	view.Abort()
 }
 
-func TestTwoSequences(t *testing.T) {
+func TestThreeSequences(t *testing.T) {
 	// A test that takes a view through all 3 phases of two consecutive sequences,
 	// when all messages are sent in advanced for both sequences.
 
@@ -677,8 +677,8 @@ func TestTwoSequences(t *testing.T) {
 	})
 	decider := &mocks.Decider{}
 	deciderWG := sync.WaitGroup{}
-	decidedProposal := make(chan types.Proposal, 1)
-	decidedSigs := make(chan []types.Signature, 1)
+	decidedProposal := make(chan types.Proposal, 2)
+	decidedSigs := make(chan []types.Signature, 2)
 	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
 		proposal, _ := args.Get(0).(types.Proposal)
@@ -731,16 +731,34 @@ func TestTwoSequences(t *testing.T) {
 		VerificationSequence: 1,
 	}
 
+	thirdProposal := types.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			DecisionsInView: 2,
+			LatestSequence:  2,
+			ViewId:          1,
+		}),
+		VerificationSequence: 1,
+	}
+
 	prepareNext := proto.Clone(prepare).(*protos.Message)
 	prepareNextGet := prepareNext.GetPrepare()
 	prepareNextGet.Seq = 1
 	prepareNextGet.Digest = secondProposal.Digest()
 
+	prepareNextNext := proto.Clone(prepare).(*protos.Message)
+	prepareNextNextGet := prepareNextNext.GetPrepare()
+	prepareNextNextGet.Seq = 2
+	prepareNextNextGet.Digest = thirdProposal.Digest()
+
 	commWG.Add(1)
 	view.HandleMessage(1, prepare)
 	view.HandleMessage(1, prepareNext)
+	view.HandleMessage(1, prepareNextNext)
 	view.HandleMessage(2, prepare)
 	view.HandleMessage(2, prepareNext)
+	view.HandleMessage(2, prepareNextNext)
 	commWG.Wait()
 
 	commit1Next := proto.Clone(commit1).(*protos.Message)
@@ -748,12 +766,22 @@ func TestTwoSequences(t *testing.T) {
 	commit1NextGet.Seq = 1
 	commit1NextGet.Digest = secondProposal.Digest()
 
+	commit1NextNext := proto.Clone(commit1).(*protos.Message)
+	commit1NextNextGet := commit1NextNext.GetCommit()
+	commit1NextNextGet.Seq = 2
+	commit1NextNextGet.Digest = thirdProposal.Digest()
+
 	commit2Next := proto.Clone(commit2).(*protos.Message)
 	commit2NextGet := commit2Next.GetCommit()
 	commit2NextGet.Seq = 1
 	commit2NextGet.Digest = secondProposal.Digest()
 
-	deciderWG.Add(2)
+	commit2NextNext := proto.Clone(commit2).(*protos.Message)
+	commit2NextNextGet := commit2NextNext.GetCommit()
+	commit2NextNextGet.Seq = 2
+	commit2NextNextGet.Digest = thirdProposal.Digest()
+
+	deciderWG.Add(3)
 	view.HandleMessage(1, commit1)
 	view.HandleMessage(1, commit1Next)
 	view.HandleMessage(2, commit2)
@@ -766,6 +794,18 @@ func TestTwoSequences(t *testing.T) {
 
 	commWG.Add(2)
 	view.HandleMessage(1, prePrepareNext)
+	commWG.Wait()
+
+	view.HandleMessage(1, commit1NextNext)
+	view.HandleMessage(2, commit2NextNext)
+
+	prePrepareNextNext := proto.Clone(prePrepare).(*protos.Message)
+	prePrepareNextNextGet := prePrepareNextNext.GetPrePrepare()
+	prePrepareNextNextGet.Seq = 2
+	prePrepareNextNextGet.Proposal.Metadata = thirdProposal.Metadata
+
+	commWG.Add(2)
+	view.HandleMessage(1, prePrepareNextNext)
 	commWG.Wait()
 
 	deciderWG.Wait()
@@ -781,6 +821,16 @@ func TestTwoSequences(t *testing.T) {
 
 	dProp = <-decidedProposal
 	assert.Equal(t, secondProposal, dProp)
+	dSigs = <-decidedSigs
+	assert.Equal(t, 3, len(dSigs))
+	for _, sig := range dSigs {
+		if sig.ID != 1 && sig.ID != 2 && sig.ID != 4 {
+			assert.Fail(t, "signatures is from a different node with id", sig.ID)
+		}
+	}
+
+	dProp = <-decidedProposal
+	assert.Equal(t, thirdProposal, dProp)
 	dSigs = <-decidedSigs
 	assert.Equal(t, 3, len(dSigs))
 	for _, sig := range dSigs {
