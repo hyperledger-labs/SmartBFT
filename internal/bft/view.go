@@ -93,7 +93,7 @@ type View struct {
 	nextPrePrepare chan *protos.Message
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
-	futureMsgs     map[uint64][]*vote
+	futureMsgs     map[uint64]*futureMsgsSet
 
 	blacklistSupported bool
 	abortChan          chan struct{}
@@ -113,7 +113,7 @@ func (v *View) Start() {
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
-	v.futureMsgs = make(map[uint64][]*vote)
+	v.futureMsgs = make(map[uint64]*futureMsgsSet)
 
 	v.setupVotes()
 
@@ -271,17 +271,46 @@ func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *
 		return
 	}
 
-	fv, ok := v.futureMsgs[msgProposalSeq]
+	vf, ok := v.futureMsgs[msgProposalSeq]
 	if !ok {
-		fv = make([]*vote, 0, 1)
+		vf = &futureMsgsSet{
+			isPrePrepsre: false,
+			prepares:     make(map[uint64]struct{}, v.N),
+			commits:      make(map[uint64]struct{}, v.N),
+			msgs:         make([]*vote, 0, v.N*2+1),
+		}
+		v.futureMsgs[msgProposalSeq] = vf
 	}
 
-	fv = append(fv, &vote{
-		Message: m,
-		sender:  sender,
-	})
+	if pp := m.GetPrePrepare(); pp != nil || vf.isPrePrepsre {
+		return
+	}
 
-	v.futureMsgs[msgProposalSeq] = fv
+	if prp := m.GetPrepare(); prp != nil {
+		_, hasVoted := vf.prepares[sender]
+		if hasVoted {
+			return
+		}
+
+		vf.prepares[sender] = struct{}{}
+	}
+
+	if cmt := m.GetCommit(); cmt != nil {
+		_, hasVoted := vf.commits[sender]
+		if hasVoted {
+			return
+		}
+
+		vf.commits[sender] = struct{}{}
+	}
+
+	vf.msgs = append(
+		vf.msgs,
+		&vote{
+			Message: m,
+			sender:  sender,
+		},
+	)
 }
 
 func (v *View) receivedMsgForNextSeq() *incMsg {
@@ -294,13 +323,13 @@ func (v *View) receivedMsgForNextSeq() *incMsg {
 		return nil
 	}
 
-	if len(fv) == 0 {
+	if len(fv.msgs) == 0 {
 		delete(v.futureMsgs, v.ProposalSequence+1)
 		return nil
 	}
 
-	m := fv[0]
-	v.futureMsgs[v.ProposalSequence+1] = fv[1:]
+	m := fv.msgs[0]
+	fv.msgs = fv.msgs[1:]
 
 	return &incMsg{
 		sender:  m.sender,

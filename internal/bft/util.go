@@ -141,6 +141,13 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 	vs.votes <- &vote{Message: message, sender: voter}
 }
 
+type futureMsgsSet struct {
+	isPrePrepsre bool
+	prepares     map[uint64]struct{}
+	commits      map[uint64]struct{}
+	msgs         []*vote
+}
+
 type incMsg struct {
 	*protos.Message
 	sender uint64
