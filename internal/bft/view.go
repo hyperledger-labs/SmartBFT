@@ -282,8 +282,12 @@ func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *
 		v.futureMsgs[msgProposalSeq] = vf
 	}
 
-	if pp := m.GetPrePrepare(); pp != nil && vf.isPrePrepsre {
-		return
+	if pp := m.GetPrePrepare(); pp != nil {
+		if sender != v.LeaderID || vf.isPrePrepsre {
+			return
+		}
+
+		vf.isPrePrepsre = true
 	}
 
 	if prp := m.GetPrepare(); prp != nil {
