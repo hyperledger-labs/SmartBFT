@@ -1655,7 +1655,6 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	for j := 0; j < numberOfNodes; j++ {
 		<-nodes[0].Delivered
 	}
-	close(done)
 
 	// Rotate the leader and ensure the view doesn't change,
 	// but this time we want to ensure that node 1 became the leader
@@ -1676,6 +1675,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	go doInBackground(f, stop)
 	blacklistPrunedWG.Wait()
 	redemptionWG.Wait()
+	close(done)
 	close(stop)
 }
 
