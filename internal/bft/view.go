@@ -267,7 +267,7 @@ func (v *View) run() {
 }
 
 func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *protos.Message) {
-	if msgProposalSeq <= v.ProposalSequence {
+	if msgProposalSeq <= v.ProposalSequence || msgProposalSeq > v.ProposalSequence+10 {
 		return
 	}
 
