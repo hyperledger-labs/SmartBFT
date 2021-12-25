@@ -142,10 +142,10 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 }
 
 type futureMsgsSet struct {
-	isPrePrepsre bool
-	prepares     map[uint64]struct{}
-	commits      map[uint64]struct{}
-	msgs         []*vote
+	prePrepsres map[uint64]struct{}
+	prepares    map[uint64]struct{}
+	commits     map[uint64]struct{}
+	msgs        []*vote
 }
 
 type incMsg struct {
