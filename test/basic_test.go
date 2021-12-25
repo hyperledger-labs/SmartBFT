@@ -1639,7 +1639,9 @@ func TestBlacklistAndRedemption(t *testing.T) {
 
 	// Ensure we remain on view 1, and that node 1 is in the blacklist
 	md := &smartbftprotos.ViewMetadata{}
+	nodes[1].ldLock.RLock()
 	err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
+	nodes[1].ldLock.RUnlock()
 	assert.NoError(t, err)
 	assert.Equal(t, uint64(1), md.ViewId)
 	assert.Equal(t, []uint64{1}, md.BlackList)
@@ -1669,7 +1671,9 @@ func TestBlacklistAndRedemption(t *testing.T) {
 			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
+		nodes[1].ldLock.RLock()
 		err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
+		nodes[1].ldLock.RUnlock()
 		assert.NoError(t, err)
 		assert.Equal(t, uint64(1), md.ViewId)
 	}
@@ -1762,7 +1766,9 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 
 	// Ensure we remain on view 2, and that nodes 2,3 are in the blacklist
 	md := &smartbftprotos.ViewMetadata{}
+	nodes[1].ldLock.RLock()
 	err = proto.Unmarshal(nodes[5].lastDecision.Proposal.Metadata, md)
+	nodes[1].ldLock.RUnlock()
 	assert.NoError(t, err)
 	assert.Equal(t, uint64(3), md.ViewId)
 	assert.Equal(t, []uint64{2, 3}, md.BlackList)
@@ -1792,7 +1798,9 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
+		nodes[1].ldLock.RLock()
 		err = proto.Unmarshal(nodes[3].lastDecision.Proposal.Metadata, md)
+		nodes[1].ldLock.RUnlock()
 		assert.NoError(t, err)
 		assert.Equal(t, uint64(3), md.ViewId)
 	}

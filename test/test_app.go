@@ -52,6 +52,7 @@ type App struct {
 	logLevel        zap.AtomicLevel
 	latestMD        *smartbftprotos.ViewMetadata
 	lastDecision    *types.Decision
+	ldLock          sync.RWMutex
 	clock           *time.Ticker
 	heartbeatTime   chan time.Time
 	viewChangeTime  chan time.Time
@@ -103,6 +104,9 @@ func (a *App) Sync() types.SyncResponse {
 			}
 		}
 	}
+
+	a.ldLock.RLock()
+	defer a.ldLock.RUnlock()
 	return types.SyncResponse{Latest: *a.lastDecision, Reconfig: reconfigSync}
 }
 
@@ -256,10 +260,14 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 		Batch:    batchFromBytes(proposal.Payload),
 	}
 	a.Node.cb.add(record)
+
+	a.ldLock.Lock()
 	a.lastDecision = &types.Decision{
 		Proposal:   proposal,
 		Signatures: signatures,
 	}
+	a.ldLock.Unlock()
+
 	a.latestMD = &smartbftprotos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, a.latestMD); err != nil {
 		panic(err)
