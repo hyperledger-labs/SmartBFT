@@ -18,6 +18,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+const defaultUpperLimitSeq = 10 // upper limit of sequences future messages
+
 // Phase indicates the status of the view
 type Phase uint8
 
@@ -267,7 +269,8 @@ func (v *View) run() {
 }
 
 func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *protos.Message) {
-	if msgProposalSeq <= v.ProposalSequence || msgProposalSeq > v.ProposalSequence+10 {
+	if msgProposalSeq <= v.ProposalSequence ||
+		msgProposalSeq > v.ProposalSequence+defaultUpperLimitSeq {
 		return
 	}
 
