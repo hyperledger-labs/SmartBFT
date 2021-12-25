@@ -274,7 +274,7 @@ func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *
 	vf, ok := v.futureMsgs[msgProposalSeq]
 	if !ok {
 		vf = &futureMsgsSet{
-			prePrepsres: make(map[uint64]struct{}, v.N),
+			prePrepares: make(map[uint64]struct{}, v.N),
 			prepares:    make(map[uint64]struct{}, v.N),
 			commits:     make(map[uint64]struct{}, v.N),
 			msgs:        make([]*vote, 0, v.N*3),
@@ -283,12 +283,12 @@ func (v *View) maybeAddFutureMsgForSeq(msgProposalSeq uint64, sender uint64, m *
 	}
 
 	if pp := m.GetPrePrepare(); pp != nil {
-		_, hasVoted := vf.prePrepsres[sender]
+		_, hasVoted := vf.prePrepares[sender]
 		if hasVoted {
 			return
 		}
 
-		vf.prePrepsres[sender] = struct{}{}
+		vf.prePrepares[sender] = struct{}{}
 	}
 
 	if prp := m.GetPrepare(); prp != nil {
