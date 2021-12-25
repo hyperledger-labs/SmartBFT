@@ -1766,9 +1766,9 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 
 	// Ensure we remain on view 2, and that nodes 2,3 are in the blacklist
 	md := &smartbftprotos.ViewMetadata{}
-	nodes[1].ldLock.RLock()
+	nodes[5].ldLock.RLock()
 	err = proto.Unmarshal(nodes[5].lastDecision.Proposal.Metadata, md)
-	nodes[1].ldLock.RUnlock()
+	nodes[5].ldLock.RUnlock()
 	assert.NoError(t, err)
 	assert.Equal(t, uint64(3), md.ViewId)
 	assert.Equal(t, []uint64{2, 3}, md.BlackList)
@@ -1798,9 +1798,9 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
-		nodes[1].ldLock.RLock()
+		nodes[3].ldLock.RLock()
 		err = proto.Unmarshal(nodes[3].lastDecision.Proposal.Metadata, md)
-		nodes[1].ldLock.RUnlock()
+		nodes[3].ldLock.RUnlock()
 		assert.NoError(t, err)
 		assert.Equal(t, uint64(3), md.ViewId)
 	}
