@@ -1339,7 +1339,6 @@ func TestReconfigAndViewChange(t *testing.T) {
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-
 }
 
 func TestRotateAndViewChange(t *testing.T) {
@@ -1447,7 +1446,6 @@ func TestRotateAndViewChange(t *testing.T) {
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-
 }
 
 func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
@@ -1665,7 +1663,10 @@ func TestBlacklistAndRedemption(t *testing.T) {
 		rand.Read(txID)
 		nodes[1].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
-			<-nodes[i].Delivered
+			select {
+			case <-nodes[i].Delivered:
+			case <-stop:
+			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
 		err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
@@ -1777,7 +1778,6 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 		<-nodes[1].Delivered
 		<-nodes[2].Delivered
 	}
-	close(done)
 
 	// Rotate the leader and ensure the view doesn't change,
 	stop := make(chan struct{})
@@ -1786,7 +1786,10 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 		rand.Read(txID)
 		nodes[3].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
-			<-nodes[i].Delivered
+			select {
+			case <-nodes[i].Delivered:
+			case <-stop:
+			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
 		err = proto.Unmarshal(nodes[3].lastDecision.Proposal.Metadata, md)
@@ -1796,6 +1799,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	go doInBackground(f, stop)
 	node2RemovedFromBlacklist.Wait()
 	node3RemovedFromBlacklist.Wait()
+	close(done)
 	close(stop)
 }
 
