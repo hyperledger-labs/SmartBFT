@@ -15,6 +15,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -28,7 +29,7 @@ import (
 func TestControllerBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	batcher := &mocks.Batcher{}
@@ -54,7 +55,7 @@ func TestControllerBasic(t *testing.T) {
 		ID:            1, // not the leader
 		N:             4,
 		NodesList:     []uint64{1, 2, 3, 4},
-		Logger:        log,
+		Diag:          diag,
 		Application:   app,
 		Comm:          comm,
 		Verifier:      verifier,
@@ -77,7 +78,7 @@ func TestControllerBasic(t *testing.T) {
 func TestControllerLeaderBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
 	batcher.On("Closed").Return(false)
@@ -108,7 +109,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 		ID:            2, // the leader
 		N:             4,
 		NodesList:     []uint64{1, 2, 3, 4},
-		Logger:        log,
+		Diag:          diag,
 		Batcher:       batcher,
 		Comm:          commMock,
 		Verifier:      verifier,
@@ -125,7 +126,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 func TestLeaderPropose(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -180,7 +181,7 @@ func TestLeaderPropose(t *testing.T) {
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -192,7 +193,7 @@ func TestLeaderPropose(t *testing.T) {
 	collector := bft.StateCollector{
 		SelfID:         11,
 		N:              4,
-		Logger:         log,
+		Diag:           diag,
 		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
@@ -207,7 +208,7 @@ func TestLeaderPropose(t *testing.T) {
 		ID:            17, // the leader
 		N:             4,
 		NodesList:     []uint64{11, 17, 23, 37},
-		Logger:        log,
+		Diag:          diag,
 		Batcher:       batcher,
 		Verifier:      verifier,
 		Assembler:     assembler,
@@ -275,7 +276,7 @@ func TestLeaderPropose(t *testing.T) {
 func TestViewChanged(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -315,7 +316,7 @@ func TestViewChanged(t *testing.T) {
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -327,7 +328,7 @@ func TestViewChanged(t *testing.T) {
 	collector := bft.StateCollector{
 		SelfID:         1,
 		N:              4,
-		Logger:         log,
+		Diag:           diag,
 		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
@@ -342,7 +343,7 @@ func TestViewChanged(t *testing.T) {
 		ID:            3, // the next leader
 		N:             4,
 		NodesList:     []uint64{1, 2, 3, 4},
-		Logger:        log,
+		Diag:          diag,
 		Batcher:       batcher,
 		Verifier:      verifier,
 		Assembler:     assembler,
@@ -374,7 +375,7 @@ func TestViewChanged(t *testing.T) {
 func TestSyncPrevView(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	app := &mocks.ApplicationMock{}
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -425,7 +426,7 @@ func TestSyncPrevView(t *testing.T) {
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 
 	controller := &bft.Controller{
@@ -435,7 +436,7 @@ func TestSyncPrevView(t *testing.T) {
 		ID:              4, // not the leader
 		N:               4,
 		NodesList:       []uint64{1, 2, 3, 4},
-		Logger:          log,
+		Diag:            diag,
 		Application:     app,
 		Comm:            comm,
 		ViewChanger:     &bft.ViewChanger{},
@@ -553,7 +554,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 
-			log := basicLog.Sugar()
+			diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
@@ -591,7 +592,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			collector := bft.StateCollector{
 				SelfID:         0,
 				N:              4,
-				Logger:         log,
+				Diag:           diag,
 				CollectTimeout: 100 * time.Millisecond,
 			}
 			collector.Start()
@@ -607,7 +608,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				ID:            1,
 				N:             4,
 				NodesList:     []uint64{0, 1, 2, 3},
-				Logger:        log,
+				Diag:          diag,
 				Batcher:       batcher,
 				Comm:          commMock,
 				Verifier:      verifier,
@@ -643,7 +644,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		Decider:            c,
 		FailureDetector:    c.FailureDetector,
 		Sync:               c,
-		Logger:             c.Logger,
+		Diag:               c.Diag,
 		Comm:               c,
 		Verifier:           c.Verifier,
 		Signer:             c.Signer,
@@ -670,7 +671,7 @@ func configureProposerBuilder(controller *bft.Controller) *atomic.Value {
 func TestSyncInform(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -726,7 +727,7 @@ func TestSyncInform(t *testing.T) {
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -755,7 +756,7 @@ func TestSyncInform(t *testing.T) {
 	collector := bft.StateCollector{
 		SelfID:         0,
 		N:              4,
-		Logger:         log,
+		Diag:           diag,
 		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
@@ -764,7 +765,7 @@ func TestSyncInform(t *testing.T) {
 		SelfID:              2,
 		N:                   4,
 		NodesList:           []uint64{0, 1, 2, 3},
-		Logger:              log,
+		Diag:                diag,
 		Comm:                commWithChan,
 		RequestsTimer:       reqTimer,
 		Ticker:              make(chan time.Time),
@@ -781,7 +782,7 @@ func TestSyncInform(t *testing.T) {
 		ID:            2,
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
+		Diag:          diag,
 		Batcher:       batcher,
 		Verifier:      verifier,
 		Assembler:     assembler,
@@ -825,12 +826,12 @@ func TestSyncInform(t *testing.T) {
 func TestRotateFromLeaderToFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 	defer wal.Close()
 
@@ -897,7 +898,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 		ID:                 2, // the first leader
 		N:                  4,
 		NodesList:          []uint64{1, 2, 3, 4},
-		Logger:             log,
+		Diag:               diag,
 		Batcher:            batcher,
 		Verifier:           verifier,
 		Assembler:          assembler,
@@ -984,12 +985,12 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 func TestRotateFromFollowerToLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, testDir, nil)
+	wal, err := wal.Create(diag, testDir, nil)
 	assert.NoError(t, err)
 	defer wal.Close()
 
@@ -1078,7 +1079,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 		ID:                 3, // the second leader
 		N:                  4,
 		NodesList:          []uint64{1, 2, 3, 4},
-		Logger:             log,
+		Diag:               diag,
 		Batcher:            batcher,
 		Verifier:           verifier,
 		Assembler:          assembler,

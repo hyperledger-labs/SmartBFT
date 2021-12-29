@@ -66,7 +66,7 @@ type LogRecordHeader uint64
 // - length of the marshaled LogRecord (not including pad bytes), in the lower 32 bits.
 // - a crc32 of the data: marshaled record bytes + pad bytes, in the upper 32 bits.
 //
-// The WAL is written to a sequence of files: <index>.wal, where index uint64=1,2,3...; represented in fixed-width
+// The WAL is written to a sequence of files: <index>.wal, where index uint64=1,2,3..; represented in fixed-width
 // hex format, e.g. 0000000000000001.wal
 //
 // The WAL has two modes: append, and read.
@@ -81,7 +81,7 @@ type WriteAheadLogFile struct {
 	dirName string
 	options *Options
 
-	logger api.Logger
+	diag api.Diagnostics
 
 	mutex         sync.Mutex
 	dirFile       *os.File
@@ -119,11 +119,7 @@ func (o *Options) String() string {
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, ErrWALAlreadyExists if WAL already exists or other errors
-func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
-	if logger == nil {
-		return nil, errors.New("wal: logger is nil")
-	}
-
+func Create(diag api.Diagnostics, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if !dirEmpty(dirPath) {
 		return nil, ErrWALAlreadyExists
 	}
@@ -144,7 +140,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 	wal := &WriteAheadLogFile{
 		dirName:       cleanDirName,
 		options:       opt,
-		logger:        logger,
+		diag:          diag,
 		index:         1,
 		headerBuff:    make([]byte, 8),
 		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
@@ -175,7 +171,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		return nil, err
 	}
 
-	wal.logger.Infof("Write-Ahead-Log created successfully, mode: WRITE, dir: %s", wal.dirName)
+	wal.diag.L().Infof("Write-Ahead-Log created successfully, mode: WRITE, dir: %s", wal.dirName)
 
 	return wal, nil
 }
@@ -190,11 +186,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, or an error
-func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
-	if logger == nil {
-		return nil, errors.New("wal: logger is nil")
-	}
-
+func Open(diag api.Diagnostics, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	walNames, err := dirReadWalNames(dirPath)
 	if err != nil {
 		return nil, err
@@ -204,7 +196,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		return nil, os.ErrNotExist
 	}
 
-	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
+	diag.L().Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
 
 	opt := DefaultOptions()
 	if options != nil {
@@ -216,7 +208,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 	wal := &WriteAheadLogFile{
 		dirName:    cleanDirName,
 		options:    opt,
-		logger:     logger,
+		diag:       diag,
 		headerBuff: make([]byte, 8),
 		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
 		readMode:   true,
@@ -230,7 +222,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 	}
 
 	// After the check we have an increasing, continuous sequence, with valid CRC-Anchors in each file.
-	wal.activeIndexes, err = checkWalFiles(logger, dirPath, walNames)
+	wal.activeIndexes, err = checkWalFiles(diag, dirPath, walNames)
 	if err != nil {
 		_ = wal.Close()
 
@@ -244,7 +236,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		return nil, err
 	}
 
-	wal.logger.Infof("Write-Ahead-Log opened successfully, mode: READ, dir: %s", wal.dirName)
+	wal.diag.L().Infof("Write-Ahead-Log opened successfully, mode: READ, dir: %s", wal.dirName)
 
 	return wal, nil
 }
@@ -264,7 +256,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 // logger: reference to a Logger implementation.
 // dirPath: directory path of the WAL.
 // return: an error if repair was not successful.
-func Repair(logger api.Logger, dirPath string) error {
+func Repair(diag api.Diagnostics, dirPath string) error {
 	cleanDirPath := filepath.Clean(dirPath)
 
 	walNames, err := dirReadWalNames(cleanDirPath)
@@ -276,36 +268,36 @@ func Repair(logger api.Logger, dirPath string) error {
 		return os.ErrNotExist
 	}
 
-	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
+	diag.L().Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
 
 	// verify that all but the last are fine
-	if err = scanVerifyFiles(logger, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
-		logger.Errorf("Write-Ahead-Log failed to repair, additional files are faulty: %s", err)
+	if err = scanVerifyFiles(diag, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
+		diag.L().Errorf("Write-Ahead-Log failed to repair, additional files are faulty: %s", err)
 
 		return err
 	}
 
 	lastFile := filepath.Join(cleanDirPath, walNames[len(walNames)-1])
-	logger.Infof("Write-Ahead-Log is going to try and repair the last file: %s", lastFile)
+	diag.L().Infof("Write-Ahead-Log is going to try and repair the last file: %s", lastFile)
 	lastFileCopy := lastFile + ".copy"
 
 	err = copyFile(lastFile, lastFileCopy)
 	if err != nil {
-		logger.Errorf("Write-Ahead-Log failed to repair, could not make a copy: %s", err)
+		diag.L().Errorf("Write-Ahead-Log failed to repair, could not make a copy: %s", err)
 
 		return err
 	}
 
-	logger.Infof("Write-Ahead-Log made a copy of the last file: %s", lastFileCopy)
+	diag.L().Infof("Write-Ahead-Log made a copy of the last file: %s", lastFileCopy)
 
-	err = scanRepairFile(logger, lastFile)
+	err = scanRepairFile(diag, lastFile)
 	if err != nil {
-		logger.Errorf("Write-Ahead-Log failed to scan and repair last file: %s", err)
+		diag.L().Errorf("Write-Ahead-Log failed to scan and repair last file: %s", err)
 
 		return err
 	}
 
-	logger.Infof("Write-Ahead-Log successfully repaired the last file: %s", lastFile)
+	diag.L().Infof("Write-Ahead-Log successfully repaired the last file: %s", lastFile)
 
 	return nil
 }
@@ -319,7 +311,7 @@ func (w *WriteAheadLogFile) Close() error {
 
 	if w.logFile != nil {
 		if errF = w.truncateAndCloseLogFile(); errF != nil {
-			w.logger.Errorf("failed to properly close log file %s; error: %s", w.logFile.Name(), errF)
+			w.diag.L().Errorf("failed to properly close log file %s; error: %s", w.logFile.Name(), errF)
 		}
 
 		w.logFile = nil
@@ -330,7 +322,7 @@ func (w *WriteAheadLogFile) Close() error {
 
 	if w.dirFile != nil {
 		if errD = w.dirFile.Close(); errD != nil {
-			w.logger.Errorf("failed to properly close directory %s; error: %s", w.dirName, errD)
+			w.diag.L().Errorf("failed to properly close directory %s; error: %s", w.dirName, errD)
 		}
 
 		w.dirFile = nil
@@ -450,7 +442,7 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 		w.truncateIndex = w.index
 	}
 
-	w.logger.Debugf(
+	w.diag.L().Debugf(
 		"LogRecord appended successfully: total size=%d, recordLength=%d, dataCRC=%08X; file=%s, new-offset=%d",
 		nh+np,
 		recordLength,
@@ -500,7 +492,7 @@ FileLoop:
 	for i, index := range w.activeIndexes {
 		w.index = index
 		// This should not fail, we check the files earlier, when we Open() the WAL.
-		r, err := NewLogRecordReader(w.logger, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
+		r, err := NewLogRecordReader(w.diag, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
 		if err != nil {
 			return nil, err
 		}
@@ -514,7 +506,7 @@ FileLoop:
 			var rec *protos.LogRecord
 			rec, readErr = r.Read()
 			if readErr != nil {
-				w.logger.Debugf("Read error, file: %s; error: %s", r.fileName, readErr)
+				w.diag.L().Debugf("Read error, file: %s; error: %s", r.fileName, readErr)
 				_ = r.Close()
 
 				break ReadLoop
@@ -529,11 +521,11 @@ FileLoop:
 				items = append(items, rec.Data)
 			}
 
-			w.logger.Debugf("Read record #%d, file: %s", i, r.fileName)
+			w.diag.L().Debugf("Read record #%d, file: %s", i, r.fileName)
 		}
 
 		if errors.Is(readErr, io.EOF) {
-			w.logger.Debugf("Reached EOF, finished reading file: %s; CRC: %08X", r.fileName, r.CRC())
+			w.diag.L().Debugf("Reached EOF, finished reading file: %s; CRC: %08X", r.fileName, r.CRC())
 			w.crc = r.CRC()
 
 			continue FileLoop
@@ -543,7 +535,7 @@ FileLoop:
 			(errors.Is(readErr, io.ErrUnexpectedEOF) ||
 				errors.Is(readErr, ErrCRC) ||
 				errors.Is(readErr, ErrWALUnmarshalPayload)) {
-			w.logger.Warnf(
+			w.diag.L().Warnf(
 				"Received an error in the last file, this can possibly be repaired; file: %s; error: %s",
 				r.fileName,
 				readErr,
@@ -553,24 +545,24 @@ FileLoop:
 		}
 
 		if readErr != nil {
-			w.logger.Warnf("Failed reading file: %s; error: %s", r.fileName, readErr)
+			w.diag.L().Warnf("Failed reading file: %s; error: %s", r.fileName, readErr)
 
 			return nil, fmt.Errorf("failed reading wal: %w", readErr)
 		}
 	}
 
-	w.logger.Debugf("Read %d items", len(items))
+	w.diag.L().Debugf("Read %d items", len(items))
 
 	// move to write mode on a new file.
 	if err := w.deleteAndCreateFile(); err != nil {
-		w.logger.Errorf("Failed to move to a new file: %s", err)
+		w.diag.L().Errorf("Failed to move to a new file: %s", err)
 
 		return nil, err
 	}
 
 	w.readMode = false
 
-	w.logger.Infof("Write-Ahead-Log read %d entries, mode: WRITE", len(items))
+	w.diag.L().Infof("Write-Ahead-Log read %d entries, mode: WRITE", len(items))
 
 	return items, nil
 }
@@ -580,12 +572,12 @@ FileLoop:
 func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 	if w.readMode {
 		if err := w.logFile.Close(); err != nil {
-			w.logger.Errorf("Failed to close log file: %s; error: %s", w.logFile.Name(), err)
+			w.diag.L().Errorf("Failed to close log file: %s; error: %s", w.logFile.Name(), err)
 
 			return err
 		}
 
-		w.logger.Debugf("Closed log file: %s", w.logFile.Name())
+		w.diag.L().Debugf("Closed log file: %s", w.logFile.Name())
 
 		return nil
 	}
@@ -599,7 +591,7 @@ func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 		return err
 	}
 
-	w.logger.Debugf("Truncated, Sync'ed & Closed log file: %s", w.logFile.Name())
+	w.diag.L().Debugf("Truncated, Sync'ed & Closed log file: %s", w.logFile.Name())
 
 	return nil
 }
@@ -607,7 +599,7 @@ func (w *WriteAheadLogFile) truncateAndCloseLogFile() error {
 func (w *WriteAheadLogFile) switchFiles() error {
 	var err error
 
-	w.logger.Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
+	w.diag.L().Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
 		len(w.activeIndexes), w.activeIndexes, w.truncateIndex)
 
 	if w.readMode {
@@ -615,7 +607,7 @@ func (w *WriteAheadLogFile) switchFiles() error {
 	}
 
 	if err = w.truncateAndCloseLogFile(); err != nil {
-		w.logger.Errorf("Failed to truncateAndCloseLogFile: %s", err)
+		w.diag.L().Errorf("Failed to truncateAndCloseLogFile: %s", err)
 
 		return err
 	}
@@ -625,8 +617,8 @@ func (w *WriteAheadLogFile) switchFiles() error {
 		return err
 	}
 
-	w.logger.Debugf("Successfully switched to log file: %s", w.logFile.Name())
-	w.logger.Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
+	w.diag.L().Debugf("Successfully switched to log file: %s", w.logFile.Name())
+	w.diag.L().Debugf("Number of files: %d, active indexes: %v, truncation index: %d",
 		len(w.activeIndexes), w.activeIndexes, w.truncateIndex)
 
 	return nil
@@ -638,7 +630,7 @@ func (w *WriteAheadLogFile) deleteAndCreateFile() error {
 	w.index++
 	nextFileName := fmt.Sprintf(walFileTemplate, w.index)
 	nextFilePath := filepath.Join(w.dirFile.Name(), nextFileName)
-	w.logger.Debugf("Preparing next log file: %s", nextFilePath)
+	w.diag.L().Debugf("Preparing next log file: %s", nextFilePath)
 
 	if w.activeIndexes[0] < w.truncateIndex {
 		var j int
@@ -646,7 +638,7 @@ func (w *WriteAheadLogFile) deleteAndCreateFile() error {
 		for i := 0; w.activeIndexes[i] < w.truncateIndex; i++ {
 			deleteFileName := fmt.Sprintf(walFileTemplate, w.activeIndexes[i])
 			deleteFilePath := filepath.Join(w.dirFile.Name(), deleteFileName)
-			w.logger.Debugf("Delete log file: %s", deleteFileName)
+			w.diag.L().Debugf("Delete log file: %s", deleteFileName)
 
 			err = os.Remove(deleteFilePath)
 			if err != nil {
@@ -659,7 +651,7 @@ func (w *WriteAheadLogFile) deleteAndCreateFile() error {
 		w.activeIndexes = w.activeIndexes[j+1:]
 	}
 
-	w.logger.Debugf("Creating log file: %s", nextFileName)
+	w.diag.L().Debugf("Creating log file: %s", nextFileName)
 
 	w.logFile, err = os.OpenFile(nextFilePath, os.O_CREATE|os.O_WRONLY, walFilePermPrivateRW)
 	if err != nil {
@@ -718,20 +710,20 @@ func (w *WriteAheadLogFile) saveCRC() error {
 		return fmt.Errorf("wal: failed to Sync: %w", err)
 	}
 
-	w.logger.Debugf("CRC-Anchor %08X written to file: %s, at offset %d, size=%d", w.crc, w.logFile.Name(), offset, nh+nb)
+	w.diag.L().Debugf("CRC-Anchor %08X written to file: %s, at offset %d, size=%d", w.crc, w.logFile.Name(), offset, nh+nb)
 
 	return nil
 }
 
 func InitializeAndReadAll(
-	logger api.Logger,
+	diag api.Diagnostics,
 	walDir string,
 	options *Options,
 ) (writeAheadLog *WriteAheadLogFile, initialState [][]byte, err error) {
-	logger.Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
-	logger.Debugf("Write-Ahead-Log options: %s", options)
+	diag.L().Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
+	diag.L().Debugf("Write-Ahead-Log options: %s", options)
 
-	writeAheadLog, err = Create(logger, walDir, options)
+	writeAheadLog, err = Create(diag, walDir, options)
 	if err != nil {
 		if !errors.Is(err, ErrWALAlreadyExists) {
 			err = errors.Wrap(err, "Cannot create Write-Ahead-Log")
@@ -739,9 +731,9 @@ func InitializeAndReadAll(
 			return nil, nil, err
 		}
 
-		logger.Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
+		diag.L().Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
 
-		writeAheadLog, err = Open(logger, walDir, options)
+		writeAheadLog, err = Open(diag, walDir, options)
 		if err != nil {
 			err = errors.Wrap(err, "Cannot open Write-Ahead-Log")
 
@@ -756,16 +748,16 @@ func InitializeAndReadAll(
 				return nil, nil, err
 			}
 
-			logger.Infof("Received io.ErrUnexpectedEOF, trying to repair Write-Ahead-Log at dir: %s", walDir)
+			diag.L().Infof("Received io.ErrUnexpectedEOF, trying to repair Write-Ahead-Log at dir: %s", walDir)
 
-			err = Repair(logger, walDir)
+			err = Repair(diag, walDir)
 			if err != nil {
 				err = errors.Wrap(err, "Cannot repair Write-Ahead-Log")
 
 				return nil, nil, err
 			}
 
-			logger.Infof("Reading Write-Ahead-Log initial state after repair")
+			diag.L().Infof("Reading Write-Ahead-Log initial state after repair")
 
 			initialState, err = writeAheadLog.ReadAll()
 			if err != nil {
@@ -776,7 +768,7 @@ func InitializeAndReadAll(
 		}
 	}
 
-	logger.Infof("Write-Ahead-Log initialized successfully, initial state contains %d entries", len(initialState))
+	diag.L().Infof("Write-Ahead-Log initialized successfully, initial state contains %d entries", len(initialState))
 
 	return writeAheadLog, initialState, err
 }

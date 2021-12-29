@@ -88,12 +88,3 @@ type Synchronizer interface {
 	// and returns it with info about reconfiguration.
 	Sync() bft.SyncResponse
 }
-
-// Logger defines the contract for logging.
-type Logger interface {
-	Debugf(template string, args ...interface{})
-	Infof(template string, args ...interface{})
-	Errorf(template string, args ...interface{})
-	Warnf(template string, args ...interface{})
-	Panicf(template string, args ...interface{})
-}

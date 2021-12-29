@@ -7,7 +7,6 @@ package wal
 
 import (
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"hash/crc32"
 	"io"
@@ -20,19 +19,15 @@ import (
 
 type LogRecordReader struct {
 	fileName string
-	logger   api.Logger
+	diag     api.Diagnostics
 	logFile  *os.File
 	crc      uint32
 }
 
-func NewLogRecordReader(logger api.Logger, fileName string) (*LogRecordReader, error) {
-	if logger == nil {
-		return nil, errors.New("logger is nil")
-	}
-
+func NewLogRecordReader(diag api.Diagnostics, fileName string) (*LogRecordReader, error) {
 	r := &LogRecordReader{
 		fileName: fileName,
-		logger:   logger,
+		diag:     diag,
 	}
 
 	var err error
@@ -83,7 +78,7 @@ func NewLogRecordReader(logger api.Logger, fileName string) (*LogRecordReader, e
 
 	r.crc = crc
 
-	r.logger.Debugf("Initialized reader: CRC-Anchor: %08X, file: %s", r.crc, r.fileName)
+	r.diag.L().Debugf("Initialized reader: CRC-Anchor: %08X, file: %s", r.crc, r.fileName)
 
 	return r, nil
 }
@@ -94,9 +89,8 @@ func (r *LogRecordReader) Close() error {
 		err = r.logFile.Close()
 	}
 
-	r.logger.Debugf("Closed reader: CRC: %08X, file: %s", r.crc, r.fileName)
+	r.diag.L().Debugf("Closed reader: CRC: %08X, file: %s", r.crc, r.fileName)
 
-	r.logger = nil
 	r.logFile = nil
 
 	return err
@@ -149,7 +143,7 @@ func (r *LogRecordReader) readHeader() (length, crc uint32, err error) {
 
 	n, err := io.ReadFull(r.logFile, buff)
 	if err != nil {
-		r.logger.Debugf("Failed to read header in full: expected=%d, actual=%d; error: %s", recordHeaderSize, n, err)
+		r.diag.L().Debugf("Failed to read header in full: expected=%d, actual=%d; error: %s", recordHeaderSize, n, err)
 
 		return 0, 0, err
 	}
@@ -168,7 +162,7 @@ func (r *LogRecordReader) readPayload(len int) (payload []byte, err error) {
 
 	n, err := io.ReadFull(r.logFile, buff)
 	if err != nil {
-		r.logger.Debugf("Failed to read payload in full: expected=%d, actual=%d; error: %s", len, n, err)
+		r.diag.L().Debugf("Failed to read payload in full: expected=%d, actual=%d; error: %s", len, n, err)
 
 		return nil, err
 	}

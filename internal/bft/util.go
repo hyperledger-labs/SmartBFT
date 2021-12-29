@@ -218,7 +218,7 @@ type ProposalMaker struct {
 	Decider            Decider
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
-	Logger             api.Logger
+	Diag               api.Diagnostics
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -243,7 +243,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		Decider:            pm.Decider,
 		FailureDetector:    pm.FailureDetector,
 		Sync:               pm.Sync,
-		Logger:             pm.Logger,
+		Diag:               pm.Diag,
 		Comm:               pm.Comm,
 		Verifier:           pm.Verifier,
 		Signer:             pm.Signer,
@@ -263,7 +263,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 	pm.restoreOnceFromWAL.Do(func() {
 		err := pm.State.Restore(view)
 		if err != nil {
-			pm.Logger.Panicf("Failed restoring view from WAL: %v", err)
+			pm.Diag.L().Panicf("Failed restoring view from WAL: %v", err)
 		}
 	})
 
@@ -372,7 +372,7 @@ type blacklist struct {
 	nodes              []uint64
 	currView           uint64
 	preparesFrom       map[uint64]*protos.PreparesFrom
-	logger             api.Logger
+	diag               api.Diagnostics
 	f                  int
 	decisionsPerLeader uint64
 }
@@ -381,7 +381,7 @@ func (bl blacklist) computeUpdate() []uint64 {
 	newBlacklist := bl.prevMD.BlackList
 	viewBeforeViewChanges := bl.prevMD.ViewId
 
-	bl.logger.Debugf("view before: %d, current view: %d", viewBeforeViewChanges, bl.currView)
+	bl.diag.L().Debugf("view before: %d, current view: %d", viewBeforeViewChanges, bl.currView)
 
 	// In case the previous view is different from this view, then we had a view change.
 	// Thus, we need to add some nodes to the blacklist.
@@ -396,33 +396,33 @@ func (bl blacklist) computeUpdate() []uint64 {
 
 		// Locate every leader of all views previous to this views.
 		for viewPreviousToThisView := viewBeforeViewChanges; viewPreviousToThisView < bl.currView; viewPreviousToThisView++ {
-			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
+			bl.diag.L().Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
 				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
 			leaderID := getLeaderID(viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView+offset, bl.decisionsPerLeader, bl.prevMD.BlackList)
 			if leaderID == bl.currentLeader {
-				bl.logger.Debugf("Skipping blacklisting current node (%d)", leaderID)
+				bl.diag.L().Debugf("Skipping blacklisting current node (%d)", leaderID)
 				continue
 			}
 			// Add that leader to the blacklist, because it did not drive any proposal, hence we skipped it because of view changes.
 			newBlacklist = append(newBlacklist, leaderID)
-			bl.logger.Infof("Blacklisting %d", leaderID)
+			bl.diag.L().Infof("Blacklisting %d", leaderID)
 		}
 	} else {
 		// We are in the same view, hence we can remove some nodes from the blacklist, if applicable,
 		// because they helped us drive from the previous sequence to this sequence.
 		// Compute the new blacklist according to your collected attestations on prepares sent
 		// in previous round.
-		newBlacklist = pruneBlacklist(newBlacklist, bl.preparesFrom, bl.f, bl.nodes, bl.logger)
+		newBlacklist = pruneBlacklist(newBlacklist, bl.preparesFrom, bl.f, bl.nodes, bl.diag)
 	}
 
 	// If blacklist is too big, remove items from its beginning
 	for len(newBlacklist) > bl.f {
-		bl.logger.Infof("Removing %d from %d sized blacklist due to size constraint", newBlacklist[0], len(newBlacklist))
+		bl.diag.L().Infof("Removing %d from %d sized blacklist due to size constraint", newBlacklist[0], len(newBlacklist))
 		newBlacklist = newBlacklist[1:]
 	}
 
 	if len(bl.prevMD.BlackList) != len(newBlacklist) {
-		bl.logger.Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
+		bl.diag.L().Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
 	}
 
 	return newBlacklist
@@ -431,12 +431,12 @@ func (bl blacklist) computeUpdate() []uint64 {
 // pruneBlacklist receives the previous blacklist, prepare acknowledgements from nodes, and returns
 // the new blacklist such that a node that was observed by more than f observers is removed from the blacklist,
 // and all nodes that no longer exist are also removed from the blacklist.
-func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.PreparesFrom, f int, nodes []uint64, logger api.Logger) []uint64 {
+func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.PreparesFrom, f int, nodes []uint64, diag api.Diagnostics) []uint64 {
 	if len(prevBlacklist) == 0 {
-		logger.Debugf("Blacklist empty, nothing to prune")
+		diag.L().Debugf("Blacklist empty, nothing to prune")
 		return prevBlacklist
 	}
-	logger.Debugf("Pruning blacklist %v with %d acknowledgements, f=%d, n=%d", prevBlacklist, len(preparesFrom), f, len(nodes))
+	diag.L().Debugf("Pruning blacklist %v with %d acknowledgements, f=%d, n=%d", prevBlacklist, len(preparesFrom), f, len(nodes))
 	// Build a set of all nodes
 	currentNodeIDs := make(map[uint64]struct{})
 	for _, n := range nodes {
@@ -446,7 +446,7 @@ func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.Prep
 	// For each sender of a prepare, count the number of commit signatures which acknowledge receiving a prepare from it.
 	nodeID2Acks := make(map[uint64]int)
 	for from, gotPrepareFrom := range preparesFrom {
-		logger.Debugf("%d observed prepares from %v", from, gotPrepareFrom)
+		diag.L().Debugf("%d observed prepares from %v", from, gotPrepareFrom)
 		for _, prepareSender := range gotPrepareFrom.Ids {
 			nodeID2Acks[prepareSender]++
 		}
@@ -456,14 +456,14 @@ func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.Prep
 	for _, blackListedNode := range prevBlacklist {
 		// Purge nodes that were removed by a reconfiguration
 		if _, exists := currentNodeIDs[blackListedNode]; !exists {
-			logger.Infof("Node %d no longer exists, removing it from the blacklist", blackListedNode)
+			diag.L().Infof("Node %d no longer exists, removing it from the blacklist", blackListedNode)
 			continue
 		}
 
 		// Purge nodes that have enough attestations of being alive
 		observers := nodeID2Acks[blackListedNode]
 		if observers > f {
-			logger.Infof("Node %d was observed sending a prepare by %d nodes, removing it from blacklist", blackListedNode, observers)
+			diag.L().Infof("Node %d was observed sending a prepare by %d nodes, removing it from blacklist", blackListedNode, observers)
 			continue
 		}
 		newBlackList = append(newBlackList, blackListedNode)

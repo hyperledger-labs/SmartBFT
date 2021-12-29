@@ -28,13 +28,12 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -51,7 +50,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, diag, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Good - with options", func(t *testing.T) {
@@ -59,7 +58,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 100 * 1024, BufferSizeBytes: 1024})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 100 * 1024, BufferSizeBytes: 1024})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -71,7 +70,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		}
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, diag, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Bad - already exist", func(t *testing.T) {
@@ -84,7 +83,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.Error(t, err)
 		assert.Equal(t, err, ErrWALAlreadyExists)
 		assert.Nil(t, wal)
@@ -99,15 +98,14 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -128,7 +126,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, dirPath, nil)
+		wal, err = Open(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -147,7 +145,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 	t.Run("Bad - does not exist", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "bad-not-exist")
 
-		wal, err := Open(logger, dirPath, nil)
+		wal, err := Open(diag, dirPath, nil)
 		assert.Error(t, err)
 		if err != nil {
 			assert.Contains(t, err.Error(), "no such file or directory")
@@ -160,7 +158,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Open(logger, dirPath, nil)
+		wal, err := Open(diag, dirPath, nil)
 		assert.Error(t, err)
 		if err != nil {
 			assert.Contains(t, err.Error(), "file does not exist")
@@ -177,13 +175,12 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("Idempotent", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "idempotent")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -199,13 +196,13 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 		assert.Equal(t, crc, wal.CRC())
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, diag, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Cannot Append", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "cannot-append")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -220,7 +217,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 		assert.EqualError(t, err, os.ErrClosed.Error())
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, diag, dirPath, expectedFileName, crc)
 	})
 }
 
@@ -232,13 +229,12 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -272,13 +268,13 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc, rec1, rec2)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc, rec1, rec2)
 	})
 
 	t.Run("File switch", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "switch")
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -319,15 +315,15 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc1, records[:10]...)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc1, records[:10]...)
 		expectedFileName = fmt.Sprintf(walFileTemplate, 2)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[10:]...)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc2, records[10:]...)
 	})
 
 	t.Run("File recycle", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "recycle")
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -372,15 +368,15 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 4)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc1, records[30:40]...)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc1, records[30:40]...)
 		expectedFileName = fmt.Sprintf(walFileTemplate, 5)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[40:]...)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc2, records[40:]...)
 	})
 
 	t.Run("TruncateTo", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "TruncateTo")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -421,7 +417,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, dirPath, expectedFileName, crc, rec1, rec2, rec3)
+		verifyAppend(t, diag, dirPath, expectedFileName, crc, rec1, rec2, rec3)
 	})
 }
 
@@ -433,13 +429,12 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("Good - one empty file", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good-1-empty")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -449,7 +444,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, dirPath, nil)
+		wal, err = Open(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -466,7 +461,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 	t.Run("Good - 1 file", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good-1-file")
 
-		wal, err := Create(logger, dirPath, nil)
+		wal, err := Create(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -483,7 +478,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, dirPath, nil)
+		wal, err = Open(diag, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -500,7 +495,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -521,16 +516,16 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		logger.Infof(">>> Open #1")
+		diag.L().Infof(">>> Open #1")
 
-		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err = Open(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
 			return
 		}
 
-		logger.Infof(">>> ReadAll #1")
+		diag.L().Infof(">>> ReadAll #1")
 
 		dataItems, err := wal.ReadAll()
 		assert.NoError(t, err)
@@ -541,7 +536,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		}
 
 		// continue to write
-		logger.Infof(">>> Continue to write")
+		diag.L().Infof(">>> Continue to write")
 
 		for m := 0; m < NumRec; m++ {
 			for n := 0; n < NumBytes; n++ {
@@ -559,16 +554,16 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		logger.Infof(">>> Open #2")
+		diag.L().Infof(">>> Open #2")
 
-		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err = Open(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
 			return
 		}
 
-		logger.Infof(">>> ReadAll #2")
+		diag.L().Infof(">>> ReadAll #2")
 
 		dataItems, err = wal.ReadAll()
 		assert.NoError(t, err)
@@ -591,15 +586,14 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	t.Run("with a tail", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "tail")
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -633,7 +627,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		assertTestRepair(t, logger, dirPath, NumRec)
+		assertTestRepair(t, diag, dirPath, NumRec)
 	})
 
 	t.Run("broken record", func(t *testing.T) {
@@ -641,7 +635,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -675,7 +669,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		assertTestRepair(t, logger, dirPath, NumRec-1)
+		assertTestRepair(t, diag, dirPath, NumRec-1)
 	})
 }
 
@@ -687,11 +681,10 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 
 	basicLog, err := zap.NewProduction()
 	assert.NoError(t, err)
-
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	// Create
-	wal, entries, err := InitializeAndReadAll(logger, testDir, DefaultOptions())
+	wal, entries, err := InitializeAndReadAll(diag, testDir, DefaultOptions())
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.Equal(t, 0, len(entries))
@@ -701,11 +694,11 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-	verifyFirstFileCreation(t, logger, testDir, expectedFileName, crc)
+	verifyFirstFileCreation(t, diag, testDir, expectedFileName, crc)
 
 	// Open
 	options := &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048}
-	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	wal, entries, err = InitializeAndReadAll(diag, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.Equal(t, 0, len(entries))
@@ -728,7 +721,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	err = wal.Close()
 	assert.NoError(t, err)
 
-	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	wal, entries, err = InitializeAndReadAll(diag, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -755,7 +748,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Repair
-	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	wal, entries, err = InitializeAndReadAll(diag, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -769,7 +762,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	// One last time
-	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
+	wal, entries, err = InitializeAndReadAll(diag, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -781,9 +774,9 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec int) {
-	logger.Infof(">>> Open #1")
-	wal, err := Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+func assertTestRepair(t *testing.T, diag api.Diagnostics, dirPath string, numRec int) {
+	diag.L().Infof(">>> Open #1")
+	wal, err := Open(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 
@@ -791,7 +784,7 @@ func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec in
 		return
 	}
 
-	logger.Infof(">>> ReadAll #1 - will fail")
+	diag.L().Infof(">>> ReadAll #1 - will fail")
 
 	_, err = wal.ReadAll()
 	assert.Error(t, err)
@@ -801,12 +794,12 @@ func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec in
 	names, err := dirReadWalNames(dirPath)
 	assert.NoError(t, err)
 
-	logger.Infof(">>> Repair")
-	err = Repair(logger, dirPath)
+	diag.L().Infof(">>> Repair")
+	err = Repair(diag, dirPath)
 	assert.NoError(t, err)
 
-	logger.Infof(">>> Open #2")
-	wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+	diag.L().Infof(">>> Open #2")
+	wal, err = Open(diag, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 
@@ -814,7 +807,7 @@ func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec in
 		return
 	}
 
-	logger.Infof(">>> ReadAll #2 OK")
+	diag.L().Infof(">>> ReadAll #2 OK")
 
 	dataItems, err := wal.ReadAll()
 	assert.NoError(t, err)
@@ -836,7 +829,7 @@ func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec in
 
 func verifyFirstFileCreation(
 	t *testing.T,
-	logger api.Logger,
+	diag api.Diagnostics,
 	dirPath string,
 	expectedFileName string,
 	expectedCRC uint32,
@@ -846,7 +839,7 @@ func verifyFirstFileCreation(
 	assert.Equal(t, 1, len(names))
 	assert.Equal(t, expectedFileName, names[0])
 
-	r, err := NewLogRecordReader(logger, filepath.Join(dirPath, expectedFileName))
+	r, err := NewLogRecordReader(diag, filepath.Join(dirPath, expectedFileName))
 	assert.NoError(t, err)
 	assert.NotNil(t, r)
 
@@ -861,13 +854,13 @@ func verifyFirstFileCreation(
 
 func verifyAppend(
 	t *testing.T,
-	logger api.Logger,
+	diag api.Diagnostics,
 	dirPath string,
 	expectedFileName string,
 	expectedCRC uint32,
 	records ...*smartbftprotos.LogRecord,
 ) {
-	r, err := NewLogRecordReader(logger, filepath.Join(dirPath, expectedFileName))
+	r, err := NewLogRecordReader(diag, filepath.Join(dirPath, expectedFileName))
 	assert.NoError(t, err)
 	assert.NotNil(t, r)
 

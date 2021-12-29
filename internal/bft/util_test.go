@@ -12,6 +12,7 @@ import (
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"go.uber.org/zap"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
 )
@@ -101,7 +102,7 @@ func TestBlacklist(t *testing.T) {
 				currentLeader:      tst.currentLeader,
 				n:                  uint64(len(tst.nodes)),
 				nodes:              tst.nodes,
-				logger:             logger.Sugar(),
+				diag:               api.Diagnostics{}.SetLogger(logger.Sugar()),
 				f:                  (len(tst.nodes) - 1) / 3,
 				currView:           tst.currView,
 				preparesFrom:       tst.preparesFrom,

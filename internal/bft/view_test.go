@@ -17,6 +17,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -125,13 +126,13 @@ func TestViewBasic(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	state := &bft.StateRecorder{}
 	view := &bft.View{
 		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 		ViewSequences:      &atomic.Value{},
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		Quorum:             3,
@@ -309,6 +310,8 @@ func TestBadPrePrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+
+			diag := api.Diagnostics{}.SetLogger(log)
 			synchronizer = &mocks.Synchronizer{}
 			syncWG = &sync.WaitGroup{}
 			synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -330,7 +333,7 @@ func TestBadPrePrepare(t *testing.T) {
 				Verifier:         verifier,
 				SelfID:           3,
 				State:            state,
-				Logger:           log,
+				Diag:             diag,
 				N:                4,
 				LeaderID:         1,
 				Quorum:           3,
@@ -390,6 +393,7 @@ func TestBadPrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			diag := api.Diagnostics{}.SetLogger(log)
 			synchronizer := &mocks.Synchronizer{}
 			syncWG := &sync.WaitGroup{}
 			synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
@@ -419,7 +423,7 @@ func TestBadPrepare(t *testing.T) {
 			view := &bft.View{
 				RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 				State:              state,
-				Logger:             log,
+				Diag:               diag,
 				N:                  4,
 				LeaderID:           1,
 				Quorum:             3,
@@ -474,6 +478,7 @@ func TestBadCommit(t *testing.T) {
 		}
 		return nil
 	})).Sugar()
+	diag := api.Diagnostics{}.SetLogger(log)
 	comm := &mocks.CommMock{}
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.VerifierMock{}
@@ -490,7 +495,7 @@ func TestBadCommit(t *testing.T) {
 	view := &bft.View{
 		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		Quorum:             3,
@@ -544,7 +549,7 @@ func TestNormalPath(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -577,7 +582,7 @@ func TestNormalPath(t *testing.T) {
 	view := &bft.View{
 		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		SelfID:             1,
@@ -669,7 +674,7 @@ func TestTwoSequences(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -701,7 +706,7 @@ func TestTwoSequences(t *testing.T) {
 	view := &bft.View{
 		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		Quorum:             3,
@@ -846,7 +851,7 @@ func TestViewPersisted(t *testing.T) {
 
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
-			log := basicLog.Sugar()
+			diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
@@ -870,7 +875,7 @@ func TestViewPersisted(t *testing.T) {
 					Verifier:           verifier,
 					SelfID:             2,
 					State:              state,
-					Logger:             log,
+					Diag:               diag,
 					N:                  4,
 					LeaderID:           1,
 					Quorum:             3,
@@ -886,12 +891,12 @@ func TestViewPersisted(t *testing.T) {
 			testDir, err := ioutil.TempDir("", "view-unittest")
 			assert.NoErrorf(t, err, "generate temporary test dir")
 			defer os.RemoveAll(testDir)
-			writeAheadLog, err := wal.Create(log, testDir, nil)
+			writeAheadLog, err := wal.Create(diag, testDir, nil)
 			assert.NoError(t, err)
 
 			persistedState := &bft.PersistedState{
 				InFlightProposal: &bft.InFlightData{},
-				Logger:           log,
+				Diag:             diag,
 				WAL:              writeAheadLog,
 			}
 			var persistedToLog sync.WaitGroup
@@ -918,7 +923,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, testDir, nil)
+				writeAheadLog, err = wal.Open(diag, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 
@@ -960,7 +965,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, testDir, nil)
+				writeAheadLog, err = wal.Open(diag, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 
@@ -1082,7 +1087,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 
 			view := &bft.View{
 				RetrieveCheckpoint: (&types.Checkpoint{}).Get,
-				Logger:             basicLog.Sugar(),
+				Diag:               api.Diagnostics{}.SetLogger(basicLog.Sugar()),
 				N:                  4,
 				LeaderID:           1,
 				Quorum:             3,
@@ -1138,6 +1143,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		loggedEntries <- entry.Message
 		return nil
 	})).Sugar()
+	diag := api.Diagnostics{}.SetLogger(log)
 
 	state := &bft.StateRecorder{}
 
@@ -1170,7 +1176,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		Signer:             signer,
 		Verifier:           verifier,
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		Quorum:             3,
@@ -1406,7 +1412,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
@@ -1428,7 +1434,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 		Verifier:           verifier,
 		SelfID:             selfID,
 		State:              state,
-		Logger:             log,
+		Diag:               diag,
 		N:                  4,
 		LeaderID:           1,
 		Quorum:             3,

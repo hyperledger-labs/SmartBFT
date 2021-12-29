@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/golang/protobuf/proto"
 
 	"github.com/stretchr/testify/assert"
@@ -110,9 +111,9 @@ func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	logger := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
-	chain := NewChain(uint64(id), ingress, egress, logger, opt, testDir)
+	chain := NewChain(uint64(id), ingress, egress, diag, opt, testDir)
 
 	return chain
 }

@@ -86,7 +86,7 @@ func dirReadWalNames(dirPath string) ([]string, error) {
 
 // checkWalFiles for continuous sequence, readable CRC-Anchor.
 // If the the last file cannot be read, it may be ignored,  (or repaired).
-func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint64, error) {
+func checkWalFiles(diag api.Diagnostics, dirName string, walNames []string) ([]uint64, error) {
 	sort.Strings(walNames)
 
 	indexes := make([]uint64, 0)
@@ -94,7 +94,7 @@ func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint
 	for i, name := range walNames {
 		index, err := parseWalFileName(name)
 		if err != nil {
-			logger.Errorf("wal: failed to parse file name: %s; error: %s", name, err)
+			diag.L().Errorf("wal: failed to parse file name: %s; error: %s", name, err)
 
 			return nil, err
 		}
@@ -102,11 +102,11 @@ func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint
 		indexes = append(indexes, index)
 
 		// verify we have CRC-Anchor.
-		r, err := NewLogRecordReader(logger, filepath.Join(dirName, walNames[i]))
+		r, err := NewLogRecordReader(diag, filepath.Join(dirName, walNames[i]))
 		if err != nil {
 			// check if it is the last file and return a special error that allows a repair.
 			if i == len(walNames)-1 {
-				logger.Errorf(
+				diag.L().Errorf(
 					"wal: failed to create reader for last file: %s; error: %s; this may possibly be repaired.",
 					name,
 					err,
@@ -187,7 +187,7 @@ func truncateCloseFile(f *os.File, offset int64) error {
 }
 
 // scanVerifyFiles.
-func scanVerifyFiles(logger api.Logger, dirPath string, files []string) error {
+func scanVerifyFiles(diag api.Diagnostics, dirPath string, files []string) error {
 	var (
 		crc           uint32
 		num, numTotal int
@@ -196,12 +196,12 @@ func scanVerifyFiles(logger api.Logger, dirPath string, files []string) error {
 	for i, name := range files {
 		fullName := filepath.Join(dirPath, name)
 
-		r, err := NewLogRecordReader(logger, fullName)
+		r, err := NewLogRecordReader(diag, fullName)
 		if err != nil {
 			return err
 		}
 
-		if num, err = scanVerify1(logger, r, i, crc); err != nil {
+		if num, err = scanVerify1(diag, r, i, crc); err != nil {
 			return err
 		}
 
@@ -209,16 +209,16 @@ func scanVerifyFiles(logger api.Logger, dirPath string, files []string) error {
 		crc = r.crc // final CRC of file
 	}
 
-	logger.Debugf("Scanned %d records in %d files", numTotal, len(files))
+	diag.L().Debugf("Scanned %d records in %d files", numTotal, len(files))
 
 	return nil
 }
 
-func scanVerify1(logger api.Logger, r *LogRecordReader, i int, crc uint32) (num int, err error) {
+func scanVerify1(diag api.Diagnostics, r *LogRecordReader, i int, crc uint32) (num int, err error) {
 	defer func() { _ = r.Close() }()
 
 	if i > 0 && crc != r.crc {
-		logger.Errorf("Anchor-CRC %08X of file: %s, does not match previous: %08X", r.crc, r.logFile.Name(), crc)
+		diag.L().Errorf("Anchor-CRC %08X of file: %s, does not match previous: %08X", r.crc, r.logFile.Name(), crc)
 
 		return 0, ErrCRC
 	}
@@ -239,18 +239,18 @@ func scanVerify1(logger api.Logger, r *LogRecordReader, i int, crc uint32) (num 
 
 // scanRepairFile scans the file to the last good record and truncates after it. If even the CRC-Anchor cannot be
 // read, the file is deleted.
-func scanRepairFile(logger api.Logger, lastFile string) error {
-	logger.Debugf("Trying to repair file: %s", lastFile)
+func scanRepairFile(diag api.Diagnostics, lastFile string) error {
+	diag.L().Debugf("Trying to repair file: %s", lastFile)
 
-	r, err := NewLogRecordReader(logger, lastFile)
+	r, err := NewLogRecordReader(diag, lastFile)
 	if err != nil {
-		logger.Warnf("Write-Ahead-Log could not open the last file, due to error: %s", err)
+		diag.L().Warnf("Write-Ahead-Log could not open the last file, due to error: %s", err)
 
 		if err = os.Remove(lastFile); err != nil {
 			return err
 		}
 
-		logger.Warnf("Write-Ahead-Log DELETED the last file (a copy was saved): %s", lastFile)
+		diag.L().Warnf("Write-Ahead-Log DELETED the last file (a copy was saved): %s", lastFile)
 
 		return nil
 	}
@@ -268,14 +268,14 @@ func scanRepairFile(logger api.Logger, lastFile string) error {
 	for {
 		_, readErr := r.Read()
 		if readErr != nil {
-			logger.Debugf("Read error: %s", readErr)
+			diag.L().Debugf("Read error: %s", readErr)
 
 			if closeErr := r.Close(); closeErr != nil {
 				return closeErr
 			}
 
 			if errors.Is(readErr, io.EOF) {
-				logger.Debugf("Read %d good records till EOF, no need to repair", num)
+				diag.L().Debugf("Read %d good records till EOF, no need to repair", num)
 
 				return nil // no need to repair
 			}
@@ -291,17 +291,17 @@ func scanRepairFile(logger api.Logger, lastFile string) error {
 		}
 	}
 
-	logger.Debugf("Read %d good records, last good record ended at offset: %d", num, offset)
+	diag.L().Debugf("Read %d good records, last good record ended at offset: %d", num, offset)
 
 	f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
 	if err != nil {
-		logger.Errorf("Failed to open log file: %s; error: %s", lastFile, err)
+		diag.L().Errorf("Failed to open log file: %s; error: %s", lastFile, err)
 
 		return err
 	}
 
 	if err = truncateCloseFile(f, offset); err != nil {
-		logger.Errorf("Failed to truncateCloseFile: error: %s", err)
+		diag.L().Errorf("Failed to truncateCloseFile: error: %s", err)
 
 		return err
 	}

@@ -16,6 +16,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
@@ -26,7 +27,7 @@ import (
 func TestReqPoolBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	insp := &testRequestInspector{}
 	byteReq1 := makeTestRequest("1", "1", "foo")
@@ -36,7 +37,7 @@ func TestReqPoolBasic(t *testing.T) {
 	t.Run("create close", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, submittedChan)
+		pool := bft.NewPool(insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, diag, submittedChan)
 
 		assert.Equal(t, 0, pool.Size())
 		err = pool.Submit(byteReq1)
@@ -52,7 +53,7 @@ func TestReqPoolBasic(t *testing.T) {
 	t.Run("submit remove next", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, submittedChan)
+		pool := bft.NewPool(insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, diag, submittedChan)
 		defer pool.Close()
 
 		assert.Equal(t, 0, pool.Size())
@@ -154,13 +155,13 @@ func TestReqPoolCapacity(t *testing.T) {
 	numReq := 100
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 
 	t.Run("submit storm", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, ForwardTimeout: time.Hour}, submittedChan)
+		pool := bft.NewPool(insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, ForwardTimeout: time.Hour}, diag, submittedChan)
 		defer pool.Close()
 
 		wg := sync.WaitGroup{}
@@ -199,7 +200,7 @@ func TestReqPoolCapacity(t *testing.T) {
 
 	t.Run("respect max count and size", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
-		pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, ForwardTimeout: time.Hour}, submittedChan)
+		pool := bft.NewPool(insp, timeoutHandler, bft.PoolOptions{QueueSize: 50, ForwardTimeout: time.Hour}, diag, submittedChan)
 		defer pool.Close()
 
 		var lengths []int
@@ -245,7 +246,7 @@ func TestReqPoolCapacity(t *testing.T) {
 func TestReqPoolPrune(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	insp := &testRequestInspector{}
 	timeoutHandler := &mocks.RequestTimeoutHandler{}
@@ -253,7 +254,7 @@ func TestReqPoolPrune(t *testing.T) {
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "bar")
-	pool := bft.NewPool(log, insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, submittedChan)
+	pool := bft.NewPool(insp, timeoutHandler, bft.PoolOptions{QueueSize: 3, ForwardTimeout: time.Hour}, diag, submittedChan)
 	defer pool.Close()
 
 	assert.Equal(t, 0, pool.Size())
@@ -284,7 +285,7 @@ func TestReqPoolPrune(t *testing.T) {
 func TestReqPoolTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")
@@ -299,7 +300,7 @@ func TestReqPoolTimeout(t *testing.T) {
 		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Return()
 		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq1)).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		pool := bft.NewPool(insp, timeoutHandler,
 			bft.PoolOptions{
 				QueueSize:         3,
 				ForwardTimeout:    10 * time.Millisecond,
@@ -307,6 +308,7 @@ func TestReqPoolTimeout(t *testing.T) {
 				AutoRemoveTimeout: time.Hour,
 				RequestMaxBytes:   1024,
 			},
+			diag,
 			nil,
 		)
 		defer pool.Close()
@@ -336,13 +338,14 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		pool := bft.NewPool(insp, timeoutHandler,
 			bft.PoolOptions{
 				QueueSize:         3,
 				ForwardTimeout:    10 * time.Millisecond,
 				ComplainTimeout:   time.Hour,
 				AutoRemoveTimeout: time.Hour,
 			},
+			diag,
 			submittedChan,
 		)
 		defer pool.Close()
@@ -381,13 +384,14 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		pool := bft.NewPool(insp, timeoutHandler,
 			bft.PoolOptions{
 				QueueSize:         3,
 				ForwardTimeout:    10 * time.Millisecond,
 				ComplainTimeout:   10 * time.Millisecond,
 				AutoRemoveTimeout: time.Hour,
 			},
+			diag,
 			submittedChan,
 		)
 		defer pool.Close()
@@ -428,13 +432,14 @@ func TestReqPoolTimeout(t *testing.T) {
 			to3WG.Done()
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		pool := bft.NewPool(insp, timeoutHandler,
 			bft.PoolOptions{
 				QueueSize:         3,
 				ForwardTimeout:    10 * time.Millisecond,
 				ComplainTimeout:   10 * time.Millisecond,
 				AutoRemoveTimeout: 10 * time.Millisecond,
 			},
+			diag,
 			submittedChan,
 		)
 		defer pool.Close()
@@ -474,13 +479,14 @@ func TestReqPoolTimeout(t *testing.T) {
 			assert.Fail(t, "called OnAutoRemoveTimeout")
 		}).Return()
 
-		pool := bft.NewPool(log, insp, timeoutHandler,
+		pool := bft.NewPool(insp, timeoutHandler,
 			bft.PoolOptions{
 				QueueSize:         3,
 				ForwardTimeout:    100 * time.Millisecond,
 				ComplainTimeout:   time.Hour,
 				AutoRemoveTimeout: time.Hour,
 			},
+			diag,
 			submittedChan,
 		)
 		defer pool.Close()

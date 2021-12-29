@@ -21,7 +21,7 @@ type StateCollector struct {
 	f      int
 	quorum int
 
-	Logger api.Logger
+	Diag api.Diagnostics
 
 	incMsgs chan *incMsg
 
@@ -52,16 +52,16 @@ func (s *StateCollector) Start() {
 // HandleMessage handle messages addressed to the state collector
 func (s *StateCollector) HandleMessage(sender uint64, m *protos.Message) {
 	if m.GetStateTransferResponse() == nil {
-		s.Logger.Panicf("Node %d handling a message which is not a response", s.SelfID)
+		s.Diag.L().Panicf("Node %d handling a message which is not a response", s.SelfID)
 	}
 	msg := &incMsg{sender: sender, Message: m}
-	s.Logger.Debugf("Node %d handling state response: %v", s.SelfID, msg)
+	s.Diag.L().Debugf("Node %d handling state response: %v", s.SelfID, msg)
 	select {
 	case <-s.stopChan:
 		return
 	case s.incMsgs <- msg:
 	default: // if incMsgs is full do nothing
-		s.Logger.Debugf("Node %d reached default in handling state response: %v", s.SelfID, msg)
+		s.Diag.L().Debugf("Node %d reached default in handling state response: %v", s.SelfID, msg)
 	}
 }
 
@@ -80,20 +80,20 @@ func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
 	timer := time.NewTimer(s.CollectTimeout)
 	defer timer.Stop()
 
-	s.Logger.Debugf("Node %d started collecting state responses", s.SelfID)
+	s.Diag.L().Debugf("Node %d started collecting state responses", s.SelfID)
 
 	for {
 		select {
 		case <-s.stopChan:
 			return nil
 		case <-timer.C:
-			s.Logger.Infof("Node %d reached the state collector timeout", s.SelfID)
+			s.Diag.L().Infof("Node %d reached the state collector timeout", s.SelfID)
 			return nil
 		case msg := <-s.incMsgs:
-			s.Logger.Debugf("Node %d collected a response: %v", s.SelfID, msg)
+			s.Diag.L().Debugf("Node %d collected a response: %v", s.SelfID, msg)
 			s.responses.registerVote(msg.sender, msg.Message)
 			if viewAndSeq := s.collectedEnoughEqualVotes(); viewAndSeq != nil {
-				s.Logger.Infof("Node %d collected a valid state: view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
+				s.Diag.L().Infof("Node %d collected a valid state: view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
 				return viewAndSeq
 			}
 		}
@@ -111,14 +111,14 @@ func (s *StateCollector) collectedEnoughEqualVotes() *types.ViewAndSeq {
 		vote := <-s.responses.votes
 		response := vote.GetStateTransferResponse()
 		if response == nil {
-			s.Logger.Panicf("Node %d collected a message which is not a response", s.SelfID)
+			s.Diag.L().Panicf("Node %d collected a message which is not a response", s.SelfID)
 			return nil
 		}
 		viewAndSeq := types.ViewAndSeq{
 			View: response.ViewNum,
 			Seq:  response.Sequence,
 		}
-		s.Logger.Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
+		s.Diag.L().Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
 		s.responses.votes <- vote
 		if _, exist := votesMap[viewAndSeq]; exist {
 			votesMap[viewAndSeq]++

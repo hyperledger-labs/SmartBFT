@@ -13,6 +13,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -34,13 +35,13 @@ var (
 func TestHeartbeatMonitor_New(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatEventHandler{}
 
 	scheduler := make(chan time.Time)
-	hm := bft.NewHeartbeatMonitor(scheduler, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, &atomic.Value{}, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm := bft.NewHeartbeatMonitor(scheduler, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, &atomic.Value{}, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 	assert.NotNil(t, hm)
 	hm.Close()
 }
@@ -48,7 +49,7 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 func TestHeartbeatMonitorLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatEventHandler{}
@@ -56,7 +57,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 
 	vs := &atomic.Value{}
 	vs.Store(bft.ViewSequence{ViewActive: true})
-	hm := bft.NewHeartbeatMonitor(scheduler, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm := bft.NewHeartbeatMonitor(scheduler, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	var heartBeatsSent uint32
 	var heartBeatsSentUntilViewBecomesInactive uint32
@@ -188,7 +189,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 		t.Run(testCase.description, func(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
-			log := basicLog.Sugar()
+			diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 			scheduler := make(chan time.Time)
 			incrementUnit := heartbeatTimeout / heartbeatCount
@@ -204,7 +205,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 				ViewActive:  testCase.viewActive,
 				ProposalSeq: testCase.proposalSeqInView,
 			})
-			hm := bft.NewHeartbeatMonitor(scheduler, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, viewSequence, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+			hm := bft.NewHeartbeatMonitor(scheduler, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, viewSequence, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 			hm.ChangeRole(bft.Follower, 10, 12)
 
@@ -233,7 +234,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	scheduler1 := make(chan time.Time)
 	scheduler2 := make(chan time.Time)
@@ -242,13 +243,13 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	handler1 := &mocks.HeartbeatEventHandler{}
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 4, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 4, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm2 := &mocks.CommMock{}
 	handler2 := &mocks.HeartbeatEventHandler{}
 	vs2 := &atomic.Value{}
 	vs2.Store(bft.ViewSequence{ViewActive: true})
-	hm2 := bft.NewHeartbeatMonitor(scheduler2, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm2, 4, handler2, vs2, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm2 := bft.NewHeartbeatMonitor(scheduler2, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm2, 4, handler2, vs2, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
@@ -297,7 +298,7 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 func TestHeartbeatResponseLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	clock := &fakeTime{time: time.Now()}
 
@@ -306,7 +307,7 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 	handler1 := &mocks.HeartbeatEventHandler{}
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	comm1.On("BroadcastConsensus", mock.AnythingOfType("*smartbftprotos.Message")).Run(func(args mock.Arguments) {
 		msg := args[0].(*smartbftprotos.Message)
@@ -363,7 +364,7 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 func TestHeartbeatResponseFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	clock := &fakeTime{time: time.Now()}
 
@@ -377,7 +378,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	})
 	vs1 := &atomic.Value{}
 	vs1.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 12})
-	hm1 := bft.NewHeartbeatMonitor(scheduler1, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
+	hm1 := bft.NewHeartbeatMonitor(scheduler1, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm1, 7, handler1, vs1, types.DefaultConfig.NumOfTicksBehindBeforeSyncing)
 
 	respWG := &sync.WaitGroup{}
 	respWG.Add(1)
@@ -419,7 +420,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 func TestFollowerBehindSync(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 
 	scheduler := make(chan time.Time)
 
@@ -433,7 +434,7 @@ func TestFollowerBehindSync(t *testing.T) {
 
 	vs := &atomic.Value{}
 	vs.Store(bft.ViewSequence{ViewActive: true, ProposalSeq: 9})
-	hm := bft.NewHeartbeatMonitor(scheduler, log, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, 3)
+	hm := bft.NewHeartbeatMonitor(scheduler, diag, types.DefaultConfig.LeaderHeartbeatTimeout, types.DefaultConfig.LeaderHeartbeatCount, comm, 4, handler, vs, 3)
 
 	hm.ChangeRole(bft.Follower, 10, 12)
 

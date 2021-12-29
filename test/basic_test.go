@@ -372,13 +372,14 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(numberOfNodes - 1)
 	for _, n := range nodes {
-		baseLogger := n.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		baseLogger := n.Consensus.Diag.L().(*zap.SugaredLogger).Desugar()
+		log := baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "ViewChanged") {
 				viewChangeWG.Done()
 			}
 			return nil
 		})).Sugar()
+		n.Consensus.Diag = n.Consensus.Diag.SetLogger(log)
 	}
 
 	startNodes(nodes, &network)
@@ -436,13 +437,14 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(5)
 	for _, n := range network {
-		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
-		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		baseLogger := n.app.Consensus.Diag.L().(*zap.SugaredLogger).Desugar()
+		log := baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "ViewChanged") {
 				viewChangeWG.Done()
 			}
 			return nil
 		})).Sugar()
+		n.app.Consensus.Diag = n.app.Consensus.Diag.SetLogger(log)
 	}
 
 	startNodes(nodes, &network)
@@ -635,20 +637,23 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(2)
-	baseLogger1 := nodes[1].Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	nodes[1].Consensus.Logger = baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+	baseLogger1 := nodes[1].Consensus.Diag.L().(*zap.SugaredLogger).Desugar()
+	log1 := baseLogger1.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeWG.Done()
 		}
 		return nil
 	})).Sugar()
-	baseLogger3 := nodes[3].Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	nodes[3].Consensus.Logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+	nodes[1].Consensus.Diag = nodes[1].Consensus.Diag.SetLogger(log1)
+
+	baseLogger3 := nodes[3].Consensus.Diag.L().(*zap.SugaredLogger).Desugar()
+	log3 := baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "ViewChanged") {
 			viewChangeWG.Done()
 		}
 		return nil
 	})).Sugar()
+	nodes[3].Consensus.Diag = nodes[3].Consensus.Diag.SetLogger(log3)
 
 	startNodes(nodes, &network)
 
@@ -891,13 +896,14 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 
 	var detectedSequenceGap uint32
 
-	baseLogger := nodes[3].Consensus.Logger.(*zap.SugaredLogger).Desugar()
-	nodes[3].Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+	baseLogger := nodes[3].Consensus.Diag.L().(*zap.SugaredLogger).Desugar()
+	log3 := baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Leader's sequence is 10 and ours is 1") {
 			atomic.StoreUint32(&detectedSequenceGap, 1)
 		}
 		return nil
 	})).Sugar()
+	nodes[3].Consensus.Diag = nodes[3].Consensus.Diag.SetLogger(log3)
 
 	start := time.Now()
 	nodes[0].heartbeatTime = make(chan time.Time, 1)

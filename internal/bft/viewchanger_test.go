@@ -14,6 +14,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -95,7 +96,7 @@ func TestStartViewChange(t *testing.T) {
 	reqTimer.On("StopTimers").Once()
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -105,7 +106,7 @@ func TestStartViewChange(t *testing.T) {
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
-		Logger:        log,
+		Diag:          diag,
 		Controller:    controller,
 		InMsqQSize:    100,
 	}
@@ -155,7 +156,7 @@ func TestViewChangeProcess(t *testing.T) {
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
-			log := basicLog.Sugar()
+			diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -169,7 +170,7 @@ func TestViewChangeProcess(t *testing.T) {
 				NodesList:         []uint64{0, 1, 2, 3},
 				Comm:              comm,
 				Signer:            signer,
-				Logger:            log,
+				Diag:              diag,
 				RequestsTimer:     reqTimer,
 				Ticker:            make(chan time.Time),
 				InFlight:          &bft.InFlightData{},
@@ -246,7 +247,7 @@ func TestViewDataProcess(t *testing.T) {
 	}).Once()
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -275,7 +276,7 @@ func TestViewDataProcess(t *testing.T) {
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Ticker:        make(chan time.Time),
@@ -323,7 +324,7 @@ func TestNewViewProcess(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -349,7 +350,7 @@ func TestNewViewProcess(t *testing.T) {
 		SelfID:        0,
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Ticker:        make(chan time.Time),
@@ -411,7 +412,7 @@ func TestNormalProcess(t *testing.T) {
 	})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -440,7 +441,7 @@ func TestNormalProcess(t *testing.T) {
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Signer:        signer,
@@ -648,6 +649,7 @@ func TestBadViewDataMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			diag := api.Diagnostics{}.SetLogger(log)
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -674,7 +676,7 @@ func TestBadViewDataMessage(t *testing.T) {
 				SelfID:      uint64(selfId),
 				N:           4,
 				NodesList:   []uint64{0, 1, 2, 3},
-				Logger:      log,
+				Diag:        diag,
 				Verifier:    verifier,
 				Checkpoint:  &checkpoint,
 				Application: app,
@@ -870,6 +872,7 @@ func TestBadNewViewMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			diag := api.Diagnostics{}.SetLogger(log)
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -897,7 +900,7 @@ func TestBadNewViewMessage(t *testing.T) {
 				SelfID:       3,
 				N:            4,
 				NodesList:    []uint64{0, 1, 2, 3},
-				Logger:       log,
+				Diag:         diag,
 				Checkpoint:   &checkpoint,
 				Verifier:     verifier,
 				Synchronizer: synchronizer,
@@ -966,7 +969,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	ticker := make(chan time.Time)
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -976,7 +979,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
-		Logger:            log,
+		Diag:              diag,
 		Controller:        controller,
 		ResendTimeout:     time.Second,
 		ViewChangeTimeout: 10 * time.Second,
@@ -1022,7 +1025,7 @@ func TestViewChangerTimeout(t *testing.T) {
 	ticker := make(chan time.Time)
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1040,7 +1043,7 @@ func TestViewChangerTimeout(t *testing.T) {
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
-		Logger:            log,
+		Diag:              diag,
 		ViewChangeTimeout: 10 * time.Second,
 		ResendTimeout:     20 * time.Second,
 		Synchronizer:      synchronizer,
@@ -1080,7 +1083,7 @@ func TestBackOff(t *testing.T) {
 	ticker := make(chan time.Time)
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1100,7 +1103,7 @@ func TestBackOff(t *testing.T) {
 		Comm:              comm,
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
-		Logger:            log,
+		Diag:              diag,
 		ViewChangeTimeout: timeout,
 		ResendTimeout:     100 * time.Second,
 		Synchronizer:      synchronizer,
@@ -1145,7 +1148,7 @@ func TestCommitLastDecision(t *testing.T) {
 	})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -1180,7 +1183,7 @@ func TestCommitLastDecision(t *testing.T) {
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Signer:        signer,
@@ -1238,7 +1241,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	synchronizer := &mocks.Synchronizer{}
@@ -1251,7 +1254,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 		SelfID:       3,
 		N:            4,
 		NodesList:    []uint64{0, 1, 2, 3},
-		Logger:       log,
+		Diag:         diag,
 		Ticker:       make(chan time.Time),
 		Checkpoint:   &checkpoint,
 		Synchronizer: synchronizer,
@@ -1363,7 +1366,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
-			log := basicLog.Sugar()
+			diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -1379,7 +1382,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 				NodesList:     []uint64{0, 1, 2, 3},
 				Comm:          comm,
 				Signer:        signer,
-				Logger:        log,
+				Diag:          diag,
 				RequestsTimer: reqTimer,
 				Ticker:        make(chan time.Time),
 				InFlight:      test.getInFlight(),
@@ -1585,7 +1588,7 @@ func TestInformViewChanger(t *testing.T) {
 	reqTimer.On("RestartTimers")
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -1595,7 +1598,7 @@ func TestInformViewChanger(t *testing.T) {
 		Comm:          comm,
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
-		Logger:        log,
+		Diag:          diag,
 		Controller:    controller,
 		InMsqQSize:    100,
 	}
@@ -1634,7 +1637,7 @@ func TestRestoreViewChange(t *testing.T) {
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	controller := &mocks.ViewController{}
@@ -1646,7 +1649,7 @@ func TestRestoreViewChange(t *testing.T) {
 		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
 		Signer:        signer,
-		Logger:        log,
+		Diag:          diag,
 		RequestsTimer: reqTimer,
 		Ticker:        make(chan time.Time),
 		InFlight:      &bft.InFlightData{},
@@ -1919,7 +1922,7 @@ func TestCommitInFlight(t *testing.T) {
 	})
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
@@ -1961,7 +1964,7 @@ func TestCommitInFlight(t *testing.T) {
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
 		Comm:          comm,
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Signer:        signer,
@@ -2054,7 +2057,7 @@ func TestCommitInFlight(t *testing.T) {
 func TestDontCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
-	log := basicLog.Sugar()
+	diag := api.Diagnostics{}.SetLogger(basicLog.Sugar())
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
@@ -2078,7 +2081,7 @@ func TestDontCommitInFlight(t *testing.T) {
 		SelfID:        3,
 		N:             4,
 		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
+		Diag:          diag,
 		Verifier:      verifier,
 		Controller:    controller,
 		Ticker:        make(chan time.Time),

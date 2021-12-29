@@ -87,7 +87,7 @@ type Controller struct {
 	Batcher            Batcher
 	LeaderMonitor      LeaderMonitor
 	Verifier           api.Verifier
-	Logger             api.Logger
+	Diag               api.Diagnostics
 	Assembler          api.Assembler
 	Application        api.Application
 	FailureDetector    FailureDetector
@@ -134,7 +134,7 @@ func (c *Controller) blacklist() []uint64 {
 	prop, _ := c.Checkpoint.Get()
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
-		c.Logger.Panicf("Failed unmarshalling metadata: %v", err)
+		c.Diag.L().Panicf("Failed unmarshalling metadata: %v", err)
 	}
 
 	return md.BlackList
@@ -194,15 +194,15 @@ func (c *Controller) GetLeaderID() uint64 {
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
 	iAm, leaderID := c.iAmTheLeader()
 	if !iAm {
-		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
+		c.Diag.L().Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
 	reqInfo, err := c.Verifier.VerifyRequest(req)
 	if err != nil {
-		c.Logger.Warnf("Got bad request from %d: %v", sender, err)
+		c.Diag.L().Warnf("Got bad request from %d: %v", sender, err)
 		return
 	}
-	c.Logger.Debugf("Got request from %d", sender)
+	c.Diag.L().Debugf("Got request from %d", sender)
 	c.addRequest(reqInfo, req)
 }
 
@@ -215,11 +215,11 @@ func (c *Controller) SubmitRequest(request []byte) error {
 func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 	err := c.RequestPool.Submit(request)
 	if err != nil {
-		c.Logger.Infof("Request %s was not submitted, error: %s", info, err)
+		c.Diag.L().Infof("Request %s was not submitted, error: %s", info, err)
 		return err
 	}
 
-	c.Logger.Debugf("Request %s was submitted", info)
+	c.Diag.L().Debugf("Request %s was submitted", info)
 
 	return nil
 }
@@ -229,11 +229,11 @@ func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Infof("Request %s timeout expired, this node is the leader, nothing to do", info)
+		c.Diag.L().Infof("Request %s timeout expired, this node is the leader, nothing to do", info)
 		return
 	}
 
-	c.Logger.Infof("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
+	c.Diag.L().Infof("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
 	c.Comm.SendTransaction(leaderID, request)
 
 	return
@@ -244,11 +244,11 @@ func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Infof("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
+		c.Diag.L().Infof("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
 		return
 	}
 
-	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
+	c.Diag.L().Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
 	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
 
 	return
@@ -257,33 +257,33 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 // OnAutoRemoveTimeout is called when the auto-remove timeout expires.
 // Called by the request-pool timeout goroutine.
 func (c *Controller) OnAutoRemoveTimeout(requestInfo types.RequestInfo) {
-	c.Logger.Debugf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
+	c.Diag.L().Debugf("Request %s auto-remove timeout expired, removed from the request pool", requestInfo)
 }
 
 // OnHeartbeatTimeout is called when the heartbeat timeout expires.
 // Called by the HeartbeatMonitor goroutine.
 func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
-	c.Logger.Debugf("Heartbeat timeout expired, reported-view: %d, reported-leader: %d", view, leaderID)
+	c.Diag.L().Debugf("Heartbeat timeout expired, reported-view: %d, reported-leader: %d", view, leaderID)
 
 	iAm, currentLeaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Debugf("Heartbeat timeout expired, this node is the leader, nothing to do; current-view: %d, current-leader: %d",
+		c.Diag.L().Debugf("Heartbeat timeout expired, this node is the leader, nothing to do; current-view: %d, current-leader: %d",
 			c.getCurrentViewNumber(), currentLeaderID)
 		return
 	}
 
 	if leaderID != currentLeaderID {
-		c.Logger.Warnf("Heartbeat timeout expired, but current leader: %d, differs from reported leader: %d; ignoring", currentLeaderID, leaderID)
+		c.Diag.L().Warnf("Heartbeat timeout expired, but current leader: %d, differs from reported leader: %d; ignoring", currentLeaderID, leaderID)
 		return
 	}
 
-	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
+	c.Diag.L().Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
 	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
 }
 
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
-	c.Logger.Debugf("%d got message from %d: %s", c.ID, sender, MsgToString(m))
+	c.Diag.L().Debugf("%d got message from %d: %s", c.ID, sender, MsgToString(m))
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
 		c.currViewLock.RLock()
@@ -303,14 +303,14 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	case *protos.Message_StateTransferResponse:
 		c.Collector.HandleMessage(sender, m)
 	default:
-		c.Logger.Warnf("Unexpected message type, ignoring")
+		c.Diag.L().Warnf("Unexpected message type, ignoring")
 	}
 }
 
 func (c *Controller) respondToStateTransferRequest(sender uint64) {
 	vs := c.ViewSequences.Load()
 	if vs == nil {
-		c.Logger.Panicf("ViewSequences is nil")
+		c.Diag.L().Panicf("ViewSequences is nil")
 	}
 	msg := &protos.Message{
 		Content: &protos.Message_StateTransferResponse{
@@ -350,14 +350,14 @@ func (c *Controller) startView(proposalSequence uint64) {
 		role = Leader
 	}
 	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
-	c.Logger.Infof("Starting view with number %d, sequence %d, and decisions %d", c.currViewNumber, proposalSequence, c.currDecisionsInView)
+	c.Diag.L().Infof("Starting view with number %d, sequence %d, and decisions %d", c.currViewNumber, proposalSequence, c.currDecisionsInView)
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64, newDecisionsInView uint64) {
 
 	latestView := c.getCurrentViewNumber()
 	if latestView > newViewNumber {
-		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
+		c.Diag.L().Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
 		return
 	}
 
@@ -367,7 +367,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 
 	c.setCurrentViewNumber(newViewNumber)
 	c.setCurrentDecisionsInView(newDecisionsInView)
-	c.Logger.Debugf("Starting view after setting decisions in view to %d", newDecisionsInView)
+	c.Diag.L().Debugf("Starting view after setting decisions in view to %d", newDecisionsInView)
 	c.startView(newProposalSequence)
 
 	// If I'm the leader, I can claim the leader token.
@@ -380,7 +380,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 func (c *Controller) abortView(view uint64) bool {
 	currView := c.getCurrentViewNumber()
 	if view < currView {
-		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
+		c.Diag.L().Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
 		return false
 	}
 
@@ -389,7 +389,7 @@ func (c *Controller) abortView(view uint64) bool {
 	c.relinquishLeaderToken()
 
 	// Kill current view
-	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
+	c.Diag.L().Debugf("Aborting current view with number %d", c.currViewNumber)
 	c.currView.Abort()
 
 	return true
@@ -405,7 +405,7 @@ func (c *Controller) Sync() {
 
 // AbortView makes the controller abort the current view
 func (c *Controller) AbortView(view uint64) {
-	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
+	c.Diag.L().Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
 
 	c.Batcher.Close()
 
@@ -414,7 +414,7 @@ func (c *Controller) AbortView(view uint64) {
 
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
 func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint64) {
-	c.Logger.Debugf("ViewChanged, the new view is %d", newViewNumber)
+	c.Diag.L().Debugf("ViewChanged, the new view is %d", newViewNumber)
 	amILeader, _ := c.iAmTheLeader()
 	if amILeader {
 		c.Batcher.Close()
@@ -453,7 +453,7 @@ func (c *Controller) run() {
 	// At exit, always make sure to kill current view
 	// and wait for it to finish.
 	defer func() {
-		c.Logger.Infof("Exiting")
+		c.Diag.L().Infof("Exiting")
 		c.currView.Abort()
 	}()
 
@@ -477,7 +477,7 @@ func (c *Controller) run() {
 			} else {
 				vs := c.ViewSequences.Load()
 				if vs == nil {
-					c.Logger.Panicf("ViewSequences is nil")
+					c.Diag.L().Panicf("ViewSequences is nil")
 				}
 				c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
@@ -491,7 +491,7 @@ func (c *Controller) decide(d decision) {
 		c.close()
 	}
 	c.Checkpoint.Set(d.proposal, d.signatures)
-	c.Logger.Debugf("Node %d delivered proposal", c.ID)
+	c.Diag.L().Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
 	select {
 	case c.deliverChan <- struct{}{}:
@@ -502,13 +502,13 @@ func (c *Controller) decide(d decision) {
 
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(d.proposal.Metadata, md); err != nil {
-		c.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+		c.Diag.L().Panicf("Failed to unmarshal proposal metadata, error: %v", err)
 	}
 
 	if c.checkIfRotate(md.BlackList) {
-		c.Logger.Debugf("Restarting view to rotate the leader")
+		c.Diag.L().Debugf("Restarting view to rotate the leader")
 		c.changeView(c.getCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
-		c.Logger.Debugf("Restarting timers in request pool due to leader rotation")
+		c.Diag.L().Debugf("Restarting timers in request pool due to leader rotation")
 		c.RequestPool.RestartTimers()
 	}
 	c.MaybePruneRevokedRequests()
@@ -520,14 +520,14 @@ func (c *Controller) decide(d decision) {
 func (c *Controller) checkIfRotate(blacklist []uint64) bool {
 	view := c.getCurrentViewNumber()
 	decisionsInView := c.getCurrentDecisionsInView()
-	c.Logger.Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
+	c.Diag.L().Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
 		view, decisionsInView, c.DecisionsPerLeader, c.N, blacklist)
 	// called after increment
 	currLeader := getLeaderID(view, c.N, c.NodesList, c.LeaderRotation, decisionsInView-1, c.DecisionsPerLeader, blacklist)
 	nextLeader := getLeaderID(view, c.N, c.NodesList, c.LeaderRotation, decisionsInView, c.DecisionsPerLeader, blacklist)
 	shouldWeRotate := currLeader != nextLeader
 	if shouldWeRotate {
-		c.Logger.Infof("Rotating leader from %d to %d", currLeader, nextLeader)
+		c.Diag.L().Infof("Rotating leader from %d to %d", currLeader, nextLeader)
 	}
 
 	return shouldWeRotate
@@ -548,13 +548,13 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	}
 	decision := syncResponse.Latest
 	if decision.Proposal.Metadata == nil {
-		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
+		c.Diag.L().Infof("Synchronizer returned with proposal metadata nil")
 		response := c.fetchState()
 		if response == nil {
 			return 0, 0, 0
 		}
 		if response.View > 0 && response.Seq == 1 {
-			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
+			c.Diag.L().Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
 					NewView: &protos.ViewMetadata{
@@ -565,7 +565,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 				},
 			}
 			if err := c.State.Save(newViewToSave); err != nil {
-				c.Logger.Panicf("Failed to save message to state, error: %v", err)
+				c.Diag.L().Panicf("Failed to save message to state, error: %v", err)
 			}
 			c.ViewChanger.InformNewView(response.View)
 			return response.View, 1, 0
@@ -574,13 +574,13 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	}
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(decision.Proposal.Metadata, md); err != nil {
-		c.Logger.Panicf("Controller was unable to unmarshal the proposal metadata returned by the Synchronizer")
+		c.Diag.L().Panicf("Controller was unable to unmarshal the proposal metadata returned by the Synchronizer")
 	}
 	if md.ViewId < c.currViewNumber {
-		c.Logger.Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
+		c.Diag.L().Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
 		return 0, 0, 0
 	}
-	c.Logger.Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
+	c.Diag.L().Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
 
 	view := md.ViewId
 	newView := false
@@ -588,7 +588,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	response := c.fetchState()
 	if response != nil {
 		if response.View > md.ViewId && response.Seq == md.LatestSequence+1 {
-			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
+			c.Diag.L().Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
 			view = response.View
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
@@ -600,16 +600,16 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 				},
 			}
 			if err := c.State.Save(newViewToSave); err != nil {
-				c.Logger.Panicf("Failed to save message to state, error: %v", err)
+				c.Diag.L().Panicf("Failed to save message to state, error: %v", err)
 			}
 			newView = true
 		}
 	}
 
-	c.Logger.Debugf("Node %d is setting the checkpoint after sync to view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
+	c.Diag.L().Debugf("Node %d is setting the checkpoint after sync to view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
 	c.Checkpoint.Set(decision.Proposal, decision.Signatures)
 	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
-	c.Logger.Debugf("Node %d is informing the view changer after sync of view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
+	c.Diag.L().Debugf("Node %d is informing the view changer after sync of view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
 	c.ViewChanger.InformNewView(view)
 	if md.LatestSequence == 0 || newView {
 		return view, md.LatestSequence + 1, 0
@@ -651,7 +651,7 @@ func (c *Controller) MaybePruneRevokedRequests() {
 	}
 	c.verificationSequence = newVerSqn
 
-	c.Logger.Infof("Verification sequence changed: %d --> %d", oldVerSqn, newVerSqn)
+	c.Diag.L().Infof("Verification sequence changed: %d --> %d", oldVerSqn, newVerSqn)
 	c.RequestPool.Prune(func(req []byte) error {
 		_, err := c.Verifier.VerifyRequest(req)
 		return err
@@ -693,7 +693,7 @@ func (c *Controller) syncOnStart(startViewNumber uint64, startProposalSequence u
 
 // Start the controller
 func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64, startDecisionsInView uint64, syncOnStart bool) {
-	c.Logger.Debugf("Starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
+	c.Diag.L().Debugf("Starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
 	c.controllerDone.Add(1)
 	c.stopOnce = sync.Once{}
 	c.syncChan = make(chan struct{}, 1)
@@ -705,14 +705,14 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.abortViewChan = make(chan uint64, 1)
 
 	Q, F := computeQuorum(c.N)
-	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
+	c.Diag.L().Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
 
 	c.verificationSequence = c.Verifier.VerificationSequence()
 
 	if syncOnStart {
 		startViewNumber, startProposalSequence, startDecisionsInView = c.syncOnStart(startViewNumber, startProposalSequence, startDecisionsInView)
-		c.Logger.Debugf("After sync starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
+		c.Diag.L().Debugf("After sync starting controller with view %d, sequence %d, and decisions %d", startViewNumber, startProposalSequence, startDecisionsInView)
 	}
 
 	c.currViewNumber = startViewNumber
@@ -810,7 +810,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 func (c *Controller) removeDeliveredFromPool(d decision) {
 	for _, reqInfo := range d.requests {
 		if err := c.RequestPool.RemoveRequest(reqInfo); err != nil {
-			c.Logger.Debugf("Request %s wasn't found in the pool : %s", reqInfo, err)
+			c.Diag.L().Debugf("Request %s wasn't found in the pool : %s", reqInfo, err)
 		}
 	}
 }

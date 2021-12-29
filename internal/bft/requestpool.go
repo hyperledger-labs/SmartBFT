@@ -21,6 +21,8 @@ import (
 const (
 	defaultRequestTimeout = 10 * time.Second // for unit tests only
 	defaultMaxBytes       = 100 * 1024       // default max request size would be of size 100Kb
+	metricsRPLengthLabel  = "request_pool_length"
+	metricsRPSizeLabel    = "request_pool_size"
 )
 
 var (
@@ -31,8 +33,8 @@ var (
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
 
-// RequestTimeoutHandler defines the methods called by request timeout timers created by time.AfterFunc.
-// This interface is implemented by the bft.Controller.
+// RequestTimeoutHandler defines the methods called by request timeout timers
+// created by time.AfterFunc. This interface is implemented by the bft.Controller.
 type RequestTimeoutHandler interface {
 
 	// OnRequestTimeout is called when a request timeout expires.
@@ -49,7 +51,7 @@ type RequestTimeoutHandler interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger    api.Logger
+	diag      api.Diagnostics
 	inspector api.RequestInspector
 	options   PoolOptions
 
@@ -81,7 +83,13 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
+func NewPool(
+	inspector api.RequestInspector,
+	th RequestTimeoutHandler,
+	options PoolOptions,
+	diag api.Diagnostics,
+	submittedChan chan struct{},
+) *Pool {
 	if options.ForwardTimeout == 0 {
 		options.ForwardTimeout = defaultRequestTimeout
 	}
@@ -100,7 +108,7 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 
 	return &Pool{
 		timeoutHandler: th,
-		logger:         log,
+		diag:           diag,
 		inspector:      inspector,
 		fifo:           list.New(),
 		semaphore:      semaphore.NewWeighted(options.QueueSize),
@@ -116,7 +124,7 @@ func (rp *Pool) ChangeTimeouts(th RequestTimeoutHandler, options PoolOptions) {
 	defer rp.lock.Unlock()
 
 	if !rp.stopped {
-		rp.logger.Errorf("Trying to change timeouts but the pool is not stopped")
+		rp.diag.L().Errorf("Trying to change timeouts but the pool is not stopped")
 		return
 	}
 
@@ -136,7 +144,7 @@ func (rp *Pool) ChangeTimeouts(th RequestTimeoutHandler, options PoolOptions) {
 
 	rp.timeoutHandler = th
 
-	rp.logger.Debugf("Changed pool timeouts")
+	rp.diag.L().Debugf("Changed pool timeouts")
 }
 
 func (rp *Pool) isClosed() bool {
@@ -162,7 +170,7 @@ func (rp *Pool) Submit(request []byte) error {
 	rp.lock.RUnlock()
 
 	if alreadyExists {
-		rp.logger.Debugf("request %s already exists in the pool", reqInfo)
+		rp.diag.L().Debugf("request %s already exists in the pool", reqInfo)
 		return ErrReqAlreadyExists
 	}
 
@@ -173,7 +181,10 @@ func (rp *Pool) Submit(request []byte) error {
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
 
-	reqCopy := append(make([]byte, 0), request...)
+	var (
+		reqCopy = append(make([]byte, 0), request...)
+		reqSize = len(reqCopy)
+	)
 
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
@@ -181,7 +192,7 @@ func (rp *Pool) Submit(request []byte) error {
 	if _, exist := rp.existMap[reqInfo]; exist {
 		rp.semaphore.Release(1)
 		errStr := fmt.Sprintf("request %s has been already added to the pool", reqInfo)
-		rp.logger.Debugf(errStr)
+		rp.diag.L().Debugf(errStr)
 		return ErrReqAlreadyExists
 	}
 
@@ -190,7 +201,7 @@ func (rp *Pool) Submit(request []byte) error {
 		func() { rp.onRequestTO(reqCopy, reqInfo) },
 	)
 	if rp.stopped {
-		rp.logger.Debugf("pool stopped, submitting with a stopped timer, request: %s", reqInfo)
+		rp.diag.L().Debugf("pool stopped, submitting with a stopped timer, request: %s", reqInfo)
 		to.Stop()
 	}
 	reqItem := &requestItem{
@@ -202,10 +213,12 @@ func (rp *Pool) Submit(request []byte) error {
 	rp.existMap[reqInfo] = element
 
 	if len(rp.existMap) != rp.fifo.Len() {
-		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
+		rp.diag.L().Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
 	}
 
-	rp.logger.Debugf("Request %s submitted; started a timeout: %s", reqInfo, rp.options.ForwardTimeout)
+	rp.diag.L().Debugf("Request %s submitted; started a timeout: %s", reqInfo, rp.options.ForwardTimeout)
+	rp.diag.C().With(metricsRPLengthLabel).Add(float64(1))
+	rp.diag.C().With(metricsRPSizeLabel).Add(float64(reqSize))
 
 	// notify that a request was submitted
 	select {
@@ -213,7 +226,7 @@ func (rp *Pool) Submit(request []byte) error {
 	default:
 	}
 
-	rp.sizeBytes += uint64(len(element.Value.(*requestItem).request))
+	rp.sizeBytes += uint64(reqSize)
 
 	return nil
 }
@@ -247,7 +260,7 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) (bat
 		req := element.Value.(*requestItem).request
 		reqLen := uint64(len(req))
 		if totalSize+reqLen > maxSizeBytes {
-			rp.logger.Debugf("Returning batch of %d requests totalling %dB as it exceeds threshold of %dB",
+			rp.diag.L().Debugf("Returning batch of %d requests totalling %dB as it exceeds threshold of %dB",
 				len(batch), totalSize, maxSizeBytes)
 			return batch, true
 		}
@@ -260,7 +273,7 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) (bat
 	fullC := len(batch) == maxCount
 	full = fullS || fullC
 	if len(batch) > 0 {
-		rp.logger.Debugf("Returning batch of %d requests totalling %dB",
+		rp.diag.L().Debugf("Returning batch of %d requests totalling %dB",
 			len(batch), totalSize)
 	}
 	return batch, full
@@ -278,14 +291,14 @@ func (rp *Pool) Prune(predicate func([]byte) error) {
 		}
 
 		if remErr := rp.RemoveRequest(infoVec[i]); remErr != nil {
-			rp.logger.Debugf("Failed to prune request: %s; predicate error: %s; remove error: %s", infoVec[i], err, remErr)
+			rp.diag.L().Debugf("Failed to prune request: %s; predicate error: %s; remove error: %s", infoVec[i], err, remErr)
 		} else {
-			rp.logger.Debugf("Pruned request: %s; predicate error: %s", infoVec[i], err)
+			rp.diag.L().Debugf("Pruned request: %s; predicate error: %s", infoVec[i], err)
 			numPruned++
 		}
 	}
 
-	rp.logger.Debugf("Pruned %d requests", numPruned)
+	rp.diag.L().Debugf("Pruned %d requests", numPruned)
 }
 
 func (rp *Pool) copyRequests() (requestVec [][]byte, infoVec []types.RequestInfo) {
@@ -313,12 +326,18 @@ func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	element, exist := rp.existMap[requestInfo]
 	if !exist {
 		errStr := fmt.Sprintf("request %s is not in the pool at remove time", requestInfo)
-		rp.logger.Debugf(errStr)
+		rp.diag.L().Debugf(errStr)
 		return fmt.Errorf(errStr)
 	}
 
+	reqSize := len(element.Value.(*requestItem).request)
+
 	rp.deleteRequest(element, requestInfo)
-	rp.sizeBytes -= uint64(len(element.Value.(*requestItem).request))
+	rp.sizeBytes -= uint64(reqSize)
+
+	rp.diag.C().With(metricsRPLengthLabel).Add(float64(-1))
+	rp.diag.C().With(metricsRPSizeLabel).Add(float64(reqSize))
+
 	return nil
 }
 
@@ -328,11 +347,11 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 
 	rp.fifo.Remove(element)
 	delete(rp.existMap, requestInfo)
-	rp.logger.Infof("Removed request %s from request pool", requestInfo)
+	rp.diag.L().Infof("Removed request %s from request pool", requestInfo)
 	rp.semaphore.Release(1)
 
 	if len(rp.existMap) != rp.fifo.Len() {
-		rp.logger.Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
+		rp.diag.L().Panicf("RequestPool map and list are of different length: map=%d, list=%d", len(rp.existMap), rp.fifo.Len())
 	}
 }
 
@@ -362,7 +381,7 @@ func (rp *Pool) StopTimers() {
 		item.timeout.Stop()
 	}
 
-	rp.logger.Debugf("Stopped all timers: size=%d", len(rp.existMap))
+	rp.diag.L().Debugf("Stopped all timers: size=%d", len(rp.existMap))
 }
 
 // RestartTimers restarts all the timeout timers attached to the pending requests, as RequestForwardTimeout, and re-allows
@@ -384,7 +403,7 @@ func (rp *Pool) RestartTimers() {
 		item.timeout = to
 	}
 
-	rp.logger.Debugf("Restarted all timers: size=%d", len(rp.existMap))
+	rp.diag.L().Debugf("Restarted all timers: size=%d", len(rp.existMap))
 }
 
 func (rp *Pool) contains(reqInfo types.RequestInfo) bool {
@@ -405,13 +424,13 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	element, contains := rp.existMap[reqInfo]
 	if !contains {
 		rp.lock.Unlock()
-		rp.logger.Debugf("Request %s no longer in pool", reqInfo)
+		rp.diag.L().Debugf("Request %s no longer in pool", reqInfo)
 		return
 	}
 
 	if rp.closed || rp.stopped {
 		rp.lock.Unlock()
-		rp.logger.Debugf("Pool stopped, will NOT start a leader-forwarding timeout")
+		rp.diag.L().Debugf("Pool stopped, will NOT start a leader-forwarding timeout")
 		return
 	}
 
@@ -421,12 +440,12 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 		rp.options.ComplainTimeout,
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
 	)
-	rp.logger.Debugf("Request %s; started a leader-forwarding timeout: %s", reqInfo, rp.options.ComplainTimeout)
+	rp.diag.L().Debugf("Request %s; started a leader-forwarding timeout: %s", reqInfo, rp.options.ComplainTimeout)
 
 	rp.lock.Unlock()
 
 	// may take time, in case Comm channel to leader is full; hence w/o the lock.
-	rp.logger.Debugf("Request %s timeout expired, going to send to leader", reqInfo)
+	rp.diag.L().Debugf("Request %s timeout expired, going to send to leader", reqInfo)
 	rp.timeoutHandler.OnRequestTimeout(request, reqInfo)
 }
 
@@ -441,13 +460,13 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	element, contains := rp.existMap[reqInfo]
 	if !contains {
 		rp.lock.Unlock()
-		rp.logger.Debugf("Request %s no longer in pool", reqInfo)
+		rp.diag.L().Debugf("Request %s no longer in pool", reqInfo)
 		return
 	}
 
 	if rp.closed || rp.stopped {
 		rp.lock.Unlock()
-		rp.logger.Debugf("Pool stopped, will NOT start auto-remove timeout")
+		rp.diag.L().Debugf("Pool stopped, will NOT start auto-remove timeout")
 		return
 	}
 
@@ -457,22 +476,21 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 		rp.options.AutoRemoveTimeout,
 		func() { rp.onAutoRemoveTO(reqInfo) },
 	)
-	rp.logger.Debugf("Request %s; started auto-remove timeout: %s", reqInfo, rp.options.AutoRemoveTimeout)
+	rp.diag.L().Debugf("Request %s; started auto-remove timeout: %s", reqInfo, rp.options.AutoRemoveTimeout)
 
 	rp.lock.Unlock()
 
 	// may take time, in case Comm channel is full; hence w/o the lock.
-	rp.logger.Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
+	rp.diag.L().Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
 	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request, reqInfo)
 }
 
 // called by the goroutine spawned by time.AfterFunc
 func (rp *Pool) onAutoRemoveTO(reqInfo types.RequestInfo) {
-	rp.logger.Debugf("Request %s auto-remove timeout expired, going to remove from pool", reqInfo)
+	rp.diag.L().Debugf("Request %s auto-remove timeout expired, going to remove from pool", reqInfo)
 	if err := rp.RemoveRequest(reqInfo); err != nil {
-		rp.logger.Errorf("Removal of request %s failed; error: %s", reqInfo, err)
+		rp.diag.L().Errorf("Removal of request %s failed; error: %s", reqInfo, err)
 		return
 	}
 	rp.timeoutHandler.OnAutoRemoveTimeout(reqInfo)
-	return
 }

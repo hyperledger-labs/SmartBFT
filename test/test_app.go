@@ -13,6 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -394,7 +395,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	config.DecisionsPerLeader = decisionsPerLeader
 
 	app.Setup = func() {
-		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(api.Diagnostics{}.SetLogger(app.logger), filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
@@ -410,7 +411,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			Config:             config,
 			ViewChangerTicker:  app.secondClock.C,
 			Scheduler:          app.clock.C,
-			Logger:             app.logger,
+			Diag:               api.Diagnostics{}.SetLogger(app.logger),
 			WAL:                writeAheadLog,
 			Metadata:           *app.latestMD,
 			Verifier:           app,

@@ -31,7 +31,7 @@ func (*StateRecorder) Restore(_ *View) error {
 type PersistedState struct {
 	InFlightProposal *InFlightData
 	Entries          [][]byte
-	Logger           api.Logger
+	Diag             api.Diagnostics
 	WAL              api.WriteAheadLog
 }
 
@@ -45,7 +45,7 @@ func (ps *PersistedState) Save(msgToSave *protos.SavedMessage) error {
 
 	b, err := proto.Marshal(msgToSave)
 	if err != nil {
-		ps.Logger.Panicf("Failed marshaling message: %v", err)
+		ps.Diag.L().Panicf("Failed marshaling message: %v", err)
 	}
 	// It is only safe to truncate if we either:
 	//
@@ -77,17 +77,17 @@ func (ps *PersistedState) storePrepared(commitMsg *protos.Message) {
 func (ps *PersistedState) LoadNewViewIfApplicable() (*types.ViewAndSeq, error) {
 	entries := ps.Entries
 	if len(entries) == 0 {
-		ps.Logger.Infof("Nothing to restore")
+		ps.Diag.L().Infof("Nothing to restore")
 		return nil, nil
 	}
 	lastEntry := entries[len(entries)-1]
 	lastPersistedMessage := &protos.SavedMessage{}
 	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
-		ps.Logger.Errorf("Failed unmarshaling last entry from WAL: %v", err)
+		ps.Diag.L().Errorf("Failed unmarshaling last entry from WAL: %v", err)
 		return nil, errors.Wrap(err, "failed unmarshaling last entry from WAL")
 	}
 	if newViewMsg := lastPersistedMessage.GetNewView(); newViewMsg != nil {
-		ps.Logger.Infof("last entry in WAL is a newView record")
+		ps.Diag.L().Infof("last entry in WAL is a newView record")
 		return &types.ViewAndSeq{View: newViewMsg.ViewId, Seq: newViewMsg.LatestSequence}, nil
 	}
 	return nil, nil
@@ -96,17 +96,17 @@ func (ps *PersistedState) LoadNewViewIfApplicable() (*types.ViewAndSeq, error) {
 func (ps *PersistedState) LoadViewChangeIfApplicable() (*protos.ViewChange, error) {
 	entries := ps.Entries
 	if len(entries) == 0 {
-		ps.Logger.Infof("Nothing to restore")
+		ps.Diag.L().Infof("Nothing to restore")
 		return nil, nil
 	}
 	lastEntry := entries[len(entries)-1]
 	lastPersistedMessage := &protos.SavedMessage{}
 	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
-		ps.Logger.Errorf("Failed unmarshaling last entry from WAL: %v", err)
+		ps.Diag.L().Errorf("Failed unmarshaling last entry from WAL: %v", err)
 		return nil, errors.Wrap(err, "failed unmarshaling last entry from WAL")
 	}
 	if viewChangeMsg := lastPersistedMessage.GetViewChange(); viewChangeMsg != nil {
-		ps.Logger.Infof("last entry in WAL is a viewChange message")
+		ps.Diag.L().Infof("last entry in WAL is a viewChange message")
 		return viewChangeMsg, nil
 	}
 	return nil, nil
@@ -118,16 +118,16 @@ func (ps *PersistedState) Restore(v *View) error {
 
 	entries := ps.Entries
 	if len(entries) == 0 {
-		ps.Logger.Infof("Nothing to restore")
+		ps.Diag.L().Infof("Nothing to restore")
 		return nil
 	}
 
-	ps.Logger.Infof("WAL contains %d entries", len(entries))
+	ps.Diag.L().Infof("WAL contains %d entries", len(entries))
 
 	lastEntry := entries[len(entries)-1]
 	lastPersistedMessage := &protos.SavedMessage{}
 	if err := proto.Unmarshal(lastEntry, lastPersistedMessage); err != nil {
-		ps.Logger.Errorf("Failed unmarshaling last entry from WAL: %v", err)
+		ps.Diag.L().Errorf("Failed unmarshaling last entry from WAL: %v", err)
 		return errors.Wrap(err, "failed unmarshaling last entry from WAL")
 	}
 
@@ -140,12 +140,12 @@ func (ps *PersistedState) Restore(v *View) error {
 	}
 
 	if newViewMsg := lastPersistedMessage.GetNewView(); newViewMsg != nil {
-		ps.Logger.Infof("last entry in WAL is a newView record")
+		ps.Diag.L().Infof("last entry in WAL is a newView record")
 		return nil
 	}
 
 	if viewChangeMsg := lastPersistedMessage.GetViewChange(); viewChangeMsg != nil {
-		ps.Logger.Infof("last entry in WAL is a viewChange message")
+		ps.Diag.L().Infof("last entry in WAL is a viewChange message")
 		return nil
 	}
 
@@ -174,10 +174,10 @@ func (ps *PersistedState) recoverProposed(lastPersistedMessage *protos.ProposedR
 	v.ProposalSequence = prp.Seq
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
-		ps.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+		ps.Diag.L().Panicf("Failed to unmarshal proposal metadata, error: %v", err)
 	}
 	v.DecisionsInView = md.DecisionsInView
-	ps.Logger.Infof("Restored proposal with sequence %d", lastPersistedMessage.GetPrePrepare().Seq)
+	ps.Diag.L().Infof("Restored proposal with sequence %d", lastPersistedMessage.GetPrePrepare().Seq)
 	return nil
 }
 
@@ -188,7 +188,7 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 	}
 	prePrepareMsg := &protos.SavedMessage{}
 	if err := proto.Unmarshal(entries[len(entries)-2], prePrepareMsg); err != nil {
-		ps.Logger.Errorf("Failed unmarshaling second last entry from WAL: %v", err)
+		ps.Diag.L().Errorf("Failed unmarshaling second last entry from WAL: %v", err)
 		return errors.Wrap(err, "failed unmarshaling last entry from WAL")
 	}
 
@@ -200,13 +200,13 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 
 	if v.ProposalSequence < prePrepareFromWAL.Seq {
 		err := fmt.Errorf("last proposal sequence persisted into WAL is %d which is greater than last committed sequence is %d", prePrepareFromWAL.Seq, v.ProposalSequence)
-		ps.Logger.Errorf("Failed recovery: %s", err)
+		ps.Diag.L().Errorf("Failed recovery: %s", err)
 		return err
 	}
 
 	// Check if the WAL's last sequence has been persisted into the application layer.
 	if v.ProposalSequence > prePrepareFromWAL.Seq {
-		ps.Logger.Infof("Last proposal with sequence %d has been safely committed", v.ProposalSequence)
+		ps.Diag.L().Infof("Last proposal with sequence %d has been safely committed", v.ProposalSequence)
 		return nil
 	}
 
@@ -230,7 +230,7 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 	v.ProposalSequence = prePrepareFromWAL.Seq
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
-		ps.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
+		ps.Diag.L().Panicf("Failed to unmarshal proposal metadata, error: %v", err)
 	}
 	v.DecisionsInView = md.DecisionsInView
 
@@ -242,6 +242,6 @@ func (ps *PersistedState) recoverPrepared(lastPersistedMessage *protos.Message, 
 		Value: signatureInLastSentCommit.Value,
 	}
 
-	ps.Logger.Infof("Restored proposal with sequence %d", prePrepareFromWAL.Seq)
+	ps.Diag.L().Infof("Restored proposal with sequence %d", prePrepareFromWAL.Seq)
 	return nil
 }
