@@ -336,7 +336,7 @@ func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	rp.sizeBytes -= uint64(reqSize)
 
 	rp.diag.C().With(metricsRPLengthLabel).Add(float64(-1))
-	rp.diag.C().With(metricsRPSizeLabel).Add(float64(reqSize))
+	rp.diag.C().With(metricsRPSizeLabel).Add(float64(-reqSize))
 
 	return nil
 }
