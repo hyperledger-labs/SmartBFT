@@ -365,7 +365,6 @@ func (c *Consensus) createComponents() {
 		Logger:             c.Logger,
 		Signer:             c.Signer,
 		Verifier:           c.Verifier,
-		Application:        c,
 		Checkpoint:         c.checkpoint,
 		InFlight:           c.inFlight,
 		State:              c.state,
@@ -406,7 +405,7 @@ func (c *Consensus) createComponents() {
 		Collector:          c.collector,
 		State:              c.state,
 	}
-
+	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
 	c.viewChanger.Comm = c.controller
 	c.viewChanger.Synchronizer = c.controller
 
