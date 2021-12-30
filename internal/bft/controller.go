@@ -128,6 +128,7 @@ type Controller struct {
 	ViewSequences *atomic.Value
 
 	StartedWG *sync.WaitGroup
+	syncLock  sync.Mutex
 }
 
 func (c *Controller) blacklist() []uint64 {
@@ -138,6 +139,16 @@ func (c *Controller) blacklist() []uint64 {
 	}
 
 	return md.BlackList
+}
+
+func (c *Controller) latestSeq() uint64 {
+	prop, _ := c.Checkpoint.Get()
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(prop.Metadata, md); err != nil {
+		c.Logger.Panicf("Failed unmarshalling metadata: %v", err)
+	}
+
+	return md.LatestSequence
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
@@ -541,6 +552,9 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	// we were syncing.
 	defer c.relinquishSyncToken()
 
+	c.syncLock.Lock()
+	defer c.syncLock.Unlock()
+
 	syncResponse := c.Synchronizer.Sync()
 	if syncResponse.Reconfig.InReplicatedDecisions {
 		c.close()
@@ -841,4 +855,36 @@ func (c *Controller) BroadcastConsensus(m *protos.Message) {
 			c.LeaderMonitor.HeartbeatWasSent()
 		}
 	}
+}
+
+type MutuallyExclusiveDeliver struct {
+	C *Controller
+}
+
+func (med *MutuallyExclusiveDeliver) Deliver(proposal types.Proposal, signature []types.Signature) types.Reconfig {
+	pendingProposalMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, pendingProposalMetadata); err != nil {
+		med.C.Logger.Panicf("Failed unmarshalling metadata of pending proposal: %v", err)
+	}
+	med.C.syncLock.Lock()
+	defer med.C.syncLock.Unlock()
+
+	// Fetch latest sequence from the latest checkpoint and compare it to the proposal that is about to be committed (pending).
+	// If the pending proposal's sequence has already been committed in the past,
+	// do not proceed to commit the proposal, but instead invoke a sync and update the checkpoint once more
+	// to match the sync result.
+	latest := med.C.latestSeq()
+	if latest >= pendingProposalMetadata.LatestSequence {
+		med.C.Logger.Infof("Attempted to deliver block %d via view change but meanwhile view change already synced to seq %d, "+
+			"returning result from sync", pendingProposalMetadata.LatestSequence, latest)
+		syncResult := med.C.Synchronizer.Sync()
+		med.C.Checkpoint.Set(syncResult.Latest.Proposal, syncResult.Latest.Signatures)
+		return types.Reconfig{
+			CurrentNodes:     syncResult.Reconfig.CurrentNodes,
+			InLatestDecision: syncResult.Reconfig.InReplicatedDecisions,
+			CurrentConfig:    syncResult.Reconfig.CurrentConfig,
+		}
+	}
+
+	return med.C.Application.Deliver(proposal, signature)
 }

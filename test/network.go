@@ -129,6 +129,7 @@ type Node struct {
 	n                   Network
 	lossProbability     float32
 	peerLossProbability map[uint64]float32
+	syncDelay           <-chan struct{}
 	probabilityLock     sync.RWMutex
 	peerMutatingFunc    map[uint64]func(uint64, *smartbftprotos.Message)
 	mutatingFuncLock    sync.RWMutex

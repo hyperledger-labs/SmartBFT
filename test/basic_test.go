@@ -57,6 +57,93 @@ func TestBasic(t *testing.T) {
 	}
 }
 
+func TestNodeViewChangeWhileInPartition(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		nodes = append(nodes, n)
+	}
+
+	var once sync.Once
+	var viewChangeTimeoutWG sync.WaitGroup
+	viewChangeTimeoutWG.Add(1)
+
+	var deliverWG sync.WaitGroup
+	deliverWG.Add(1)
+
+	syncDelay := make(chan struct{})
+
+	baseLogger := nodes[3].logger.Desugar()
+	nodes[3].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "is calling sync because it got a view change timeout") {
+			once.Do(func() {
+				viewChangeTimeoutWG.Done()
+			})
+		}
+
+		if strings.Contains(entry.Message, "Delivering to app the last decision proposal") {
+			close(syncDelay)
+		}
+
+		if strings.Contains(entry.Message, "Attempted to deliver block 1 via view change but meanwhile view change already synced to seq 1, returning result from sync") {
+			deliverWG.Done()
+		}
+
+		return nil
+	})).Sugar()
+
+	start := time.Now()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
+	}
+
+	startNodes(nodes, &network)
+
+	// Ensure the last node is disconnected and control its Sync()
+	nodes[len(nodes)-1].DelaySync(syncDelay)
+	nodes[len(nodes)-1].Disconnect()
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to a node
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		<-nodes[i].Delivered
+	}
+
+	// Disconnect leader to force view change on everyone
+	nodes[0].Disconnect()
+
+	// Accelerate the time until a view change because of heartbeat timeout
+	done := make(chan struct{})
+	defer func() {
+		close(done)
+	}()
+
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
+
+	// Wait for view change timeout to occur
+	viewChangeTimeoutWG.Wait()
+	// Connect the last node to let it participate in view change
+	nodes[len(nodes)-1].Connect()
+	// Ensure the last node calls deliver on top of calling sync
+	deliverWG.Wait()
+	// Ensure the last node successfully delivers the block to the application
+	<-nodes[len(nodes)-1].Delivered
+}
+
 func TestRestartFollowers(t *testing.T) {
 	t.Parallel()
 	network := make(Network)

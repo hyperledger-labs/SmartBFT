@@ -83,6 +83,21 @@ func (a *App) Submit(req Request) {
 
 // Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.SyncResponse {
+
+	a.Node.probabilityLock.RLock()
+	syncDelay := a.Node.syncDelay
+	a.Node.probabilityLock.RUnlock()
+
+	if syncDelay != nil {
+		defer func() {
+			<-syncDelay
+			a.Node.probabilityLock.Lock()
+			a.Node.syncDelay = nil
+			a.Node.probabilityLock.Unlock()
+		}()
+
+	}
+
 	records := a.Node.cb.readAll(*a.latestMD)
 	reconfigSync := types.ReconfigSync{InReplicatedDecisions: false}
 	for _, record := range records {
@@ -115,6 +130,12 @@ func (a *App) Restart() {
 	if err := a.Consensus.Start(); err != nil {
 		a.logger.Panicf("Consensus start returned an error : %v", err)
 	}
+}
+
+func (a *App) DelaySync(c <-chan struct{}) {
+	a.Node.probabilityLock.Lock()
+	defer a.Node.probabilityLock.Unlock()
+	a.Node.syncDelay = c
 }
 
 // Disconnect disconnects the node from the network
@@ -260,10 +281,18 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 		Proposal:   proposal,
 		Signatures: signatures,
 	}
+
+	prevSeq := a.latestMD.LatestSequence
+
 	a.latestMD = &smartbftprotos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, a.latestMD); err != nil {
 		panic(err)
 	}
+
+	if prevSeq == a.latestMD.LatestSequence {
+		a.logger.Panicf("Committed sequence %d twice", prevSeq)
+	}
+
 	a.Delivered <- record
 
 	for _, req := range record.Batch.Requests {
