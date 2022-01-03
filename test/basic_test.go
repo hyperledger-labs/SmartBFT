@@ -1753,7 +1753,11 @@ func TestBlacklistAndRedemption(t *testing.T) {
 		rand.Read(txID)
 		nodes[1].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
-			<-nodes[i].Delivered
+			select {
+			case <-nodes[i].Delivered:
+			case <-stop:
+				return
+			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
 		err = proto.Unmarshal(nodes[1].lastDecision.Proposal.Metadata, md)
@@ -1873,7 +1877,11 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 		rand.Read(txID)
 		nodes[3].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
-			<-nodes[i].Delivered
+			select {
+			case <-nodes[i].Delivered:
+			case <-stop:
+				return
+			}
 		}
 		md := &smartbftprotos.ViewMetadata{}
 		err = proto.Unmarshal(nodes[3].lastDecision.Proposal.Metadata, md)
