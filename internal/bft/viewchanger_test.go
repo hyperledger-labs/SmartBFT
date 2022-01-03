@@ -1956,6 +1956,7 @@ func TestCommitInFlight(t *testing.T) {
 	pruner := &mocks.Pruner{}
 	pruner.On("MaybePruneRevokedRequests")
 
+	sched := make(chan time.Time)
 	vc := &bft.ViewChanger{
 		SelfID:        1,
 		N:             4,
@@ -1966,7 +1967,7 @@ func TestCommitInFlight(t *testing.T) {
 		Controller:    controller,
 		Signer:        signer,
 		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
+		Ticker:        sched,
 		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &checkpoint,
 		ViewSequences: &atomic.Value{},
@@ -2013,6 +2014,11 @@ func TestCommitInFlight(t *testing.T) {
 	vc.HandleMessage(2, msg2)
 	m = <-msgChan
 	assert.NotNil(t, m.GetNewView())
+
+	go func() {
+		sched <- time.Now()
+		sched <- time.Now()
+	}()
 
 	signWG.Wait()
 

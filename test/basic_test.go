@@ -1657,6 +1657,150 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 	})
 }
 
+func TestNodeInFlightFails(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+
+	var failedViewChange sync.WaitGroup
+	failedViewChange.Add(1)
+
+	var timeoutExpiredWG sync.WaitGroup
+	timeoutExpiredWG.Add(1)
+
+	var collectPreparesWG sync.WaitGroup
+	collectPreparesWG.Add(4)
+
+	var inFlightCommit sync.WaitGroup
+	inFlightCommit.Add(2)
+
+	var blockCommits uint32
+	var blockCommitsForLastNode uint32
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.SyncOnStart = false                       // Prevent last node from syncing without a reason
+		n.Consensus.Config.ViewChangeTimeout = time.Second * 10      // Make view change faster to speedup the test
+		n.Consensus.Config.LeaderHeartbeatTimeout = time.Second * 20 // Force view change sooner to speedup test
+		n.Consensus.Config.RequestForwardTimeout = time.Second * 25  // Prevent first node to forward after view change
+		n.Consensus.Config.RequestComplainTimeout = time.Second * 30 // Must be bigger than the forward timeout
+		n.Consensus.Config.SpeedUpViewChange = false
+		nodes = append(nodes, n)
+
+		baseLogger := n.logger.Desugar()
+
+		id := n.ID
+		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "collected 2 prepares") && atomic.LoadUint32(&blockCommits) == 1 {
+				collectPreparesWG.Done()
+			}
+
+			if strings.Contains(entry.Message, "In-flight view 0 with latest sequence 1 has committed a decision") && (id == 2 || id == 3) {
+				inFlightCommit.Done()
+			}
+
+			if strings.Contains(entry.Message, "Timeout expired waiting on In-flight 0 with latest sequence view to commit 1") && id == 4 {
+				timeoutExpiredWG.Done()
+			}
+
+			if strings.Contains(entry.Message, "Node 4 was unable to commit the in flight proposal, not changing the view") && id == 4 {
+				failedViewChange.Done()
+			}
+
+			return nil
+		})).Sugar()
+
+		// Make all nodes but the last node lose commits per the 'blockCommits' flag
+		if i == 4 {
+			continue
+		}
+		n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+			if msg.GetCommit() == nil {
+				return false
+			}
+			return atomic.LoadUint32(&blockCommits) == 1
+		})
+	}
+
+	// However the last node never receives any commits.
+	nodes[len(nodes)-1].LoseMessages(func(msg *smartbftprotos.Message) bool {
+		return msg.GetCommit() != nil && atomic.LoadUint32(&blockCommitsForLastNode) == 1
+	})
+
+	startNodes(nodes, &network)
+
+	atomic.StoreUint32(&blockCommits, 1)
+	atomic.StoreUint32(&blockCommitsForLastNode, 1)
+
+	nodes[0].Submit(Request{ID: "first request", ClientID: "alice"})
+
+	// Wait for prepares to be collected
+	collectPreparesWG.Wait()
+
+	// Ensure no one commits a block because of not enough commits gathered
+	var doNotCommitWG sync.WaitGroup
+	doNotCommitWG.Add(numberOfNodes)
+
+	for i := 0; i < numberOfNodes; i++ {
+		go func(deliverChannel chan *AppRecord) {
+			defer doNotCommitWG.Done()
+			select {
+			case <-deliverChannel:
+				assert.Fail(t, "should not have committed because first commit message should have been lost")
+			case <-time.After(time.Second):
+			}
+		}(nodes[i].Delivered)
+	}
+	doNotCommitWG.Wait()
+
+	// Re-enable commit messages to flow to all nodes but the last node
+	atomic.StoreUint32(&blockCommits, 0)
+
+	// Disconnect leader to force view change
+	nodes[0].Disconnect()
+
+	// Wait for view change and ensure in-flight view has committed the previous decision
+	inFlightCommit.Wait()
+
+	// Re-connect the leader
+	nodes[0].Connect()
+
+	// Ensure that only nodes 1 to 3 have committed in-flight
+	d1 := <-nodes[0].Delivered
+	d2 := <-nodes[1].Delivered
+	d3 := <-nodes[2].Delivered
+	select {
+	case <-nodes[3].Delivered:
+		t.Fatalf("Node 4 has committed but shouldn't have")
+	case <-time.After(time.Second):
+	}
+
+	// Ensure all nodes that committed, committed the same decision
+	assert.Equal(t, d1, d2)
+	assert.Equal(t, d2, d3)
+
+	// Wait for in-flight view of view changer to time out
+	timeoutExpiredWG.Wait()
+	// Re-enable commits to flow to the last node
+	atomic.StoreUint32(&blockCommitsForLastNode, 0)
+	// Ensure the last node failed changing the view
+	failedViewChange.Wait()
+	// However, it eventually syncs successfully and delivers the proposal
+	select {
+	case d4 := <-nodes[3].Delivered:
+		assert.Equal(t, d3, d4)
+	case <-time.After(time.Second * 30):
+		t.Fatalf("Didn't commit decision in a timely manner")
+	}
+}
+
 func TestBlacklistAndRedemption(t *testing.T) {
 	t.Parallel()
 	network := make(Network)

@@ -59,6 +59,7 @@ type App struct {
 	logger          *zap.SugaredLogger
 	lastRecord      lastRecord
 	verificationSeq uint64
+	messageLost     func(*smartbftprotos.Message) bool
 }
 
 type lastRecord struct {
@@ -180,6 +181,10 @@ func (a *App) ClearMutateSend(target uint64) {
 	delete(a.Node.peerMutatingFunc, target)
 }
 
+func (a *App) LoseMessages(filter func(*smartbftprotos.Message) bool) {
+	a.messageLost = filter
+}
+
 // RequestID returns info about the given request
 func (a *App) RequestID(req []byte) types.RequestInfo {
 	txn := requestFromBytes(req)
@@ -245,7 +250,7 @@ func (a *App) Sign([]byte) []byte {
 
 // SignProposal signs on the given proposal
 func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
-	if len(aux) == 0 && len(a.Node.n) > 1 {
+	if len(aux) == 0 && len(a.Node.n) > 1 && a.messageLost == nil {
 		panic(fmt.Sprintf("didn't receive prepares from anyone, n=%d", len(a.Node.n)))
 	}
 	return &types.Signature{ID: a.ID, Msg: aux}
