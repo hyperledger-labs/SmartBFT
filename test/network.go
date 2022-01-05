@@ -181,6 +181,9 @@ func (node *Node) serve() {
 			node.RUnlock()
 			switch msg := m.message.(type) {
 			case *smartbftprotos.Message:
+				if node.app != nil && node.app.messageLost != nil && node.app.messageLost(msg) {
+					continue
+				}
 				handler.HandleMessage(uint64(m.from), msg)
 			default:
 				handler.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)

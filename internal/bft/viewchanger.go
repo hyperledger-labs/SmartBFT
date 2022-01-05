@@ -233,13 +233,13 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 	}
 }
 
-func (v *ViewChanger) checkIfTimeout(now time.Time) {
+func (v *ViewChanger) checkIfTimeout(now time.Time) bool {
 	if !v.checkTimeout {
-		return
+		return false
 	}
 	nextTimeout := v.startViewChangeTime.Add(v.ViewChangeTimeout * time.Duration(v.backOffFactor))
 	if nextTimeout.After(now) { // check if timeout has passed
-		return
+		return false
 	}
 	v.Logger.Debugf("Node %d got a view change timeout, the current view is %d", v.SelfID, v.currView)
 	v.checkTimeout = false // stop timeout for now, a new one will start when a new view change begins
@@ -248,6 +248,7 @@ func (v *ViewChanger) checkIfTimeout(now time.Time) {
 	v.Logger.Debugf("Node %d is calling sync because it got a view change timeout", v.SelfID)
 	v.Synchronizer.Sync()
 	v.StartViewChange(v.currView, false) // don't stop the view, the sync maybe created a good view
+	return true
 }
 
 func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
@@ -1175,13 +1176,16 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 
 	v.Logger.Debugf("Node %d is creating a view for the in flight proposal", v.SelfID)
 
+	inFlightViewNum := proposalMD.ViewId
+	inFlightViewLatestSeq := proposalMD.LatestSequence
+
 	v.inFlightViewLock.Lock()
-	v.inFlightView = &View{
+	inFlightView := &View{
 		RetrieveCheckpoint: v.Checkpoint.Get,
 		DecisionsPerLeader: v.DecisionsPerLeader,
 		SelfID:             v.SelfID,
 		N:                  v.N,
-		Number:             proposalMD.ViewId,
+		Number:             inFlightViewNum,
 		LeaderID:           v.SelfID, // so that no byzantine leader will cause a complain
 		Quorum:             v.quorum,
 		Decider:            v,
@@ -1191,13 +1195,13 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		Comm:               v.Comm,
 		Verifier:           v.Verifier,
 		Signer:             v.Signer,
-		ProposalSequence:   proposalMD.LatestSequence,
+		ProposalSequence:   inFlightViewLatestSeq,
 		State:              v.State,
 		InMsgQSize:         v.InMsqQSize,
 		ViewSequences:      v.ViewSequences,
 		Phase:              PREPARED,
 	}
-
+	v.inFlightView = inFlightView
 	v.inFlightView.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(proposal.VerificationSequence),
 		Metadata:             proposal.Metadata,
@@ -1220,21 +1224,38 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		},
 	}
 
-	v.inFlightView.Start()
+	v.Logger.Debugf("Waiting two ticks before starting in-flight view")
+	<-v.Ticker
+	<-v.Ticker
+
+	inFlightView.Start()
+	defer inFlightView.Abort()
+
 	v.inFlightViewLock.Unlock()
 
 	v.Logger.Debugf("Node %d started a view for the in flight proposal", v.SelfID)
 
-	select { // wait for view to finish
-	case <-v.inFlightDecideChan:
-	case <-v.inFlightSyncChan:
-	case <-v.stopChan:
-	case now := <-v.Ticker:
-		v.lastTick = now
-		v.checkIfTimeout(now)
+	// wait for view to finish or time out
+	for {
+		select {
+		case <-v.inFlightDecideChan:
+			v.Logger.Infof("In-flight view %d with latest sequence %d has committed a decision", inFlightViewNum, inFlightViewLatestSeq)
+			return true
+		case <-v.inFlightSyncChan:
+			v.Logger.Infof("In-flight view %d with latest sequence %d has asked to sync", inFlightViewNum, inFlightViewLatestSeq)
+			return false
+		case now := <-v.Ticker:
+			v.lastTick = now
+			if v.checkIfTimeout(now) {
+				v.Logger.Infof("Timeout expired waiting on In-flight %d with latest sequence view to commit %d", inFlightViewNum, inFlightViewLatestSeq)
+				return false
+			}
+		case <-v.stopChan:
+			v.Logger.Infof("View changer was instructed to stop")
+			return false
+		}
 	}
 
-	v.inFlightView.Abort()
 	return true
 }
 
