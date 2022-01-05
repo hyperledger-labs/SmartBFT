@@ -129,6 +129,7 @@ type Node struct {
 	n                   Network
 	lossProbability     float32
 	peerLossProbability map[uint64]float32
+	syncDelay           <-chan struct{}
 	probabilityLock     sync.RWMutex
 	peerMutatingFunc    map[uint64]func(uint64, *smartbftprotos.Message)
 	mutatingFuncLock    sync.RWMutex
@@ -180,6 +181,9 @@ func (node *Node) serve() {
 			node.RUnlock()
 			switch msg := m.message.(type) {
 			case *smartbftprotos.Message:
+				if node.app != nil && node.app.messageLost != nil && node.app.messageLost(msg) {
+					continue
+				}
 				handler.HandleMessage(uint64(m.from), msg)
 			default:
 				handler.HandleRequest(uint64(m.from), msg.(*FwdMessage).Payload)

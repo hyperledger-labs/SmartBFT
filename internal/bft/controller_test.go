@@ -102,6 +102,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
 		RequestPool:   pool,
 		LeaderMonitor: leaderMon,
@@ -201,6 +202,7 @@ func TestLeaderPropose(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:      &bft.InFlightData{},
 		RequestPool:   reqPool,
 		LeaderMonitor: leaderMon,
 		WAL:           wal,
@@ -336,6 +338,7 @@ func TestViewChanged(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:      &bft.InFlightData{},
 		Checkpoint:    &types.Checkpoint{},
 		Signer:        signer,
 		WAL:           wal,
@@ -412,7 +415,7 @@ func TestSyncPrevView(t *testing.T) {
 	}).Return(types.SyncResponse{Latest: types.Decision{
 		Proposal: types.Proposal{
 			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
-				LatestSequence: 1,
+				LatestSequence: 0,
 				ViewId:         0, // previous view number
 			}),
 			VerificationSequence: 1},
@@ -428,7 +431,18 @@ func TestSyncPrevView(t *testing.T) {
 	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
+	collector := bft.StateCollector{
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
+	defer collector.Stop()
+
 	controller := &bft.Controller{
+		Collector:       &collector,
+		InFlight:        &bft.InFlightData{},
 		Batcher:         batcher,
 		RequestPool:     pool,
 		LeaderMonitor:   leaderMon,
@@ -601,6 +615,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			startedWG.Add(1)
 
 			controller := &bft.Controller{
+				InFlight:      &bft.InFlightData{},
 				Checkpoint:    &types.Checkpoint{},
 				RequestPool:   pool,
 				LeaderMonitor: leaderMon,
@@ -776,6 +791,7 @@ func TestSyncInform(t *testing.T) {
 	vc.ControllerStartedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:      &bft.InFlightData{},
 		Signer:        signer,
 		WAL:           wal,
 		ID:            2,
@@ -891,6 +907,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:           &bft.InFlightData{},
 		RequestPool:        reqPool,
 		LeaderMonitor:      leaderMon,
 		WAL:                wal,
@@ -1072,6 +1089,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
+		InFlight:           &bft.InFlightData{},
 		RequestPool:        reqPool,
 		LeaderMonitor:      leaderMon,
 		WAL:                wal,
