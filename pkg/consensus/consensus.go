@@ -404,6 +404,7 @@ func (c *Consensus) createComponents() {
 		ViewSequences:      &atomic.Value{},
 		Collector:          c.collector,
 		State:              c.state,
+		InFlight:           c.inFlight,
 	}
 	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
 	c.viewChanger.Comm = c.controller

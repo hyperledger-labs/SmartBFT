@@ -100,8 +100,8 @@ type Controller struct {
 	ViewChanger        *ViewChanger
 	Collector          *StateCollector
 	State              State
-
-	quorum int
+	InFlight           *InFlightData
+	quorum             int
 
 	currView Proposer
 
@@ -590,11 +590,18 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	if err := proto.Unmarshal(decision.Proposal.Metadata, md); err != nil {
 		c.Logger.Panicf("Controller was unable to unmarshal the proposal metadata returned by the Synchronizer")
 	}
+
+	latestSequence := c.latestSeq()
+
 	if md.ViewId < c.currViewNumber {
 		c.Logger.Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
 		return 0, 0, 0
 	}
-	c.Logger.Infof("Synchronized to view %d and sequence %d with verification sequence %d", md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
+
+	c.Logger.Infof("Replicated decisions from view %d and seq %d up to view %d and sequence %d with verification sequence %d",
+		c.currViewNumber, latestSequence, md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
+
+	c.maybePruneInFlight(*md)
 
 	view := md.ViewId
 	newView := false
@@ -602,7 +609,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	response := c.fetchState()
 	if response != nil {
 		if response.View > md.ViewId && response.Seq == md.LatestSequence+1 {
-			c.Logger.Infof("The collected state is with view %d and sequence %d", response.View, response.Seq)
+			c.Logger.Infof("Node %d collected state with view %d and sequence %d", c.ID, response.View, response.Seq)
 			view = response.View
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{
@@ -629,6 +636,31 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 		return view, md.LatestSequence + 1, 0
 	}
 	return view, md.LatestSequence + 1, md.DecisionsInView + 1
+}
+
+func (c *Controller) maybePruneInFlight(syncResultViewMD protos.ViewMetadata) {
+	inFlight := c.InFlight.InFlightProposal()
+	if inFlight == nil {
+		c.Logger.Debugf("No in-flight proposal to prune")
+		return
+	}
+	inFlightMD := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(inFlight.Metadata, inFlightMD); err != nil {
+		c.Logger.Panicf("In-flight proposal was malformed: %v", err)
+	}
+	c.Logger.Debugf("In-flight proposal: view: %d, seq: %d", inFlightMD.ViewId, inFlightMD.LatestSequence)
+	c.Logger.Debugf("Sync result: view: %d, seq: %d", syncResultViewMD.ViewId, syncResultViewMD.LatestSequence)
+
+	// If in-flight sequence is higher than latest committed sequence then in-flight might still be relevant
+	if syncResultViewMD.LatestSequence < inFlightMD.LatestSequence {
+		c.Logger.Infof("In-flight sequence is %d but latest committed sequence is %d, will not delete in-flight", inFlightMD.LatestSequence, syncResultViewMD.LatestSequence)
+		return
+	}
+	// Else we have replicated the in-flight proposal from another node or have committed it in the past,
+	// so we whenever we participate in a view change there will be no need to present this in-flight
+	// as we have corresponding signatures on the proposal.
+	c.Logger.Infof("Synced to sequence %d, deleting in-flight as it is stale", syncResultViewMD.LatestSequence)
+	c.InFlight.clear()
 }
 
 func (c *Controller) fetchState() *types.ViewAndSeq {

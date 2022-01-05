@@ -165,7 +165,8 @@ func computeQuorum(N uint64) (Q int, F int) {
 // InFlightData records proposals that are in-flight,
 // as well as their corresponding prepares.
 type InFlightData struct {
-	v atomic.Value
+	lock sync.RWMutex
+	v    *inFlightProposalData
 }
 
 type inFlightProposalData struct {
@@ -175,29 +176,36 @@ type inFlightProposalData struct {
 
 // InFlightProposal returns an in-flight proposal or nil if there is no such.
 func (ifp *InFlightData) InFlightProposal() *types.Proposal {
-	fetched := ifp.v.Load()
-	if fetched == nil {
+	ifp.lock.RLock()
+	defer ifp.lock.RUnlock()
+
+	if ifp.v == nil {
 		return nil
 	}
 
-	data := fetched.(inFlightProposalData)
-	return data.proposal
+	return ifp.v.proposal
 }
 
 // IsInFlightPrepared returns true if the in-flight proposal is prepared.
 func (ifp *InFlightData) IsInFlightPrepared() bool {
-	fetched := ifp.v.Load()
-	if fetched == nil {
+	ifp.lock.RLock()
+	defer ifp.lock.RUnlock()
+
+	if ifp.v == nil {
 		return false
 	}
-	data := fetched.(inFlightProposalData)
-	return data.prepared
+
+	return ifp.v.prepared
 }
 
 // StoreProposal stores an in-flight proposal.
 func (ifp *InFlightData) StoreProposal(prop types.Proposal) {
 	p := prop
-	ifp.v.Store(inFlightProposalData{proposal: &p})
+
+	ifp.lock.Lock()
+	defer ifp.lock.Unlock()
+
+	ifp.v = &inFlightProposalData{proposal: &p}
 }
 
 // StorePrepares stores alongside the already stored in-flight proposal that it is prepared.
@@ -207,7 +215,18 @@ func (ifp *InFlightData) StorePrepares(view, seq uint64) {
 		panic("stored prepares but proposal is not initialized")
 	}
 	p := prop
-	ifp.v.Store(inFlightProposalData{proposal: p, prepared: true})
+
+	ifp.lock.Lock()
+	defer ifp.lock.Unlock()
+
+	ifp.v = &inFlightProposalData{proposal: p, prepared: true}
+}
+
+func (ifp *InFlightData) clear() {
+	ifp.lock.Lock()
+	defer ifp.lock.Unlock()
+
+	ifp.v = nil
 }
 
 // ProposalMaker implements ProposerBuilder

@@ -1457,7 +1457,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	syncedWG.Add(1)
 	baseLogger3 := nodes[3].logger.Desugar()
 	nodes[3].logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The collected state") {
+		if strings.Contains(entry.Message, "Node 4 collected state with view 1 and sequence 4") {
 			syncedWG.Done()
 		}
 		return nil
@@ -2036,6 +2036,272 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	node2RemovedFromBlacklist.Wait()
 	node3RemovedFromBlacklist.Wait()
 	close(stop)
+}
+
+func TestNodeInFlightThenViewChange(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+
+	var blockCommits uint32
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+			if msg.GetCommit() == nil {
+				return false
+			}
+			return atomic.LoadUint32(&blockCommits) == 1
+		})
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	atomic.StoreUint32(&blockCommits, 1)
+
+	nodes[0].Submit(Request{ID: "first request", ClientID: "alice"})
+
+	// Ensure no one commits a block because of not enough commits gathered
+	var wg sync.WaitGroup
+	wg.Add(numberOfNodes)
+
+	for i := 0; i < numberOfNodes; i++ {
+		go func(deliverChannel chan *AppRecord) {
+			defer wg.Done()
+			select {
+			case <-deliverChannel:
+				assert.Fail(t, "should not have committed because first commit message should have been lost")
+			case <-time.After(time.Second):
+			}
+		}(nodes[i].Delivered)
+	}
+
+	wg.Wait()
+	atomic.StoreUint32(&blockCommits, 0)
+
+	nodes[len(nodes)-1].Disconnect() // Last node in partition
+
+	// Submit second request to all nodes to trigger view change
+	nodes[0].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[1].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "second request", ClientID: "alice"})
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		<-nodes[i].Delivered // first request
+		<-nodes[i].Delivered // second request
+	}
+
+	// Submit a third request to one of the nodes
+	nodes[0].Submit(Request{ID: "third request", ClientID: "alice"})
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		<-nodes[i].Delivered
+	}
+
+	// Reconnect the offline node and wait for it to sync
+	nodes[len(nodes)-1].Connect()
+	<-nodes[len(nodes)-1].Delivered
+	<-nodes[len(nodes)-1].Delivered
+	<-nodes[len(nodes)-1].Delivered
+
+	// Disconnect leader
+	nodes[1].Disconnect()
+
+	// Submit fourth request to all nodes to trigger view change
+	nodes[0].Submit(Request{ID: "fourth request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "fourth request", ClientID: "alice"})
+	nodes[3].Submit(Request{ID: "fourth request", ClientID: "alice"})
+
+	// Wait for a view change and a commit
+	<-nodes[0].Delivered
+	<-nodes[2].Delivered
+	<-nodes[3].Delivered
+}
+
+func TestNodeCommitTheRestPrepareAndCommittedNodeCrashesThenRecovers(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+
+	var blockCommits uint32
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		// All but the leader don't receive any commits
+		if i != 1 {
+			n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+				if msg.GetCommit() == nil {
+					return false
+				}
+				return atomic.LoadUint32(&blockCommits) == 1
+			})
+		}
+
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	atomic.StoreUint32(&blockCommits, 1)
+
+	nodes[0].Submit(Request{ID: "first request", ClientID: "alice"})
+
+	firstReqs := make(map[string]struct{})
+
+	// Ensure the leader commits
+	cmt := <-nodes[0].Delivered
+	firstReqs[string(cmt.Batch.toBytes())] = struct{}{}
+
+	// Disconnect the leader
+	nodes[0].Disconnect()
+
+	// Unblock commits
+	atomic.StoreUint32(&blockCommits, 0)
+
+	// Submit second request to all nodes to trigger view change
+	nodes[1].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[3].Submit(Request{ID: "second request", ClientID: "alice"})
+
+	secondReqs := make(map[string]struct{})
+	// Nodes should commit both decisions
+	for i := 1; i < numberOfNodes; i++ {
+		first := <-nodes[i].Delivered  // first request
+		second := <-nodes[i].Delivered // second request
+		firstReqs[string(first.Batch.toBytes())] = struct{}{}
+		secondReqs[string(second.Batch.toBytes())] = struct{}{}
+	}
+
+	// Reconnect the old leader
+	nodes[0].Connect()
+
+	// Wait for the old leader to sync
+	cmt = <-nodes[0].Delivered // second request
+	secondReqs[string(cmt.Batch.toBytes())] = struct{}{}
+
+	// Disconnect the new leader
+	nodes[1].Disconnect()
+
+	// Submit a third request to force view change
+	nodes[0].Submit(Request{ID: "third request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "third request", ClientID: "alice"})
+	nodes[3].Submit(Request{ID: "third request", ClientID: "alice"})
+
+	// Wait for remaining nodes to commit
+	<-nodes[0].Delivered
+	<-nodes[2].Delivered
+	<-nodes[3].Delivered
+
+	assert.Len(t, firstReqs, 1)
+	assert.Len(t, secondReqs, 1)
+}
+
+func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+
+	var blockPrepares uint32
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		// All but the leader don't receive any prepares
+		if i != 1 {
+			n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+				if msg.GetPrepare() == nil {
+					return false
+				}
+				return atomic.LoadUint32(&blockPrepares) == 1
+			})
+		}
+
+		nodes = append(nodes, n)
+	}
+
+	// Notice node 0's WAL append when receiving enough prepares
+	var wg sync.WaitGroup
+	wg.Add(2) // One for pre-prepare reception, one for reception of quorum of prepares
+
+	baseLogger := nodes[0].logger.Desugar()
+	nodes[0].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		// Only make not of log appends if we are interested in blocking prepares
+		if atomic.LoadUint32(&blockPrepares) == 0 {
+			return nil
+		}
+		if strings.Contains(entry.Message, "LogRecord appended successfully") {
+			wg.Done()
+		}
+		return nil
+	})).Sugar()
+	nodes[0].Setup()
+
+	startNodes(nodes, &network)
+
+	atomic.StoreUint32(&blockPrepares, 1)
+
+	nodes[0].Submit(Request{ID: "first request", ClientID: "alice"})
+
+	// Wait for node 0 to receive both pre-prepare and a quorum of prepares
+	wg.Wait()
+
+	// Disconnect node 0
+	nodes[0].Disconnect()
+
+	atomic.StoreUint32(&blockPrepares, 0)
+
+	// Submit second request to all nodes to trigger view change
+	nodes[1].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "second request", ClientID: "alice"})
+	nodes[3].Submit(Request{ID: "second request", ClientID: "alice"})
+
+	secondReqs := make(map[string]struct{})
+	// Nodes should commit the second request only
+	for i := 1; i < numberOfNodes; i++ {
+		second := <-nodes[i].Delivered // second request
+		secondReqs[string(second.Batch.toBytes())] = struct{}{}
+	}
+
+	// Reconnect the old leader
+	nodes[0].Connect()
+
+	// Wait for the old leader to sync
+	cmt := <-nodes[0].Delivered // second request
+	secondReqs[string(cmt.Batch.toBytes())] = struct{}{}
+
+	// Disconnect the new leader
+	nodes[1].Disconnect()
+
+	// Submit a third request to force view change
+	nodes[0].Submit(Request{ID: "third request", ClientID: "alice"})
+	nodes[2].Submit(Request{ID: "third request", ClientID: "alice"})
+	nodes[3].Submit(Request{ID: "third request", ClientID: "alice"})
+
+	// Wait for remaining nodes to commit
+	<-nodes[0].Delivered
+	<-nodes[2].Delivered
+	<-nodes[3].Delivered
+
+	assert.Len(t, secondReqs, 1)
 }
 
 func doInBackground(f func(), stop <-chan struct{}) {
