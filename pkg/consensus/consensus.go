@@ -6,11 +6,14 @@
 package consensus
 
 import (
+	"io"
 	"sort"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	recorder "github.com/SmartBFT-Go/consensus/internal/recorder"
 
 	"github.com/golang/protobuf/proto"
 
@@ -25,6 +28,8 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
+	Recording          io.Writer
+	Transcript         io.Reader
 	Config             types.Configuration
 	Application        bft.Application
 	Assembler          bft.Assembler
@@ -64,6 +69,36 @@ type Consensus struct {
 	reconfigChan chan types.Reconfig
 
 	running uint64
+}
+
+func (c *Consensus) maybeReadFromTranscript() {
+	if c.Transcript == nil {
+		return
+	}
+
+	recorder.RegisterTypes()
+
+	c.Logger.Infof("Record transcript playback enabled")
+	recorder := &recorder.Proxy{
+		In: c.Transcript,
+		S:  c.Synchronizer,
+	}
+	c.Synchronizer = recorder
+}
+
+func (c *Consensus) maybeRecord() {
+	if c.Recording == nil {
+		return
+	}
+
+	recorder.RegisterTypes()
+
+	c.Logger.Infof("Recording enabled")
+	recorder := &recorder.Proxy{
+		Out: c.Recording,
+		S:   c.Synchronizer,
+	}
+	c.Synchronizer = recorder
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
@@ -106,6 +141,9 @@ func (c *Consensus) Start() error {
 	if err := c.ValidateConfiguration(c.Comm.Nodes()); err != nil {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
+
+	c.maybeRecord()
+	c.maybeReadFromTranscript()
 
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}

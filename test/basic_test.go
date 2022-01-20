@@ -113,7 +113,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	startNodes(nodes, &network)
 
 	// Ensure the last node is disconnected and control its Sync()
-	nodes[len(nodes)-1].DelaySync(syncDelay)
+	nodes[len(nodes)-1].DelaySync(syncDelay, false)
 	nodes[len(nodes)-1].Disconnect()
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to a node

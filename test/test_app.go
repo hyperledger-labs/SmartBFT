@@ -87,16 +87,22 @@ func (a *App) Sync() types.SyncResponse {
 
 	a.Node.probabilityLock.RLock()
 	syncDelay := a.Node.syncDelay
+	atStart := a.Node.delaySyncAtStart
 	a.Node.probabilityLock.RUnlock()
 
-	if syncDelay != nil {
-		defer func() {
-			<-syncDelay
-			a.Node.probabilityLock.Lock()
-			a.Node.syncDelay = nil
-			a.Node.probabilityLock.Unlock()
-		}()
+	delayFunc := func() {
+		<-syncDelay
+		a.Node.probabilityLock.Lock()
+		a.Node.syncDelay = nil
+		a.Node.probabilityLock.Unlock()
+	}
 
+	if syncDelay != nil && atStart {
+		delayFunc()
+	}
+
+	if syncDelay != nil && !atStart {
+		defer delayFunc()
 	}
 
 	records := a.Node.cb.readAll(*a.latestMD)
@@ -133,10 +139,11 @@ func (a *App) Restart() {
 	}
 }
 
-func (a *App) DelaySync(c <-chan struct{}) {
+func (a *App) DelaySync(c <-chan struct{}, atStart bool) {
 	a.Node.probabilityLock.Lock()
 	defer a.Node.probabilityLock.Unlock()
 	a.Node.syncDelay = c
+	a.Node.delaySyncAtStart = atStart
 }
 
 // Disconnect disconnects the node from the network
