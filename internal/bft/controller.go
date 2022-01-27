@@ -515,6 +515,7 @@ func (c *Controller) decide(d decision) {
 	if err := proto.Unmarshal(d.proposal.Metadata, md); err != nil {
 		c.Logger.Panicf("Failed to unmarshal proposal metadata, error: %v", err)
 	}
+	c.Logger.Debugf("Node %d delivered proposal with view %d and sequence %d", c.ID, md.ViewId, md.LatestSequence)
 
 	if c.checkIfRotate(md.BlackList) {
 		c.Logger.Debugf("Restarting view to rotate the leader")

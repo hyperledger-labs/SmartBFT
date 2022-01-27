@@ -28,12 +28,13 @@ func RegisterTypes() {
 }
 
 type Proxy struct {
-	once sync.Once
-	in   *bufio.Scanner
-	S    api.Synchronizer
-	A    api.Application
-	Out  io.Writer
-	In   io.Reader
+	Logger api.Logger
+	once   sync.Once
+	in     *bufio.Scanner
+	S      api.Synchronizer
+	A      api.Application
+	Out    io.Writer
+	In     io.Reader
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
@@ -86,6 +87,7 @@ func (p *Proxy) Deliver(proposal types.Proposal, signature []types.Signature) ty
 
 	if p.In != nil {
 		res := p.nextRecord().(DecisionAndResponse)
+		p.Logger.Debugf("Recorded deliver returns reconfig")
 		return res.Reconfig
 	}
 

@@ -80,9 +80,10 @@ func (c *Consensus) maybeReadFromTranscript() {
 
 	c.Logger.Infof("Record transcript playback enabled")
 	recorder := &recorder.Proxy{
-		In: c.Transcript,
-		S:  c.Synchronizer,
-		A:  c.Application,
+		In:     c.Transcript,
+		S:      c.Synchronizer,
+		A:      c.Application,
+		Logger: c.Logger,
 	}
 	c.Synchronizer = recorder
 	c.Application = recorder
@@ -97,9 +98,10 @@ func (c *Consensus) maybeRecord() {
 
 	c.Logger.Infof("Recording enabled")
 	recorder := &recorder.Proxy{
-		Out: c.Recording,
-		S:   c.Synchronizer,
-		A:   c.Application,
+		Out:    c.Recording,
+		S:      c.Synchronizer,
+		A:      c.Application,
+		Logger: c.Logger,
 	}
 	c.Synchronizer = recorder
 	c.Application = recorder
