@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSample(t *testing.T) {
+func TestSync(t *testing.T) {
 	syncResponse := SyncResponse{
 		Reconfig: ReconfigSync{
 			CurrentConfig: Configuration{
@@ -49,4 +49,43 @@ func TestSample(t *testing.T) {
 	syncResponse.Latest.Proposal.Payload = nil
 	// Ensure the original sync response was decoded from the string properly
 	assert.Equal(t, syncResponse, syncResponse2)
+}
+
+func TestDeliver(t *testing.T) {
+	decisionAndResponse := DecisionAndResponse{
+		Reconfig: Reconfig{
+			CurrentConfig: Configuration{
+				RequestBatchMaxBytes: 1,
+				RequestMaxBytes:      1,
+			},
+			InLatestDecision: true,
+			CurrentNodes:     []uint64{1, 2, 3, 4},
+		},
+		Decision: Decision{
+			Signatures: []Signature{{
+				ID:    1,
+				Msg:   []byte{1, 2, 3},
+				Value: []byte{4, 5, 6},
+			}},
+			Proposal: Proposal{
+				Metadata: []byte{1, 2, 3},
+				Header:   []byte{4, 5, 6},
+				Payload:  []byte{7, 8, 9},
+			},
+		},
+	}
+
+	RegisterDecoder(TypeDecisionAndResponse, decodeSanitizedDecision)
+	RegisterSanitizer(TypeDecisionAndResponse, sanitizeDecision)
+
+	re := NewRecordedEvent(TypeDecisionAndResponse, decisionAndResponse)
+	// Make sure we can encode to string and decode from string without losing information
+	re2 := RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	decisionAndResponse2 := re2.Decode().(DecisionAndResponse)
+	// Nullify payload since we sanitized
+	decisionAndResponse.Decision.Proposal.Payload = nil
+	// Ensure the original response was decoded from the string properly
+	assert.Equal(t, decisionAndResponse, decisionAndResponse2)
 }

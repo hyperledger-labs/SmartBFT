@@ -8,7 +8,6 @@ package types
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"strings"
 )
 
@@ -47,8 +46,6 @@ func NewRecordedEvent(eventType EventType, o interface{}) RecordedEvent {
 		Content: raw,
 		Type:    eventType,
 	}
-
-	panic(fmt.Sprintf("unknown type %s", reflect.TypeOf(o)))
 }
 
 func (re RecordedEvent) Decode() interface{} {

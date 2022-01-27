@@ -16,18 +16,22 @@ import (
 )
 
 const (
-	TypeSyncResponse types.EventType = "SyncResponse"
+	TypeSyncResponse        types.EventType = "SyncResponse"
+	TypeDecisionAndResponse types.EventType = "DecisionAndResponse"
 )
 
 func RegisterTypes() {
 	types.RegisterDecoder(TypeSyncResponse, decodeSanitizedResponse)
 	types.RegisterSanitizer(TypeSyncResponse, sanitizeSync)
+	types.RegisterDecoder(TypeDecisionAndResponse, decodeSanitizedDecision)
+	types.RegisterSanitizer(TypeDecisionAndResponse, sanitizeDecision)
 }
 
 type Proxy struct {
 	once sync.Once
 	in   *bufio.Scanner
 	S    api.Synchronizer
+	A    api.Application
 	Out  io.Writer
 	In   io.Reader
 }
@@ -64,6 +68,25 @@ func (p *Proxy) Sync() types.SyncResponse {
 	if p.In != nil {
 		res := p.nextRecord().(types.SyncResponse)
 		return res
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) Deliver(proposal types.Proposal, signature []types.Signature) types.Reconfig {
+	if p.Out != nil {
+		res := p.A.Deliver(proposal, signature)
+		re := types.NewRecordedEvent(TypeDecisionAndResponse, DecisionAndResponse{
+			Reconfig: res,
+			Decision: types.Decision{Proposal: proposal, Signatures: signature},
+		})
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		res := p.nextRecord().(DecisionAndResponse)
+		return res.Reconfig
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")

@@ -82,8 +82,10 @@ func (c *Consensus) maybeReadFromTranscript() {
 	recorder := &recorder.Proxy{
 		In: c.Transcript,
 		S:  c.Synchronizer,
+		A:  c.Application,
 	}
 	c.Synchronizer = recorder
+	c.Application = recorder
 }
 
 func (c *Consensus) maybeRecord() {
@@ -97,8 +99,10 @@ func (c *Consensus) maybeRecord() {
 	recorder := &recorder.Proxy{
 		Out: c.Recording,
 		S:   c.Synchronizer,
+		A:   c.Application,
 	}
 	c.Synchronizer = recorder
+	c.Application = recorder
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {

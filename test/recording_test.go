@@ -109,6 +109,7 @@ func TestOnboardingRecording(t *testing.T) {
 
 	// Setup recording transcript for last node
 	nodes[3].Consensus.Transcript = recording
+	nodes[3].Consensus.Recording = nil
 
 	// Detach the committed batches of the node from the committed batches of the other nodes
 	// so sync won't work, to force the sync output to come from the transcript
