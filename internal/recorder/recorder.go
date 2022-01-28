@@ -87,7 +87,6 @@ func (p *Proxy) Deliver(proposal types.Proposal, signature []types.Signature) ty
 
 	if p.In != nil {
 		res := p.nextRecord().(DecisionAndResponse)
-		p.Logger.Debugf("Recorded deliver returns reconfig")
 		return res.Reconfig
 	}
 

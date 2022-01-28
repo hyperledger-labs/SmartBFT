@@ -49,7 +49,7 @@ func TestOnboardingRecording(t *testing.T) {
 			if strings.Contains(entry.Message, "Starting view with number 0, sequence 7, and decisions 6") {
 				syncWG.Done()
 			}
-			if strings.Contains(entry.Message, "Recorded deliver returns reconfig") {
+			if strings.Contains(entry.Message, "Node 4 delivered proposal with view 0 and sequence 7") {
 				deliverWG.Done()
 			}
 			return nil
