@@ -16,20 +16,32 @@ import (
 )
 
 const (
-	TypeSyncResponse types.EventType = "SyncResponse"
+	TypeSyncResponse        types.EventType = "SyncResponse"
+	TypeDecisionAndResponse types.EventType = "DecisionAndResponse"
+	TypeSignResponse        types.EventType = "SignResponse"
+	TypeSignedProposal      types.EventType = "SignedProposal"
 )
 
 func RegisterTypes() {
 	types.RegisterDecoder(TypeSyncResponse, decodeSanitizedResponse)
 	types.RegisterSanitizer(TypeSyncResponse, sanitizeSync)
+	types.RegisterDecoder(TypeDecisionAndResponse, decodeSanitizedDecision)
+	types.RegisterSanitizer(TypeDecisionAndResponse, sanitizeDecision)
+	types.RegisterSanitizer(TypeSignResponse, sanitizeToNil)
+	types.RegisterDecoder(TypeSignResponse, decodeFromNil)
+	types.RegisterSanitizer(TypeSignedProposal, sanitizeSignedProposal)
+	types.RegisterDecoder(TypeSignedProposal, decodeSanitizedSignedProposal)
 }
 
 type Proxy struct {
-	once sync.Once
-	in   *bufio.Scanner
-	S    api.Synchronizer
-	Out  io.Writer
-	In   io.Reader
+	Logger       api.Logger
+	once         sync.Once
+	in           *bufio.Scanner
+	Synchronizer api.Synchronizer
+	Application  api.Application
+	Signer       api.Signer
+	Out          io.Writer
+	In           io.Reader
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
@@ -55,7 +67,7 @@ func (p *Proxy) write(re types.RecordedEvent) {
 
 func (p *Proxy) Sync() types.SyncResponse {
 	if p.Out != nil {
-		res := p.S.Sync()
+		res := p.Synchronizer.Sync()
 		re := types.NewRecordedEvent(TypeSyncResponse, res)
 		p.write(re)
 		return res
@@ -64,6 +76,56 @@ func (p *Proxy) Sync() types.SyncResponse {
 	if p.In != nil {
 		res := p.nextRecord().(types.SyncResponse)
 		return res
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) Deliver(proposal types.Proposal, signature []types.Signature) types.Reconfig {
+	if p.Out != nil {
+		res := p.Application.Deliver(proposal, signature)
+		re := types.NewRecordedEvent(TypeDecisionAndResponse, DecisionAndResponse{
+			Reconfig: res,
+			Decision: types.Decision{Proposal: proposal, Signatures: signature},
+		})
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		res := p.nextRecord().(DecisionAndResponse)
+		return res.Reconfig
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) Sign(b []byte) []byte {
+	if p.Out != nil {
+		res := p.Signer.Sign(b)
+		re := types.NewRecordedEvent(TypeSignResponse, res)
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		p.nextRecord()
+		return nil
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) SignProposal(proposal types.Proposal, auxiliaryInput []byte) *types.Signature {
+	if p.Out != nil {
+		res := p.Signer.SignProposal(proposal, auxiliaryInput)
+		re := types.NewRecordedEvent(TypeSignedProposal, res)
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		return p.nextRecord().(*types.Signature)
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")
