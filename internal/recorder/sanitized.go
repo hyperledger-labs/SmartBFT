@@ -103,3 +103,33 @@ func decodeSanitizedDecision(in []byte) interface{} {
 
 	return dr
 }
+
+type SanitizedSignature struct {
+	ID uint64
+}
+
+func sanitizeSignedProposal(in interface{}) interface{} {
+	sp, isSignedProposal := in.(*types.Signature)
+	if !isSignedProposal {
+		panic(fmt.Sprintf("expected object of type Signature but got %s", reflect.TypeOf(in)))
+	}
+
+	return SanitizedSignature{ID: sp.ID}
+}
+
+func decodeSanitizedSignedProposal(in []byte) interface{} {
+	var sSign SanitizedSignature
+	if err := json.Unmarshal(in, &sSign); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to SanitizedSignature: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+
+	return &types.Signature{ID: sSign.ID}
+}
+
+func sanitizeToNil(in interface{}) interface{} {
+	return nil
+}
+
+func decodeFromNil(in []byte) interface{} {
+	return nil
+}
