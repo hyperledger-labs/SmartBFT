@@ -84,11 +84,13 @@ func (c *Consensus) maybeReadFromTranscript() {
 		Synchronizer: c.Synchronizer,
 		Application:  c.Application,
 		Signer:       c.Signer,
+		Assembler:    c.Assembler,
 		Logger:       c.Logger,
 	}
 	c.Synchronizer = recorder
 	c.Application = recorder
 	c.Signer = recorder
+	c.Assembler = recorder
 }
 
 func (c *Consensus) maybeRecord() {
@@ -104,11 +106,13 @@ func (c *Consensus) maybeRecord() {
 		Synchronizer: c.Synchronizer,
 		Application:  c.Application,
 		Signer:       c.Signer,
+		Assembler:    c.Assembler,
 		Logger:       c.Logger,
 	}
 	c.Synchronizer = recorder
 	c.Application = recorder
 	c.Signer = recorder
+	c.Assembler = recorder
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {

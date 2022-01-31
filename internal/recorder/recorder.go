@@ -20,6 +20,7 @@ const (
 	TypeDecisionAndResponse types.EventType = "DecisionAndResponse"
 	TypeSignResponse        types.EventType = "SignResponse"
 	TypeSignedProposal      types.EventType = "SignedProposal"
+	TypeProposal            types.EventType = "Proposal"
 )
 
 func RegisterTypes() {
@@ -31,6 +32,8 @@ func RegisterTypes() {
 	types.RegisterDecoder(TypeSignResponse, decodeFromNil)
 	types.RegisterSanitizer(TypeSignedProposal, sanitizeSignedProposal)
 	types.RegisterDecoder(TypeSignedProposal, decodeSanitizedSignedProposal)
+	types.RegisterSanitizer(TypeProposal, sanitizeProposal)
+	types.RegisterDecoder(TypeProposal, decodeSanitizedProposal)
 }
 
 type Proxy struct {
@@ -40,6 +43,7 @@ type Proxy struct {
 	Synchronizer api.Synchronizer
 	Application  api.Application
 	Signer       api.Signer
+	Assembler    api.Assembler
 	Out          io.Writer
 	In           io.Reader
 }
@@ -126,6 +130,21 @@ func (p *Proxy) SignProposal(proposal types.Proposal, auxiliaryInput []byte) *ty
 
 	if p.In != nil {
 		return p.nextRecord().(*types.Signature)
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) AssembleProposal(metadata []byte, requests [][]byte) types.Proposal {
+	if p.Out != nil {
+		res := p.Assembler.AssembleProposal(metadata, requests)
+		re := types.NewRecordedEvent(TypeProposal, res)
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		return p.nextRecord().(types.Proposal)
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")

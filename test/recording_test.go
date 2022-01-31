@@ -211,3 +211,83 @@ func TestDecisionRecording(t *testing.T) {
 		deliverWG.Wait()
 	}
 }
+
+func TestAssemblerRecording(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.SyncOnStart = false
+		nodes = append(nodes, n)
+	}
+
+	// Record last nodex
+	recording := &bytes.Buffer{}
+	nodes[0].Consensus.Recording = recording // make sure the leader is recording
+
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 100), ClientID: "alice"})
+	// Wait for all nodes to commit
+	var delivered *AppRecord
+	for i := 0; i < numberOfNodes; i++ {
+		delivered = <-nodes[i].Delivered
+	}
+
+	assert.NotNil(t, delivered.Batch.Requests[0])
+
+	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 200), ClientID: "alice"})
+	// Wait for all nodes to commit
+	for i := 0; i < numberOfNodes; i++ {
+		delivered = <-nodes[i].Delivered
+	}
+
+	assert.NotNil(t, delivered.Batch.Requests[0])
+
+	// Now, shut down all nodes and re-create them with the leader node receiving information from the recording
+	network.Shutdown()
+	os.RemoveAll(testDir)
+
+	network = make(Network)
+	defer network.Shutdown()
+
+	testDir, err = ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	nodes = make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.SyncOnStart = false
+		nodes = append(nodes, n)
+	}
+
+	// Setup recording transcript for the leader node
+	nodes[0].Consensus.Transcript = recording
+	nodes[0].Consensus.Recording = nil
+
+	baseLogger := nodes[0].logger.Desugar()
+	nodes[0].Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Proposing proposal 2") {
+			nodes[0].Disconnect()
+		}
+		return nil
+	})).Sugar()
+
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 100), ClientID: "alice"})
+	// Wait for nodes to commit
+	for i := 1; i < numberOfNodes; i++ {
+		delivered = <-nodes[i].Delivered
+	}
+
+	assert.Nil(t, delivered.Batch.Requests)
+
+}

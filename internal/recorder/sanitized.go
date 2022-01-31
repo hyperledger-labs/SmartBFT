@@ -62,6 +62,34 @@ type SanitizedProposal struct {
 	VerificationSequence int64 // int64 for asn1 marshaling
 }
 
+func sanitizeProposal(in interface{}) interface{} {
+	p, isProposal := in.(types.Proposal)
+	if !isProposal {
+		panic(fmt.Sprintf("expected object of type Proposal but got %s", reflect.TypeOf(in)))
+	}
+
+	var sp SanitizedProposal
+	sp.Header = p.Header
+	sp.Metadata = p.Metadata
+	sp.VerificationSequence = p.VerificationSequence
+
+	return sp
+}
+
+func decodeSanitizedProposal(in []byte) interface{} {
+	var sp SanitizedProposal
+	if err := json.Unmarshal(in, &sp); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to SanitizedProposal: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+
+	var p types.Proposal
+	p.Header = sp.Header
+	p.Metadata = sp.Metadata
+	p.VerificationSequence = sp.VerificationSequence
+
+	return p
+}
+
 type DecisionAndResponse struct {
 	Reconfig types.Reconfig
 	Decision types.Decision
