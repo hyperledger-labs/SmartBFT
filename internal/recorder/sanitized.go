@@ -85,7 +85,7 @@ func decodeSanitizedProposal(in []byte) interface{} {
 	var p types.Proposal
 	p.Header = sp.Header
 	p.Metadata = sp.Metadata
-	p.VerificationSequence = p.VerificationSequence
+	p.VerificationSequence = sp.VerificationSequence
 
 	return p
 }
