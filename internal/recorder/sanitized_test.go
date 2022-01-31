@@ -89,3 +89,14 @@ func TestDeliver(t *testing.T) {
 	// Ensure the original response was decoded from the string properly
 	assert.Equal(t, decisionAndResponse, decisionAndResponse2)
 }
+
+func TestMembershipChange(t *testing.T) {
+	RegisterDecoder(TypeMembershipChange, decodeBool)
+	RegisterSanitizer(TypeMembershipChange, nothingToSanitize)
+	re := NewRecordedEvent(TypeMembershipChange, true)
+	re2 := RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	true2 := re2.Decode().(bool)
+	assert.True(t, true2)
+}
