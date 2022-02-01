@@ -21,6 +21,7 @@ const (
 	TypeSignResponse        types.EventType = "SignResponse"
 	TypeSignedProposal      types.EventType = "SignedProposal"
 	TypeProposal            types.EventType = "Proposal"
+	TypeMembershipChange    types.EventType = "MembershipChange"
 )
 
 func RegisterTypes() {
@@ -34,18 +35,21 @@ func RegisterTypes() {
 	types.RegisterDecoder(TypeSignedProposal, decodeSanitizedSignedProposal)
 	types.RegisterSanitizer(TypeProposal, sanitizeProposal)
 	types.RegisterDecoder(TypeProposal, decodeSanitizedProposal)
+	types.RegisterSanitizer(TypeMembershipChange, nothingToSanitize)
+	types.RegisterDecoder(TypeMembershipChange, decodeBool)
 }
 
 type Proxy struct {
-	Logger       api.Logger
-	once         sync.Once
-	in           *bufio.Scanner
-	Synchronizer api.Synchronizer
-	Application  api.Application
-	Signer       api.Signer
-	Assembler    api.Assembler
-	Out          io.Writer
-	In           io.Reader
+	Logger             api.Logger
+	once               sync.Once
+	in                 *bufio.Scanner
+	Synchronizer       api.Synchronizer
+	Application        api.Application
+	Signer             api.Signer
+	Assembler          api.Assembler
+	MembershipNotifier api.MembershipNotifier
+	Out                io.Writer
+	In                 io.Reader
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
@@ -145,6 +149,21 @@ func (p *Proxy) AssembleProposal(metadata []byte, requests [][]byte) types.Propo
 
 	if p.In != nil {
 		return p.nextRecord().(types.Proposal)
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) MembershipChange() bool {
+	if p.Out != nil {
+		res := p.MembershipNotifier.MembershipChange()
+		re := types.NewRecordedEvent(TypeMembershipChange, res)
+		p.write(re)
+		return res
+	}
+
+	if p.In != nil {
+		return p.nextRecord().(bool)
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")

@@ -161,3 +161,15 @@ func sanitizeToNil(in interface{}) interface{} {
 func decodeFromNil(in []byte) interface{} {
 	return nil
 }
+
+func nothingToSanitize(in interface{}) interface{} {
+	return in
+}
+
+func decodeBool(in []byte) interface{} {
+	var b bool
+	if err := json.Unmarshal(in, &b); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to bool: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+	return b
+}
