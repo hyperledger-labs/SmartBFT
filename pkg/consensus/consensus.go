@@ -29,7 +29,9 @@ import (
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
 	Recording          io.Writer
+	VerifierRecording  io.Writer
 	Transcript         io.Reader
+	VerifierTranscript io.Reader
 	Config             types.Configuration
 	Application        bft.Application
 	Assembler          bft.Assembler
@@ -79,20 +81,28 @@ func (c *Consensus) maybeReadFromTranscript() {
 	recorder.RegisterTypes()
 
 	c.Logger.Infof("Record transcript playback enabled")
-	recorder := &recorder.Proxy{
+	r := &recorder.Proxy{
 		In:                 c.Transcript,
 		Synchronizer:       c.Synchronizer,
 		Application:        c.Application,
 		Signer:             c.Signer,
 		Assembler:          c.Assembler,
 		MembershipNotifier: c.MembershipNotifier,
+		Verifier:           c.Verifier,
 		Logger:             c.Logger,
 	}
-	c.Synchronizer = recorder
-	c.Application = recorder
-	c.Signer = recorder
-	c.Assembler = recorder
-	c.MembershipNotifier = recorder
+	c.Synchronizer = r
+	c.Application = r
+	c.Signer = r
+	c.Assembler = r
+	c.MembershipNotifier = r
+
+	vRecorder := &recorder.Proxy{
+		In:       c.VerifierTranscript,
+		Verifier: c.Verifier,
+		Logger:   c.Logger,
+	}
+	c.Verifier = vRecorder
 }
 
 func (c *Consensus) maybeRecord() {
@@ -103,20 +113,27 @@ func (c *Consensus) maybeRecord() {
 	recorder.RegisterTypes()
 
 	c.Logger.Infof("Recording enabled")
-	recorder := &recorder.Proxy{
+	r := &recorder.Proxy{
 		Out:                c.Recording,
 		Synchronizer:       c.Synchronizer,
 		Application:        c.Application,
 		Signer:             c.Signer,
 		Assembler:          c.Assembler,
 		MembershipNotifier: c.MembershipNotifier,
+		Verifier:           c.Verifier,
 		Logger:             c.Logger,
 	}
-	c.Synchronizer = recorder
-	c.Application = recorder
-	c.Signer = recorder
-	c.Assembler = recorder
-	c.MembershipNotifier = recorder
+	c.Synchronizer = r
+	c.Application = r
+	c.Signer = r
+	c.Assembler = r
+	c.MembershipNotifier = r
+	vRecorder := &recorder.Proxy{
+		Out:      c.VerifierRecording,
+		Verifier: c.Verifier,
+		Logger:   c.Logger,
+	}
+	c.Verifier = vRecorder
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {

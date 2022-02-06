@@ -173,3 +173,18 @@ func decodeBool(in []byte) interface{} {
 	}
 	return b
 }
+
+type VerifierResponses struct {
+	Ris []types.RequestInfo
+	Err string
+	Seq uint64
+	Aux []byte
+}
+
+func decodeVerifierResponses(in []byte) interface{} {
+	var vr VerifierResponses
+	if err := json.Unmarshal(in, &vr); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to VerifierResponses: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+	return vr
+}

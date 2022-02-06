@@ -38,6 +38,8 @@ func TestOnboardingRecording(t *testing.T) {
 	// Record last node
 	recording := &bytes.Buffer{}
 	nodes[3].Consensus.Recording = recording
+	vRecording := &bytes.Buffer{}
+	nodes[3].Consensus.VerifierRecording = vRecording
 
 	runSyncScenario := func(nodes []*App, network *Network, recording bool) {
 		deliverWG := sync.WaitGroup{}
@@ -122,6 +124,8 @@ func TestOnboardingRecording(t *testing.T) {
 	// Setup recording transcript for last node
 	nodes[3].Consensus.Transcript = recording
 	nodes[3].Consensus.Recording = nil
+	nodes[3].Consensus.VerifierTranscript = vRecording
+	nodes[3].Consensus.VerifierRecording = nil
 
 	// Detach the committed batches of the node from the committed batches of the other nodes
 	// so sync won't work, to force the sync output to come from the transcript
@@ -155,10 +159,18 @@ func TestDecisionRecording(t *testing.T) {
 	// Record last node
 	recording := &bytes.Buffer{}
 	nodes[3].Consensus.Recording = recording
+	vRecording := &bytes.Buffer{}
+	nodes[3].Consensus.VerifierRecording = vRecording
 
 	startNodes(nodes, &network)
 
 	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 100), ClientID: "alice"})
+	// Wait for all nodes to commit
+	for i := 0; i < numberOfNodes; i++ {
+		<-nodes[i].Delivered
+	}
+
+	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 200), ClientID: "alice"})
 	// Wait for all nodes to commit
 	for i := 0; i < numberOfNodes; i++ {
 		<-nodes[i].Delivered
@@ -185,6 +197,8 @@ func TestDecisionRecording(t *testing.T) {
 	// Setup recording transcript for last node
 	nodes[3].Consensus.Transcript = recording
 	nodes[3].Consensus.Recording = nil
+	nodes[3].Consensus.VerifierTranscript = vRecording
+	nodes[3].Consensus.VerifierRecording = nil
 
 	deliverWG := sync.WaitGroup{}
 	deliverWG.Add(1)
@@ -230,6 +244,8 @@ func TestAssemblerRecording(t *testing.T) {
 	// Record last nodex
 	recording := &bytes.Buffer{}
 	nodes[0].Consensus.Recording = recording // make sure the leader is recording
+	vRecording := &bytes.Buffer{}
+	nodes[0].Consensus.VerifierRecording = vRecording // make sure the leader is recording
 
 	startNodes(nodes, &network)
 
@@ -271,6 +287,8 @@ func TestAssemblerRecording(t *testing.T) {
 	// Setup recording transcript for the leader node
 	nodes[0].Consensus.Transcript = recording
 	nodes[0].Consensus.Recording = nil
+	nodes[0].Consensus.VerifierTranscript = vRecording
+	nodes[0].Consensus.VerifierRecording = nil
 
 	baseLogger := nodes[0].logger.Desugar()
 	nodes[0].Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {

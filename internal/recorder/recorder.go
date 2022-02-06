@@ -7,6 +7,7 @@ package recorder
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"sync"
@@ -16,12 +17,19 @@ import (
 )
 
 const (
-	TypeSyncResponse        types.EventType = "SyncResponse"
-	TypeDecisionAndResponse types.EventType = "DecisionAndResponse"
-	TypeSignResponse        types.EventType = "SignResponse"
-	TypeSignedProposal      types.EventType = "SignedProposal"
-	TypeProposal            types.EventType = "Proposal"
-	TypeMembershipChange    types.EventType = "MembershipChange"
+	TypeSyncResponse         types.EventType = "SyncResponse"
+	TypeDecisionAndResponse  types.EventType = "DecisionAndResponse"
+	TypeSignResponse         types.EventType = "SignResponse"
+	TypeSignedProposal       types.EventType = "SignedProposal"
+	TypeProposal             types.EventType = "Proposal"
+	TypeMembershipChange     types.EventType = "MembershipChange"
+	TypeVerifyProposal       types.EventType = "VerifyProposal"
+	TypeVerifyRequest        types.EventType = "VerifyRequest"
+	TypeVerifyConsenterSig   types.EventType = "VerifyConsenterSig"
+	TypeVerifySignature      types.EventType = "VerifySignature"
+	TypeVerificationSequence types.EventType = "VerificationSequence"
+	TypeRequestsFromProposal types.EventType = "RequestsFromProposal"
+	TypeAuxData              types.EventType = "AuxData"
 )
 
 func RegisterTypes() {
@@ -37,6 +45,20 @@ func RegisterTypes() {
 	types.RegisterDecoder(TypeProposal, decodeSanitizedProposal)
 	types.RegisterSanitizer(TypeMembershipChange, nothingToSanitize)
 	types.RegisterDecoder(TypeMembershipChange, decodeBool)
+	types.RegisterSanitizer(TypeVerifyProposal, nothingToSanitize)
+	types.RegisterDecoder(TypeVerifyProposal, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeVerifyRequest, nothingToSanitize)
+	types.RegisterDecoder(TypeVerifyRequest, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeVerifyConsenterSig, nothingToSanitize)
+	types.RegisterDecoder(TypeVerifyConsenterSig, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeVerifySignature, nothingToSanitize)
+	types.RegisterDecoder(TypeVerifySignature, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeVerificationSequence, nothingToSanitize)
+	types.RegisterDecoder(TypeVerificationSequence, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeRequestsFromProposal, nothingToSanitize)
+	types.RegisterDecoder(TypeRequestsFromProposal, decodeVerifierResponses)
+	types.RegisterSanitizer(TypeAuxData, nothingToSanitize)
+	types.RegisterDecoder(TypeAuxData, decodeVerifierResponses)
 }
 
 type Proxy struct {
@@ -48,6 +70,7 @@ type Proxy struct {
 	Signer             api.Signer
 	Assembler          api.Assembler
 	MembershipNotifier api.MembershipNotifier
+	Verifier           api.Verifier
 	Out                io.Writer
 	In                 io.Reader
 }
@@ -164,6 +187,148 @@ func (p *Proxy) MembershipChange() bool {
 
 	if p.In != nil {
 		return p.nextRecord().(bool)
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) VerifyProposal(proposal types.Proposal) ([]types.RequestInfo, error) {
+	if p.Out != nil {
+		ris, err := p.Verifier.VerifyProposal(proposal)
+		errS := ""
+		if err != nil {
+			errS = err.Error()
+		}
+		re := types.NewRecordedEvent(TypeVerifyProposal, VerifierResponses{Ris: ris, Err: errS})
+		p.write(re)
+		return ris, err
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		if rec.Err != "" {
+			return rec.Ris, errors.New(rec.Err)
+		}
+		return rec.Ris, nil
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) VerifyRequest(val []byte) (types.RequestInfo, error) {
+	if p.Out != nil {
+		ri, err := p.Verifier.VerifyRequest(val)
+		ris := []types.RequestInfo{ri}
+		errS := ""
+		if err != nil {
+			errS = err.Error()
+		}
+		re := types.NewRecordedEvent(TypeVerifyRequest, VerifierResponses{Ris: ris, Err: errS})
+		p.write(re)
+		return ri, err
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		if rec.Err != "" {
+			return rec.Ris[0], errors.New(rec.Err)
+		}
+		return rec.Ris[0], nil
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+
+}
+
+func (p *Proxy) VerifyConsenterSig(signature types.Signature, prop types.Proposal) ([]byte, error) {
+	if p.Out != nil {
+		aux, err := p.Verifier.VerifyConsenterSig(signature, prop)
+		errS := ""
+		if err != nil {
+			errS = err.Error()
+		}
+		re := types.NewRecordedEvent(TypeVerifyConsenterSig, VerifierResponses{Aux: aux, Err: errS})
+		p.write(re)
+		return aux, err
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		if rec.Err != "" {
+			return rec.Aux, errors.New(rec.Err)
+		}
+		return rec.Aux, nil
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) VerifySignature(signature types.Signature) error {
+	if p.Out != nil {
+		err := p.Verifier.VerifySignature(signature)
+		errS := ""
+		if err != nil {
+			errS = err.Error()
+		}
+		re := types.NewRecordedEvent(TypeVerifySignature, VerifierResponses{Err: errS})
+		p.write(re)
+		return err
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		if rec.Err != "" {
+			return errors.New(rec.Err)
+		}
+		return nil
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) VerificationSequence() uint64 {
+	if p.Out != nil {
+		seq := p.Verifier.VerificationSequence()
+		re := types.NewRecordedEvent(TypeVerificationSequence, VerifierResponses{Seq: seq})
+		p.write(re)
+		return seq
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		return rec.Seq
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) RequestsFromProposal(proposal types.Proposal) []types.RequestInfo {
+	if p.Out != nil {
+		ris := p.Verifier.RequestsFromProposal(proposal)
+		re := types.NewRecordedEvent(TypeRequestsFromProposal, VerifierResponses{Ris: ris})
+		p.write(re)
+		return ris
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		return rec.Ris
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) AuxiliaryData(sig []byte) []byte {
+	if p.Out != nil {
+		aux := p.Verifier.AuxiliaryData(sig)
+		re := types.NewRecordedEvent(TypeAuxData, VerifierResponses{Aux: aux})
+		p.write(re)
+		return aux
+	}
+
+	if p.In != nil {
+		rec := p.nextRecord().(VerifierResponses)
+		return rec.Aux
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")

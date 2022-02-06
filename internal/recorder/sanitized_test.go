@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	. "github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -99,4 +100,58 @@ func TestMembershipChange(t *testing.T) {
 	assert.Equal(t, re, re2)
 	true2 := re2.Decode().(bool)
 	assert.True(t, true2)
+}
+
+func TestVerifier(t *testing.T) {
+	RegisterSanitizer(TypeVerifyProposal, nothingToSanitize)
+	RegisterDecoder(TypeVerifyProposal, decodeVerifierResponses)
+	ris := []RequestInfo{{ClientID: "1", ID: "1"}, {ClientID: "2", ID: "2"}, {ClientID: "3", ID: "3"}}
+	err := errors.Errorf("verifier error")
+	re := NewRecordedEvent(TypeVerifyProposal, VerifierResponses{Ris: ris, Err: err.Error()})
+	re2 := RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	vr := re2.Decode().(VerifierResponses)
+	assert.Equal(t, vr.Err, "verifier error")
+	assert.Len(t, vr.Ris, 3)
+
+	RegisterSanitizer(TypeVerifyRequest, nothingToSanitize)
+	RegisterDecoder(TypeVerifyRequest, decodeVerifierResponses)
+	ri := RequestInfo{ClientID: "10", ID: "10"}
+	re = NewRecordedEvent(TypeVerifyRequest, VerifierResponses{Ris: []RequestInfo{ri}, Err: err.Error()})
+	re2 = RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	vr = re2.Decode().(VerifierResponses)
+	assert.Equal(t, vr.Err, "verifier error")
+	assert.Len(t, vr.Ris, 1)
+
+	RegisterSanitizer(TypeVerifyConsenterSig, nothingToSanitize)
+	RegisterDecoder(TypeVerifyConsenterSig, decodeVerifierResponses)
+	re = NewRecordedEvent(TypeVerifyConsenterSig, VerifierResponses{Aux: []byte{1, 2}, Err: err.Error()})
+	re2 = RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	vr = re2.Decode().(VerifierResponses)
+	assert.Equal(t, vr.Err, "verifier error")
+	assert.Len(t, vr.Aux, 2)
+
+	RegisterSanitizer(TypeVerifySignature, nothingToSanitize)
+	RegisterDecoder(TypeVerifySignature, decodeVerifierResponses)
+	re = NewRecordedEvent(TypeVerifySignature, VerifierResponses{Err: err.Error()})
+	re2 = RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	vr = re2.Decode().(VerifierResponses)
+	assert.Errorf(t, errors.New(vr.Err), "verifier error")
+
+	RegisterSanitizer(TypeVerificationSequence, nothingToSanitize)
+	RegisterDecoder(TypeVerificationSequence, decodeVerifierResponses)
+	re = NewRecordedEvent(TypeVerificationSequence, VerifierResponses{Seq: 100})
+	re2 = RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	vr = re2.Decode().(VerifierResponses)
+	assert.Equal(t, uint64(100), vr.Seq)
+
 }
