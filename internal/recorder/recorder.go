@@ -24,19 +24,28 @@ const (
 	TypeMembershipChange    types.EventType = "MembershipChange"
 )
 
-func RegisterTypes() {
-	types.RegisterDecoder(TypeSyncResponse, decodeSanitizedResponse)
+func RegisterSanitizers() {
 	types.RegisterSanitizer(TypeSyncResponse, sanitizeSync)
-	types.RegisterDecoder(TypeDecisionAndResponse, decodeSanitizedDecision)
 	types.RegisterSanitizer(TypeDecisionAndResponse, sanitizeDecision)
 	types.RegisterSanitizer(TypeSignResponse, sanitizeToNil)
-	types.RegisterDecoder(TypeSignResponse, decodeFromNil)
 	types.RegisterSanitizer(TypeSignedProposal, sanitizeSignedProposal)
-	types.RegisterDecoder(TypeSignedProposal, decodeSanitizedSignedProposal)
 	types.RegisterSanitizer(TypeProposal, sanitizeProposal)
-	types.RegisterDecoder(TypeProposal, decodeSanitizedProposal)
 	types.RegisterSanitizer(TypeMembershipChange, nothingToSanitize)
-	types.RegisterDecoder(TypeMembershipChange, decodeBool)
+
+}
+
+func RegisterDecoders(wrapper func(func([]byte) interface{}) func([]byte) interface{}) {
+	if wrapper == nil {
+		wrapper = func(f func([]byte) interface{}) func([]byte) interface{} {
+			return f
+		}
+	}
+	types.RegisterDecoder(TypeSyncResponse, wrapper(decodeSanitizedResponse))
+	types.RegisterDecoder(TypeDecisionAndResponse, wrapper(decodeSanitizedDecision))
+	types.RegisterDecoder(TypeSignResponse, wrapper(decodeFromNil))
+	types.RegisterDecoder(TypeSignedProposal, wrapper(decodeSanitizedSignedProposal))
+	types.RegisterDecoder(TypeProposal, wrapper(decodeSanitizedProposal))
+	types.RegisterDecoder(TypeMembershipChange, wrapper(decodeBool))
 }
 
 type Proxy struct {
