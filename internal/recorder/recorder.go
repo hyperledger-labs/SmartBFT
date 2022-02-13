@@ -28,6 +28,10 @@ const (
 	TypeMessageStateTransferResponse types.EventType = "MessageStateTransferResponse"
 	TypeMessageHeartBeat             types.EventType = "MessageHeartBeat"
 	TypeMessageHeartBeatResponse     types.EventType = "MessageHeartBeatResponse"
+	TypeMessagePrePrepare            types.EventType = "MessagePrePrepare"
+	TypeMessagePrepare               types.EventType = "MessagePrepare"
+	TypeMessageCommit                types.EventType = "MessageCommit"
+	TypeMessageViewChange            types.EventType = "MessageViewChange"
 )
 
 func RegisterSanitizers() {
@@ -41,6 +45,10 @@ func RegisterSanitizers() {
 	types.RegisterSanitizer(TypeMessageStateTransferResponse, nothingToSanitize)
 	types.RegisterSanitizer(TypeMessageHeartBeat, nothingToSanitize)
 	types.RegisterSanitizer(TypeMessageHeartBeatResponse, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessagePrePrepare, sanitizePrePrepare)
+	types.RegisterSanitizer(TypeMessagePrepare, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessageCommit, sanitizeCommit)
+	types.RegisterSanitizer(TypeMessageViewChange, nothingToSanitize)
 }
 
 func RegisterDecoders(wrapper func(func([]byte) interface{}) func([]byte) interface{}) {
@@ -194,8 +202,24 @@ func (p *Proxy) MembershipChange() bool {
 func (p *Proxy) PreProcess(sender uint64, m *protos.Message) {
 	if p.Out != nil {
 		switch m.GetContent().(type) {
-		case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
-		case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
+		case *protos.Message_PrePrepare:
+			re := types.NewRecordedEvent(TypeMessagePrePrepare, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_Prepare:
+			re := types.NewRecordedEvent(TypeMessagePrepare, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_Commit:
+			re := types.NewRecordedEvent(TypeMessageCommit, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_ViewChange:
+			re := types.NewRecordedEvent(TypeMessageViewChange, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_ViewData, *protos.Message_NewView:
+			// TODO
 		case *protos.Message_HeartBeat:
 			re := types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessage{Sender: sender, M: m})
 			p.write(re)

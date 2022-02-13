@@ -179,3 +179,62 @@ type RecordedMessage struct {
 	Sender uint64
 	M      *protos.Message
 }
+
+func sanitizePrePrepare(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	pp := rm.M.GetPrePrepare()
+	if pp == nil {
+		panic("expected message of type PrePrepare")
+	}
+	var sanitizedPrevCommitSignatures []*protos.Signature
+	for _, s := range pp.PrevCommitSignatures {
+		ss := &protos.Signature{Signer: s.Signer}
+		sanitizedPrevCommitSignatures = append(sanitizedPrevCommitSignatures, ss)
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: pp.View,
+				Seq:  pp.Seq,
+				Proposal: &protos.Proposal{
+					Header:               pp.Proposal.Header,
+					Payload:              nil, // sanitized
+					Metadata:             pp.Proposal.Metadata,
+					VerificationSequence: pp.Proposal.VerificationSequence,
+				},
+				PrevCommitSignatures: sanitizedPrevCommitSignatures, // sanitized
+			},
+		},
+	}
+	return srm
+}
+
+func sanitizeCommit(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	cmt := rm.M.GetCommit()
+	if cmt == nil {
+		panic("expected message of type Commit")
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:      cmt.View,
+				Seq:       cmt.Seq,
+				Digest:    cmt.Digest,
+				Signature: &protos.Signature{Signer: cmt.Signature.Signer}, // sanitized
+				Assist:    cmt.Assist,
+			},
+		},
+	}
+	return srm
+}
