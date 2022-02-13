@@ -9,7 +9,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -311,8 +310,8 @@ type messageSeeker struct {
 	stop           chan struct{}
 }
 
-func newMessageSeeker(transcript io.Reader, h func(sender uint64, m *smartbftprotos.Message)) *messageSeeker {
-	scanner := bufio.NewScanner(transcript)
+func newMessageSeeker(transcript *bytes.Buffer, h func(sender uint64, m *smartbftprotos.Message)) *messageSeeker {
+	scanner := bufio.NewScanner(bytes.NewBuffer(transcript.Bytes()))
 	return &messageSeeker{
 		transcript:     scanner,
 		decodingEvents: make(chan struct{}, 1),

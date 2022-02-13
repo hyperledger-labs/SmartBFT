@@ -12,6 +12,7 @@ import (
 	"reflect"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 func decodeSanitizedResponse(in []byte) interface{} {
@@ -172,4 +173,9 @@ func decodeBool(in []byte) interface{} {
 		panic(fmt.Sprintf("failed unmarshaling %s to bool: %v", base64.StdEncoding.EncodeToString(in), err))
 	}
 	return b
+}
+
+type RecordedMessage struct {
+	Sender uint64
+	M      *protos.Message
 }

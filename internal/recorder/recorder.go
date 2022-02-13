@@ -9,19 +9,25 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"strings"
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 const (
-	TypeSyncResponse        types.EventType = "SyncResponse"
-	TypeDecisionAndResponse types.EventType = "DecisionAndResponse"
-	TypeSignResponse        types.EventType = "SignResponse"
-	TypeSignedProposal      types.EventType = "SignedProposal"
-	TypeProposal            types.EventType = "Proposal"
-	TypeMembershipChange    types.EventType = "MembershipChange"
+	TypeSyncResponse                 types.EventType = "SyncResponse"
+	TypeDecisionAndResponse          types.EventType = "DecisionAndResponse"
+	TypeSignResponse                 types.EventType = "SignResponse"
+	TypeSignedProposal               types.EventType = "SignedProposal"
+	TypeProposal                     types.EventType = "Proposal"
+	TypeMembershipChange             types.EventType = "MembershipChange"
+	TypeMessageStateTransferRequest  types.EventType = "MessageStateTransferRequest"
+	TypeMessageStateTransferResponse types.EventType = "MessageStateTransferResponse"
+	TypeMessageHeartBeat             types.EventType = "MessageHeartBeat"
+	TypeMessageHeartBeatResponse     types.EventType = "MessageHeartBeatResponse"
 )
 
 func RegisterSanitizers() {
@@ -31,7 +37,10 @@ func RegisterSanitizers() {
 	types.RegisterSanitizer(TypeSignedProposal, sanitizeSignedProposal)
 	types.RegisterSanitizer(TypeProposal, sanitizeProposal)
 	types.RegisterSanitizer(TypeMembershipChange, nothingToSanitize)
-
+	types.RegisterSanitizer(TypeMessageStateTransferRequest, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessageStateTransferResponse, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessageHeartBeat, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessageHeartBeatResponse, nothingToSanitize)
 }
 
 func RegisterDecoders(wrapper func(func([]byte) interface{}) func([]byte) interface{}) {
@@ -70,12 +79,16 @@ func (p *Proxy) getOrCreateInput() *bufio.Scanner {
 
 func (p *Proxy) nextRecord() interface{} {
 	in := p.getOrCreateInput()
-	if !in.Scan() {
-		panic("reached end of file")
+	for {
+		if !in.Scan() {
+			panic("reached end of file")
+		}
+		re := types.RecordedEvent{}
+		re.FromString(in.Text())
+		if !strings.HasPrefix(re.String(), "Message") {
+			return re.Decode()
+		}
 	}
-	re := types.RecordedEvent{}
-	re.FromString(in.Text())
-	return re.Decode()
 }
 
 func (p *Proxy) write(re types.RecordedEvent) {
@@ -173,6 +186,40 @@ func (p *Proxy) MembershipChange() bool {
 
 	if p.In != nil {
 		return p.nextRecord().(bool)
+	}
+
+	panic("programming error: in recording mode but no input nor output initialized")
+}
+
+func (p *Proxy) PreProcess(sender uint64, m *protos.Message) {
+	if p.Out != nil {
+		switch m.GetContent().(type) {
+		case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
+		case *protos.Message_ViewChange, *protos.Message_ViewData, *protos.Message_NewView:
+		case *protos.Message_HeartBeat:
+			re := types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_HeartBeatResponse:
+			re := types.NewRecordedEvent(TypeMessageHeartBeatResponse, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_StateTransferRequest:
+			re := types.NewRecordedEvent(TypeMessageStateTransferRequest, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		case *protos.Message_StateTransferResponse:
+			re := types.NewRecordedEvent(TypeMessageStateTransferResponse, RecordedMessage{Sender: sender, M: m})
+			p.write(re)
+			return
+		default:
+			p.Logger.Warnf("Unexpected message type")
+		}
+		return
+	}
+
+	if p.In != nil {
+		return
 	}
 
 	panic("programming error: in recording mode but no input nor output initialized")
