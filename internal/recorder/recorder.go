@@ -76,6 +76,7 @@ type Proxy struct {
 	MembershipNotifier api.MembershipNotifier
 	Out                io.Writer
 	In                 io.Reader
+	lock               sync.Mutex
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
@@ -100,6 +101,8 @@ func (p *Proxy) nextRecord() interface{} {
 }
 
 func (p *Proxy) write(re types.RecordedEvent) {
+	p.lock.Lock()
+	defer p.lock.Unlock()
 	fmt.Fprintln(p.Out, re)
 }
 
