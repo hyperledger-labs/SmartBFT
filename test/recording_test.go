@@ -303,6 +303,52 @@ func TestAssemblerRecording(t *testing.T) {
 
 }
 
+func TestViewChangeRecording(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+
+	recorder.RegisterDecoders(nil)
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.SyncOnStart = false
+		nodes = append(nodes, n)
+	}
+
+	// Record last node
+	recording := &bytes.Buffer{}
+	nodes[3].Consensus.Recording = recording
+
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 100), ClientID: "alice"})
+	// Wait for all nodes to commit
+	for i := 0; i < numberOfNodes; i++ {
+		<-nodes[i].Delivered
+	}
+
+	nodes[0].Disconnect() // disconnect leader
+
+	nodes[1].Submit(Request{ID: fmt.Sprintf("%d", 200), ClientID: "alice"})
+	nodes[2].Submit(Request{ID: fmt.Sprintf("%d", 200), ClientID: "alice"})
+	nodes[3].Submit(Request{ID: fmt.Sprintf("%d", 200), ClientID: "alice"})
+
+	// Wait for all nodes to commit
+	for i := 1; i < numberOfNodes; i++ {
+		<-nodes[i].Delivered
+	}
+	network.Shutdown()
+	os.RemoveAll(testDir)
+
+	// Make sure view change messages were recorded
+	assert.True(t, strings.Contains(recording.String(), "MessageNewView"))
+}
+
 type messageSeeker struct {
 	handler        func(sender uint64, m *smartbftprotos.Message)
 	transcript     *bufio.Scanner

@@ -32,6 +32,8 @@ const (
 	TypeMessagePrepare               types.EventType = "MessagePrepare"
 	TypeMessageCommit                types.EventType = "MessageCommit"
 	TypeMessageViewChange            types.EventType = "MessageViewChange"
+	TypeMessageViewData              types.EventType = "MessageViewData"
+	TypeMessageNewView               types.EventType = "MessageNewView"
 )
 
 func RegisterSanitizers() {
@@ -49,6 +51,8 @@ func RegisterSanitizers() {
 	types.RegisterSanitizer(TypeMessagePrepare, nothingToSanitize)
 	types.RegisterSanitizer(TypeMessageCommit, sanitizeCommit)
 	types.RegisterSanitizer(TypeMessageViewChange, nothingToSanitize)
+	types.RegisterSanitizer(TypeMessageViewData, sanitizeViewData)
+	types.RegisterSanitizer(TypeMessageNewView, sanitizeNewView)
 }
 
 func RegisterDecoders(wrapper func(func([]byte) interface{}) func([]byte) interface{}) {
@@ -204,44 +208,32 @@ func (p *Proxy) MembershipChange() bool {
 
 func (p *Proxy) PreProcess(sender uint64, m *protos.Message) {
 	if p.Out != nil {
+		var re types.RecordedEvent
 		switch m.GetContent().(type) {
 		case *protos.Message_PrePrepare:
-			re := types.NewRecordedEvent(TypeMessagePrePrepare, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessagePrePrepare, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_Prepare:
-			re := types.NewRecordedEvent(TypeMessagePrepare, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessagePrepare, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_Commit:
-			re := types.NewRecordedEvent(TypeMessageCommit, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessageCommit, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_ViewChange:
-			re := types.NewRecordedEvent(TypeMessageViewChange, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
-		case *protos.Message_ViewData, *protos.Message_NewView:
-			// TODO
+			re = types.NewRecordedEvent(TypeMessageViewChange, RecordedMessage{Sender: sender, M: m})
+		case *protos.Message_ViewData:
+			re = types.NewRecordedEvent(TypeMessageViewData, RecordedMessage{Sender: sender, M: m})
+		case *protos.Message_NewView:
+			re = types.NewRecordedEvent(TypeMessageNewView, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_HeartBeat:
-			re := types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_HeartBeatResponse:
-			re := types.NewRecordedEvent(TypeMessageHeartBeatResponse, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessageHeartBeatResponse, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_StateTransferRequest:
-			re := types.NewRecordedEvent(TypeMessageStateTransferRequest, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessageStateTransferRequest, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_StateTransferResponse:
-			re := types.NewRecordedEvent(TypeMessageStateTransferResponse, RecordedMessage{Sender: sender, M: m})
-			p.write(re)
-			return
+			re = types.NewRecordedEvent(TypeMessageStateTransferResponse, RecordedMessage{Sender: sender, M: m})
 		default:
-			p.Logger.Warnf("Unexpected message type")
+			p.Logger.Panicf("Unexpected message type")
 		}
+		p.write(re)
 		return
 	}
 
