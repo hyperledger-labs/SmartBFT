@@ -12,6 +12,8 @@ import (
 	"reflect"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 )
 
 func decodeSanitizedResponse(in []byte) interface{} {
@@ -172,4 +174,154 @@ func decodeBool(in []byte) interface{} {
 		panic(fmt.Sprintf("failed unmarshaling %s to bool: %v", base64.StdEncoding.EncodeToString(in), err))
 	}
 	return b
+}
+
+type RecordedMessage struct {
+	Sender uint64
+	M      *protos.Message
+}
+
+func sanitizePrePrepare(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	pp := rm.M.GetPrePrepare()
+	if pp == nil {
+		panic("expected message of type PrePrepare")
+	}
+	var sanitizedPrevCommitSignatures []*protos.Signature
+	for _, s := range pp.PrevCommitSignatures {
+		ss := &protos.Signature{Signer: s.Signer}
+		sanitizedPrevCommitSignatures = append(sanitizedPrevCommitSignatures, ss)
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: pp.View,
+				Seq:  pp.Seq,
+				Proposal: &protos.Proposal{
+					Header:               pp.Proposal.Header,
+					Payload:              nil, // sanitized
+					Metadata:             pp.Proposal.Metadata,
+					VerificationSequence: pp.Proposal.VerificationSequence,
+				},
+				PrevCommitSignatures: sanitizedPrevCommitSignatures, // sanitized
+			},
+		},
+	}
+	return srm
+}
+
+func sanitizeCommit(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	cmt := rm.M.GetCommit()
+	if cmt == nil {
+		panic("expected message of type Commit")
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_Commit{
+			Commit: &protos.Commit{
+				View:      cmt.View,
+				Seq:       cmt.Seq,
+				Digest:    cmt.Digest,
+				Signature: &protos.Signature{Signer: cmt.Signature.Signer}, // sanitized
+				Assist:    cmt.Assist,
+			},
+		},
+	}
+	return srm
+}
+
+func sanitizeViewData(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	svd := rm.M.GetViewData()
+	if svd == nil {
+		panic("expected message of type ViewData")
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_ViewData{
+			ViewData: sanitizeSignedViewData(svd),
+		},
+	}
+	return srm
+}
+
+func sanitizeSignedViewData(svd *protos.SignedViewData) *protos.SignedViewData {
+	vd := &protos.ViewData{}
+	if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
+		panic("unable to unmarshal ViewData message")
+	}
+	var sanitizedLastDecisionSignatures []*protos.Signature
+	for _, s := range vd.LastDecisionSignatures {
+		ss := &protos.Signature{Signer: s.Signer}
+		sanitizedLastDecisionSignatures = append(sanitizedLastDecisionSignatures, ss)
+	}
+	sanitizedVD := &protos.ViewData{
+		NextView: vd.NextView,
+		LastDecision: &protos.Proposal{
+			Header:               vd.LastDecision.Header,
+			Payload:              nil,
+			Metadata:             vd.LastDecision.Metadata,
+			VerificationSequence: vd.LastDecision.VerificationSequence,
+		},
+		LastDecisionSignatures: sanitizedLastDecisionSignatures,
+		InFlightProposal:       nil,
+		InFlightPrepared:       vd.InFlightPrepared,
+	}
+	if vd.InFlightProposal != nil {
+		sanitizedVD.InFlightProposal = &protos.Proposal{
+			Header:               vd.InFlightProposal.Header,
+			Payload:              nil,
+			Metadata:             vd.InFlightProposal.Metadata,
+			VerificationSequence: vd.InFlightProposal.VerificationSequence,
+		}
+	}
+	vdBytes, err := proto.Marshal(sanitizedVD)
+	if err != nil {
+		panic(err)
+	}
+	return &protos.SignedViewData{
+		RawViewData: vdBytes,
+		Signer:      svd.Signer,
+		Signature:   svd.Signature,
+	}
+}
+
+func sanitizeNewView(in interface{}) interface{} {
+	rm, isRecordedMessage := in.(RecordedMessage)
+	if !isRecordedMessage {
+		panic(fmt.Sprintf("expected object of type RecordedMessage but got %s", reflect.TypeOf(in)))
+	}
+	srm := RecordedMessage{}
+	srm.Sender = rm.Sender
+	nv := rm.M.GetNewView()
+	if nv == nil {
+		panic("expected message of type NewView")
+	}
+	var sanitizedSignedViewDataMessages []*protos.SignedViewData
+	for _, svd := range nv.SignedViewData {
+		sanitized := sanitizeSignedViewData(svd)
+		sanitizedSignedViewDataMessages = append(sanitizedSignedViewDataMessages, sanitized)
+	}
+	srm.M = &protos.Message{
+		Content: &protos.Message_NewView{
+			NewView: &protos.NewView{
+				SignedViewData: sanitizedSignedViewDataMessages,
+			},
+		},
+	}
+	return srm
 }
