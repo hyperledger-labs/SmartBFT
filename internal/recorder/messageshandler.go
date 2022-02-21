@@ -16,13 +16,15 @@ type MessagesHandler struct {
 	handler  func(sender uint64, m *smartbftprotos.Message)
 	stopChan chan struct{}
 	messages chan []types.RecordedEvent
+	done     func()
 }
 
-func newMessagesHandler(h func(sender uint64, m *smartbftprotos.Message)) *MessagesHandler {
+func newMessagesHandler(h func(sender uint64, m *smartbftprotos.Message), done func()) *MessagesHandler {
 	mh := &MessagesHandler{
 		handler:  h,
+		done:     done,
 		stopChan: make(chan struct{}),
-		messages: make(chan []types.RecordedEvent, 1),
+		messages: make(chan []types.RecordedEvent),
 	}
 	go func() {
 		mh.run()
@@ -53,4 +55,5 @@ func (mh *MessagesHandler) handleMessages(messages []types.RecordedEvent) {
 		decoded := decodeMessage(re.Content).(RecordedMessage)
 		mh.handler(decoded.Sender, decoded.M)
 	}
+	mh.done()
 }

@@ -30,6 +30,7 @@ import (
 type Consensus struct {
 	Recording          io.Writer
 	Transcript         io.Reader
+	recorder           *recorder.Proxy
 	Config             types.Configuration
 	Application        bft.Application
 	Assembler          bft.Assembler
@@ -93,7 +94,7 @@ func (c *Consensus) maybeReadFromTranscript() {
 	c.Signer = recorder
 	c.Assembler = recorder
 	c.MembershipNotifier = recorder
-	recorder.StartDecoding()
+	c.recorder = recorder
 }
 
 type MessagesRecorder interface {
@@ -219,6 +220,10 @@ func (c *Consensus) Start() error {
 	go c.run()
 
 	c.startComponents(view, seq, dec, true)
+
+	if c.Transcript != nil {
+		c.recorder.StartDecoding()
+	}
 
 	atomic.StoreUint64(&c.running, 1)
 

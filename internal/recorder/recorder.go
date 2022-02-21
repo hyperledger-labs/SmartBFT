@@ -85,14 +85,19 @@ type Proxy struct {
 	HandleMessage      func(sender uint64, m *protos.Message)
 	next               types.RecordedEvent
 	eof                bool
+	done               chan struct{}
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
 	p.once.Do(func() {
 		p.in = bufio.NewScanner(p.In)
-		newMessagesHandler(p.HandleMessage)
+		newMessagesHandler(p.HandleMessage, p.messagesHandlerIsDone)
 	})
 	return p.in
+}
+
+func (p *Proxy) messagesHandlerIsDone() {
+	p.done <- struct{}{}
 }
 
 func (p *Proxy) nextRecord() interface{} {
@@ -117,6 +122,7 @@ func (p *Proxy) nextRecord() interface{} {
 	}
 	if len(messages) > 0 {
 		p.mh.messages <- messages
+		<-p.done
 	}
 	if p.eof {
 		p.mh.stop()
@@ -145,6 +151,7 @@ func (p *Proxy) StartDecoding() {
 	}
 	if len(messages) > 0 {
 		p.mh.messages <- messages
+		<-p.done
 	}
 	if p.eof {
 		p.mh.stop()
