@@ -81,26 +81,73 @@ type Proxy struct {
 	Out                io.Writer
 	In                 io.Reader
 	lock               sync.Mutex
+	mh                 MessagesHandler
+	HandleMessage      func(sender uint64, m *protos.Message)
+	next               types.RecordedEvent
+	eof                bool
 }
 
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
 	p.once.Do(func() {
 		p.in = bufio.NewScanner(p.In)
+		newMessagesHandler(p.HandleMessage)
 	})
 	return p.in
 }
 
 func (p *Proxy) nextRecord() interface{} {
+	if p.eof {
+		panic("reached end of file")
+	}
 	in := p.getOrCreateInput()
+	next := p.next
+	var messages []types.RecordedEvent
 	for {
 		if !in.Scan() {
-			panic("reached end of file")
+			p.eof = true
+			break
 		}
 		re := types.RecordedEvent{}
 		re.FromString(in.Text())
 		if !strings.HasPrefix(re.String(), "Message") {
-			return re.Decode()
+			p.next = re
+			break
 		}
+		messages = append(messages, re)
+	}
+	if len(messages) > 0 {
+		p.mh.messages <- messages
+	}
+	if p.eof {
+		p.mh.stop()
+	}
+	return next.Decode()
+}
+
+func (p *Proxy) StartDecoding() {
+	if p.eof {
+		panic("reached end of file")
+	}
+	in := p.getOrCreateInput()
+	var messages []types.RecordedEvent
+	for {
+		if !in.Scan() {
+			p.eof = true
+			break
+		}
+		re := types.RecordedEvent{}
+		re.FromString(in.Text())
+		if !strings.HasPrefix(re.String(), "Message") {
+			p.next = re
+			break
+		}
+		messages = append(messages, re)
+	}
+	if len(messages) > 0 {
+		p.mh.messages <- messages
+	}
+	if p.eof {
+		p.mh.stop()
 	}
 }
 

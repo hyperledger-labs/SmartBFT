@@ -325,3 +325,11 @@ func sanitizeNewView(in interface{}) interface{} {
 	}
 	return srm
 }
+
+func decodeMessage(in []byte) interface{} {
+	var rm RecordedMessage
+	if err := json.Unmarshal(in, &rm); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to RecordedMessage: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+	return rm
+}

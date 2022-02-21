@@ -86,12 +86,14 @@ func (c *Consensus) maybeReadFromTranscript() {
 		Assembler:          c.Assembler,
 		MembershipNotifier: c.MembershipNotifier,
 		Logger:             c.Logger,
+		HandleMessage:      c.HandleMessage,
 	}
 	c.Synchronizer = recorder
 	c.Application = recorder
 	c.Signer = recorder
 	c.Assembler = recorder
 	c.MembershipNotifier = recorder
+	recorder.StartDecoding()
 }
 
 type MessagesRecorder interface {
