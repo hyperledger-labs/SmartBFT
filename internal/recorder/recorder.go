@@ -206,7 +206,7 @@ func (p *Proxy) MembershipChange() bool {
 	panic("programming error: in recording mode but no input nor output initialized")
 }
 
-func (p *Proxy) PreProcess(sender uint64, m *protos.Message) {
+func (p *Proxy) MaybeRecordMessage(sender uint64, m *protos.Message) {
 	if p.Out != nil {
 		var re types.RecordedEvent
 		switch m.GetContent().(type) {

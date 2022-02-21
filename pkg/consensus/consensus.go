@@ -28,26 +28,26 @@ import (
 // and delivers to the application proposals by invoking Deliver() on it.
 // The proposals contain batches of requests assembled together by the Assembler.
 type Consensus struct {
-	Recording            io.Writer
-	Transcript           io.Reader
-	Config               types.Configuration
-	Application          bft.Application
-	Assembler            bft.Assembler
-	WAL                  bft.WriteAheadLog
-	WALInitialContent    [][]byte
-	Comm                 bft.Comm
-	Signer               bft.Signer
-	Verifier             bft.Verifier
-	MembershipNotifier   bft.MembershipNotifier
-	RequestInspector     bft.RequestInspector
-	Synchronizer         bft.Synchronizer
-	Logger               bft.Logger
-	Metadata             protos.ViewMetadata
-	LastProposal         types.Proposal
-	LastSignatures       []types.Signature
-	Scheduler            <-chan time.Time
-	ViewChangerTicker    <-chan time.Time
-	MessagesPreProcessor MessagesPreProcessor
+	Recording          io.Writer
+	Transcript         io.Reader
+	Config             types.Configuration
+	Application        bft.Application
+	Assembler          bft.Assembler
+	WAL                bft.WriteAheadLog
+	WALInitialContent  [][]byte
+	Comm               bft.Comm
+	Signer             bft.Signer
+	Verifier           bft.Verifier
+	MembershipNotifier bft.MembershipNotifier
+	RequestInspector   bft.RequestInspector
+	Synchronizer       bft.Synchronizer
+	Logger             bft.Logger
+	Metadata           protos.ViewMetadata
+	LastProposal       types.Proposal
+	LastSignatures     []types.Signature
+	Scheduler          <-chan time.Time
+	ViewChangerTicker  <-chan time.Time
+	MessagesRecorder   MessagesRecorder
 
 	submittedChan chan struct{}
 	inFlight      *algorithm.InFlightData
@@ -94,14 +94,14 @@ func (c *Consensus) maybeReadFromTranscript() {
 	c.MembershipNotifier = recorder
 }
 
-type MessagesPreProcessor interface {
-	PreProcess(sender uint64, m *protos.Message)
+type MessagesRecorder interface {
+	MaybeRecordMessage(sender uint64, m *protos.Message)
 }
 
-type DummyPreProcessor struct {
+type DummyMessagesRecorder struct {
 }
 
-func (d *DummyPreProcessor) PreProcess(sender uint64, m *protos.Message) {
+func (d *DummyMessagesRecorder) MaybeRecordMessage(sender uint64, m *protos.Message) {
 	// do nothing
 }
 
@@ -127,7 +127,7 @@ func (c *Consensus) maybeRecord() {
 	c.Signer = recorder
 	c.Assembler = recorder
 	c.MembershipNotifier = recorder
-	c.MessagesPreProcessor = recorder
+	c.MessagesRecorder = recorder
 }
 
 func (c *Consensus) Complain(viewNum uint64, stopView bool) {
@@ -171,7 +171,7 @@ func (c *Consensus) Start() error {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
 
-	c.MessagesPreProcessor = &DummyPreProcessor{}
+	c.MessagesRecorder = &DummyMessagesRecorder{}
 	c.maybeRecord()
 	c.maybeReadFromTranscript()
 
@@ -338,7 +338,7 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 	}
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
-	c.MessagesPreProcessor.PreProcess(sender, m)
+	c.MessagesRecorder.MaybeRecordMessage(sender, m)
 	c.controller.ProcessMessages(sender, m)
 }
 
