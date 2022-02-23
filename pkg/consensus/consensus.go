@@ -183,7 +183,12 @@ func (c *Consensus) Start() error {
 	c.stopChan = make(chan struct{})
 	c.reconfigChan = make(chan types.Reconfig)
 	c.consensusLock.Lock()
-	defer c.consensusLock.Unlock()
+	defer func() {
+		c.consensusLock.Unlock()
+		if c.Transcript != nil {
+			c.recorder.StartDecoding()
+		}
+	}()
 
 	c.setNodes(c.Comm.Nodes())
 
@@ -220,10 +225,6 @@ func (c *Consensus) Start() error {
 	go c.run()
 
 	c.startComponents(view, seq, dec, true)
-
-	if c.Transcript != nil {
-		c.recorder.StartDecoding()
-	}
 
 	atomic.StoreUint64(&c.running, 1)
 
