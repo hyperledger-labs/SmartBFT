@@ -247,6 +247,7 @@ type ProposalMaker struct {
 	ViewSequences      *atomic.Value
 	restoreOnceFromWAL sync.Once
 	Checkpoint         *types.Checkpoint
+	Replaying          bool
 }
 
 // NewProposer returns a new view
@@ -272,6 +273,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		State:              pm.State,
 		InMsgQSize:         pm.InMsqQSize,
 		ViewSequences:      pm.ViewSequences,
+		Replaying:          pm.Replaying,
 	}
 
 	view.ViewSequences.Store(ViewSequence{

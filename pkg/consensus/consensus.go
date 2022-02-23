@@ -367,6 +367,10 @@ func (c *Consensus) SubmitRequest(req []byte) error {
 }
 
 func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
+	replaying := false
+	if c.Transcript != nil {
+		replaying = true
+	}
 	return &algorithm.ProposalMaker{
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		Checkpoint:         c.checkpoint,
@@ -383,6 +387,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		N:                  c.numberOfNodes,
 		InMsqQSize:         int(c.Config.IncomingMessageBufferSize),
 		ViewSequences:      c.controller.ViewSequences,
+		Replaying:          replaying,
 	}
 }
 

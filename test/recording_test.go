@@ -62,7 +62,9 @@ func TestOnboardingRecording(t *testing.T) {
 		})).Sugar()
 
 		startNodes(nodes, network)
-		nodes[3].Disconnect()
+		if !recording {
+			nodes[3].Disconnect()
+		}
 
 		syncDelay := make(chan struct{})
 
@@ -75,7 +77,9 @@ func TestOnboardingRecording(t *testing.T) {
 		}
 
 		nodes[3].DelaySync(syncDelay, true)
-		nodes[3].Connect()
+		if !recording {
+			nodes[3].Connect()
+		}
 
 		// Commit some more transactions so last node will see it is behind
 		for i := 5; i < 6; i++ {
@@ -128,6 +132,7 @@ func TestOnboardingRecording(t *testing.T) {
 	// Setup recording transcript for last node
 	nodes[3].Consensus.Transcript = recording
 	nodes[3].Consensus.Recording = nil
+	nodes[3].Disconnect()
 
 	// Detach the committed batches of the node from the committed batches of the other nodes
 	// so sync won't work, to force the sync output to come from the transcript
@@ -205,6 +210,7 @@ func TestDecisionRecording(t *testing.T) {
 	})).Sugar()
 
 	startNodes(nodes, &network)
+	nodes[3].Disconnect()
 
 	nodes[0].Submit(Request{ID: fmt.Sprintf("%d", 100), ClientID: "alice"})
 	// Wait for all nodes to commit

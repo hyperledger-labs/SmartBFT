@@ -71,6 +71,7 @@ type View struct {
 	State              State
 	Phase              Phase
 	InMsgQSize         int
+	Replaying          bool
 	// Runtime
 	lastVotedProposalByID map[uint64]protos.Commit
 	incMsgs               chan *incMsg
@@ -415,10 +416,12 @@ func (v *View) processPrepares() Phase {
 			v.processMsg(msg.sender, msg.Message)
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
-			if prepare.Digest != expectedDigest {
-				seq := v.ProposalSequence
-				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
-				continue
+			if !v.Replaying {
+				if prepare.Digest != expectedDigest {
+					seq := v.ProposalSequence
+					v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)
+					continue
+				}
 			}
 			voterIDs = append(voterIDs, vote.sender)
 		}
@@ -488,6 +491,7 @@ func (v *View) processCommits(proposal *types.Proposal) ([]types.Signature, Phas
 		expectedDigest: proposal.Digest(),
 		proposal:       proposal,
 		v:              v,
+		replaying:      v.Replaying,
 	}
 
 	var voterIDs []uint64
@@ -785,11 +789,12 @@ type voteVerifier struct {
 	proposal       *types.Proposal
 	expectedDigest string
 	validVotes     chan types.Signature
+	replaying      bool
 }
 
 func (vv *voteVerifier) verifyVote(vote *protos.Message) {
 	commit := vote.GetCommit()
-	if commit.Digest != vv.expectedDigest {
+	if !vv.replaying && commit.Digest != vv.expectedDigest {
 		vv.v.Logger.Warnf("Got wrong digest at processCommits for seq %d", commit.Seq)
 		return
 	}
