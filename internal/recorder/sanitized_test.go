@@ -100,3 +100,14 @@ func TestMembershipChange(t *testing.T) {
 	true2 := re2.Decode().(bool)
 	assert.True(t, true2)
 }
+
+func TestMessage(t *testing.T) {
+	RegisterSanitizer(TypeMessageViewChange, nothingToSanitize)
+	RegisterDecoder(TypeMessageViewChange, decodeViewChangeMessage)
+	re := NewRecordedEvent(TypeMessageViewChange, RecordedViewChange{Sender: 1, M: viewChangeMsg.GetViewChange()})
+	re2 := RecordedEvent{}
+	re2.FromString(re.String())
+	assert.Equal(t, re, re2)
+	decoded := re2.Decode().(RecordedViewChange)
+	assert.Equal(t, uint64(1), decoded.Sender)
+}

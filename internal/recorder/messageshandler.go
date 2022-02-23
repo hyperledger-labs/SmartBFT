@@ -36,6 +36,14 @@ func (mh *MessagesHandler) stop() {
 	close(mh.stopChan)
 }
 
+func (mh *MessagesHandler) getMessages(messages []types.RecordedEvent) {
+	select {
+	case <-mh.stopChan:
+		return
+	case mh.messages <- messages:
+	}
+}
+
 func (mh *MessagesHandler) run() {
 	for {
 		select {

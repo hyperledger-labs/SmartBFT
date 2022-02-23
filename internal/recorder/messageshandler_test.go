@@ -6,10 +6,11 @@
 package recorder
 
 import (
-	"github.com/SmartBFT-Go/consensus/pkg/types"
-	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"sync"
 	"testing"
+
+	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
 func TestSimple(t *testing.T) {
@@ -18,7 +19,7 @@ func TestSimple(t *testing.T) {
 		doneWG.Done()
 	}
 	handlerWG := sync.WaitGroup{}
-	handlerFunc := func(sender uint64, m *smartbftprotos.Message) {handlerWG.Done()}
+	handlerFunc := func(sender uint64, m *smartbftprotos.Message) { handlerWG.Done() }
 	mh := newMessagesHandler(handlerFunc, doneFunc)
 	doneWG.Add(1)
 	mh.messages <- nil

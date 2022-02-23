@@ -333,3 +333,16 @@ func decodeMessage(in []byte) interface{} {
 	}
 	return rm
 }
+
+type RecordedViewChange struct {
+	Sender uint64
+	M      *protos.ViewChange
+}
+
+func decodeViewChangeMessage(in []byte) interface{} {
+	var rm RecordedViewChange
+	if err := json.Unmarshal(in, &rm); err != nil {
+		panic(fmt.Sprintf("failed unmarshaling %s to RecordedViewChange: %v", base64.StdEncoding.EncodeToString(in), err))
+	}
+	return rm
+}

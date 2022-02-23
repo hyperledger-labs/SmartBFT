@@ -81,7 +81,7 @@ type Proxy struct {
 	Out                io.Writer
 	In                 io.Reader
 	lock               sync.Mutex
-	mh                 MessagesHandler
+	mh                 *MessagesHandler
 	HandleMessage      func(sender uint64, m *protos.Message)
 	next               types.RecordedEvent
 	eof                bool
@@ -91,7 +91,8 @@ type Proxy struct {
 func (p *Proxy) getOrCreateInput() *bufio.Scanner {
 	p.once.Do(func() {
 		p.in = bufio.NewScanner(p.In)
-		newMessagesHandler(p.HandleMessage, p.messagesHandlerIsDone)
+		p.mh = newMessagesHandler(p.HandleMessage, p.messagesHandlerIsDone)
+		p.done = make(chan struct{})
 	})
 	return p.in
 }
@@ -121,7 +122,7 @@ func (p *Proxy) nextRecord() interface{} {
 		messages = append(messages, re)
 	}
 	if len(messages) > 0 {
-		p.mh.messages <- messages
+		p.mh.getMessages(messages)
 		<-p.done
 	}
 	if p.eof {
@@ -150,7 +151,7 @@ func (p *Proxy) StartDecoding() {
 		messages = append(messages, re)
 	}
 	if len(messages) > 0 {
-		p.mh.messages <- messages
+		p.mh.getMessages(messages)
 		<-p.done
 	}
 	if p.eof {
@@ -271,7 +272,7 @@ func (p *Proxy) MaybeRecordMessage(sender uint64, m *protos.Message) {
 		case *protos.Message_Commit:
 			re = types.NewRecordedEvent(TypeMessageCommit, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_ViewChange:
-			re = types.NewRecordedEvent(TypeMessageViewChange, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageViewChange, RecordedViewChange{Sender: sender, M: m.GetViewChange()})
 		case *protos.Message_ViewData:
 			re = types.NewRecordedEvent(TypeMessageViewData, RecordedMessage{Sender: sender, M: m})
 		case *protos.Message_NewView:
