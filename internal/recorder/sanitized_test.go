@@ -103,11 +103,11 @@ func TestMembershipChange(t *testing.T) {
 
 func TestMessage(t *testing.T) {
 	RegisterSanitizer(TypeMessageViewChange, nothingToSanitize)
-	RegisterDecoder(TypeMessageViewChange, decodeViewChangeMessage)
-	re := NewRecordedEvent(TypeMessageViewChange, RecordedViewChange{Sender: 1, M: viewChangeMsg.GetViewChange()})
+	RegisterDecoder(TypeMessageViewChange, decodeMessages)
+	re := NewRecordedEvent(TypeMessageViewChange, RecordedMessages{Sender: 1, VC: viewChangeMsg.GetViewChange()})
 	re2 := RecordedEvent{}
 	re2.FromString(re.String())
 	assert.Equal(t, re, re2)
-	decoded := re2.Decode().(RecordedViewChange)
+	decoded := re2.Decode().(RecordedMessages)
 	assert.Equal(t, uint64(1), decoded.Sender)
 }

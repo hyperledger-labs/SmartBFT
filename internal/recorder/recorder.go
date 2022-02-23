@@ -266,25 +266,25 @@ func (p *Proxy) MaybeRecordMessage(sender uint64, m *protos.Message) {
 		var re types.RecordedEvent
 		switch m.GetContent().(type) {
 		case *protos.Message_PrePrepare:
-			re = types.NewRecordedEvent(TypeMessagePrePrepare, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessagePrePrepare, RecordedMessages{Sender: sender, PREP: m.GetPrePrepare()})
 		case *protos.Message_Prepare:
-			re = types.NewRecordedEvent(TypeMessagePrepare, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessagePrepare, RecordedMessages{Sender: sender, P: m.GetPrepare()})
 		case *protos.Message_Commit:
-			re = types.NewRecordedEvent(TypeMessageCommit, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageCommit, RecordedMessages{Sender: sender, CMT: m.GetCommit()})
 		case *protos.Message_ViewChange:
-			re = types.NewRecordedEvent(TypeMessageViewChange, RecordedViewChange{Sender: sender, M: m.GetViewChange()})
+			re = types.NewRecordedEvent(TypeMessageViewChange, RecordedMessages{Sender: sender, VC: m.GetViewChange()})
 		case *protos.Message_ViewData:
-			re = types.NewRecordedEvent(TypeMessageViewData, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageViewData, RecordedMessages{Sender: sender, VD: m.GetViewData()})
 		case *protos.Message_NewView:
-			re = types.NewRecordedEvent(TypeMessageNewView, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageNewView, RecordedMessages{Sender: sender, NV: m.GetNewView()})
 		case *protos.Message_HeartBeat:
-			re = types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageHeartBeat, RecordedMessages{Sender: sender, HB: m.GetHeartBeat()})
 		case *protos.Message_HeartBeatResponse:
-			re = types.NewRecordedEvent(TypeMessageHeartBeatResponse, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageHeartBeatResponse, RecordedMessages{Sender: sender, HBR: m.GetHeartBeatResponse()})
 		case *protos.Message_StateTransferRequest:
-			re = types.NewRecordedEvent(TypeMessageStateTransferRequest, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageStateTransferRequest, RecordedMessages{Sender: sender, STRequest: m.GetStateTransferRequest()})
 		case *protos.Message_StateTransferResponse:
-			re = types.NewRecordedEvent(TypeMessageStateTransferResponse, RecordedMessage{Sender: sender, M: m})
+			re = types.NewRecordedEvent(TypeMessageStateTransferResponse, RecordedMessages{Sender: sender, STResponse: m.GetStateTransferResponse()})
 		default:
 			p.Logger.Panicf("Unexpected message type")
 		}
