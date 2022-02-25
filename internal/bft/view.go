@@ -171,7 +171,7 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 }
 
 func (v *View) processMsg(sender uint64, m *protos.Message) {
-	if v.stopped() {
+	if v.Stopped() {
 		return
 	}
 	// Ensure view number is equal to our view
@@ -959,13 +959,17 @@ func (v *View) Abort() {
 	v.viewEnded.Wait()
 }
 
-func (v *View) stopped() bool {
+func (v *View) Stopped() bool {
 	select {
 	case <-v.abortChan:
 		return true
 	default:
 		return false
 	}
+}
+
+func (v *View) GetLeaderID() uint64 {
+	return v.LeaderID
 }
 
 func (v *View) updateBlacklistMetadata(metadata *protos.ViewMetadata, prevSigs []*protos.Signature, prevMetadata []byte) *protos.ViewMetadata {
