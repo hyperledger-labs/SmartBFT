@@ -42,7 +42,7 @@ var heartBeatMsg = &protos.Message{
 }
 
 func TestMessagesDecoding(t *testing.T) {
-	RegisterDecoders(nil)
+	RegisterDecoders()
 	RegisterSanitizers()
 	recording := &bytes.Buffer{}
 	proxy := &Proxy{Out: recording, MembershipNotifier: &membership{}}
@@ -82,7 +82,7 @@ func TestMessagesDecoding(t *testing.T) {
 }
 
 func TestMessagesDecodingWithDifferentOrder(t *testing.T) {
-	RegisterDecoders(nil)
+	RegisterDecoders()
 	RegisterSanitizers()
 	recording := &bytes.Buffer{}
 	proxy := &Proxy{Out: recording, MembershipNotifier: &membership{}}
