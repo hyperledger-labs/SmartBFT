@@ -78,6 +78,8 @@ func (c *Consensus) maybeReadFromTranscript() {
 		return
 	}
 
+	recorder.RegisterDecoders()
+
 	c.Logger.Infof("Record transcript playback enabled")
 	recorder := &recorder.Proxy{
 		In:                 c.Transcript,

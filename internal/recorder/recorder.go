@@ -55,18 +55,13 @@ func RegisterSanitizers() {
 	types.RegisterSanitizer(TypeMessageNewView, sanitizeNewView)
 }
 
-func RegisterDecoders(wrapper func(func([]byte) interface{}) func([]byte) interface{}) {
-	if wrapper == nil {
-		wrapper = func(f func([]byte) interface{}) func([]byte) interface{} {
-			return f
-		}
-	}
-	types.RegisterDecoder(TypeSyncResponse, wrapper(decodeSanitizedResponse))
-	types.RegisterDecoder(TypeDecisionAndResponse, wrapper(decodeSanitizedDecision))
-	types.RegisterDecoder(TypeSignResponse, wrapper(decodeFromNil))
-	types.RegisterDecoder(TypeSignedProposal, wrapper(decodeSanitizedSignedProposal))
-	types.RegisterDecoder(TypeProposal, wrapper(decodeSanitizedProposal))
-	types.RegisterDecoder(TypeMembershipChange, wrapper(decodeBool))
+func RegisterDecoders() {
+	types.RegisterDecoder(TypeSyncResponse, decodeSanitizedResponse)
+	types.RegisterDecoder(TypeDecisionAndResponse, decodeSanitizedDecision)
+	types.RegisterDecoder(TypeSignResponse, decodeFromNil)
+	types.RegisterDecoder(TypeSignedProposal, decodeSanitizedSignedProposal)
+	types.RegisterDecoder(TypeProposal, decodeSanitizedProposal)
+	types.RegisterDecoder(TypeMembershipChange, decodeBool)
 }
 
 type Proxy struct {

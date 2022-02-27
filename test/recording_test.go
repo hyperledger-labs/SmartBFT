@@ -6,7 +6,6 @@
 package test
 
 import (
-	"bufio"
 	"bytes"
 	"fmt"
 	"io/ioutil"
@@ -14,9 +13,6 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
-
-	"github.com/SmartBFT-Go/consensus/internal/recorder"
 
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -27,8 +23,6 @@ import (
 func TestOnboardingRecording(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
-
-	recorder.RegisterDecoders(nil)
 
 	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
@@ -152,8 +146,6 @@ func TestDecisionRecording(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
 
-	recorder.RegisterDecoders(nil)
-
 	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
@@ -228,8 +220,6 @@ func TestDecisionRecording(t *testing.T) {
 
 func TestAssemblerRecording(t *testing.T) {
 	t.Parallel()
-
-	recorder.RegisterDecoders(nil)
 
 	network := make(Network)
 
@@ -313,8 +303,6 @@ func TestViewChangeRecording(t *testing.T) {
 	t.Parallel()
 	network := make(Network)
 
-	recorder.RegisterDecoders(nil)
-
 	testDir, err := ioutil.TempDir("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
@@ -353,62 +341,4 @@ func TestViewChangeRecording(t *testing.T) {
 
 	// Make sure view change messages were recorded
 	assert.True(t, strings.Contains(recording.String(), "MessageNewView"))
-}
-
-type messageSeeker struct {
-	handler        func(sender uint64, m *smartbftprotos.Message)
-	transcript     *bufio.Scanner
-	decodingEvents chan struct{}
-	stop           chan struct{}
-}
-
-func newMessageSeeker(transcript *bytes.Buffer, h func(sender uint64, m *smartbftprotos.Message)) *messageSeeker {
-	scanner := bufio.NewScanner(bytes.NewBuffer(transcript.Bytes()))
-	return &messageSeeker{
-		transcript:     scanner,
-		decodingEvents: make(chan struct{}, 1),
-		stop:           make(chan struct{}),
-		handler:        h,
-	}
-}
-
-func (ms *messageSeeker) shutdown() {
-	close(ms.decodingEvents)
-}
-
-func (ms *messageSeeker) seekMessages() {
-	for {
-		select {
-		case <-ms.stop:
-			return
-		case <-ms.decodingEvents:
-			time.Sleep(time.Millisecond * 100)
-			ms.maybeMessageDispatch()
-		}
-	}
-}
-
-func (ms *messageSeeker) maybeMessageDispatch() {
-	if !ms.transcript.Scan() {
-		return
-	}
-
-	entry := ms.transcript.Text()
-	// Figure out whether entry is a message
-	sep := strings.Index(entry, " ")
-	entryType := entry[:sep]
-	_ = entryType
-	if false {
-		// Invoke correct decoder function
-		ms.handler(0, nil)
-	}
-}
-
-func (ms *messageSeeker) wrapDecoder(f func(in []byte) interface{}) func([]byte) interface{} {
-	return func(in []byte) interface{} {
-		defer func() {
-			ms.decodingEvents <- struct{}{}
-		}()
-		return f(in)
-	}
 }
