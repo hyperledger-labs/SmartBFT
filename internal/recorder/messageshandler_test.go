@@ -14,22 +14,14 @@ import (
 )
 
 func TestSimple(t *testing.T) {
-	doneWG := sync.WaitGroup{}
-	doneFunc := func() {
-		doneWG.Done()
-	}
 	handlerWG := sync.WaitGroup{}
 	handlerFunc := func(sender uint64, m *smartbftprotos.Message) { handlerWG.Done() }
-	mh := newMessagesHandler(handlerFunc, doneFunc)
-	doneWG.Add(1)
+	mh := newMessagesHandler(handlerFunc)
 	mh.messages <- nil
-	doneWG.Wait()
 	types.RegisterSanitizer(TypeMessageViewChange, nothingToSanitize)
-	doneWG.Add(1)
 	handlerWG.Add(3)
 	vc := types.NewRecordedEvent(TypeMessageViewChange, nil)
 	mh.messages <- []types.RecordedEvent{vc, vc, vc}
 	handlerWG.Wait()
-	doneWG.Wait()
 	mh.stop()
 }

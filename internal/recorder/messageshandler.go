@@ -7,6 +7,7 @@ package recorder
 
 import (
 	"strings"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -16,13 +17,11 @@ type MessagesHandler struct {
 	handler  func(sender uint64, m *protos.Message)
 	stopChan chan struct{}
 	messages chan []types.RecordedEvent
-	done     func()
 }
 
-func newMessagesHandler(h func(sender uint64, m *protos.Message), done func()) *MessagesHandler {
+func newMessagesHandler(h func(sender uint64, m *protos.Message)) *MessagesHandler {
 	mh := &MessagesHandler{
 		handler:  h,
-		done:     done,
 		stopChan: make(chan struct{}),
 		messages: make(chan []types.RecordedEvent),
 	}
@@ -50,6 +49,7 @@ func (mh *MessagesHandler) run() {
 		case <-mh.stopChan:
 			return
 		case messages := <-mh.messages:
+			time.Sleep(1 * time.Second)
 			mh.handleMessages(messages)
 		}
 	}
@@ -86,5 +86,4 @@ func (mh *MessagesHandler) handleMessages(messages []types.RecordedEvent) {
 		}
 		mh.handler(decoded.Sender, m)
 	}
-	mh.done()
 }

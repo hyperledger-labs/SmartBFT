@@ -62,7 +62,7 @@ func TestOnboardingRecording(t *testing.T) {
 		})).Sugar()
 
 		startNodes(nodes, network)
-		if !recording {
+		if recording {
 			nodes[3].Disconnect()
 		}
 
@@ -77,7 +77,7 @@ func TestOnboardingRecording(t *testing.T) {
 		}
 
 		nodes[3].DelaySync(syncDelay, true)
-		if !recording {
+		if recording {
 			nodes[3].Connect()
 		}
 
