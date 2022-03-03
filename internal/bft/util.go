@@ -141,6 +141,30 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 	vs.votes <- &vote{Message: message, sender: voter}
 }
 
+type nextViews struct {
+	n map[uint64]uint64
+}
+
+func (nv *nextViews) clear() {
+	nv.n = make(map[uint64]uint64)
+}
+
+func (nv *nextViews) registerNext(next uint64, sender uint64) {
+	if next <= nv.n[sender] {
+		return
+	}
+
+	nv.n[sender] = next
+}
+
+func (nv *nextViews) sendRecv(next uint64, sender uint64) bool {
+	if next == nv.n[sender] {
+		return true
+	}
+
+	return false
+}
+
 type incMsg struct {
 	*protos.Message
 	sender uint64
