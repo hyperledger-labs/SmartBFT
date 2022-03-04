@@ -158,11 +158,7 @@ func (nv *nextViews) registerNext(next uint64, sender uint64) {
 }
 
 func (nv *nextViews) sendRecv(next uint64, sender uint64) bool {
-	if next == nv.n[sender] {
-		return true
-	}
-
-	return false
+	return next == nv.n[sender]
 }
 
 type incMsg struct {

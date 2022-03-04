@@ -265,6 +265,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	if vc := m.GetViewChange(); vc != nil {
 		v.Logger.Debugf("Node %d is processing a view change message %v from %d with next view %d", v.SelfID, m, sender, vc.NextView)
 
+		v.nvs.registerNext(vc.NextView, sender)
+
 		// check view number
 		if vc.NextView == v.currView+1 { // accept view change only to immediate next view number
 			v.viewChangeMsgs.registerVote(sender, m)
@@ -273,7 +275,8 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 			return
 		}
 
-		if vc.NextView > v.realView &&
+		if v.nextView == v.currView+1 && // node has already started view change with last view
+			vc.NextView > v.realView &&
 			vc.NextView < v.currView+1 &&
 			v.nvs.sendRecv(vc.NextView, sender) {
 			// Let's help the lagging nodes.
