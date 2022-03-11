@@ -111,7 +111,7 @@ type ViewChanger struct {
 // Start the view changer.
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
-	v.startChangeChan = make(chan *change, 1)
+	v.startChangeChan = make(chan *change, 2)
 	v.informChan = make(chan uint64, 1)
 
 	v.quorum, v.f = computeQuorum(v.N)
