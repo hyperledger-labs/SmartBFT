@@ -2348,8 +2348,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	viewChange2Map := make(map[uint64]struct{}, 4)
 	viewChange2Sync := sync.RWMutex{}
 
-	realViewChangeWG := sync.WaitGroup{}
-	realViewChangeWG.Add(7)
+	realViewChangeCh := make(chan struct{}, 7)
 	realViewChangeMap := make(map[uint64]struct{}, 7)
 	realViewChangeSync := sync.RWMutex{}
 
@@ -2368,7 +2367,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 					_, hasVoted = realViewChangeMap[id]
 					if !hasVoted {
 						realViewChangeMap[id] = struct{}{}
-						realViewChangeWG.Done()
+						realViewChangeCh <- struct{}{}
 					}
 					realViewChangeSync.Unlock()
 				}
@@ -2456,19 +2455,36 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
 	}
 
+	fail := time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
-		<-viewChange1Ch
+		select {
+		case <-viewChange1Ch:
+		case <-fail:
+			t.Fatal("Didn't change view 1")
+		}
 	}
 
+	fail = time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
-		<-viewChange2Ch
+		select {
+		case <-viewChange2Ch:
+		case <-fail:
+			t.Fatal("Didn't change view 2")
+		}
 	}
 
 	nodes[6].Connect()
 	nodes[5].Connect()
 	nodes[4].Connect()
 
-	realViewChangeWG.Wait()
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < 7; i++ {
+		select {
+		case <-realViewChangeCh:
+		case <-fail:
+			t.Fatal("Didn't change real view")
+		}
+	}
 
 	close(done)
 
