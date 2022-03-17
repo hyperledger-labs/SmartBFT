@@ -63,33 +63,48 @@ func TestReqPoolBasic(t *testing.T) {
 			ID:       "1",
 			ClientID: "1",
 		}
+		byteReq11 := makeTestRequest("11", "11", "foo")
+		req11 := types.RequestInfo{
+			ID:       "11",
+			ClientID: "11",
+		}
 		err = pool.Submit(byteReq1)
 		assert.Error(t, err)
 		assert.Equal(t, 1, pool.Size())
 		err = pool.RemoveRequest(req1)
 		assert.NoError(t, err)
 		assert.Equal(t, 0, pool.Size())
-		err = pool.Submit(byteReq1)
+		err = pool.Submit(byteReq11)
 		assert.NoError(t, err)
 		assert.Equal(t, 1, pool.Size())
-		err = pool.RemoveRequest(req1)
+		err = pool.RemoveRequest(req11)
 		assert.NoError(t, err)
 		assert.Equal(t, 0, pool.Size())
 
 		byteReq2 := makeTestRequest("2", "2", "bar")
+		byteReq22 := makeTestRequest("22", "22", "bar")
+		req22 := types.RequestInfo{
+			ID:       "22",
+			ClientID: "22",
+		}
 		err = pool.Submit(byteReq2)
 		assert.NoError(t, err)
 		assert.Equal(t, 1, pool.Size())
-		err = pool.Submit(byteReq1)
+		err = pool.Submit(byteReq22)
 		assert.NoError(t, err)
 		assert.Equal(t, 2, pool.Size())
-		err = pool.Submit(byteReq1)
+		err = pool.Submit(byteReq22)
 		assert.Error(t, err)
 		err = pool.Submit(byteReq2)
 		assert.Error(t, err)
-		err = pool.RemoveRequest(req1)
+		err = pool.RemoveRequest(req22)
 		assert.NoError(t, err)
-		err = pool.Submit(byteReq1)
+		byteReq23 := makeTestRequest("23", "23", "bar")
+		req23 := types.RequestInfo{
+			ID:       "23",
+			ClientID: "23",
+		}
+		err = pool.Submit(byteReq23)
 		assert.NoError(t, err)
 		req2 := types.RequestInfo{
 			ID:       "2",
@@ -97,7 +112,12 @@ func TestReqPoolBasic(t *testing.T) {
 		}
 		err = pool.RemoveRequest(req2)
 		assert.NoError(t, err)
-		err = pool.Submit(byteReq2)
+		byteReq24 := makeTestRequest("24", "24", "bar")
+		req24 := types.RequestInfo{
+			ID:       "24",
+			ClientID: "24",
+		}
+		err = pool.Submit(byteReq24)
 		assert.NoError(t, err)
 
 		byteReq3 := makeTestRequest("3", "3", "bog")
@@ -105,17 +125,17 @@ func TestReqPoolBasic(t *testing.T) {
 		assert.NoError(t, err)
 
 		next, full := pool.NextRequests(4, 10000000, false)
-		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
-		assert.Equal(t, "2", insp.RequestID(next[1]).ID)
+		assert.Equal(t, "23", insp.RequestID(next[0]).ID)
+		assert.Equal(t, "24", insp.RequestID(next[1]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[2]).ID)
 		assert.Len(t, next, 3)
 		assert.False(t, full)
 
-		err = pool.RemoveRequest(req2)
+		err = pool.RemoveRequest(req24)
 		assert.NoError(t, err)
 
 		next, _ = pool.NextRequests(4, 10000000, false)
-		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+		assert.Equal(t, "23", insp.RequestID(next[0]).ID)
 		assert.Equal(t, "3", insp.RequestID(next[1]).ID)
 		assert.Len(t, next, 2)
 		assert.False(t, full)
@@ -125,11 +145,11 @@ func TestReqPoolBasic(t *testing.T) {
 		assert.False(t, full)
 
 		next, full = pool.NextRequests(1, 10000000, false)
-		assert.Equal(t, "1", insp.RequestID(next[0]).ID)
+		assert.Equal(t, "23", insp.RequestID(next[0]).ID)
 		assert.Len(t, next, 1)
 		assert.True(t, full)
 
-		err = pool.RemoveRequest(req1)
+		err = pool.RemoveRequest(req23)
 		assert.NoError(t, err)
 
 		req3 := types.RequestInfo{
@@ -169,8 +189,11 @@ func TestReqPoolCapacity(t *testing.T) {
 			go func(i string) {
 				byteReq := makeTestRequest(i, i, "foo")
 				err := pool.Submit(byteReq)
-				assert.NoError(t, err)
-				wg.Done()
+
+				if err == nil ||
+					errors.Is(err, bft.ErrReqAlreadyProcessed) {
+					wg.Done()
+				}
 			}(fmt.Sprintf("%d", i))
 		}
 
@@ -182,10 +205,7 @@ func TestReqPoolCapacity(t *testing.T) {
 					ID:       i,
 					ClientID: i,
 				}
-				err := pool.RemoveRequest(req)
-				for err != nil {
-					err = pool.RemoveRequest(req)
-				}
+				err = pool.RemoveRequest(req)
 				wg.Done()
 			}(fmt.Sprintf("%d", i))
 		}
