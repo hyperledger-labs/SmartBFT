@@ -205,7 +205,7 @@ func TestReqPoolCapacity(t *testing.T) {
 					ID:       i,
 					ClientID: i,
 				}
-				err = pool.RemoveRequest(req)
+				_ = pool.RemoveRequest(req)
 				wg.Done()
 			}(fmt.Sprintf("%d", i))
 		}
