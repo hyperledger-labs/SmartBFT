@@ -346,7 +346,7 @@ func (rp *Pool) copyRequests() (requestVec [][]byte, infoVec []types.RequestInfo
 	return
 }
 
-// RemoveRequest removes the given request from the pool
+// RemoveRequest removes the given request from the pool.
 func (rp *Pool) RemoveRequest(requestInfo types.RequestInfo) error {
 	rp.lock.Lock()
 	defer rp.lock.Unlock()
