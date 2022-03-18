@@ -390,7 +390,11 @@ func (rp *Pool) moveToDelSlice(requestInfo types.RequestInfo) {
 }
 
 func (rp *Pool) eraseFromDelSlice() {
-	if len(rp.delSlice) <= defaultSizeOfDelElements {
+	rp.lock.RLock()
+	l := len(rp.delSlice)
+	rp.lock.RUnlock()
+
+	if l <= defaultSizeOfDelElements {
 		return
 	}
 
