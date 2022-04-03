@@ -214,15 +214,13 @@ func (rp *Pool) Submit(request []byte) error {
 
 	if _, existsEl := rp.existMap[reqInfo]; existsEl {
 		rp.semaphore.Release(1)
-		errStr := fmt.Sprintf("request %s has been already added to the pool", reqInfo)
-		rp.logger.Debugf(errStr)
+		rp.logger.Debugf("request %s has been already added to the pool", reqInfo)
 		return ErrReqAlreadyExists
 	}
 
 	if _, deleteEl := rp.delMap[reqInfo]; deleteEl {
 		rp.semaphore.Release(1)
-		errStr := fmt.Sprintf("request %s has been already processed", reqInfo)
-		rp.logger.Debugf(errStr)
+		rp.logger.Debugf("request %s has been already processed", reqInfo)
 		return ErrReqAlreadyProcessed
 	}
 
@@ -403,12 +401,8 @@ func (rp *Pool) eraseFromDelSlice() {
 
 	n := len(rp.delSlice) - defaultSizeOfDelElements
 
-	for i, r := range rp.delSlice {
+	for _, r := range rp.delSlice[:n] {
 		delete(rp.delMap, r)
-
-		if i+1 == n {
-			return
-		}
 	}
 
 	rp.delSlice = rp.delSlice[n:]
