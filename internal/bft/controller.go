@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"errors"
 	"sync"
 	"sync/atomic"
 
@@ -560,6 +561,17 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 		c.close()
 		c.ViewChanger.close()
 	}
+
+	if len(syncResponse.RequestDel) != 0 {
+		c.RequestPool.Prune(func(bytes []byte) error {
+			return errors.New("Need all delete")
+		})
+
+		for i := range syncResponse.RequestDel {
+			_ = c.RequestPool.RemoveRequest(syncResponse.RequestDel[i])
+		}
+	}
+
 	decision := syncResponse.Latest
 	if decision.Proposal.Metadata == nil {
 		c.Logger.Infof("Synchronizer returned with proposal metadata nil")
@@ -872,7 +884,7 @@ type decision struct {
 	requests   []types.RequestInfo
 }
 
-//BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
+// BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
 func (c *Controller) BroadcastConsensus(m *protos.Message) {
 	for _, node := range c.NodesList {
 		// Do not send to yourself

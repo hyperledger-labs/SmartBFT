@@ -37,6 +37,8 @@ func TestBatcherBasic(t *testing.T) {
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo-bar")
 	byteReq3 := makeTestRequest("3", "3", "foo-bar-foo")
+	byteReq4 := makeTestRequest("4", "4", "foo-bar-foo-bar")
+	byteReq5 := makeTestRequest("5", "5", "foo-bar-foo-bar-foo")
 	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq1) // pool: [req1]
 	assert.NoError(t, err)
@@ -82,31 +84,31 @@ func TestBatcherBasic(t *testing.T) {
 	// count limit
 	batcher = bft.NewBatchBuilder(pool, submittedChan, 2, 2048, 10*time.Millisecond)
 
-	err = pool.Submit(byteReq2) // pool: [req2, req3]
+	err = pool.Submit(byteReq4) // pool: [req4, req3]
 	assert.NoError(t, err)
-	err = pool.Submit(byteReq1) // pool: [req1, req2, req3]
+	err = pool.Submit(byteReq5) // pool: [req5, req4, req3]
 	assert.NoError(t, err)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 2)
 	assert.Equal(t, byteReq3, res[0])
-	assert.Equal(t, byteReq2, res[1])
+	assert.Equal(t, byteReq4, res[1])
 
 	// size limit
-	batcher = bft.NewBatchBuilder(pool, submittedChan, 10, uint64(len(byteReq3)+len(byteReq2)), 10*time.Millisecond)
+	batcher = bft.NewBatchBuilder(pool, submittedChan, 10, uint64(len(byteReq3)+len(byteReq4)), 10*time.Millisecond)
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 2)
 	assert.Equal(t, byteReq3, res[0])
-	assert.Equal(t, byteReq2, res[1])
+	assert.Equal(t, byteReq4, res[1])
 
 	// high limits
 	batcher = bft.NewBatchBuilder(pool, submittedChan, 10, 2048, 10*time.Millisecond)
 	res = batcher.NextBatch()
 	assert.Len(t, res, 3)
 	assert.Equal(t, byteReq3, res[0])
-	assert.Equal(t, byteReq2, res[1])
-	assert.Equal(t, byteReq1, res[2])
+	assert.Equal(t, byteReq4, res[1])
+	assert.Equal(t, byteReq5, res[2])
 
 	pool.Close()
 }
