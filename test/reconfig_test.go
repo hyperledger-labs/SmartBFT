@@ -328,7 +328,7 @@ func TestAddRemoveNodes(t *testing.T) {
 
 		nodes[9].Submit(Request{
 			ClientID: "reconfig",
-			ID:       "10",
+			ID:       fmt.Sprintf("%d", 50+r),
 			Reconfig: Reconfig{
 				InLatestDecision: true,
 				CurrentNodes:     currentNodes,

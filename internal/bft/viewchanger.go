@@ -109,7 +109,7 @@ type ViewChanger struct {
 // Start the view changer
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
-	v.startChangeChan = make(chan *change, 1)
+	v.startChangeChan = make(chan *change, 2)
 	v.informChan = make(chan uint64, 1)
 
 	v.quorum, v.f = computeQuorum(v.N)
@@ -265,7 +265,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 		return
 	}
 
-	//viewData message
+	// viewData message
 	if vd := m.GetViewData(); vd != nil {
 		v.Logger.Debugf("Node %d is processing a view data message %s from %d", v.SelfID, MsgToString(m), sender)
 		if !v.validateViewDataMsg(vd, sender) {
@@ -308,7 +308,7 @@ func (v *ViewChanger) informNewView(view uint64) {
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
-	v.backOffFactor = 1 //reset
+	v.backOffFactor = 1 // reset
 	v.RequestsTimer.RestartTimers()
 }
 
