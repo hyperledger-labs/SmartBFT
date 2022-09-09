@@ -20,7 +20,7 @@ import (
 )
 
 // ViewController controls the view
-//
+
 //go:generate mockery -dir . -name ViewController -case underscore -output ./mocks/
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
@@ -28,14 +28,14 @@ type ViewController interface {
 }
 
 // Pruner prunes revoked requests
-//
+
 //go:generate mockery -dir . -name Pruner -case underscore -output ./mocks/
 type Pruner interface {
 	MaybePruneRevokedRequests()
 }
 
 // RequestsTimer controls requests
-//
+
 //go:generate mockery -dir . -name RequestsTimer -case underscore -output ./mocks/
 type RequestsTimer interface {
 	StopTimers()
@@ -48,7 +48,7 @@ type change struct {
 	stopView bool
 }
 
-// ViewChanger is responsible for running the view change protocol.
+// ViewChanger is responsible for running the view change protocol
 type ViewChanger struct {
 	// Configuration
 	SelfID             uint64
@@ -111,7 +111,7 @@ type ViewChanger struct {
 	ControllerStartedWG sync.WaitGroup
 }
 
-// Start the view changer.
+// Start the view changer
 func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
 	v.startChangeChan = make(chan *change, 2)
@@ -180,13 +180,13 @@ func (v *ViewChanger) close() {
 	)
 }
 
-// Stop the view changer.
+// Stop the view changer
 func (v *ViewChanger) Stop() {
 	v.close()
 	v.vcDone.Wait()
 }
 
-// HandleMessage passes a message to the view changer.
+// HandleMessage passes a message to the view changer
 func (v *ViewChanger) HandleMessage(sender uint64, m *protos.Message) {
 	msg := &incMsg{sender: sender, Message: m}
 	select {
@@ -312,7 +312,7 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 	}
 }
 
-// InformNewView tells the view changer to advance to a new view number.
+// InformNewView tells the view changer to advance to a new view number
 func (v *ViewChanger) InformNewView(view uint64) {
 	select {
 	case v.informChan <- view:
@@ -338,7 +338,7 @@ func (v *ViewChanger) informNewView(view uint64) {
 	v.RequestsTimer.RestartTimers()
 }
 
-// StartViewChange initiates a view change.
+// StartViewChange initiates a view change
 func (v *ViewChanger) StartViewChange(view uint64, stopView bool) {
 	select {
 	case v.startChangeChan <- &change{view: view, stopView: stopView}:
@@ -346,7 +346,7 @@ func (v *ViewChanger) StartViewChange(view uint64, stopView bool) {
 	}
 }
 
-// StartViewChange stops current view and timeouts, and broadcasts a view change message to all.
+// StartViewChange stops current view and timeouts, and broadcasts a view change message to all
 func (v *ViewChanger) startViewChange(change *change) {
 	if change.view < v.currView { // this is about an old view
 		v.Logger.Debugf("Node %d has a view change request with an old view %d, while the current view is %d", v.SelfID, change.view, v.currView)
@@ -403,7 +403,6 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 	v.currView = v.nextView
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N) // clear because currView changed
-
 	msg := v.prepareViewDataMsg()
 	leader := v.getLeader()
 	if leader == v.SelfID {
@@ -411,7 +410,6 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 	} else {
 		v.Comm.SendConsensus(leader, msg)
 	}
-
 	v.Logger.Debugf("Node %d sent view data msg, with next view %d, to the new leader %d", v.SelfID, v.currView, leader)
 }
 
@@ -596,6 +594,7 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 	}
 
 	// This node is one sequence behind, validate the last decision and deliver
+
 	_, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
 	if err != nil {
 		v.Logger.Warnf("Node %d got %s from %d, but the last decision is invalid, reason: %v", v.SelfID, signedViewDataToString(svd), sender, err)
@@ -649,7 +648,7 @@ func (v *ViewChanger) extractCurrentSequence() (uint64, *protos.Proposal) {
 	return myMetadata.LatestSequence, &myLastDesicion
 }
 
-// ValidateLastDecision validates the given decision, and returns its sequence when valid.
+// ValidateLastDecision validates the given decision, and returns its sequence when valid
 func ValidateLastDecision(vd *protos.ViewData, quorum int, n uint64, verifier api.Verifier) (lastSequence uint64, err error) {
 	if vd.LastDecision == nil {
 		return 0, errors.Errorf("the last decision is not set")
@@ -698,7 +697,7 @@ func ValidateLastDecision(vd *protos.ViewData, quorum int, n uint64, verifier ap
 	return md.LatestSequence, nil
 }
 
-// ValidateInFlight validates the given in-flight proposal.
+// ValidateInFlight validates the given in-flight proposal
 func ValidateInFlight(inFlightProposal *protos.Proposal, lastSequence uint64) error {
 	if inFlightProposal == nil {
 		return nil
@@ -721,7 +720,6 @@ func (v *ViewChanger) processViewDataMsg() {
 		return // need enough (quorum) data to continue
 	}
 	v.Logger.Debugf("Node %d got a quorum of viewData messages", v.SelfID)
-
 	ok, _, _, err := CheckInFlight(v.getViewDataMessages(), v.f, v.quorum, v.N, v.Verifier)
 	if err != nil {
 		v.Logger.Panicf("Node %d checked the in flight and it got an error: %v", v.SelfID, err)
@@ -757,7 +755,7 @@ func (v *ViewChanger) processViewDataMsg() {
 	v.Logger.Debugf("Node %d sent a new view msg", v.SelfID)
 }
 
-// returns view data messages included in votes.
+// returns view data messages included in votes
 func (v *ViewChanger) getViewDataMessages() []*protos.ViewData {
 	num := len(v.viewDataMsgs.votes)
 	var messages []*protos.ViewData
@@ -784,7 +782,7 @@ type proposalAndMetadata struct {
 	metadata *protos.ViewMetadata
 }
 
-// CheckInFlight checks if there is an in-flight proposal that needs to be decided on (because a node might decided on it already).
+// CheckInFlight checks if there is an in-flight proposal that needs to be decided on (because a node might decided on it already)
 func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal, err error) {
 	expectedSequence := maxLastDecisionSequence(messages) + 1
 	possibleProposals := make([]*possibleProposal, 0)
@@ -881,7 +879,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, N uint64, ver
 	return false, false, nil, nil
 }
 
-// returns the highest sequence of a last decision within the given view data messages.
+// returns the highest sequence of a last decision within the given view data messages
 func maxLastDecisionSequence(messages []*protos.ViewData) uint64 {
 	max := uint64(0)
 	for _, vd := range messages {
@@ -1065,7 +1063,6 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 	}
 
 	v.Logger.Debugf("Node %d found a quorum of valid view data messages within the new view message", v.SelfID)
-
 	return true, false, false
 }
 
@@ -1285,7 +1282,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	}
 }
 
-// Decide delivers to the application and informs the view changer after delivery.
+// Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
 	v.Logger.Debugf("Delivering to app the last decision proposal")
@@ -1306,12 +1303,12 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 	v.inFlightDecideChan <- struct{}{}
 }
 
-// Complain panics when a view change is requested.
+// Complain panics when a view change is requested
 func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
 	v.Logger.Panicf("Node %d has complained while in the view for the in flight proposal", v.SelfID)
 }
 
-// Sync calls the synchronizer and informs the view changer of the sync.
+// Sync calls the synchronizer and informs the view changer of the sync
 func (v *ViewChanger) Sync() {
 	// the in flight proposal view asked to sync
 	v.Logger.Debugf("Node %d is calling sync because the in flight proposal view has asked to sync", v.SelfID)
@@ -1319,7 +1316,7 @@ func (v *ViewChanger) Sync() {
 	v.inFlightSyncChan <- struct{}{}
 }
 
-// HandleViewMessage passes a message to the in flight proposal view if applicable.
+// HandleViewMessage passes a message to the in flight proposal view if applicable
 func (v *ViewChanger) HandleViewMessage(sender uint64, m *protos.Message) {
 	v.inFlightViewLock.RLock()
 	defer v.inFlightViewLock.RUnlock()
