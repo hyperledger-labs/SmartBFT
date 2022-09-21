@@ -65,6 +65,8 @@ type Proposer interface {
 	Propose(proposal types.Proposal)
 	Start()
 	Abort()
+	Stopped() bool
+	GetLeaderID() uint64
 	GetMetadata() []byte
 	HandleMessage(sender uint64, m *protos.Message)
 }
@@ -150,6 +152,22 @@ func (c *Controller) latestSeq() uint64 {
 	}
 
 	return md.LatestSequence
+}
+
+func (c *Controller) currentViewStopped() bool {
+	c.currViewLock.RLock()
+	view := c.currView
+	c.currViewLock.RUnlock()
+
+	return view.Stopped()
+}
+
+func (c *Controller) currentViewLeader() uint64 {
+	c.currViewLock.RLock()
+	view := c.currView
+	c.currViewLock.RUnlock()
+
+	return view.GetLeaderID()
 }
 
 func (c *Controller) getCurrentViewNumber() uint64 {
@@ -366,10 +384,17 @@ func (c *Controller) startView(proposalSequence uint64) {
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64, newDecisionsInView uint64) {
-
 	latestView := c.getCurrentViewNumber()
 	if latestView > newViewNumber {
 		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
+		return
+	}
+
+	leader := c.currentViewLeader()
+	stopped := c.currentViewStopped()
+
+	if !stopped && latestView == newViewNumber && c.leaderID() == leader {
+		c.Logger.Debugf("Got view change to %d but view is already running", newViewNumber)
 		return
 	}
 
