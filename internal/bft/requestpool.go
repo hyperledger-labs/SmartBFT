@@ -182,7 +182,11 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	if uint64(len(request)) > rp.options.RequestMaxBytes {
-		return ErrRequestTooBig
+		return fmt.Errorf(
+			"submitted request (%d) is bigger than request max bytes (%d)",
+			len(request),
+			rp.options.RequestMaxBytes,
+		)
 	}
 
 	rp.lock.RLock()
