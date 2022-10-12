@@ -336,8 +336,7 @@ func TestReqPoolTimeout(t *testing.T) {
 		request := makeTestRequest("1", "1", string(payload))
 		assert.Equal(t, 0, pool.Size())
 		err = pool.Submit(request)
-		assert.Equal(t, err, bft.ErrRequestTooBig)
-
+		assert.Contains(t, err.Error(), "is bigger than request max bytes")
 	})
 	t.Run("request timeout", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
