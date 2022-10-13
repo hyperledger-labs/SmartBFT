@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
-
 	"github.com/stretchr/testify/assert"
 )
 

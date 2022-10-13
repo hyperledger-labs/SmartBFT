@@ -13,7 +13,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -57,6 +59,7 @@ type App struct {
 	viewChangeTime  chan time.Time
 	secondClock     *time.Ticker
 	logger          *zap.SugaredLogger
+	metricsProvider api.Provider
 	lastRecord      lastRecord
 	verificationSeq uint64
 	messageLost     func(*smartbftprotos.Message) bool
@@ -411,14 +414,15 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	sugaredLogger := logger.Sugar()
 
 	app := &App{
-		clock:        time.NewTicker(time.Second),
-		secondClock:  time.NewTicker(time.Second),
-		ID:           id,
-		Delivered:    make(chan *AppRecord, 100),
-		logLevel:     logConfig.Level,
-		latestMD:     &smartbftprotos.ViewMetadata{},
-		lastDecision: &types.Decision{},
-		logger:       sugaredLogger,
+		clock:           time.NewTicker(time.Second),
+		secondClock:     time.NewTicker(time.Second),
+		ID:              id,
+		Delivered:       make(chan *AppRecord, 100),
+		logLevel:        logConfig.Level,
+		latestMD:        &smartbftprotos.ViewMetadata{},
+		lastDecision:    &types.Decision{},
+		logger:          sugaredLogger,
+		metricsProvider: &disabled.Provider{},
 	}
 
 	config := fastConfig
@@ -428,7 +432,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	config.DecisionsPerLeader = decisionsPerLeader
 
 	app.Setup = func() {
-		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, app.metricsProvider, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}

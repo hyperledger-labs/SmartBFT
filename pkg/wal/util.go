@@ -86,7 +86,7 @@ func dirReadWalNames(dirPath string) ([]string, error) {
 
 // checkWalFiles for continuous sequence, readable CRC-Anchor.
 // If the the last file cannot be read, it may be ignored,  (or repaired).
-func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint64, error) {
+func checkWalFiles(logger api.Logger, metricsProvider api.Provider, dirName string, walNames []string) ([]uint64, error) {
 	sort.Strings(walNames)
 
 	indexes := make([]uint64, 0)
@@ -102,7 +102,7 @@ func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint
 		indexes = append(indexes, index)
 
 		// verify we have CRC-Anchor.
-		r, err := NewLogRecordReader(logger, filepath.Join(dirName, walNames[i]))
+		r, err := NewLogRecordReader(logger, metricsProvider, filepath.Join(dirName, walNames[i]))
 		if err != nil {
 			// check if it is the last file and return a special error that allows a repair.
 			if i == len(walNames)-1 {
@@ -187,7 +187,7 @@ func truncateCloseFile(f *os.File, offset int64) error {
 }
 
 // scanVerifyFiles.
-func scanVerifyFiles(logger api.Logger, dirPath string, files []string) error {
+func scanVerifyFiles(logger api.Logger, metricsProvider api.Provider, dirPath string, files []string) error {
 	var (
 		crc           uint32
 		num, numTotal int
@@ -196,7 +196,7 @@ func scanVerifyFiles(logger api.Logger, dirPath string, files []string) error {
 	for i, name := range files {
 		fullName := filepath.Join(dirPath, name)
 
-		r, err := NewLogRecordReader(logger, fullName)
+		r, err := NewLogRecordReader(logger, metricsProvider, fullName)
 		if err != nil {
 			return err
 		}
@@ -239,10 +239,10 @@ func scanVerify1(logger api.Logger, r *LogRecordReader, i int, crc uint32) (num 
 
 // scanRepairFile scans the file to the last good record and truncates after it. If even the CRC-Anchor cannot be
 // read, the file is deleted.
-func scanRepairFile(logger api.Logger, lastFile string) error {
+func scanRepairFile(logger api.Logger, metricsProvider api.Provider, lastFile string) error {
 	logger.Debugf("Trying to repair file: %s", lastFile)
 
-	r, err := NewLogRecordReader(logger, lastFile)
+	r, err := NewLogRecordReader(logger, metricsProvider, lastFile)
 	if err != nil {
 		logger.Warnf("Write-Ahead-Log could not open the last file, due to error: %s", err)
 

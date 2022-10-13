@@ -50,6 +50,7 @@ type HeartbeatMonitor struct {
 	stopChan                      chan struct{}
 	commandChan                   chan roleChange
 	logger                        api.Logger
+	metricsProvider               api.Provider
 	hbTimeout                     time.Duration
 	hbCount                       uint64
 	comm                          Comm
@@ -75,13 +76,14 @@ type HeartbeatMonitor struct {
 }
 
 // NewHeartbeatMonitor creates a new HeartbeatMonitor
-func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, heartbeatTimeout time.Duration, heartbeatCount uint64, comm Comm, numberOfNodes uint64, handler HeartbeatEventHandler, viewSequences *atomic.Value, numOfTicksBehindBeforeSyncing uint64) *HeartbeatMonitor {
+func NewHeartbeatMonitor(scheduler <-chan time.Time, logger api.Logger, metricsProvider api.Provider, heartbeatTimeout time.Duration, heartbeatCount uint64, comm Comm, numberOfNodes uint64, handler HeartbeatEventHandler, viewSequences *atomic.Value, numOfTicksBehindBeforeSyncing uint64) *HeartbeatMonitor {
 	hm := &HeartbeatMonitor{
 		stopChan:                      make(chan struct{}),
 		inc:                           make(chan incMsg),
 		commandChan:                   make(chan roleChange),
 		scheduler:                     scheduler,
 		logger:                        logger,
+		metricsProvider:               metricsProvider,
 		hbTimeout:                     heartbeatTimeout,
 		hbCount:                       heartbeatCount,
 		comm:                          comm,

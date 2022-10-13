@@ -60,12 +60,13 @@ type ViewChanger struct {
 	LeaderRotation     bool
 	DecisionsPerLeader uint64
 
-	Logger       api.Logger
-	Comm         Comm
-	Signer       api.Signer
-	Verifier     api.Verifier
-	Application  api.Application
-	Synchronizer Synchronizer
+	Logger          api.Logger
+	MetricsProvider api.Provider
+	Comm            Comm
+	Signer          api.Signer
+	Verifier        api.Verifier
+	Application     api.Application
+	Synchronizer    Synchronizer
 
 	Checkpoint *types.Checkpoint
 	InFlight   *InFlightData
@@ -1217,6 +1218,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		FailureDetector:    v,
 		Sync:               v,
 		Logger:             v.Logger,
+		MetricsProvider:    v.MetricsProvider,
 		Comm:               v.Comm,
 		Verifier:           v.Verifier,
 		Signer:             v.Signer,

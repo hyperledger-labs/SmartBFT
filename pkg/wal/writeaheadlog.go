@@ -81,7 +81,8 @@ type WriteAheadLogFile struct {
 	dirName string
 	options *Options
 
-	logger api.Logger
+	logger          api.Logger
+	metricsProvider api.Provider
 
 	mutex         sync.Mutex
 	dirFile       *os.File
@@ -119,7 +120,7 @@ func (o *Options) String() string {
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, ErrWALAlreadyExists if WAL already exists or other errors
-func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Create(logger api.Logger, metricsProvider api.Provider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -142,15 +143,16 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 	}
 
 	wal := &WriteAheadLogFile{
-		dirName:       cleanDirName,
-		options:       opt,
-		logger:        logger,
-		index:         1,
-		headerBuff:    make([]byte, 8),
-		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
-		crc:           walCRCSeed,
-		truncateIndex: 1,
-		activeIndexes: []uint64{1},
+		dirName:         cleanDirName,
+		options:         opt,
+		logger:          logger,
+		metricsProvider: metricsProvider,
+		index:           1,
+		headerBuff:      make([]byte, 8),
+		dataBuff:        proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		crc:             walCRCSeed,
+		truncateIndex:   1,
+		activeIndexes:   []uint64{1},
 	}
 
 	wal.dirFile, err = os.Open(cleanDirName)
@@ -190,7 +192,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, or an error
-func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Open(logger api.Logger, metricsProvider api.Provider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -214,12 +216,13 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 	cleanDirName := filepath.Clean(dirPath)
 
 	wal := &WriteAheadLogFile{
-		dirName:    cleanDirName,
-		options:    opt,
-		logger:     logger,
-		headerBuff: make([]byte, 8),
-		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
-		readMode:   true,
+		dirName:         cleanDirName,
+		options:         opt,
+		logger:          logger,
+		metricsProvider: metricsProvider,
+		headerBuff:      make([]byte, 8),
+		dataBuff:        proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		readMode:        true,
 	}
 
 	wal.dirFile, err = os.Open(cleanDirName)
@@ -230,7 +233,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 	}
 
 	// After the check we have an increasing, continuous sequence, with valid CRC-Anchors in each file.
-	wal.activeIndexes, err = checkWalFiles(logger, dirPath, walNames)
+	wal.activeIndexes, err = checkWalFiles(logger, metricsProvider, dirPath, walNames)
 	if err != nil {
 		_ = wal.Close()
 
@@ -264,7 +267,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 // logger: reference to a Logger implementation.
 // dirPath: directory path of the WAL.
 // return: an error if repair was not successful.
-func Repair(logger api.Logger, dirPath string) error {
+func Repair(logger api.Logger, metricsProvider api.Provider, dirPath string) error {
 	cleanDirPath := filepath.Clean(dirPath)
 
 	walNames, err := dirReadWalNames(cleanDirPath)
@@ -279,7 +282,7 @@ func Repair(logger api.Logger, dirPath string) error {
 	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
 
 	// verify that all but the last are fine
-	if err = scanVerifyFiles(logger, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
+	if err = scanVerifyFiles(logger, metricsProvider, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
 		logger.Errorf("Write-Ahead-Log failed to repair, additional files are faulty: %s", err)
 
 		return err
@@ -298,7 +301,7 @@ func Repair(logger api.Logger, dirPath string) error {
 
 	logger.Infof("Write-Ahead-Log made a copy of the last file: %s", lastFileCopy)
 
-	err = scanRepairFile(logger, lastFile)
+	err = scanRepairFile(logger, metricsProvider, lastFile)
 	if err != nil {
 		logger.Errorf("Write-Ahead-Log failed to scan and repair last file: %s", err)
 
@@ -500,7 +503,7 @@ FileLoop:
 	for i, index := range w.activeIndexes {
 		w.index = index
 		// This should not fail, we check the files earlier, when we Open() the WAL.
-		r, err := NewLogRecordReader(w.logger, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
+		r, err := NewLogRecordReader(w.logger, w.metricsProvider, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
 		if err != nil {
 			return nil, err
 		}
@@ -725,13 +728,14 @@ func (w *WriteAheadLogFile) saveCRC() error {
 
 func InitializeAndReadAll(
 	logger api.Logger,
+	metricsProvider api.Provider,
 	walDir string,
 	options *Options,
 ) (writeAheadLog *WriteAheadLogFile, initialState [][]byte, err error) {
 	logger.Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
 	logger.Debugf("Write-Ahead-Log options: %s", options)
 
-	writeAheadLog, err = Create(logger, walDir, options)
+	writeAheadLog, err = Create(logger, metricsProvider, walDir, options)
 	if err != nil {
 		if !errors.Is(err, ErrWALAlreadyExists) {
 			err = errors.Wrap(err, "Cannot create Write-Ahead-Log")
@@ -741,7 +745,7 @@ func InitializeAndReadAll(
 
 		logger.Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
 
-		writeAheadLog, err = Open(logger, walDir, options)
+		writeAheadLog, err = Open(logger, metricsProvider, walDir, options)
 		if err != nil {
 			err = errors.Wrap(err, "Cannot open Write-Ahead-Log")
 
@@ -758,7 +762,7 @@ func InitializeAndReadAll(
 
 			logger.Infof("Received io.ErrUnexpectedEOF, trying to repair Write-Ahead-Log at dir: %s", walDir)
 
-			err = Repair(logger, walDir)
+			err = Repair(logger, metricsProvider, walDir)
 			if err != nil {
 				err = errors.Wrap(err, "Cannot repair Write-Ahead-Log")
 

@@ -12,12 +12,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )
 
@@ -37,6 +37,7 @@ type Consensus struct {
 	RequestInspector   bft.RequestInspector
 	Synchronizer       bft.Synchronizer
 	Logger             bft.Logger
+	MetricsProvider    bft.Provider
 	Metadata           protos.ViewMetadata
 	LastProposal       types.Proposal
 	LastSignatures     []types.Signature
@@ -107,6 +108,10 @@ func (c *Consensus) Start() error {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
 
+	if c.MetricsProvider == nil {
+		c.MetricsProvider = &disabled.Provider{}
+	}
+
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}
 	c.stopChan = make(chan struct{})
@@ -122,6 +127,7 @@ func (c *Consensus) Start() error {
 		InFlightProposal: c.inFlight,
 		Entries:          c.WALInitialContent,
 		Logger:           c.Logger,
+		MetricsProvider:  c.MetricsProvider,
 		WAL:              c.WAL,
 	}
 
@@ -138,7 +144,7 @@ func (c *Consensus) Start() error {
 		SubmitTimeout:     c.Config.RequestPoolSubmitTimeout,
 	}
 	c.submittedChan = make(chan struct{}, 1)
-	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
+	c.Pool = algorithm.NewPool(c.Logger, c.MetricsProvider, c.RequestInspector, c.controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
 	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
@@ -297,6 +303,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Comm:               c.controller,
 		Decider:            c.controller,
 		Logger:             c.Logger,
+		MetricsProvider:    c.MetricsProvider,
 		Signer:             c.Signer,
 		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
@@ -363,6 +370,7 @@ func (c *Consensus) createComponents() {
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		SpeedUpViewChange:  c.Config.SpeedUpViewChange,
 		Logger:             c.Logger,
+		MetricsProvider:    c.MetricsProvider,
 		Signer:             c.Signer,
 		Verifier:           c.Verifier,
 		Checkpoint:         c.checkpoint,
@@ -377,10 +385,11 @@ func (c *Consensus) createComponents() {
 	}
 
 	c.collector = &algorithm.StateCollector{
-		SelfID:         c.Config.SelfID,
-		N:              c.numberOfNodes,
-		Logger:         c.Logger,
-		CollectTimeout: c.Config.CollectTimeout,
+		SelfID:          c.Config.SelfID,
+		N:               c.numberOfNodes,
+		Logger:          c.Logger,
+		MetricsProvider: c.MetricsProvider,
+		CollectTimeout:  c.Config.CollectTimeout,
 	}
 
 	c.controller = &algorithm.Controller{
@@ -393,6 +402,7 @@ func (c *Consensus) createComponents() {
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		Verifier:           c.Verifier,
 		Logger:             c.Logger,
+		MetricsProvider:    c.MetricsProvider,
 		Assembler:          c.Assembler,
 		Application:        c,
 		FailureDetector:    c,
@@ -415,7 +425,7 @@ func (c *Consensus) createComponents() {
 
 func (c *Consensus) continueCreateComponents() {
 	batchBuilder := algorithm.NewBatchBuilder(c.Pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.MetricsProvider, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
 	c.controller.RequestPool = c.Pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor

@@ -21,7 +21,8 @@ type StateCollector struct {
 	f      int
 	quorum int
 
-	Logger api.Logger
+	Logger          api.Logger
+	MetricsProvider api.Provider
 
 	incMsgs chan *incMsg
 

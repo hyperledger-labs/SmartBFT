@@ -52,9 +52,10 @@ type RequestTimeoutHandler interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger    api.Logger
-	inspector api.RequestInspector
-	options   PoolOptions
+	logger          api.Logger
+	metricsProvider api.Provider
+	inspector       api.RequestInspector
+	options         PoolOptions
 
 	cancel         context.CancelFunc
 	lock           sync.RWMutex
@@ -87,7 +88,7 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
+func NewPool(log api.Logger, metricsProvider api.Provider, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
 	if options.ForwardTimeout == 0 {
 		options.ForwardTimeout = defaultRequestTimeout
 	}
@@ -107,17 +108,18 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 	ctx, cancel := context.WithCancel(context.Background())
 
 	rp := &Pool{
-		cancel:         cancel,
-		timeoutHandler: th,
-		logger:         log,
-		inspector:      inspector,
-		fifo:           list.New(),
-		semaphore:      semaphore.NewWeighted(options.QueueSize),
-		existMap:       make(map[types.RequestInfo]*list.Element),
-		options:        options,
-		submittedChan:  submittedChan,
-		delMap:         make(map[types.RequestInfo]struct{}),
-		delSlice:       make([]types.RequestInfo, 0, defaultSizeOfDelElements),
+		cancel:          cancel,
+		timeoutHandler:  th,
+		logger:          log,
+		metricsProvider: metricsProvider,
+		inspector:       inspector,
+		fifo:            list.New(),
+		semaphore:       semaphore.NewWeighted(options.QueueSize),
+		existMap:        make(map[types.RequestInfo]*list.Element),
+		options:         options,
+		submittedChan:   submittedChan,
+		delMap:          make(map[types.RequestInfo]struct{}),
+		delSlice:        make([]types.RequestInfo, 0, defaultSizeOfDelElements),
 	}
 
 	go func() {

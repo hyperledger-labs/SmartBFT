@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -29,8 +30,9 @@ func TestLogRecordReader(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
+	met := &disabled.Provider{}
 
-	wal, err := Create(logger, testDir, nil)
+	wal, err := Create(logger, met, testDir, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 
@@ -71,7 +73,7 @@ func TestLogRecordReader(t *testing.T) {
 	fileName := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 1))
 
 	t.Run("Create and Read till EOF", func(t *testing.T) {
-		r, err := NewLogRecordReader(logger, fileName)
+		r, err := NewLogRecordReader(logger, met, fileName)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 		assert.Equal(t, walCRCSeed, r.CRC())
@@ -97,7 +99,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err := NewLogRecordReader(logger, testFile)
+		r, err := NewLogRecordReader(logger, met, testFile)
 		assert.Contains(t, err.Error(), "failed reading CRC-Anchor from log file:")
 		assert.Nil(t, r)
 	})
@@ -124,7 +126,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err := NewLogRecordReader(logger, testFile)
+		r, err := NewLogRecordReader(logger, met, testFile)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 
@@ -149,7 +151,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err := NewLogRecordReader(logger, testFile)
+		r, err := NewLogRecordReader(logger, met, testFile)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 
@@ -178,7 +180,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err := NewLogRecordReader(logger, testFile)
+		r, err := NewLogRecordReader(logger, met, testFile)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 
@@ -197,7 +199,7 @@ func TestLogRecordReader(t *testing.T) {
 		testFile := filepath.Join(testDir, "test5.wal")
 		err = copyFile(fileName, testFile)
 		assert.NoError(t, err)
-		r, err := NewLogRecordReader(logger, fileName)
+		r, err := NewLogRecordReader(logger, met, fileName)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 		assertReadRecord(t, r, rec1, crc1)
@@ -222,7 +224,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err = NewLogRecordReader(logger, testFile)
+		r, err = NewLogRecordReader(logger, met, testFile)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 
@@ -238,7 +240,7 @@ func TestLogRecordReader(t *testing.T) {
 		testFile := filepath.Join(testDir, "test6.wal")
 		err = copyFile(fileName, testFile)
 		assert.NoError(t, err)
-		r, err := NewLogRecordReader(logger, fileName)
+		r, err := NewLogRecordReader(logger, met, fileName)
 		assert.NoError(t, err)
 		assertReadRecord(t, r, rec1, crc1)
 		assertReadRecord(t, r, rec2, crc2)
@@ -260,7 +262,7 @@ func TestLogRecordReader(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		r, err = NewLogRecordReader(logger, testFile)
+		r, err = NewLogRecordReader(logger, met, testFile)
 		assert.NoError(t, err)
 		assert.NotNil(t, r)
 

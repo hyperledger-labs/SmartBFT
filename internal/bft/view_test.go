@@ -17,6 +17,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -847,6 +848,7 @@ func TestViewPersisted(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
+			met := &disabled.Provider{}
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
@@ -871,6 +873,7 @@ func TestViewPersisted(t *testing.T) {
 					SelfID:             2,
 					State:              state,
 					Logger:             log,
+					MetricsProvider:    met,
 					N:                  4,
 					LeaderID:           1,
 					Quorum:             3,
@@ -886,12 +889,13 @@ func TestViewPersisted(t *testing.T) {
 			testDir, err := ioutil.TempDir("", "view-unittest")
 			assert.NoErrorf(t, err, "generate temporary test dir")
 			defer os.RemoveAll(testDir)
-			writeAheadLog, err := wal.Create(log, testDir, nil)
+			writeAheadLog, err := wal.Create(log, met, testDir, nil)
 			assert.NoError(t, err)
 
 			persistedState := &bft.PersistedState{
 				InFlightProposal: &bft.InFlightData{},
 				Logger:           log,
+				MetricsProvider:  met,
 				WAL:              writeAheadLog,
 			}
 			var persistedToLog sync.WaitGroup
@@ -918,7 +922,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, testDir, nil)
+				writeAheadLog, err = wal.Open(log, met, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 
@@ -960,7 +964,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, testDir, nil)
+				writeAheadLog, err = wal.Open(log, met, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 

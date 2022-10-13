@@ -62,6 +62,7 @@ type View struct {
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
 	Logger             api.Logger
+	MetricsProvider    api.Provider
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -666,6 +667,7 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 		preparesFrom:       prepareAcknowledgements,
 		f:                  f,
 		logger:             v.Logger,
+		metricsProvider:    v.MetricsProvider,
 		nodes:              v.Comm.Nodes(),
 		currView:           v.Number,
 	}
@@ -1006,6 +1008,7 @@ func (v *View) updateBlacklistMetadata(metadata *protos.ViewMetadata, prevSigs [
 		f:                  f,
 		n:                  v.N,
 		logger:             v.Logger,
+		metricsProvider:    v.MetricsProvider,
 		preparesFrom:       preparesFrom,
 		decisionsPerLeader: v.DecisionsPerLeader,
 	}

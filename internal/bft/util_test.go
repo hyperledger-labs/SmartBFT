@@ -9,11 +9,11 @@ import (
 	"fmt"
 	"testing"
 
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
-	"go.uber.org/zap"
-
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestBlacklist(t *testing.T) {
@@ -102,6 +102,7 @@ func TestBlacklist(t *testing.T) {
 				n:                  uint64(len(tst.nodes)),
 				nodes:              tst.nodes,
 				logger:             logger.Sugar(),
+				metricsProvider:    &disabled.Provider{},
 				f:                  (len(tst.nodes) - 1) / 3,
 				currView:           tst.currView,
 				preparesFrom:       tst.preparesFrom,

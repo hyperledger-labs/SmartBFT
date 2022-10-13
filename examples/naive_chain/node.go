@@ -165,9 +165,9 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	return bft.Reconfig{InLatestDecision: false}
 }
 
-func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, opts NetworkOptions, testDir string) *Node {
+func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, metricsProvider smart.Provider, opts NetworkOptions, testDir string) *Node {
 	nodeDir := filepath.Join(testDir, fmt.Sprintf("node%d", id))
-	writeAheadLog, err := wal.Create(logger, nodeDir, nil)
+	writeAheadLog, err := wal.Create(logger, metricsProvider, nodeDir, nil)
 	if err != nil {
 		logger.Panicf("Cannot create WAL at %s", nodeDir)
 	}

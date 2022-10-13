@@ -12,6 +12,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -31,6 +32,7 @@ func TestBatcherBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 
@@ -39,7 +41,7 @@ func TestBatcherBasic(t *testing.T) {
 	byteReq3 := makeTestRequest("3", "3", "foo-bar-foo")
 	byteReq4 := makeTestRequest("4", "4", "foo-bar-foo-bar")
 	byteReq5 := makeTestRequest("5", "5", "foo-bar-foo-bar-foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
+	pool := bft.NewPool(log, met, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq1) // pool: [req1]
 	assert.NoError(t, err)
 
@@ -117,9 +119,10 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200}, submittedChan)
+	pool := bft.NewPool(log, met, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200}, submittedChan)
 
 	batcher := bft.NewBatchBuilder(pool, submittedChan, 100, 5000, 100*time.Second)
 
@@ -169,11 +172,12 @@ func TestBatcherClose(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	insp := &testRequestInspector{}
 
 	submittedChan := make(chan struct{}, 1)
 	byteReq := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
+	pool := bft.NewPool(log, met, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq)
 	assert.NoError(t, err)
 
@@ -194,11 +198,12 @@ func TestBatcherReset(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	insp := &testRequestInspector{}
 
 	submittedChan := make(chan struct{}, 1)
 	byteReq1 := makeTestRequest("1", "1", "foo")
-	pool := bft.NewPool(log, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
+	pool := bft.NewPool(log, met, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 3}, submittedChan)
 	err = pool.Submit(byteReq1)
 	assert.NoError(t, err)
 

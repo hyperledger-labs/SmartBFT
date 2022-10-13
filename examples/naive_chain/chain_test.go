@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/golang/protobuf/proto"
-
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -111,8 +111,9 @@ func setupNode(t *testing.T, id int, opt NetworkOptions, network map[int]map[int
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	logger := basicLog.Sugar()
+	met := &disabled.Provider{}
 
-	chain := NewChain(uint64(id), ingress, egress, logger, opt, testDir)
+	chain := NewChain(uint64(id), ingress, egress, logger, met, opt, testDir)
 
 	return chain
 }
