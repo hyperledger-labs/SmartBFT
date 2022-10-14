@@ -38,7 +38,7 @@ type Consensus struct {
 	Synchronizer       bft.Synchronizer
 	Logger             bft.Logger
 	MetricsProvider    bft.Provider
-	Metadata           protos.ViewMetadata
+	Metadata           *protos.ViewMetadata
 	LastProposal       types.Proposal
 	LastSignatures     []types.Signature
 	Scheduler          <-chan time.Time

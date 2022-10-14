@@ -181,7 +181,6 @@ func (hm *HeartbeatMonitor) ChangeRole(follower Role, view uint64, leaderID uint
 	case <-hm.stopChan:
 		return
 	}
-
 }
 
 func (hm *HeartbeatMonitor) handleMsg(sender uint64, msg *smartbftprotos.Message) {

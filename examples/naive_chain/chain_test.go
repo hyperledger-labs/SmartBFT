@@ -65,7 +65,6 @@ func TestBlockHeader(t *testing.T) {
 	headerBytes := blockHeader.ToBytes()
 	blockHeader2 := BlockHeaderFromBytes(headerBytes)
 	assert.Equal(t, blockHeader, blockHeader2)
-
 }
 
 func TestChain(t *testing.T) {

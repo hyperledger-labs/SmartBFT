@@ -266,12 +266,15 @@ func TestLeaderPropose(t *testing.T) {
 		VerificationSequence: uint64(proposal.VerificationSequence),
 	}
 	proposal, signatures := controller.Checkpoint.Get()
-	assert.Equal(t, expected, proposal)
-	signaturesBySigners := make(map[uint64]protos.Signature)
+	assert.Equal(t, expected.Metadata, proposal.Metadata)
+	assert.Equal(t, expected.Payload, proposal.Payload)
+	assert.Equal(t, expected.Header, proposal.Header)
+	assert.Equal(t, expected.VerificationSequence, proposal.VerificationSequence)
+	signaturesBySigners := make(map[uint64]*protos.Signature)
 	for _, sig := range signatures {
-		signaturesBySigners[sig.Signer] = *sig
+		signaturesBySigners[sig.Signer] = sig
 	}
-	assert.Equal(t, map[uint64]protos.Signature{
+	assert.Equal(t, map[uint64]*protos.Signature{
 		17: {Signer: 17, Value: []byte{4}},
 		23: {Signer: 23, Value: []byte{4}},
 		37: {Signer: 37, Value: []byte{4}},
@@ -430,7 +433,8 @@ func TestSyncPrevView(t *testing.T) {
 				LatestSequence: 0,
 				ViewId:         0, // previous view number
 			}),
-			VerificationSequence: 1},
+			VerificationSequence: 1,
+		},
 		Signatures: nil,
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
@@ -774,7 +778,8 @@ func TestSyncInform(t *testing.T) {
 				LatestSequence: 1,
 				ViewId:         syncToView,
 			}),
-			VerificationSequence: 1},
+			VerificationSequence: 1,
+		},
 		Signatures: []types.Signature{
 			{ID: 1}, {ID: 2}, {ID: 3},
 		},
@@ -1192,5 +1197,4 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
 	controller.Stop()
-
 }

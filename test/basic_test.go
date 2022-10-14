@@ -1621,36 +1621,6 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 		assert.Equal(t, uint64(2), atomic.LoadUint64(&leaderRotationDisabled))
 		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
 	})
-
-	return
-
-	t.Run("Deactivate leader rotation", func(t *testing.T) {
-		network.StopServe()
-
-		for _, n := range nodes {
-			n.Consensus.Config.DecisionsPerLeader = 0
-			n.Consensus.Config.LeaderRotation = false
-			n.Restart()
-		}
-
-		network.StartServe()
-
-		nodes[0].Submit(Request{ID: "5", ClientID: "alice"})
-
-		for i := 0; i < numberOfNodes; i++ {
-			<-nodes[i].Delivered
-		}
-
-		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
-
-		nodes[0].Submit(Request{ID: "6", ClientID: "alice"})
-
-		for i := 0; i < numberOfNodes; i++ {
-			<-nodes[i].Delivered
-		}
-
-		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
-	})
 }
 
 func TestNodeInFlightFails(t *testing.T) {
@@ -1890,7 +1860,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	stop := make(chan struct{})
 	f := func() {
 		txID := make([]byte, 15)
-		rand.Read(txID)
+		_, _ = rand.Read(txID)
 		nodes[1].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
 			select {
@@ -2014,7 +1984,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	stop := make(chan struct{})
 	f := func() {
 		txID := make([]byte, 15)
-		rand.Read(txID)
+		_, _ = rand.Read(txID)
 		nodes[3].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
 			select {

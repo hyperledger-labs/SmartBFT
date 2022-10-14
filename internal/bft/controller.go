@@ -234,7 +234,7 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		return
 	}
 	c.Logger.Debugf("Got request from %d", sender)
-	c.addRequest(reqInfo, req)
+	_ = c.addRequest(reqInfo, req)
 }
 
 // SubmitRequest Submits a request to go through consensus.
@@ -266,8 +266,6 @@ func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 
 	c.Logger.Infof("Request %s timeout expired, forwarding request to leader: %d", info, leaderID)
 	c.Comm.SendTransaction(leaderID, request)
-
-	return
 }
 
 // OnLeaderFwdRequestTimeout is called when the leader-forward timeout expires, and complains about the leader.
@@ -281,8 +279,6 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 
 	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
 	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
-
-	return
 }
 
 // OnAutoRemoveTimeout is called when the auto-remove timeout expires.
@@ -467,9 +463,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		if c.stopped() || c.Batcher.Closed() {
 			return nil
 		}
-		for _, req := range requests {
-			validRequests = append(validRequests, req)
-		}
+		validRequests = append(validRequests, requests...)
 	}
 	return validRequests
 }
@@ -590,7 +584,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 
 	if len(syncResponse.RequestDel) != 0 {
 		c.RequestPool.Prune(func(bytes []byte) error {
-			return errors.New("Need all delete")
+			return errors.New("need all delete")
 		})
 
 		for i := range syncResponse.RequestDel {
@@ -639,7 +633,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.Logger.Infof("Replicated decisions from view %d and seq %d up to view %d and sequence %d with verification sequence %d",
 		c.currViewNumber, latestSequence, md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
 
-	c.maybePruneInFlight(*md)
+	c.maybePruneInFlight(md)
 
 	view := md.ViewId
 	newView := false
@@ -676,7 +670,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	return view, md.LatestSequence + 1, md.DecisionsInView + 1
 }
 
-func (c *Controller) maybePruneInFlight(syncResultViewMD protos.ViewMetadata) {
+func (c *Controller) maybePruneInFlight(syncResultViewMD *protos.ViewMetadata) {
 	inFlight := c.InFlight.InFlightProposal()
 	if inFlight == nil {
 		c.Logger.Debugf("No in-flight proposal to prune")
@@ -754,7 +748,6 @@ func (c *Controller) relinquishLeaderToken() {
 	select {
 	case <-c.leaderToken:
 	default:
-
 	}
 }
 
@@ -888,7 +881,6 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	case <-c.deliverChan: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
 	}
-
 }
 
 func (c *Controller) removeDeliveredFromPool(d decision) {

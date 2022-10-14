@@ -72,7 +72,7 @@ type Verifier interface {
 
 // MembershipNotifier notifies if there was a membership change in the last proposal.
 type MembershipNotifier interface {
-	//MembershipChange returns true if there was a membership change in the last proposal.
+	// MembershipChange returns true if there was a membership change in the last proposal.
 	MembershipChange() bool
 }
 

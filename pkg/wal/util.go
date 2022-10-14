@@ -167,7 +167,7 @@ func copyFile(source, target string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(target, input, 0644)
+	return ioutil.WriteFile(target, input, 0o644)
 }
 
 func truncateCloseFile(f *os.File, offset int64) error {

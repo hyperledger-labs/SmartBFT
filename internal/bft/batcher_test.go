@@ -19,9 +19,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var (
-	noopTimeoutHandler = &mocks.RequestTimeoutHandler{}
-)
+var noopTimeoutHandler = &mocks.RequestTimeoutHandler{}
 
 func init() {
 	noopTimeoutHandler.On("OnRequestTimeout", mock.Anything, mock.Anything)

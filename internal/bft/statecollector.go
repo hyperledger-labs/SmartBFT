@@ -99,7 +99,6 @@ func (s *StateCollector) CollectStateResponses() *types.ViewAndSeq {
 			}
 		}
 	}
-
 }
 
 func (s *StateCollector) collectedEnoughEqualVotes() *types.ViewAndSeq {
@@ -121,11 +120,7 @@ func (s *StateCollector) collectedEnoughEqualVotes() *types.ViewAndSeq {
 		}
 		s.Logger.Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
 		s.responses.votes <- vote
-		if _, exist := votesMap[viewAndSeq]; exist {
-			votesMap[viewAndSeq]++
-		} else {
-			votesMap[viewAndSeq] = 1
-		}
+		votesMap[viewAndSeq]++
 	}
 	for viewAndSeq, count := range votesMap {
 		if count > uint64(s.f) {

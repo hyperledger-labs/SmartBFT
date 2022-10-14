@@ -82,12 +82,11 @@ func (a *App) UnMute() {
 
 // Submit submits the client request
 func (a *App) Submit(req Request) {
-	a.Consensus.SubmitRequest(req.ToBytes())
+	_ = a.Consensus.SubmitRequest(req.ToBytes())
 }
 
 // Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.SyncResponse {
-
 	a.Node.probabilityLock.RLock()
 	syncDelay := a.Node.syncDelay
 	a.Node.probabilityLock.RUnlock()
@@ -99,10 +98,9 @@ func (a *App) Sync() types.SyncResponse {
 			a.Node.syncDelay = nil
 			a.Node.probabilityLock.Unlock()
 		}()
-
 	}
 
-	records := a.Node.cb.readAll(*a.latestMD)
+	records := a.Node.cb.readAll(a.latestMD)
 	reconfigSync := types.ReconfigSync{InReplicatedDecisions: false}
 	for _, record := range records {
 		proposal := types.Proposal{
@@ -316,7 +314,7 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 
 type committedBatches struct {
 	lock     sync.RWMutex
-	latestMD smartbftprotos.ViewMetadata
+	latestMD *smartbftprotos.ViewMetadata
 	records  []*AppRecord
 }
 
@@ -335,11 +333,11 @@ func (cb *committedBatches) add(record *AppRecord) {
 	if cb.latestMD.LatestSequence >= md.LatestSequence {
 		return
 	}
-	cb.latestMD = *md
+	cb.latestMD = md
 	cb.records = append(cb.records, record)
 }
 
-func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppRecord {
+func (cb *committedBatches) readAll(from *smartbftprotos.ViewMetadata) []*AppRecord {
 	cb.lock.RLock()
 	defer cb.lock.RUnlock()
 
@@ -379,7 +377,7 @@ func (txn Request) ToBytes() []byte {
 
 func requestFromBytes(req []byte) *Request {
 	var r Request
-	asn1.Unmarshal(req, &r)
+	_, _ = asn1.Unmarshal(req, &r)
 	return &r
 }
 
@@ -397,7 +395,7 @@ func (b batch) toBytes() []byte {
 
 func batchFromBytes(rawBlock []byte) *batch {
 	var block batch
-	asn1.Unmarshal(rawBlock, &block)
+	_, _ = asn1.Unmarshal(rawBlock, &block)
 	return &block
 }
 
@@ -451,7 +449,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			Logger:             app.logger,
 			MetricsProvider:    app.metricsProvider,
 			WAL:                writeAheadLog,
-			Metadata:           *app.latestMD,
+			Metadata:           app.latestMD,
 			Verifier:           app,
 			Signer:             app,
 			MembershipNotifier: app,
