@@ -12,51 +12,59 @@ import (
 
 // Generate mocks for a collection of interfaces that are defined in api/dependencies.go
 
-// VerifierMock mock for the Verifier interface
 //go:generate mockery -dir . -name VerifierMock -case underscore -output ./mocks/
+
+// VerifierMock mock for the Verifier interface
 type VerifierMock interface {
 	api.Verifier
 }
 
-// AssemblerMock mock for the Assembler interface
 //go:generate mockery -dir . -name AssemblerMock -case underscore -output ./mocks/
+
+// AssemblerMock mock for the Assembler interface
 type AssemblerMock interface {
 	api.Assembler
 }
 
-// ApplicationMock mock for the Application interface
 //go:generate mockery -dir . -name ApplicationMock -case underscore -output ./mocks/
+
+// ApplicationMock mock for the Application interface
 type ApplicationMock interface {
 	api.Application
 }
 
-// CommMock mock for the Comm interface
 //go:generate mockery -dir . -name CommMock -case underscore -output ./mocks/
+
+// CommMock mock for the Comm interface
 type CommMock interface {
 	api.Comm
 	BroadcastConsensus(m *smartbftprotos.Message)
 }
 
-// SynchronizerMock mock for the Synchronizer interface
 //go:generate mockery -dir . -name SynchronizerMock -case underscore -output ./mocks/
+
+// SynchronizerMock mock for the Synchronizer interface
 type SynchronizerMock interface {
 	api.Synchronizer
 }
 
-// SignerMock mock for the Signer interface
 //go:generate mockery -dir . -name SignerMock -case underscore -output ./mocks/
+
+// SignerMock mock for the Signer interface
 type SignerMock interface {
 	api.Signer
 }
 
-// MembershipNotifierMock mock for the MembershipNotifier interface
 //go:generate mockery -dir . -name MembershipNotifierMock -case underscore -output ./mocks/
+
+// MembershipNotifierMock mock for the MembershipNotifier interface
 type MembershipNotifierMock interface {
 	api.MembershipNotifier
 }
 
-// Synchronizer mock for the Synchronizer interface (no return value)
 //go:generate mockery -dir . -name Synchronizer -case underscore -output ./mocks/
+
+// Synchronizer mock for the Synchronizer interface (no return value)
 type Synchronizer interface {
 	Sync()
 }

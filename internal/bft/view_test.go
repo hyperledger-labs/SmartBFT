@@ -913,7 +913,7 @@ func TestViewPersisted(t *testing.T) {
 			persistedToLog.Add(1)
 			state.On("Save", mock.Anything).Return(nil).Run(func(args mock.Arguments) {
 				persistedToLog.Done()
-				persistedState.Save(args.Get(0).(*protos.SavedMessage))
+				_ = persistedState.Save(args.Get(0).(*protos.SavedMessage))
 			})
 
 			view.Start()
@@ -942,9 +942,9 @@ func TestViewPersisted(t *testing.T) {
 				// Recover the view from WAL.
 				persistedState.Entries, err = writeAheadLog.ReadAll()
 				assert.NoError(t, err)
-				persistedState.Restore(view)
+				_ = persistedState.Restore(view)
 
-				// It should broadcast a prepare right after starting it.
+				// It should broadcast prepare right after starting it.
 				prepareSent.Add(1)
 
 				// Restart the view.
@@ -985,7 +985,7 @@ func TestViewPersisted(t *testing.T) {
 				persistedState.Entries, err = writeAheadLog.ReadAll()
 				assert.NoError(t, err)
 				assert.Equal(t, 2, len(persistedState.Entries))
-				persistedState.Restore(view)
+				_ = persistedState.Restore(view)
 
 				// It should broadcast a commit again after it is restored.
 				commitSent.Add(1)

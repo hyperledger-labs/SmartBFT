@@ -18,18 +18,21 @@ import (
 
 // Decider delivers the proposal with signatures to the application
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
+
 type Decider interface {
 	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
 }
 
-// FailureDetector initiates a view change when there is a complaint
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
+
+// FailureDetector initiates a view change when there is a complaint
 type FailureDetector interface {
 	Complain(viewNum uint64, stopView bool)
 }
 
-// Batcher batches requests to eventually become a new proposal
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
+
+// Batcher batches requests to eventually become a new proposal
 type Batcher interface {
 	NextBatch() [][]byte
 	Close()
@@ -37,8 +40,9 @@ type Batcher interface {
 	Reset()
 }
 
-// RequestPool is a pool of client's requests
 //go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
+
+// RequestPool is a pool of client's requests
 type RequestPool interface {
 	Prune(predicate func([]byte) error)
 	Submit(request []byte) error
@@ -50,8 +54,9 @@ type RequestPool interface {
 	Close()
 }
 
-// LeaderMonitor monitors the heartbeat from the current leader
 //go:generate mockery -dir . -name LeaderMonitor -case underscore -output ./mocks/
+
+// LeaderMonitor monitors the heartbeat from the current leader
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
 	ProcessMsg(sender uint64, msg *protos.Message)
@@ -71,8 +76,9 @@ type Proposer interface {
 	HandleMessage(sender uint64, m *protos.Message)
 }
 
-// ProposerBuilder builds a new Proposer
 //go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
+
+// ProposerBuilder builds a new Proposer
 type ProposerBuilder interface {
 	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer
 }

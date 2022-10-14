@@ -341,8 +341,7 @@ func (cb *committedBatches) readAll(from *smartbftprotos.ViewMetadata) []*AppRec
 	cb.lock.RLock()
 	defer cb.lock.RUnlock()
 
-	var res []*AppRecord
-
+	res := make([]*AppRecord, 0, len(cb.records))
 	for _, entry := range cb.records {
 		md := &smartbftprotos.ViewMetadata{}
 		if err := proto.Unmarshal(entry.Metadata, md); err != nil {
