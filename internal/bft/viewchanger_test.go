@@ -12,6 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -96,18 +98,20 @@ func TestStartViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		Logger:        log,
-		Controller:    controller,
-		InMsqQSize:    100,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		RequestsTimer:   reqTimer,
+		Ticker:          make(chan time.Time),
+		Logger:          log,
+		MetricsProvider: met,
+		Controller:      controller,
+		InMsqQSize:      100,
 	}
 
 	vc.Start(0)
@@ -156,6 +160,7 @@ func TestViewChangeProcess(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
+			met := &disabled.Provider{}
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -170,6 +175,7 @@ func TestViewChangeProcess(t *testing.T) {
 				Comm:              comm,
 				Signer:            signer,
 				Logger:            log,
+				MetricsProvider:   met,
 				RequestsTimer:     reqTimer,
 				Ticker:            make(chan time.Time),
 				InFlight:          &bft.InFlightData{},
@@ -247,6 +253,7 @@ func TestViewDataProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -271,20 +278,21 @@ func TestViewDataProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:        1,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Ticker:        make(chan time.Time),
-		Checkpoint:    &checkpoint,
-		InFlight:      &bft.InFlightData{},
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		InMsqQSize:    100,
-		State:         state,
+		SelfID:          1,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Ticker:          make(chan time.Time),
+		Checkpoint:      &checkpoint,
+		InFlight:        &bft.InFlightData{},
+		Signer:          signer,
+		RequestsTimer:   reqTimer,
+		InMsqQSize:      100,
+		State:           state,
 	}
 
 	vc.Start(1)
@@ -324,6 +332,7 @@ func TestNewViewProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -346,17 +355,18 @@ func TestNewViewProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:        0,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Ticker:        make(chan time.Time),
-		Checkpoint:    &checkpoint,
-		RequestsTimer: reqTimer,
-		InMsqQSize:    100,
-		State:         state,
+		SelfID:          0,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Ticker:          make(chan time.Time),
+		Checkpoint:      &checkpoint,
+		RequestsTimer:   reqTimer,
+		InMsqQSize:      100,
+		State:           state,
 	}
 
 	vc.Start(2)
@@ -412,6 +422,7 @@ func TestNormalProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -436,20 +447,21 @@ func TestNormalProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:        1,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &checkpoint,
-		InMsqQSize:    100,
-		State:         state,
+		SelfID:          1,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Signer:          signer,
+		RequestsTimer:   reqTimer,
+		Ticker:          make(chan time.Time),
+		InFlight:        &bft.InFlightData{},
+		Checkpoint:      &checkpoint,
+		InMsqQSize:      100,
+		State:           state,
 	}
 
 	vc.Start(0)
@@ -648,6 +660,7 @@ func TestBadViewDataMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			met := &disabled.Provider{}
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -671,16 +684,17 @@ func TestBadViewDataMessage(t *testing.T) {
 			}
 
 			vc := &bft.ViewChanger{
-				SelfID:      uint64(selfId),
-				N:           4,
-				NodesList:   []uint64{0, 1, 2, 3},
-				Logger:      log,
-				Verifier:    verifier,
-				Checkpoint:  &checkpoint,
-				Application: app,
-				Pruner:      pruner,
-				Ticker:      make(chan time.Time),
-				InMsqQSize:  100,
+				SelfID:          uint64(selfId),
+				N:               4,
+				NodesList:       []uint64{0, 1, 2, 3},
+				Logger:          log,
+				MetricsProvider: met,
+				Verifier:        verifier,
+				Checkpoint:      &checkpoint,
+				Application:     app,
+				Pruner:          pruner,
+				Ticker:          make(chan time.Time),
+				InMsqQSize:      100,
 			}
 
 			vc.Start(1)
@@ -870,6 +884,7 @@ func TestBadNewViewMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			met := &disabled.Provider{}
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -894,17 +909,18 @@ func TestBadNewViewMessage(t *testing.T) {
 			})
 
 			vc := &bft.ViewChanger{
-				SelfID:       3,
-				N:            4,
-				NodesList:    []uint64{0, 1, 2, 3},
-				Logger:       log,
-				Checkpoint:   &checkpoint,
-				Verifier:     verifier,
-				Synchronizer: synchronizer,
-				Application:  app,
-				Pruner:       pruner,
-				Ticker:       make(chan time.Time),
-				InMsqQSize:   100,
+				SelfID:          3,
+				N:               4,
+				NodesList:       []uint64{0, 1, 2, 3},
+				Logger:          log,
+				MetricsProvider: met,
+				Checkpoint:      &checkpoint,
+				Verifier:        verifier,
+				Synchronizer:    synchronizer,
+				Application:     app,
+				Pruner:          pruner,
+				Ticker:          make(chan time.Time),
+				InMsqQSize:      100,
 			}
 
 			vc.Start(1)
@@ -967,6 +983,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -977,6 +994,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
 		Logger:            log,
+		MetricsProvider:   met,
 		Controller:        controller,
 		ResendTimeout:     time.Second,
 		ViewChangeTimeout: 10 * time.Second,
@@ -1023,6 +1041,7 @@ func TestViewChangerTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1041,6 +1060,7 @@ func TestViewChangerTimeout(t *testing.T) {
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
 		Logger:            log,
+		MetricsProvider:   met,
 		ViewChangeTimeout: 10 * time.Second,
 		ResendTimeout:     20 * time.Second,
 		Synchronizer:      synchronizer,
@@ -1081,6 +1101,7 @@ func TestBackOff(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1101,6 +1122,7 @@ func TestBackOff(t *testing.T) {
 		RequestsTimer:     reqTimer,
 		Ticker:            ticker,
 		Logger:            log,
+		MetricsProvider:   met,
 		ViewChangeTimeout: timeout,
 		ResendTimeout:     100 * time.Second,
 		Synchronizer:      synchronizer,
@@ -1146,6 +1168,7 @@ func TestCommitLastDecision(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -1176,22 +1199,23 @@ func TestCommitLastDecision(t *testing.T) {
 	pruner.On("MaybePruneRevokedRequests")
 
 	vc := &bft.ViewChanger{
-		SelfID:        1,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &checkpoint,
-		Application:   app,
-		InMsqQSize:    100,
-		State:         state,
-		Pruner:        pruner,
+		SelfID:          1,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Signer:          signer,
+		RequestsTimer:   reqTimer,
+		Ticker:          make(chan time.Time),
+		InFlight:        &bft.InFlightData{},
+		Checkpoint:      &checkpoint,
+		Application:     app,
+		InMsqQSize:      100,
+		State:           state,
+		Pruner:          pruner,
 	}
 
 	vc.Start(0)
@@ -1239,6 +1263,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	synchronizer := &mocks.Synchronizer{}
@@ -1248,13 +1273,14 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	})
 
 	vc := &bft.ViewChanger{
-		SelfID:       3,
-		N:            4,
-		NodesList:    []uint64{0, 1, 2, 3},
-		Logger:       log,
-		Ticker:       make(chan time.Time),
-		Checkpoint:   &checkpoint,
-		Synchronizer: synchronizer,
+		SelfID:          3,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Logger:          log,
+		MetricsProvider: met,
+		Ticker:          make(chan time.Time),
+		Checkpoint:      &checkpoint,
+		Synchronizer:    synchronizer,
 	}
 
 	decisionAhead := types.Proposal{
@@ -1364,6 +1390,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
+			met := &disabled.Provider{}
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -1374,19 +1401,20 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			state.On("Save", mock.Anything).Return(nil)
 
 			vc := &bft.ViewChanger{
-				SelfID:        0,
-				N:             4,
-				NodesList:     []uint64{0, 1, 2, 3},
-				Comm:          comm,
-				Signer:        signer,
-				Logger:        log,
-				RequestsTimer: reqTimer,
-				Ticker:        make(chan time.Time),
-				InFlight:      test.getInFlight(),
-				Checkpoint:    &checkpoint,
-				Controller:    controller,
-				InMsqQSize:    100,
-				State:         state,
+				SelfID:          0,
+				N:               4,
+				NodesList:       []uint64{0, 1, 2, 3},
+				Comm:            comm,
+				Signer:          signer,
+				Logger:          log,
+				MetricsProvider: met,
+				RequestsTimer:   reqTimer,
+				Ticker:          make(chan time.Time),
+				InFlight:        test.getInFlight(),
+				Checkpoint:      &checkpoint,
+				Controller:      controller,
+				InMsqQSize:      100,
+				State:           state,
 			}
 
 			vc.Start(0)
@@ -1586,18 +1614,20 @@ func TestInformViewChanger(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		Logger:        log,
-		Controller:    controller,
-		InMsqQSize:    100,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		RequestsTimer:   reqTimer,
+		Ticker:          make(chan time.Time),
+		Logger:          log,
+		MetricsProvider: met,
+		Controller:      controller,
+		InMsqQSize:      100,
 	}
 
 	vc.Start(0)
@@ -1635,24 +1665,26 @@ func TestRestoreViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
-		SelfID:        0,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Signer:        signer,
-		Logger:        log,
-		RequestsTimer: reqTimer,
-		Ticker:        make(chan time.Time),
-		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &types.Checkpoint{},
-		Controller:    controller,
-		InMsqQSize:    100,
+		SelfID:          0,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		Signer:          signer,
+		Logger:          log,
+		MetricsProvider: met,
+		RequestsTimer:   reqTimer,
+		Ticker:          make(chan time.Time),
+		InFlight:        &bft.InFlightData{},
+		Checkpoint:      &types.Checkpoint{},
+		Controller:      controller,
+		InMsqQSize:      100,
 	}
 
 	restoreChan := make(chan struct{}, 1)
@@ -1920,6 +1952,7 @@ func TestCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
@@ -1958,23 +1991,24 @@ func TestCommitInFlight(t *testing.T) {
 
 	sched := make(chan time.Time)
 	vc := &bft.ViewChanger{
-		SelfID:        1,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		Ticker:        sched,
-		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &checkpoint,
-		ViewSequences: &atomic.Value{},
-		State:         &bft.StateRecorder{},
-		InMsqQSize:    int(types.DefaultConfig.IncomingMessageBufferSize),
-		Application:   app,
-		Pruner:        pruner,
+		SelfID:          1,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Comm:            comm,
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Signer:          signer,
+		RequestsTimer:   reqTimer,
+		Ticker:          sched,
+		InFlight:        &bft.InFlightData{},
+		Checkpoint:      &checkpoint,
+		ViewSequences:   &atomic.Value{},
+		State:           &bft.StateRecorder{},
+		InMsqQSize:      int(types.DefaultConfig.IncomingMessageBufferSize),
+		Application:     app,
+		Pruner:          pruner,
 	}
 
 	vc.Start(0)
@@ -2061,6 +2095,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
@@ -2081,16 +2116,17 @@ func TestDontCommitInFlight(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:        3,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Ticker:        make(chan time.Time),
-		RequestsTimer: reqTimer,
-		Application:   app,
-		State:         state,
+		SelfID:          3,
+		N:               4,
+		NodesList:       []uint64{0, 1, 2, 3},
+		Logger:          log,
+		MetricsProvider: met,
+		Verifier:        verifier,
+		Controller:      controller,
+		Ticker:          make(chan time.Time),
+		RequestsTimer:   reqTimer,
+		Application:     app,
+		State:           state,
 	}
 
 	inFlightProposal := types.Proposal{

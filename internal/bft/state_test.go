@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -170,10 +171,12 @@ func TestStateRestore(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
+			met := &disabled.Provider{}
 
 			state := &bft.PersistedState{
 				Entries:          testCase.WALContent,
 				Logger:           log,
+				MetricsProvider:  met,
 				InFlightProposal: &bft.InFlightData{},
 			}
 

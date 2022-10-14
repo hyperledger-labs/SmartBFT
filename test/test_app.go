@@ -449,6 +449,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			ViewChangerTicker:  app.secondClock.C,
 			Scheduler:          app.clock.C,
 			Logger:             app.logger,
+			MetricsProvider:    app.metricsProvider,
 			WAL:                writeAheadLog,
 			Metadata:           *app.latestMD,
 			Verifier:           app,

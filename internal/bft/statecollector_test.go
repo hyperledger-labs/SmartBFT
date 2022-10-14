@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -25,12 +26,14 @@ func TestBasicTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := &disabled.Provider{}
 
 	collector := &bft.StateCollector{
-		SelfID:         0,
-		N:              4,
-		Logger:         log,
-		CollectTimeout: 100 * time.Millisecond,
+		SelfID:          0,
+		N:               4,
+		Logger:          log,
+		MetricsProvider: met,
+		CollectTimeout:  100 * time.Millisecond,
 	}
 
 	collector.Start()
@@ -125,12 +128,14 @@ func TestCollect(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
+			met := &disabled.Provider{}
 
 			collector := &bft.StateCollector{
-				SelfID:         0,
-				N:              4,
-				Logger:         log,
-				CollectTimeout: test.timeout,
+				SelfID:          0,
+				N:               4,
+				Logger:          log,
+				MetricsProvider: met,
+				CollectTimeout:  test.timeout,
 			}
 
 			collector.Start()
