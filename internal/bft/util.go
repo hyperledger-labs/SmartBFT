@@ -493,7 +493,7 @@ func pruneBlacklist(prevBlacklist []uint64, preparesFrom map[uint64]*protos.Prep
 		}
 	}
 
-	newBlackList := make([]uint64, 0, len(prevBlacklist))
+	var newBlackList []uint64
 	for _, blackListedNode := range prevBlacklist {
 		// Purge nodes that were removed by a reconfiguration
 		if _, exists := currentNodeIDs[blackListedNode]; !exists {
