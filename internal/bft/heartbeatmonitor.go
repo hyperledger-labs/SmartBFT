@@ -35,10 +35,10 @@ type HeartbeatEventHandler interface {
 type Role bool
 
 type roleChange struct {
-	view         uint64
-	leaderID     uint64
-	follower     Role
-	onlyFollower bool
+	view                            uint64
+	leaderID                        uint64
+	follower                        Role
+	onlyStopSendHeartbearFromLeader bool
 }
 
 // heartbeatResponseCollector is a map from node ID to view number, and hold the last response from each node.
@@ -59,7 +59,7 @@ type HeartbeatMonitor struct {
 	view                          uint64
 	leaderID                      uint64
 	follower                      Role
-	stopLeader                    bool
+	stopSendHeartbearFromLeader   bool
 	lastHeartbeat                 time.Time
 	lastTick                      time.Time
 	hbRespCollector               heartbeatResponseCollector
@@ -163,8 +163,7 @@ func (hm *HeartbeatMonitor) StopLeaderSendMsg() {
 	hm.logger.Infof("Changing role to folower without change current view and current leader")
 	select {
 	case hm.commandChan <- roleChange{
-		follower:     true,
-		onlyFollower: true,
+		onlyStopSendHeartbearFromLeader: true,
 	}:
 	case <-hm.stopChan:
 		return
@@ -221,7 +220,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		return
 	}
 
-	if !hm.stopLeader && sender != hm.leaderID {
+	if !hm.stopSendHeartbearFromLeader && sender != hm.leaderID {
 		hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
 		return
 	}
@@ -318,7 +317,7 @@ func (hm *HeartbeatMonitor) tick(now time.Time) {
 	if hm.lastHeartbeat.IsZero() {
 		hm.lastHeartbeat = now
 	}
-	if hm.follower {
+	if bool(hm.follower) || hm.stopSendHeartbearFromLeader {
 		hm.followerTick(now)
 	} else {
 		hm.leaderTick(now)
@@ -335,13 +334,12 @@ func (hm *HeartbeatMonitor) closed() bool {
 }
 
 func (hm *HeartbeatMonitor) handleCommand(cmd roleChange) {
-	if cmd.onlyFollower {
-		hm.follower = cmd.follower
-		hm.stopLeader = true
+	if cmd.onlyStopSendHeartbearFromLeader {
+		hm.stopSendHeartbearFromLeader = true
 		return
 	}
 
-	hm.stopLeader = false
+	hm.stopSendHeartbearFromLeader = false
 	hm.view = cmd.view
 	hm.leaderID = cmd.leaderID
 	hm.follower = cmd.follower
