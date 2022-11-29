@@ -38,3 +38,7 @@ func (_m *LeaderMonitor) InjectArtificialHeartbeat(sender uint64, msg *smartbftp
 func (_m *LeaderMonitor) ProcessMsg(sender uint64, msg *smartbftprotos.Message) {
 	_m.Called(sender, msg)
 }
+
+func (_m *LeaderMonitor) StopLeaderSendMsg() {
+	_m.Called()
+}
