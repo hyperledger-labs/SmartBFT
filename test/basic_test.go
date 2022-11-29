@@ -2527,16 +2527,9 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 		n.Setup()
 	}
 
-	// nodes[2].LoseMessages(func(msg *smartbftprotos.Message) bool {
-	// 	return false
-	// })
-	// nodes[3].LoseMessages(func(msg *smartbftprotos.Message) bool {
-	// 	return false
-	// })
-
 	// wait for the new leader to finish the view change before submitting
 	done := make(chan struct{})
-	
+
 	prepareFirstCh := make(chan struct{}, 2)
 	prepareFirstMap := make(map[uint64]struct{}, 2)
 	prepareFirstSync := sync.RWMutex{}
