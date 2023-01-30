@@ -24,4 +24,4 @@ The source code files are made available under the Apache License, Version 2.0 (
 
 The library development was sponsored by __[Idea](https://scientificideas.org/)__ - The Interdisciplinary Blockchain Research and Expertise center. 
 
-* Gennadiy Muzykantov - [repository admin](mailto:g@muzykantov.me) 
+* Gennadiy Muzykantov - [repository admin](mailto:g@muzykantov.me)
