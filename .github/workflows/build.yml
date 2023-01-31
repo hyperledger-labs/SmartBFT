@@ -28,7 +28,7 @@ jobs:
       - name: Prepare Env
         run: bash scripts/prepare_environ.sh
       - name: Test
-        working-directory: /home/runner/go/src/github.com/SmartBFT-Go/consensus
+#        working-directory: /home/runner/go/src/github.com/SmartBFT-Go/consensus
         run:  make all
       - name: Post
         working-directory: /home/runner/go/src/github.com/SmartBFT-Go/consensus
