@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -467,9 +467,15 @@ func TestAddRemoveAddNodes(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "14", ClientID: "alice"})
 	data6 := make([]*AppRecord, 0)
+
+	fail := time.After(1 * time.Minute)
 	for i := 0; i < numberOfNodes+1; i++ {
-		d := <-nodes[i].Delivered
-		data6 = append(data6, d)
+		select {
+		case d := <-nodes[i].Delivered:
+			data6 = append(data6, d)
+		case <-fail:
+			t.Fatal("Didn't get delivered")
+		}
 	}
 	for i := 0; i < numberOfNodes; i++ {
 		assert.Equal(t, data6[i], data6[i+1])
