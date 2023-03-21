@@ -2469,6 +2469,131 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	}
 }
 
+func TestLeaderStopSendHeartbeat(t *testing.T) {
+	t.Parallel()
+
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0, 4)
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		nodes = append(nodes, n)
+	}
+
+	start := time.Now()
+
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.Setup()
+	}
+
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+
+	prepareFirstCh := make(chan struct{}, 2)
+	prepareFirstMap := make(map[uint64]struct{}, 2)
+	prepareFirstSync := sync.RWMutex{}
+
+	realViewChangeCh := make(chan struct{}, 4)
+	realViewChangeMap := make(map[uint64]struct{}, 4)
+	realViewChangeSync := sync.RWMutex{}
+
+	for i := 0; i < numberOfNodes; i++ {
+		id := nodes[i].ID
+		baseLogger := nodes[i].Node.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Starting view with number") &&
+				!strings.Contains(entry.Message, "Starting view with number 0") {
+				realViewChangeSync.RLock()
+				_, hasVoted := realViewChangeMap[id]
+				realViewChangeSync.RUnlock()
+
+				if !hasVoted {
+					realViewChangeSync.Lock()
+					_, hasVoted = realViewChangeMap[id]
+					if !hasVoted {
+						realViewChangeMap[id] = struct{}{}
+						realViewChangeCh <- struct{}{}
+					}
+					realViewChangeSync.Unlock()
+				}
+			}
+
+			if (id == 1 || id == 2) &&
+				strings.Contains(entry.Message, "prepare") {
+				prepareFirstSync.RLock()
+				_, hasVoted := prepareFirstMap[id]
+				prepareFirstSync.RUnlock()
+
+				if !hasVoted {
+					prepareFirstSync.Lock()
+					_, hasVoted = prepareFirstMap[id]
+					if !hasVoted {
+						prepareFirstMap[id] = struct{}{}
+						prepareFirstCh <- struct{}{}
+					}
+					prepareFirstSync.Unlock()
+				}
+			}
+
+			return nil
+		})).Sugar()
+	}
+
+	startNodes(nodes, &network)
+
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
+
+	nodes[2].Disconnect()
+	nodes[3].Disconnect()
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+	fail := time.After(1 * time.Minute)
+	for i := 0; i < 2; i++ {
+		select {
+		case <-prepareFirstCh:
+		case <-fail:
+			t.Fatal("Didn't change view 1")
+		}
+	}
+
+	nodes[2].Connect()
+	nodes[3].Connect()
+
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < 4; i++ {
+		select {
+		case <-realViewChangeCh:
+		case <-fail:
+			t.Fatal("Didn't change real view")
+		}
+	}
+
+	close(done)
+
+	data := make([]*AppRecord, 0, 4)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
 func doInBackground(f func(), stop <-chan struct{}) {
 	for {
 		select {

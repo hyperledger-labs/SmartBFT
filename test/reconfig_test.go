@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
@@ -355,6 +356,128 @@ func TestAddRemoveNodes(t *testing.T) {
 	}
 	for i := 0; i < numberOfNodes-nodesToRemove-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
+func TestAddRemoveAddNodes(t *testing.T) {
+	t.Parallel()
+	network := make(Network)
+	defer network.Shutdown()
+
+	testDir, err := ioutil.TempDir("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Mute()
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, &network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+	data1 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data1 = append(data1, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data1[i], data1[i+1])
+	}
+
+	newNode := newNode(uint64(5), network, t.Name(), testDir, false, 0)
+	nodes = append(nodes, newNode)
+
+	newConfig := fastConfig
+	newConfig.LeaderRotation = false
+	newConfig.DecisionsPerLeader = 0
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "10",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     []int64{1, 2, 3, 4, 5},
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
+		},
+	})
+
+	data2 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data2 = append(data2, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data2[i], data2[i+1])
+	}
+
+	startNodes(nodes[4:], &network)
+
+	<-nodes[4].Delivered
+	d := <-nodes[4].Delivered
+
+	assert.Equal(t, "10", requestFromBytes(d.Batch.Requests[0]).ID)
+
+	nodes[4].Disconnect()
+
+	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
+	data3 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data3 = append(data3, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data3[i], data3[i+1])
+	}
+
+	nodes[0].Submit(Request{ID: "12", ClientID: "alice"})
+	data4 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data4 = append(data4, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data4[i], data4[i+1])
+	}
+
+	nodes[0].Submit(Request{ID: "13", ClientID: "alice"})
+	data5 := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data5 = append(data5, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data5[i], data5[i+1])
+	}
+
+	nodes[4].logger.Infof("--------------------------------")
+	nodes[4].Connect()
+
+	<-nodes[4].Delivered
+
+	<-nodes[4].Delivered
+
+	<-nodes[4].Delivered
+
+	nodes[4].logger.Infof("--------------------------------")
+
+	nodes[0].Submit(Request{ID: "14", ClientID: "alice"})
+	data6 := make([]*AppRecord, 0)
+
+	fail := time.After(1 * time.Minute)
+	for i := 0; i < numberOfNodes+1; i++ {
+		select {
+		case d := <-nodes[i].Delivered:
+			data6 = append(data6, d)
+		case <-fail:
+			t.Fatal("Didn't get delivered")
+		}
+	}
+	for i := 0; i < numberOfNodes; i++ {
+		assert.Equal(t, data6[i], data6[i+1])
 	}
 }
 

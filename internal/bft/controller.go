@@ -63,6 +63,7 @@ type LeaderMonitor interface {
 	InjectArtificialHeartbeat(sender uint64, msg *protos.Message)
 	HeartbeatWasSent()
 	Close()
+	StopLeaderSendMsg()
 }
 
 // Proposer proposes a new proposal to be agreed on
@@ -279,7 +280,8 @@ func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Infof("Request %s leader-forwarding timeout expired, this node is the leader, nothing to do", info)
+		c.Logger.Infof("Request %s leader-forwarding timeout expired, this node is the leader, stop send heartbeat message", info)
+		c.LeaderMonitor.StopLeaderSendMsg()
 		return
 	}
 
@@ -396,7 +398,8 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	leader := c.currentViewLeader()
 	stopped := c.currentViewStopped()
 
-	if !stopped && latestView == newViewNumber && c.leaderID() == leader {
+	if !stopped && latestView == newViewNumber && c.leaderID() == leader &&
+		c.getCurrentDecisionsInView() == newDecisionsInView {
 		c.Logger.Debugf("Got view change to %d but view is already running", newViewNumber)
 		return
 	}
