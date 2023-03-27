@@ -15,6 +15,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -30,7 +31,7 @@ func TestControllerBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	batcher := &mocks.Batcher{}
@@ -81,7 +82,7 @@ func TestControllerLeaderBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
 	batcher.On("Closed").Return(false)
@@ -132,7 +133,7 @@ func TestLeaderPropose(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -289,7 +290,7 @@ func TestViewChanged(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -392,7 +393,7 @@ func TestSyncPrevView(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	app := &mocks.ApplicationMock{}
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -586,7 +587,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			assert.NoError(t, err)
 
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
@@ -708,7 +709,7 @@ func TestSyncInform(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -869,7 +870,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
@@ -1031,7 +1032,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	testDir, err := ioutil.TempDir("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")

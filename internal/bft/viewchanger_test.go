@@ -14,6 +14,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -97,7 +98,7 @@ func TestStartViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -158,7 +159,7 @@ func TestViewChangeProcess(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -249,7 +250,7 @@ func TestViewDataProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -328,7 +329,7 @@ func TestNewViewProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	verifier := &mocks.VerifierMock{}
 	verifierSigWG := sync.WaitGroup{}
 	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
@@ -418,7 +419,7 @@ func TestNormalProcess(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -656,7 +657,7 @@ func TestBadViewDataMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -879,7 +880,7 @@ func TestBadNewViewMessage(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			verifier := &mocks.VerifierMock{}
 			test.mutateVerifySig(verifier)
 			verifier.On("VerifySignature", mock.Anything).Return(nil)
@@ -976,7 +977,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -1033,7 +1034,7 @@ func TestViewChangerTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1093,7 +1094,7 @@ func TestBackOff(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	synchronizer := &mocks.Synchronizer{}
 	synchronizerWG := sync.WaitGroup{}
 	synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -1159,7 +1160,7 @@ func TestCommitLastDecision(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	verifier := &mocks.VerifierMock{}
@@ -1253,7 +1254,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	synchronizer := &mocks.Synchronizer{}
@@ -1379,7 +1380,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			reqTimer := &mocks.RequestsTimer{}
 			reqTimer.On("StopTimers")
 			controller := &mocks.ViewController{}
@@ -1600,7 +1601,7 @@ func TestInformViewChanger(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	controller := &mocks.ViewController{}
 	controller.On("AbortView", mock.Anything)
 
@@ -1651,7 +1652,7 @@ func TestRestoreViewChange(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	controller := &mocks.ViewController{}
@@ -1938,7 +1939,7 @@ func TestCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
@@ -2081,7 +2082,7 @@ func TestDontCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	verifier := &mocks.VerifierMock{}
 	verifier.On("VerifySignature", mock.Anything).Return(nil)
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)

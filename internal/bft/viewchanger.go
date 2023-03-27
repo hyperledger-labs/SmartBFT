@@ -61,7 +61,7 @@ type ViewChanger struct {
 	DecisionsPerLeader uint64
 
 	Logger          api.Logger
-	MetricsProvider api.Provider
+	MetricsProvider *api.CustomerProvider
 	Comm            Comm
 	Signer          api.Signer
 	Verifier        api.Verifier

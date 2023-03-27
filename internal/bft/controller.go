@@ -98,7 +98,7 @@ type Controller struct {
 	LeaderMonitor      LeaderMonitor
 	Verifier           api.Verifier
 	Logger             api.Logger
-	MetricsProvider    api.Provider
+	MetricsProvider    *api.CustomerProvider
 	Assembler          api.Assembler
 	Application        api.Application
 	FailureDetector    FailureDetector

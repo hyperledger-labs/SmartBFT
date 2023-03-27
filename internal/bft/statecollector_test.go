@@ -11,6 +11,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -26,7 +28,7 @@ func TestBasicTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	collector := &bft.StateCollector{
 		SelfID:          0,
@@ -128,7 +130,7 @@ func TestCollect(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			collector := &bft.StateCollector{
 				SelfID:          0,

@@ -52,7 +52,7 @@ type RequestTimeoutHandler interface {
 // block during submit until there will be place to submit new ones.
 type Pool struct {
 	logger          api.Logger
-	metricsProvider api.Provider
+	metricsProvider *api.CustomerProvider
 	inspector       api.RequestInspector
 	options         PoolOptions
 
@@ -87,7 +87,7 @@ type PoolOptions struct {
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, metricsProvider api.Provider, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
+func NewPool(log api.Logger, metricsProvider *api.CustomerProvider, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
 	if options.ForwardTimeout == 0 {
 		options.ForwardTimeout = defaultRequestTimeout
 	}

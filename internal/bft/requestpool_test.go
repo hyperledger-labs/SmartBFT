@@ -14,6 +14,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
@@ -28,7 +30,7 @@ func TestReqPoolBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	insp := &testRequestInspector{}
 	byteReq1 := makeTestRequest("1", "1", "foo")
@@ -176,7 +178,7 @@ func TestReqPoolCapacity(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 
@@ -268,7 +270,7 @@ func TestReqPoolPrune(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	insp := &testRequestInspector{}
 	timeoutHandler := &mocks.RequestTimeoutHandler{}
@@ -309,7 +311,7 @@ func TestReqPoolTimeout(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	byteReq1 := makeTestRequest("1", "1", "foo")
 	byteReq2 := makeTestRequest("2", "2", "foo")

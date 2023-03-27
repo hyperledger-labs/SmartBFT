@@ -83,15 +83,15 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 	return requests
 }
 
-func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
+func (*Node) VerifyRequest([]byte) (bft.RequestInfo, error) {
 	return bft.RequestInfo{}, nil
 }
 
-func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) ([]byte, error) {
+func (*Node) VerifyConsenterSig(bft.Signature, bft.Proposal) ([]byte, error) {
 	return nil, nil
 }
 
-func (*Node) VerifySignature(signature bft.Signature) error {
+func (*Node) VerifySignature(bft.Signature) error {
 	return nil
 }
 
@@ -99,7 +99,7 @@ func (*Node) VerificationSequence() uint64 {
 	return 0
 }
 
-func (*Node) Sign(msg []byte) []byte {
+func (*Node) Sign([]byte) []byte {
 	return nil
 }
 
@@ -142,9 +142,9 @@ func (n *Node) MembershipChange() bool {
 	return false
 }
 
-func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig {
+func (n *Node) Deliver(proposal bft.Proposal, _ []bft.Signature) bft.Reconfig {
 	blockData := BlockDataFromBytes(proposal.Payload)
-	var txns []Transaction
+	txns := make([]Transaction, 0, len(blockData.Transactions))
 	for _, rawTxn := range blockData.Transactions {
 		txn := TransactionFromBytes(rawTxn)
 		txns = append(txns, Transaction{
@@ -169,7 +169,8 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 
 func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, metricsProvider smart.Provider, opts NetworkOptions, testDir string) *Node {
 	nodeDir := filepath.Join(testDir, fmt.Sprintf("node%d", id))
-	writeAheadLog, err := wal.Create(logger, metricsProvider, nodeDir, nil)
+	met := smart.NewCustomerProvider(metricsProvider)
+	writeAheadLog, err := wal.Create(logger, met, nodeDir, nil)
 	if err != nil {
 		logger.Panicf("Cannot create WAL at %s", nodeDir)
 	}
@@ -234,7 +235,7 @@ func (n *Node) Start() {
 					case *smartbftprotos.Message:
 						n.consensus.HandleMessage(id, msg)
 					case *FwdMessage:
-						n.consensus.SubmitRequest(msg.Payload)
+						_ = n.consensus.SubmitRequest(msg.Payload)
 					}
 				}
 			}
@@ -255,7 +256,7 @@ func (n *Node) Stop() {
 }
 
 func (n *Node) Nodes() []uint64 {
-	var nodes []uint64
+	nodes := make([]uint64, 0, len(n.in))
 	for id := range n.in {
 		nodes = append(nodes, uint64(id))
 	}

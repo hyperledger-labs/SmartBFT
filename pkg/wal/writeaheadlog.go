@@ -80,8 +80,8 @@ type WriteAheadLogFile struct {
 	dirName string
 	options *Options
 
-	logger          api.Logger
-	metricsProvider api.Provider
+	logger  api.Logger
+	metrics *Metrics
 
 	mutex         sync.Mutex
 	dirFile       *os.File
@@ -119,7 +119,7 @@ func (o *Options) String() string {
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, ErrWALAlreadyExists if WAL already exists or other errors
-func Create(logger api.Logger, metricsProvider api.Provider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Create(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -142,17 +142,18 @@ func Create(logger api.Logger, metricsProvider api.Provider, dirPath string, opt
 	}
 
 	wal := &WriteAheadLogFile{
-		dirName:         cleanDirName,
-		options:         opt,
-		logger:          logger,
-		metricsProvider: metricsProvider,
-		index:           1,
-		headerBuff:      make([]byte, 8),
-		dataBuff:        proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
-		crc:             walCRCSeed,
-		truncateIndex:   1,
-		activeIndexes:   []uint64{1},
+		dirName:       cleanDirName,
+		options:       opt,
+		logger:        logger,
+		metrics:       NewMetrics(metricsProvider),
+		index:         1,
+		headerBuff:    make([]byte, 8),
+		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		crc:           walCRCSeed,
+		truncateIndex: 1,
+		activeIndexes: []uint64{1},
 	}
+	wal.metrics.CountOfFiles.Set(float64(len(wal.activeIndexes)))
 
 	wal.dirFile, err = os.Open(cleanDirName)
 	if err != nil {
@@ -191,7 +192,7 @@ func Create(logger api.Logger, metricsProvider api.Provider, dirPath string, opt
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, or an error
-func Open(logger api.Logger, metricsProvider api.Provider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Open(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -215,13 +216,13 @@ func Open(logger api.Logger, metricsProvider api.Provider, dirPath string, optio
 	cleanDirName := filepath.Clean(dirPath)
 
 	wal := &WriteAheadLogFile{
-		dirName:         cleanDirName,
-		options:         opt,
-		logger:          logger,
-		metricsProvider: metricsProvider,
-		headerBuff:      make([]byte, 8),
-		dataBuff:        proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
-		readMode:        true,
+		dirName:    cleanDirName,
+		options:    opt,
+		logger:     logger,
+		metrics:    NewMetrics(metricsProvider),
+		headerBuff: make([]byte, 8),
+		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
+		readMode:   true,
 	}
 
 	wal.dirFile, err = os.Open(cleanDirName)
@@ -232,12 +233,14 @@ func Open(logger api.Logger, metricsProvider api.Provider, dirPath string, optio
 	}
 
 	// After the check we have an increasing, continuous sequence, with valid CRC-Anchors in each file.
-	wal.activeIndexes, err = checkWalFiles(logger, metricsProvider, dirPath, walNames)
+	wal.activeIndexes, err = checkWalFiles(logger, dirPath, walNames)
 	if err != nil {
+		wal.metrics.CountOfFiles.Set(float64(len(wal.activeIndexes)))
 		_ = wal.Close()
 
 		return nil, err
 	}
+	wal.metrics.CountOfFiles.Set(float64(len(wal.activeIndexes)))
 
 	wal.index, err = parseWalFileName(walNames[0]) // first valid file
 	if err != nil {
@@ -266,7 +269,7 @@ func Open(logger api.Logger, metricsProvider api.Provider, dirPath string, optio
 // logger: reference to a Logger implementation.
 // dirPath: directory path of the WAL.
 // return: an error if repair was not successful.
-func Repair(logger api.Logger, metricsProvider api.Provider, dirPath string) error {
+func Repair(logger api.Logger, dirPath string) error {
 	cleanDirPath := filepath.Clean(dirPath)
 
 	walNames, err := dirReadWalNames(cleanDirPath)
@@ -281,7 +284,7 @@ func Repair(logger api.Logger, metricsProvider api.Provider, dirPath string) err
 	logger.Infof("Write-Ahead-Log discovered %d wal files: %s", len(walNames), strings.Join(walNames, ", "))
 
 	// verify that all but the last are fine
-	if err = scanVerifyFiles(logger, metricsProvider, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
+	if err = scanVerifyFiles(logger, cleanDirPath, walNames[:len(walNames)-1]); err != nil {
 		logger.Errorf("Write-Ahead-Log failed to repair, additional files are faulty: %s", err)
 
 		return err
@@ -300,7 +303,7 @@ func Repair(logger api.Logger, metricsProvider api.Provider, dirPath string) err
 
 	logger.Infof("Write-Ahead-Log made a copy of the last file: %s", lastFileCopy)
 
-	err = scanRepairFile(logger, metricsProvider, lastFile)
+	err = scanRepairFile(logger, lastFile)
 	if err != nil {
 		logger.Errorf("Write-Ahead-Log failed to scan and repair last file: %s", err)
 
@@ -502,7 +505,7 @@ FileLoop:
 	for i, index := range w.activeIndexes {
 		w.index = index
 		// This should not fail, we check the files earlier, when we Open() the WAL.
-		r, err := NewLogRecordReader(w.logger, w.metricsProvider, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
+		r, err := NewLogRecordReader(w.logger, filepath.Join(w.dirName, fmt.Sprintf(walFileTemplate, w.index)))
 		if err != nil {
 			return nil, err
 		}
@@ -659,6 +662,7 @@ func (w *WriteAheadLogFile) deleteAndCreateFile() error {
 		}
 
 		w.activeIndexes = w.activeIndexes[j+1:]
+		w.metrics.CountOfFiles.Set(float64(len(w.activeIndexes)))
 	}
 
 	w.logger.Debugf("Creating log file: %s", nextFileName)
@@ -677,6 +681,7 @@ func (w *WriteAheadLogFile) deleteAndCreateFile() error {
 	}
 
 	w.activeIndexes = append(w.activeIndexes, w.index)
+	w.metrics.CountOfFiles.Set(float64(len(w.activeIndexes)))
 
 	return nil
 }
@@ -727,7 +732,7 @@ func (w *WriteAheadLogFile) saveCRC() error {
 
 func InitializeAndReadAll(
 	logger api.Logger,
-	metricsProvider api.Provider,
+	metricsProvider *api.CustomerProvider,
 	walDir string,
 	options *Options,
 ) (writeAheadLog *WriteAheadLogFile, initialState [][]byte, err error) {
@@ -761,7 +766,7 @@ func InitializeAndReadAll(
 
 			logger.Infof("Received io.ErrUnexpectedEOF, trying to repair Write-Ahead-Log at dir: %s", walDir)
 
-			err = Repair(logger, metricsProvider, walDir)
+			err = Repair(logger, walDir)
 			if err != nil {
 				err = errors.Wrap(err, "Cannot repair Write-Ahead-Log")
 

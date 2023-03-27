@@ -12,28 +12,28 @@ import (
 
 type Provider struct{}
 
-func (p *Provider) NewCounter(o bft.CounterOpts) bft.Counter       { return &Counter{} }
-func (p *Provider) NewGauge(o bft.GaugeOpts) bft.Gauge             { return &Gauge{} }
-func (p *Provider) NewHistogram(o bft.HistogramOpts) bft.Histogram { return &Histogram{} }
+func (p *Provider) NewCounter(bft.CounterOpts) bft.Counter       { return &Counter{} }
+func (p *Provider) NewGauge(bft.GaugeOpts) bft.Gauge             { return &Gauge{} }
+func (p *Provider) NewHistogram(bft.HistogramOpts) bft.Histogram { return &Histogram{} }
 
 type Counter struct{}
 
-func (c *Counter) Add(delta float64) {}
-func (c *Counter) With(labelValues ...string) bft.Counter {
+func (c *Counter) Add(float64) {}
+func (c *Counter) With(...string) bft.Counter {
 	return c
 }
 
 type Gauge struct{}
 
-func (g *Gauge) Add(delta float64) {}
-func (g *Gauge) Set(delta float64) {}
-func (g *Gauge) With(labelValues ...string) bft.Gauge {
+func (g *Gauge) Add(float64) {}
+func (g *Gauge) Set(float64) {}
+func (g *Gauge) With(...string) bft.Gauge {
 	return g
 }
 
 type Histogram struct{}
 
-func (h *Histogram) Observe(value float64) {}
-func (h *Histogram) With(labelValues ...string) bft.Histogram {
+func (h *Histogram) Observe(float64) {}
+func (h *Histogram) With(...string) bft.Histogram {
 	return h
 }

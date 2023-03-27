@@ -12,6 +12,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/stretchr/testify/assert"
@@ -30,7 +31,7 @@ func TestBatcherBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 
@@ -117,7 +118,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	insp := &testRequestInspector{}
 	submittedChan := make(chan struct{}, 1)
 	pool := bft.NewPool(log, met, insp, noopTimeoutHandler, bft.PoolOptions{QueueSize: 200}, submittedChan)
@@ -170,7 +171,7 @@ func TestBatcherClose(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	insp := &testRequestInspector{}
 
 	submittedChan := make(chan struct{}, 1)
@@ -196,7 +197,7 @@ func TestBatcherReset(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	insp := &testRequestInspector{}
 
 	submittedChan := make(chan struct{}, 1)

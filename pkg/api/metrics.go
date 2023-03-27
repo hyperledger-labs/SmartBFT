@@ -6,6 +6,31 @@ SPDX-License-Identifier: Apache-2.0
 
 package api
 
+type CustomerProvider struct {
+	Provider
+	Labels map[string]string
+}
+
+func NewCustomerProvider(mp Provider, labelValues ...string) *CustomerProvider {
+	return &CustomerProvider{
+		Provider: mp,
+		Labels:   labelsToMap(labelValues),
+	}
+}
+
+func labelsToMap(labelValues []string) map[string]string {
+	labels := make(map[string]string)
+	for i := 0; i < len(labelValues); i += 2 {
+		key := labelValues[i]
+		if i == len(labelValues)-1 {
+			labels[key] = "unknown"
+		} else {
+			labels[key] = labelValues[i+1]
+		}
+	}
+	return labels
+}
+
 // A Provider is an abstraction for a metrics provider. It is a factory for
 // Counter, Gauge, and Histogram meters.
 type Provider interface {

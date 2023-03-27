@@ -429,7 +429,8 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	config.DecisionsPerLeader = decisionsPerLeader
 
 	app.Setup = func() {
-		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, app.metricsProvider, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		met := api.NewCustomerProvider(app.metricsProvider, "channel", testName)
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, met, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
@@ -446,7 +447,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			ViewChangerTicker:  app.secondClock.C,
 			Scheduler:          app.clock.C,
 			Logger:             app.logger,
-			MetricsProvider:    app.metricsProvider,
+			MetricsProvider:    met,
 			WAL:                writeAheadLog,
 			Metadata:           app.latestMD,
 			Verifier:           app,

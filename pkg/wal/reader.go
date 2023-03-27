@@ -19,22 +19,20 @@ import (
 )
 
 type LogRecordReader struct {
-	fileName        string
-	logger          api.Logger
-	metricsProvider api.Provider
-	logFile         *os.File
-	crc             uint32
+	fileName string
+	logger   api.Logger
+	logFile  *os.File
+	crc      uint32
 }
 
-func NewLogRecordReader(logger api.Logger, metricsProvider api.Provider, fileName string) (*LogRecordReader, error) {
+func NewLogRecordReader(logger api.Logger, fileName string) (*LogRecordReader, error) {
 	if logger == nil {
 		return nil, errors.New("logger is nil")
 	}
 
 	r := &LogRecordReader{
-		fileName:        fileName,
-		logger:          logger,
-		metricsProvider: metricsProvider,
+		fileName: fileName,
+		logger:   logger,
 	}
 
 	var err error

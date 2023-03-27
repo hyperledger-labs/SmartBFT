@@ -1935,7 +1935,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 		<-nodes[i].Delivered
 	}
 
-	// Put the next and the next next nodes in partition
+	// Put the next and the next nodes in partition
 	nodes[1].Disconnect()
 	nodes[2].Disconnect()
 

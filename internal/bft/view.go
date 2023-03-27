@@ -63,7 +63,7 @@ type View struct {
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
 	Logger             api.Logger
-	MetricsProvider    api.Provider
+	MetricsProvider    *api.CustomerProvider
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer

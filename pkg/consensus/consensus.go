@@ -37,7 +37,7 @@ type Consensus struct {
 	RequestInspector   bft.RequestInspector
 	Synchronizer       bft.Synchronizer
 	Logger             bft.Logger
-	MetricsProvider    bft.Provider
+	MetricsProvider    *bft.CustomerProvider
 	Metadata           *protos.ViewMetadata
 	LastProposal       types.Proposal
 	LastSignatures     []types.Signature
@@ -109,7 +109,7 @@ func (c *Consensus) Start() error {
 	}
 
 	if c.MetricsProvider == nil {
-		c.MetricsProvider = &disabled.Provider{}
+		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
 	}
 
 	c.consensusDone.Add(1)

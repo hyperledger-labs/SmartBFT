@@ -31,7 +31,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
@@ -53,7 +53,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, met, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Good - with options", func(t *testing.T) {
@@ -73,7 +73,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		}
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, met, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Bad - already exist", func(t *testing.T) {
@@ -103,7 +103,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
@@ -182,7 +182,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Idempotent", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "idempotent")
@@ -203,7 +203,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 		assert.Equal(t, crc, wal.CRC())
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, met, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
 	})
 
 	t.Run("Cannot Append", func(t *testing.T) {
@@ -224,7 +224,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 		assert.EqualError(t, err, os.ErrClosed.Error())
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyFirstFileCreation(t, logger, met, dirPath, expectedFileName, crc)
+		verifyFirstFileCreation(t, logger, dirPath, expectedFileName, crc)
 	})
 }
 
@@ -238,7 +238,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
@@ -277,7 +277,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc, rec1, rec2)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc, rec1, rec2)
 	})
 
 	t.Run("File switch", func(t *testing.T) {
@@ -324,9 +324,9 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc1, records[:10]...)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc1, records[:10]...)
 		expectedFileName = fmt.Sprintf(walFileTemplate, 2)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc2, records[10:]...)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[10:]...)
 	})
 
 	t.Run("File recycle", func(t *testing.T) {
@@ -377,9 +377,9 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 4)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc1, records[30:40]...)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc1, records[30:40]...)
 		expectedFileName = fmt.Sprintf(walFileTemplate, 5)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc2, records[40:]...)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc2, records[40:]...)
 	})
 
 	t.Run("TruncateTo", func(t *testing.T) {
@@ -426,7 +426,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		assert.NoError(t, err)
 
 		expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-		verifyAppend(t, logger, met, dirPath, expectedFileName, crc, rec1, rec2, rec3)
+		verifyAppend(t, logger, dirPath, expectedFileName, crc, rec1, rec2, rec3)
 	})
 }
 
@@ -440,7 +440,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good - one empty file", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good-1-empty")
@@ -599,7 +599,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("with a tail", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "tail")
@@ -696,7 +696,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	// Create
 	wal, entries, err := InitializeAndReadAll(logger, met, testDir, DefaultOptions())
@@ -709,7 +709,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	expectedFileName := fmt.Sprintf(walFileTemplate, 1)
-	verifyFirstFileCreation(t, logger, met, testDir, expectedFileName, crc)
+	verifyFirstFileCreation(t, logger, testDir, expectedFileName, crc)
 
 	// Open
 	options := &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048}
@@ -789,7 +789,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider api.Provider, dirPath string, numRec int) {
+func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, numRec int) {
 	logger.Infof(">>> Open #1")
 	wal, err := Open(logger, metricsProvider, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 	assert.NoError(t, err)
@@ -810,7 +810,7 @@ func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider api.Provi
 	assert.NoError(t, err)
 
 	logger.Infof(">>> Repair")
-	err = Repair(logger, metricsProvider, dirPath)
+	err = Repair(logger, dirPath)
 	assert.NoError(t, err)
 
 	logger.Infof(">>> Open #2")
@@ -845,7 +845,6 @@ func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider api.Provi
 func verifyFirstFileCreation(
 	t *testing.T,
 	logger api.Logger,
-	metricsProvider api.Provider,
 	dirPath string,
 	expectedFileName string,
 	expectedCRC uint32,
@@ -855,7 +854,7 @@ func verifyFirstFileCreation(
 	assert.Equal(t, 1, len(names))
 	assert.Equal(t, expectedFileName, names[0])
 
-	r, err := NewLogRecordReader(logger, metricsProvider, filepath.Join(dirPath, expectedFileName))
+	r, err := NewLogRecordReader(logger, filepath.Join(dirPath, expectedFileName))
 	assert.NoError(t, err)
 	assert.NotNil(t, r)
 
@@ -871,13 +870,12 @@ func verifyFirstFileCreation(
 func verifyAppend(
 	t *testing.T,
 	logger api.Logger,
-	metricsProvider api.Provider,
 	dirPath string,
 	expectedFileName string,
 	expectedCRC uint32,
 	records ...*smartbftprotos.LogRecord,
 ) {
-	r, err := NewLogRecordReader(logger, metricsProvider, filepath.Join(dirPath, expectedFileName))
+	r, err := NewLogRecordReader(logger, filepath.Join(dirPath, expectedFileName))
 	assert.NoError(t, err)
 	assert.NotNil(t, r)
 

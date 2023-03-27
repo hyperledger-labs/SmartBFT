@@ -8,6 +8,8 @@ package bft_test
 import (
 	"testing"
 
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -171,7 +173,7 @@ func TestStateRestore(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			state := &bft.PersistedState{
 				Entries:          testCase.WALContent,

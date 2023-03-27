@@ -33,7 +33,7 @@ func (header BlockHeader) ToBytes() []byte {
 
 func BlockHeaderFromBytes(rawHeader []byte) *BlockHeader {
 	var header BlockHeader
-	asn1.Unmarshal(rawHeader, &header)
+	_, _ = asn1.Unmarshal(rawHeader, &header)
 	return &header
 }
 
@@ -52,7 +52,7 @@ func (txn Transaction) ToBytes() []byte {
 
 func TransactionFromBytes(rawTxn []byte) *Transaction {
 	var txn Transaction
-	asn1.Unmarshal(rawTxn, &txn)
+	_, _ = asn1.Unmarshal(rawTxn, &txn)
 	return &txn
 }
 
@@ -70,7 +70,7 @@ func (b BlockData) ToBytes() []byte {
 
 func BlockDataFromBytes(rawBlock []byte) *BlockData {
 	var block BlockData
-	asn1.Unmarshal(rawBlock, &block)
+	_, _ = asn1.Unmarshal(rawBlock, &block)
 	return &block
 }
 

@@ -13,6 +13,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -36,7 +37,7 @@ func TestHeartbeatMonitor_New(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatEventHandler{}
@@ -51,7 +52,7 @@ func TestHeartbeatMonitorLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	comm := &mocks.CommMock{}
 	handler := &mocks.HeartbeatEventHandler{}
@@ -192,7 +193,7 @@ func TestHeartbeatMonitorFollower(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			scheduler := make(chan time.Time)
 			incrementUnit := heartbeatTimeout / heartbeatCount
@@ -238,7 +239,7 @@ func TestHeartbeatMonitorLeaderAndFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	scheduler1 := make(chan time.Time)
 	scheduler2 := make(chan time.Time)
@@ -303,7 +304,7 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	clock := &fakeTime{time: time.Now()}
 
@@ -370,7 +371,7 @@ func TestHeartbeatResponseFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	clock := &fakeTime{time: time.Now()}
 
@@ -427,7 +428,7 @@ func TestFollowerBehindSync(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	scheduler := make(chan time.Time)
 

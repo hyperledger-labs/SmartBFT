@@ -17,6 +17,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -127,7 +128,7 @@ func TestViewBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	state := &bft.StateRecorder{}
 	view := &bft.View{
 		RetrieveCheckpoint: (&types.Checkpoint{}).Get,
@@ -312,7 +313,7 @@ func TestBadPrePrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			synchronizer = &mocks.Synchronizer{}
 			syncWG = &sync.WaitGroup{}
 			synchronizer.On("Sync").Run(func(args mock.Arguments) {
@@ -395,7 +396,7 @@ func TestBadPrepare(t *testing.T) {
 				}
 				return nil
 			})).Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 			synchronizer := &mocks.Synchronizer{}
 			syncWG := &sync.WaitGroup{}
 			synchronizer.On("Sync", mock.Anything).Run(func(args mock.Arguments) {
@@ -480,7 +481,7 @@ func TestBadCommit(t *testing.T) {
 		}
 		return nil
 	})).Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	comm := &mocks.CommMock{}
 	comm.On("BroadcastConsensus", mock.Anything)
 	verifier := &mocks.VerifierMock{}
@@ -553,7 +554,7 @@ func TestNormalPath(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -680,7 +681,7 @@ func TestTwoSequences(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	comm := &mocks.CommMock{}
 	commWG := sync.WaitGroup{}
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -859,7 +860,7 @@ func TestViewPersisted(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := &disabled.Provider{}
+			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
@@ -1098,7 +1099,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 			view := &bft.View{
 				RetrieveCheckpoint: (&types.Checkpoint{}).Get,
 				Logger:             basicLog.Sugar(),
-				MetricsProvider:    &disabled.Provider{},
+				MetricsProvider:    api.NewCustomerProvider(&disabled.Provider{}),
 				N:                  4,
 				LeaderID:           1,
 				Quorum:             3,
@@ -1154,7 +1155,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		loggedEntries <- entry.Message
 		return nil
 	})).Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	state := &bft.StateRecorder{}
 
@@ -1425,7 +1426,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := &disabled.Provider{}
+	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})

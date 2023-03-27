@@ -257,7 +257,7 @@ type ProposalMaker struct {
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
 	Logger             api.Logger
-	MetricsProvider    api.Provider
+	MetricsProvider    *api.CustomerProvider
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -413,7 +413,7 @@ type blacklist struct {
 	currView           uint64
 	preparesFrom       map[uint64]*protos.PreparesFrom
 	logger             api.Logger
-	metricsProvider    api.Provider
+	metricsProvider    *api.CustomerProvider
 	f                  int
 	decisionsPerLeader uint64
 }
