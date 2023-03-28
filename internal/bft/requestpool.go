@@ -51,10 +51,10 @@ type RequestTimeoutHandler interface {
 // construction. In case there are more incoming request than given size it will
 // block during submit until there will be place to submit new ones.
 type Pool struct {
-	logger          api.Logger
-	metricsProvider *api.CustomerProvider
-	inspector       api.RequestInspector
-	options         PoolOptions
+	logger    api.Logger
+	metrics   *MetricsRequestPool
+	inspector api.RequestInspector
+	options   PoolOptions
 
 	cancel         context.CancelFunc
 	lock           sync.RWMutex
@@ -107,18 +107,18 @@ func NewPool(log api.Logger, metricsProvider *api.CustomerProvider, inspector ap
 	ctx, cancel := context.WithCancel(context.Background())
 
 	rp := &Pool{
-		cancel:          cancel,
-		timeoutHandler:  th,
-		logger:          log,
-		metricsProvider: metricsProvider,
-		inspector:       inspector,
-		fifo:            list.New(),
-		semaphore:       semaphore.NewWeighted(options.QueueSize),
-		existMap:        make(map[types.RequestInfo]*list.Element),
-		options:         options,
-		submittedChan:   submittedChan,
-		delMap:          make(map[types.RequestInfo]struct{}),
-		delSlice:        make([]types.RequestInfo, 0, defaultSizeOfDelElements),
+		cancel:         cancel,
+		timeoutHandler: th,
+		logger:         log,
+		metrics:        NewMetricsRequestPool(metricsProvider),
+		inspector:      inspector,
+		fifo:           list.New(),
+		semaphore:      semaphore.NewWeighted(options.QueueSize),
+		existMap:       make(map[types.RequestInfo]*list.Element),
+		options:        options,
+		submittedChan:  submittedChan,
+		delMap:         make(map[types.RequestInfo]struct{}),
+		delSlice:       make([]types.RequestInfo, 0, defaultSizeOfDelElements),
 	}
 
 	go func() {
@@ -183,6 +183,7 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	if uint64(len(request)) > rp.options.RequestMaxBytes {
+		rp.metrics.CountOfFailAddRequestToPool.Add(1)
 		return fmt.Errorf(
 			"submitted request (%d) is bigger than request max bytes (%d)",
 			len(request),
@@ -209,6 +210,7 @@ func (rp *Pool) Submit(request []byte) error {
 	defer cancel()
 	// do not wait for a semaphore with a lock, as it will prevent draining the pool.
 	if err := rp.semaphore.Acquire(ctx, 1); err != nil {
+		rp.metrics.CountOfFailAddRequestToPool.Add(1)
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
 
@@ -243,6 +245,7 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	element := rp.fifo.PushBack(reqItem)
+	rp.metrics.CountOfRequestPool.Add(1)
 	rp.existMap[reqInfo] = element
 
 	if len(rp.existMap) != rp.fifo.Len() {
@@ -372,6 +375,7 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 	item.timeout.Stop()
 
 	rp.fifo.Remove(element)
+	rp.metrics.CountOfRequestPool.Add(-1)
 	delete(rp.existMap, requestInfo)
 	rp.moveToDelSlice(requestInfo)
 	rp.logger.Infof("Removed request %s from request pool", requestInfo)
@@ -495,7 +499,13 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	}
 
 	// start a second timeout
-	item := element.Value.(*requestItem)
+	item, ok := element.Value.(*requestItem)
+	if !ok {
+		rp.lock.Unlock()
+		rp.logger.Debugf("Request %s is not type *requestItem", reqInfo)
+		return
+	}
+
 	item.timeout = time.AfterFunc(
 		rp.options.ComplainTimeout,
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
@@ -506,6 +516,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 
 	// may take time, in case Comm channel to leader is full; hence w/o the lock.
 	rp.logger.Debugf("Request %s timeout expired, going to send to leader", reqInfo)
+	rp.metrics.CountOfLeaderForwardRequest.Add(1)
 	rp.timeoutHandler.OnRequestTimeout(request, reqInfo)
 }
 
@@ -531,7 +542,13 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	}
 
 	// start a third timeout
-	item := element.Value.(*requestItem)
+	item, ok := element.Value.(*requestItem)
+	if !ok {
+		rp.lock.Unlock()
+		rp.logger.Debugf("Request %s is not type *requestItem", reqInfo)
+		return
+	}
+
 	item.timeout = time.AfterFunc(
 		rp.options.AutoRemoveTimeout,
 		func() { rp.onAutoRemoveTO(reqInfo) },
@@ -542,6 +559,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 
 	// may take time, in case Comm channel is full; hence w/o the lock.
 	rp.logger.Debugf("Request %s leader-forwarding timeout expired, going to complain on leader", reqInfo)
+	rp.metrics.CountTimeoutTwoStep.Add(1)
 	rp.timeoutHandler.OnLeaderFwdRequestTimeout(request, reqInfo)
 }
 
@@ -552,5 +570,6 @@ func (rp *Pool) onAutoRemoveTO(reqInfo types.RequestInfo) {
 		rp.logger.Errorf("Removal of request %s failed; error: %s", reqInfo, err)
 		return
 	}
+	rp.metrics.CountOfDeleteRequestPool.Add(1)
 	rp.timeoutHandler.OnAutoRemoveTimeout(reqInfo)
 }
