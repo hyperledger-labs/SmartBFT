@@ -846,7 +846,7 @@ func (c *Controller) Stop() {
 	c.controllerDone.Wait()
 }
 
-// Stop the controller but only stop the requests pool timers
+// StopWithPoolPause the controller but only stop the requests pool timers
 func (c *Controller) StopWithPoolPause() {
 	c.close()
 	c.Batcher.Close()

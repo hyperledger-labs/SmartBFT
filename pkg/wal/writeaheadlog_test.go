@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -22,7 +21,7 @@ import (
 )
 
 func TestWriteAheadLogFile_Create(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -94,7 +93,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_Open(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -173,7 +172,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_Close(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -229,7 +228,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_Append(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -431,7 +430,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_ReadAll(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -590,7 +589,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_Repair(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)
@@ -687,7 +686,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 }
 
 func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)

@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
-
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -34,11 +33,11 @@ type commMock struct {
 	toWG           *sync.WaitGroup
 }
 
-func (c commMock) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
+func (c commMock) SendConsensus(uint64, *smartbftprotos.Message) {
 	panic("implement me")
 }
 
-func (c commMock) SendTransaction(targetID uint64, request []byte) {
+func (c commMock) SendTransaction(uint64, []byte) {
 	panic("implement me")
 }
 
@@ -46,14 +45,14 @@ func (c commMock) Nodes() []uint64 {
 	panic("implement me")
 }
 
-func (c commMock) BroadcastConsensus(m *smartbftprotos.Message) {
+func (c commMock) BroadcastConsensus(*smartbftprotos.Message) {
 	atomic.AddUint32(c.heartBeatsSent, 1)
 	c.toWG.Done()
 }
 
 type heartbeatEventHandler struct{}
 
-func (h heartbeatEventHandler) OnHeartbeatTimeout(view uint64, leaderID uint64) {
+func (h heartbeatEventHandler) OnHeartbeatTimeout(uint64, uint64) {
 	panic("implement me")
 }
 

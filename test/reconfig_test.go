@@ -2,7 +2,6 @@ package test
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -16,7 +15,7 @@ func TestBasicReconfig(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -81,7 +80,7 @@ func TestBasicAddNodes(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -165,7 +164,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -234,7 +233,7 @@ func TestAddRemoveNodes(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -364,7 +363,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -490,7 +489,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -559,7 +558,7 @@ func TestAddNodeAfterManyRotations(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 

@@ -11,7 +11,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
-func TestNetwork(t *testing.T) {
+func TestNetwork(*testing.T) {
 	network := make(Network)
 	node1 := make(mockHandler)
 	node2 := make(mockHandler)

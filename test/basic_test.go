@@ -9,7 +9,6 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -31,7 +30,7 @@ func TestBasic(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -62,7 +61,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -149,7 +148,7 @@ func TestRestartFollowers(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -212,7 +211,7 @@ func TestLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -249,7 +248,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -318,7 +317,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -382,7 +381,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -435,7 +434,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -497,7 +496,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -560,7 +559,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -641,7 +640,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -699,7 +698,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -768,7 +767,7 @@ func TestRestoringViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -848,7 +847,7 @@ func TestLeaderForwarding(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -886,7 +885,7 @@ func TestLeaderExclusion(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -918,7 +917,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -964,7 +963,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1049,7 +1048,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1187,7 +1186,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			network := make(Network)
 			defer network.Shutdown()
 
-			testDir, err := ioutil.TempDir("", test.description)
+			testDir, err := os.MkdirTemp("", test.description)
 			assert.NoErrorf(t, err, "generate temporary test dir")
 			defer os.RemoveAll(testDir)
 
@@ -1256,7 +1255,7 @@ func TestGradualStart(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1370,7 +1369,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1432,7 +1431,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1539,7 +1538,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1628,7 +1627,7 @@ func TestNodeInFlightFails(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1772,7 +1771,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -1885,7 +1884,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -2009,7 +2008,7 @@ func TestNodeInFlightThenViewChange(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -2096,7 +2095,7 @@ func TestNodeCommitTheRestPrepareAndCommittedNodeCrashesThenRecovers(t *testing.
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -2180,7 +2179,7 @@ func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -2276,7 +2275,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
@@ -2475,7 +2474,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	network := make(Network)
 	defer network.Shutdown()
 
-	testDir, err := ioutil.TempDir("", t.Name())
+	testDir, err := os.MkdirTemp("", t.Name())
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 

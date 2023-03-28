@@ -5,8 +5,8 @@ import metrics "github.com/SmartBFT-Go/consensus/pkg/api"
 var countOfFilesOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
-	Name:         "count_of_files",
-	Help:         "Count of files in this channel.",
+	Name:         "wal_count_of_files",
+	Help:         "Count of wal-files in this channel.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }

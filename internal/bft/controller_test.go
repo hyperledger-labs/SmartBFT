@@ -6,7 +6,6 @@
 package bft_test
 
 import (
-	"io/ioutil"
 	"os"
 	"sync"
 	"sync/atomic"
@@ -185,7 +184,7 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)
@@ -327,7 +326,7 @@ func TestViewChanged(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)
@@ -442,7 +441,7 @@ func TestSyncPrevView(t *testing.T) {
 	startedWG := sync.WaitGroup{}
 	startedWG.Add(1)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)
@@ -762,7 +761,7 @@ func TestSyncInform(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)
@@ -872,7 +871,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	log := basicLog.Sugar()
 	met := api.NewCustomerProvider(&disabled.Provider{})
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)
@@ -1034,7 +1033,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	log := basicLog.Sugar()
 	met := api.NewCustomerProvider(&disabled.Provider{})
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, met, testDir, nil)

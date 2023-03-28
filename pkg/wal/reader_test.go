@@ -8,7 +8,6 @@ package wal
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -22,7 +21,7 @@ import (
 )
 
 func TestLogRecordReader(t *testing.T) {
-	testDir, err := ioutil.TempDir("", "unittest")
+	testDir, err := os.MkdirTemp("", "unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 
 	defer os.RemoveAll(testDir)

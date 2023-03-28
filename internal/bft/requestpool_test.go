@@ -14,10 +14,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"

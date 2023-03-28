@@ -28,8 +28,8 @@ const (
 var (
 	ErrReqAlreadyExists    = fmt.Errorf("request already exists")
 	ErrReqAlreadyProcessed = fmt.Errorf("request already processed")
-	ErrRequestTooBig       = fmt.Errorf("submitted request is too big")
-	ErrSubmitTimeout       = fmt.Errorf("timeout submitting to request pool")
+	// ErrRequestTooBig       = fmt.Errorf("submitted request is too big")
+	// ErrSubmitTimeout       = fmt.Errorf("timeout submitting to request pool")
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/

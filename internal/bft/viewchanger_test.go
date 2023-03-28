@@ -69,7 +69,7 @@ var (
 	}
 )
 
-func TestViewChangerBasic(t *testing.T) {
+func TestViewChangerBasic(*testing.T) {
 	// A simple test that starts a viewChanger and stops it
 
 	vc := &bft.ViewChanger{
@@ -675,13 +675,13 @@ func TestBadViewDataMessage(t *testing.T) {
 			checkpoint := types.Checkpoint{}
 			checkpoint.Set(lastDecision, lastDecisionSignatures)
 
-			selfId := 1
+			selfID := 1
 			if test.notLeader {
-				selfId = 2
+				selfID = 2
 			}
 
 			vc := &bft.ViewChanger{
-				SelfID:          uint64(selfId),
+				SelfID:          uint64(selfID),
 				N:               4,
 				NodesList:       []uint64{0, 1, 2, 3},
 				Logger:          log,

@@ -11,9 +11,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"

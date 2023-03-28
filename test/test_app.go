@@ -314,7 +314,7 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 
 type committedBatches struct {
 	lock     sync.RWMutex
-	latestMD smartbftprotos.ViewMetadata // TODO Not to put a pointer. It doesn't work.
+	latestMD *smartbftprotos.ViewMetadata // TODO Not to put a pointer. It doesn't work.
 	records  []*AppRecord
 }
 
@@ -327,13 +327,13 @@ func (cb *committedBatches) add(record *AppRecord) {
 		panic(err)
 	}
 
-	if cb.latestMD.ViewId > md.ViewId {
+	if cb.latestMD != nil && cb.latestMD.ViewId > md.ViewId {
 		return
 	}
-	if cb.latestMD.LatestSequence >= md.LatestSequence {
+	if cb.latestMD != nil && cb.latestMD.LatestSequence >= md.LatestSequence {
 		return
 	}
-	cb.latestMD = *md
+	cb.latestMD = md
 	cb.records = append(cb.records, record)
 }
 
