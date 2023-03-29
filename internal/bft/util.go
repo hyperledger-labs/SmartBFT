@@ -12,6 +12,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"math"
+	"strconv"
 	"sync"
 	"sync/atomic"
 
@@ -258,6 +259,7 @@ type ProposalMaker struct {
 	Sync               Synchronizer
 	Logger             api.Logger
 	MetricsProvider    *api.CustomerProvider
+	MetricsBlacklist   *MetricsBlacklist
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -293,6 +295,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		State:              pm.State,
 		InMsgQSize:         pm.InMsqQSize,
 		ViewSequences:      pm.ViewSequences,
+		MetricsBlacklist:   pm.MetricsBlacklist,
 	}
 
 	view.ViewSequences.Store(ViewSequence{
@@ -413,7 +416,7 @@ type blacklist struct {
 	currView           uint64
 	preparesFrom       map[uint64]*protos.PreparesFrom
 	logger             api.Logger
-	metricsProvider    *api.CustomerProvider
+	metricsBlacklist   *MetricsBlacklist
 	f                  int
 	decisionsPerLeader uint64
 }
@@ -435,7 +438,7 @@ func (bl blacklist) computeUpdate() []uint64 {
 			offset = 0
 		}
 
-		// Locate every leader of all views previous to this views.
+		// Locate every leader of all views previous to these views.
 		for viewPreviousToThisView := viewBeforeViewChanges; viewPreviousToThisView < bl.currView; viewPreviousToThisView++ {
 			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
 				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)
@@ -464,6 +467,25 @@ func (bl blacklist) computeUpdate() []uint64 {
 
 	if len(bl.prevMD.BlackList) != len(newBlacklist) {
 		bl.logger.Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
+	}
+
+	bl.metricsBlacklist.CountBlackList.Set(float64(len(newBlacklist)))
+
+Outer:
+	for n := range bl.nodes {
+		for i := range newBlacklist {
+			if newBlacklist[i] == bl.nodes[n] {
+				bl.metricsBlacklist.NodesInBlackList.With(
+					"channel", bl.metricsBlacklist.Label("channel"),
+					"id", strconv.FormatUint(bl.nodes[n], 10),
+				).Set(1)
+				continue Outer
+			}
+		}
+		bl.metricsBlacklist.NodesInBlackList.With(
+			"channel", bl.metricsBlacklist.Label("channel"),
+			"id", strconv.FormatUint(bl.nodes[n], 10),
+		).Set(0)
 	}
 
 	return newBlacklist

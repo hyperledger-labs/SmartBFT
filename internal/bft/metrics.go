@@ -67,3 +67,42 @@ func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
 		CountOfDeleteRequestPool:    p.NewCounter(countOfDeleteRequestPoolOpts).With("channel", ch),
 	}
 }
+
+var countBlackListOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "blacklist_count",
+	Help:         "Count of nodes in blacklist on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var nodesInBlackListOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "node_id_in_blacklist",
+	Help:         "Node ID in blacklist on this channel.",
+	LabelNames:   []string{"channel", "id"},
+	StatsdFormat: "%{#fqname}.%{channel}.%{id}",
+}
+
+type MetricsBlacklist struct {
+	CountBlackList   metrics.Gauge
+	NodesInBlackList metrics.Gauge
+
+	labels map[string]string
+}
+
+func NewMetricsBlacklist(p *metrics.CustomerProvider) *MetricsBlacklist {
+	ch := p.Labels["channel"]
+
+	return &MetricsBlacklist{
+		CountBlackList:   p.NewGauge(countBlackListOpts).With("channel", ch),
+		NodesInBlackList: p.NewGauge(nodesInBlackListOpts),
+		labels:           p.Labels,
+	}
+}
+
+func (m *MetricsBlacklist) Label(name string) string {
+	return m.labels[name]
+}

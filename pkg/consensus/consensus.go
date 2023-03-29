@@ -62,7 +62,8 @@ type Consensus struct {
 
 	consensusLock sync.RWMutex
 
-	reconfigChan chan types.Reconfig
+	reconfigChan     chan types.Reconfig
+	metricsBlacklist *algorithm.MetricsBlacklist
 
 	running uint64
 }
@@ -304,6 +305,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Decider:            c.controller,
 		Logger:             c.Logger,
 		MetricsProvider:    c.MetricsProvider,
+		MetricsBlacklist:   c.metricsBlacklist,
 		Signer:             c.Signer,
 		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
@@ -362,6 +364,7 @@ func sortNodes(nodes []uint64) []uint64 {
 }
 
 func (c *Consensus) createComponents() {
+	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:             c.Config.SelfID,
 		N:                  c.numberOfNodes,
@@ -382,6 +385,7 @@ func (c *Consensus) createComponents() {
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
+		MetricsBlacklist:  c.metricsBlacklist,
 	}
 
 	c.collector = &algorithm.StateCollector{

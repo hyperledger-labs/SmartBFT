@@ -93,17 +93,18 @@ type ViewChanger struct {
 	backOffFactor       uint64
 
 	// Runtime
-	Restore         chan struct{}
-	InMsqQSize      int
-	incMsgs         chan *incMsg
-	viewChangeMsgs  *voteSet
-	viewDataMsgs    *voteSet
-	nvs             *nextViews
-	realView        uint64
-	currView        uint64
-	nextView        uint64
-	startChangeChan chan *change
-	informChan      chan uint64
+	MetricsBlacklist *MetricsBlacklist
+	Restore          chan struct{}
+	InMsqQSize       int
+	incMsgs          chan *incMsg
+	viewChangeMsgs   *voteSet
+	viewDataMsgs     *voteSet
+	nvs              *nextViews
+	realView         uint64
+	currView         uint64
+	nextView         uint64
+	startChangeChan  chan *change
+	informChan       chan uint64
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -1229,6 +1230,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		InMsgQSize:         v.InMsqQSize,
 		ViewSequences:      v.ViewSequences,
 		Phase:              PREPARED,
+		MetricsBlacklist:   v.MetricsBlacklist,
 	}
 	v.inFlightView = inFlightView
 	v.inFlightView.inFlightProposal = &types.Proposal{

@@ -96,6 +96,7 @@ type View struct {
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
 
+	MetricsBlacklist   *MetricsBlacklist
 	blacklistSupported bool
 	abortChan          chan struct{}
 	stopOnce           sync.Once
@@ -668,7 +669,7 @@ func (v *View) verifyBlacklist(prevCommitSignatures []*protos.Signature, currVer
 		preparesFrom:       prepareAcknowledgements,
 		f:                  f,
 		logger:             v.Logger,
-		metricsProvider:    v.MetricsProvider,
+		metricsBlacklist:   v.MetricsBlacklist,
 		nodes:              v.Comm.Nodes(),
 		currView:           v.Number,
 	}
@@ -1011,7 +1012,7 @@ func (v *View) updateBlacklistMetadata(metadata *protos.ViewMetadata, prevSigs [
 		f:                  f,
 		n:                  v.N,
 		logger:             v.Logger,
-		metricsProvider:    v.MetricsProvider,
+		metricsBlacklist:   v.MetricsBlacklist,
 		preparesFrom:       preparesFrom,
 		decisionsPerLeader: v.DecisionsPerLeader,
 	}
