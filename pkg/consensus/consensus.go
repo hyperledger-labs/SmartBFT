@@ -64,6 +64,7 @@ type Consensus struct {
 
 	reconfigChan     chan types.Reconfig
 	metricsBlacklist *algorithm.MetricsBlacklist
+	metricsReconfig  *algorithm.MetricsReconfig
 
 	running uint64
 }
@@ -112,6 +113,8 @@ func (c *Consensus) Start() error {
 	if c.MetricsProvider == nil {
 		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
 	}
+	c.metricsReconfig = algorithm.NewMetricsReconfig(c.MetricsProvider)
+	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}
@@ -244,6 +247,8 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.Pool.RestartTimers()
 
+	c.metricsReconfig.CountConsensusReconfig.Add(1)
+
 	c.Logger.Debugf("Reconfig is done")
 }
 
@@ -364,7 +369,6 @@ func sortNodes(nodes []uint64) []uint64 {
 }
 
 func (c *Consensus) createComponents() {
-	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 	c.viewChanger = &algorithm.ViewChanger{
 		SelfID:             c.Config.SelfID,
 		N:                  c.numberOfNodes,

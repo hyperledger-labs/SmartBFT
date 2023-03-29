@@ -106,3 +106,24 @@ func NewMetricsBlacklist(p *metrics.CustomerProvider) *MetricsBlacklist {
 func (m *MetricsBlacklist) Label(name string) string {
 	return m.labels[name]
 }
+
+var consensusReconfigOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "consensus_reconfig",
+	Help:         "count consensus reconfig on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+type MetricsReconfig struct {
+	CountConsensusReconfig metrics.Counter
+}
+
+func NewMetricsReconfig(p *metrics.CustomerProvider) *MetricsReconfig {
+	ch := p.Labels["channel"]
+
+	return &MetricsReconfig{
+		CountConsensusReconfig: p.NewCounter(consensusReconfigOpts).With("channel", ch),
+	}
+}
