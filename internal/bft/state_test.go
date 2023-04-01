@@ -184,6 +184,7 @@ func TestStateRestore(t *testing.T) {
 			view := &bft.View{
 				Number:           300,
 				ProposalSequence: testCase.proposalSeqViewInitializedWith,
+				MetricsView:      bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 			}
 
 			err = state.Restore(view)

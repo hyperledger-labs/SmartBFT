@@ -680,7 +680,6 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		FailureDetector:    c.FailureDetector,
 		Sync:               c,
 		Logger:             c.Logger,
-		MetricsProvider:    c.MetricsProvider,
 		Comm:               c,
 		Verifier:           c.Verifier,
 		Signer:             c.Signer,
@@ -690,6 +689,8 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		ViewSequences:      vs,
 		State:              &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:         int(c.N * 10),
+		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsBlacklist:   bft.NewMetricsBlacklist(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 }
 

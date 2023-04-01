@@ -127,3 +127,79 @@ func NewMetricsReconfig(p *metrics.CustomerProvider) *MetricsReconfig {
 		CountConsensusReconfig: p.NewCounter(consensusReconfigOpts).With("channel", ch),
 	}
 }
+
+var viewNumberOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_number",
+	Help:         "number of view on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var leaderIDOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_leader_id",
+	Help:         "leader id on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var proposalSequenceOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_proposal_sequence",
+	Help:         "proposal sequence view on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var decisionsInViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_decisions",
+	Help:         "decisions in view on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var phaseOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_phase",
+	Help:         "phase in view on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var countTxsInBatchOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_count_txs_in_batch",
+	Help:         "count txs in batch on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+type MetricsView struct {
+	ViewNumber       metrics.Gauge
+	LeaderID         metrics.Gauge
+	ProposalSequence metrics.Gauge
+	DecisionsInView  metrics.Gauge
+	Phase            metrics.Gauge
+	CountTxsInBatch  metrics.Gauge
+}
+
+func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
+	ch := p.Labels["channel"]
+
+	return &MetricsView{
+		ViewNumber:       p.NewGauge(viewNumberOpts).With("channel", ch),
+		LeaderID:         p.NewGauge(leaderIDOpts).With("channel", ch),
+		ProposalSequence: p.NewGauge(proposalSequenceOpts).With("channel", ch),
+		DecisionsInView:  p.NewGauge(decisionsInViewOpts).With("channel", ch),
+		Phase:            p.NewGauge(phaseOpts).With("channel", ch),
+		CountTxsInBatch:  p.NewGauge(countTxsInBatchOpts).With("channel", ch),
+	}
+}

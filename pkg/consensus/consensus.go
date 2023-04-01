@@ -65,6 +65,7 @@ type Consensus struct {
 	reconfigChan     chan types.Reconfig
 	metricsBlacklist *algorithm.MetricsBlacklist
 	metricsReconfig  *algorithm.MetricsReconfig
+	metricsView      *algorithm.MetricsView
 
 	running uint64
 }
@@ -115,6 +116,7 @@ func (c *Consensus) Start() error {
 	}
 	c.metricsReconfig = algorithm.NewMetricsReconfig(c.MetricsProvider)
 	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
+	c.metricsView = algorithm.NewMetricsView(c.MetricsProvider)
 
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}
@@ -309,8 +311,8 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Comm:               c.controller,
 		Decider:            c.controller,
 		Logger:             c.Logger,
-		MetricsProvider:    c.MetricsProvider,
 		MetricsBlacklist:   c.metricsBlacklist,
+		MetricsView:        c.metricsView,
 		Signer:             c.Signer,
 		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
@@ -390,6 +392,7 @@ func (c *Consensus) createComponents() {
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
 		MetricsBlacklist:  c.metricsBlacklist,
+		MetricsView:       c.metricsView,
 	}
 
 	c.collector = &algorithm.StateCollector{

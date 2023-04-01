@@ -63,7 +63,6 @@ type View struct {
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
 	Logger             api.Logger
-	MetricsProvider    *api.CustomerProvider
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -97,6 +96,7 @@ type View struct {
 	nextCommits    *voteSet
 
 	MetricsBlacklist   *MetricsBlacklist
+	MetricsView        *MetricsView
 	blacklistSupported bool
 	abortChan          chan struct{}
 	stopOnce           sync.Once
@@ -276,6 +276,8 @@ func (v *View) doPhase() {
 	default:
 		v.Logger.Panicf("Unknown phase in view : %v", v)
 	}
+
+	v.MetricsView.Phase.Set(float64(v.Phase))
 }
 
 func (v *View) processPrePrepare(pp *protos.PrePrepare, m *protos.Message, msgForNextProposal bool, sender uint64) {
@@ -362,6 +364,8 @@ func (v *View) processProposal() Phase {
 		return ABORT
 	}
 
+	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
+
 	seq := v.ProposalSequence
 
 	prepareMessage := v.createPrepare(seq, proposal)
@@ -376,7 +380,7 @@ func (v *View) processProposal() Phase {
 			},
 		},
 	}
-	if err := v.State.Save(savedMsg); err != nil {
+	if err = v.State.Save(savedMsg); err != nil {
 		v.Logger.Panicf("Failed to save message to state, error: %v", err)
 	}
 	v.lastBroadcastSent = prepareMessage
@@ -472,7 +476,7 @@ func (v *View) processPrepares() Phase {
 
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
-	if err := v.State.Save(preparedProof); err != nil {
+	if err = v.State.Save(preparedProof); err != nil {
 		v.Logger.Panicf("Failed to save message to state, error: %v", err)
 	}
 	v.currCommitSent = proto.Clone(commitMsg).(*protos.Message)
@@ -527,7 +531,7 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 
 	// Verify proposal's metadata is valid.
 	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+	if err = proto.Unmarshal(proposal.Metadata, md); err != nil {
 		return nil, err
 	}
 
@@ -557,7 +561,7 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 		return nil, err
 	}
 
-	if err := v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList, prepareAcknowledgements); err != nil {
+	if err = v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList, prepareAcknowledgements); err != nil {
 		return nil, err
 	}
 
@@ -604,7 +608,7 @@ func (v *View) verifyPrevCommitSignatures(prevCommitSignatures []*protos.Signatu
 			return nil, errors.Errorf("failed verifying consenter signature of %d: %v", sig.Signer, err)
 		}
 		prpf := &protos.PreparesFrom{}
-		if err := proto.Unmarshal(aux, prpf); err != nil {
+		if err = proto.Unmarshal(aux, prpf); err != nil {
 			return nil, errors.Errorf("failed unmarshaling auxiliary input from %d: %v", sig.Signer, err)
 		}
 		prepareAcknowledgements[sig.Signer] = prpf
@@ -831,6 +835,9 @@ func (v *View) startNextSeq() {
 	v.DecisionsInView++
 
 	nextSeq := v.ProposalSequence
+
+	v.MetricsView.ProposalSequence.Set(float64(v.ProposalSequence))
+	v.MetricsView.DecisionsInView.Set(float64(v.DecisionsInView))
 
 	v.Logger.Infof("Sequence: %d-->%d", prevSeq, nextSeq)
 
