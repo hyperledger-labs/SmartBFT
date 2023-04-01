@@ -172,12 +172,10 @@ func TestStateRestore(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			state := &bft.PersistedState{
 				Entries:          testCase.WALContent,
 				Logger:           log,
-				MetricsProvider:  met,
 				InFlightProposal: &bft.InFlightData{},
 			}
 

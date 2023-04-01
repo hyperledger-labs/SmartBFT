@@ -900,7 +900,6 @@ func TestViewPersisted(t *testing.T) {
 			persistedState := &bft.PersistedState{
 				InFlightProposal: &bft.InFlightData{},
 				Logger:           log,
-				MetricsProvider:  met,
 				WAL:              writeAheadLog,
 			}
 			var persistedToLog sync.WaitGroup

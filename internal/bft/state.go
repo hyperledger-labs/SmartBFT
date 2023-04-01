@@ -32,7 +32,6 @@ type PersistedState struct {
 	InFlightProposal *InFlightData
 	Entries          [][]byte
 	Logger           api.Logger
-	MetricsProvider  *api.CustomerProvider
 	WAL              api.WriteAheadLog
 }
 

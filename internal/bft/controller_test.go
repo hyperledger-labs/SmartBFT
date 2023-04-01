@@ -197,11 +197,10 @@ func TestLeaderPropose(t *testing.T) {
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
-		SelfID:          11,
-		N:               4,
-		Logger:          log,
-		MetricsProvider: met,
-		CollectTimeout:  100 * time.Millisecond,
+		SelfID:         11,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
 
@@ -339,11 +338,10 @@ func TestViewChanged(t *testing.T) {
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	collector := bft.StateCollector{
-		SelfID:          1,
-		N:               4,
-		Logger:          log,
-		MetricsProvider: met,
-		CollectTimeout:  100 * time.Millisecond,
+		SelfID:         1,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
 
@@ -448,11 +446,10 @@ func TestSyncPrevView(t *testing.T) {
 	assert.NoError(t, err)
 
 	collector := bft.StateCollector{
-		SelfID:          0,
-		N:               4,
-		Logger:          log,
-		MetricsProvider: met,
-		CollectTimeout:  100 * time.Millisecond,
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
 	defer collector.Stop()
@@ -622,11 +619,10 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 			collector := bft.StateCollector{
-				SelfID:          0,
-				N:               4,
-				Logger:          log,
-				MetricsProvider: met,
-				CollectTimeout:  100 * time.Millisecond,
+				SelfID:         0,
+				N:              4,
+				Logger:         log,
+				CollectTimeout: 100 * time.Millisecond,
 			}
 			collector.Start()
 			defer collector.Stop()
@@ -793,11 +789,10 @@ func TestSyncInform(t *testing.T) {
 	controllerMock.On("AbortView", mock.Anything)
 
 	collector := bft.StateCollector{
-		SelfID:          0,
-		N:               4,
-		Logger:          log,
-		MetricsProvider: met,
-		CollectTimeout:  100 * time.Millisecond,
+		SelfID:         0,
+		N:              4,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
 	}
 	collector.Start()
 

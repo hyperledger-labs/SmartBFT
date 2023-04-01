@@ -133,7 +133,6 @@ func (c *Consensus) Start() error {
 		InFlightProposal: c.inFlight,
 		Entries:          c.WALInitialContent,
 		Logger:           c.Logger,
-		MetricsProvider:  c.MetricsProvider,
 		WAL:              c.WAL,
 	}
 
@@ -396,11 +395,10 @@ func (c *Consensus) createComponents() {
 	}
 
 	c.collector = &algorithm.StateCollector{
-		SelfID:          c.Config.SelfID,
-		N:               c.numberOfNodes,
-		Logger:          c.Logger,
-		MetricsProvider: c.MetricsProvider,
-		CollectTimeout:  c.Config.CollectTimeout,
+		SelfID:         c.Config.SelfID,
+		N:              c.numberOfNodes,
+		Logger:         c.Logger,
+		CollectTimeout: c.Config.CollectTimeout,
 	}
 
 	c.controller = &algorithm.Controller{
