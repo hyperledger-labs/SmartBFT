@@ -11,8 +11,7 @@ import (
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 )
 
-func TestNetwork(t *testing.T) {
-
+func TestNetwork(*testing.T) {
 	network := make(Network)
 	node1 := make(mockHandler)
 	node2 := make(mockHandler)
@@ -44,9 +43,9 @@ type mockHandler chan msgFrom
 func (mh mockHandler) HandleMessage(sender uint64, m *smartbftprotos.Message) {
 	mh <- msgFrom{from: int(sender), message: m}
 }
+
 func (mh mockHandler) HandleRequest(sender uint64, req []byte) {
 	mh <- msgFrom{from: int(sender), message: &FwdMessage{Payload: req}}
 }
-func (mh mockHandler) Stop() {
 
-}
+func (mh mockHandler) Stop() {}

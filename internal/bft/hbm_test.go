@@ -48,8 +48,7 @@ func (c commMock) BroadcastConsensus(m *smartbftprotos.Message) {
 	c.toWG.Done()
 }
 
-type heartbeatEventHandler struct {
-}
+type heartbeatEventHandler struct{}
 
 func (h heartbeatEventHandler) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	panic("implement me")

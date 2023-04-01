@@ -8,7 +8,6 @@ package wal
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -26,7 +25,7 @@ func TestWALUtil(t *testing.T) {
 	logger := basicLog.Sugar()
 
 	t.Run("read wal names", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
@@ -79,7 +78,7 @@ func TestWALUtil(t *testing.T) {
 	})
 
 	t.Run("check wal names", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
@@ -137,7 +136,7 @@ func TestWALUtil(t *testing.T) {
 	})
 
 	t.Run("scan-verify", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
@@ -149,7 +148,7 @@ func TestWALUtil(t *testing.T) {
 	})
 
 	t.Run("scan-repair-short", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
@@ -187,7 +186,7 @@ func TestWALUtil(t *testing.T) {
 	})
 
 	t.Run("scan-repair-tail", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
@@ -221,7 +220,7 @@ func TestWALUtil(t *testing.T) {
 	})
 
 	t.Run("scan-repair-bad-anchor", func(t *testing.T) {
-		testDir, err := ioutil.TempDir("", "unittest")
+		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
