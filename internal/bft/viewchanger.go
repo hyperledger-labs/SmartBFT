@@ -415,11 +415,11 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 
 func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
 	lastDecision, lastDecisionSignatures := v.Checkpoint.Get()
-	inFlight := v.getInFlight(&lastDecision)
+	inFlight := v.getInFlight(lastDecision)
 	prepared := v.InFlight.IsInFlightPrepared()
 	vd := &protos.ViewData{
 		NextView:               v.currView,
-		LastDecision:           &lastDecision,
+		LastDecision:           lastDecision,
 		LastDecisionSignatures: lastDecisionSignatures,
 		InFlightProposal:       inFlight,
 		InFlightPrepared:       prepared,
@@ -459,6 +459,7 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 	}
 	if lastDecision == nil {
 		v.Logger.Panicf("￿The given last decision is nil", v.SelfID)
+		return nil
 	}
 	if lastDecision.Metadata == nil {
 		return proposal // this is the first proposal after genesis
@@ -640,12 +641,12 @@ func (v *ViewChanger) extractCurrentSequence() (uint64, *protos.Proposal) {
 	myMetadata := &protos.ViewMetadata{}
 	myLastDesicion, _ := v.Checkpoint.Get()
 	if myLastDesicion.Metadata == nil {
-		return 0, &myLastDesicion
+		return 0, myLastDesicion
 	}
 	if err := proto.Unmarshal(myLastDesicion.Metadata, myMetadata); err != nil {
 		v.Logger.Panicf("Node %d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err)
 	}
-	return myMetadata.LatestSequence, &myLastDesicion
+	return myMetadata.LatestSequence, myLastDesicion
 }
 
 // ValidateLastDecision validates the given decision, and returns its sequence when valid
@@ -1174,6 +1175,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	myLastDecision, _ := v.Checkpoint.Get()
 	if proposal == nil {
 		v.Logger.Panicf("The in flight proposal is nil")
+		return
 	}
 	proposalMD := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, proposalMD); err != nil {
@@ -1188,7 +1190,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		if lastDecisionMD.LatestSequence == proposalMD.LatestSequence {
 			v.Logger.Debugf("Node %d already decided on sequence %d and so it will not commit the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
 			v.Logger.Debugf("Node %d is comparing its last decision with the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
-			if !proto.Equal(&myLastDecision, proposal) {
+			if !proto.Equal(myLastDecision, proposal) {
 				v.Logger.Warnf("Node %d compared its last decision with the in flight proposal, which has the same sequence, but they are not equal", v.SelfID)
 				return false
 			}

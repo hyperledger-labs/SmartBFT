@@ -79,12 +79,11 @@ func (a *App) UnMute() {
 
 // Submit submits the client request
 func (a *App) Submit(req Request) {
-	a.Consensus.SubmitRequest(req.ToBytes())
+	_ = a.Consensus.SubmitRequest(req.ToBytes())
 }
 
 // Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.SyncResponse {
-
 	a.Node.probabilityLock.RLock()
 	syncDelay := a.Node.syncDelay
 	a.Node.probabilityLock.RUnlock()
@@ -96,10 +95,9 @@ func (a *App) Sync() types.SyncResponse {
 			a.Node.syncDelay = nil
 			a.Node.probabilityLock.Unlock()
 		}()
-
 	}
 
-	records := a.Node.cb.readAll(*a.latestMD)
+	records := a.Node.cb.readAll(a.latestMD)
 	reconfigSync := types.ReconfigSync{InReplicatedDecisions: false}
 	for _, record := range records {
 		proposal := types.Proposal{
@@ -313,7 +311,7 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 
 type committedBatches struct {
 	lock     sync.RWMutex
-	latestMD smartbftprotos.ViewMetadata
+	latestMD *smartbftprotos.ViewMetadata
 	records  []*AppRecord
 }
 
@@ -326,17 +324,17 @@ func (cb *committedBatches) add(record *AppRecord) {
 		panic(err)
 	}
 
-	if cb.latestMD.ViewId > md.ViewId {
+	if cb.latestMD != nil && cb.latestMD.ViewId > md.ViewId {
 		return
 	}
-	if cb.latestMD.LatestSequence >= md.LatestSequence {
+	if cb.latestMD != nil && cb.latestMD.LatestSequence >= md.LatestSequence {
 		return
 	}
-	cb.latestMD = *md
+	cb.latestMD = md
 	cb.records = append(cb.records, record)
 }
 
-func (cb *committedBatches) readAll(from smartbftprotos.ViewMetadata) []*AppRecord {
+func (cb *committedBatches) readAll(from *smartbftprotos.ViewMetadata) []*AppRecord {
 	cb.lock.RLock()
 	defer cb.lock.RUnlock()
 
