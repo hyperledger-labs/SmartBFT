@@ -201,7 +201,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		RequestInspector:   node,
 		Synchronizer:       node,
 		WAL:                writeAheadLog,
-		Metadata: smartbftprotos.ViewMetadata{
+		Metadata: &smartbftprotos.ViewMetadata{
 			LatestSequence: 0,
 			ViewId:         0,
 		},
