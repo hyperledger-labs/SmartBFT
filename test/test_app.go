@@ -444,7 +444,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			Scheduler:          app.clock.C,
 			Logger:             app.logger,
 			WAL:                writeAheadLog,
-			Metadata:           *app.latestMD,
+			Metadata:           app.latestMD,
 			Verifier:           app,
 			Signer:             app,
 			MembershipNotifier: app,
