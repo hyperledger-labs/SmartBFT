@@ -30,7 +30,6 @@ func TestControllerBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	app := &mocks.ApplicationMock{}
 	app.On("Deliver", mock.Anything, mock.Anything)
 	batcher := &mocks.Batcher{}
@@ -49,19 +48,18 @@ func TestControllerBasic(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
-		Checkpoint:      &types.Checkpoint{},
-		Batcher:         batcher,
-		RequestPool:     pool,
-		LeaderMonitor:   leaderMon,
-		ID:              1, // not the leader
-		N:               4,
-		NodesList:       []uint64{1, 2, 3, 4},
-		Logger:          log,
-		MetricsProvider: met,
-		Application:     app,
-		Comm:            comm,
-		Verifier:        verifier,
-		StartedWG:       &startedWG,
+		Checkpoint:    &types.Checkpoint{},
+		Batcher:       batcher,
+		RequestPool:   pool,
+		LeaderMonitor: leaderMon,
+		ID:            1, // not the leader
+		N:             4,
+		NodesList:     []uint64{1, 2, 3, 4},
+		Logger:        log,
+		Application:   app,
+		Comm:          comm,
+		Verifier:      verifier,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -81,7 +79,6 @@ func TestControllerLeaderBasic(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
 	batcher.On("Closed").Return(false)
@@ -106,19 +103,18 @@ func TestControllerLeaderBasic(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
-		InFlight:        &bft.InFlightData{},
-		Checkpoint:      &types.Checkpoint{},
-		RequestPool:     pool,
-		LeaderMonitor:   leaderMon,
-		ID:              2, // the leader
-		N:               4,
-		NodesList:       []uint64{1, 2, 3, 4},
-		Logger:          log,
-		MetricsProvider: met,
-		Batcher:         batcher,
-		Comm:            commMock,
-		Verifier:        verifier,
-		StartedWG:       &startedWG,
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &types.Checkpoint{},
+		RequestPool:   pool,
+		LeaderMonitor: leaderMon,
+		ID:            2, // the leader
+		N:             4,
+		NodesList:     []uint64{1, 2, 3, 4},
+		Logger:        log,
+		Batcher:       batcher,
+		Comm:          commMock,
+		Verifier:      verifier,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -208,26 +204,25 @@ func TestLeaderPropose(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
-		InFlight:        &bft.InFlightData{},
-		RequestPool:     reqPool,
-		LeaderMonitor:   leaderMon,
-		WAL:             wal,
-		ID:              17, // the leader
-		N:               4,
-		NodesList:       []uint64{11, 17, 23, 37},
-		Logger:          log,
-		MetricsProvider: met,
-		Batcher:         batcher,
-		Verifier:        verifier,
-		Assembler:       assembler,
-		Comm:            comm,
-		Signer:          signer,
-		Application:     app,
-		Checkpoint:      &types.Checkpoint{},
-		ViewChanger:     &bft.ViewChanger{},
-		Synchronizer:    synchronizer,
-		Collector:       &collector,
-		StartedWG:       &startedWG,
+		InFlight:      &bft.InFlightData{},
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		WAL:           wal,
+		ID:            17, // the leader
+		N:             4,
+		NodesList:     []uint64{11, 17, 23, 37},
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		Signer:        signer,
+		Application:   app,
+		Checkpoint:    &types.Checkpoint{},
+		ViewChanger:   &bft.ViewChanger{},
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -349,24 +344,23 @@ func TestViewChanged(t *testing.T) {
 	startedWG.Add(1)
 
 	controller := &bft.Controller{
-		InFlight:        &bft.InFlightData{},
-		Checkpoint:      &types.Checkpoint{},
-		Signer:          signer,
-		WAL:             wal,
-		ID:              3, // the next leader
-		N:               4,
-		NodesList:       []uint64{1, 2, 3, 4},
-		Logger:          log,
-		MetricsProvider: met,
-		Batcher:         batcher,
-		Verifier:        verifier,
-		Assembler:       assembler,
-		Comm:            comm,
-		RequestPool:     reqPool,
-		LeaderMonitor:   leaderMon,
-		Synchronizer:    synchronizer,
-		Collector:       &collector,
-		StartedWG:       &startedWG,
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &types.Checkpoint{},
+		Signer:        signer,
+		WAL:           wal,
+		ID:            3, // the next leader
+		N:             4,
+		NodesList:     []uint64{1, 2, 3, 4},
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		Synchronizer:  synchronizer,
+		Collector:     &collector,
+		StartedWG:     &startedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -464,7 +458,6 @@ func TestSyncPrevView(t *testing.T) {
 		N:               4,
 		NodesList:       []uint64{1, 2, 3, 4},
 		Logger:          log,
-		MetricsProvider: met,
 		Application:     app,
 		Comm:            comm,
 		ViewChanger:     &bft.ViewChanger{},
@@ -583,7 +576,6 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			assert.NoError(t, err)
 
 			log := basicLog.Sugar()
-			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
@@ -631,21 +623,20 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 			startedWG.Add(1)
 
 			controller := &bft.Controller{
-				InFlight:        &bft.InFlightData{},
-				Checkpoint:      &types.Checkpoint{},
-				RequestPool:     pool,
-				LeaderMonitor:   leaderMon,
-				ID:              1,
-				N:               4,
-				NodesList:       []uint64{0, 1, 2, 3},
-				Logger:          log,
-				MetricsProvider: met,
-				Batcher:         batcher,
-				Comm:            commMock,
-				Verifier:        verifier,
-				Synchronizer:    synchronizer,
-				Collector:       &collector,
-				StartedWG:       &startedWG,
+				InFlight:      &bft.InFlightData{},
+				Checkpoint:    &types.Checkpoint{},
+				RequestPool:   pool,
+				LeaderMonitor: leaderMon,
+				ID:            1,
+				N:             4,
+				NodesList:     []uint64{0, 1, 2, 3},
+				Logger:        log,
+				Batcher:       batcher,
+				Comm:          commMock,
+				Verifier:      verifier,
+				Synchronizer:  synchronizer,
+				Collector:     &collector,
+				StartedWG:     &startedWG,
 			}
 
 			configureProposerBuilder(controller)
@@ -813,25 +804,24 @@ func TestSyncInform(t *testing.T) {
 	vc.ControllerStartedWG.Add(1)
 
 	controller := &bft.Controller{
-		InFlight:        &bft.InFlightData{},
-		Signer:          signer,
-		WAL:             wal,
-		ID:              2,
-		N:               4,
-		NodesList:       []uint64{0, 1, 2, 3},
-		Logger:          log,
-		MetricsProvider: met,
-		Batcher:         batcher,
-		Verifier:        verifier,
-		Assembler:       assembler,
-		Comm:            comm,
-		RequestPool:     reqPool,
-		LeaderMonitor:   leaderMon,
-		Synchronizer:    synchronizer,
-		ViewChanger:     vc,
-		Checkpoint:      &types.Checkpoint{},
-		Collector:       &collector,
-		StartedWG:       &vc.ControllerStartedWG,
+		InFlight:      &bft.InFlightData{},
+		Signer:        signer,
+		WAL:           wal,
+		ID:            2,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		Synchronizer:  synchronizer,
+		ViewChanger:   vc,
+		Checkpoint:    &types.Checkpoint{},
+		Collector:     &collector,
+		StartedWG:     &vc.ControllerStartedWG,
 	}
 	configureProposerBuilder(controller)
 
@@ -939,7 +929,6 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 		N:                  4,
 		NodesList:          []uint64{1, 2, 3, 4},
 		Logger:             log,
-		MetricsProvider:    met,
 		Batcher:            batcher,
 		Verifier:           verifier,
 		Assembler:          assembler,
@@ -1123,7 +1112,6 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 		N:                  4,
 		NodesList:          []uint64{1, 2, 3, 4},
 		Logger:             log,
-		MetricsProvider:    met,
 		Batcher:            batcher,
 		Verifier:           verifier,
 		Assembler:          assembler,

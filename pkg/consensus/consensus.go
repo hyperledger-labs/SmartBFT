@@ -411,7 +411,6 @@ func (c *Consensus) createComponents() {
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		Verifier:           c.Verifier,
 		Logger:             c.Logger,
-		MetricsProvider:    c.MetricsProvider,
 		Assembler:          c.Assembler,
 		Application:        c,
 		FailureDetector:    c,
@@ -434,7 +433,7 @@ func (c *Consensus) createComponents() {
 
 func (c *Consensus) continueCreateComponents() {
 	batchBuilder := algorithm.NewBatchBuilder(c.Pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.MetricsProvider, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
 	c.controller.RequestPool = c.Pool
 	c.controller.Batcher = batchBuilder
 	c.controller.LeaderMonitor = leaderMonitor
