@@ -801,13 +801,13 @@ func TestSyncInform(t *testing.T) {
 		N:                   4,
 		NodesList:           []uint64{0, 1, 2, 3},
 		Logger:              log,
-		MetricsProvider:     met,
 		Comm:                commWithChan,
 		RequestsTimer:       reqTimer,
 		Ticker:              make(chan time.Time),
 		Controller:          controllerMock,
 		InMsqQSize:          100,
 		ControllerStartedWG: sync.WaitGroup{},
+		MetricsViewChange:   bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 
 	vc.ControllerStartedWG.Add(1)

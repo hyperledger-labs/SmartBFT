@@ -378,7 +378,6 @@ func (c *Consensus) createComponents() {
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		SpeedUpViewChange:  c.Config.SpeedUpViewChange,
 		Logger:             c.Logger,
-		MetricsProvider:    c.MetricsProvider,
 		Signer:             c.Signer,
 		Verifier:           c.Verifier,
 		Checkpoint:         c.checkpoint,
@@ -390,6 +389,7 @@ func (c *Consensus) createComponents() {
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
+		MetricsViewChange: algorithm.NewMetricsViewChange(c.MetricsProvider),
 		MetricsBlacklist:  c.metricsBlacklist,
 		MetricsView:       c.metricsView,
 	}

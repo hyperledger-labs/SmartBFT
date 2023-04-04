@@ -203,3 +203,46 @@ func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
 		CountTxsInBatch:  p.NewGauge(countTxsInBatchOpts).With("channel", ch),
 	}
 }
+
+var currentViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_current_view",
+	Help:         "current view of viewchange on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var nextViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_next_view",
+	Help:         "next view of viewchange on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var realViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_real_view",
+	Help:         "real view of viewchange on this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+type MetricsViewChange struct {
+	CurrentView metrics.Gauge
+	NextView    metrics.Gauge
+	RealView    metrics.Gauge
+}
+
+func NewMetricsViewChange(p *metrics.CustomerProvider) *MetricsViewChange {
+	ch := p.Labels["channel"]
+
+	return &MetricsViewChange{
+		CurrentView: p.NewGauge(currentViewOpts).With("channel", ch),
+		NextView:    p.NewGauge(nextViewOpts).With("channel", ch),
+		RealView:    p.NewGauge(realViewOpts).With("channel", ch),
+	}
+}
