@@ -73,11 +73,10 @@ func TestViewChangerBasic(*testing.T) {
 	// A simple test that starts a viewChanger and stops it
 
 	vc := &bft.ViewChanger{
-		N:                 4,
-		NodesList:         []uint64{0, 1, 2, 3},
-		Ticker:            make(chan time.Time),
-		InMsqQSize:        100,
-		MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		N:          4,
+		NodesList:  []uint64{0, 1, 2, 3},
+		Ticker:     make(chan time.Time),
+		InMsqQSize: 100,
 	}
 
 	vc.Start(0)
@@ -103,15 +102,14 @@ func TestStartViewChange(t *testing.T) {
 	controller.On("AbortView", mock.Anything)
 
 	vc := &bft.ViewChanger{
-		N:                 4,
-		NodesList:         []uint64{0, 1, 2, 3},
-		Comm:              comm,
-		RequestsTimer:     reqTimer,
-		Ticker:            make(chan time.Time),
-		Logger:            log,
-		Controller:        controller,
-		InMsqQSize:        100,
-		MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Comm:          comm,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		Logger:        log,
+		Controller:    controller,
+		InMsqQSize:    100,
 	}
 
 	vc.Start(0)
@@ -181,7 +179,6 @@ func TestViewChangeProcess(t *testing.T) {
 				InMsqQSize:        100,
 				State:             state,
 				SpeedUpViewChange: testCase.speedup,
-				MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
 			}
 
 			vc.Start(0)
@@ -273,21 +270,20 @@ func TestViewDataProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:            1,
-		N:                 4,
-		NodesList:         []uint64{0, 1, 2, 3},
-		Comm:              comm,
-		Logger:            log,
-		Verifier:          verifier,
-		Controller:        controller,
-		Ticker:            make(chan time.Time),
-		Checkpoint:        &checkpoint,
-		InFlight:          &bft.InFlightData{},
-		Signer:            signer,
-		RequestsTimer:     reqTimer,
-		InMsqQSize:        100,
-		State:             state,
-		MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		SelfID:        1,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		Checkpoint:    &checkpoint,
+		InFlight:      &bft.InFlightData{},
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(1)
@@ -349,18 +345,17 @@ func TestNewViewProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:            0,
-		N:                 4,
-		NodesList:         []uint64{0, 1, 2, 3},
-		Logger:            log,
-		Verifier:          verifier,
-		Controller:        controller,
-		Ticker:            make(chan time.Time),
-		Checkpoint:        &checkpoint,
-		RequestsTimer:     reqTimer,
-		InMsqQSize:        100,
-		State:             state,
-		MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		SelfID:        0,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		Checkpoint:    &checkpoint,
+		RequestsTimer: reqTimer,
+		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(2)
@@ -440,21 +435,20 @@ func TestNormalProcess(t *testing.T) {
 	state.On("Save", mock.Anything).Return(nil)
 
 	vc := &bft.ViewChanger{
-		SelfID:            1,
-		N:                 4,
-		NodesList:         []uint64{0, 1, 2, 3},
-		Comm:              comm,
-		Logger:            log,
-		Verifier:          verifier,
-		Controller:        controller,
-		Signer:            signer,
-		RequestsTimer:     reqTimer,
-		Ticker:            make(chan time.Time),
-		InFlight:          &bft.InFlightData{},
-		Checkpoint:        &checkpoint,
-		InMsqQSize:        100,
-		State:             state,
-		MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		SelfID:        1,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		Ticker:        make(chan time.Time),
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &checkpoint,
+		InMsqQSize:    100,
+		State:         state,
 	}
 
 	vc.Start(0)
@@ -676,17 +670,16 @@ func TestBadViewDataMessage(t *testing.T) {
 			}
 
 			vc := &bft.ViewChanger{
-				SelfID:            uint64(selfID),
-				N:                 4,
-				NodesList:         []uint64{0, 1, 2, 3},
-				Logger:            log,
-				Verifier:          verifier,
-				Checkpoint:        &checkpoint,
-				Application:       app,
-				Pruner:            pruner,
-				Ticker:            make(chan time.Time),
-				InMsqQSize:        100,
-				MetricsViewChange: bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+				SelfID:      uint64(selfID),
+				N:           4,
+				NodesList:   []uint64{0, 1, 2, 3},
+				Logger:      log,
+				Verifier:    verifier,
+				Checkpoint:  &checkpoint,
+				Application: app,
+				Pruner:      pruner,
+				Ticker:      make(chan time.Time),
+				InMsqQSize:  100,
 			}
 
 			vc.Start(1)

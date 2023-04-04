@@ -231,11 +231,11 @@ func (n *Node) Start() {
 				case <-n.stopChan:
 					return
 				case msg := <-in:
-					switch msg := msg.(type) {
+					switch m := msg.(type) {
 					case *smartbftprotos.Message:
-						n.consensus.HandleMessage(id, msg)
+						n.consensus.HandleMessage(id, m)
 					case *FwdMessage:
-						_ = n.consensus.SubmitRequest(msg.Payload)
+						_ = n.consensus.SubmitRequest(m.Payload)
 					}
 				}
 			}

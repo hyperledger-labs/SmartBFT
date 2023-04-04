@@ -258,7 +258,7 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	// Ensure checkpoint was updated
-	expected := protos.Proposal{
+	expected := &protos.Proposal{
 		Header:               proposal.Header,
 		Payload:              proposal.Payload,
 		Metadata:             proposal.Metadata,

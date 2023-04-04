@@ -48,5 +48,4 @@ func (mh mockHandler) HandleRequest(sender uint64, req []byte) {
 	mh <- msgFrom{from: int(sender), message: &FwdMessage{Payload: req}}
 }
 
-func (mh mockHandler) Stop() {
-}
+func (mh mockHandler) Stop() {}

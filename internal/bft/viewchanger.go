@@ -12,9 +12,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
-
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -1193,7 +1192,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	myLastDecision, _ := v.Checkpoint.Get()
 	if proposal == nil {
 		v.Logger.Panicf("The in flight proposal is nil")
-		return false
+		return
 	}
 	proposalMD := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, proposalMD); err != nil {

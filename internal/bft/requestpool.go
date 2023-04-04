@@ -39,10 +39,8 @@ var (
 type RequestTimeoutHandler interface {
 	// OnRequestTimeout is called when a request timeout expires.
 	OnRequestTimeout(request []byte, requestInfo types.RequestInfo)
-
 	// OnLeaderFwdRequestTimeout is called when a leader forwarding timeout expires.
 	OnLeaderFwdRequestTimeout(request []byte, requestInfo types.RequestInfo)
-
 	// OnAutoRemoveTimeout is called when a auto-remove timeout expires.
 	OnAutoRemoveTimeout(requestInfo types.RequestInfo)
 }

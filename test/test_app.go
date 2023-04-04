@@ -314,7 +314,7 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 
 type committedBatches struct {
 	lock     sync.RWMutex
-	latestMD *smartbftprotos.ViewMetadata // TODO Not to put a pointer. It doesn't work.
+	latestMD *smartbftprotos.ViewMetadata
 	records  []*AppRecord
 }
 
