@@ -6,7 +6,6 @@
 package bft_test
 
 import (
-	"io/ioutil"
 	"os"
 	"sync"
 	"sync/atomic"
@@ -178,7 +177,7 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -314,7 +313,7 @@ func TestViewChanged(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -425,7 +424,7 @@ func TestSyncPrevView(t *testing.T) {
 	startedWG := sync.WaitGroup{}
 	startedWG.Add(1)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -738,7 +737,7 @@ func TestSyncInform(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -843,7 +842,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -1003,7 +1002,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)

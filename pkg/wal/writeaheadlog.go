@@ -25,8 +25,8 @@ const (
 	walFileSuffix   string = ".wal"
 	walFileTemplate        = "%016x" + walFileSuffix
 
-	walFilePermPrivateRW os.FileMode = 0600
-	walDirPermPrivateRWX os.FileMode = 0700
+	walFilePermPrivateRW os.FileMode = 0o600
+	walDirPermPrivateRWX os.FileMode = 0o700
 
 	recordHeaderSize int    = 8
 	recordLengthMask uint64 = 0x00000000FFFFFFFF

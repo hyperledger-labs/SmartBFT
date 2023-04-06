@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -162,12 +161,12 @@ func parseWalFileName(fileName string) (index uint64, err error) {
 }
 
 func copyFile(source, target string) error {
-	input, err := ioutil.ReadFile(source)
+	input, err := os.ReadFile(source)
 	if err != nil {
 		return err
 	}
 
-	return ioutil.WriteFile(target, input, 0644)
+	return os.WriteFile(target, input, 0o644)
 }
 
 func truncateCloseFile(f *os.File, offset int64) error {
