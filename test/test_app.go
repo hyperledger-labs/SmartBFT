@@ -84,7 +84,6 @@ func (a *App) Submit(req Request) {
 
 // Sync synchronizes and returns the latest decision
 func (a *App) Sync() types.SyncResponse {
-
 	a.Node.probabilityLock.RLock()
 	syncDelay := a.Node.syncDelay
 	a.Node.probabilityLock.RUnlock()
@@ -96,7 +95,6 @@ func (a *App) Sync() types.SyncResponse {
 			a.Node.syncDelay = nil
 			a.Node.probabilityLock.Unlock()
 		}()
-
 	}
 
 	records := a.Node.cb.readAll(a.latestMD)

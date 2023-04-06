@@ -454,7 +454,6 @@ func TestBadPrepare(t *testing.T) {
 			view.Abort()
 		})
 	}
-
 }
 
 func TestBadCommit(t *testing.T) {

@@ -37,13 +37,10 @@ var (
 // RequestTimeoutHandler defines the methods called by request timeout timers created by time.AfterFunc.
 // This interface is implemented by the bft.Controller.
 type RequestTimeoutHandler interface {
-
 	// OnRequestTimeout is called when a request timeout expires.
 	OnRequestTimeout(request []byte, requestInfo types.RequestInfo)
-
 	// OnLeaderFwdRequestTimeout is called when a leader forwarding timeout expires.
 	OnLeaderFwdRequestTimeout(request []byte, requestInfo types.RequestInfo)
-
 	// OnAutoRemoveTimeout is called when a auto-remove timeout expires.
 	OnAutoRemoveTimeout(requestInfo types.RequestInfo)
 }
@@ -285,7 +282,7 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) (bat
 	count := minInt(rp.fifo.Len(), maxCount)
 	var totalSize uint64
 	batch = make([][]byte, 0, count)
-	var element = rp.fifo.Front()
+	element := rp.fifo.Front()
 	for i := 0; i < count; i++ {
 		req := element.Value.(*requestItem).request
 		reqLen := uint64(len(req))
@@ -295,7 +292,7 @@ func (rp *Pool) NextRequests(maxCount int, maxSizeBytes uint64, check bool) (bat
 			return batch, true
 		}
 		batch = append(batch, req)
-		totalSize = totalSize + reqLen
+		totalSize += reqLen
 		element = element.Next()
 	}
 
@@ -552,5 +549,4 @@ func (rp *Pool) onAutoRemoveTO(reqInfo types.RequestInfo) {
 		return
 	}
 	rp.timeoutHandler.OnAutoRemoveTimeout(reqInfo)
-	return
 }
