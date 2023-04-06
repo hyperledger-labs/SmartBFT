@@ -417,8 +417,7 @@ func TestSyncPrevView(t *testing.T) {
 				LatestSequence: 0,
 				ViewId:         0, // previous view number
 			}),
-			VerificationSequence: 1,
-		},
+			VerificationSequence: 1},
 		Signatures: nil,
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
@@ -755,8 +754,7 @@ func TestSyncInform(t *testing.T) {
 				LatestSequence: 1,
 				ViewId:         syncToView,
 			}),
-			VerificationSequence: 1,
-		},
+			VerificationSequence: 1},
 		Signatures: []types.Signature{
 			{ID: 1}, {ID: 2}, {ID: 3},
 		},
@@ -1167,4 +1165,5 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
 	controller.Stop()
+
 }

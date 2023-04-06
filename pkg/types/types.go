@@ -54,6 +54,7 @@ func (p Proposal) Digest() string {
 		Payload:              p.Payload,
 		Header:               p.Header,
 	})
+
 	if err != nil {
 		panic(fmt.Sprintf("failed marshaling proposal: %v", err))
 	}

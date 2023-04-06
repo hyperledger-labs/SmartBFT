@@ -138,17 +138,8 @@ func TestQuorum(t *testing.T) {
 		Q int
 	}
 
-	quorums := []quorum{
-		{4, 1, 3},
-		{5, 1, 4},
-		{6, 1, 4},
-		{7, 2, 5},
-		{8, 2, 6},
-		{9, 2, 6},
-		{10, 3, 7},
-		{11, 3, 8},
-		{12, 3, 8},
-	}
+	quorums := []quorum{{4, 1, 3}, {5, 1, 4}, {6, 1, 4}, {7, 2, 5}, {8, 2, 6},
+		{9, 2, 6}, {10, 3, 7}, {11, 3, 8}, {12, 3, 8}}
 
 	for _, testCase := range quorums {
 		t.Run(fmt.Sprintf("%d nodes", testCase.N), func(t *testing.T) {
@@ -157,9 +148,11 @@ func TestQuorum(t *testing.T) {
 			assert.Equal(t, testCase.F, F)
 		})
 	}
+
 }
 
 func TestGetLeaderId(t *testing.T) {
+
 	nodes := []uint64{1, 2, 3, 4}
 	view := uint64(0)
 
@@ -438,4 +431,5 @@ func TestGetLeaderId(t *testing.T) {
 	assert.Equal(t, uint64(11), getLeaderID(view, uint64(len(nodes)), nodes, true, 6, decisionsPerLeader, nil))
 	assert.Equal(t, uint64(11), getLeaderID(view, uint64(len(nodes)), nodes, true, 7, decisionsPerLeader, nil))
 	assert.Equal(t, uint64(11), getLeaderID(view, uint64(len(nodes)), nodes, true, 8, decisionsPerLeader, nil))
+
 }

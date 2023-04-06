@@ -39,7 +39,6 @@ func (h backingHeap) Len() int {
 func (h backingHeap) Less(i, j int) bool {
 	return h[i].Deadline.Before(h[j].Deadline)
 }
-
 func (h backingHeap) Swap(i, j int) {
 	h[i], h[j] = h[j], h[i]
 }
@@ -133,6 +132,7 @@ func (s *Scheduler) Stop() {
 	case <-s.stopChan:
 		return
 	default:
+
 	}
 	defer s.running.Wait()
 	close(s.stopChan)
@@ -215,6 +215,7 @@ func (s *Scheduler) checkAndExecute() bool {
 		case <-s.exec.stopChan:
 			return
 		}
+
 	}
 
 	// Check if there is room in the executor queue by trying to enqueue into it.

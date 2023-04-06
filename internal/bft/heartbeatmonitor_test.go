@@ -455,6 +455,7 @@ func TestFollowerBehindSync(t *testing.T) {
 
 	hm.Close()
 	handler.AssertNumberOfCalls(t, "Sync", 1)
+
 }
 
 type fakeTime struct {

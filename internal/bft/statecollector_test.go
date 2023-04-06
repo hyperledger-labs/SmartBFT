@@ -163,6 +163,7 @@ func TestCollect(t *testing.T) {
 				assert.Equal(t, test.seq, response.Seq)
 			}
 			collector.Stop()
+
 		})
 	}
 }

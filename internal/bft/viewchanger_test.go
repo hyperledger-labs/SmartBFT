@@ -67,7 +67,7 @@ var (
 	}
 )
 
-func TestViewChangerBasic(*testing.T) {
+func TestViewChangerBasic(t *testing.T) {
 	// A simple test that starts a viewChanger and stops it
 
 	vc := &bft.ViewChanger{
@@ -139,6 +139,7 @@ func TestViewChangeProcess(t *testing.T) {
 		},
 	} {
 		t.Run(testCase.description, func(t *testing.T) {
+
 			comm := &mocks.CommMock{}
 			broadcastChan := make(chan *protos.Message)
 			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -228,8 +229,10 @@ func TestViewChangeProcess(t *testing.T) {
 			state.AssertNumberOfCalls(t, "Save", 2)
 
 			vc.Stop()
+
 		})
 	}
+
 }
 
 func TestViewDataProcess(t *testing.T) {
@@ -694,6 +697,7 @@ func TestBadViewDataMessage(t *testing.T) {
 
 			vc.Stop()
 		})
+
 	}
 }
 
@@ -945,11 +949,13 @@ func TestBadNewViewMessage(t *testing.T) {
 			warningMsgLogged.Wait()
 
 			vc.Stop()
+
 		})
 	}
 }
 
 func TestResendViewChangeMessage(t *testing.T) {
+
 	comm := &mocks.CommMock{}
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -1002,6 +1008,7 @@ func TestResendViewChangeMessage(t *testing.T) {
 	comm.AssertNumberOfCalls(t, "BroadcastConsensus", 3) // start view change and two resends
 	reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
 	controller.AssertNumberOfCalls(t, "AbortView", 1)
+
 }
 
 func TestViewChangerTimeout(t *testing.T) {
@@ -1129,6 +1136,7 @@ func TestBackOff(t *testing.T) {
 }
 
 func TestCommitLastDecision(t *testing.T) {
+
 	comm := &mocks.CommMock{}
 	msgChan := make(chan *protos.Message)
 	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
@@ -1220,6 +1228,7 @@ func TestCommitLastDecision(t *testing.T) {
 	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
+
 }
 
 func TestFarBehindLastDecisionAndSync(t *testing.T) {
@@ -1301,6 +1310,7 @@ func TestFarBehindLastDecisionAndSync(t *testing.T) {
 }
 
 func TestInFlightProposalInViewData(t *testing.T) {
+
 	for _, test := range []struct {
 		description    string
 		getInFlight    func() *bft.InFlightData
@@ -1403,9 +1413,11 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			state.AssertNumberOfCalls(t, "Save", 1)
 		})
 	}
+
 }
 
 func TestValidateLastDecision(t *testing.T) {
+
 	for _, test := range []struct {
 		description  string
 		viewData     *protos.ViewData
@@ -1512,6 +1524,7 @@ func TestValidateLastDecision(t *testing.T) {
 			assert.Equal(t, test.sequence, seq)
 		})
 	}
+
 }
 
 func TestValidateInFlight(t *testing.T) {

@@ -21,10 +21,8 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
-type (
-	Ingress map[int]<-chan proto.Message
-	Egress  map[int]chan<- proto.Message
-)
+type Ingress map[int]<-chan proto.Message
+type Egress map[int]chan<- proto.Message
 
 type NetworkOptions struct {
 	NumNodes     int
@@ -230,11 +228,11 @@ func (n *Node) Start() {
 				case <-n.stopChan:
 					return
 				case msg := <-in:
-					switch m := msg.(type) {
+					switch msg.(type) {
 					case *smartbftprotos.Message:
-						n.consensus.HandleMessage(id, m)
+						n.consensus.HandleMessage(id, msg.(*smartbftprotos.Message))
 					case *FwdMessage:
-						n.consensus.SubmitRequest(m.Payload)
+						n.consensus.SubmitRequest(msg.(*FwdMessage).Payload)
 					}
 				}
 			}

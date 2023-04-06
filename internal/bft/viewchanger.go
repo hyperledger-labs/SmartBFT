@@ -459,7 +459,6 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 	}
 	if lastDecision == nil {
 		v.Logger.Panicf("￿The given last decision is nil", v.SelfID)
-		return nil
 	}
 	if lastDecision.Metadata == nil {
 		return proposal // this is the first proposal after genesis
@@ -1175,7 +1174,6 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	myLastDecision, _ := v.Checkpoint.Get()
 	if proposal == nil {
 		v.Logger.Panicf("The in flight proposal is nil")
-		return
 	}
 	proposalMD := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, proposalMD); err != nil {

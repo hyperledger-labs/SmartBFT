@@ -70,6 +70,7 @@ func (b *BatchBuilder) Close() {
 	case <-b.closeChan:
 		return
 	default:
+
 	}
 	close(b.closeChan)
 }

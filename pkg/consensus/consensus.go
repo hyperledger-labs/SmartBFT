@@ -203,8 +203,9 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 			c.close()
 			c.Logger.Infof("Closing consensus since this node is not in the current set of nodes")
 			return
+		} else {
+			c.Logger.Panicf("Configuration is invalid, error: %v", err)
 		}
-		c.Logger.Panicf("Configuration is invalid, error: %v", err)
 	}
 
 	c.setNodes(reconfig.CurrentNodes)
@@ -441,13 +442,15 @@ func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDe
 	}
 	if viewChange == nil {
 		c.Logger.Debugf("No view change to restore")
-	} else if viewChange.NextView >= view {
+	} else {
 		// Check if the view change has a newer view
-		c.Logger.Debugf("Restoring from view change with view %d", viewChange.NextView)
-		newView = viewChange.NextView
-		restoreChan := make(chan struct{}, 1)
-		restoreChan <- struct{}{}
-		c.viewChanger.Restore = restoreChan
+		if viewChange.NextView >= view {
+			c.Logger.Debugf("Restoring from view change with view %d", viewChange.NextView)
+			newView = viewChange.NextView
+			restoreChan := make(chan struct{}, 1)
+			restoreChan <- struct{}{}
+			c.viewChanger.Restore = restoreChan
+		}
 	}
 
 	viewSeq, err := c.state.LoadNewViewIfApplicable()
@@ -456,12 +459,14 @@ func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDe
 	}
 	if viewSeq == nil {
 		c.Logger.Debugf("No new view to restore")
-	} else if viewSeq.Seq >= seq {
+	} else {
 		// Check if metadata should be taken from the restored new view
-		c.Logger.Debugf("Restoring from new view with view %d and seq %d", viewSeq.View, viewSeq.Seq)
-		newView = viewSeq.View
-		newSeq = viewSeq.Seq
-		newDec = 0
+		if viewSeq.Seq >= seq {
+			c.Logger.Debugf("Restoring from new view with view %d and seq %d", viewSeq.View, viewSeq.Seq)
+			newView = viewSeq.View
+			newSeq = viewSeq.Seq
+			newDec = 0
+		}
 	}
 	return newView, newSeq, newDec
 }
