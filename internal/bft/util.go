@@ -77,7 +77,7 @@ func MarshalOrPanic(msg proto.Message) []byte {
 
 func getLeaderID(
 	view uint64,
-	N uint64,
+	n uint64,
 	nodes []uint64,
 	leaderRotation bool,
 	decisionsInView uint64,
@@ -85,17 +85,17 @@ func getLeaderID(
 	blacklist []uint64,
 ) uint64 {
 	blackListed := make(map[uint64]struct{})
-	for _, n := range blacklist {
-		blackListed[n] = struct{}{}
+	for _, i := range blacklist {
+		blackListed[i] = struct{}{}
 	}
 
 	if !leaderRotation {
-		return nodes[view%N]
+		return nodes[view%n]
 	}
 
 	for i := 0; i < len(nodes); i++ {
 		index := (view + (decisionsInView / decisionsPerLeader)) + uint64(i)
-		node := nodes[index%N]
+		node := nodes[index%n]
 		_, exists := blackListed[node]
 		if !exists {
 			return node
@@ -179,9 +179,9 @@ type incMsg struct {
 //
 // Note that this is different from N-f (the number of correct nodes), when N=3f+3. That is, we have two extra nodes
 // above the minimum required to tolerate f failures.
-func computeQuorum(N uint64) (Q int, F int) {
-	F = (int(N) - 1) / 3
-	Q = int(math.Ceil((float64(N) + float64(F) + 1) / 2.0))
+func computeQuorum(n uint64) (q int, f int) {
+	f = (int(n) - 1) / 3
+	q = int(math.Ceil((float64(n) + float64(f) + 1) / 2.0))
 	return
 }
 
