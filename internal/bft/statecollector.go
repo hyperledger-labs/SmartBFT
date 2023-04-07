@@ -119,7 +119,6 @@ func (s *StateCollector) collectedEnoughEqualVotes() *types.ViewAndSeq {
 		}
 		s.Logger.Debugf("Node %d collected a responses with view - %d and seq - %d", s.SelfID, viewAndSeq.View, viewAndSeq.Seq)
 		s.responses.votes <- vote
-
 		votesMap[viewAndSeq]++
 	}
 	for viewAndSeq, count := range votesMap {

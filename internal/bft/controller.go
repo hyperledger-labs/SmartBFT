@@ -471,9 +471,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		if c.stopped() || c.Batcher.Closed() {
 			return nil
 		}
-		for _, req := range requests {
-			validRequests = append(validRequests, req)
-		}
+		validRequests = append(validRequests, requests...)
 	}
 	return validRequests
 }

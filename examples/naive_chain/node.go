@@ -234,7 +234,7 @@ func (n *Node) Start() {
 					case *smartbftprotos.Message:
 						n.consensus.HandleMessage(id, m)
 					case *FwdMessage:
-						_ = n.consensus.SubmitRequest(m.Payload)
+						n.consensus.SubmitRequest(m.Payload)
 					}
 				}
 			}
