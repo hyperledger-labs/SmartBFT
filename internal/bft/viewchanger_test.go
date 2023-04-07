@@ -662,13 +662,13 @@ func TestBadViewDataMessage(t *testing.T) {
 			checkpoint := types.Checkpoint{}
 			checkpoint.Set(lastDecision, lastDecisionSignatures)
 
-			selfID := 1
+			selfId := 1
 			if test.notLeader {
-				selfID = 2
+				selfId = 2
 			}
 
 			vc := &bft.ViewChanger{
-				SelfID:      uint64(selfID),
+				SelfID:      uint64(selfId),
 				N:           4,
 				NodesList:   []uint64{0, 1, 2, 3},
 				Logger:      log,
