@@ -319,7 +319,7 @@ func TestHeartbeatResponseLeader(t *testing.T) {
 	hm1.ChangeRole(bft.Leader, 5, 0)
 	clock.advanceTime(2*heartbeatCount, scheduler1)
 
-	//this will be ignored, as view=4,5 <= leader-view=5
+	// this will be ignored, as view=4,5 <= leader-view=5
 	hbr4 := makeHeartBeatResponse(4)
 	hm1.ProcessMsg(1, hbr4)
 	hm1.ProcessMsg(2, hbr4)

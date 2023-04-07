@@ -9,11 +9,10 @@ import (
 	"fmt"
 	"testing"
 
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
-	"go.uber.org/zap"
-
 	"github.com/SmartBFT-Go/consensus/pkg/types"
+	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/zap"
 )
 
 func TestBlacklist(t *testing.T) {

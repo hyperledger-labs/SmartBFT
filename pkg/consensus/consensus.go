@@ -12,12 +12,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 )
 
