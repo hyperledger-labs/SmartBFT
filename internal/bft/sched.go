@@ -83,7 +83,7 @@ func (q *TaskQueue) Top() *Task {
 	return (*q.h)[0]
 }
 
-func (q TaskQueue) Size() int {
+func (q *TaskQueue) Size() int {
 	return q.h.Len()
 }
 
