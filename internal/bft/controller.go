@@ -594,7 +594,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 
 	if len(syncResponse.RequestDel) != 0 {
 		c.RequestPool.Prune(func(bytes []byte) error {
-			return errors.New("Need all delete")
+			return errors.New("need all delete")
 		})
 
 		for i := range syncResponse.RequestDel {
