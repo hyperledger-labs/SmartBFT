@@ -84,7 +84,7 @@ func dirReadWalNames(dirPath string) ([]string, error) {
 }
 
 // checkWalFiles for continuous sequence, readable CRC-Anchor.
-// If the the last file cannot be read, it may be ignored,  (or repaired).
+// If the last file cannot be read, it may be ignored,  (or repaired).
 func checkWalFiles(logger api.Logger, dirName string, walNames []string) ([]uint64, error) {
 	sort.Strings(walNames)
 

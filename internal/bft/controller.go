@@ -471,9 +471,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		if c.stopped() || c.Batcher.Closed() {
 			return nil
 		}
-		for _, req := range requests {
-			validRequests = append(validRequests, req)
-		}
+		validRequests = append(validRequests, requests...)
 	}
 	return validRequests
 }
@@ -758,7 +756,6 @@ func (c *Controller) relinquishLeaderToken() {
 	select {
 	case <-c.leaderToken:
 	default:
-
 	}
 }
 
@@ -892,7 +889,6 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	case <-c.deliverChan: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
 	}
-
 }
 
 func (c *Controller) removeDeliveredFromPool(d decision) {

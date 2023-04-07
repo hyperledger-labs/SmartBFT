@@ -167,7 +167,6 @@ func TestReqPoolBasic(t *testing.T) {
 		timeoutHandler.AssertNumberOfCalls(t, "OnLeaderFwdRequestTimeout", 0)
 		pool.Close()
 	})
-
 }
 
 func TestReqPoolCapacity(t *testing.T) {
@@ -279,6 +278,7 @@ func TestReqPoolPrune(t *testing.T) {
 	assert.Equal(t, 0, pool.Size())
 
 	err = pool.Submit(byteReq1)
+	assert.NoError(t, err)
 	err = pool.Submit(byteReq2)
 	assert.NoError(t, err)
 	assert.Equal(t, 2, pool.Size())
@@ -588,8 +588,7 @@ func parseTestRequest(request []byte) (clientID, txID, data string) {
 	return
 }
 
-type testRequestInspector struct {
-}
+type testRequestInspector struct{}
 
 func (ins *testRequestInspector) RequestID(req []byte) types.RequestInfo {
 	var info types.RequestInfo

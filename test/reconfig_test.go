@@ -356,7 +356,6 @@ func TestAddRemoveNodes(t *testing.T) {
 	for i := 0; i < numberOfNodes-nodesToRemove-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-
 }
 
 func TestAddRemoveAddNodes(t *testing.T) {
@@ -555,7 +554,6 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 }
 
 func TestAddNodeAfterManyRotations(t *testing.T) {
-
 	t.Parallel()
 	network := make(Network)
 	defer network.Shutdown()
@@ -640,5 +638,4 @@ func TestAddNodeAfterManyRotations(t *testing.T) {
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-
 }
