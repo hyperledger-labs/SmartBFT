@@ -415,11 +415,11 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 
 func (v *ViewChanger) prepareViewDataMsg() *protos.Message {
 	lastDecision, lastDecisionSignatures := v.Checkpoint.Get()
-	inFlight := v.getInFlight(&lastDecision)
+	inFlight := v.getInFlight(lastDecision)
 	prepared := v.InFlight.IsInFlightPrepared()
 	vd := &protos.ViewData{
 		NextView:               v.currView,
-		LastDecision:           &lastDecision,
+		LastDecision:           lastDecision,
 		LastDecisionSignatures: lastDecisionSignatures,
 		InFlightProposal:       inFlight,
 		InFlightPrepared:       prepared,
@@ -640,12 +640,12 @@ func (v *ViewChanger) extractCurrentSequence() (uint64, *protos.Proposal) {
 	myMetadata := &protos.ViewMetadata{}
 	myLastDesicion, _ := v.Checkpoint.Get()
 	if myLastDesicion.Metadata == nil {
-		return 0, &myLastDesicion
+		return 0, myLastDesicion
 	}
 	if err := proto.Unmarshal(myLastDesicion.Metadata, myMetadata); err != nil {
 		v.Logger.Panicf("Node %d is unable to unmarshal its own last decision metadata from checkpoint, err: %v", v.SelfID, err)
 	}
-	return myMetadata.LatestSequence, &myLastDesicion
+	return myMetadata.LatestSequence, myLastDesicion
 }
 
 // ValidateLastDecision validates the given decision, and returns its sequence when valid
@@ -1188,7 +1188,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		if lastDecisionMD.LatestSequence == proposalMD.LatestSequence {
 			v.Logger.Debugf("Node %d already decided on sequence %d and so it will not commit the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
 			v.Logger.Debugf("Node %d is comparing its last decision with the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
-			if !proto.Equal(&myLastDecision, proposal) {
+			if !proto.Equal(myLastDecision, proposal) {
 				v.Logger.Warnf("Node %d compared its last decision with the in flight proposal, which has the same sequence, but they are not equal", v.SelfID)
 				return false
 			}

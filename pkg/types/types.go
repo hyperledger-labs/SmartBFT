@@ -75,11 +75,11 @@ type Checkpoint struct {
 	signatures []Signature
 }
 
-func (c *Checkpoint) Get() (smartbftprotos.Proposal, []*smartbftprotos.Signature) {
+func (c *Checkpoint) Get() (*smartbftprotos.Proposal, []*smartbftprotos.Signature) {
 	c.lock.RLock()
 	defer c.lock.RUnlock()
 
-	p := smartbftprotos.Proposal{
+	p := &smartbftprotos.Proposal{
 		Header:               c.proposal.Header,
 		Payload:              c.proposal.Payload,
 		Metadata:             c.proposal.Metadata,

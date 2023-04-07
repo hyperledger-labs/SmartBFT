@@ -643,7 +643,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.Logger.Infof("Replicated decisions from view %d and seq %d up to view %d and sequence %d with verification sequence %d",
 		c.currViewNumber, latestSequence, md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
 
-	c.maybePruneInFlight(*md)
+	c.maybePruneInFlight(md)
 
 	view := md.ViewId
 	newView := false
@@ -680,7 +680,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	return view, md.LatestSequence + 1, md.DecisionsInView + 1
 }
 
-func (c *Controller) maybePruneInFlight(syncResultViewMD protos.ViewMetadata) {
+func (c *Controller) maybePruneInFlight(syncResultViewMD *protos.ViewMetadata) {
 	inFlight := c.InFlight.InFlightProposal()
 	if inFlight == nil {
 		c.Logger.Debugf("No in-flight proposal to prune")
