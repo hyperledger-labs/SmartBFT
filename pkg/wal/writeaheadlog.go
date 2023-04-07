@@ -25,8 +25,8 @@ const (
 	walFileSuffix   string = ".wal"
 	walFileTemplate        = "%016x" + walFileSuffix
 
-	walFilePermPrivateRW os.FileMode = 0600
-	walDirPermPrivateRWX os.FileMode = 0700
+	walFilePermPrivateRW os.FileMode = 0o600
+	walDirPermPrivateRWX os.FileMode = 0o700
 
 	recordHeaderSize int    = 8
 	recordLengthMask uint64 = 0x00000000FFFFFFFF
@@ -76,7 +76,6 @@ type LogRecordHeader uint64
 //
 // In append mode the WAL can accept Append() and TruncateTo() calls.
 // The WAL must be closed after use to release all resources.
-//
 type WriteAheadLogFile struct {
 	dirName string
 	options *Options
@@ -475,12 +474,12 @@ func (w *WriteAheadLogFile) append(record *protos.LogRecord) error {
 // After a successful invocation the WAL moves to write mode, and is ready to Append().
 //
 // In case of failure:
-//  - an error of type io.ErrUnexpectedEOF	is returned when the WAL can possibly be repaired by truncating the last
-//    log file after the last good record.
-//  - all other errors indicate that the WAL is either
-//  	- is closed, or
-//  	- is in write mode, or
-//  	- is corrupted beyond the simple repair measure described above.
+//   - an error of type io.ErrUnexpectedEOF	is returned when the WAL can possibly be repaired by truncating the last
+//     log file after the last good record.
+//   - all other errors indicate that the WAL is either
+//   - is closed, or
+//   - is in write mode, or
+//   - is corrupted beyond the simple repair measure described above.
 func (w *WriteAheadLogFile) ReadAll() ([][]byte, error) {
 	w.mutex.Lock()
 	defer w.mutex.Unlock()

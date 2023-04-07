@@ -6,7 +6,6 @@
 package bft_test
 
 import (
-	"io/ioutil"
 	"os"
 	"sync"
 	"sync/atomic"
@@ -178,7 +177,7 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.On("HeartbeatWasSent")
 	leaderMon.On("Close")
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -251,7 +250,7 @@ func TestLeaderPropose(t *testing.T) {
 	leaderMon.AssertCalled(t, "HeartbeatWasSent")
 
 	// Ensure checkpoint was updated
-	expected := protos.Proposal{
+	expected := &protos.Proposal{
 		Header:               proposal.Header,
 		Payload:              proposal.Payload,
 		Metadata:             proposal.Metadata,
@@ -259,11 +258,11 @@ func TestLeaderPropose(t *testing.T) {
 	}
 	proposal, signatures := controller.Checkpoint.Get()
 	assert.Equal(t, expected, proposal)
-	signaturesBySigners := make(map[uint64]protos.Signature)
+	signaturesBySigners := make(map[uint64]*protos.Signature)
 	for _, sig := range signatures {
-		signaturesBySigners[sig.Signer] = *sig
+		signaturesBySigners[sig.Signer] = sig
 	}
-	assert.Equal(t, map[uint64]protos.Signature{
+	assert.Equal(t, map[uint64]*protos.Signature{
 		17: {Signer: 17, Value: []byte{4}},
 		23: {Signer: 23, Value: []byte{4}},
 		37: {Signer: 37, Value: []byte{4}},
@@ -314,7 +313,7 @@ func TestViewChanged(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -418,14 +417,15 @@ func TestSyncPrevView(t *testing.T) {
 				LatestSequence: 0,
 				ViewId:         0, // previous view number
 			}),
-			VerificationSequence: 1},
+			VerificationSequence: 1,
+		},
 		Signatures: nil,
 	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}})
 
 	startedWG := sync.WaitGroup{}
 	startedWG.Add(1)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -738,7 +738,7 @@ func TestSyncInform(t *testing.T) {
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return(nil)
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -755,7 +755,8 @@ func TestSyncInform(t *testing.T) {
 				LatestSequence: 1,
 				ViewId:         syncToView,
 			}),
-			VerificationSequence: 1},
+			VerificationSequence: 1,
+		},
 		Signatures: []types.Signature{
 			{ID: 1}, {ID: 2}, {ID: 3},
 		},
@@ -843,7 +844,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -1003,7 +1004,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
 
-	testDir, err := ioutil.TempDir("", "controller-unittest")
+	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 	wal, err := wal.Create(log, testDir, nil)
@@ -1166,5 +1167,4 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	app.AssertNumberOfCalls(t, "Deliver", 2)
 
 	controller.Stop()
-
 }

@@ -7,13 +7,11 @@ package naive
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
 
 	"github.com/golang/protobuf/proto"
-
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -65,13 +63,12 @@ func TestBlockHeader(t *testing.T) {
 	headerBytes := blockHeader.ToBytes()
 	blockHeader2 := BlockHeaderFromBytes(headerBytes)
 	assert.Equal(t, blockHeader, blockHeader2)
-
 }
 
 func TestChain(t *testing.T) {
 	blockCount := 10
 
-	testDir, err := ioutil.TempDir("", "naive_chain")
+	testDir, err := os.MkdirTemp("", "naive_chain")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 

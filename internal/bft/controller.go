@@ -17,18 +17,21 @@ import (
 )
 
 // Decider delivers the proposal with signatures to the application
+//
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
 	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
 }
 
 // FailureDetector initiates a view change when there is a complaint
+//
 //go:generate mockery -dir . -name FailureDetector -case underscore -output ./mocks/
 type FailureDetector interface {
 	Complain(viewNum uint64, stopView bool)
 }
 
 // Batcher batches requests to eventually become a new proposal
+//
 //go:generate mockery -dir . -name Batcher -case underscore -output ./mocks/
 type Batcher interface {
 	NextBatch() [][]byte
@@ -38,6 +41,7 @@ type Batcher interface {
 }
 
 // RequestPool is a pool of client's requests
+//
 //go:generate mockery -dir . -name RequestPool -case underscore -output ./mocks/
 type RequestPool interface {
 	Prune(predicate func([]byte) error)
@@ -51,6 +55,7 @@ type RequestPool interface {
 }
 
 // LeaderMonitor monitors the heartbeat from the current leader
+//
 //go:generate mockery -dir . -name LeaderMonitor -case underscore -output ./mocks/
 type LeaderMonitor interface {
 	ChangeRole(role Role, view uint64, leaderID uint64)
@@ -73,6 +78,7 @@ type Proposer interface {
 }
 
 // ProposerBuilder builds a new Proposer
+//
 //go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
 type ProposerBuilder interface {
 	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer
@@ -465,9 +471,7 @@ func (c *Controller) getNextBatch() [][]byte {
 		if c.stopped() || c.Batcher.Closed() {
 			return nil
 		}
-		for _, req := range requests {
-			validRequests = append(validRequests, req)
-		}
+		validRequests = append(validRequests, requests...)
 	}
 	return validRequests
 }
@@ -588,7 +592,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 
 	if len(syncResponse.RequestDel) != 0 {
 		c.RequestPool.Prune(func(bytes []byte) error {
-			return errors.New("Need all delete")
+			return errors.New("need all delete")
 		})
 
 		for i := range syncResponse.RequestDel {
@@ -637,7 +641,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	c.Logger.Infof("Replicated decisions from view %d and seq %d up to view %d and sequence %d with verification sequence %d",
 		c.currViewNumber, latestSequence, md.ViewId, md.LatestSequence, decision.Proposal.VerificationSequence)
 
-	c.maybePruneInFlight(*md)
+	c.maybePruneInFlight(md)
 
 	view := md.ViewId
 	newView := false
@@ -674,7 +678,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	return view, md.LatestSequence + 1, md.DecisionsInView + 1
 }
 
-func (c *Controller) maybePruneInFlight(syncResultViewMD protos.ViewMetadata) {
+func (c *Controller) maybePruneInFlight(syncResultViewMD *protos.ViewMetadata) {
 	inFlight := c.InFlight.InFlightProposal()
 	if inFlight == nil {
 		c.Logger.Debugf("No in-flight proposal to prune")
@@ -752,7 +756,6 @@ func (c *Controller) relinquishLeaderToken() {
 	select {
 	case <-c.leaderToken:
 	default:
-
 	}
 }
 
@@ -842,7 +845,7 @@ func (c *Controller) Stop() {
 	c.controllerDone.Wait()
 }
 
-// Stop the controller but only stop the requests pool timers
+// StopWithPoolPause the controller but only stop the requests pool timers
 func (c *Controller) StopWithPoolPause() {
 	c.close()
 	c.Batcher.Close()
@@ -886,7 +889,6 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	case <-c.deliverChan: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
 	}
-
 }
 
 func (c *Controller) removeDeliveredFromPool(d decision) {

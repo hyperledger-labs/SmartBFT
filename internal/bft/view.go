@@ -30,6 +30,7 @@ const (
 )
 
 // State can save and restore the state
+//
 //go:generate mockery -dir . -name State -case underscore -output ./mocks/
 type State interface {
 	// Save saves a message.
@@ -46,7 +47,7 @@ type Comm interface {
 	BroadcastConsensus(m *protos.Message)
 }
 
-type CheckpointRetriever func() (protos.Proposal, []*protos.Signature)
+type CheckpointRetriever func() (*protos.Proposal, []*protos.Signature)
 
 // View is responsible for running the view protocol
 type View struct {
@@ -72,7 +73,7 @@ type View struct {
 	Phase              Phase
 	InMsgQSize         int
 	// Runtime
-	lastVotedProposalByID map[uint64]protos.Commit
+	lastVotedProposalByID map[uint64]*protos.Commit
 	incMsgs               chan *incMsg
 	myProposalSig         *types.Signature
 	inFlightProposal      *types.Proposal
@@ -107,7 +108,7 @@ func (v *View) Start() {
 	v.stopOnce = sync.Once{}
 	v.incMsgs = make(chan *incMsg, v.InMsgQSize)
 	v.abortChan = make(chan struct{})
-	v.lastVotedProposalByID = make(map[uint64]protos.Commit)
+	v.lastVotedProposalByID = make(map[uint64]*protos.Commit)
 	v.viewEnded.Add(1)
 
 	v.prePrepare = make(chan *protos.Message, 1)
@@ -734,7 +735,7 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 	_, f := computeQuorum(v.N)
 	threshold := f + 1
 
-	v.lastVotedProposalByID[sender] = *commit
+	v.lastVotedProposalByID[sender] = commit
 
 	v.Logger.Debugf("Got commit of seq %d in view %d from %d while being in seq %d in view %d",
 		commit.Seq, commit.View, sender, v.ProposalSequence, v.Number)
@@ -862,7 +863,7 @@ func (v *View) GetMetadata() []byte {
 	}
 
 	var prevSigs []*protos.Signature
-	var prevProp protos.Proposal
+	var prevProp *protos.Proposal
 	verificationSeq := v.Verifier.VerificationSequence()
 
 	prevProp, prevSigs = v.RetrieveCheckpoint()
@@ -880,7 +881,7 @@ func (v *View) GetMetadata() []byte {
 	return MarshalOrPanic(metadata)
 }
 
-func (v *View) metadataWithUpdatedBlacklist(metadata *protos.ViewMetadata, verificationSeq uint64, prevProp protos.Proposal, prevSigs []*protos.Signature) *protos.ViewMetadata {
+func (v *View) metadataWithUpdatedBlacklist(metadata *protos.ViewMetadata, verificationSeq uint64, prevProp *protos.Proposal, prevSigs []*protos.Signature) *protos.ViewMetadata {
 	var membershipChange bool
 	if v.MembershipNotifier != nil {
 		membershipChange = v.MembershipNotifier.MembershipChange()
