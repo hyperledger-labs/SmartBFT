@@ -7,7 +7,6 @@ package naive
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -70,7 +69,7 @@ func TestBlockHeader(t *testing.T) {
 func TestChain(t *testing.T) {
 	blockCount := 10
 
-	testDir, err := ioutil.TempDir("", "naive_chain")
+	testDir, err := os.MkdirTemp("", "naive_chain")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
 
