@@ -258,11 +258,11 @@ func TestLeaderPropose(t *testing.T) {
 	}
 	proposal, signatures := controller.Checkpoint.Get()
 	assert.Equal(t, expected, proposal)
-	signaturesBySigners := make(map[uint64]protos.Signature)
+	signaturesBySigners := make(map[uint64]*protos.Signature)
 	for _, sig := range signatures {
-		signaturesBySigners[sig.Signer] = *sig
+		signaturesBySigners[sig.Signer] = sig
 	}
-	assert.Equal(t, map[uint64]protos.Signature{
+	assert.Equal(t, map[uint64]*protos.Signature{
 		17: {Signer: 17, Value: []byte{4}},
 		23: {Signer: 23, Value: []byte{4}},
 		37: {Signer: 37, Value: []byte{4}},
