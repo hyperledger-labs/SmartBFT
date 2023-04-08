@@ -83,15 +83,15 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 	return requests
 }
 
-func (*Node) VerifyRequest([]byte) (bft.RequestInfo, error) {
+func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	return bft.RequestInfo{}, nil
 }
 
-func (*Node) VerifyConsenterSig(bft.Signature, bft.Proposal) ([]byte, error) {
+func (*Node) VerifyConsenterSig(_ bft.Signature, prop bft.Proposal) ([]byte, error) {
 	return nil, nil
 }
 
-func (*Node) VerifySignature(bft.Signature) error {
+func (*Node) VerifySignature(signature bft.Signature) error {
 	return nil
 }
 
@@ -99,7 +99,7 @@ func (*Node) VerificationSequence() uint64 {
 	return 0
 }
 
-func (*Node) Sign([]byte) []byte {
+func (*Node) Sign(msg []byte) []byte {
 	return nil
 }
 
@@ -142,7 +142,7 @@ func (n *Node) MembershipChange() bool {
 	return false
 }
 
-func (n *Node) Deliver(proposal bft.Proposal, _ []bft.Signature) bft.Reconfig {
+func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig {
 	blockData := BlockDataFromBytes(proposal.Payload)
 	txns := make([]Transaction, 0, len(blockData.Transactions))
 	for _, rawTxn := range blockData.Transactions {
@@ -235,7 +235,7 @@ func (n *Node) Start() {
 					case *smartbftprotos.Message:
 						n.consensus.HandleMessage(id, m)
 					case *FwdMessage:
-						_ = n.consensus.SubmitRequest(m.Payload)
+						n.consensus.SubmitRequest(m.Payload)
 					}
 				}
 			}

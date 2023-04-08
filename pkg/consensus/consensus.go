@@ -216,7 +216,6 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 			c.Logger.Infof("Closing consensus since this node is not in the current set of nodes")
 			return
 		}
-
 		c.Logger.Panicf("Configuration is invalid, error: %v", err)
 	}
 
