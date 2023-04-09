@@ -1450,12 +1450,20 @@ func TestRotateAndViewChange(t *testing.T) {
 		n.viewChangeTime <- start
 	}
 
+	var once sync.Once
 	syncedWG := sync.WaitGroup{}
 	syncedWG.Add(1)
+	viewChangeWG3 := sync.WaitGroup{}
+	viewChangeWG3.Add(1)
 	baseLogger3 := nodes[3].logger.Desugar()
 	nodes[3].logger = baseLogger3.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Node 4 collected state with view 1 and sequence 4") {
 			syncedWG.Done()
+		}
+		if strings.Contains(entry.Message, "Starting view with number 1") {
+			once.Do(func() {
+				viewChangeWG3.Done()
+			})
 		}
 		return nil
 	})).Sugar()
@@ -1519,6 +1527,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	viewChangeWG.Wait()
 	nodes[3].Connect()
 	syncedWG.Wait()
+	viewChangeWG3.Wait()
 	close(done)
 
 	nodes[1].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
