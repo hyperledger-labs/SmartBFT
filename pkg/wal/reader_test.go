@@ -12,8 +12,6 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/assert"
@@ -30,9 +28,8 @@ func TestLogRecordReader(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
-	wal, err := Create(logger, met, testDir, nil)
+	wal, err := Create(logger, testDir, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 

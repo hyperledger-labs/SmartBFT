@@ -170,7 +170,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logger smart.Logger, metricsProvider smart.Provider, opts NetworkOptions, testDir string) *Node {
 	nodeDir := filepath.Join(testDir, fmt.Sprintf("node%d", id))
 	met := smart.NewCustomerProvider(metricsProvider)
-	writeAheadLog, err := wal.Create(logger, met, nodeDir, nil)
+	writeAheadLog, err := wal.Create(logger, nodeDir, &wal.Options{MetricsProvider: met})
 	if err != nil {
 		logger.Panicf("Cannot create WAL at %s", nodeDir)
 	}

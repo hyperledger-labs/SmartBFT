@@ -852,7 +852,6 @@ func TestViewPersisted(t *testing.T) {
 			basicLog, err := zap.NewDevelopment()
 			assert.NoError(t, err)
 			log := basicLog.Sugar()
-			met := api.NewCustomerProvider(&disabled.Provider{})
 
 			signer := &mocks.SignerMock{}
 			signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
@@ -893,7 +892,7 @@ func TestViewPersisted(t *testing.T) {
 			testDir, err := os.MkdirTemp("", "view-unittest")
 			assert.NoErrorf(t, err, "generate temporary test dir")
 			defer os.RemoveAll(testDir)
-			writeAheadLog, err := wal.Create(log, met, testDir, nil)
+			writeAheadLog, err := wal.Create(log, testDir, nil)
 			assert.NoError(t, err)
 
 			persistedState := &bft.PersistedState{
@@ -925,7 +924,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, met, testDir, nil)
+				writeAheadLog, err = wal.Open(log, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 
@@ -967,7 +966,7 @@ func TestViewPersisted(t *testing.T) {
 				view.Abort()
 
 				writeAheadLog.Close()
-				writeAheadLog, err = wal.Open(log, met, testDir, nil)
+				writeAheadLog, err = wal.Open(log, testDir, nil)
 				assert.NoError(t, err)
 				persistedState.WAL = writeAheadLog
 

@@ -270,7 +270,7 @@ func arrayToSet(array []string) map[string]bool {
 
 // create 8 wal files, 000000000000000000001.wal - 000000000000000000008.wal.
 func make8LogFiles(t *testing.T, logger api.Logger, metricsProvider *api.CustomerProvider, testDir string) {
-	wal, err := Create(logger, metricsProvider, testDir, &Options{FileSizeBytes: 2048})
+	wal, err := Create(logger, testDir, &Options{FileSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 

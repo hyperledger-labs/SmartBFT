@@ -16,6 +16,7 @@ import (
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
@@ -98,6 +99,7 @@ type WriteAheadLogFile struct {
 type Options struct {
 	FileSizeBytes   int64
 	BufferSizeBytes int64
+	MetricsProvider *api.CustomerProvider
 }
 
 // DefaultOptions returns the set of default options.
@@ -105,6 +107,7 @@ func DefaultOptions() *Options {
 	return &Options{
 		FileSizeBytes:   FileSizeBytesDefault,
 		BufferSizeBytes: BufferSizeBytesDefault,
+		MetricsProvider: api.NewCustomerProvider(&disabled.Provider{}),
 	}
 }
 
@@ -119,7 +122,7 @@ func (o *Options) String() string {
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, ErrWALAlreadyExists if WAL already exists or other errors
-func Create(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -130,7 +133,15 @@ func Create(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath st
 
 	opt := DefaultOptions()
 	if options != nil {
-		opt = options
+		if options.MetricsProvider != nil {
+			opt.MetricsProvider = options.MetricsProvider
+		}
+		if options.FileSizeBytes != 0 {
+			opt.FileSizeBytes = options.FileSizeBytes
+		}
+		if options.BufferSizeBytes != 0 {
+			opt.BufferSizeBytes = options.FileSizeBytes
+		}
 	}
 
 	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
@@ -145,7 +156,7 @@ func Create(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath st
 		dirName:       cleanDirName,
 		options:       opt,
 		logger:        logger,
-		metrics:       NewMetrics(metricsProvider),
+		metrics:       NewMetrics(opt.MetricsProvider),
 		index:         1,
 		headerBuff:    make([]byte, 8),
 		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
@@ -192,7 +203,7 @@ func Create(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath st
 // options: a structure containing Options, or nil, for default options.
 //
 // return: pointer to a WAL, or an error
-func Open(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, options *Options) (*WriteAheadLogFile, error) {
+func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFile, error) {
 	if logger == nil {
 		return nil, errors.New("wal: logger is nil")
 	}
@@ -210,7 +221,15 @@ func Open(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath stri
 
 	opt := DefaultOptions()
 	if options != nil {
-		opt = options
+		if options.MetricsProvider != nil {
+			opt.MetricsProvider = options.MetricsProvider
+		}
+		if options.FileSizeBytes != 0 {
+			opt.FileSizeBytes = options.FileSizeBytes
+		}
+		if options.BufferSizeBytes != 0 {
+			opt.BufferSizeBytes = options.FileSizeBytes
+		}
 	}
 
 	cleanDirName := filepath.Clean(dirPath)
@@ -219,7 +238,7 @@ func Open(logger api.Logger, metricsProvider *api.CustomerProvider, dirPath stri
 		dirName:    cleanDirName,
 		options:    opt,
 		logger:     logger,
-		metrics:    NewMetrics(metricsProvider),
+		metrics:    NewMetrics(opt.MetricsProvider),
 		headerBuff: make([]byte, 8),
 		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
 		readMode:   true,
@@ -732,14 +751,13 @@ func (w *WriteAheadLogFile) saveCRC() error {
 
 func InitializeAndReadAll(
 	logger api.Logger,
-	metricsProvider *api.CustomerProvider,
 	walDir string,
 	options *Options,
 ) (writeAheadLog *WriteAheadLogFile, initialState [][]byte, err error) {
 	logger.Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
 	logger.Debugf("Write-Ahead-Log options: %s", options)
 
-	writeAheadLog, err = Create(logger, metricsProvider, walDir, options)
+	writeAheadLog, err = Create(logger, walDir, options)
 	if err != nil {
 		if !errors.Is(err, ErrWALAlreadyExists) {
 			err = errors.Wrap(err, "Cannot create Write-Ahead-Log")
@@ -749,7 +767,7 @@ func InitializeAndReadAll(
 
 		logger.Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
 
-		writeAheadLog, err = Open(logger, metricsProvider, walDir, options)
+		writeAheadLog, err = Open(logger, walDir, options)
 		if err != nil {
 			err = errors.Wrap(err, "Cannot open Write-Ahead-Log")
 

@@ -14,7 +14,6 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
@@ -30,12 +29,11 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -60,7 +58,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 100 * 1024, BufferSizeBytes: 1024})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 100 * 1024, BufferSizeBytes: 1024})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -85,7 +83,7 @@ func TestWriteAheadLogFile_Create(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.Error(t, err)
 		assert.Equal(t, err, ErrWALAlreadyExists)
 		assert.Nil(t, wal)
@@ -102,14 +100,13 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -130,7 +127,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, met, dirPath, nil)
+		wal, err = Open(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -149,7 +146,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 	t.Run("Bad - does not exist", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "bad-not-exist")
 
-		wal, err := Open(logger, met, dirPath, nil)
+		wal, err := Open(logger, dirPath, nil)
 		assert.Error(t, err)
 		if err != nil {
 			assert.Contains(t, err.Error(), "no such file or directory")
@@ -162,7 +159,7 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Open(logger, met, dirPath, nil)
+		wal, err := Open(logger, dirPath, nil)
 		assert.Error(t, err)
 		if err != nil {
 			assert.Contains(t, err.Error(), "file does not exist")
@@ -181,12 +178,11 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Idempotent", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "idempotent")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -208,7 +204,7 @@ func TestWriteAheadLogFile_Close(t *testing.T) {
 	t.Run("Cannot Append", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "cannot-append")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -237,12 +233,11 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -282,7 +277,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 	t.Run("File switch", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "switch")
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -331,7 +326,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 	t.Run("File recycle", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "recycle")
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -384,7 +379,7 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 	t.Run("TruncateTo", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "TruncateTo")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -439,12 +434,11 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("Good - one empty file", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good-1-empty")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -454,7 +448,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, met, dirPath, nil)
+		wal, err = Open(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -471,7 +465,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 	t.Run("Good - 1 file", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "good-1-file")
 
-		wal, err := Create(logger, met, dirPath, nil)
+		wal, err := Create(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -488,7 +482,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err = wal.Close()
 		assert.NoError(t, err)
 
-		wal, err = Open(logger, met, dirPath, nil)
+		wal, err = Open(logger, dirPath, nil)
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 
@@ -505,7 +499,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -528,7 +522,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 
 		logger.Infof(">>> Open #1")
 
-		wal, err = Open(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -566,7 +560,7 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 
 		logger.Infof(">>> Open #2")
 
-		wal, err = Open(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -598,14 +592,13 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("with a tail", func(t *testing.T) {
 		dirPath := filepath.Join(testDir, "tail")
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -639,7 +632,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		assertTestRepair(t, logger, met, dirPath, NumRec)
+		assertTestRepair(t, logger, dirPath, NumRec)
 	})
 
 	t.Run("broken record", func(t *testing.T) {
@@ -647,7 +640,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err := os.MkdirAll(dirPath, walDirPermPrivateRWX)
 		assert.NoError(t, err)
 
-		wal, err := Create(logger, met, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+		wal, err := Create(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 		assert.NoError(t, err)
 		assert.NotNil(t, wal)
 		if wal == nil {
@@ -681,7 +674,7 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		err = f.Close()
 		assert.NoError(t, err)
 
-		assertTestRepair(t, logger, met, dirPath, NumRec-1)
+		assertTestRepair(t, logger, dirPath, NumRec-1)
 	})
 }
 
@@ -695,10 +688,9 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	// Create
-	wal, entries, err := InitializeAndReadAll(logger, met, testDir, DefaultOptions())
+	wal, entries, err := InitializeAndReadAll(logger, testDir, DefaultOptions())
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.Equal(t, 0, len(entries))
@@ -712,7 +704,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 
 	// Open
 	options := &Options{FileSizeBytes: 4 * 1024, BufferSizeBytes: 2048}
-	wal, entries, err = InitializeAndReadAll(logger, met, testDir, options)
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.Equal(t, 0, len(entries))
@@ -735,7 +727,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	err = wal.Close()
 	assert.NoError(t, err)
 
-	wal, entries, err = InitializeAndReadAll(logger, met, testDir, options)
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -762,7 +754,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Repair
-	wal, entries, err = InitializeAndReadAll(logger, met, testDir, options)
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -776,7 +768,7 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 
 	// One last time
-	wal, entries, err = InitializeAndReadAll(logger, met, testDir, options)
+	wal, entries, err = InitializeAndReadAll(logger, testDir, options)
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 	assert.NotNil(t, entries)
@@ -788,9 +780,9 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider *api.CustomerProvider, dirPath string, numRec int) {
+func assertTestRepair(t *testing.T, logger api.Logger, dirPath string, numRec int) {
 	logger.Infof(">>> Open #1")
-	wal, err := Open(logger, metricsProvider, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+	wal, err := Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 
@@ -813,7 +805,7 @@ func assertTestRepair(t *testing.T, logger api.Logger, metricsProvider *api.Cust
 	assert.NoError(t, err)
 
 	logger.Infof(">>> Open #2")
-	wal, err = Open(logger, metricsProvider, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
+	wal, err = Open(logger, dirPath, &Options{FileSizeBytes: 10 * 1024, BufferSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
 

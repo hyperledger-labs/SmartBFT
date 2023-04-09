@@ -128,7 +128,6 @@ func TestLeaderPropose(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -183,7 +182,7 @@ func TestLeaderPropose(t *testing.T) {
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -280,7 +279,6 @@ func TestViewChanged(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -320,7 +318,7 @@ func TestViewChanged(t *testing.T) {
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -381,7 +379,6 @@ func TestSyncPrevView(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	app := &mocks.ApplicationMock{}
 	appWG := sync.WaitGroup{}
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
@@ -433,7 +430,7 @@ func TestSyncPrevView(t *testing.T) {
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
 	collector := bft.StateCollector{
@@ -693,7 +690,6 @@ func TestSyncInform(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	req := []byte{1}
 	batcher := &mocks.Batcher{}
 	batcher.On("Close")
@@ -749,7 +745,7 @@ func TestSyncInform(t *testing.T) {
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 
 	synchronizer := &mocks.SynchronizerMock{}
@@ -852,12 +848,11 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 	defer wal.Close()
 
@@ -1013,12 +1008,11 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	testDir, err := os.MkdirTemp("", "controller-unittest")
 	assert.NoErrorf(t, err, "generate temporary test dir")
 	defer os.RemoveAll(testDir)
-	wal, err := wal.Create(log, met, testDir, nil)
+	wal, err := wal.Create(log, testDir, nil)
 	assert.NoError(t, err)
 	defer wal.Close()
 
