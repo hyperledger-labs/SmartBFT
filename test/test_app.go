@@ -79,7 +79,7 @@ func (a *App) UnMute() {
 
 // Submit submits the client request
 func (a *App) Submit(req Request) {
-	_ = a.Consensus.SubmitRequest(req.ToBytes())
+	a.Consensus.SubmitRequest(req.ToBytes())
 }
 
 // Sync synchronizes and returns the latest decision
