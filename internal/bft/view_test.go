@@ -121,7 +121,6 @@ var (
 
 func TestViewBasic(t *testing.T) {
 	// A simple test that starts a view and aborts it
-
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
