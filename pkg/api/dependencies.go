@@ -36,7 +36,7 @@ type Assembler interface {
 	AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 }
 
-// WriteAheadLog is a write ahead log.
+// WriteAheadLog is write ahead log.
 type WriteAheadLog interface {
 	// Append appends a data item to the end of the WAL
 	// and indicate whether this entry is a truncation point.
