@@ -72,6 +72,7 @@ type Pool struct {
 type requestItem struct {
 	request []byte
 	timeout *time.Timer
+	begin   time.Time
 }
 
 // PoolOptions is the pool configuration
@@ -240,10 +241,12 @@ func (rp *Pool) Submit(request []byte) error {
 	reqItem := &requestItem{
 		request: reqCopy,
 		timeout: to,
+		begin:   time.Now(),
 	}
 
 	element := rp.fifo.PushBack(reqItem)
 	rp.metrics.CountOfRequestPool.Add(1)
+	rp.metrics.CountOfRequestPoolAll.Add(1)
 	rp.existMap[reqInfo] = element
 
 	if len(rp.existMap) != rp.fifo.Len() {
@@ -374,6 +377,7 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 
 	rp.fifo.Remove(element)
 	rp.metrics.CountOfRequestPool.Add(-1)
+	rp.metrics.LatencyOfRequestPool.Observe(time.Since(item.begin).Seconds())
 	delete(rp.existMap, requestInfo)
 	rp.moveToDelSlice(requestInfo)
 	rp.logger.Infof("Removed request %s from request pool", requestInfo)

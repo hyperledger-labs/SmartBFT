@@ -48,12 +48,33 @@ var countOfDeleteRequestPoolOpts = metrics.CounterOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
+var countOfRequestPoolAllOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "pool_count_of_elements_all",
+	Help:         "All of request elements in pool for this channel.",
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
+var latencyOfRequestPoolOpts = metrics.HistogramOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "pool_latency_of_elements",
+	Help:         "Latency of request elements in pool for this channel.",
+	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
+}
+
 type MetricsRequestPool struct {
 	CountOfRequestPool          metrics.Gauge
 	CountOfFailAddRequestToPool metrics.Counter
 	CountOfLeaderForwardRequest metrics.Counter
 	CountTimeoutTwoStep         metrics.Counter
 	CountOfDeleteRequestPool    metrics.Counter
+	CountOfRequestPoolAll       metrics.Counter
+	LatencyOfRequestPool        metrics.Histogram
 }
 
 func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
@@ -65,6 +86,8 @@ func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
 		CountOfLeaderForwardRequest: p.NewCounter(countOfLeaderForwardRequestOpts).With("channel", ch),
 		CountTimeoutTwoStep:         p.NewCounter(countTimeoutTwoStepOpts).With("channel", ch),
 		CountOfDeleteRequestPool:    p.NewCounter(countOfDeleteRequestPoolOpts).With("channel", ch),
+		CountOfRequestPoolAll:       p.NewCounter(countOfRequestPoolAllOpts).With("channel", ch),
+		LatencyOfRequestPool:        p.NewHistogram(latencyOfRequestPoolOpts).With("channel", ch),
 	}
 }
 
