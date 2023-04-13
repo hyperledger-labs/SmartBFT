@@ -475,7 +475,7 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 	}
 	if lastDecision == nil {
 		v.Logger.Panicf("%d The given last decision is nil", v.SelfID)
-		return proposal
+		return nil
 	}
 	if lastDecision.Metadata == nil {
 		return proposal // this is the first proposal after genesis
