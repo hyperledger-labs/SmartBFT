@@ -82,7 +82,7 @@ func (a *App) UnMute() {
 
 // Submit submits the client request
 func (a *App) Submit(req Request) {
-	_ = a.Consensus.SubmitRequest(req.ToBytes())
+	a.Consensus.SubmitRequest(req.ToBytes())
 }
 
 // Sync synchronizes and returns the latest decision
@@ -376,7 +376,7 @@ func (txn Request) ToBytes() []byte {
 
 func requestFromBytes(req []byte) *Request {
 	var r Request
-	_, _ = asn1.Unmarshal(req, &r)
+	asn1.Unmarshal(req, &r)
 	return &r
 }
 
@@ -394,7 +394,7 @@ func (b batch) toBytes() []byte {
 
 func batchFromBytes(rawBlock []byte) *batch {
 	var block batch
-	_, _ = asn1.Unmarshal(rawBlock, &block)
+	asn1.Unmarshal(rawBlock, &block)
 	return &block
 }
 

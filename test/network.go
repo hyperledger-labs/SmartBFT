@@ -141,7 +141,7 @@ func (node *Node) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
 	mutatingFunc := node.peerMutatingFunc[targetID]
 	msg := m
 	if mutatingFunc != nil {
-		msg, _ = proto.Clone(m).(*smartbftprotos.Message)
+		msg = proto.Clone(m).(*smartbftprotos.Message)
 		mutatingFunc(targetID, msg)
 	}
 	node.mutatingFuncLock.RUnlock()

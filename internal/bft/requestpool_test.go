@@ -338,7 +338,7 @@ func TestReqPoolTimeout(t *testing.T) {
 		defer pool.Close()
 
 		payload := make([]byte, 2048)
-		_, _ = rand.Read(payload)
+		rand.Read(payload)
 		request := makeTestRequest("1", "1", string(payload))
 		assert.Equal(t, 0, pool.Size())
 		err = pool.Submit(request)

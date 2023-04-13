@@ -92,11 +92,11 @@ type View struct {
 	prepares   *voteSet
 	commits    *voteSet
 	// Next proposal
-	nextPrePrepare  chan *protos.Message
-	nextPrepares    *voteSet
-	nextCommits     *voteSet
-	beginPrePrepare time.Time
+	nextPrePrepare chan *protos.Message
+	nextPrepares   *voteSet
+	nextCommits    *voteSet
 
+	beginPrePrepare    time.Time
 	MetricsBlacklist   *MetricsBlacklist
 	MetricsView        *MetricsView
 	blacklistSupported bool

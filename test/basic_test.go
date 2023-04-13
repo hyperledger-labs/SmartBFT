@@ -1868,7 +1868,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	stop := make(chan struct{})
 	f := func() {
 		txID := make([]byte, 15)
-		_, _ = rand.Read(txID)
+		rand.Read(txID)
 		nodes[1].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
 			select {
@@ -1992,7 +1992,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	stop := make(chan struct{})
 	f := func() {
 		txID := make([]byte, 15)
-		_, _ = rand.Read(txID)
+		rand.Read(txID)
 		nodes[3].Submit(Request{ID: hex.EncodeToString(txID), ClientID: "alice"})
 		for i := 0; i < len(nodes); i++ {
 			select {

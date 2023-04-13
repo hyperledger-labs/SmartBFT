@@ -448,7 +448,7 @@ func (bl blacklist) computeUpdate() []uint64 {
 			offset = 0
 		}
 
-		// Locate every leader of all views previous to these views.
+		// Locate every leader of all views previous to this views.
 		for viewPreviousToThisView := viewBeforeViewChanges; viewPreviousToThisView < bl.currView; viewPreviousToThisView++ {
 			bl.logger.Debugf("viewPreviousToThisView: %d, N: %d, Nodes: %v, rotation: %v, decisions in view: %d, decisions per leader: %d, blacklist: %v",
 				viewPreviousToThisView, bl.n, bl.nodes, bl.leaderRotation, bl.prevMD.DecisionsInView, bl.decisionsPerLeader, bl.prevMD.BlackList)

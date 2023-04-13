@@ -31,11 +31,11 @@ type commMock struct {
 	toWG           *sync.WaitGroup
 }
 
-func (c commMock) SendConsensus(uint64, *smartbftprotos.Message) {
+func (c commMock) SendConsensus(targetID uint64, m *smartbftprotos.Message) {
 	panic("implement me")
 }
 
-func (c commMock) SendTransaction(uint64, []byte) {
+func (c commMock) SendTransaction(targetID uint64, request []byte) {
 	panic("implement me")
 }
 
@@ -43,14 +43,14 @@ func (c commMock) Nodes() []uint64 {
 	panic("implement me")
 }
 
-func (c commMock) BroadcastConsensus(*smartbftprotos.Message) {
+func (c commMock) BroadcastConsensus(m *smartbftprotos.Message) {
 	atomic.AddUint32(c.heartBeatsSent, 1)
 	c.toWG.Done()
 }
 
 type heartbeatEventHandler struct{}
 
-func (h heartbeatEventHandler) OnHeartbeatTimeout(uint64, uint64) {
+func (h heartbeatEventHandler) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	panic("implement me")
 }
 

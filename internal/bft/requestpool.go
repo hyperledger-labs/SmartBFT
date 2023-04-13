@@ -28,8 +28,8 @@ const (
 var (
 	ErrReqAlreadyExists    = fmt.Errorf("request already exists")
 	ErrReqAlreadyProcessed = fmt.Errorf("request already processed")
-	// ErrRequestTooBig       = fmt.Errorf("submitted request is too big")
-	// ErrSubmitTimeout       = fmt.Errorf("timeout submitting to request pool")
+	ErrRequestTooBig       = fmt.Errorf("submitted request is too big")
+	ErrSubmitTimeout       = fmt.Errorf("timeout submitting to request pool")
 )
 
 //go:generate mockery -dir . -name RequestTimeoutHandler -case underscore -output ./mocks/
@@ -501,13 +501,7 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 	}
 
 	// start a second timeout
-	item, ok := element.Value.(*requestItem)
-	if !ok {
-		rp.lock.Unlock()
-		rp.logger.Debugf("Request %s is not type *requestItem", reqInfo)
-		return
-	}
-
+	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
 		rp.options.ComplainTimeout,
 		func() { rp.onLeaderFwdRequestTO(request, reqInfo) },
@@ -544,13 +538,7 @@ func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) 
 	}
 
 	// start a third timeout
-	item, ok := element.Value.(*requestItem)
-	if !ok {
-		rp.lock.Unlock()
-		rp.logger.Debugf("Request %s is not type *requestItem", reqInfo)
-		return
-	}
-
+	item := element.Value.(*requestItem)
 	item.timeout = time.AfterFunc(
 		rp.options.AutoRemoveTimeout,
 		func() { rp.onAutoRemoveTO(reqInfo) },

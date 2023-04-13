@@ -13,7 +13,6 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
@@ -24,7 +23,6 @@ func TestWALUtil(t *testing.T) {
 	assert.NoError(t, err)
 
 	logger := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 
 	t.Run("read wal names", func(t *testing.T) {
 		testDir, err := os.MkdirTemp("", "unittest")
@@ -35,7 +33,7 @@ func TestWALUtil(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, 0, len(names))
 
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 
 		names, err = dirReadWalNames(testDir)
 		assert.NoError(t, err)
@@ -88,7 +86,7 @@ func TestWALUtil(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, 0, len(indexes))
 
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 
 		// All good
 		names, err := dirReadWalNames(testDir)
@@ -142,7 +140,7 @@ func TestWALUtil(t *testing.T) {
 		assert.NoErrorf(t, err, "generate temporary test dir")
 		defer os.RemoveAll(testDir)
 
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -155,7 +153,7 @@ func TestWALUtil(t *testing.T) {
 		defer os.RemoveAll(testDir)
 
 		// first its fine
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -193,7 +191,7 @@ func TestWALUtil(t *testing.T) {
 		defer os.RemoveAll(testDir)
 
 		// first its fine
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -227,7 +225,7 @@ func TestWALUtil(t *testing.T) {
 		defer os.RemoveAll(testDir)
 
 		// first its fine
-		make8LogFiles(t, logger, met, testDir)
+		make8LogFiles(t, logger, testDir)
 		names, err := dirReadWalNames(testDir)
 		assert.NoError(t, err)
 		err = scanVerifyFiles(logger, testDir, names)
@@ -269,7 +267,7 @@ func arrayToSet(array []string) map[string]bool {
 }
 
 // create 8 wal files, 000000000000000000001.wal - 000000000000000000008.wal.
-func make8LogFiles(t *testing.T, logger api.Logger, metricsProvider *api.CustomerProvider, testDir string) {
+func make8LogFiles(t *testing.T, logger api.Logger, testDir string) {
 	wal, err := Create(logger, testDir, &Options{FileSizeBytes: 2048})
 	assert.NoError(t, err)
 	assert.NotNil(t, wal)
