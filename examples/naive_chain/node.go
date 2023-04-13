@@ -144,7 +144,7 @@ func (n *Node) MembershipChange() bool {
 
 func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Reconfig {
 	blockData := BlockDataFromBytes(proposal.Payload)
-	var txns []Transaction
+	txns := make([]Transaction, 0, len(blockData.Transactions))
 	for _, rawTxn := range blockData.Transactions {
 		txn := TransactionFromBytes(rawTxn)
 		txns = append(txns, Transaction{
@@ -208,7 +208,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 			ViewId:         0,
 		},
 	}
-	if err := node.consensus.Start(); err != nil {
+	if err = node.consensus.Start(); err != nil {
 		panic("error on consensus start")
 	}
 	node.Start()
@@ -255,7 +255,7 @@ func (n *Node) Stop() {
 }
 
 func (n *Node) Nodes() []uint64 {
-	var nodes []uint64
+	nodes := make([]uint64, 0, len(n.in))
 	for id := range n.in {
 		nodes = append(nodes, uint64(id))
 	}

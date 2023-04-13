@@ -374,7 +374,7 @@ func (v *View) processProposal() Phase {
 			},
 		},
 	}
-	if err := v.State.Save(savedMsg); err != nil {
+	if err = v.State.Save(savedMsg); err != nil {
 		v.Logger.Panicf("Failed to save message to state, error: %v", err)
 	}
 	v.lastBroadcastSent = prepareMessage
@@ -470,7 +470,7 @@ func (v *View) processPrepares() Phase {
 
 	// We received enough prepares to send a commit.
 	// Save the commit message we are about to send.
-	if err := v.State.Save(preparedProof); err != nil {
+	if err = v.State.Save(preparedProof); err != nil {
 		v.Logger.Panicf("Failed to save message to state, error: %v", err)
 	}
 	v.currCommitSent = proto.Clone(commitMsg).(*protos.Message)
@@ -525,7 +525,7 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 
 	// Verify proposal's metadata is valid.
 	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+	if err = proto.Unmarshal(proposal.Metadata, md); err != nil {
 		return nil, err
 	}
 
@@ -555,7 +555,7 @@ func (v *View) verifyProposal(proposal types.Proposal, prevCommits []*protos.Sig
 		return nil, err
 	}
 
-	if err := v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList, prepareAcknowledgements); err != nil {
+	if err = v.verifyBlacklist(prevCommits, expectedSeq, md.BlackList, prepareAcknowledgements); err != nil {
 		return nil, err
 	}
 
@@ -602,7 +602,7 @@ func (v *View) verifyPrevCommitSignatures(prevCommitSignatures []*protos.Signatu
 			return nil, errors.Errorf("failed verifying consenter signature of %d: %v", sig.Signer, err)
 		}
 		prpf := &protos.PreparesFrom{}
-		if err := proto.Unmarshal(aux, prpf); err != nil {
+		if err = proto.Unmarshal(aux, prpf); err != nil {
 			return nil, errors.Errorf("failed unmarshaling auxiliary input from %d: %v", sig.Signer, err)
 		}
 		prepareAcknowledgements[sig.Signer] = prpf
@@ -862,8 +862,10 @@ func (v *View) GetMetadata() []byte {
 		DecisionsInView: v.DecisionsInView,
 	}
 
-	var prevSigs []*protos.Signature
-	var prevProp *protos.Proposal
+	var (
+		prevSigs []*protos.Signature
+		prevProp *protos.Proposal
+	)
 	verificationSeq := v.Verifier.VerificationSequence()
 
 	prevProp, prevSigs = v.RetrieveCheckpoint()
