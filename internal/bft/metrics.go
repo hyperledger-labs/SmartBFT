@@ -139,15 +139,27 @@ var consensusReconfigOpts = metrics.CounterOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
-type MetricsReconfig struct {
-	CountConsensusReconfig metrics.Counter
+var latencySyncOpts = metrics.HistogramOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "consensus_latency_sync",
+	Help:         "latency sync on this channel.",
+	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
+	LabelNames:   []string{"channel"},
+	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
-func NewMetricsReconfig(p *metrics.CustomerProvider) *MetricsReconfig {
+type MetricsConcensus struct {
+	CountConsensusReconfig metrics.Counter
+	LatencySync            metrics.Histogram
+}
+
+func NewMetricsConcensus(p *metrics.CustomerProvider) *MetricsConcensus {
 	ch := p.Labels["channel"]
 
-	return &MetricsReconfig{
+	return &MetricsConcensus{
 		CountConsensusReconfig: p.NewCounter(consensusReconfigOpts).With("channel", ch),
+		LatencySync:            p.NewHistogram(latencySyncOpts).With("channel", ch),
 	}
 }
 

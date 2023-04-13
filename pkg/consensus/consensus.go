@@ -64,7 +64,7 @@ type Consensus struct {
 
 	reconfigChan     chan types.Reconfig
 	metricsBlacklist *algorithm.MetricsBlacklist
-	metricsReconfig  *algorithm.MetricsReconfig
+	metricsConsensus *algorithm.MetricsConcensus
 	metricsView      *algorithm.MetricsView
 
 	running uint64
@@ -86,7 +86,9 @@ func (c *Consensus) Deliver(proposal types.Proposal, signatures []types.Signatur
 }
 
 func (c *Consensus) Sync() types.SyncResponse {
+	begin := time.Now()
 	syncResponse := c.Synchronizer.Sync()
+	c.metricsConsensus.LatencySync.Observe(time.Since(begin).Seconds())
 	if syncResponse.Reconfig.InReplicatedDecisions {
 		c.Logger.Debugf("Detected a reconfig in sync")
 		c.reconfigChan <- types.Reconfig{
@@ -114,7 +116,7 @@ func (c *Consensus) Start() error {
 	if c.MetricsProvider == nil {
 		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
 	}
-	c.metricsReconfig = algorithm.NewMetricsReconfig(c.MetricsProvider)
+	c.metricsConsensus = algorithm.NewMetricsConcensus(c.MetricsProvider)
 	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 	c.metricsView = algorithm.NewMetricsView(c.MetricsProvider)
 
@@ -247,7 +249,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	c.Pool.RestartTimers()
 
-	c.metricsReconfig.CountConsensusReconfig.Add(1)
+	c.metricsConsensus.CountConsensusReconfig.Add(1)
 
 	c.Logger.Debugf("Reconfig is done")
 }
