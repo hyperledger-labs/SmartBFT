@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -91,9 +92,10 @@ type View struct {
 	prepares   *voteSet
 	commits    *voteSet
 	// Next proposal
-	nextPrePrepare chan *protos.Message
-	nextPrepares   *voteSet
-	nextCommits    *voteSet
+	nextPrePrepare  chan *protos.Message
+	nextPrepares    *voteSet
+	nextCommits     *voteSet
+	beginPrePrepare time.Time
 
 	MetricsBlacklist   *MetricsBlacklist
 	MetricsView        *MetricsView
@@ -316,6 +318,16 @@ func (v *View) prepared() Phase {
 
 	v.Logger.Infof("%d processed commits for proposal with seq %d", v.SelfID, seq)
 
+	v.MetricsView.CountBatchAll.Add(1)
+	v.MetricsView.CountTxsAll.Add(float64(len(v.inFlightRequests)))
+	size := 0
+	size += len(proposal.Metadata) + len(proposal.Header) + len(proposal.Payload)
+	for i := range signatures {
+		size += len(signatures[i].Value) + len(signatures[i].Msg)
+	}
+	v.MetricsView.SizeOfBatch.Add(float64(size))
+	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
+
 	v.decide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED
 }
@@ -365,6 +377,7 @@ func (v *View) processProposal() Phase {
 	}
 
 	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
+	v.beginPrePrepare = time.Now()
 
 	seq := v.ProposalSequence
 

@@ -222,6 +222,7 @@ func TestLeaderPropose(t *testing.T) {
 		Synchronizer:  synchronizer,
 		Collector:     &collector,
 		StartedWG:     &startedWG,
+		MetricsView:   bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 	configureProposerBuilder(controller)
 
@@ -462,6 +463,7 @@ func TestSyncPrevView(t *testing.T) {
 		Signer:          signer,
 		WAL:             wal,
 		StartedWG:       &startedWG,
+		MetricsView:     bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 
 	vs := configureProposerBuilder(controller)
@@ -932,6 +934,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 		StartedWG:          &startedWG,
 		LeaderRotation:     true,
 		DecisionsPerLeader: 1,
+		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs
@@ -1114,6 +1117,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 		StartedWG:          &startedWG,
 		LeaderRotation:     true,
 		DecisionsPerLeader: 1,
+		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs

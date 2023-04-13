@@ -422,6 +422,7 @@ func (c *Consensus) createComponents() {
 		Collector:          c.collector,
 		State:              c.state,
 		InFlight:           c.inFlight,
+		MetricsView:        c.metricsView,
 	}
 	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
 	c.viewChanger.Comm = c.controller
