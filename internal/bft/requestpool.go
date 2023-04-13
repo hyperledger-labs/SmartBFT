@@ -12,6 +12,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
+
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
@@ -83,10 +85,11 @@ type PoolOptions struct {
 	AutoRemoveTimeout time.Duration
 	RequestMaxBytes   uint64
 	SubmitTimeout     time.Duration
+	MetricsProvider   *api.CustomerProvider
 }
 
 // NewPool constructs new requests pool
-func NewPool(log api.Logger, metricsProvider *api.CustomerProvider, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
+func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHandler, options PoolOptions, submittedChan chan struct{}) *Pool {
 	if options.ForwardTimeout == 0 {
 		options.ForwardTimeout = defaultRequestTimeout
 	}
@@ -102,6 +105,9 @@ func NewPool(log api.Logger, metricsProvider *api.CustomerProvider, inspector ap
 	if options.SubmitTimeout == 0 {
 		options.SubmitTimeout = defaultRequestTimeout
 	}
+	if options.MetricsProvider == nil {
+		options.MetricsProvider = api.NewCustomerProvider(&disabled.Provider{})
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 
@@ -109,7 +115,7 @@ func NewPool(log api.Logger, metricsProvider *api.CustomerProvider, inspector ap
 		cancel:         cancel,
 		timeoutHandler: th,
 		logger:         log,
-		metrics:        NewMetricsRequestPool(metricsProvider),
+		metrics:        NewMetricsRequestPool(options.MetricsProvider),
 		inspector:      inspector,
 		fifo:           list.New(),
 		semaphore:      semaphore.NewWeighted(options.QueueSize),

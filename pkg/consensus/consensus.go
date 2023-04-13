@@ -149,9 +149,10 @@ func (c *Consensus) Start() error {
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 		RequestMaxBytes:   c.Config.RequestMaxBytes,
 		SubmitTimeout:     c.Config.RequestPoolSubmitTimeout,
+		MetricsProvider:   c.MetricsProvider,
 	}
 	c.submittedChan = make(chan struct{}, 1)
-	c.Pool = algorithm.NewPool(c.Logger, c.MetricsProvider, c.RequestInspector, c.controller, opts, c.submittedChan)
+	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
 	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
