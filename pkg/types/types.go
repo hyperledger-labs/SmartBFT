@@ -85,7 +85,7 @@ func (c *Checkpoint) Get() (*smartbftprotos.Proposal, []*smartbftprotos.Signatur
 		VerificationSequence: uint64(c.proposal.VerificationSequence),
 	}
 
-	var signatures []*smartbftprotos.Signature
+	signatures := make([]*smartbftprotos.Signature, 0, len(c.signatures))
 	for _, sig := range c.signatures {
 		signatures = append(signatures, &smartbftprotos.Signature{
 			Msg:    sig.Msg,

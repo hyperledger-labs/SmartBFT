@@ -926,13 +926,13 @@ func TestViewPersisted(t *testing.T) {
 				assert.NoError(t, err)
 				persistedState.Restore(view)
 
-				// It should broadcast a prepare right after starting it.
+				// It should broadcast prepare right after starting it.
 				prepareSent.Add(1)
 
 				// Restart the view.
 				view.Start()
 
-				// Wait for the prepare to be sent again.
+				// Wait for prepare to be sent again.
 				prepareSent.Wait()
 			}
 

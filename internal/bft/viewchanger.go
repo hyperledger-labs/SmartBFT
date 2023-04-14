@@ -458,7 +458,7 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 		VerificationSequence: uint64(inFlight.VerificationSequence),
 	}
 	if lastDecision == nil {
-		v.Logger.Panicf("￿The given last decision is nil", v.SelfID)
+		v.Logger.Panicf("%d The given last decision is nil", v.SelfID)
 		return nil
 	}
 	if lastDecision.Metadata == nil {
@@ -1189,7 +1189,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		}
 		if lastDecisionMD.LatestSequence == proposalMD.LatestSequence {
 			v.Logger.Debugf("Node %d already decided on sequence %d and so it will not commit the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
-			v.Logger.Debugf("Node %d is comparing its last decision with the in flight proposal with the same sequence", v.SelfID, lastDecisionMD.LatestSequence)
+			v.Logger.Debugf("Node %d is comparing its last decision with the in flight proposal with the same sequence %d", v.SelfID, lastDecisionMD.LatestSequence)
 			if !proto.Equal(myLastDecision, proposal) {
 				v.Logger.Warnf("Node %d compared its last decision with the in flight proposal, which has the same sequence, but they are not equal", v.SelfID)
 				return false
