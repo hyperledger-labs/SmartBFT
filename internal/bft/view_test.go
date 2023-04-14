@@ -941,7 +941,7 @@ func TestViewPersisted(t *testing.T) {
 				// Restart the view.
 				view.Start()
 
-				// Wait for the prepare to be sent again.
+				// Wait for prepare to be sent again.
 				prepareSent.Wait()
 			}
 

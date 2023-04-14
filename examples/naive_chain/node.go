@@ -209,7 +209,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 			ViewId:         0,
 		},
 	}
-	if err := node.consensus.Start(); err != nil {
+	if err = node.consensus.Start(); err != nil {
 		panic("error on consensus start")
 	}
 	node.Start()
