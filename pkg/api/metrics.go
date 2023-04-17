@@ -6,11 +6,13 @@ SPDX-License-Identifier: Apache-2.0
 
 package api
 
+// CustomerProvider encapsulates provider and labels
 type CustomerProvider struct {
 	Provider
 	Labels map[string]string
 }
 
+// NewCustomerProvider create new provide for metrics
 func NewCustomerProvider(mp Provider, labelValues ...string) *CustomerProvider {
 	return &CustomerProvider{
 		Provider: mp,
