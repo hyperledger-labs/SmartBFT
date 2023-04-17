@@ -82,28 +82,41 @@ type MetricsRequestPool struct {
 
 // NewMetricsRequestPool create new request pool metrics
 func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
-	countOfRequestPoolOpts.LabelNames = p.MakeLabelNames(countOfRequestPoolOpts.LabelNames...)
-	countOfRequestPoolOpts.StatsdFormat = p.MakeStatsdFormat(countOfRequestPoolOpts.StatsdFormat)
-	countOfFailAddRequestToPoolOpts.LabelNames = p.MakeLabelNames(countOfFailAddRequestToPoolOpts.LabelNames...)
-	countOfFailAddRequestToPoolOpts.StatsdFormat = p.MakeStatsdFormat(countOfFailAddRequestToPoolOpts.StatsdFormat)
-	countOfLeaderForwardRequestOpts.LabelNames = p.MakeLabelNames(countOfLeaderForwardRequestOpts.LabelNames...)
-	countOfLeaderForwardRequestOpts.StatsdFormat = p.MakeStatsdFormat(countOfLeaderForwardRequestOpts.StatsdFormat)
-	countTimeoutTwoStepOpts.LabelNames = p.MakeLabelNames(countTimeoutTwoStepOpts.LabelNames...)
-	countTimeoutTwoStepOpts.StatsdFormat = p.MakeStatsdFormat(countTimeoutTwoStepOpts.StatsdFormat)
-	countOfDeleteRequestPoolOpts.LabelNames = p.MakeLabelNames(countOfDeleteRequestPoolOpts.LabelNames...)
-	countOfDeleteRequestPoolOpts.StatsdFormat = p.MakeStatsdFormat(countOfDeleteRequestPoolOpts.StatsdFormat)
-	countOfRequestPoolAllOpts.LabelNames = p.MakeLabelNames(countOfRequestPoolAllOpts.LabelNames...)
-	countOfRequestPoolAllOpts.StatsdFormat = p.MakeStatsdFormat(countOfRequestPoolAllOpts.StatsdFormat)
-	latencyOfRequestPoolOpts.LabelNames = p.MakeLabelNames(latencyOfRequestPoolOpts.LabelNames...)
-	latencyOfRequestPoolOpts.StatsdFormat = p.MakeStatsdFormat(latencyOfRequestPoolOpts.StatsdFormat)
+	countOfRequestPoolOptsTmp := countOfRequestPoolOpts
+	countOfRequestPoolOptsTmp.LabelNames = p.MakeLabelNames(countOfRequestPoolOptsTmp.LabelNames...)
+	countOfRequestPoolOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfRequestPoolOptsTmp.StatsdFormat)
+
+	countOfFailAddRequestToPoolOptsTmp := countOfFailAddRequestToPoolOpts
+	countOfFailAddRequestToPoolOptsTmp.LabelNames = p.MakeLabelNames(countOfFailAddRequestToPoolOptsTmp.LabelNames...)
+	countOfFailAddRequestToPoolOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfFailAddRequestToPoolOptsTmp.StatsdFormat)
+
+	countOfLeaderForwardRequestOptsTmp := countOfLeaderForwardRequestOpts
+	countOfLeaderForwardRequestOptsTmp.LabelNames = p.MakeLabelNames(countOfLeaderForwardRequestOptsTmp.LabelNames...)
+	countOfLeaderForwardRequestOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfLeaderForwardRequestOptsTmp.StatsdFormat)
+
+	countTimeoutTwoStepOptsTmp := countTimeoutTwoStepOpts
+	countTimeoutTwoStepOptsTmp.LabelNames = p.MakeLabelNames(countTimeoutTwoStepOptsTmp.LabelNames...)
+	countTimeoutTwoStepOptsTmp.StatsdFormat = p.MakeStatsdFormat(countTimeoutTwoStepOptsTmp.StatsdFormat)
+
+	countOfDeleteRequestPoolOptsTmp := countOfDeleteRequestPoolOpts
+	countOfDeleteRequestPoolOptsTmp.LabelNames = p.MakeLabelNames(countOfDeleteRequestPoolOptsTmp.LabelNames...)
+	countOfDeleteRequestPoolOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfDeleteRequestPoolOptsTmp.StatsdFormat)
+
+	countOfRequestPoolAllOptsTmp := countOfRequestPoolAllOpts
+	countOfRequestPoolAllOptsTmp.LabelNames = p.MakeLabelNames(countOfRequestPoolAllOptsTmp.LabelNames...)
+	countOfRequestPoolAllOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfRequestPoolAllOptsTmp.StatsdFormat)
+
+	latencyOfRequestPoolOptsTmp := latencyOfRequestPoolOpts
+	latencyOfRequestPoolOptsTmp.LabelNames = p.MakeLabelNames(latencyOfRequestPoolOptsTmp.LabelNames...)
+	latencyOfRequestPoolOptsTmp.StatsdFormat = p.MakeStatsdFormat(latencyOfRequestPoolOptsTmp.StatsdFormat)
 	return &MetricsRequestPool{
-		CountOfRequestPool:          p.NewGauge(countOfRequestPoolOpts).With(p.LabelsForWith()...),
-		CountOfFailAddRequestToPool: p.NewCounter(countOfFailAddRequestToPoolOpts).With(p.LabelsForWith()...),
-		CountOfLeaderForwardRequest: p.NewCounter(countOfLeaderForwardRequestOpts).With(p.LabelsForWith()...),
-		CountTimeoutTwoStep:         p.NewCounter(countTimeoutTwoStepOpts).With(p.LabelsForWith()...),
-		CountOfDeleteRequestPool:    p.NewCounter(countOfDeleteRequestPoolOpts).With(p.LabelsForWith()...),
-		CountOfRequestPoolAll:       p.NewCounter(countOfRequestPoolAllOpts).With(p.LabelsForWith()...),
-		LatencyOfRequestPool:        p.NewHistogram(latencyOfRequestPoolOpts).With(p.LabelsForWith()...),
+		CountOfRequestPool:          p.NewGauge(countOfRequestPoolOptsTmp).With(p.LabelsForWith()...),
+		CountOfFailAddRequestToPool: p.NewCounter(countOfFailAddRequestToPoolOptsTmp).With(p.LabelsForWith()...),
+		CountOfLeaderForwardRequest: p.NewCounter(countOfLeaderForwardRequestOptsTmp).With(p.LabelsForWith()...),
+		CountTimeoutTwoStep:         p.NewCounter(countTimeoutTwoStepOptsTmp).With(p.LabelsForWith()...),
+		CountOfDeleteRequestPool:    p.NewCounter(countOfDeleteRequestPoolOptsTmp).With(p.LabelsForWith()...),
+		CountOfRequestPoolAll:       p.NewCounter(countOfRequestPoolAllOptsTmp).With(p.LabelsForWith()...),
+		LatencyOfRequestPool:        p.NewHistogram(latencyOfRequestPoolOptsTmp).With(p.LabelsForWith()...),
 	}
 }
 
@@ -135,13 +148,16 @@ type MetricsBlacklist struct {
 
 // NewMetricsBlacklist create new blacklist metrics
 func NewMetricsBlacklist(p *metrics.CustomerProvider) *MetricsBlacklist {
-	countBlackListOpts.LabelNames = p.MakeLabelNames(countBlackListOpts.LabelNames...)
-	countBlackListOpts.StatsdFormat = p.MakeStatsdFormat(countBlackListOpts.StatsdFormat)
-	nodesInBlackListOpts.LabelNames = p.MakeLabelNames(nodesInBlackListOpts.LabelNames...)
-	nodesInBlackListOpts.StatsdFormat = p.MakeStatsdFormat(nodesInBlackListOpts.StatsdFormat)
+	countBlackListOptsTmp := countBlackListOpts
+	countBlackListOptsTmp.LabelNames = p.MakeLabelNames(countBlackListOptsTmp.LabelNames...)
+	countBlackListOptsTmp.StatsdFormat = p.MakeStatsdFormat(countBlackListOptsTmp.StatsdFormat)
+
+	nodesInBlackListOptsTmp := nodesInBlackListOpts
+	nodesInBlackListOptsTmp.LabelNames = p.MakeLabelNames(nodesInBlackListOptsTmp.LabelNames...)
+	nodesInBlackListOptsTmp.StatsdFormat = p.MakeStatsdFormat(nodesInBlackListOptsTmp.StatsdFormat)
 	return &MetricsBlacklist{
-		CountBlackList:   p.NewGauge(countBlackListOpts).With(p.LabelsForWith()...),
-		NodesInBlackList: p.NewGauge(nodesInBlackListOpts),
+		CountBlackList:   p.NewGauge(countBlackListOptsTmp).With(p.LabelsForWith()...),
+		NodesInBlackList: p.NewGauge(nodesInBlackListOptsTmp),
 		labels:           p.LabelsForWith(),
 	}
 }
@@ -180,13 +196,16 @@ type MetricsConsensus struct {
 
 // NewMetricsConsensus create new consensus metrics
 func NewMetricsConsensus(p *metrics.CustomerProvider) *MetricsConsensus {
-	consensusReconfigOpts.LabelNames = p.MakeLabelNames(consensusReconfigOpts.LabelNames...)
-	consensusReconfigOpts.StatsdFormat = p.MakeStatsdFormat(consensusReconfigOpts.StatsdFormat)
-	latencySyncOpts.LabelNames = p.MakeLabelNames(latencySyncOpts.LabelNames...)
-	latencySyncOpts.StatsdFormat = p.MakeStatsdFormat(latencySyncOpts.StatsdFormat)
+	consensusReconfigOptsTmp := consensusReconfigOpts
+	consensusReconfigOptsTmp.LabelNames = p.MakeLabelNames(consensusReconfigOptsTmp.LabelNames...)
+	consensusReconfigOptsTmp.StatsdFormat = p.MakeStatsdFormat(consensusReconfigOptsTmp.StatsdFormat)
+
+	latencySyncOptsTmp := latencySyncOpts
+	latencySyncOptsTmp.LabelNames = p.MakeLabelNames(latencySyncOptsTmp.LabelNames...)
+	latencySyncOptsTmp.StatsdFormat = p.MakeStatsdFormat(latencySyncOptsTmp.StatsdFormat)
 	return &MetricsConsensus{
-		CountConsensusReconfig: p.NewCounter(consensusReconfigOpts).With(p.LabelsForWith()...),
-		LatencySync:            p.NewHistogram(latencySyncOpts).With(p.LabelsForWith()...),
+		CountConsensusReconfig: p.NewCounter(consensusReconfigOptsTmp).With(p.LabelsForWith()...),
+		LatencySync:            p.NewHistogram(latencySyncOptsTmp).With(p.LabelsForWith()...),
 	}
 }
 
@@ -308,40 +327,61 @@ type MetricsView struct {
 
 // NewMetricsView create new view metrics
 func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
-	viewNumberOpts.LabelNames = p.MakeLabelNames(viewNumberOpts.LabelNames...)
-	viewNumberOpts.StatsdFormat = p.MakeStatsdFormat(viewNumberOpts.StatsdFormat)
-	leaderIDOpts.LabelNames = p.MakeLabelNames(leaderIDOpts.LabelNames...)
-	leaderIDOpts.StatsdFormat = p.MakeStatsdFormat(leaderIDOpts.StatsdFormat)
-	proposalSequenceOpts.LabelNames = p.MakeLabelNames(proposalSequenceOpts.LabelNames...)
-	proposalSequenceOpts.StatsdFormat = p.MakeStatsdFormat(proposalSequenceOpts.StatsdFormat)
-	decisionsInViewOpts.LabelNames = p.MakeLabelNames(decisionsInViewOpts.LabelNames...)
-	decisionsInViewOpts.StatsdFormat = p.MakeStatsdFormat(decisionsInViewOpts.StatsdFormat)
-	phaseOpts.LabelNames = p.MakeLabelNames(phaseOpts.LabelNames...)
-	phaseOpts.StatsdFormat = p.MakeStatsdFormat(phaseOpts.StatsdFormat)
-	countTxsInBatchOpts.LabelNames = p.MakeLabelNames(countTxsInBatchOpts.LabelNames...)
-	countTxsInBatchOpts.StatsdFormat = p.MakeStatsdFormat(countTxsInBatchOpts.StatsdFormat)
-	countBatchAllOpts.LabelNames = p.MakeLabelNames(countBatchAllOpts.LabelNames...)
-	countBatchAllOpts.StatsdFormat = p.MakeStatsdFormat(countBatchAllOpts.StatsdFormat)
-	countTxsAllOpts.LabelNames = p.MakeLabelNames(countTxsAllOpts.LabelNames...)
-	countTxsAllOpts.StatsdFormat = p.MakeStatsdFormat(countTxsAllOpts.StatsdFormat)
-	sizeOfBatchOpts.LabelNames = p.MakeLabelNames(sizeOfBatchOpts.LabelNames...)
-	sizeOfBatchOpts.StatsdFormat = p.MakeStatsdFormat(sizeOfBatchOpts.StatsdFormat)
-	latencyBatchProcessingOpts.LabelNames = p.MakeLabelNames(latencyBatchProcessingOpts.LabelNames...)
-	latencyBatchProcessingOpts.StatsdFormat = p.MakeStatsdFormat(latencyBatchProcessingOpts.StatsdFormat)
-	latencyBatchSaveOpts.LabelNames = p.MakeLabelNames(latencyBatchSaveOpts.LabelNames...)
-	latencyBatchSaveOpts.StatsdFormat = p.MakeStatsdFormat(latencyBatchSaveOpts.StatsdFormat)
+	viewNumberOptsTmp := viewNumberOpts
+	viewNumberOptsTmp.LabelNames = p.MakeLabelNames(viewNumberOptsTmp.LabelNames...)
+	viewNumberOptsTmp.StatsdFormat = p.MakeStatsdFormat(viewNumberOptsTmp.StatsdFormat)
+
+	leaderIDOptsTmp := leaderIDOpts
+	leaderIDOptsTmp.LabelNames = p.MakeLabelNames(leaderIDOptsTmp.LabelNames...)
+	leaderIDOptsTmp.StatsdFormat = p.MakeStatsdFormat(leaderIDOptsTmp.StatsdFormat)
+
+	proposalSequenceOptsTmp := proposalSequenceOpts
+	proposalSequenceOptsTmp.LabelNames = p.MakeLabelNames(proposalSequenceOptsTmp.LabelNames...)
+	proposalSequenceOptsTmp.StatsdFormat = p.MakeStatsdFormat(proposalSequenceOptsTmp.StatsdFormat)
+
+	decisionsInViewOptsTmp := decisionsInViewOpts
+	decisionsInViewOptsTmp.LabelNames = p.MakeLabelNames(decisionsInViewOptsTmp.LabelNames...)
+	decisionsInViewOptsTmp.StatsdFormat = p.MakeStatsdFormat(decisionsInViewOptsTmp.StatsdFormat)
+
+	phaseOptsTmp := phaseOpts
+	phaseOptsTmp.LabelNames = p.MakeLabelNames(phaseOptsTmp.LabelNames...)
+	phaseOptsTmp.StatsdFormat = p.MakeStatsdFormat(phaseOptsTmp.StatsdFormat)
+
+	countTxsInBatchOptsTmp := countTxsInBatchOpts
+	countTxsInBatchOptsTmp.LabelNames = p.MakeLabelNames(countTxsInBatchOptsTmp.LabelNames...)
+	countTxsInBatchOptsTmp.StatsdFormat = p.MakeStatsdFormat(countTxsInBatchOptsTmp.StatsdFormat)
+
+	countBatchAllOptsTmp := countBatchAllOpts
+	countBatchAllOptsTmp.LabelNames = p.MakeLabelNames(countBatchAllOptsTmp.LabelNames...)
+	countBatchAllOptsTmp.StatsdFormat = p.MakeStatsdFormat(countBatchAllOptsTmp.StatsdFormat)
+
+	countTxsAllOptsTmp := countTxsAllOpts
+	countTxsAllOptsTmp.LabelNames = p.MakeLabelNames(countTxsAllOptsTmp.LabelNames...)
+	countTxsAllOptsTmp.StatsdFormat = p.MakeStatsdFormat(countTxsAllOptsTmp.StatsdFormat)
+
+	sizeOfBatchOptsTmp := sizeOfBatchOpts
+	sizeOfBatchOptsTmp.LabelNames = p.MakeLabelNames(sizeOfBatchOptsTmp.LabelNames...)
+	sizeOfBatchOptsTmp.StatsdFormat = p.MakeStatsdFormat(sizeOfBatchOptsTmp.StatsdFormat)
+
+	latencyBatchProcessingOptsTmp := latencyBatchProcessingOpts
+	latencyBatchProcessingOptsTmp.LabelNames = p.MakeLabelNames(latencyBatchProcessingOptsTmp.LabelNames...)
+	latencyBatchProcessingOptsTmp.StatsdFormat = p.MakeStatsdFormat(latencyBatchProcessingOptsTmp.StatsdFormat)
+
+	latencyBatchSaveOptsTmp := latencyBatchSaveOpts
+	latencyBatchSaveOptsTmp.LabelNames = p.MakeLabelNames(latencyBatchSaveOptsTmp.LabelNames...)
+	latencyBatchSaveOptsTmp.StatsdFormat = p.MakeStatsdFormat(latencyBatchSaveOptsTmp.StatsdFormat)
 	return &MetricsView{
-		ViewNumber:             p.NewGauge(viewNumberOpts).With(p.LabelsForWith()...),
-		LeaderID:               p.NewGauge(leaderIDOpts).With(p.LabelsForWith()...),
-		ProposalSequence:       p.NewGauge(proposalSequenceOpts).With(p.LabelsForWith()...),
-		DecisionsInView:        p.NewGauge(decisionsInViewOpts).With(p.LabelsForWith()...),
-		Phase:                  p.NewGauge(phaseOpts).With(p.LabelsForWith()...),
-		CountTxsInBatch:        p.NewGauge(countTxsInBatchOpts).With(p.LabelsForWith()...),
-		CountBatchAll:          p.NewCounter(countBatchAllOpts).With(p.LabelsForWith()...),
-		CountTxsAll:            p.NewCounter(countTxsAllOpts).With(p.LabelsForWith()...),
-		SizeOfBatch:            p.NewCounter(sizeOfBatchOpts).With(p.LabelsForWith()...),
-		LatencyBatchProcessing: p.NewHistogram(latencyBatchProcessingOpts).With(p.LabelsForWith()...),
-		LatencyBatchSave:       p.NewHistogram(latencyBatchSaveOpts).With(p.LabelsForWith()...),
+		ViewNumber:             p.NewGauge(viewNumberOptsTmp).With(p.LabelsForWith()...),
+		LeaderID:               p.NewGauge(leaderIDOptsTmp).With(p.LabelsForWith()...),
+		ProposalSequence:       p.NewGauge(proposalSequenceOptsTmp).With(p.LabelsForWith()...),
+		DecisionsInView:        p.NewGauge(decisionsInViewOptsTmp).With(p.LabelsForWith()...),
+		Phase:                  p.NewGauge(phaseOptsTmp).With(p.LabelsForWith()...),
+		CountTxsInBatch:        p.NewGauge(countTxsInBatchOptsTmp).With(p.LabelsForWith()...),
+		CountBatchAll:          p.NewCounter(countBatchAllOptsTmp).With(p.LabelsForWith()...),
+		CountTxsAll:            p.NewCounter(countTxsAllOptsTmp).With(p.LabelsForWith()...),
+		SizeOfBatch:            p.NewCounter(sizeOfBatchOptsTmp).With(p.LabelsForWith()...),
+		LatencyBatchProcessing: p.NewHistogram(latencyBatchProcessingOptsTmp).With(p.LabelsForWith()...),
+		LatencyBatchSave:       p.NewHistogram(latencyBatchSaveOptsTmp).With(p.LabelsForWith()...),
 	}
 }
 
@@ -381,15 +421,20 @@ type MetricsViewChange struct {
 
 // NewMetricsViewChange create new view change metrics
 func NewMetricsViewChange(p *metrics.CustomerProvider) *MetricsViewChange {
-	currentViewOpts.LabelNames = p.MakeLabelNames(currentViewOpts.LabelNames...)
-	currentViewOpts.StatsdFormat = p.MakeStatsdFormat(currentViewOpts.StatsdFormat)
-	nextViewOpts.LabelNames = p.MakeLabelNames(nextViewOpts.LabelNames...)
-	nextViewOpts.StatsdFormat = p.MakeStatsdFormat(nextViewOpts.StatsdFormat)
-	realViewOpts.LabelNames = p.MakeLabelNames(realViewOpts.LabelNames...)
-	realViewOpts.StatsdFormat = p.MakeStatsdFormat(realViewOpts.StatsdFormat)
+	currentViewOptsTmp := currentViewOpts
+	currentViewOptsTmp.LabelNames = p.MakeLabelNames(currentViewOptsTmp.LabelNames...)
+	currentViewOptsTmp.StatsdFormat = p.MakeStatsdFormat(currentViewOptsTmp.StatsdFormat)
+
+	nextViewOptsTmp := nextViewOpts
+	nextViewOptsTmp.LabelNames = p.MakeLabelNames(nextViewOptsTmp.LabelNames...)
+	nextViewOptsTmp.StatsdFormat = p.MakeStatsdFormat(nextViewOptsTmp.StatsdFormat)
+
+	realViewOptsTmp := realViewOpts
+	realViewOptsTmp.LabelNames = p.MakeLabelNames(realViewOptsTmp.LabelNames...)
+	realViewOptsTmp.StatsdFormat = p.MakeStatsdFormat(realViewOptsTmp.StatsdFormat)
 	return &MetricsViewChange{
-		CurrentView: p.NewGauge(currentViewOpts).With(p.LabelsForWith()...),
-		NextView:    p.NewGauge(nextViewOpts).With(p.LabelsForWith()...),
-		RealView:    p.NewGauge(realViewOpts).With(p.LabelsForWith()...),
+		CurrentView: p.NewGauge(currentViewOptsTmp).With(p.LabelsForWith()...),
+		NextView:    p.NewGauge(nextViewOptsTmp).With(p.LabelsForWith()...),
+		RealView:    p.NewGauge(realViewOptsTmp).With(p.LabelsForWith()...),
 	}
 }
