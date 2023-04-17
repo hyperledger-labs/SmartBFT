@@ -6,7 +6,7 @@ var countOfRequestPoolOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_of_elements",
-	Help:         "Count of request elements in pool for this channel.",
+	Help:         "Number of elements in the consensus request pool.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -15,7 +15,7 @@ var countOfFailAddRequestToPoolOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_of_fail_add_request",
-	Help:         "Count of fail add request in pool for this channel.",
+	Help:         "Number of requests pool insertion failure.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -25,7 +25,7 @@ var countOfLeaderForwardRequestOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_leader_forward_request",
-	Help:         "Count leader forward request on this channel.",
+	Help:         "Number of requests forwarded to the leader.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -34,7 +34,7 @@ var countTimeoutTwoStepOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_timeout_two_step",
-	Help:         "Count of timeout two step on this channel.",
+	Help:         "Number of times requests reached second timeout.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -43,7 +43,7 @@ var countOfDeleteRequestPoolOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_of_delete_request",
-	Help:         "Count of request delete from pool on this channel.",
+	Help:         "Number of elements removed from the request pool.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -52,7 +52,7 @@ var countOfRequestPoolAllOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_count_of_elements_all",
-	Help:         "All of request elements in pool for this channel.",
+	Help:         "Total amount of elements in the request pool.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -61,7 +61,7 @@ var latencyOfRequestPoolOpts = metrics.HistogramOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "pool_latency_of_elements",
-	Help:         "Latency of request elements in pool for this channel.",
+	Help:         "The average request processing time, time request resides in the pool.",
 	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
@@ -134,7 +134,7 @@ var consensusReconfigOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "consensus_reconfig",
-	Help:         "count consensus reconfig on this channel.",
+	Help:         "Number of reconfiguration requests.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -143,7 +143,7 @@ var latencySyncOpts = metrics.HistogramOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "consensus_latency_sync",
-	Help:         "latency sync on this channel.",
+	Help:         "An average time it takes to sync node.",
 	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
@@ -167,7 +167,7 @@ var viewNumberOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_number",
-	Help:         "number of view on this channel.",
+	Help:         "The View number value.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -176,7 +176,7 @@ var leaderIDOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_leader_id",
-	Help:         "leader id on this channel.",
+	Help:         "The leader id.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -185,7 +185,7 @@ var proposalSequenceOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_proposal_sequence",
-	Help:         "proposal sequence view on this channel.",
+	Help:         "The sequence number within current view.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -194,7 +194,7 @@ var decisionsInViewOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_decisions",
-	Help:         "decisions in view on this channel.",
+	Help:         "The number of decisions in the current view.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -203,7 +203,7 @@ var phaseOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_phase",
-	Help:         "phase in view on this channel.",
+	Help:         "Current consensus phase.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -212,7 +212,7 @@ var countTxsInBatchOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_count_txs_in_batch",
-	Help:         "count txs in batch on this channel.",
+	Help:         "The number of transactions per batch.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -221,7 +221,7 @@ var countBatchAllOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_count_batch_all",
-	Help:         "count processed batch on this channel.",
+	Help:         "Amount of batched processed.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -230,7 +230,7 @@ var countTxsAllOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_count_txs_all",
-	Help:         "count txs all on this channel.",
+	Help:         "Total amount of transactions.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -239,7 +239,7 @@ var sizeOfBatchOpts = metrics.CounterOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_size_batch",
-	Help:         "size of batch on this channel.",
+	Help:         "An average batch size.",
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
@@ -248,7 +248,7 @@ var latencyBatchProcessingOpts = metrics.HistogramOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_latency_batch_processing",
-	Help:         "latency batch processing on this channel.",
+	Help:         "Amount of time it take to process batch.",
 	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
@@ -258,7 +258,7 @@ var latencyBatchSaveOpts = metrics.HistogramOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
 	Name:         "view_latency_batch_save",
-	Help:         "latency batch save on this channel.",
+	Help:         "An average time it takes to persist batch.",
 	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
 	LabelNames:   []string{"channel"},
 	StatsdFormat: "%{#fqname}.%{channel}",
