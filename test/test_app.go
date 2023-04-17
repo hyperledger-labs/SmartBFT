@@ -63,6 +63,7 @@ type App struct {
 	lastRecord      lastRecord
 	verificationSeq uint64
 	messageLost     func(*smartbftprotos.Message) bool
+	lock            sync.Mutex
 }
 
 type lastRecord struct {
@@ -272,6 +273,8 @@ func (a *App) MembershipChange() bool {
 
 // Deliver delivers the given proposal
 func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
+	a.lock.Lock()
+	defer a.lock.Unlock()
 	defer func() {
 		a.lastRecord = lastRecord{
 			proposal:   proposal,

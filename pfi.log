@@ -1,0 +1,10 @@
+?   	github.com/SmartBFT-Go/consensus/internal/bft/mocks	[no test files]
+?   	github.com/SmartBFT-Go/consensus/pkg/consensus	[no test files]
+?   	github.com/SmartBFT-Go/consensus/pkg/metrics/disabled	[no test files]
+?   	github.com/SmartBFT-Go/consensus/pkg/types	[no test files]
+?   	github.com/SmartBFT-Go/consensus/smartbftprotos	[no test files]
+ok  	github.com/SmartBFT-Go/consensus/examples/naive_chain	17.019s
+ok  	github.com/SmartBFT-Go/consensus/internal/bft	11.714s
+ok  	github.com/SmartBFT-Go/consensus/pkg/api	1.099s
+ok  	github.com/SmartBFT-Go/consensus/pkg/wal	56.395s
+ok  	github.com/SmartBFT-Go/consensus/test	62.829s

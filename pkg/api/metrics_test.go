@@ -8,12 +8,30 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var countOpts = api.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "count_of_files",
+	Help:         "Count.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var nodesOpts = api.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "node",
+	Help:         "Node ID.",
+	LabelNames:   []string{"id"},
+	StatsdFormat: "%{#fqname}.%{id}",
+}
+
 func TestMakeStatsdFormat(t *testing.T) {
 	cp := api.NewCustomerProvider(&disabled.Provider{}, "label2", "text1", "label1", "text2")
-	rez := cp.MakeStatsdFormat("%{#fqname}.%{id}")
-	assert.Equal(t, "%{#fqname}.%{id}.%{label1}.%{label2}", rez)
-	rez = cp.MakeStatsdFormat("%{#fqname}")
-	assert.Equal(t, "%{#fqname}.%{label1}.%{label2}", rez)
+	countOptsTmp := cp.NewGaugeOpts(countOpts)
+	nodesOptsTmp := cp.NewGaugeOpts(nodesOpts)
+	assert.Equal(t, "%{#fqname}.%{label1}.%{label2}", countOptsTmp.StatsdFormat)
+	assert.Equal(t, "%{#fqname}.%{id}.%{label1}.%{label2}", nodesOptsTmp.StatsdFormat)
 }
 
 func TestLabelsForWith(t *testing.T) {
@@ -26,11 +44,8 @@ func TestLabelsForWith(t *testing.T) {
 
 func TestMakeLabelNames(t *testing.T) {
 	cp := api.NewCustomerProvider(&disabled.Provider{}, "label2", "text1", "label1", "text2")
-	rez := cp.MakeLabelNames()
-	assert.Equal(t, []string{"label1", "label2"}, rez)
-	var s []string
-	rez = cp.MakeLabelNames(s...)
-	assert.Equal(t, []string{"label1", "label2"}, rez)
-	rez = cp.MakeLabelNames("id")
-	assert.Equal(t, []string{"id", "label1", "label2"}, rez)
+	countOptsTmp := cp.NewGaugeOpts(countOpts)
+	nodesOptsTmp := cp.NewGaugeOpts(nodesOpts)
+	assert.Equal(t, []string{"label1", "label2"}, countOptsTmp.LabelNames)
+	assert.Equal(t, []string{"id", "label1", "label2"}, nodesOptsTmp.LabelNames)
 }

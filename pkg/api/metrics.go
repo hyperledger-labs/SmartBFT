@@ -25,6 +25,43 @@ func NewCustomerProvider(mp Provider, labelValues ...string) *CustomerProvider {
 	}
 }
 
+func (c *CustomerProvider) NewGaugeOpts(old GaugeOpts) GaugeOpts {
+	return GaugeOpts{
+		Namespace:    old.Namespace,
+		Subsystem:    old.Subsystem,
+		Name:         old.Name,
+		Help:         old.Help,
+		LabelNames:   c.makeLabelNames(old.LabelNames...),
+		LabelHelp:    old.LabelHelp,
+		StatsdFormat: c.makeStatsdFormat(old.StatsdFormat),
+	}
+}
+
+func (c *CustomerProvider) NewCounterOpts(old CounterOpts) CounterOpts {
+	return CounterOpts{
+		Namespace:    old.Namespace,
+		Subsystem:    old.Subsystem,
+		Name:         old.Name,
+		Help:         old.Help,
+		LabelNames:   c.makeLabelNames(old.LabelNames...),
+		LabelHelp:    old.LabelHelp,
+		StatsdFormat: c.makeStatsdFormat(old.StatsdFormat),
+	}
+}
+
+func (c *CustomerProvider) NewHistogramOpts(old HistogramOpts) HistogramOpts {
+	return HistogramOpts{
+		Namespace:    old.Namespace,
+		Subsystem:    old.Subsystem,
+		Name:         old.Name,
+		Help:         old.Help,
+		Buckets:      old.Buckets,
+		LabelNames:   c.makeLabelNames(old.LabelNames...),
+		LabelHelp:    old.LabelHelp,
+		StatsdFormat: c.makeStatsdFormat(old.StatsdFormat),
+	}
+}
+
 func (c *CustomerProvider) LabelsForWith(labelValues ...string) []string {
 	result := make([]string, 0, len(labelValues)+len(c.labels)*2)
 	result = append(result, labelValues...)
@@ -34,7 +71,7 @@ func (c *CustomerProvider) LabelsForWith(labelValues ...string) []string {
 	return result
 }
 
-func (c *CustomerProvider) MakeStatsdFormat(str string) string {
+func (c *CustomerProvider) makeStatsdFormat(str string) string {
 	for _, s := range c.getLabels() {
 		str += fmt.Sprintf(".%%{%s}", s)
 	}
@@ -42,7 +79,7 @@ func (c *CustomerProvider) MakeStatsdFormat(str string) string {
 	return str
 }
 
-func (c *CustomerProvider) MakeLabelNames(names ...string) []string {
+func (c *CustomerProvider) makeLabelNames(names ...string) []string {
 	ln := make([]string, 0, len(names)+len(c.labels))
 	ln = append(ln, names...)
 	ln = append(ln, c.getLabels()...)

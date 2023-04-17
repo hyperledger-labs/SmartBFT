@@ -18,9 +18,7 @@ type Metrics struct {
 
 // NewMetrics create new wal metrics
 func NewMetrics(p *metrics.CustomerProvider) *Metrics {
-	countOfFilesOptsTmp := countOfFilesOpts
-	countOfFilesOptsTmp.LabelNames = p.MakeLabelNames(countOfFilesOptsTmp.LabelNames...)
-	countOfFilesOptsTmp.StatsdFormat = p.MakeStatsdFormat(countOfFilesOptsTmp.StatsdFormat)
+	countOfFilesOptsTmp := p.NewGaugeOpts(countOfFilesOpts)
 	return &Metrics{
 		CountOfFiles: p.NewGauge(countOfFilesOptsTmp).With(p.LabelsForWith()...),
 	}
