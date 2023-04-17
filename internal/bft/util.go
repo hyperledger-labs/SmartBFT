@@ -479,24 +479,26 @@ func (bl blacklist) computeUpdate() []uint64 {
 		bl.logger.Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
 	}
 
+	newBlacklistMap := make(map[uint64]bool, len(newBlacklist))
+	for _, node := range newBlacklist {
+		newBlacklistMap[node] = true
+	}
+	for _, node := range bl.nodes {
+		inBlacklist := newBlacklistMap[node]
+		bl.metricsBlacklist.NodesInBlackList.With(
+			bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(node, 10))...,
+		).Set(btoi(inBlacklist))
+	}
 	bl.metricsBlacklist.CountBlackList.Set(float64(len(newBlacklist)))
 
-Outer:
-	for n := range bl.nodes {
-		for i := range newBlacklist {
-			if newBlacklist[i] == bl.nodes[n] {
-				bl.metricsBlacklist.NodesInBlackList.With(
-					bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(bl.nodes[n], 10))...,
-				).Set(1)
-				continue Outer
-			}
-		}
-		bl.metricsBlacklist.NodesInBlackList.With(
-			bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(bl.nodes[n], 10))...,
-		).Set(0)
-	}
-
 	return newBlacklist
+}
+
+func btoi(b bool) float64 {
+	if b {
+		return 1
+	}
+	return 0
 }
 
 // pruneBlacklist receives the previous blacklist, prepare acknowledgements from nodes, and returns
