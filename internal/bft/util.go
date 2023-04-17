@@ -486,15 +486,13 @@ Outer:
 		for i := range newBlacklist {
 			if newBlacklist[i] == bl.nodes[n] {
 				bl.metricsBlacklist.NodesInBlackList.With(
-					"channel", bl.metricsBlacklist.Label("channel"),
-					"blackid", strconv.FormatUint(bl.nodes[n], 10),
+					bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(bl.nodes[n], 10))...,
 				).Set(1)
 				continue Outer
 			}
 		}
 		bl.metricsBlacklist.NodesInBlackList.With(
-			"channel", bl.metricsBlacklist.Label("channel"),
-			"blackid", strconv.FormatUint(bl.nodes[n], 10),
+			bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(bl.nodes[n], 10))...,
 		).Set(0)
 	}
 

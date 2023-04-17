@@ -7,8 +7,8 @@ var countOfFilesOpts = metrics.GaugeOpts{
 	Subsystem:    "bft",
 	Name:         "wal_count_of_files",
 	Help:         "Count of wal-files.",
-	LabelNames:   []string{"channel"},
-	StatsdFormat: "%{#fqname}.%{channel}",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
 }
 
 // Metrics encapsulates wal metrics
@@ -18,9 +18,9 @@ type Metrics struct {
 
 // NewMetrics create new wal metrics
 func NewMetrics(p *metrics.CustomerProvider) *Metrics {
-	ch := p.Labels["channel"]
-
+	countOfFilesOpts.LabelNames = p.MakeLabelNames(countOfFilesOpts.LabelNames...)
+	countOfFilesOpts.StatsdFormat = p.MakeStatsdFormat(countOfFilesOpts.StatsdFormat)
 	return &Metrics{
-		CountOfFiles: p.NewGauge(countOfFilesOpts).With("channel", ch),
+		CountOfFiles: p.NewGauge(countOfFilesOpts).With(p.LabelsForWith()...),
 	}
 }

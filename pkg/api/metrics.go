@@ -6,18 +6,57 @@ SPDX-License-Identifier: Apache-2.0
 
 package api
 
+import (
+	"fmt"
+	"sort"
+)
+
 // CustomerProvider encapsulates provider and labels
 type CustomerProvider struct {
 	Provider
-	Labels map[string]string
+	labels map[string]string
 }
 
 // NewCustomerProvider create new provide for metrics
 func NewCustomerProvider(mp Provider, labelValues ...string) *CustomerProvider {
 	return &CustomerProvider{
 		Provider: mp,
-		Labels:   labelsToMap(labelValues),
+		labels:   labelsToMap(labelValues),
 	}
+}
+
+func (c *CustomerProvider) LabelsForWith(labelValues ...string) []string {
+	result := make([]string, 0, len(labelValues)+len(c.labels)*2)
+	result = append(result, labelValues...)
+	for _, s := range c.getLabels() {
+		result = append(result, s, c.labels[s])
+	}
+	return result
+}
+
+func (c *CustomerProvider) MakeStatsdFormat(str string) string {
+	for _, s := range c.getLabels() {
+		str += fmt.Sprintf(".%%{%s}", s)
+	}
+
+	return str
+}
+
+func (c *CustomerProvider) MakeLabelNames(names ...string) []string {
+	ln := make([]string, 0, len(names)+len(c.labels))
+	ln = append(ln, names...)
+	ln = append(ln, c.getLabels()...)
+	return ln
+}
+
+func (c *CustomerProvider) getLabels() []string {
+	lbs := make([]string, 0, len(c.labels))
+	for l := range c.labels {
+		lbs = append(lbs, l)
+	}
+	sort.Strings(lbs)
+
+	return lbs
 }
 
 func labelsToMap(labelValues []string) map[string]string {
