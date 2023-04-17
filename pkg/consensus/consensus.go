@@ -64,7 +64,7 @@ type Consensus struct {
 
 	reconfigChan     chan types.Reconfig
 	metricsBlacklist *algorithm.MetricsBlacklist
-	metricsConsensus *algorithm.MetricsConcensus
+	metricsConsensus *algorithm.MetricsConsensus
 	metricsView      *algorithm.MetricsView
 
 	running uint64
@@ -116,7 +116,7 @@ func (c *Consensus) Start() error {
 	if c.MetricsProvider == nil {
 		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
 	}
-	c.metricsConsensus = algorithm.NewMetricsConcensus(c.MetricsProvider)
+	c.metricsConsensus = algorithm.NewMetricsConsensus(c.MetricsProvider)
 	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 	c.metricsView = algorithm.NewMetricsView(c.MetricsProvider)
 

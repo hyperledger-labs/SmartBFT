@@ -487,14 +487,14 @@ Outer:
 			if newBlacklist[i] == bl.nodes[n] {
 				bl.metricsBlacklist.NodesInBlackList.With(
 					"channel", bl.metricsBlacklist.Label("channel"),
-					"id", strconv.FormatUint(bl.nodes[n], 10),
+					"blackid", strconv.FormatUint(bl.nodes[n], 10),
 				).Set(1)
 				continue Outer
 			}
 		}
 		bl.metricsBlacklist.NodesInBlackList.With(
 			"channel", bl.metricsBlacklist.Label("channel"),
-			"id", strconv.FormatUint(bl.nodes[n], 10),
+			"blackid", strconv.FormatUint(bl.nodes[n], 10),
 		).Set(0)
 	}
 

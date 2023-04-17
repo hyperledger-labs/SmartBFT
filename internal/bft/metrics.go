@@ -67,6 +67,7 @@ var latencyOfRequestPoolOpts = metrics.HistogramOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
+// MetricsRequestPool encapsulates request pool metrics
 type MetricsRequestPool struct {
 	CountOfRequestPool          metrics.Gauge
 	CountOfFailAddRequestToPool metrics.Counter
@@ -77,6 +78,7 @@ type MetricsRequestPool struct {
 	LatencyOfRequestPool        metrics.Histogram
 }
 
+// NewMetricsRequestPool create new request pool metrics
 func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
 	ch := p.Labels["channel"]
 
@@ -106,9 +108,10 @@ var nodesInBlackListOpts = metrics.GaugeOpts{
 	Name:         "node_id_in_blacklist",
 	Help:         "Node ID in blacklist on this channel.",
 	LabelNames:   []string{"channel", "id"},
-	StatsdFormat: "%{#fqname}.%{channel}.%{id}",
+	StatsdFormat: "%{#fqname}.%{channel}.%{blackid}",
 }
 
+// MetricsBlacklist encapsulates blacklist metrics
 type MetricsBlacklist struct {
 	CountBlackList   metrics.Gauge
 	NodesInBlackList metrics.Gauge
@@ -116,6 +119,7 @@ type MetricsBlacklist struct {
 	labels map[string]string
 }
 
+// NewMetricsBlacklist create new blacklist metrics
 func NewMetricsBlacklist(p *metrics.CustomerProvider) *MetricsBlacklist {
 	ch := p.Labels["channel"]
 
@@ -149,15 +153,17 @@ var latencySyncOpts = metrics.HistogramOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
-type MetricsConcensus struct {
+// MetricsConsensus encapsulates consensus metrics
+type MetricsConsensus struct {
 	CountConsensusReconfig metrics.Counter
 	LatencySync            metrics.Histogram
 }
 
-func NewMetricsConcensus(p *metrics.CustomerProvider) *MetricsConcensus {
+// NewMetricsConsensus create new consensus metrics
+func NewMetricsConsensus(p *metrics.CustomerProvider) *MetricsConsensus {
 	ch := p.Labels["channel"]
 
-	return &MetricsConcensus{
+	return &MetricsConsensus{
 		CountConsensusReconfig: p.NewCounter(consensusReconfigOpts).With("channel", ch),
 		LatencySync:            p.NewHistogram(latencySyncOpts).With("channel", ch),
 	}
@@ -264,6 +270,7 @@ var latencyBatchSaveOpts = metrics.HistogramOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
+// MetricsView encapsulates view metrics
 type MetricsView struct {
 	ViewNumber             metrics.Gauge
 	LeaderID               metrics.Gauge
@@ -278,6 +285,7 @@ type MetricsView struct {
 	LatencyBatchSave       metrics.Histogram
 }
 
+// NewMetricsView create new view metrics
 func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
 	ch := p.Labels["channel"]
 
@@ -323,12 +331,14 @@ var realViewOpts = metrics.GaugeOpts{
 	StatsdFormat: "%{#fqname}.%{channel}",
 }
 
+// MetricsViewChange encapsulates view change metrics
 type MetricsViewChange struct {
 	CurrentView metrics.Gauge
 	NextView    metrics.Gauge
 	RealView    metrics.Gauge
 }
 
+// NewMetricsViewChange create new view change metrics
 func NewMetricsViewChange(p *metrics.CustomerProvider) *MetricsViewChange {
 	ch := p.Labels["channel"]
 
