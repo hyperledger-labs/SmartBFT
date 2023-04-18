@@ -2,7 +2,13 @@ package bft
 
 import metrics "github.com/SmartBFT-Go/consensus/pkg/api"
 
-const nameBlackListNodeID = "blackid"
+const (
+	nameBlackListNodeID = "blackid"
+	nameReasonFailAdd   = "reason"
+
+	reasonRequestMaxBytes      = "MAX_BYTES"
+	reasonSemaphoreAcquireFail = "SEMAPHORE_ACQUIRE_FAIL"
+)
 
 var countOfRequestPoolOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
@@ -18,8 +24,8 @@ var countOfFailAddRequestToPoolOpts = metrics.CounterOpts{
 	Subsystem:    "bft",
 	Name:         "pool_count_of_fail_add_request",
 	Help:         "Number of requests pool insertion failure.",
-	LabelNames:   []string{},
-	StatsdFormat: "%{#fqname}",
+	LabelNames:   []string{nameReasonFailAdd},
+	StatsdFormat: "%{#fqname}.%{" + nameReasonFailAdd + "}",
 }
 
 // ForwardTimeout
@@ -78,6 +84,8 @@ type MetricsRequestPool struct {
 	CountOfDeleteRequestPool    metrics.Counter
 	CountOfRequestPoolAll       metrics.Counter
 	LatencyOfRequestPool        metrics.Histogram
+
+	labels []string
 }
 
 // NewMetricsRequestPool create new request pool metrics
@@ -91,13 +99,21 @@ func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
 	latencyOfRequestPoolOptsTmp := p.NewHistogramOpts(latencyOfRequestPoolOpts)
 	return &MetricsRequestPool{
 		CountOfRequestPool:          p.NewGauge(countOfRequestPoolOptsTmp).With(p.LabelsForWith()...),
-		CountOfFailAddRequestToPool: p.NewCounter(countOfFailAddRequestToPoolOptsTmp).With(p.LabelsForWith()...),
+		CountOfFailAddRequestToPool: p.NewCounter(countOfFailAddRequestToPoolOptsTmp),
 		CountOfLeaderForwardRequest: p.NewCounter(countOfLeaderForwardRequestOptsTmp).With(p.LabelsForWith()...),
 		CountTimeoutTwoStep:         p.NewCounter(countTimeoutTwoStepOptsTmp).With(p.LabelsForWith()...),
 		CountOfDeleteRequestPool:    p.NewCounter(countOfDeleteRequestPoolOptsTmp).With(p.LabelsForWith()...),
 		CountOfRequestPoolAll:       p.NewCounter(countOfRequestPoolAllOptsTmp).With(p.LabelsForWith()...),
 		LatencyOfRequestPool:        p.NewHistogram(latencyOfRequestPoolOptsTmp).With(p.LabelsForWith()...),
+		labels:                      p.LabelsForWith(),
 	}
+}
+
+func (m *MetricsRequestPool) LabelsForWith(labelValues ...string) []string {
+	result := make([]string, 0, len(m.labels)+len(labelValues))
+	result = append(result, labelValues...)
+	result = append(result, m.labels...)
+	return result
 }
 
 var countBlackListOpts = metrics.GaugeOpts{

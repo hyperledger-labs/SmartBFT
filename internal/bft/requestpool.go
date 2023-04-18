@@ -187,7 +187,9 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	if uint64(len(request)) > rp.options.RequestMaxBytes {
-		rp.metrics.CountOfFailAddRequestToPool.Add(1)
+		rp.metrics.CountOfFailAddRequestToPool.With(
+			rp.metrics.LabelsForWith(nameReasonFailAdd, reasonRequestMaxBytes)...,
+		).Add(1)
 		return fmt.Errorf(
 			"submitted request (%d) is bigger than request max bytes (%d)",
 			len(request),
@@ -214,7 +216,9 @@ func (rp *Pool) Submit(request []byte) error {
 	defer cancel()
 	// do not wait for a semaphore with a lock, as it will prevent draining the pool.
 	if err := rp.semaphore.Acquire(ctx, 1); err != nil {
-		rp.metrics.CountOfFailAddRequestToPool.Add(1)
+		rp.metrics.CountOfFailAddRequestToPool.With(
+			rp.metrics.LabelsForWith(nameReasonFailAdd, reasonSemaphoreAcquireFail)...,
+		).Add(1)
 		return errors.Wrapf(err, "acquiring semaphore for request: %s", reqInfo)
 	}
 
