@@ -1218,7 +1218,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		}
 	}
 
-	v.Logger.Debugf("Node %d is creating a view for the in flight proposal", v.SelfID)
+	v.Logger.Debugf("Node %d is creating a view %d for the in flight proposal", v.SelfID, proposalMD.ViewId)
 
 	inFlightViewNum := proposalMD.ViewId
 	inFlightViewLatestSeq := proposalMD.LatestSequence
@@ -1285,7 +1285,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 
 	v.inFlightViewLock.Unlock()
 
-	v.Logger.Debugf("Node %d started a view for the in flight proposal", v.SelfID)
+	v.Logger.Debugf("Node %d started a view %d for the in flight proposal", v.SelfID, v.inFlightView.Number)
 
 	// wait for view to finish or time out
 	for {
