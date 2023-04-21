@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/pkg/errors"
 	"golang.org/x/sync/semaphore"
@@ -81,6 +82,7 @@ type PoolOptions struct {
 	AutoRemoveTimeout time.Duration
 	RequestMaxBytes   uint64
 	SubmitTimeout     time.Duration
+	MetricsProvider   *api.CustomerProvider
 }
 
 // NewPool constructs new requests pool
@@ -99,6 +101,9 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 	}
 	if options.SubmitTimeout == 0 {
 		options.SubmitTimeout = defaultRequestTimeout
+	}
+	if options.MetricsProvider == nil {
+		options.MetricsProvider = api.NewCustomerProvider(&disabled.Provider{})
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

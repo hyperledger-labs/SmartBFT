@@ -13,6 +13,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
+
+	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -57,9 +60,11 @@ type App struct {
 	viewChangeTime  chan time.Time
 	secondClock     *time.Ticker
 	logger          *zap.SugaredLogger
+	metricsProvider api.Provider
 	lastRecord      lastRecord
 	verificationSeq uint64
 	messageLost     func(*smartbftprotos.Message) bool
+	lock            sync.Mutex
 }
 
 type lastRecord struct {
@@ -269,6 +274,8 @@ func (a *App) MembershipChange() bool {
 
 // Deliver delivers the given proposal
 func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) types.Reconfig {
+	a.lock.Lock()
+	defer a.lock.Unlock()
 	defer func() {
 		a.lastRecord = lastRecord{
 			proposal:   proposal,
@@ -339,7 +346,6 @@ func (cb *committedBatches) readAll(from *smartbftprotos.ViewMetadata) []*AppRec
 	defer cb.lock.RUnlock()
 
 	var res []*AppRecord
-
 	for _, entry := range cb.records {
 		md := &smartbftprotos.ViewMetadata{}
 		if err := proto.Unmarshal(entry.Metadata, md); err != nil {
@@ -409,14 +415,15 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	sugaredLogger := logger.Sugar()
 
 	app := &App{
-		clock:        time.NewTicker(time.Second),
-		secondClock:  time.NewTicker(time.Second),
-		ID:           id,
-		Delivered:    make(chan *AppRecord, 100),
-		logLevel:     logConfig.Level,
-		latestMD:     &smartbftprotos.ViewMetadata{},
-		lastDecision: &types.Decision{},
-		logger:       sugaredLogger,
+		clock:           time.NewTicker(time.Second),
+		secondClock:     time.NewTicker(time.Second),
+		ID:              id,
+		Delivered:       make(chan *AppRecord, 100),
+		logLevel:        logConfig.Level,
+		latestMD:        &smartbftprotos.ViewMetadata{},
+		lastDecision:    &types.Decision{},
+		logger:          sugaredLogger,
+		metricsProvider: &disabled.Provider{},
 	}
 
 	config := fastConfig
@@ -426,7 +433,11 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 	config.DecisionsPerLeader = decisionsPerLeader
 
 	app.Setup = func() {
-		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(app.logger, filepath.Join(testDir, fmt.Sprintf("node%d", id)), nil)
+		met := api.NewCustomerProvider(app.metricsProvider, "channel", testName)
+		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(
+			app.logger,
+			filepath.Join(testDir, fmt.Sprintf("node%d", id)),
+			&wal.Options{MetricsProvider: met})
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
@@ -443,6 +454,7 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			ViewChangerTicker:  app.secondClock.C,
 			Scheduler:          app.clock.C,
 			Logger:             app.logger,
+			MetricsProvider:    met,
 			WAL:                writeAheadLog,
 			Metadata:           app.latestMD,
 			Verifier:           app,
