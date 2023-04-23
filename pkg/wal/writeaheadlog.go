@@ -139,7 +139,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 			opt.FileSizeBytes = options.FileSizeBytes
 		}
 		if options.BufferSizeBytes != 0 {
-			opt.BufferSizeBytes = options.FileSizeBytes
+			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 	}
 
@@ -225,7 +225,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 			opt.FileSizeBytes = options.FileSizeBytes
 		}
 		if options.BufferSizeBytes != 0 {
-			opt.BufferSizeBytes = options.FileSizeBytes
+			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 	}
 
