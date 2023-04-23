@@ -438,7 +438,8 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 		writeAheadLog, walInitialEntries, err := wal.InitializeAndReadAll(
 			app.logger,
 			filepath.Join(testDir, fmt.Sprintf("node%d", id)),
-			&wal.Options{MetricsProvider: met})
+			&wal.Options{MetricsProvider: met},
+		)
 		if err != nil {
 			sugaredLogger.Panicf("Failed to initialize WAL: %s", err)
 		}
