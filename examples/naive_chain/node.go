@@ -195,6 +195,7 @@ func NewNode(id uint64, in Ingress, out Egress, deliverChan chan<- *Block, logge
 		ViewChangerTicker:  node.secondClock.C,
 		Scheduler:          node.clock.C,
 		Logger:             logger,
+		MetricsProvider:    met,
 		Comm:               node,
 		Signer:             node,
 		MembershipNotifier: node,
