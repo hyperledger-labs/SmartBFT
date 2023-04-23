@@ -14,6 +14,8 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
@@ -668,6 +670,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		ViewSequences:      vs,
 		State:              &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:         int(c.N * 10),
+		MetricsBlacklist:   bft.NewMetricsBlacklist(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 }
 

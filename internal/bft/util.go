@@ -12,6 +12,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"math"
+	"strconv"
 	"sync"
 	"sync/atomic"
 
@@ -261,6 +262,7 @@ type ProposalMaker struct {
 	FailureDetector    FailureDetector
 	Sync               Synchronizer
 	Logger             api.Logger
+	MetricsBlacklist   *MetricsBlacklist
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -295,6 +297,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		State:              pm.State,
 		InMsgQSize:         pm.InMsqQSize,
 		ViewSequences:      pm.ViewSequences,
+		MetricsBlacklist:   pm.MetricsBlacklist,
 	}
 
 	view.ViewSequences.Store(ViewSequence{
@@ -415,6 +418,7 @@ type blacklist struct {
 	currView           uint64
 	preparesFrom       map[uint64]*protos.PreparesFrom
 	logger             api.Logger
+	metricsBlacklist   *MetricsBlacklist
 	f                  int
 	decisionsPerLeader uint64
 }
@@ -467,7 +471,26 @@ func (bl blacklist) computeUpdate() []uint64 {
 		bl.logger.Infof("Blacklist changed: %v --> %v", bl.prevMD.BlackList, newBlacklist)
 	}
 
+	newBlacklistMap := make(map[uint64]bool, len(newBlacklist))
+	for _, node := range newBlacklist {
+		newBlacklistMap[node] = true
+	}
+	for _, node := range bl.nodes {
+		inBlacklist := newBlacklistMap[node]
+		bl.metricsBlacklist.NodesInBlackList.With(
+			bl.metricsBlacklist.LabelsForWith(nameBlackListNodeID, strconv.FormatUint(node, 10))...,
+		).Set(btoi(inBlacklist))
+	}
+	bl.metricsBlacklist.CountBlackList.Set(float64(len(newBlacklist)))
+
 	return newBlacklist
+}
+
+func btoi(b bool) float64 {
+	if b {
+		return 1
+	}
+	return 0
 }
 
 // pruneBlacklist receives the previous blacklist, prepare acknowledgements from nodes, and returns

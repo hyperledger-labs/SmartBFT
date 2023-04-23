@@ -62,7 +62,8 @@ type Consensus struct {
 
 	consensusLock sync.RWMutex
 
-	reconfigChan chan types.Reconfig
+	reconfigChan     chan types.Reconfig
+	metricsBlacklist *algorithm.MetricsBlacklist
 
 	running uint64
 }
@@ -111,6 +112,7 @@ func (c *Consensus) Start() error {
 	if c.MetricsProvider == nil {
 		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
 	}
+	c.metricsBlacklist = algorithm.NewMetricsBlacklist(c.MetricsProvider)
 
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}
@@ -302,6 +304,7 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		Comm:               c.controller,
 		Decider:            c.controller,
 		Logger:             c.Logger,
+		MetricsBlacklist:   c.metricsBlacklist,
 		Signer:             c.Signer,
 		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
@@ -379,6 +382,7 @@ func (c *Consensus) createComponents() {
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
+		MetricsBlacklist:  c.metricsBlacklist,
 	}
 
 	c.collector = &algorithm.StateCollector{
