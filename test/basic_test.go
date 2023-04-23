@@ -1630,9 +1630,8 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 		assert.Equal(t, uint64(2), atomic.LoadUint64(&boundCommitSignatures))
 	})
 
-	return
-
 	t.Run("Deactivate leader rotation", func(t *testing.T) {
+		t.Skip()
 		network.StopServe()
 
 		for _, n := range nodes {

@@ -16,6 +16,7 @@ import (
 	"sync"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
@@ -97,6 +98,7 @@ type WriteAheadLogFile struct {
 type Options struct {
 	FileSizeBytes   int64
 	BufferSizeBytes int64
+	MetricsProvider *api.CustomerProvider
 }
 
 // DefaultOptions returns the set of default options.
@@ -104,6 +106,7 @@ func DefaultOptions() *Options {
 	return &Options{
 		FileSizeBytes:   FileSizeBytesDefault,
 		BufferSizeBytes: BufferSizeBytesDefault,
+		MetricsProvider: api.NewCustomerProvider(&disabled.Provider{}),
 	}
 }
 
@@ -129,7 +132,15 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 
 	opt := DefaultOptions()
 	if options != nil {
-		opt = options
+		if options.MetricsProvider != nil {
+			opt.MetricsProvider = options.MetricsProvider
+		}
+		if options.FileSizeBytes != 0 {
+			opt.FileSizeBytes = options.FileSizeBytes
+		}
+		if options.BufferSizeBytes != 0 {
+			opt.BufferSizeBytes = options.BufferSizeBytes
+		}
 	}
 
 	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
@@ -207,7 +218,15 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 
 	opt := DefaultOptions()
 	if options != nil {
-		opt = options
+		if options.MetricsProvider != nil {
+			opt.MetricsProvider = options.MetricsProvider
+		}
+		if options.FileSizeBytes != 0 {
+			opt.FileSizeBytes = options.FileSizeBytes
+		}
+		if options.BufferSizeBytes != 0 {
+			opt.BufferSizeBytes = options.BufferSizeBytes
+		}
 	}
 
 	cleanDirName := filepath.Clean(dirPath)

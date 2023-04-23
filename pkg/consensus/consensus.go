@@ -14,6 +14,7 @@ import (
 
 	algorithm "github.com/SmartBFT-Go/consensus/internal/bft"
 	bft "github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -36,6 +37,7 @@ type Consensus struct {
 	RequestInspector   bft.RequestInspector
 	Synchronizer       bft.Synchronizer
 	Logger             bft.Logger
+	MetricsProvider    *bft.CustomerProvider
 	Metadata           *protos.ViewMetadata
 	LastProposal       types.Proposal
 	LastSignatures     []types.Signature
@@ -106,6 +108,10 @@ func (c *Consensus) Start() error {
 		return errors.Wrapf(err, "configuration is invalid")
 	}
 
+	if c.MetricsProvider == nil {
+		c.MetricsProvider = bft.NewCustomerProvider(&disabled.Provider{})
+	}
+
 	c.consensusDone.Add(1)
 	c.stopOnce = sync.Once{}
 	c.stopChan = make(chan struct{})
@@ -135,6 +141,7 @@ func (c *Consensus) Start() error {
 		AutoRemoveTimeout: c.Config.RequestAutoRemoveTimeout,
 		RequestMaxBytes:   c.Config.RequestMaxBytes,
 		SubmitTimeout:     c.Config.RequestPoolSubmitTimeout,
+		MetricsProvider:   c.MetricsProvider,
 	}
 	c.submittedChan = make(chan struct{}, 1)
 	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
