@@ -25,6 +25,7 @@ import (
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
 	AbortView(view uint64)
+	IsViewAlive() bool
 }
 
 // Pruner prunes revoked requests
@@ -1172,6 +1173,11 @@ func (v *ViewChanger) sequenceFromProposal(rawMetadata []byte) uint64 {
 }
 
 func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success bool) {
+	if v.Controller.IsViewAlive() {
+		v.Logger.Warnf("The view is alive")
+		return
+	}
+
 	myLastDecision, _ := v.Checkpoint.Get()
 	if proposal == nil {
 		v.Logger.Panicf("The in flight proposal is nil")

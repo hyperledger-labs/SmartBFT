@@ -464,6 +464,12 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
 }
 
+func (c *Controller) IsViewAlive() bool {
+	stopped := c.currentViewStopped()
+
+	return !stopped
+}
+
 func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
