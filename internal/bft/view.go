@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -95,7 +96,9 @@ type View struct {
 	nextPrepares   *voteSet
 	nextCommits    *voteSet
 
+	beginPrePrepare    time.Time
 	MetricsBlacklist   *MetricsBlacklist
+	MetricsView        *MetricsView
 	blacklistSupported bool
 	abortChan          chan struct{}
 	stopOnce           sync.Once
@@ -275,6 +278,8 @@ func (v *View) doPhase() {
 	default:
 		v.Logger.Panicf("Unknown phase in view : %v", v)
 	}
+
+	v.MetricsView.Phase.Set(float64(v.Phase))
 }
 
 func (v *View) processPrePrepare(pp *protos.PrePrepare, m *protos.Message, msgForNextProposal bool, sender uint64) {
@@ -312,6 +317,16 @@ func (v *View) prepared() Phase {
 	seq := v.ProposalSequence
 
 	v.Logger.Infof("%d processed commits for proposal with seq %d", v.SelfID, seq)
+
+	v.MetricsView.CountBatchAll.Add(1)
+	v.MetricsView.CountTxsAll.Add(float64(len(v.inFlightRequests)))
+	size := 0
+	size += len(proposal.Metadata) + len(proposal.Header) + len(proposal.Payload)
+	for i := range signatures {
+		size += len(signatures[i].Value) + len(signatures[i].Msg)
+	}
+	v.MetricsView.SizeOfBatch.Add(float64(size))
+	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
 
 	v.decide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED
@@ -360,6 +375,9 @@ func (v *View) processProposal() Phase {
 		v.stop()
 		return ABORT
 	}
+
+	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
+	v.beginPrePrepare = time.Now()
 
 	seq := v.ProposalSequence
 
@@ -830,6 +848,9 @@ func (v *View) startNextSeq() {
 	v.DecisionsInView++
 
 	nextSeq := v.ProposalSequence
+
+	v.MetricsView.ProposalSequence.Set(float64(v.ProposalSequence))
+	v.MetricsView.DecisionsInView.Set(float64(v.DecisionsInView))
 
 	v.Logger.Infof("Sequence: %d-->%d", prevSeq, nextSeq)
 

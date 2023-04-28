@@ -9,6 +9,7 @@ import (
 	"errors"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
@@ -111,6 +112,7 @@ type Controller struct {
 	Collector          *StateCollector
 	State              State
 	InFlight           *InFlightData
+	MetricsView        *MetricsView
 	quorum             int
 
 	currView Proposer
@@ -526,7 +528,9 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) decide(d decision) {
+	begin := time.Now()
 	reconfig := c.Application.Deliver(d.proposal, d.signatures)
+	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
 	if reconfig.InLatestDecision {
 		c.close()
 	}
