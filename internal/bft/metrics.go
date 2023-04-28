@@ -159,3 +159,38 @@ func (m *MetricsBlacklist) LabelsForWith(labelValues ...string) []string {
 	result = append(result, m.labels...)
 	return result
 }
+
+var consensusReconfigOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "consensus_reconfig",
+	Help:         "Number of reconfiguration requests.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var latencySyncOpts = metrics.HistogramOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "consensus_latency_sync",
+	Help:         "An average time it takes to sync node.",
+	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+// MetricsConsensus encapsulates consensus metrics
+type MetricsConsensus struct {
+	CountConsensusReconfig metrics.Counter
+	LatencySync            metrics.Histogram
+}
+
+// NewMetricsConsensus create new consensus metrics
+func NewMetricsConsensus(p *metrics.CustomerProvider) *MetricsConsensus {
+	consensusReconfigOptsTmp := p.NewCounterOpts(consensusReconfigOpts)
+	latencySyncOptsTmp := p.NewHistogramOpts(latencySyncOpts)
+	return &MetricsConsensus{
+		CountConsensusReconfig: p.NewCounter(consensusReconfigOptsTmp).With(p.LabelsForWith()...),
+		LatencySync:            p.NewHistogram(latencySyncOptsTmp).With(p.LabelsForWith()...),
+	}
+}
