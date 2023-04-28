@@ -194,3 +194,147 @@ func NewMetricsConsensus(p *metrics.CustomerProvider) *MetricsConsensus {
 		LatencySync:            p.NewHistogram(latencySyncOptsTmp).With(p.LabelsForWith()...),
 	}
 }
+
+var viewNumberOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_number",
+	Help:         "The View number value.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var leaderIDOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_leader_id",
+	Help:         "The leader id.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var proposalSequenceOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_proposal_sequence",
+	Help:         "The sequence number within current view.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var decisionsInViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_decisions",
+	Help:         "The number of decisions in the current view.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var phaseOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_phase",
+	Help:         "Current consensus phase.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var countTxsInBatchOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_count_txs_in_batch",
+	Help:         "The number of transactions per batch.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var countBatchAllOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_count_batch_all",
+	Help:         "Amount of batched processed.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var countTxsAllOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_count_txs_all",
+	Help:         "Total amount of transactions.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var sizeOfBatchOpts = metrics.CounterOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_size_batch",
+	Help:         "An average batch size.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var latencyBatchProcessingOpts = metrics.HistogramOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_latency_batch_processing",
+	Help:         "Amount of time it take to process batch.",
+	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var latencyBatchSaveOpts = metrics.HistogramOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "view_latency_batch_save",
+	Help:         "An average time it takes to persist batch.",
+	Buckets:      []float64{0.005, 0.01, 0.015, 0.05, 0.1, 1, 10},
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+// MetricsView encapsulates view metrics
+type MetricsView struct {
+	ViewNumber             metrics.Gauge
+	LeaderID               metrics.Gauge
+	ProposalSequence       metrics.Gauge
+	DecisionsInView        metrics.Gauge
+	Phase                  metrics.Gauge
+	CountTxsInBatch        metrics.Gauge
+	CountBatchAll          metrics.Counter
+	CountTxsAll            metrics.Counter
+	SizeOfBatch            metrics.Counter
+	LatencyBatchProcessing metrics.Histogram
+	LatencyBatchSave       metrics.Histogram
+}
+
+// NewMetricsView create new view metrics
+func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
+	viewNumberOptsTmp := p.NewGaugeOpts(viewNumberOpts)
+	leaderIDOptsTmp := p.NewGaugeOpts(leaderIDOpts)
+	proposalSequenceOptsTmp := p.NewGaugeOpts(proposalSequenceOpts)
+	decisionsInViewOptsTmp := p.NewGaugeOpts(decisionsInViewOpts)
+	phaseOptsTmp := p.NewGaugeOpts(phaseOpts)
+	countTxsInBatchOptsTmp := p.NewGaugeOpts(countTxsInBatchOpts)
+	countBatchAllOptsTmp := p.NewCounterOpts(countBatchAllOpts)
+	countTxsAllOptsTmp := p.NewCounterOpts(countTxsAllOpts)
+	sizeOfBatchOptsTmp := p.NewCounterOpts(sizeOfBatchOpts)
+	latencyBatchProcessingOptsTmp := p.NewHistogramOpts(latencyBatchProcessingOpts)
+	latencyBatchSaveOptsTmp := p.NewHistogramOpts(latencyBatchSaveOpts)
+	return &MetricsView{
+		ViewNumber:             p.NewGauge(viewNumberOptsTmp).With(p.LabelsForWith()...),
+		LeaderID:               p.NewGauge(leaderIDOptsTmp).With(p.LabelsForWith()...),
+		ProposalSequence:       p.NewGauge(proposalSequenceOptsTmp).With(p.LabelsForWith()...),
+		DecisionsInView:        p.NewGauge(decisionsInViewOptsTmp).With(p.LabelsForWith()...),
+		Phase:                  p.NewGauge(phaseOptsTmp).With(p.LabelsForWith()...),
+		CountTxsInBatch:        p.NewGauge(countTxsInBatchOptsTmp).With(p.LabelsForWith()...),
+		CountBatchAll:          p.NewCounter(countBatchAllOptsTmp).With(p.LabelsForWith()...),
+		CountTxsAll:            p.NewCounter(countTxsAllOptsTmp).With(p.LabelsForWith()...),
+		SizeOfBatch:            p.NewCounter(sizeOfBatchOptsTmp).With(p.LabelsForWith()...),
+		LatencyBatchProcessing: p.NewHistogram(latencyBatchProcessingOptsTmp).With(p.LabelsForWith()...),
+		LatencyBatchSave:       p.NewHistogram(latencyBatchSaveOptsTmp).With(p.LabelsForWith()...),
+	}
+}

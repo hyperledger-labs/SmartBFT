@@ -1979,6 +1979,7 @@ func TestCommitInFlight(t *testing.T) {
 		Application:      app,
 		Pruner:           pruner,
 		MetricsBlacklist: bft.NewMetricsBlacklist(met),
+		MetricsView:      bft.NewMetricsView(met),
 	}
 
 	vc.Start(0)

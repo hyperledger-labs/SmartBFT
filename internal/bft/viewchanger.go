@@ -94,6 +94,7 @@ type ViewChanger struct {
 
 	// Runtime
 	MetricsBlacklist *MetricsBlacklist
+	MetricsView      *MetricsView
 	Restore          chan struct{}
 	InMsqQSize       int
 	incMsgs          chan *incMsg
@@ -1235,7 +1236,14 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		ViewSequences:      v.ViewSequences,
 		Phase:              PREPARED,
 		MetricsBlacklist:   v.MetricsBlacklist,
+		MetricsView:        v.MetricsView,
 	}
+	inFlightView.MetricsView.ViewNumber.Set(float64(inFlightView.Number))
+	inFlightView.MetricsView.LeaderID.Set(float64(inFlightView.LeaderID))
+	inFlightView.MetricsView.ProposalSequence.Set(float64(inFlightView.ProposalSequence))
+	inFlightView.MetricsView.DecisionsInView.Set(float64(inFlightView.DecisionsInView))
+	inFlightView.MetricsView.Phase.Set(float64(inFlightView.Phase))
+
 	v.inFlightView = inFlightView
 	v.inFlightView.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(proposal.VerificationSequence),
