@@ -3,7 +3,8 @@ package bft
 import metrics "github.com/SmartBFT-Go/consensus/pkg/api"
 
 const (
-	nameReasonFailAdd = "reason"
+	nameBlackListNodeID = "blackid"
+	nameReasonFailAdd   = "reason"
 
 	reasonRequestMaxBytes      = "MAX_BYTES"
 	reasonSemaphoreAcquireFail = "SEMAPHORE_ACQUIRE_FAIL"
@@ -109,6 +110,50 @@ func NewMetricsRequestPool(p *metrics.CustomerProvider) *MetricsRequestPool {
 }
 
 func (m *MetricsRequestPool) LabelsForWith(labelValues ...string) []string {
+	result := make([]string, 0, len(m.labels)+len(labelValues))
+	result = append(result, labelValues...)
+	result = append(result, m.labels...)
+	return result
+}
+
+var countBlackListOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "blacklist_count",
+	Help:         "Count of nodes in blacklist on this channel.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var nodesInBlackListOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "node_id_in_blacklist",
+	Help:         "Node ID in blacklist on this channel.",
+	LabelNames:   []string{nameBlackListNodeID},
+	StatsdFormat: "%{#fqname}.%{" + nameBlackListNodeID + "}",
+}
+
+// MetricsBlacklist encapsulates blacklist metrics
+type MetricsBlacklist struct {
+	CountBlackList   metrics.Gauge
+	NodesInBlackList metrics.Gauge
+
+	labels []string
+}
+
+// NewMetricsBlacklist create new blacklist metrics
+func NewMetricsBlacklist(p *metrics.CustomerProvider) *MetricsBlacklist {
+	countBlackListOptsTmp := p.NewGaugeOpts(countBlackListOpts)
+	nodesInBlackListOptsTmp := p.NewGaugeOpts(nodesInBlackListOpts)
+	return &MetricsBlacklist{
+		CountBlackList:   p.NewGauge(countBlackListOptsTmp).With(p.LabelsForWith()...),
+		NodesInBlackList: p.NewGauge(nodesInBlackListOptsTmp),
+		labels:           p.LabelsForWith(),
+	}
+}
+
+func (m *MetricsBlacklist) LabelsForWith(labelValues ...string) []string {
 	result := make([]string, 0, len(m.labels)+len(labelValues))
 	result = append(result, labelValues...)
 	result = append(result, m.labels...)

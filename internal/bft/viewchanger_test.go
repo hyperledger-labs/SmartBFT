@@ -14,6 +14,8 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
 	"github.com/SmartBFT-Go/consensus/internal/bft/mocks"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -1919,6 +1921,7 @@ func TestCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
+	met := api.NewCustomerProvider(&disabled.Provider{})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
@@ -1958,23 +1961,24 @@ func TestCommitInFlight(t *testing.T) {
 
 	sched := make(chan time.Time)
 	vc := &bft.ViewChanger{
-		SelfID:        1,
-		N:             4,
-		NodesList:     []uint64{0, 1, 2, 3},
-		Comm:          comm,
-		Logger:        log,
-		Verifier:      verifier,
-		Controller:    controller,
-		Signer:        signer,
-		RequestsTimer: reqTimer,
-		Ticker:        sched,
-		InFlight:      &bft.InFlightData{},
-		Checkpoint:    &checkpoint,
-		ViewSequences: &atomic.Value{},
-		State:         &bft.StateRecorder{},
-		InMsqQSize:    int(types.DefaultConfig.IncomingMessageBufferSize),
-		Application:   app,
-		Pruner:        pruner,
+		SelfID:           1,
+		N:                4,
+		NodesList:        []uint64{0, 1, 2, 3},
+		Comm:             comm,
+		Logger:           log,
+		Verifier:         verifier,
+		Controller:       controller,
+		Signer:           signer,
+		RequestsTimer:    reqTimer,
+		Ticker:           sched,
+		InFlight:         &bft.InFlightData{},
+		Checkpoint:       &checkpoint,
+		ViewSequences:    &atomic.Value{},
+		State:            &bft.StateRecorder{},
+		InMsqQSize:       int(types.DefaultConfig.IncomingMessageBufferSize),
+		Application:      app,
+		Pruner:           pruner,
+		MetricsBlacklist: bft.NewMetricsBlacklist(met),
 	}
 
 	vc.Start(0)
