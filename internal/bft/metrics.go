@@ -384,4 +384,3 @@ func NewMetricsViewChange(p *metrics.CustomerProvider) *MetricsViewChange {
 		RealView:    p.NewGauge(realViewOptsTmp).With(p.LabelsForWith()...),
 	}
 }
-

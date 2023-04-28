@@ -108,7 +108,6 @@ type ViewChanger struct {
 	startChangeChan   chan *change
 	informChan        chan uint64
 
-
 	stopOnce sync.Once
 	stopChan chan struct{}
 	vcDone   sync.WaitGroup
