@@ -2048,6 +2048,124 @@ func TestCommitInFlight(t *testing.T) {
 	vc.Stop()
 }
 
+func TestCommitWhileHavingInFlight(t *testing.T) {
+	comm := &mocks.CommMock{}
+	msgChan := make(chan *protos.Message, 1)
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		m := args.Get(0).(*protos.Message)
+		msgChan <- m
+	})
+
+	var reasonAboutInFlightLowerThanLatestDecision sync.WaitGroup
+	reasonAboutInFlightLowerThanLatestDecision.Add(1)
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Node 1's in flight proposal sequence is 1 while already committed decision 2, but that is because it committed it during the view change") {
+			reasonAboutInFlightLowerThanLatestDecision.Done()
+		}
+		return nil
+	})).Sugar()
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+	signWG := sync.WaitGroup{}
+	signer.On("SignProposal", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		signWG.Done()
+	}).Return(&types.Signature{
+		ID:    1,
+		Value: []byte{4},
+	})
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
+	controller := &mocks.ViewController{}
+	viewNumChan := make(chan uint64)
+	seqNumChan := make(chan uint64)
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		num := args.Get(0).(uint64)
+		viewNumChan <- num
+		num = args.Get(1).(uint64)
+		seqNumChan <- num
+	}).Return(nil).Once()
+	controller.On("AbortView", mock.Anything)
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
+	app := &mocks.ApplicationMock{}
+	appChan := make(chan types.Proposal, 1)
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		prop := args.Get(0).(types.Proposal)
+		appChan <- prop
+	}).Return(types.Reconfig{InLatestDecision: false})
+	pruner := &mocks.Pruner{}
+	pruner.On("MaybePruneRevokedRequests")
+
+	sched := make(chan time.Time)
+	vc := &bft.ViewChanger{
+		SelfID:        1,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Comm:          comm,
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Signer:        signer,
+		RequestsTimer: reqTimer,
+		Ticker:        sched,
+		InFlight:      &bft.InFlightData{},
+		Checkpoint:    &checkpoint,
+		ViewSequences: &atomic.Value{},
+		State:         &bft.StateRecorder{},
+		InMsqQSize:    int(types.DefaultConfig.IncomingMessageBufferSize),
+		Application:   app,
+		Pruner:        pruner,
+	}
+
+	vc.InFlight.StoreProposal(types.Proposal{
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 1,
+		}),
+	})
+
+	defer vc.Stop()
+	vc.Start(0)
+
+	vc.HandleMessage(2, viewChangeMsg)
+	vc.HandleMessage(3, viewChangeMsg)
+	m := <-msgChan
+	assert.NotNil(t, m.GetViewChange())
+
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.LastDecision.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+		LatestSequence: 2,
+	})
+
+	msg := proto.Clone(viewDataMsg1).(*protos.Message)
+	msg.GetViewData().RawViewData = bft.MarshalOrPanic(viewData)
+
+	signWG.Add(1)
+
+	vc.HandleMessage(0, msg)
+
+	// Wait for committing the block
+	commit := <-appChan
+	assert.Equal(t, viewData.LastDecision.Metadata, commit.Metadata)
+
+	// Get the second view data message, this time our latest decision is higher by 1
+
+	msg2 := proto.Clone(msg).(*protos.Message)
+	msg2.GetViewData().Signer = 2
+	vc.HandleMessage(2, msg2)
+
+	reasonAboutInFlightLowerThanLatestDecision.Wait()
+
+}
+
 func TestDontCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
