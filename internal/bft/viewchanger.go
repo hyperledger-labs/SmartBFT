@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
@@ -92,18 +93,19 @@ type ViewChanger struct {
 	backOffFactor       uint64
 
 	// Runtime
-	MetricsBlacklist *MetricsBlacklist
-	Restore          chan struct{}
-	InMsqQSize       int
-	incMsgs          chan *incMsg
-	viewChangeMsgs   *voteSet
-	viewDataMsgs     *voteSet
-	nvs              *nextViews
-	realView         uint64
-	currView         uint64
-	nextView         uint64
-	startChangeChan  chan *change
-	informChan       chan uint64
+	MetricsViewChange *MetricsViewChange
+	MetricsBlacklist  *MetricsBlacklist
+	Restore           chan struct{}
+	InMsqQSize        int
+	incMsgs           chan *incMsg
+	viewChangeMsgs    *voteSet
+	viewDataMsgs      *voteSet
+	nvs               *nextViews
+	realView          uint64
+	currView          uint64
+	nextView          uint64
+	startChangeChan   chan *change
+	informChan        chan uint64
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -117,6 +119,10 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.incMsgs = make(chan *incMsg, v.InMsqQSize)
 	v.startChangeChan = make(chan *change, 2)
 	v.informChan = make(chan uint64, 1)
+
+	if v.MetricsViewChange == nil {
+		v.MetricsViewChange = NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{}))
+	}
 
 	v.quorum, v.f = computeQuorum(v.N)
 
@@ -132,6 +138,9 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.currView = startViewNumber
 	v.realView = v.currView
 	v.nextView = v.currView
+	v.MetricsViewChange.CurrentView.Set(float64(v.currView))
+	v.MetricsViewChange.RealView.Set(float64(v.realView))
+	v.MetricsViewChange.NextView.Set(float64(v.nextView))
 
 	v.lastTick = time.Now()
 	v.lastResend = v.lastTick
@@ -331,6 +340,9 @@ func (v *ViewChanger) informNewView(view uint64) {
 	v.currView = view
 	v.realView = v.currView
 	v.nextView = v.currView
+	v.MetricsViewChange.CurrentView.Set(float64(v.currView))
+	v.MetricsViewChange.RealView.Set(float64(v.realView))
+	v.MetricsViewChange.NextView.Set(float64(v.nextView))
 	v.nvs.clear()
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N)
@@ -359,6 +371,7 @@ func (v *ViewChanger) startViewChange(change *change) {
 		return
 	}
 	v.nextView = v.currView + 1
+	v.MetricsViewChange.NextView.Set(float64(v.nextView))
 	v.RequestsTimer.StopTimers()
 	msg := &protos.Message{
 		Content: &protos.Message_ViewChange{
@@ -402,6 +415,7 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 		}
 	}
 	v.currView = v.nextView
+	v.MetricsViewChange.CurrentView.Set(float64(v.currView))
 	v.viewChangeMsgs.clear(v.N)
 	v.viewDataMsgs.clear(v.N) // clear because currView changed
 	msg := v.prepareViewDataMsg()
@@ -1131,6 +1145,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 	}
 
 	v.realView = v.currView
+	v.MetricsViewChange.RealView.Set(float64(v.realView))
 	v.nvs.clear()
 	v.Controller.ViewChanged(v.currView, mySequence+1)
 
