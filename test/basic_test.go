@@ -27,7 +27,7 @@ import (
 
 func TestBasic(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -40,7 +40,7 @@ func TestBasic(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	for i := 1; i < 5; i++ {
 		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
@@ -58,7 +58,7 @@ func TestBasic(t *testing.T) {
 
 func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -109,7 +109,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	// Ensure the last node is disconnected and control its Sync()
 	nodes[len(nodes)-1].DelaySync(syncDelay)
@@ -145,7 +145,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 
 func TestRestartFollowers(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -170,7 +170,7 @@ func TestRestartFollowers(t *testing.T) {
 	})).Sugar()
 	nodes[2].Setup()
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -208,7 +208,7 @@ func TestRestartFollowers(t *testing.T) {
 
 func TestLeaderInPartition(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -223,7 +223,7 @@ func TestLeaderInPartition(t *testing.T) {
 	}
 
 	assert.Equal(t, uint64(0), nodes[2].Consensus.GetLeaderID())
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 	assert.Equal(t, uint64(1), nodes[2].Consensus.GetLeaderID())
 
 	nodes[0].Disconnect() // leader in partition
@@ -245,7 +245,7 @@ func TestLeaderInPartition(t *testing.T) {
 
 func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -258,7 +258,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
@@ -314,7 +314,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 func TestLeaderInPartitionWithHealing(t *testing.T) {
 	t.Parallel()
 
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -327,7 +327,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
@@ -378,7 +378,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 
 func TestMultiLeadersPartition(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -399,7 +399,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 		n.Setup()
 	}
 	assert.Equal(t, uint64(0), nodes[0].Consensus.GetLeaderID())
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 	assert.Equal(t, uint64(1), nodes[0].Consensus.GetLeaderID())
 
 	nodes[0].Disconnect() // leader in partition
@@ -431,7 +431,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 
 func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -466,7 +466,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 		})).Sugar()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect() // leader in partition
 
@@ -493,7 +493,7 @@ func TestHeartbeatTimeoutCausesViewChange(t *testing.T) {
 
 func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -520,7 +520,8 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(5)
-	for _, n := range network {
+	network.lock.RLock()
+	for _, n := range network.nodes {
 		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "ViewChanged") {
@@ -529,8 +530,9 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 			return nil
 		})).Sugar()
 	}
+	network.lock.RUnlock()
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -556,7 +558,7 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 
 func TestCatchingUpWithViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -594,7 +596,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -637,7 +639,7 @@ func TestCatchingUpWithViewChange(t *testing.T) {
 
 func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -650,7 +652,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
@@ -695,7 +697,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 
 func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -735,7 +737,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 		return nil
 	})).Sugar()
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect()
 
@@ -764,7 +766,7 @@ func TestRestartAfterViewChangeAndRestoreNewView(t *testing.T) {
 
 func TestRestoringViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -812,7 +814,7 @@ func TestRestoringViewChange(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[1].Disconnect() // next leader in partition
@@ -844,7 +846,7 @@ func TestRestoringViewChange(t *testing.T) {
 
 func TestLeaderForwarding(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -857,7 +859,7 @@ func TestLeaderForwarding(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[1].Submit(Request{ID: "1", ClientID: "alice"})
 	nodes[2].Submit(Request{ID: "2", ClientID: "bob"})
@@ -882,7 +884,7 @@ func TestLeaderExclusion(t *testing.T) {
 	// Scenario: The leader doesn't send messages to n3,
 	// but it should detect this and sync.
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -896,7 +898,7 @@ func TestLeaderExclusion(t *testing.T) {
 		nodes = append(nodes, n)
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].DisconnectFrom(3)
 
@@ -914,7 +916,7 @@ func TestLeaderExclusion(t *testing.T) {
 
 func TestCatchingUpWithSyncAssisted(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -927,7 +929,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -960,7 +962,7 @@ func TestCatchingUpWithSyncAssisted(t *testing.T) {
 
 func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -994,7 +996,7 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	nodes[0].Setup()
 	nodes[3].Setup()
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[3].Disconnect() // will need to catch up
 
@@ -1045,7 +1047,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 	// where it collects state transfer requests and sees that there was a view change
 
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1091,7 +1093,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect() // leader in partition
 	nodes[6].Disconnect() // follower in partition
@@ -1183,7 +1185,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 		test := test
 		t.Run(test.description, func(t *testing.T) {
 			t.Parallel()
-			network := make(Network)
+			network := NewNetwork()
 			defer network.Shutdown()
 
 			testDir, err := os.MkdirTemp("", test.description)
@@ -1211,7 +1213,7 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			})).Sugar()
 			nodes[1].Setup()
 
-			startNodes(nodes, &network)
+			startNodes(nodes, network)
 
 			for i := 2; i <= numberOfNodes; i++ {
 				nodes[0].MutateSend(uint64(i), test.mutatingFunc)
@@ -1252,7 +1254,7 @@ func TestGradualStart(t *testing.T) {
 	// and another transaction is passed
 	// lastly a third node is added and another transaction is submitted
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1366,7 +1368,7 @@ func TestGradualStart(t *testing.T) {
 
 func TestReconfigAndViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1380,7 +1382,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 		nodes = append(nodes, n)
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	for i := 1; i < 5; i++ {
 		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
@@ -1401,7 +1403,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 
 	newNode := newNode(1, network, t.Name(), testDir, false, 0) // add node with id 1, should be the leader
 	nodes = append(nodes, newNode)
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 
 	for i := 0; i < numberOfNodes; i++ {
 		nodes[i].Restart() // restart all stopped nodes
@@ -1428,7 +1430,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 
 func TestRotateAndViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1482,7 +1484,7 @@ func TestRotateAndViewChange(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to first leader
 
@@ -1544,7 +1546,7 @@ func TestRotateAndViewChange(t *testing.T) {
 
 func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1579,7 +1581,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 	}
 
 	t.Run("No leader rotation", func(t *testing.T) {
-		startNodes(nodes, &network)
+		startNodes(nodes, network)
 
 		nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -1662,7 +1664,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 func TestNodeInFlightFails(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1737,7 +1739,7 @@ func TestNodeInFlightFails(t *testing.T) {
 		return msg.GetCommit() != nil && atomic.LoadUint32(&blockCommitsForLastNode) == 1
 	})
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	atomic.StoreUint32(&blockCommits, 1)
 	atomic.StoreUint32(&blockCommitsForLastNode, 1)
@@ -1806,7 +1808,7 @@ func TestNodeInFlightFails(t *testing.T) {
 
 func TestBlacklistAndRedemption(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1851,7 +1853,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Disconnect() // Leader is in partition
 
@@ -1919,7 +1921,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 
 func TestBlacklistMultipleViewChanges(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -1964,7 +1966,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 		n.Setup()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	// Put a single decision
 	nodes[0].Submit(Request{ID: "genesis", ClientID: "alice"})
@@ -2043,7 +2045,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 
 func TestNodeInFlightThenViewChange(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -2065,7 +2067,7 @@ func TestNodeInFlightThenViewChange(t *testing.T) {
 		})
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	atomic.StoreUint32(&blockCommits, 1)
 
@@ -2130,7 +2132,7 @@ func TestNodeInFlightThenViewChange(t *testing.T) {
 
 func TestNodeCommitTheRestPrepareAndCommittedNodeCrashesThenRecovers(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -2156,7 +2158,7 @@ func TestNodeCommitTheRestPrepareAndCommittedNodeCrashesThenRecovers(t *testing.
 
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	atomic.StoreUint32(&blockCommits, 1)
 
@@ -2214,7 +2216,7 @@ func TestNodeCommitTheRestPrepareAndCommittedNodeCrashesThenRecovers(t *testing.
 
 func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -2258,7 +2260,7 @@ func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 	})).Sugar()
 	nodes[0].Setup()
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	atomic.StoreUint32(&blockPrepares, 1)
 
@@ -2310,7 +2312,7 @@ func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 func TestViewChangeAfterTryingToFork(t *testing.T) {
 	t.Parallel()
 
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -2443,7 +2445,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		})).Sugar()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	var counter uint64
 	accelerateTime(nodes, done, true, true, &counter)
@@ -2509,7 +2511,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 func TestLeaderStopSendHeartbeat(t *testing.T) {
 	t.Parallel()
 
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -2587,7 +2589,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 		})).Sugar()
 	}
 
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	var counter uint64
 	accelerateTime(nodes, done, true, true, &counter)

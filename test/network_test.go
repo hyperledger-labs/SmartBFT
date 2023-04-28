@@ -12,7 +12,7 @@ import (
 )
 
 func TestNetwork(*testing.T) {
-	network := make(Network)
+	network := NewNetwork()
 	node1 := make(mockHandler)
 	node2 := make(mockHandler)
 
