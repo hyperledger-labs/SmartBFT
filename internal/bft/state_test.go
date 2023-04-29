@@ -9,6 +9,8 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/internal/bft"
+	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/stretchr/testify/assert"
@@ -180,6 +182,7 @@ func TestStateRestore(t *testing.T) {
 			view := &bft.View{
 				Number:           300,
 				ProposalSequence: testCase.proposalSeqViewInitializedWith,
+				MetricsView:      bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
 			}
 
 			err = state.Restore(view)

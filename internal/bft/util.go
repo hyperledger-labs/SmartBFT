@@ -263,6 +263,7 @@ type ProposalMaker struct {
 	Sync               Synchronizer
 	Logger             api.Logger
 	MetricsBlacklist   *MetricsBlacklist
+	MetricsView        *MetricsView
 	Comm               Comm
 	Verifier           api.Verifier
 	Signer             api.Signer
@@ -298,6 +299,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		InMsgQSize:         pm.InMsqQSize,
 		ViewSequences:      pm.ViewSequences,
 		MetricsBlacklist:   pm.MetricsBlacklist,
+		MetricsView:        pm.MetricsView,
 	}
 
 	view.ViewSequences.Store(ViewSequence{
@@ -321,6 +323,12 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 		view.Number = viewNum
 		view.DecisionsInView = decisionsInView
 	}
+
+	view.MetricsView.ViewNumber.Set(float64(view.Number))
+	view.MetricsView.LeaderID.Set(float64(view.LeaderID))
+	view.MetricsView.ProposalSequence.Set(float64(view.ProposalSequence))
+	view.MetricsView.DecisionsInView.Set(float64(view.DecisionsInView))
+	view.MetricsView.Phase.Set(float64(view.Phase))
 
 	return view
 }
