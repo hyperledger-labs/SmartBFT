@@ -93,7 +93,7 @@ type ViewChanger struct {
 
 	// Runtime
 	MetricsBlacklist          *MetricsBlacklist
-  MetricsView               *MetricsView
+	MetricsView               *MetricsView
 	Restore                   chan struct{}
 	InMsqQSize                int
 	incMsgs                   chan *incMsg
@@ -106,7 +106,6 @@ type ViewChanger struct {
 	startChangeChan           chan *change
 	informChan                chan uint64
 	committedDuringViewChange *protos.ViewMetadata
-
 
 	stopOnce sync.Once
 	stopChan chan struct{}
