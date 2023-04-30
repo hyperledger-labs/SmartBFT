@@ -793,6 +793,7 @@ func TestSyncInform(t *testing.T) {
 		Controller:          controllerMock,
 		InMsqQSize:          100,
 		ControllerStartedWG: sync.WaitGroup{},
+		MetricsViewChange:   bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
 	}
 
 	vc.ControllerStartedWG.Add(1)

@@ -391,6 +391,7 @@ func (c *Consensus) createComponents() {
 		ResendTimeout:     c.Config.ViewChangeResendInterval,
 		ViewChangeTimeout: c.Config.ViewChangeTimeout,
 		InMsqQSize:        int(c.Config.IncomingMessageBufferSize),
+		MetricsViewChange: algorithm.NewMetricsViewChange(c.MetricsProvider),
 		MetricsBlacklist:  c.metricsBlacklist,
 		MetricsView:       c.metricsView,
 	}
