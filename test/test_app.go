@@ -253,8 +253,9 @@ func (a *App) Sign([]byte) []byte {
 
 // SignProposal signs on the given proposal
 func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
-	if len(aux) == 0 && a.Node.n.Count() > 1 && a.messageLost == nil {
-		a.logger.Panicf("didn't receive prepares from anyone, n=%d", len(a.Node.n.nodes))
+	cnt := a.Node.n.Count()
+	if len(aux) == 0 && cnt > 1 && a.messageLost == nil {
+		a.logger.Panicf("didn't receive prepares from anyone, n=%d", cnt)
 	}
 	return &types.Signature{ID: a.ID, Msg: aux}
 }
