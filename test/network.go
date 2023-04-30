@@ -44,14 +44,14 @@ func NewNetwork() *Network {
 
 // AddOrUpdateNode adds or updates a node in the network
 func (n *Network) AddOrUpdateNode(id uint64, h handler, app *App) {
-	n.lock.Lock()
-	defer n.lock.Unlock()
-
+	n.lock.RLock()
 	node, exists := n.nodes[id]
 	if exists {
 		node.h = h
+		n.lock.RUnlock()
 		return
 	}
+	n.lock.RUnlock()
 
 	node = &Node{
 		in:                  make(chan msgFrom, incBuffSize),
@@ -63,7 +63,10 @@ func (n *Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 		peerMutatingFunc:    make(map[uint64]func(uint64, *smartbftprotos.Message)),
 		app:                 app,
 	}
+	n.lock.Lock()
 	n.nodes[id] = node
+	n.lock.Unlock()
+
 	node.createCommittedBatches(n)
 }
 
