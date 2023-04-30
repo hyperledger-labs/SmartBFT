@@ -520,8 +520,9 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 	done := make(chan struct{})
 	viewChangeWG := sync.WaitGroup{}
 	viewChangeWG.Add(5)
-	network.lock.RLock()
-	for _, n := range network.nodes {
+
+	ns := network.Nodes()
+	for _, n := range ns {
 		baseLogger := n.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		n.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "ViewChanged") {
@@ -530,7 +531,6 @@ func TestMultiViewChangeWithNoRequestsTimeout(t *testing.T) {
 			return nil
 		})).Sugar()
 	}
-	network.lock.RUnlock()
 
 	startNodes(nodes, network)
 

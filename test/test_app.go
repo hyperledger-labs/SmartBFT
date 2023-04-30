@@ -253,9 +253,7 @@ func (a *App) Sign([]byte) []byte {
 
 // SignProposal signs on the given proposal
 func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
-	a.Node.n.lock.RLock()
-	defer a.Node.n.lock.RUnlock()
-	if len(aux) == 0 && len(a.Node.n.nodes) > 1 && a.messageLost == nil {
+	if len(aux) == 0 && a.Node.n.Count() > 1 && a.messageLost == nil {
 		a.logger.Panicf("didn't receive prepares from anyone, n=%d", len(a.Node.n.nodes))
 	}
 	return &types.Signature{ID: a.ID, Msg: aux}
@@ -481,14 +479,10 @@ func newNode(id uint64, network *Network, testName string, testDir string, rotat
 			c.ViewChangerTicker = app.viewChangeTime
 		}
 		network.AddOrUpdateNode(id, c, app)
-		network.lock.RLock()
-		c.Comm = network.nodes[id]
-		network.lock.RUnlock()
+		c.Comm = network.GetByID(id)
 		app.Consensus = c
 	}
 	app.Setup()
-	network.lock.RLock()
-	app.Node = network.nodes[id]
-	network.lock.RUnlock()
+	app.Node = network.GetByID(id)
 	return app
 }

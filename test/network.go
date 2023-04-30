@@ -136,6 +136,40 @@ func (n *Network) send(source, target uint64, msg proto.Message) {
 	}
 }
 
+func (n *Network) getAll() []uint64 {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	res := make([]uint64, 0, len(n.nodes))
+	for _, i := range n.nodes {
+		res = append(res, i.id)
+	}
+
+	return res
+}
+
+func (n *Network) Nodes() []*Node {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	res := make([]*Node, 0, len(n.nodes))
+	for _, i := range n.nodes {
+		res = append(res, i)
+	}
+
+	return res
+}
+
+func (n *Network) Count() int {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	return len(n.nodes)
+}
+
+func (n *Network) GetByID(id uint64) *Node {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	return n.nodes[id]
+}
+
 // Node represents a node in a network
 type Node struct {
 	sync.RWMutex
@@ -175,13 +209,7 @@ func (node *Node) SendTransaction(targetID uint64, request []byte) {
 
 // Nodes returns the ids of all nodes in the network
 func (node *Node) Nodes() []uint64 {
-	node.n.lock.RLock()
-	defer node.n.lock.RUnlock()
-	res := make([]uint64, 0, len(node.n.nodes))
-	for _, n := range node.n.nodes {
-		res = append(res, n.id)
-	}
-
+	res := node.n.getAll()
 	sort.Slice(res, func(i, j int) bool { return res[i] < res[j] })
 	return res
 }
