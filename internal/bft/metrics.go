@@ -338,3 +338,49 @@ func NewMetricsView(p *metrics.CustomerProvider) *MetricsView {
 		LatencyBatchSave:       p.NewHistogram(latencyBatchSaveOptsTmp).With(p.LabelsForWith()...),
 	}
 }
+
+var currentViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_current_view",
+	Help:         "current view of viewchange on this channel.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var nextViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_next_view",
+	Help:         "next view of viewchange on this channel.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+var realViewOpts = metrics.GaugeOpts{
+	Namespace:    "consensus",
+	Subsystem:    "bft",
+	Name:         "viewchange_real_view",
+	Help:         "real view of viewchange on this channel.",
+	LabelNames:   []string{},
+	StatsdFormat: "%{#fqname}",
+}
+
+// MetricsViewChange encapsulates view change metrics
+type MetricsViewChange struct {
+	CurrentView metrics.Gauge
+	NextView    metrics.Gauge
+	RealView    metrics.Gauge
+}
+
+// NewMetricsViewChange create new view change metrics
+func NewMetricsViewChange(p *metrics.CustomerProvider) *MetricsViewChange {
+	currentViewOptsTmp := p.NewGaugeOpts(currentViewOpts)
+	nextViewOptsTmp := p.NewGaugeOpts(nextViewOpts)
+	realViewOptsTmp := p.NewGaugeOpts(realViewOpts)
+	return &MetricsViewChange{
+		CurrentView: p.NewGauge(currentViewOptsTmp).With(p.LabelsForWith()...),
+		NextView:    p.NewGauge(nextViewOptsTmp).With(p.LabelsForWith()...),
+		RealView:    p.NewGauge(realViewOptsTmp).With(p.LabelsForWith()...),
+	}
+}
