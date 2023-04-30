@@ -108,6 +108,7 @@ func (a *App) Sync() types.SyncResponse {
 			Payload:  record.Batch.toBytes(),
 			Metadata: record.Metadata,
 		}
+		a.logger.Debugf("Sync deliver view %d last seq %d", a.latestMD.ViewId, a.latestMD.LatestSequence)
 		a.Deliver(proposal, nil)
 		for _, req := range record.Batch.Requests {
 			request := requestFromBytes(req)
@@ -255,7 +256,7 @@ func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
 	a.Node.n.lock.RLock()
 	defer a.Node.n.lock.RUnlock()
 	if len(aux) == 0 && len(a.Node.n.nodes) > 1 && a.messageLost == nil {
-		panic(fmt.Sprintf("didn't receive prepares from anyone, n=%d", len(a.Node.n.nodes)))
+		a.logger.Panicf("didn't receive prepares from anyone, n=%d", len(a.Node.n.nodes))
 	}
 	return &types.Signature{ID: a.ID, Msg: aux}
 }
@@ -300,6 +301,7 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 		panic(err)
 	}
 
+	a.logger.Debugf("Deliver view %d last seq %d prevSeq %d", a.latestMD.ViewId, a.latestMD.LatestSequence, prevSeq)
 	if prevSeq == a.latestMD.LatestSequence {
 		a.logger.Panicf("Committed sequence %d twice", prevSeq)
 	}
