@@ -92,19 +92,20 @@ type ViewChanger struct {
 	backOffFactor       uint64
 
 	// Runtime
-	MetricsBlacklist *MetricsBlacklist
-	MetricsView      *MetricsView
-	Restore          chan struct{}
-	InMsqQSize       int
-	incMsgs          chan *incMsg
-	viewChangeMsgs   *voteSet
-	viewDataMsgs     *voteSet
-	nvs              *nextViews
-	realView         uint64
-	currView         uint64
-	nextView         uint64
-	startChangeChan  chan *change
-	informChan       chan uint64
+	MetricsBlacklist          *MetricsBlacklist
+	MetricsView               *MetricsView
+	Restore                   chan struct{}
+	InMsqQSize                int
+	incMsgs                   chan *incMsg
+	viewChangeMsgs            *voteSet
+	viewDataMsgs              *voteSet
+	nvs                       *nextViews
+	realView                  uint64
+	currView                  uint64
+	nextView                  uint64
+	startChangeChan           chan *change
+	informChan                chan uint64
+	committedDuringViewChange *protos.ViewMetadata
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -474,8 +475,11 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 		v.Logger.Debugf("Node %d's in flight proposal and the last decision has the same sequence: %d", v.SelfID, inFlightMetadata.LatestSequence)
 		return nil // this is not an actual in flight proposal
 	}
-	if inFlightMetadata.LatestSequence != lastDecisionMetadata.LatestSequence+1 {
-		v.Logger.Panicf("Node %d's in flight proposal sequence is %d while its last decision sequence is %d", v.SelfID, inFlightMetadata.LatestSequence, lastDecisionMetadata.LatestSequence)
+	if inFlightMetadata.LatestSequence+1 == lastDecisionMetadata.LatestSequence && v.committedDuringViewChange != nil &&
+		v.committedDuringViewChange.LatestSequence == lastDecisionMetadata.LatestSequence {
+		v.Logger.Infof("Node %d's in flight proposal sequence is %d while already committed decision %d, "+
+			"but that is because it committed it during the view change", v.SelfID, inFlightMetadata.LatestSequence, lastDecisionMetadata.LatestSequence)
+		return nil
 	}
 	return proposal
 }
@@ -620,6 +624,14 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 		signatures = append(signatures, signature)
 	}
 	v.deliverDecision(proposal, signatures)
+
+	// Make note that we have advanced the sequence during a view change,
+	// so our in-flight sequence may be behind.
+	md := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+		v.Logger.Panicf("Node %d got %s from %d, but was unable to unmarshal proposal metadata, err: %v", v.SelfID, signedViewDataToString(svd), sender, err)
+	}
+	v.committedDuringViewChange = md
 
 	select { // if there was a delivery with a reconfig we need to stop here before verify signature
 	case <-v.stopChan:
