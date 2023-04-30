@@ -481,19 +481,8 @@ func (rp *Pool) RestartTimers() {
 	rp.logger.Debugf("Restarted all timers: size=%d", len(rp.existMap))
 }
 
-func (rp *Pool) contains(reqInfo types.RequestInfo) bool {
-	rp.lock.Lock()
-	defer rp.lock.Unlock()
-	_, contains := rp.existMap[reqInfo]
-	return contains
-}
-
 // called by the goroutine spawned by time.AfterFunc
 func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
-	if !rp.contains(reqInfo) {
-		return
-	}
-
 	rp.lock.Lock()
 
 	element, contains := rp.existMap[reqInfo]
@@ -527,10 +516,6 @@ func (rp *Pool) onRequestTO(request []byte, reqInfo types.RequestInfo) {
 
 // called by the goroutine spawned by time.AfterFunc
 func (rp *Pool) onLeaderFwdRequestTO(request []byte, reqInfo types.RequestInfo) {
-	if !rp.contains(reqInfo) {
-		return
-	}
-
 	rp.lock.Lock()
 
 	element, contains := rp.existMap[reqInfo]
