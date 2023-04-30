@@ -238,7 +238,8 @@ func (node *Node) serve() {
 }
 
 func (node *Node) createCommittedBatches(network *Network) {
-	for _, n := range network.nodes {
+	ns := network.Nodes()
+	for _, n := range ns {
 		if n.cb != nil {
 			node.cb = n.cb
 			return
