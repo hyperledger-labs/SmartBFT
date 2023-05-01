@@ -144,9 +144,9 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 		opt.metrics = options.metrics
-		if opt.metrics == nil {
-			opt.metrics = NewMetrics(opt.MetricsProvider)
-		}
+	}
+	if opt.metrics == nil {
+		opt.metrics = NewMetrics(opt.MetricsProvider)
 	}
 
 	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
@@ -236,9 +236,9 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 		opt.metrics = options.metrics
-		if opt.metrics == nil {
-			opt.metrics = NewMetrics(opt.MetricsProvider)
-		}
+	}
+	if opt.metrics == nil {
+		opt.metrics = NewMetrics(opt.MetricsProvider)
 	}
 
 	cleanDirName := filepath.Clean(dirPath)
@@ -778,9 +778,9 @@ func InitializeAndReadAll(
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 		opt.metrics = options.metrics
-		if opt.metrics == nil {
-			opt.metrics = NewMetrics(opt.MetricsProvider)
-		}
+	}
+	if opt.metrics == nil {
+		opt.metrics = NewMetrics(opt.MetricsProvider)
 	}
 
 	writeAheadLog, err = Create(logger, walDir, opt)
