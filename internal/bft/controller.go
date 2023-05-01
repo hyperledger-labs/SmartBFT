@@ -85,6 +85,11 @@ type ProposerBuilder interface {
 	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer
 }
 
+type abortView struct {
+	view  uint64
+	reply chan struct{}
+}
+
 // Controller controls the entire flow of the consensus
 type Controller struct {
 	api.Comm
@@ -124,7 +129,7 @@ type Controller struct {
 	currDecisionsInView     uint64
 
 	viewChange    chan viewInfo
-	abortViewChan chan uint64
+	abortViewChan chan *abortView
 
 	stopOnce sync.Once
 	stopChan chan struct{}
@@ -405,7 +410,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 		return
 	}
 
-	if !c.abortView(latestView) {
+	if !c.abortView(latestView, nil) {
 		return
 	}
 
@@ -421,7 +426,13 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	}
 }
 
-func (c *Controller) abortView(view uint64) bool {
+func (c *Controller) abortView(view uint64, reply chan struct{}) bool {
+	defer func() {
+		if reply != nil {
+			close(reply)
+		}
+	}()
+
 	currView := c.getCurrentViewNumber()
 	if view < currView {
 		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
@@ -453,7 +464,14 @@ func (c *Controller) AbortView(view uint64) {
 
 	c.Batcher.Close()
 
-	c.abortViewChan <- view
+	reply := make(chan struct{}, 1)
+
+	c.abortViewChan <- &abortView{
+		view:  view,
+		reply: reply,
+	}
+
+	<-reply
 }
 
 // ViewChanged makes the controller abort the current view and start a new one with the given numbers
@@ -505,8 +523,8 @@ func (c *Controller) run() {
 			c.decide(d)
 		case newView := <-c.viewChange:
 			c.changeView(newView.viewNumber, newView.proposalSeq, 0)
-		case view := <-c.abortViewChan:
-			c.abortView(view)
+		case avm := <-c.abortViewChan:
+			c.abortView(avm.view, avm.reply)
 		case <-c.stopChan:
 			return
 		case <-c.leaderToken:
@@ -791,7 +809,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.decisionChan = make(chan decision)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
-	c.abortViewChan = make(chan uint64, 1)
+	c.abortViewChan = make(chan *abortView, 1)
 
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
