@@ -100,6 +100,7 @@ type Options struct {
 	FileSizeBytes   int64
 	BufferSizeBytes int64
 	MetricsProvider *api.CustomerProvider
+	metrics         *Metrics
 }
 
 // DefaultOptions returns the set of default options.
@@ -142,6 +143,10 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		if options.BufferSizeBytes != 0 {
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
+		opt.metrics = options.metrics
+		if opt.metrics == nil {
+			opt.metrics = NewMetrics(opt.MetricsProvider)
+		}
 	}
 
 	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
@@ -156,7 +161,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		dirName:       cleanDirName,
 		options:       opt,
 		logger:        logger,
-		metrics:       NewMetrics(opt.MetricsProvider),
+		metrics:       opt.metrics,
 		index:         1,
 		headerBuff:    make([]byte, 8),
 		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
@@ -230,6 +235,10 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		if options.BufferSizeBytes != 0 {
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
+		opt.metrics = options.metrics
+		if opt.metrics == nil {
+			opt.metrics = NewMetrics(opt.MetricsProvider)
+		}
 	}
 
 	cleanDirName := filepath.Clean(dirPath)
@@ -238,7 +247,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		dirName:    cleanDirName,
 		options:    opt,
 		logger:     logger,
-		metrics:    NewMetrics(opt.MetricsProvider),
+		metrics:    opt.metrics,
 		headerBuff: make([]byte, 8),
 		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
 		readMode:   true,
@@ -757,7 +766,24 @@ func InitializeAndReadAll(
 	logger.Infof("Trying to creating a Write-Ahead-Log at dir: %s", walDir)
 	logger.Debugf("Write-Ahead-Log options: %s", options)
 
-	writeAheadLog, err = Create(logger, walDir, options)
+	opt := DefaultOptions()
+	if options != nil {
+		if options.MetricsProvider != nil {
+			opt.MetricsProvider = options.MetricsProvider
+		}
+		if options.FileSizeBytes != 0 {
+			opt.FileSizeBytes = options.FileSizeBytes
+		}
+		if options.BufferSizeBytes != 0 {
+			opt.BufferSizeBytes = options.BufferSizeBytes
+		}
+		opt.metrics = options.metrics
+		if opt.metrics == nil {
+			opt.metrics = NewMetrics(opt.MetricsProvider)
+		}
+	}
+
+	writeAheadLog, err = Create(logger, walDir, opt)
 	if err != nil {
 		if !errors.Is(err, ErrWALAlreadyExists) {
 			err = errors.Wrap(err, "Cannot create Write-Ahead-Log")
