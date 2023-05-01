@@ -1379,6 +1379,9 @@ func TestReconfigAndViewChange(t *testing.T) {
 	nodes := make([]*App, 0)
 	for i := 2; i <= numberOfNodes+1; i++ { // add 4 nodes with ids starting at 2
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+			return false
+		})
 		nodes = append(nodes, n)
 	}
 
@@ -1402,6 +1405,9 @@ func TestReconfigAndViewChange(t *testing.T) {
 	}
 
 	newNode := newNode(1, network, t.Name(), testDir, false, 0) // add node with id 1, should be the leader
+	newNode.LoseMessages(func(msg *smartbftprotos.Message) bool {
+		return false
+	})
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], network)
 
