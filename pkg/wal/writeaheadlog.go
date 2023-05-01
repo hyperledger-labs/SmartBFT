@@ -793,7 +793,7 @@ func InitializeAndReadAll(
 
 		logger.Infof("Write-Ahead-Log already exists at dir: %s; Trying to open", walDir)
 
-		writeAheadLog, err = Open(logger, walDir, options)
+		writeAheadLog, err = Open(logger, walDir, opt)
 		if err != nil {
 			err = errors.Wrap(err, "Cannot open Write-Ahead-Log")
 
