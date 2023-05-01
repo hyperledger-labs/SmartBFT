@@ -222,7 +222,7 @@ func TestLeaderPropose(t *testing.T) {
 		Synchronizer:  synchronizer,
 		Collector:     &collector,
 		StartedWG:     &startedWG,
-		MetricsView:   bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:   api.NewMetricsView(&disabled.Provider{}),
 	}
 	configureProposerBuilder(controller)
 
@@ -463,7 +463,7 @@ func TestSyncPrevView(t *testing.T) {
 		Signer:          signer,
 		WAL:             wal,
 		StartedWG:       &startedWG,
-		MetricsView:     bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:     api.NewMetricsView(&disabled.Provider{}),
 	}
 
 	vs := configureProposerBuilder(controller)
@@ -672,8 +672,8 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 		ViewSequences:      vs,
 		State:              &bft.PersistedState{WAL: c.WAL, InFlightProposal: &bft.InFlightData{}},
 		InMsgQSize:         int(c.N * 10),
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
-		MetricsBlacklist:   bft.NewMetricsBlacklist(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
+		MetricsBlacklist:   api.NewMetricsBlacklist(&disabled.Provider{}),
 	}
 }
 
@@ -793,7 +793,7 @@ func TestSyncInform(t *testing.T) {
 		Controller:          controllerMock,
 		InMsqQSize:          100,
 		ControllerStartedWG: sync.WaitGroup{},
-		MetricsViewChange:   bft.NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsViewChange:   api.NewMetricsViewChange(&disabled.Provider{}),
 	}
 
 	vc.ControllerStartedWG.Add(1)
@@ -934,7 +934,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 		StartedWG:          &startedWG,
 		LeaderRotation:     true,
 		DecisionsPerLeader: 1,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs
@@ -1117,7 +1117,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 		StartedWG:          &startedWG,
 		LeaderRotation:     true,
 		DecisionsPerLeader: 1,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs

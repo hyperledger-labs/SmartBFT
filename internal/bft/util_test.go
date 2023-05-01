@@ -103,7 +103,7 @@ func TestBlacklist(t *testing.T) {
 				n:                  uint64(len(tst.nodes)),
 				nodes:              tst.nodes,
 				logger:             logger.Sugar(),
-				metricsBlacklist:   NewMetricsBlacklist(api.NewCustomerProvider(&disabled.Provider{})),
+				metricsBlacklist:   api.NewMetricsBlacklist(&disabled.Provider{}),
 				f:                  (len(tst.nodes) - 1) / 3,
 				currView:           tst.currView,
 				preparesFrom:       tst.preparesFrom,
