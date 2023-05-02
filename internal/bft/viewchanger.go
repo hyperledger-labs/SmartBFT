@@ -93,9 +93,9 @@ type ViewChanger struct {
 	backOffFactor       uint64
 
 	// Runtime
-	MetricsViewChange         *MetricsViewChange
-	MetricsBlacklist          *MetricsBlacklist
-	MetricsView               *MetricsView
+	MetricsViewChange         *api.MetricsViewChange
+	MetricsBlacklist          *api.MetricsBlacklist
+	MetricsView               *api.MetricsView
 	Restore                   chan struct{}
 	InMsqQSize                int
 	incMsgs                   chan *incMsg
@@ -123,7 +123,7 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.informChan = make(chan uint64, 1)
 
 	if v.MetricsViewChange == nil {
-		v.MetricsViewChange = NewMetricsViewChange(api.NewCustomerProvider(&disabled.Provider{}))
+		v.MetricsViewChange = api.NewMetricsViewChange(&disabled.Provider{})
 	}
 
 	v.quorum, v.f = computeQuorum(v.N)

@@ -138,7 +138,7 @@ func TestViewBasic(t *testing.T) {
 		Number:             1,
 		ProposalSequence:   0,
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	view.Start()
 	view.Abort()
@@ -341,7 +341,7 @@ func TestBadPrePrepare(t *testing.T) {
 				FailureDetector:  fd,
 				ViewSequences:    &atomic.Value{},
 				InMsgQSize:       40,
-				MetricsView:      bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+				MetricsView:      api.NewMetricsView(&disabled.Provider{}),
 			}
 			view.Start()
 
@@ -434,7 +434,7 @@ func TestBadPrepare(t *testing.T) {
 				Signer:             signer,
 				ViewSequences:      &atomic.Value{},
 				InMsgQSize:         40,
-				MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+				MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 			}
 			view.Start()
 
@@ -503,7 +503,7 @@ func TestBadCommit(t *testing.T) {
 		Signer:             signer,
 		ViewSequences:      &atomic.Value{},
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	view.Start()
 
@@ -593,7 +593,7 @@ func TestNormalPath(t *testing.T) {
 		Signer:             signer,
 		ViewSequences:      viewSeq,
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	view.Start()
 
@@ -717,7 +717,7 @@ func TestTwoSequences(t *testing.T) {
 		Signer:             signer,
 		ViewSequences:      &atomic.Value{},
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 	view.Start()
 
@@ -883,7 +883,7 @@ func TestViewPersisted(t *testing.T) {
 					ProposalSequence:   0,
 					ViewSequences:      &atomic.Value{},
 					InMsgQSize:         40,
-					MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+					MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 				}
 			}
 
@@ -1097,7 +1097,7 @@ func TestDiscoverDeliberateCensorship(t *testing.T) {
 				Sync:               synchronizer,
 				ViewSequences:      &atomic.Value{},
 				InMsgQSize:         40,
-				MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+				MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 			}
 
 			var syncCalled sync.WaitGroup
@@ -1185,7 +1185,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 		ProposalSequence:   0,
 		ViewSequences:      &atomic.Value{},
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 
 	verifier.On("VerifyProposal", mock.Anything).Run(func(arguments mock.Arguments) {
@@ -1444,7 +1444,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 		ProposalSequence:   0,
 		ViewSequences:      &atomic.Value{},
 		InMsgQSize:         40,
-		MetricsView:        bft.NewMetricsView(api.NewCustomerProvider(&disabled.Provider{})),
+		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
 
 	return tv
