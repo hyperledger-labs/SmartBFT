@@ -1909,7 +1909,6 @@ func TestCommitInFlight(t *testing.T) {
 	basicLog, err := zap.NewDevelopment()
 	assert.NoError(t, err)
 	log := basicLog.Sugar()
-	met := api.NewCustomerProvider(&disabled.Provider{})
 	signer := &mocks.SignerMock{}
 	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
 	signWG := sync.WaitGroup{}
@@ -1965,8 +1964,8 @@ func TestCommitInFlight(t *testing.T) {
 		InMsqQSize:       int(types.DefaultConfig.IncomingMessageBufferSize),
 		Application:      app,
 		Pruner:           pruner,
-		MetricsBlacklist: bft.NewMetricsBlacklist(met),
-		MetricsView:      bft.NewMetricsView(met),
+		MetricsBlacklist: api.NewMetricsBlacklist(&disabled.Provider{}),
+		MetricsView:      api.NewMetricsView(&disabled.Provider{}),
 	}
 
 	vc.Start(0)
