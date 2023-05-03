@@ -253,8 +253,9 @@ func (a *App) Sign([]byte) []byte {
 
 // SignProposal signs on the given proposal
 func (a *App) SignProposal(_ types.Proposal, aux []byte) *types.Signature {
-	if len(aux) == 0 && len(a.Node.n) > 1 && a.messageLost == nil {
-		a.logger.Panicf("didn't receive prepares from anyone, n=%d", len(a.Node.n))
+	cnt := a.Node.n.Count()
+	if len(aux) == 0 && cnt > 1 && a.messageLost == nil {
+		a.logger.Panicf("didn't receive prepares from anyone, n=%d", cnt)
 	}
 	return &types.Signature{ID: a.ID, Msg: aux}
 }
@@ -409,7 +410,7 @@ type AppRecord struct {
 	Metadata []byte
 }
 
-func newNode(id uint64, network Network, testName string, testDir string, rotateLeader bool, decisionsPerLeader uint64) *App {
+func newNode(id uint64, network *Network, testName string, testDir string, rotateLeader bool, decisionsPerLeader uint64) *App {
 	logConfig := zap.NewDevelopmentConfig()
 	logger, _ := logConfig.Build()
 	logger = logger.With(zap.String("t", testName)).With(zap.Int64("id", int64(id)))
@@ -478,10 +479,10 @@ func newNode(id uint64, network Network, testName string, testDir string, rotate
 			c.ViewChangerTicker = app.viewChangeTime
 		}
 		network.AddOrUpdateNode(id, c, app)
-		c.Comm = network[id]
+		c.Comm = network.GetByID(id)
 		app.Consensus = c
 	}
 	app.Setup()
-	app.Node = network[id]
+	app.Node = network.GetByID(id)
 	return app
 }

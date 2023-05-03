@@ -31,15 +31,27 @@ type msgFrom struct {
 }
 
 // Network is a map of ids and nodes
-type Network map[uint64]*Node
+type Network struct {
+	nodes map[uint64]*Node
+	lock  sync.RWMutex
+}
+
+func NewNetwork() *Network {
+	return &Network{
+		nodes: make(map[uint64]*Node),
+	}
+}
 
 // AddOrUpdateNode adds or updates a node in the network
-func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
-	node, exists := n[id]
+func (n *Network) AddOrUpdateNode(id uint64, h handler, app *App) {
+	n.lock.RLock()
+	node, exists := n.nodes[id]
 	if exists {
 		node.h = h
+		n.lock.RUnlock()
 		return
 	}
+	n.lock.RUnlock()
 
 	node = &Node{
 		in:                  make(chan msgFrom, incBuffSize),
@@ -51,21 +63,28 @@ func (n Network) AddOrUpdateNode(id uint64, h handler, app *App) {
 		peerMutatingFunc:    make(map[uint64]func(uint64, *smartbftprotos.Message)),
 		app:                 app,
 	}
-	n[id] = node
+	n.lock.Lock()
+	n.nodes[id] = node
+	n.lock.Unlock()
+
 	node.createCommittedBatches(n)
 }
 
 // StartServe calls serve on all nodes in the network
-func (n Network) StartServe() {
-	for _, node := range n {
+func (n *Network) StartServe() {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	for _, node := range n.nodes {
 		node.running.Add(1)
 		go node.serve()
 	}
 }
 
 // StopServe stops serve for all nodes in the network
-func (n Network) StopServe() {
-	for _, node := range n {
+func (n *Network) StopServe() {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	for _, node := range n.nodes {
 		close(node.shutdownChan)
 		node.running.Wait()
 		node.shutdownChan = make(chan struct{}) // reopen for next time
@@ -73,24 +92,28 @@ func (n Network) StopServe() {
 }
 
 // Shutdown stops all nodes in the network
-func (n Network) Shutdown() {
-	for _, node := range n {
+func (n *Network) Shutdown() {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	for _, node := range n.nodes {
 		close(node.shutdownChan)
 		node.running.Wait()
 	}
-	for _, node := range n {
+	for _, node := range n.nodes {
 		node.h.Stop()
 	}
 }
 
-func (n Network) send(source, target uint64, msg proto.Message) {
-	dstNode, found := n[target]
+func (n *Network) send(source, target uint64, msg proto.Message) {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	dstNode, found := n.nodes[target]
 
 	if !found {
 		panic("node doesn't exist")
 	}
 
-	srcNode, found := n[source]
+	srcNode, found := n.nodes[source]
 	if !found {
 		panic("node doesn't exist")
 	}
@@ -116,12 +139,46 @@ func (n Network) send(source, target uint64, msg proto.Message) {
 	}
 }
 
+func (n *Network) getAll() []uint64 {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	res := make([]uint64, 0, len(n.nodes))
+	for _, i := range n.nodes {
+		res = append(res, i.id)
+	}
+
+	return res
+}
+
+func (n *Network) Nodes() []*Node {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	res := make([]*Node, 0, len(n.nodes))
+	for _, i := range n.nodes {
+		res = append(res, i)
+	}
+
+	return res
+}
+
+func (n *Network) Count() int {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	return len(n.nodes)
+}
+
+func (n *Network) GetByID(id uint64) *Node {
+	n.lock.RLock()
+	defer n.lock.RUnlock()
+	return n.nodes[id]
+}
+
 // Node represents a node in a network
 type Node struct {
 	sync.RWMutex
 	running             sync.WaitGroup
 	id                  uint64
-	n                   Network
+	n                   *Network
 	lossProbability     float32
 	peerLossProbability map[uint64]float32
 	syncDelay           <-chan struct{}
@@ -155,12 +212,8 @@ func (node *Node) SendTransaction(targetID uint64, request []byte) {
 
 // Nodes returns the ids of all nodes in the network
 func (node *Node) Nodes() []uint64 {
-	var res nodes
-	for _, n := range node.n {
-		res = append(res, n.id)
-	}
-
-	res.Sort()
+	res := node.n.getAll()
+	sort.Slice(res, func(i, j int) bool { return res[i] < res[j] })
 	return res
 }
 
@@ -187,8 +240,9 @@ func (node *Node) serve() {
 	}
 }
 
-func (node *Node) createCommittedBatches(network Network) {
-	for _, n := range network {
+func (node *Node) createCommittedBatches(network *Network) {
+	ns := network.Nodes()
+	for _, n := range ns {
 		if n.cb != nil {
 			node.cb = n.cb
 			return
@@ -196,12 +250,3 @@ func (node *Node) createCommittedBatches(network Network) {
 	}
 	node.cb = &committedBatches{}
 }
-
-type nodes []uint64
-
-func (p nodes) Len() int           { return len(p) }
-func (p nodes) Less(i, j int) bool { return p[i] < p[j] }
-func (p nodes) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-
-// Sort is a convenience method.
-func (p nodes) Sort() { sort.Sort(p) }
