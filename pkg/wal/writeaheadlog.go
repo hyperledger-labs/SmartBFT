@@ -99,7 +99,7 @@ type WriteAheadLogFile struct {
 type Options struct {
 	FileSizeBytes   int64
 	BufferSizeBytes int64
-	MetricsProvider *api.CustomerProvider
+	Metrics         *Metrics
 }
 
 // DefaultOptions returns the set of default options.
@@ -107,7 +107,7 @@ func DefaultOptions() *Options {
 	return &Options{
 		FileSizeBytes:   FileSizeBytesDefault,
 		BufferSizeBytes: BufferSizeBytesDefault,
-		MetricsProvider: api.NewCustomerProvider(&disabled.Provider{}),
+		Metrics:         NewMetrics(&disabled.Provider{}),
 	}
 }
 
@@ -133,8 +133,8 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 
 	opt := DefaultOptions()
 	if options != nil {
-		if options.MetricsProvider != nil {
-			opt.MetricsProvider = options.MetricsProvider
+		if options.Metrics != nil {
+			opt.Metrics = options.Metrics
 		}
 		if options.FileSizeBytes != 0 {
 			opt.FileSizeBytes = options.FileSizeBytes
@@ -156,7 +156,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 		dirName:       cleanDirName,
 		options:       opt,
 		logger:        logger,
-		metrics:       NewMetrics(opt.MetricsProvider),
+		metrics:       opt.Metrics,
 		index:         1,
 		headerBuff:    make([]byte, 8),
 		dataBuff:      proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
@@ -221,8 +221,8 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 
 	opt := DefaultOptions()
 	if options != nil {
-		if options.MetricsProvider != nil {
-			opt.MetricsProvider = options.MetricsProvider
+		if options.Metrics != nil {
+			opt.Metrics = options.Metrics
 		}
 		if options.FileSizeBytes != 0 {
 			opt.FileSizeBytes = options.FileSizeBytes
@@ -238,7 +238,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 		dirName:    cleanDirName,
 		options:    opt,
 		logger:     logger,
-		metrics:    NewMetrics(opt.MetricsProvider),
+		metrics:    opt.Metrics,
 		headerBuff: make([]byte, 8),
 		dataBuff:   proto.NewBuffer(make([]byte, opt.BufferSizeBytes)),
 		readMode:   true,

@@ -12,7 +12,7 @@ import (
 
 func TestBasicReconfig(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -27,7 +27,7 @@ func TestBasicReconfig(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -77,7 +77,7 @@ func TestBasicReconfig(t *testing.T) {
 
 func TestBasicAddNodes(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -92,7 +92,7 @@ func TestBasicAddNodes(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -132,7 +132,7 @@ func TestBasicAddNodes(t *testing.T) {
 	}
 
 	nodes = append(nodes, newNode1, newNode2)
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 
 	d1 := <-nodes[4].Delivered
 	d2 := <-nodes[5].Delivered
@@ -161,7 +161,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 	// so transactions can be committed after the reconfiguration only if it was successful.
 
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -176,7 +176,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -230,7 +230,7 @@ func TestBasicRemoveNodes(t *testing.T) {
 
 func TestAddRemoveNodes(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -245,7 +245,7 @@ func TestAddRemoveNodes(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -286,7 +286,7 @@ func TestAddRemoveNodes(t *testing.T) {
 		assert.Equal(t, data2[i], data2[i+1])
 	}
 
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 
 	numberOfNodes = 10
 	// make sure both decisions were delivered by the new nodes
@@ -360,7 +360,7 @@ func TestAddRemoveNodes(t *testing.T) {
 
 func TestAddRemoveAddNodes(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -374,7 +374,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 		n.Mute()
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -413,7 +413,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 		assert.Equal(t, data2[i], data2[i+1])
 	}
 
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 
 	<-nodes[4].Delivered
 	d := <-nodes[4].Delivered
@@ -486,7 +486,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	// however this node is disconnected, and so a view change is needed
 
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -499,7 +499,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
@@ -514,7 +514,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 
 	newNode := newNode(1, network, t.Name(), testDir, false, 0)
 	nodes = append(nodes, newNode)
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 	nodes[4].Disconnect()
 
 	newConfig := fastConfig
@@ -555,7 +555,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 
 func TestAddNodeAfterManyRotations(t *testing.T) {
 	t.Parallel()
-	network := make(Network)
+	network := NewNetwork()
 	defer network.Shutdown()
 
 	testDir, err := os.MkdirTemp("", t.Name())
@@ -571,7 +571,7 @@ func TestAddNodeAfterManyRotations(t *testing.T) {
 		n := newNode(uint64(i), network, t.Name(), testDir, true, decisions)
 		nodes = append(nodes, n)
 	}
-	startNodes(nodes, &network)
+	startNodes(nodes, network)
 
 	// deliver many blocks and rotate after each block
 	blocks := make([]*AppRecord, 0)
@@ -615,7 +615,7 @@ func TestAddNodeAfterManyRotations(t *testing.T) {
 	}
 
 	nodes = append(nodes, newNode)
-	startNodes(nodes[4:], &network)
+	startNodes(nodes[4:], network)
 
 	// make sure the new node synced with the many delivered blocks
 	for j := 1; j <= blocksNum; j++ {

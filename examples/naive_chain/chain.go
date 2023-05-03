@@ -9,6 +9,7 @@ import (
 	"encoding/asn1"
 
 	smart "github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/wal"
 )
 
 type Block struct {
@@ -79,9 +80,9 @@ type Chain struct {
 	node        *Node
 }
 
-func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, metricsProvider smart.Provider, opts NetworkOptions, testDir string) *Chain {
+func NewChain(id uint64, in Ingress, out Egress, logger smart.Logger, walmet *wal.Metrics, bftmet *smart.Metrics, opts NetworkOptions, testDir string) *Chain {
 	deliverChan := make(chan *Block)
-	node := NewNode(id, in, out, deliverChan, logger, metricsProvider, opts, testDir)
+	node := NewNode(id, in, out, deliverChan, logger, walmet, bftmet, opts, testDir)
 	return &Chain{
 		node:        node,
 		deliverChan: deliverChan,

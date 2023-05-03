@@ -117,7 +117,7 @@ type Controller struct {
 	Collector          *StateCollector
 	State              State
 	InFlight           *InFlightData
-	MetricsView        *MetricsView
+	MetricsView        *api.MetricsView
 	quorum             int
 
 	currView Proposer
