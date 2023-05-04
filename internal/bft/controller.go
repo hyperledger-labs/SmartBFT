@@ -423,6 +423,8 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 
 func (c *Controller) abortView(view uint64) bool {
 	currView := c.getCurrentViewNumber()
+	c.Logger.Debugf("view for abort %d, current view %d", view, currView)
+
 	if view < currView {
 		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
 		return false
@@ -504,6 +506,7 @@ func (c *Controller) run() {
 		case d := <-c.decisionChan:
 			c.decide(d)
 		case newView := <-c.viewChange:
+			c.Logger.Debugf("get newView from viewChange")
 			c.changeView(newView.viewNumber, newView.proposalSeq, 0)
 		case view := <-c.abortViewChan:
 			c.abortView(view)
@@ -512,11 +515,13 @@ func (c *Controller) run() {
 		case <-c.leaderToken:
 			c.propose()
 		case <-c.syncChan:
+			c.Logger.Debugf("get msg from syncChan")
 			view, seq, dec := c.sync()
 			c.MaybePruneRevokedRequests()
 			if view > 0 || seq > 0 {
 				c.changeView(view, seq, dec)
 			} else {
+				c.Logger.Debugf("view and seq is zero")
 				vs := c.ViewSequences.Load()
 				if vs == nil {
 					c.Logger.Panicf("ViewSequences is nil")
