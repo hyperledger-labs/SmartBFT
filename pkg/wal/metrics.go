@@ -29,3 +29,7 @@ func (m *Metrics) With(labelValues ...string) *Metrics {
 		CountOfFiles: m.CountOfFiles.With(labelValues...),
 	}
 }
+
+func (m *Metrics) Initialize() {
+	m.CountOfFiles.Add(0)
+}

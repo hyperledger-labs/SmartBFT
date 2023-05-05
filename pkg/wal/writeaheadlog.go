@@ -143,6 +143,7 @@ func Create(logger api.Logger, dirPath string, options *Options) (*WriteAheadLog
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 	}
+	opt.Metrics.Initialize()
 
 	// TODO BACKLOG: create the directory & file atomically by creation in a temp dir and renaming
 	cleanDirName := filepath.Clean(dirPath)
@@ -231,6 +232,7 @@ func Open(logger api.Logger, dirPath string, options *Options) (*WriteAheadLogFi
 			opt.BufferSizeBytes = options.BufferSizeBytes
 		}
 	}
+	opt.Metrics.Initialize()
 
 	cleanDirName := filepath.Clean(dirPath)
 
