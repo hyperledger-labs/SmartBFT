@@ -229,7 +229,7 @@ OuterLoop:
 		}
 		newNodes = append(newNodes, i)
 	}
-	c.Metrics.Initialize(newNodes)
+	c.Metrics.MetricsBlacklist.Initialize(newNodes)
 
 	c.createComponents()
 	opts := algorithm.PoolOptions{
