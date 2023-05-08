@@ -254,7 +254,7 @@ func (rp *Pool) Submit(request []byte) error {
 	}
 
 	element := rp.fifo.PushBack(reqItem)
-	rp.metrics.CountOfRequestPool.Add(1)
+	rp.metrics.CountOfRequestPool.Set(float64(rp.fifo.Len()))
 	rp.metrics.CountOfRequestPoolAll.Add(1)
 	rp.existMap[reqInfo] = element
 
@@ -385,7 +385,7 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 	item.timeout.Stop()
 
 	rp.fifo.Remove(element)
-	rp.metrics.CountOfRequestPool.Add(-1)
+	rp.metrics.CountOfRequestPool.Set(float64(rp.fifo.Len()))
 	rp.metrics.LatencyOfRequestPool.Observe(time.Since(item.additionTimestamp).Seconds())
 	delete(rp.existMap, requestInfo)
 	rp.moveToDelSlice(requestInfo)

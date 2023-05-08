@@ -1,5 +1,7 @@
 package api
 
+import "strconv"
+
 const (
 	NameBlackListNodeID = "blackid"
 	NameReasonFailAdd   = "reason"
@@ -34,6 +36,14 @@ func (m *Metrics) With(labelValues ...string) *Metrics {
 		MetricsView:        m.MetricsView.With(labelValues...),
 		MetricsViewChange:  m.MetricsViewChange.With(labelValues...),
 	}
+}
+
+func (m *Metrics) Initialize(nodes []uint64) {
+	m.MetricsRequestPool.Initialize()
+	m.MetricsBlacklist.Initialize(nodes)
+	m.MetricsConsensus.Initialize()
+	m.MetricsView.Initialize()
+	m.MetricsViewChange.Initialize()
 }
 
 var countOfRequestPoolOpts = GaugeOpts{
@@ -147,6 +157,21 @@ func (m *MetricsRequestPool) With(labelValues ...string) *MetricsRequestPool {
 	}
 }
 
+func (m *MetricsRequestPool) Initialize() {
+	m.CountOfRequestPool.Add(0)
+	m.CountOfFailAddRequestToPool.With(
+		m.LabelsForWith(NameReasonFailAdd, ReasonRequestMaxBytes)...,
+	).Add(0)
+	m.CountOfFailAddRequestToPool.With(
+		m.LabelsForWith(NameReasonFailAdd, ReasonSemaphoreAcquireFail)...,
+	).Add(0)
+	m.CountOfLeaderForwardRequest.Add(0)
+	m.CountTimeoutTwoStep.Add(0)
+	m.CountOfDeleteRequestPool.Add(0)
+	m.CountOfRequestPoolAll.Add(0)
+	m.LatencyOfRequestPool.Observe(0)
+}
+
 func (m *MetricsRequestPool) LabelsForWith(labelValues ...string) []string {
 	result := make([]string, 0, len(m.labels)+len(labelValues))
 	result = append(result, labelValues...)
@@ -198,6 +223,15 @@ func (m *MetricsBlacklist) With(labelValues ...string) *MetricsBlacklist {
 	}
 }
 
+func (m *MetricsBlacklist) Initialize(nodes []uint64) {
+	m.CountBlackList.Add(0)
+	for _, n := range nodes {
+		m.NodesInBlackList.With(
+			m.LabelsForWith(NameBlackListNodeID, strconv.FormatUint(n, 10))...,
+		).Set(0)
+	}
+}
+
 func (m *MetricsBlacklist) LabelsForWith(labelValues ...string) []string {
 	result := make([]string, 0, len(m.labels)+len(labelValues))
 	result = append(result, labelValues...)
@@ -245,6 +279,11 @@ func (m *MetricsConsensus) With(labelValues ...string) *MetricsConsensus {
 		CountConsensusReconfig: m.CountConsensusReconfig.With(labelValues...),
 		LatencySync:            m.LatencySync.With(labelValues...),
 	}
+}
+
+func (m *MetricsConsensus) Initialize() {
+	m.CountConsensusReconfig.Add(0)
+	m.LatencySync.Observe(0)
 }
 
 var viewNumberOpts = GaugeOpts{
@@ -407,6 +446,20 @@ func (m *MetricsView) With(labelValues ...string) *MetricsView {
 	}
 }
 
+func (m *MetricsView) Initialize() {
+	m.ViewNumber.Add(0)
+	m.LeaderID.Add(0)
+	m.ProposalSequence.Add(0)
+	m.DecisionsInView.Add(0)
+	m.Phase.Add(0)
+	m.CountTxsInBatch.Add(0)
+	m.CountBatchAll.Add(0)
+	m.CountTxsAll.Add(0)
+	m.SizeOfBatch.Add(0)
+	m.LatencyBatchProcessing.Observe(0)
+	m.LatencyBatchSave.Observe(0)
+}
+
 var currentViewOpts = GaugeOpts{
 	Namespace:    "consensus",
 	Subsystem:    "bft",
@@ -459,4 +512,10 @@ func (m *MetricsViewChange) With(labelValues ...string) *MetricsViewChange {
 		NextView:    m.NextView.With(labelValues...),
 		RealView:    m.RealView.With(labelValues...),
 	}
+}
+
+func (m *MetricsViewChange) Initialize() {
+	m.CurrentView.Add(0)
+	m.NextView.Add(0)
+	m.RealView.Add(0)
 }
