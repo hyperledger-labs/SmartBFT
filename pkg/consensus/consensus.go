@@ -121,6 +121,7 @@ func (c *Consensus) Start() error {
 	defer c.consensusLock.Unlock()
 
 	c.setNodes(c.Comm.Nodes())
+	c.Metrics.Initialize(c.nodes)
 
 	c.inFlight = &algorithm.InFlightData{}
 
@@ -215,7 +216,20 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 		c.Logger.Panicf("Configuration is invalid, error: %v", err)
 	}
 
+	tmp := c.nodes
+	var newNodes []uint64
 	c.setNodes(reconfig.CurrentNodes)
+
+OuterLoop:
+	for _, i := range c.nodes {
+		for _, j := range tmp {
+			if i == j {
+				continue OuterLoop
+			}
+		}
+		newNodes = append(newNodes, i)
+	}
+	c.Metrics.MetricsBlacklist.Initialize(newNodes)
 
 	c.createComponents()
 	opts := algorithm.PoolOptions{
