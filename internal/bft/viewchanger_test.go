@@ -579,7 +579,7 @@ func TestBadViewDataMessage(t *testing.T) {
 		},
 		{
 			description:           "deliver last decision",
-			expectedMessageLogged: "Delivering to app the last decision proposal",
+			expectedMessageLogged: "Delivering to app from deliverDecision the last decision proposal",
 			mutateViewData: func(m *protos.Message) {
 				vd := &protos.ViewData{
 					NextView: 1,
@@ -1931,6 +1931,8 @@ func TestCommitInFlight(t *testing.T) {
 		seqNumChan <- num
 	}).Return(nil).Once()
 	controller.On("AbortView", mock.Anything)
+	controller.On("LockDoubleDelivery")
+	controller.On("UnlockDoubleDelivery")
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
 	reqTimer.On("RestartTimers")
@@ -2042,7 +2044,7 @@ func TestCommitInFlight(t *testing.T) {
 	num = <-seqNumChan
 	assert.Equal(t, uint64(3), num)
 
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
 
 	vc.Stop()
@@ -2182,6 +2184,9 @@ func TestDontCommitInFlight(t *testing.T) {
 		num = args.Get(1).(uint64)
 		seqNumChan <- num
 	}).Return(nil).Once()
+	controller.On("AbortView", mock.Anything)
+	controller.On("LockDoubleDelivery")
+	controller.On("UnlockDoubleDelivery")
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("RestartTimers")
 	app := &mocks.ApplicationMock{}

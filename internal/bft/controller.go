@@ -144,8 +144,9 @@ type Controller struct {
 
 	ViewSequences *atomic.Value
 
-	StartedWG *sync.WaitGroup
-	syncLock  sync.Mutex
+	StartedWG          *sync.WaitGroup
+	syncLock           sync.Mutex
+	doubleDeliveryLock sync.Mutex
 }
 
 func (c *Controller) blacklist() []uint64 {
@@ -486,6 +487,16 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
 }
 
+// LockDoubleDelivery lock mutex
+func (c *Controller) LockDoubleDelivery() {
+	c.doubleDeliveryLock.Lock()
+}
+
+// UnlockDoubleDelivery unlock mutex
+func (c *Controller) UnlockDoubleDelivery() {
+	c.doubleDeliveryLock.Unlock()
+}
+
 func (c *Controller) getNextBatch() [][]byte {
 	var validRequests [][]byte
 	for len(validRequests) == 0 { // no valid requests in this batch
@@ -534,6 +545,8 @@ func (c *Controller) run() {
 			c.propose()
 		case <-c.syncChan:
 			c.Logger.Debugf("get msg from syncChan")
+
+			c.doubleDeliveryLock.Lock()
 			view, seq, dec := c.sync()
 			c.MaybePruneRevokedRequests()
 			if view > 0 || seq > 0 {
@@ -546,6 +559,7 @@ func (c *Controller) run() {
 				}
 				c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
+			c.doubleDeliveryLock.Unlock()
 		}
 	}
 }

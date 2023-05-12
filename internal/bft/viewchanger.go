@@ -26,6 +26,8 @@ import (
 type ViewController interface {
 	ViewChanged(newViewNumber uint64, newProposalSequence uint64)
 	AbortView(view uint64)
+	LockDoubleDelivery()
+	UnlockDoubleDelivery()
 }
 
 // Pruner prunes revoked requests
@@ -642,7 +644,7 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 	// Make note that we have advanced the sequence during a view change,
 	// so our in-flight sequence may be behind.
 	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+	if err = proto.Unmarshal(proposal.Metadata, md); err != nil {
 		v.Logger.Panicf("Node %d got %s from %d, but was unable to unmarshal proposal metadata, err: %v", v.SelfID, signedViewDataToString(svd), sender, err)
 	}
 	v.committedDuringViewChange = md
@@ -1168,7 +1170,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 }
 
 func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
-	v.Logger.Debugf("Delivering to app the last decision proposal")
+	v.Logger.Debugf("Delivering to app from deliverDecision the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		v.close()
@@ -1201,7 +1203,9 @@ func (v *ViewChanger) sequenceFromProposal(rawMetadata []byte) uint64 {
 }
 
 func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success bool) {
-	myLastDecision, _ := v.Checkpoint.Get()
+	v.Controller.LockDoubleDelivery()
+	defer v.Controller.UnlockDoubleDelivery()
+
 	if proposal == nil {
 		v.Logger.Panicf("The in flight proposal is nil")
 		return
@@ -1210,6 +1214,10 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	if err := proto.Unmarshal(proposal.Metadata, proposalMD); err != nil {
 		v.Logger.Panicf("Node %d is unable to unmarshal the in flight proposal metadata, err: %v", v.SelfID, err)
 	}
+
+	v.Controller.AbortView(proposalMD.ViewId) // abort the current view when joining view change
+
+	myLastDecision, _ := v.Checkpoint.Get()
 
 	if myLastDecision.Metadata != nil { // if metadata is nil then I am at genesis proposal and I should commit the in flight proposal anyway
 		lastDecisionMD := &protos.ViewMetadata{}
@@ -1324,7 +1332,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 // Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
-	v.Logger.Debugf("Delivering to app the last decision proposal")
+	v.Logger.Debugf("Delivering to app from Decide the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		v.close()

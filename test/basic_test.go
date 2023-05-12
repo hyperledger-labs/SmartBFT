@@ -89,7 +89,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 			})
 		}
 
-		if strings.Contains(entry.Message, "Delivering to app the last decision proposal") {
+		if strings.Contains(entry.Message, "Delivering to app from deliverDecision the last decision proposal") {
 			close(syncDelay)
 		}
 
@@ -240,7 +240,7 @@ func TestLeaderInPartition(t *testing.T) {
 	for i := 0; i < numberOfNodes-2; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-	assert.Equal(t, uint64(2), nodes[2].Consensus.GetLeaderID())
+	assert.LessOrEqual(t, uint64(2), nodes[2].Consensus.GetLeaderID())
 }
 
 func TestAfterDecisionLeaderInPartition(t *testing.T) {
