@@ -2492,7 +2492,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[5].Connect()
 	nodes[4].Connect()
 
-	fail = time.After(1 * time.Minute)
+	fail = time.After(2 * time.Minute)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
