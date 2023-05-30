@@ -579,7 +579,7 @@ func TestBadViewDataMessage(t *testing.T) {
 		},
 		{
 			description:           "deliver last decision",
-			expectedMessageLogged: "Delivering to app the last decision proposal",
+			expectedMessageLogged: "Delivering to app from deliverDecision the last decision proposal",
 			mutateViewData: func(m *protos.Message) {
 				vd := &protos.ViewData{
 					NextView: 1,
