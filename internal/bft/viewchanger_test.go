@@ -2082,6 +2082,7 @@ func TestCommitWhileHavingInFlight(t *testing.T) {
 	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 	verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
 	controller := &mocks.ViewController{}
+	controller.On("ViewChanged", mock.Anything, mock.Anything)
 	controller.On("AbortView", mock.Anything)
 	reqTimer := &mocks.RequestsTimer{}
 	reqTimer.On("StopTimers")
