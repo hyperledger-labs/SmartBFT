@@ -1173,10 +1173,6 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 	if reconfig.InLatestDecision {
 		v.close()
 	}
-	if v.isProposalLatestComparedToCheckpoint(proposal) {
-		// Only set the proposal in case it is later than the already known checkpoint.
-		v.Checkpoint.Set(proposal, signatures)
-	}
 	requests := v.Verifier.RequestsFromProposal(proposal)
 	for _, reqInfo := range requests {
 		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {
@@ -1184,20 +1180,6 @@ func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []type
 		}
 	}
 	v.Pruner.MaybePruneRevokedRequests()
-}
-
-func (v *ViewChanger) isProposalLatestComparedToCheckpoint(proposal types.Proposal) bool {
-	checkpointProposal, _ := v.Checkpoint.Get()
-	return v.sequenceFromProposal(proposal.Metadata) > v.sequenceFromProposal(checkpointProposal.Metadata)
-}
-
-func (v *ViewChanger) sequenceFromProposal(rawMetadata []byte) uint64 {
-	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(rawMetadata, md); err != nil {
-		v.Logger.Panicf("Failed extracting view metadata from proposal metadata %s: %v",
-			base64.StdEncoding.EncodeToString(rawMetadata), err)
-	}
-	return md.LatestSequence
 }
 
 func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success bool) {
@@ -1328,10 +1310,6 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		v.close()
-	}
-	if v.isProposalLatestComparedToCheckpoint(proposal) {
-		// Only set the proposal in case it is later than the already known checkpoint.
-		v.Checkpoint.Set(proposal, signatures)
 	}
 	for _, reqInfo := range requests {
 		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {

@@ -1163,7 +1163,12 @@ func TestCommitLastDecision(t *testing.T) {
 	checkpoint := types.Checkpoint{}
 	checkpoint.Set(lastDecision, lastDecisionSignatures)
 	app := &mocks.ApplicationMock{}
-	app.On("Deliver", mock.Anything, mock.Anything).Return(types.Reconfig{InLatestDecision: false})
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		prop := args.Get(0).(types.Proposal)
+		sign := args.Get(1).([]types.Signature)
+		checkpoint.Set(prop, sign)
+	}).Return(types.Reconfig{InLatestDecision: false})
+
 	state := &mocks.State{}
 	state.On("Save", mock.Anything).Return(nil)
 	pruner := &mocks.Pruner{}
@@ -1940,6 +1945,8 @@ func TestCommitInFlight(t *testing.T) {
 	appChan := make(chan types.Proposal)
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		prop := args.Get(0).(types.Proposal)
+		sign := args.Get(1).([]types.Signature)
+		checkpoint.Set(prop, sign)
 		appChan <- prop
 	}).Return(types.Reconfig{InLatestDecision: false})
 	pruner := &mocks.Pruner{}
@@ -2100,6 +2107,8 @@ func TestCommitWhileHavingInFlight(t *testing.T) {
 	appChan := make(chan types.Proposal, 1)
 	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		prop := args.Get(0).(types.Proposal)
+		sign := args.Get(1).([]types.Signature)
+		checkpoint.Set(prop, sign)
 		appChan <- prop
 	}).Return(types.Reconfig{InLatestDecision: false})
 	pruner := &mocks.Pruner{}

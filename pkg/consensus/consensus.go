@@ -434,6 +434,8 @@ func (c *Consensus) createComponents() {
 		InFlight:           c.inFlight,
 		MetricsView:        c.Metrics.MetricsView,
 	}
+	c.controller.Deliver = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
+
 	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
 	c.viewChanger.Comm = c.controller
 	c.viewChanger.Synchronizer = c.controller
