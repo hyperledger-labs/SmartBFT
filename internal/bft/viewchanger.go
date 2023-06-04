@@ -1168,7 +1168,7 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 }
 
 func (v *ViewChanger) deliverDecision(proposal types.Proposal, signatures []types.Signature) {
-	v.Logger.Debugf("Delivering to app the last decision proposal")
+	v.Logger.Debugf("Delivering to app from deliverDecision the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		v.close()
@@ -1324,7 +1324,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 // Decide delivers to the application and informs the view changer after delivery
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
 	v.inFlightView.stop()
-	v.Logger.Debugf("Delivering to app the last decision proposal")
+	v.Logger.Debugf("Delivering to app from Decide the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
 		v.close()
