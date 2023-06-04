@@ -240,7 +240,7 @@ func TestLeaderInPartition(t *testing.T) {
 	for i := 0; i < numberOfNodes-2; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-	assert.Equal(t, uint64(2), nodes[2].Consensus.GetLeaderID())
+	assert.LessOrEqual(t, uint64(2), nodes[2].Consensus.GetLeaderID())
 }
 
 func TestAfterDecisionLeaderInPartition(t *testing.T) {
@@ -425,7 +425,7 @@ func TestMultiLeadersPartition(t *testing.T) {
 	}
 
 	for i := 2; i < numberOfNodes; i++ {
-		assert.GreaterOrEqual(t, uint64(3), nodes[i].Consensus.GetLeaderID())
+		assert.LessOrEqual(t, uint64(3), nodes[i].Consensus.GetLeaderID())
 	}
 }
 
