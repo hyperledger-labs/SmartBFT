@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"encoding/base64"
 	"fmt"
 	"sync"
 	"sync/atomic"
