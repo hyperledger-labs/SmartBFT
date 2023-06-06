@@ -641,7 +641,7 @@ func (v *ViewChanger) checkLastDecision(svd *protos.SignedViewData, sender uint6
 	// Make note that we have advanced the sequence during a view change,
 	// so our in-flight sequence may be behind.
 	md := &protos.ViewMetadata{}
-	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+	if err = proto.Unmarshal(proposal.Metadata, md); err != nil {
 		v.Logger.Panicf("Node %d got %s from %d, but was unable to unmarshal proposal metadata, err: %v", v.SelfID, signedViewDataToString(svd), sender, err)
 	}
 	v.committedDuringViewChange = md
