@@ -89,7 +89,7 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 			})
 		}
 
-		if strings.Contains(entry.Message, "Delivering to app the last decision proposal") {
+		if strings.Contains(entry.Message, "Delivering to app from deliverDecision the last decision proposal") {
 			close(syncDelay)
 		}
 
