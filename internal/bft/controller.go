@@ -533,6 +533,7 @@ func (c *Controller) run() {
 }
 
 func (c *Controller) decide(d decision) {
+	c.Logger.Debugf("Delivering to app from Controller decide the last decision proposal")
 	begin := time.Now()
 	reconfig := c.Application.Deliver(d.proposal, d.signatures)
 	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
