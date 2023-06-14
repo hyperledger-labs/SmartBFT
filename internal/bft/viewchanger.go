@@ -1313,7 +1313,7 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 		v.close()
 	}
 	v.Logger.Debugf("Delivering end to app from Decide the last decision proposal")
-  
+
 	for _, reqInfo := range requests {
 		if err := v.RequestsTimer.RemoveRequest(reqInfo); err != nil {
 			v.Logger.Warnf("Error during remove of request %s from the pool, err: %v", reqInfo, err)
