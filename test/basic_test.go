@@ -2641,6 +2641,238 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	}
 }
 
+func TestTryCommittedSequenceTwice(t *testing.T) {
+	t.Parallel()
+
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer func() {
+		_ = os.RemoveAll(testDir)
+	}()
+
+	numberOfNodes := 7
+	nodes := make([]*App, 0, 7)
+
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		// n.Consensus.Application
+		nodes = append(nodes, n)
+	}
+
+	start := time.Now()
+
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.viewChangeTime = make(chan time.Time, 1)
+		n.viewChangeTime <- start
+		n.LoseMessages(func(msg *smartbftprotos.Message) bool {
+			return false
+		})
+		n.Setup()
+	}
+
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+
+	var once sync.Once
+
+	addFirstViewCh := make(chan struct{}, 6)
+	addFirstViewChMap := make(map[uint64]struct{}, 6)
+	addFirstSync := sync.RWMutex{}
+
+	viewChange1Ch := make(chan struct{}, 4)
+	viewChange1Map := make(map[uint64]struct{}, 4)
+	viewChange1Sync := sync.RWMutex{}
+
+	viewChange2Ch := make(chan struct{}, 4)
+	viewChange2Map := make(map[uint64]struct{}, 4)
+	viewChange2Sync := sync.RWMutex{}
+
+	realViewChangeCh := make(chan struct{}, 7)
+	realViewChangeMap := make(map[uint64]struct{}, 7)
+	realViewChangeSync := sync.RWMutex{}
+
+	twiceDeliverBeginCh := make(chan struct{}, 2)
+	deliverControlCh := make(chan struct{})
+	deliverViewChangerCh := make(chan struct{})
+	go func() {
+		<-twiceDeliverBeginCh
+		<-twiceDeliverBeginCh
+		close(deliverViewChangerCh)
+	}()
+
+	for i := 0; i < numberOfNodes; i++ {
+		id := nodes[i].ID
+		baseLogger := nodes[i].Node.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "Starting view with number") &&
+				!strings.Contains(entry.Message, "Starting view with number 0") {
+				realViewChangeSync.RLock()
+				_, hasVoted := realViewChangeMap[id]
+				realViewChangeSync.RUnlock()
+
+				if !hasVoted {
+					realViewChangeSync.Lock()
+					_, hasVoted = realViewChangeMap[id]
+					if !hasVoted {
+						realViewChangeMap[id] = struct{}{}
+						realViewChangeCh <- struct{}{}
+					}
+					realViewChangeSync.Unlock()
+				}
+			}
+
+			if id != 7 {
+				if strings.Contains(entry.Message, "is processing a view change message") &&
+					strings.Contains(entry.Message, "from 7") {
+					addFirstSync.RLock()
+					_, hasVoted := addFirstViewChMap[id]
+					addFirstSync.RUnlock()
+
+					if !hasVoted {
+						addFirstSync.Lock()
+						_, hasVoted = addFirstViewChMap[id]
+						if !hasVoted {
+							addFirstViewChMap[id] = struct{}{}
+							addFirstViewCh <- struct{}{}
+						}
+						addFirstSync.Unlock()
+					}
+				}
+			}
+
+			if id >= 1 && id <= 4 {
+				if strings.Contains(entry.Message, "sent view data msg, with next view 1") {
+					viewChange1Sync.RLock()
+					_, hasVoted := viewChange1Map[id]
+					viewChange1Sync.RUnlock()
+
+					if !hasVoted {
+						viewChange1Sync.Lock()
+						_, hasVoted = viewChange1Map[id]
+						if !hasVoted {
+							viewChange1Map[id] = struct{}{}
+							viewChange1Ch <- struct{}{}
+						}
+						viewChange1Sync.Unlock()
+					}
+				}
+				if strings.Contains(entry.Message, "started view change, last view is 1") {
+					viewChange2Sync.RLock()
+					_, hasVoted := viewChange2Map[id]
+					viewChange2Sync.RUnlock()
+
+					if !hasVoted {
+						viewChange2Sync.Lock()
+						_, hasVoted = viewChange2Map[id]
+						if !hasVoted {
+							viewChange2Map[id] = struct{}{}
+							viewChange2Ch <- struct{}{}
+						}
+						viewChange2Sync.Unlock()
+					}
+				}
+			}
+
+			if id == 7 {
+				if strings.Contains(entry.Message, "Heartbeat timeout expired") {
+					once.Do(func() {
+						nodes[6].Connect()
+					})
+				}
+			}
+
+			if id == 4 {
+				if strings.Contains(entry.Message, "Delivering to app from deliverDecision the last decision proposal") {
+					twiceDeliverBeginCh <- struct{}{}
+					<-deliverViewChangerCh
+				}
+				if strings.Contains(entry.Message, "Delivering to app from Decide the last decision proposal") {
+					twiceDeliverBeginCh <- struct{}{}
+					<-deliverViewChangerCh
+				}
+				if strings.Contains(entry.Message, "Delivering end to app from deliverDecision the last decision proposal") {
+					close(deliverControlCh)
+				}
+				if strings.Contains(entry.Message, "Delivering end to app from Decide the last decision proposal") {
+					close(deliverControlCh)
+				}
+				if strings.Contains(entry.Message, "Delivering to app from Controller decide the last decision proposal") {
+					twiceDeliverBeginCh <- struct{}{}
+					<-deliverControlCh
+				}
+			}
+			return nil
+		})).Sugar()
+	}
+
+	startNodes(nodes, network)
+
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
+
+	nodes[6].Disconnect()
+
+	for i := 0; i < 6; i++ {
+		<-addFirstViewCh
+	}
+
+	nodes[6].Disconnect()
+	nodes[5].Disconnect()
+	nodes[4].Disconnect()
+
+	for i := 0; i < numberOfNodes-3; i++ {
+		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
+	}
+
+	fail := time.After(1 * time.Minute)
+	for i := 0; i < 4; i++ {
+		select {
+		case <-viewChange1Ch:
+		case <-fail:
+			t.Fatal("Didn't change view 1")
+		}
+	}
+
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < 4; i++ {
+		select {
+		case <-viewChange2Ch:
+		case <-fail:
+			t.Fatal("Didn't change view 2")
+		}
+	}
+
+	nodes[6].Connect()
+	nodes[5].Connect()
+	nodes[4].Connect()
+
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < 7; i++ {
+		select {
+		case <-realViewChangeCh:
+		case <-fail:
+			t.Fatal("Didn't change real view")
+		}
+	}
+
+	close(done)
+
+	data := make([]*AppRecord, 0, 7)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
 func doInBackground(f func(), stop <-chan struct{}) {
 	for {
 		select {
