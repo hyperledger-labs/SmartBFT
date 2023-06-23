@@ -2320,6 +2320,10 @@ func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 func TestViewChangeAfterTryingToFork(t *testing.T) {
 	t.Parallel()
 
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+	defer close(done)
+
 	network := NewNetwork()
 	defer network.Shutdown()
 
@@ -2347,9 +2351,6 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		})
 		n.Setup()
 	}
-
-	// wait for the new leader to finish the view change before submitting
-	done := make(chan struct{})
 
 	var once sync.Once
 
@@ -2503,8 +2504,6 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		}
 	}
 
-	close(done)
-
 	data := make([]*AppRecord, 0, 7)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
@@ -2644,6 +2643,10 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 func TestTryCommittedSequenceTwice(t *testing.T) {
 	t.Parallel()
 
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+	defer close(done)
+
 	network := NewNetwork()
 	defer network.Shutdown()
 
@@ -2674,9 +2677,6 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		})
 		n.Setup()
 	}
-
-	// wait for the new leader to finish the view change before submitting
-	done := make(chan struct{})
 
 	var once sync.Once
 
@@ -2860,8 +2860,6 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		}
 	}
 
-	close(done)
-
 	data := make([]*AppRecord, 0, 7)
 	for i := 0; i < numberOfNodes; i++ {
 		d := <-nodes[i].Delivered
@@ -2925,10 +2923,16 @@ func accelerateTime(nodes []*App, done chan struct{}, heartbeatTime, viewChangeT
 			case <-time.After(time.Millisecond * 100):
 				for _, n := range nodes {
 					if heartbeatTime {
-						n.heartbeatTime <- newTime
+						select {
+						case n.heartbeatTime <- newTime:
+						default:
+						}
 					}
 					if viewChangeTime {
-						n.viewChangeTime <- newTime
+						select {
+						case n.viewChangeTime <- newTime:
+						default:
+						}
 					}
 				}
 			}
