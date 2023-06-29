@@ -535,9 +535,7 @@ func (c *Controller) run() {
 
 func (c *Controller) decide(d decision) {
 	c.Logger.Debugf("Delivering to app from Controller decide the last decision proposal")
-	begin := time.Now()
 	reconfig := c.Deliver.Deliver(d.proposal, d.signatures)
-	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
 	if reconfig.InLatestDecision {
 		c.close()
 	}
@@ -966,7 +964,9 @@ func (med *MutuallyExclusiveDeliver) Deliver(proposal types.Proposal, signature 
 		}
 	}
 
+	begin := time.Now()
 	result := med.C.Application.Deliver(proposal, signature)
+	med.C.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
 
 	// Only set the proposal in case it is later than the already known checkpoint.
 	med.C.Checkpoint.Set(proposal, signature)
