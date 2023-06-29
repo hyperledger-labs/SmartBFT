@@ -2640,6 +2640,11 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	}
 }
 
+// TestTryCommittedSequenceTwice - is a modified copy of TestViewChangeAfterTryingToFork,
+// because it periodically recorded an error.
+// The difference from the parent is that there is work with new channels:
+// twiceDeliverBeginCh, deliverControlCh and deliverViewChangerCh,
+// which, at the right moments of time, suspended or triggered the corresponding goroutines
 func TestTryCommittedSequenceTwice(t *testing.T) {
 	t.Parallel()
 
