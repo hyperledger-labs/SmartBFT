@@ -534,13 +534,9 @@ func (c *Controller) run() {
 
 func (c *Controller) decide(d decision) {
 	c.Logger.Debugf("Delivering to app from Controller decide the last decision proposal")
-	begin := time.Now()
-	reconfig := c.Application.Deliver(d.proposal, d.signatures)
-	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
-	if reconfig.InLatestDecision {
+	if c.checkBeforeDeliver(d) {
 		c.close()
 	}
-	c.Checkpoint.Set(d.proposal, d.signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
 	select {
@@ -565,6 +561,30 @@ func (c *Controller) decide(d decision) {
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
+}
+
+func (c *Controller) checkBeforeDeliver(d decision) bool {
+	decisionMetadata := &protos.ViewMetadata{}
+	if err := proto.Unmarshal(d.proposal.Metadata, decisionMetadata); err != nil {
+		c.Logger.Panicf("Failed unmarshalling metadata of decision proposal: %v", err)
+	}
+	c.syncLock.Lock()
+	defer c.syncLock.Unlock()
+
+	// read the checkpoint (using c.latestSeq()), deliver and set the checkpoint all under a lock
+
+	latest := c.latestSeq()
+	if latest > decisionMetadata.LatestSequence {
+		c.Logger.Infof("Not calling deliver since this sequence was already delivered")
+		return false
+	}
+
+	begin := time.Now()
+	reconfig := c.Application.Deliver(d.proposal, d.signatures)
+	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
+
+	c.Checkpoint.Set(d.proposal, d.signatures)
+	return reconfig.InLatestDecision
 }
 
 func (c *Controller) checkIfRotate(blacklist []uint64) bool {
