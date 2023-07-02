@@ -2317,6 +2317,17 @@ func TestNodePreparesTheRestInPartitionThenPartitionHeals(t *testing.T) {
 	assert.Len(t, secondReqs, 1)
 }
 
+// TestViewChangeAfterTryingToFork - there is some redundancy in the test,
+// but it is a reminder of the conditions under which the error was detected.
+// This is the first time the 7th node is disconnected and it is connected back in.
+// It turned out that at startup one node self-deleted from the consensus.
+// This situation can be fixed by adding and configuring backoff between nodes
+// (for example, this should be added to fabric,
+// the recommended parameters ORDERER_GENERAL_BACKOFF_MAXDELAY: 20s)
+// In this test, we disable 3 nodes and destroy the quorum.
+// Throw the transaction. And after unsuccessful change of leader (no quorum),
+// reconnect 3 nodes. Quorum must be assembled, leader must be successfully
+// changed and transaction must be accepted.
 func TestViewChangeAfterTryingToFork(t *testing.T) {
 	t.Parallel()
 
@@ -2644,7 +2655,11 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 // because it periodically recorded an error.
 // The difference from the parent is that there is work with new channels:
 // twiceDeliverBeginCh, deliverControlCh and deliverViewChangerCh,
-// which, at the right moments of time, suspended or triggered the corresponding goroutines
+// After the quorum is restored, two "change of viewpoint" processes take place in parallel,
+// during which a transaction delivery and an attempt to deliver a transaction by the new leader can take place.
+// With the help of channels twiceDeliverBeginCh, deliverControlCh and deliverViewChangerCh
+// at the right moments of time, suspended or triggered the corresponding goroutines,
+// so that double delivery can take place
 func TestTryCommittedSequenceTwice(t *testing.T) {
 	t.Parallel()
 
