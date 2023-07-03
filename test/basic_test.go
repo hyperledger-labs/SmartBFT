@@ -2387,6 +2387,8 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "Starting view with number") &&
 				!strings.Contains(entry.Message, "Starting view with number 0") {
+				// After returning all the nodes,
+				// we fix that a new view has started, but not the very first one
 				realViewChangeSync.RLock()
 				_, hasVoted := realViewChangeMap[id]
 				realViewChangeSync.RUnlock()
@@ -2403,6 +2405,8 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 			}
 
 			if id != 7 {
+				// We wait for the node, after no heartbeat, to throw its vote for the leader change.
+				// Then we will turn this node off anyway, so that we can't use it to complete the leader change.
 				if strings.Contains(entry.Message, "is processing a view change message") &&
 					strings.Contains(entry.Message, "from 7") {
 					addFirstSync.RLock()
@@ -2422,6 +2426,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 			}
 
 			if id >= 1 && id <= 4 {
+				// All live nodes want to change the leader
 				if strings.Contains(entry.Message, "sent view data msg, with next view 1") {
 					viewChange1Sync.RLock()
 					_, hasVoted := viewChange1Map[id]
@@ -2437,6 +2442,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 						viewChange1Sync.Unlock()
 					}
 				}
+				// All live nodes have begun the leader change procedure
 				if strings.Contains(entry.Message, "started view change, last view is 1") {
 					viewChange2Sync.RLock()
 					_, hasVoted := viewChange2Map[id]
@@ -2455,6 +2461,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 			}
 
 			if id == 7 {
+				// Emulation of node removal from the consensus in the absence of heartbeat
 				if strings.Contains(entry.Message, "Heartbeat timeout expired") {
 					once.Do(func() {
 						nodes[6].Connect()
@@ -2470,12 +2477,15 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	var counter uint64
 	accelerateTime(nodes, done, true, true, &counter)
 
+	// Emulation of node removal from the consensus in the absence of heartbeat
 	nodes[6].Disconnect()
 
+	// Expect all nodes to see the 7th node's proposal to change the leader
 	for i := 0; i < 6; i++ {
 		<-addFirstViewCh
 	}
 
+	// Breaking consensus for all operations: performing a transaction and changing a view
 	nodes[6].Disconnect()
 	nodes[5].Disconnect()
 	nodes[4].Disconnect()
@@ -2484,6 +2494,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
 	}
 
+	// Expect the desire of all living nodes to change the leader
 	fail := time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
 		select {
@@ -2493,6 +2504,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		}
 	}
 
+	// Expect leader changes to begin from all live nodes
 	fail = time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
 		select {
@@ -2502,10 +2514,12 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 		}
 	}
 
+	// Return the nodes to the consensus
 	nodes[6].Connect()
 	nodes[5].Connect()
 	nodes[4].Connect()
 
+	// Waiting for a real change of leader and view
 	fail = time.After(1 * time.Minute)
 	for i := 0; i < 7; i++ {
 		select {
@@ -2720,8 +2734,10 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	deliverControlCh := make(chan struct{})
 	deliverViewChangerCh := make(chan struct{})
 	go func() {
+		// 2. [twice] Waiting for the moment when both goroutines are ready to deliver the transaction
 		<-twiceDeliverBeginCh
 		<-twiceDeliverBeginCh
+		// 3. [twice] Started delivery in goroutine viewchanger
 		close(deliverViewChangerCh)
 	}()
 
@@ -2731,6 +2747,8 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 			if strings.Contains(entry.Message, "Starting view with number") &&
 				!strings.Contains(entry.Message, "Starting view with number 0") {
+				// After returning all the nodes,
+				// we fix that a new view has started, but not the very first one.
 				realViewChangeSync.RLock()
 				_, hasVoted := realViewChangeMap[id]
 				realViewChangeSync.RUnlock()
@@ -2747,6 +2765,8 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 			}
 
 			if id != 7 {
+				// We wait for the node, after no heartbeat, to throw its vote for the leader change.
+				// Then we will turn this node off anyway, so that we can't use it to complete the leader change.
 				if strings.Contains(entry.Message, "is processing a view change message") &&
 					strings.Contains(entry.Message, "from 7") {
 					addFirstSync.RLock()
@@ -2766,6 +2786,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 			}
 
 			if id >= 1 && id <= 4 {
+				// All live nodes want to change the leader
 				if strings.Contains(entry.Message, "sent view data msg, with next view 1") {
 					viewChange1Sync.RLock()
 					_, hasVoted := viewChange1Map[id]
@@ -2781,6 +2802,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 						viewChange1Sync.Unlock()
 					}
 				}
+				// All live nodes have begun the leader change procedure
 				if strings.Contains(entry.Message, "started view change, last view is 1") {
 					viewChange2Sync.RLock()
 					_, hasVoted := viewChange2Map[id]
@@ -2799,6 +2821,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 			}
 
 			if id == 7 {
+				// Emulation of node removal from the consensus in the absence of heartbeat
 				if strings.Contains(entry.Message, "Heartbeat timeout expired") {
 					once.Do(func() {
 						nodes[6].Connect()
@@ -2807,22 +2830,31 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 			}
 
 			if id == 4 {
+				// Suspension of gorutins and their launch to try to implement twice-delivery
 				if strings.Contains(entry.Message, "Delivering to app from deliverDecision the last decision proposal") {
+					// 1. [twice] Waited by the time the transaction was delivered
 					twiceDeliverBeginCh <- struct{}{}
+					// 4. [twice] Started delivery in goroutine "viewchanger"
 					<-deliverViewChangerCh
 				}
 				if strings.Contains(entry.Message, "Delivering to app from Decide the last decision proposal") {
+					// 1. [twice] Waited by the time the transaction was delivered
 					twiceDeliverBeginCh <- struct{}{}
+					// 4. [twice] Started delivery in goroutine "viewchanger"
 					<-deliverViewChangerCh
 				}
 				if strings.Contains(entry.Message, "Delivering end to app from deliverDecision the last decision proposal") {
+					// 5. [twice] "Viewchanger" delivered the transaction, let's pass the baton on
 					close(deliverControlCh)
 				}
 				if strings.Contains(entry.Message, "Delivering end to app from Decide the last decision proposal") {
+					// 5. [twice] "Viewchanger" delivered the transaction, let's pass the baton on
 					close(deliverControlCh)
 				}
 				if strings.Contains(entry.Message, "Delivering to app from Controller decide the last decision proposal") {
+					// 1. [twice] Waited by the time the transaction was delivered
 					twiceDeliverBeginCh <- struct{}{}
+					// 6. [twice] Started delivery in goroutine "control"
 					<-deliverControlCh
 				}
 			}
@@ -2835,12 +2867,15 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	var counter uint64
 	accelerateTime(nodes, done, true, true, &counter)
 
+	// Emulation of node removal from the consensus in the absence of heartbeat
 	nodes[6].Disconnect()
 
+	// Expect all nodes to see the 7th node's proposal to change the leader
 	for i := 0; i < 6; i++ {
 		<-addFirstViewCh
 	}
 
+	// Breaking consensus for all operations: performing a transaction and changing a view
 	nodes[6].Disconnect()
 	nodes[5].Disconnect()
 	nodes[4].Disconnect()
@@ -2849,6 +2884,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		nodes[i].Submit(Request{ID: "1", ClientID: "alice"}) // submit to other nodes
 	}
 
+	// Expect the desire of all living nodes to change the leader
 	fail := time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
 		select {
@@ -2858,6 +2894,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		}
 	}
 
+	// Expect leader changes to begin from all live nodes
 	fail = time.After(1 * time.Minute)
 	for i := 0; i < 4; i++ {
 		select {
@@ -2867,10 +2904,12 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		}
 	}
 
+	// Return the nodes to the consensus
 	nodes[6].Connect()
 	nodes[5].Connect()
 	nodes[4].Connect()
 
+	// Waiting for a real change of leader and view
 	fail = time.After(1 * time.Minute)
 	for i := 0; i < 7; i++ {
 		select {
