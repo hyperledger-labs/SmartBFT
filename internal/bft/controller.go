@@ -101,6 +101,7 @@ type Controller struct {
 	Logger             api.Logger
 	Assembler          api.Assembler
 	Application        api.Application
+	Deliver            api.Application
 	FailureDetector    FailureDetector
 	Synchronizer       api.Synchronizer
 	Signer             api.Signer
@@ -534,13 +535,10 @@ func (c *Controller) run() {
 
 func (c *Controller) decide(d decision) {
 	c.Logger.Debugf("Delivering to app from Controller decide the last decision proposal")
-	begin := time.Now()
-	reconfig := c.Application.Deliver(d.proposal, d.signatures)
-	c.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
+	reconfig := c.Deliver.Deliver(d.proposal, d.signatures)
 	if reconfig.InLatestDecision {
 		c.close()
 	}
-	c.Checkpoint.Set(d.proposal, d.signatures)
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
 	select {
@@ -954,7 +952,7 @@ func (med *MutuallyExclusiveDeliver) Deliver(proposal types.Proposal, signature 
 	// do not proceed to commit the proposal, but instead invoke a sync and update the checkpoint once more
 	// to match the sync result.
 	latest := med.C.latestSeq()
-	if latest >= pendingProposalMetadata.LatestSequence {
+	if latest != 0 && latest >= pendingProposalMetadata.LatestSequence {
 		med.C.Logger.Infof("Attempted to deliver block %d via view change but meanwhile view change already synced to seq %d, "+
 			"returning result from sync", pendingProposalMetadata.LatestSequence, latest)
 		syncResult := med.C.Synchronizer.Sync()
@@ -966,5 +964,12 @@ func (med *MutuallyExclusiveDeliver) Deliver(proposal types.Proposal, signature 
 		}
 	}
 
-	return med.C.Application.Deliver(proposal, signature)
+	begin := time.Now()
+	result := med.C.Application.Deliver(proposal, signature)
+	med.C.MetricsView.LatencyBatchSave.Observe(time.Since(begin).Seconds())
+
+	// Only set the proposal in case it is later than the already known checkpoint.
+	med.C.Checkpoint.Set(proposal, signature)
+
+	return result
 }

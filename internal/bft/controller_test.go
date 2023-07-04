@@ -61,6 +61,8 @@ func TestControllerBasic(t *testing.T) {
 		Verifier:      verifier,
 		StartedWG:     &startedWG,
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
+
 	configureProposerBuilder(controller)
 
 	controller.Start(1, 0, 0, false)
@@ -116,6 +118,8 @@ func TestControllerLeaderBasic(t *testing.T) {
 		Verifier:      verifier,
 		StartedWG:     &startedWG,
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
+
 	configureProposerBuilder(controller)
 
 	controller.Start(1, 0, 0, false)
@@ -224,6 +228,8 @@ func TestLeaderPropose(t *testing.T) {
 		StartedWG:     &startedWG,
 		MetricsView:   api.NewMetricsView(&disabled.Provider{}),
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
+
 	configureProposerBuilder(controller)
 
 	commWG.Add(9)
@@ -358,6 +364,8 @@ func TestViewChanged(t *testing.T) {
 		Collector:     &collector,
 		StartedWG:     &startedWG,
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
+
 	configureProposerBuilder(controller)
 
 	commWG.Add(3) // state request
@@ -465,6 +473,7 @@ func TestSyncPrevView(t *testing.T) {
 		StartedWG:       &startedWG,
 		MetricsView:     api.NewMetricsView(&disabled.Provider{}),
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
 
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs
@@ -634,6 +643,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 				Collector:     &collector,
 				StartedWG:     &startedWG,
 			}
+			controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
 
 			configureProposerBuilder(controller)
 			controller.Start(testCase.startViewNum, 0, 0, true)
@@ -818,6 +828,7 @@ func TestSyncInform(t *testing.T) {
 		Collector:     &collector,
 		StartedWG:     &vc.ControllerStartedWG,
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
 	configureProposerBuilder(controller)
 
 	controller.Checkpoint.Set(proposal, []types.Signature{{ID: 1}, {ID: 2}, {ID: 3}})
@@ -936,6 +947,7 @@ func TestRotateFromLeaderToFollower(t *testing.T) {
 		DecisionsPerLeader: 1,
 		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs
 
@@ -1119,6 +1131,7 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 		DecisionsPerLeader: 1,
 		MetricsView:        api.NewMetricsView(&disabled.Provider{}),
 	}
+	controller.Deliver = &bft.MutuallyExclusiveDeliver{C: controller}
 	vs := configureProposerBuilder(controller)
 	controller.ViewSequences = vs
 
