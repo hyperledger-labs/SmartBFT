@@ -12,7 +12,7 @@ type Decider struct {
 	mock.Mock
 }
 
-// Decide provides a mock function with given fields: proposal, signatures, requests
-func (_m *Decider) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	_m.Called(proposal, signatures, requests)
+// Decide provides a mock function with given fields: proposal, signatures, requests, abortChan
+func (_m *Decider) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo, abortChan <-chan struct{}) {
+	_m.Called(proposal, signatures, requests, abortChan)
 }

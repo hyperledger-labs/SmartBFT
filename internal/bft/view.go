@@ -838,7 +838,7 @@ func (v *View) decide(proposal *types.Proposal, signatures []types.Signature, re
 	// first make preparations for the next sequence so that the view will be ready to continue right after delivery
 	v.startNextSeq()
 	signatures = append(signatures, *v.myProposalSig)
-	v.Decider.Decide(*proposal, signatures, requests)
+	v.Decider.Decide(*proposal, signatures, requests, v.abortChan)
 }
 
 func (v *View) startNextSeq() {

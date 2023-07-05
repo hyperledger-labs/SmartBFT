@@ -148,7 +148,7 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 
 	v.backOffFactor = 1
 
-	v.inFlightDecideChan = make(chan struct{})
+	v.inFlightDecideChan = make(chan struct{}, 1)
 	v.inFlightSyncChan = make(chan struct{})
 
 	go func() {
@@ -1305,7 +1305,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 }
 
 // Decide delivers to the application and informs the view changer after delivery
-func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo, _ <-chan struct{}) {
 	v.inFlightView.stop()
 	v.Logger.Debugf("Delivering to app from Decide the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)

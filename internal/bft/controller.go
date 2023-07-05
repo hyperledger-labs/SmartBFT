@@ -21,7 +21,7 @@ import (
 //
 //go:generate mockery -dir . -name Decider -case underscore -output ./mocks/
 type Decider interface {
-	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo)
+	Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo, abortChan <-chan struct{})
 }
 
 // FailureDetector initiates a view change when there is a complaint
@@ -543,6 +543,7 @@ func (c *Controller) decide(d decision) {
 	c.removeDeliveredFromPool(d)
 	select {
 	case c.deliverChan <- struct{}{}:
+	case <-d.abortChan:
 	case <-c.stopChan:
 		return
 	}
@@ -792,7 +793,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.syncChan = make(chan struct{}, 1)
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
-	c.decisionChan = make(chan decision)
+	c.decisionChan = make(chan decision, 1)
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan uint64, 1)
@@ -880,12 +881,13 @@ func (c *Controller) stopped() bool {
 }
 
 // Decide delivers the decision to the application
-func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo, abortChan <-chan struct{}) {
 	select {
 	case c.decisionChan <- decision{
 		proposal:   proposal,
 		requests:   requests,
 		signatures: signatures,
+		abortChan:  abortChan,
 	}:
 	case <-c.stopChan:
 		// In case we are in the middle of shutting down,
@@ -896,6 +898,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	select {
 	case <-c.deliverChan: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
+	case <-abortChan: // If we stopped the calling, abort delivery
 	}
 }
 
@@ -916,6 +919,7 @@ type decision struct {
 	proposal   types.Proposal
 	signatures []types.Signature
 	requests   []types.RequestInfo
+	abortChan  <-chan struct{}
 }
 
 // BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary

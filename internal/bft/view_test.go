@@ -558,7 +558,7 @@ func TestNormalPath(t *testing.T) {
 	deciderWG := sync.WaitGroup{}
 	decidedProposal := make(chan types.Proposal)
 	decidedSigs := make(chan []types.Signature)
-	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
 		proposal, _ := args.Get(0).(types.Proposal)
 		decidedProposal <- proposal
@@ -683,7 +683,7 @@ func TestTwoSequences(t *testing.T) {
 	deciderWG := sync.WaitGroup{}
 	decidedProposal := make(chan types.Proposal, 1)
 	decidedSigs := make(chan []types.Signature, 1)
-	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
 		deciderWG.Done()
 		proposal, _ := args.Get(0).(types.Proposal)
 		decidedProposal <- proposal
@@ -860,7 +860,7 @@ func TestViewPersisted(t *testing.T) {
 			var deciderWG sync.WaitGroup
 			deciderWG.Add(1)
 			decider := &mocks.Decider{}
-			decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+			decider.On("Decide", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
 				deciderWG.Done()
 			})
 
@@ -1151,7 +1151,7 @@ func TestTwoPrePreparesInARow(t *testing.T) {
 	var deciderWG sync.WaitGroup
 	deciderWG.Add(1)
 	decider := &mocks.Decider{}
-	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
 		deciderWG.Done()
 	})
 
@@ -1421,7 +1421,7 @@ func newView(t *testing.T, selfID uint64, network map[uint64]*testedView) *teste
 	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{Value: []byte{4}, ID: selfID})
 
 	decider := &mocks.Decider{}
-	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
+	decider.On("Decide", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Run(func(_ mock.Arguments) {
 		tv.deciderWG.Done()
 	})
 
