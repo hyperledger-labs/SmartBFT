@@ -6,7 +6,6 @@
 package bft
 
 import (
-	"errors"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -596,16 +595,6 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	if syncResponse.Reconfig.InReplicatedDecisions {
 		c.close()
 		c.ViewChanger.close()
-	}
-
-	if len(syncResponse.RequestDel) != 0 {
-		c.RequestPool.Prune(func(bytes []byte) error {
-			return errors.New("need all delete")
-		})
-
-		for i := range syncResponse.RequestDel {
-			_ = c.RequestPool.RemoveRequest(syncResponse.RequestDel[i])
-		}
 	}
 
 	decision := syncResponse.Latest
