@@ -2530,13 +2530,49 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	}
 
 	data := make([]*AppRecord, 0, 7)
+	storeI := -1
+	fail = time.After(1 * time.Minute)
 	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data = append(data, d)
+		select {
+		case d := <-nodes[i].Delivered:
+			data = append(data, d)
+		case <-fail:
+			storeI = i
+		}
+	}
+
+	if storeI != -1 {
+		for i := 0; i < numberOfNodes; i++ {
+			nodes[i].Submit(Request{ID: "2", ClientID: "bob"})
+		}
+
+		for i := storeI; i < numberOfNodes; i++ {
+			d := <-nodes[i].Delivered
+			data = append(data, d)
+		}
 	}
 
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
+	}
+
+	if storeI == -1 {
+		return
+	}
+
+	data1 := make([]*AppRecord, 0, 7)
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < numberOfNodes; i++ {
+		select {
+		case d := <-nodes[i].Delivered:
+			data1 = append(data1, d)
+		case <-fail:
+			t.Fatal("Didn't deliver two msg")
+		}
+	}
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data1[i], data1[i+1])
 	}
 }
 
@@ -2920,13 +2956,49 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	}
 
 	data := make([]*AppRecord, 0, 7)
+	storeI := -1
+	fail = time.After(1 * time.Minute)
 	for i := 0; i < numberOfNodes; i++ {
-		d := <-nodes[i].Delivered
-		data = append(data, d)
+		select {
+		case d := <-nodes[i].Delivered:
+			data = append(data, d)
+		case <-fail:
+			storeI = i
+		}
+	}
+
+	if storeI != -1 {
+		for i := 0; i < numberOfNodes; i++ {
+			nodes[i].Submit(Request{ID: "2", ClientID: "bob"})
+		}
+
+		for i := storeI; i < numberOfNodes; i++ {
+			d := <-nodes[i].Delivered
+			data = append(data, d)
+		}
 	}
 
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data[i], data[i+1])
+	}
+
+	if storeI == -1 {
+		return
+	}
+
+	data1 := make([]*AppRecord, 0, 7)
+	fail = time.After(1 * time.Minute)
+	for i := 0; i < numberOfNodes; i++ {
+		select {
+		case d := <-nodes[i].Delivered:
+			data1 = append(data1, d)
+		case <-fail:
+			t.Fatal("Didn't deliver two msg")
+		}
+	}
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data1[i], data1[i+1])
 	}
 }
 
