@@ -1249,6 +1249,70 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 	}
 }
 
+func TestLeaderCatchUpWithoutSync(t *testing.T) {
+	t.Parallel()
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.SyncOnStart = false
+		nodes = append(nodes, n)
+	}
+
+	restartWG := sync.WaitGroup{}
+	restartWG.Add(1)
+
+	restoredWG := sync.WaitGroup{}
+	restoredWG.Add(1)
+
+	baseLogger := nodes[0].logger.Desugar()
+	nodes[0].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Processed prepares for proposal with seq 1") {
+			restartWG.Done()
+		}
+		if strings.Contains(entry.Message, "Restored proposal with sequence 1") {
+			restoredWG.Done()
+		}
+		return nil
+	})).Sugar()
+	nodes[0].Setup()
+
+	startNodes(nodes, network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+	restartWG.Wait()
+	nodes[0].RestartSync(false)
+	restoredWG.Wait()
+
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
+
+	data = make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
 func TestGradualStart(t *testing.T) {
 	// Scenario: initially the network has only one node
 	// a transaction is submitted and committed with that node

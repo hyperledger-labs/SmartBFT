@@ -584,6 +584,7 @@ func TestControllerLeaderRequestHandling(t *testing.T) {
 
 			batcher := &mocks.Batcher{}
 			batcher.On("Close")
+			batcher.On("Closed").Return(false)
 			batcher.On("Reset")
 			batcher.On("NextBatch").Run(func(arguments mock.Arguments) {
 				time.Sleep(time.Hour)
