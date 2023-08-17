@@ -81,7 +81,7 @@ type Proposer interface {
 //
 //go:generate mockery -dir . -name ProposerBuilder -case underscore -output ./mocks/
 type ProposerBuilder interface {
-	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer
+	NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) (Proposer, Phase)
 }
 
 // Controller controls the entire flow of the consensus
@@ -373,7 +373,7 @@ func (c *Controller) convertViewMessageToHeartbeat(m *protos.Message) *protos.Me
 }
 
 func (c *Controller) startView(proposalSequence uint64) {
-	view := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.currDecisionsInView, c.quorum)
+	view, initPhase := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.currDecisionsInView, c.quorum)
 
 	c.currViewLock.Lock()
 	c.currView = view
@@ -383,6 +383,12 @@ func (c *Controller) startView(proposalSequence uint64) {
 	role := Follower
 	leader, _ := c.iAmTheLeader()
 	if leader {
+		if initPhase == COMMITTED || initPhase == ABORT {
+			c.Logger.Debugf("Acquiring leader token when starting view with phase %s", initPhase.String())
+			c.acquireLeaderToken()
+		} else {
+			c.Logger.Debugf("Not acquiring leader token when starting view with phase %s", initPhase.String())
+		}
 		role = Leader
 	}
 	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
@@ -414,10 +420,8 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 	c.Logger.Debugf("Starting view after setting decisions in view to %d", newDecisionsInView)
 	c.startView(newProposalSequence)
 
-	// If I'm the leader, I can claim the leader token.
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.Batcher.Reset()
-		c.acquireLeaderToken()
 	}
 }
 
@@ -789,9 +793,6 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.currViewNumber = startViewNumber
 	c.currDecisionsInView = startDecisionsInView
 	c.startView(startProposalSequence)
-	if iAm, _ := c.iAmTheLeader(); iAm {
-		c.acquireLeaderToken()
-	}
 
 	go func() {
 		defer c.controllerDone.Done()
