@@ -652,10 +652,12 @@ func TestSyncPrevViewAnd2Twice(t *testing.T) {
 
 	synchronizerWG.Add(1)
 	leaderMonWG.Add(1)
+	// send a message with view 2 to trigger sync
 	wrongViewMsg := proto.Clone(prePrepare).(*protos.Message)
 	wrongViewMsgGet := wrongViewMsg.GetPrePrepare()
 	wrongViewMsgGet.View = 2
 	controller.ProcessMessages(2, wrongViewMsg)
+	// waiting for a synchronization that returned blocks with LatestSequence: 1,
 	synchronizerWG.Wait()
 	leaderMonWG.Wait() // wait for view to start before sending messages
 
@@ -696,6 +698,8 @@ func TestSyncPrevViewAnd2Twice(t *testing.T) {
 	controller.ProcessMessages(2, commit2Next)
 	controller.ProcessMessages(3, commit3Next)
 
+	// send a message with seq 1, but have already received a block with seq 1
+	// therefore no delivery will occur
 	appWG.Wait()
 	app.AssertNumberOfCalls(t, "Deliver", 0)
 
