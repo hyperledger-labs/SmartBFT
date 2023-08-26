@@ -13,7 +13,7 @@ type ProposerBuilder struct {
 }
 
 // NewProposer provides a mock function with given fields: leader, proposalSequence, viewNum, decisionsInView, quorumSize
-func (_m *ProposerBuilder) NewProposer(leader uint64, proposalSequence uint64, viewNum uint64, decisionsInView uint64, quorumSize int) bft.Proposer {
+func (_m *ProposerBuilder) NewProposer(leader uint64, proposalSequence uint64, viewNum uint64, decisionsInView uint64, quorumSize int) (bft.Proposer, bft.Phase) {
 	ret := _m.Called(leader, proposalSequence, viewNum, decisionsInView, quorumSize)
 
 	var r0 bft.Proposer
@@ -25,5 +25,14 @@ func (_m *ProposerBuilder) NewProposer(leader uint64, proposalSequence uint64, v
 		}
 	}
 
-	return r0
+	var r1 bft.Phase
+	if rf, ok := ret.Get(1).(func(uint64, uint64, uint64, uint64, int) bft.Phase); ok {
+		r1 = rf(leader, proposalSequence, viewNum, decisionsInView, quorumSize)
+	} else {
+		if ret.Get(1) != nil {
+			r1 = ret.Get(1).(bft.Phase)
+		}
+	}
+
+	return r0, r1
 }

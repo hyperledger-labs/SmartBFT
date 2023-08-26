@@ -694,7 +694,7 @@ func configureProposerBuilder(controller *bft.Controller) *atomic.Value {
 	pb.On("NewProposer", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).
 		Return(func(a uint64, b uint64, c uint64, d uint64, e int) bft.Proposer {
 			return createView(controller, a, b, c, d, e, vs)
-		})
+		}, bft.Phase(bft.COMMITTED))
 	controller.ProposerBuilder = pb
 	return vs
 }

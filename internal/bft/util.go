@@ -276,7 +276,7 @@ type ProposalMaker struct {
 }
 
 // NewProposer returns a new view
-func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) Proposer {
+func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decisionsInView uint64, quorumSize int) (proposer Proposer, phase Phase) {
 	view := &View{
 		RetrieveCheckpoint: pm.Checkpoint.Get,
 		DecisionsPerLeader: pm.DecisionsPerLeader,
@@ -330,7 +330,7 @@ func (pm *ProposalMaker) NewProposer(leader, proposalSequence, viewNum, decision
 	view.MetricsView.DecisionsInView.Set(float64(view.DecisionsInView))
 	view.MetricsView.Phase.Set(float64(view.Phase))
 
-	return view
+	return view, view.Phase
 }
 
 // ViewSequence indicates if a view is currently active and its current proposal sequence
