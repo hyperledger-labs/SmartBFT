@@ -468,24 +468,13 @@ func (c *Controller) ViewChanged(newViewNumber uint64, newProposalSequence uint6
 	c.viewChange <- viewInfo{proposalSeq: newProposalSequence, viewNumber: newViewNumber}
 }
 
-func (c *Controller) getNextBatch() [][]byte {
-	var validRequests [][]byte
-	for len(validRequests) == 0 { // no valid requests in this batch
-		requests := c.Batcher.NextBatch()
-		if c.stopped() || c.Batcher.Closed() {
-			return nil
-		}
-		validRequests = append(validRequests, requests...)
-	}
-	return validRequests
-}
-
 func (c *Controller) propose() {
-	nextBatch := c.getNextBatch()
-	if len(nextBatch) == 0 {
-		// If our next batch is empty,
-		// it can only be because
-		// the batcher is stopped and so are we.
+	if c.stopped() || c.Batcher.Closed() {
+		return
+	}
+	nextBatch := c.Batcher.NextBatch()
+	if len(nextBatch) == 0 { // no requests in this batch
+		c.acquireLeaderToken() // try again later
 		return
 	}
 	metadata := c.currView.GetMetadata()
