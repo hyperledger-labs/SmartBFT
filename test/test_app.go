@@ -127,10 +127,15 @@ func (a *App) Sync() types.SyncResponse {
 
 // Restart restarts the node
 func (a *App) Restart() {
+	a.RestartSync(true)
+}
+
+func (a *App) RestartSync(sync bool) {
 	a.Consensus.Stop()
 	a.Node.Lock()
 	defer a.Node.Unlock()
 	a.Setup()
+	a.Consensus.Config.SyncOnStart = sync
 	if err := a.Consensus.Start(); err != nil {
 		a.logger.Panicf("Consensus start returned an error : %v", err)
 	}
