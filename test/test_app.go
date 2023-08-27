@@ -15,6 +15,7 @@ import (
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
 	"github.com/SmartBFT-Go/consensus/pkg/consensus"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics"
 	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
 	"github.com/SmartBFT-Go/consensus/pkg/types"
 	"github.com/SmartBFT-Go/consensus/pkg/wal"
@@ -59,7 +60,7 @@ type App struct {
 	viewChangeTime  chan time.Time
 	secondClock     *time.Ticker
 	logger          *zap.SugaredLogger
-	metricsProvider api.Provider
+	metricsProvider metrics.Provider
 	lastRecord      lastRecord
 	verificationSeq uint64
 	messageLost     func(*smartbftprotos.Message) bool
