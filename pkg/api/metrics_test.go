@@ -4,21 +4,22 @@ import (
 	"testing"
 
 	"github.com/SmartBFT-Go/consensus/pkg/api"
+	"github.com/SmartBFT-Go/consensus/pkg/metrics"
 	"github.com/stretchr/testify/assert"
 )
 
-var countOpts = api.GaugeOpts{
+var countOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
-	Subsystem:    "bft",
+	Subsystem:    "smartbft",
 	Name:         "count_of_files",
 	Help:         "Count.",
 	LabelNames:   []string{},
 	StatsdFormat: "%{#fqname}",
 }
 
-var nodesOpts = api.GaugeOpts{
+var nodesOpts = metrics.GaugeOpts{
 	Namespace:    "consensus",
-	Subsystem:    "bft",
+	Subsystem:    "smartbft",
 	Name:         "node",
 	Help:         "Node ID.",
 	LabelNames:   []string{"id"},

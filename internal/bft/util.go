@@ -486,7 +486,7 @@ func (bl blacklist) computeUpdate() []uint64 {
 	for _, node := range bl.nodes {
 		inBlacklist := newBlacklistMap[node]
 		bl.metricsBlacklist.NodesInBlackList.With(
-			bl.metricsBlacklist.LabelsForWith(api.NameBlackListNodeID, strconv.FormatUint(node, 10))...,
+			bl.metricsBlacklist.LabelsForWith("blackid", strconv.FormatUint(node, 10))...,
 		).Set(btoi(inBlacklist))
 	}
 	bl.metricsBlacklist.CountBlackList.Set(float64(len(newBlacklist)))
