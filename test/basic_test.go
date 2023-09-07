@@ -2842,6 +2842,8 @@ func TestFetchStateWhenSyncReturnsPrevView(t *testing.T) {
 	ignoreWG.Wait()
 	close(done)
 
+	stateWG.Wait()
+
 	for i := 0; i < numberOfNodes; i++ {
 		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to all nodes
 	}
@@ -2854,8 +2856,6 @@ func TestFetchStateWhenSyncReturnsPrevView(t *testing.T) {
 	for i := 0; i < numberOfNodes-2; i++ {
 		assert.Equal(t, data[i], data[i+1])
 	}
-
-	stateWG.Wait()
 }
 
 func TestLeaderStopSendHeartbeat(t *testing.T) {

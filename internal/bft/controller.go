@@ -631,7 +631,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 		c.Logger.Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
 		response := c.fetchState()
 		if response == nil {
-			c.Logger.Infof("Response is nil")
+			c.Logger.Infof("Fetching state failed")
 			return 0, 0, 0
 		}
 		if response.View > c.currViewNumber && response.Seq == md.LatestSequence+1 {
