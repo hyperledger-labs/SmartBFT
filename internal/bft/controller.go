@@ -629,6 +629,28 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 
 	if md.ViewId < c.currViewNumber {
 		c.Logger.Infof("Synchronizer returned with view number %d but the controller is at view number %d", md.ViewId, c.currViewNumber)
+		response := c.fetchState()
+		if response == nil {
+			c.Logger.Infof("Fetching state failed")
+			return 0, 0, 0
+		}
+		if response.View > c.currViewNumber && response.Seq == md.LatestSequence+1 {
+			c.Logger.Infof("Collected state with view %d and sequence %d", response.View, response.Seq)
+			newViewToSave := &protos.SavedMessage{
+				Content: &protos.SavedMessage_NewView{
+					NewView: &protos.ViewMetadata{
+						ViewId:          response.View,
+						LatestSequence:  md.LatestSequence,
+						DecisionsInView: 0,
+					},
+				},
+			}
+			if err := c.State.Save(newViewToSave); err != nil {
+				c.Logger.Panicf("Failed to save message to state, error: %v", err)
+			}
+			c.ViewChanger.InformNewView(response.View)
+			return response.View, response.Seq, 0
+		}
 		return 0, 0, 0
 	}
 

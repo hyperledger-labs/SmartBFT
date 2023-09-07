@@ -2719,6 +2719,145 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	}
 }
 
+func TestFetchStateWhenSyncReturnsPrevView(t *testing.T) {
+	// Scenario: A node (node 2) becomes the leader but disconnects inducing a second view change.
+	// When it reconnects, with no transactions available, it syncs after receiving multiple heartbeat responses.
+	// However, the Synchronizer returns with an old view, and so for the node to catch up it needs to fetch the state.
+
+	t.Parallel()
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		nodes = append(nodes, n)
+	}
+
+	start := time.Now()
+	for _, n := range nodes {
+		n.heartbeatTime = make(chan time.Time, 1)
+		n.heartbeatTime <- start
+		n.Setup()
+	}
+
+	// wait for the new leader to finish the view change before submitting
+	done := make(chan struct{})
+	viewChangeWG := sync.WaitGroup{}
+	viewChangeWG.Add(numberOfNodes - 1)
+
+	syncWG := sync.WaitGroup{}
+	syncWG.Add(1)
+
+	ignoreWG := sync.WaitGroup{}
+	ignoreWG.Add(1)
+	ignoreOnce := sync.Once{}
+
+	stateWG := sync.WaitGroup{}
+	stateWG.Add(1)
+
+	for _, n := range nodes {
+		id := n.ID
+		baseLogger := n.Consensus.Logger.(*zap.SugaredLogger).Desugar()
+		n.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+			if strings.Contains(entry.Message, "ViewChanged") {
+				viewChangeWG.Done()
+			}
+
+			if strings.Contains(entry.Message, "Received HeartBeatResponse triggered a call to HeartBeatEventHandler Sync") {
+				syncWG.Done()
+			}
+
+			if strings.Contains(entry.Message, "Monitor already called Sync, ignoring HeartBeatResponse") {
+				if id == 2 {
+					ignoreOnce.Do(func() {
+						ignoreWG.Done()
+					})
+				}
+			}
+
+			if strings.Contains(entry.Message, "Collected state with view 2 and sequence 2") {
+				stateWG.Done()
+			}
+
+			if strings.Contains(entry.Message, "but I am in view 1 and seq 2") {
+				panic("Didn't fetch state")
+			}
+
+			return nil
+		})).Sugar()
+	}
+
+	startNodes(nodes, network)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
+
+	data := make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[0].Disconnect() // leader in partition
+
+	// Accelerate the time until a view change because of heartbeat timeout
+	var counter uint64
+	accelerateTime(nodes, done, true, false, &counter)
+
+	viewChangeWG.Wait()
+	close(done)
+
+	nodes[0].Connect() // connect after view changed
+
+	done = make(chan struct{})
+	accelerateTime(nodes, done, true, false, &counter)
+
+	syncWG.Wait()
+	close(done)
+
+	syncWG.Add(1)
+	viewChangeWG.Add(3)
+	nodes[1].Disconnect() // leader in partition
+
+	done = make(chan struct{})
+	accelerateTime(nodes, done, true, false, &counter)
+
+	viewChangeWG.Wait()
+	close(done)
+
+	nodes[1].Connect()
+
+	done = make(chan struct{})
+	accelerateTime(nodes, done, true, false, &counter)
+
+	syncWG.Wait()
+	ignoreWG.Wait()
+	close(done)
+
+	stateWG.Wait()
+
+	for i := 0; i < numberOfNodes; i++ {
+		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to all nodes
+	}
+
+	data = make([]*AppRecord, 0)
+	for i := 1; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-2; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
 func TestLeaderStopSendHeartbeat(t *testing.T) {
 	t.Parallel()
 
