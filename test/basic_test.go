@@ -2663,7 +2663,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -2675,12 +2675,14 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 
@@ -2961,7 +2963,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[2].Connect()
 	nodes[3].Connect()
 
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 4; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3228,7 +3230,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3240,12 +3242,14 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 
