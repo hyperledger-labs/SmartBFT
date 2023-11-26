@@ -133,7 +133,7 @@ type Controller struct {
 	decisionChan         chan decision
 	deliverChan          chan struct{}
 	leaderToken          chan struct{}
-	verificationSequence uint64
+	verificationSequence atomic.Uint64
 
 	controllerDone sync.WaitGroup
 
@@ -681,7 +681,7 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 
 	c.Logger.Debugf("Node %d is setting the checkpoint after sync to view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
 	c.Checkpoint.Set(decision.Proposal, decision.Signatures)
-	c.verificationSequence = uint64(decision.Proposal.VerificationSequence)
+	c.verificationSequence.Store(uint64(decision.Proposal.VerificationSequence))
 	c.Logger.Debugf("Node %d is informing the view changer after sync of view %d and seq %d", c.ID, md.ViewId, md.LatestSequence)
 	c.ViewChanger.InformNewView(view)
 	if md.LatestSequence == 0 || newView {
@@ -742,12 +742,12 @@ func (c *Controller) relinquishSyncToken() {
 
 // MaybePruneRevokedRequests prunes requests with different verification sequence
 func (c *Controller) MaybePruneRevokedRequests() {
-	oldVerSqn := c.verificationSequence
+	oldVerSqn := c.verificationSequence.Load()
 	newVerSqn := c.Verifier.VerificationSequence()
 	if newVerSqn == oldVerSqn {
 		return
 	}
-	c.verificationSequence = newVerSqn
+	c.verificationSequence.Store(newVerSqn)
 
 	c.Logger.Infof("Verification sequence changed: %d --> %d", oldVerSqn, newVerSqn)
 	c.RequestPool.Prune(func(req []byte) error {
@@ -805,7 +805,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)
 	c.quorum = Q
 
-	c.verificationSequence = c.Verifier.VerificationSequence()
+	c.verificationSequence.Store(c.Verifier.VerificationSequence())
 
 	if syncOnStart {
 		startViewNumber, startProposalSequence, startDecisionsInView = c.syncOnStart(startViewNumber, startProposalSequence, startDecisionsInView)

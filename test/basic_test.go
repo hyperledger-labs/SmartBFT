@@ -1272,6 +1272,10 @@ func TestLeaderCatchUpWithoutSync(t *testing.T) {
 	restoredWG := sync.WaitGroup{}
 	restoredWG.Add(1)
 
+	var blockCommits uint32
+	nodes[0].LoseMessages(func(msg *smartbftprotos.Message) bool {
+		return msg.GetCommit() != nil && atomic.LoadUint32(&blockCommits) == 1
+	})
 	baseLogger := nodes[0].logger.Desugar()
 	nodes[0].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Processed prepares for proposal with seq 1") {
@@ -1283,6 +1287,7 @@ func TestLeaderCatchUpWithoutSync(t *testing.T) {
 		return nil
 	})).Sugar()
 	nodes[0].Setup()
+	atomic.StoreUint32(&blockCommits, 1)
 
 	startNodes(nodes, network)
 
@@ -1290,6 +1295,7 @@ func TestLeaderCatchUpWithoutSync(t *testing.T) {
 
 	restartWG.Wait()
 	nodes[0].RestartSync(false)
+	atomic.StoreUint32(&blockCommits, 0)
 	restoredWG.Wait()
 
 	data := make([]*AppRecord, 0)
@@ -1339,6 +1345,10 @@ func TestLeaderProposeAfterRestartWithoutSync(t *testing.T) {
 	contViewWG := sync.WaitGroup{}
 	contViewWG.Add(2)
 
+	var blockCommits uint32
+	nodes[0].LoseMessages(func(msg *smartbftprotos.Message) bool {
+		return msg.GetCommit() != nil && atomic.LoadUint32(&blockCommits) == 1
+	})
 	baseLogger := nodes[0].logger.Desugar()
 	nodes[0].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
 		if strings.Contains(entry.Message, "Processed prepares for proposal with seq 1") {
@@ -1362,6 +1372,7 @@ func TestLeaderProposeAfterRestartWithoutSync(t *testing.T) {
 		return nil
 	})).Sugar()
 	nodes[0].Setup()
+	atomic.StoreUint32(&blockCommits, 1)
 
 	startNodes(nodes, network)
 
@@ -1369,6 +1380,7 @@ func TestLeaderProposeAfterRestartWithoutSync(t *testing.T) {
 
 	restartWG.Wait()
 	nodes[0].RestartSync(false)
+	atomic.StoreUint32(&blockCommits, 0)
 	restoredWG.Wait()
 
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
@@ -2663,7 +2675,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -2675,12 +2687,14 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 
@@ -2961,7 +2975,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[2].Connect()
 	nodes[3].Connect()
 
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 4; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3228,7 +3242,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(90 * time.Second)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3240,12 +3254,14 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 
