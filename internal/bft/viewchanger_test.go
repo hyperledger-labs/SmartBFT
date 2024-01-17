@@ -226,7 +226,7 @@ func TestViewChangeProcess(t *testing.T) {
 			comm.AssertCalled(t, "SendConsensus", uint64(2), mock.Anything)
 
 			reqTimer.AssertNumberOfCalls(t, "StopTimers", 2)
-			controller.AssertNumberOfCalls(t, "AbortView", 2)
+			controller.AssertNumberOfCalls(t, "AbortView", 4)
 			state.AssertNumberOfCalls(t, "Save", 2)
 
 			vc.Stop()
@@ -470,7 +470,7 @@ func TestNormalProcess(t *testing.T) {
 	num = <-seqNumChan
 	assert.Equal(t, uint64(2), num)
 
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 	state.AssertNumberOfCalls(t, "Save", 2)
 
 	vc.Stop()
@@ -1221,7 +1221,7 @@ func TestCommitLastDecision(t *testing.T) {
 	num = <-seqNumChan
 	assert.Equal(t, uint64(3), num)
 
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 	app.AssertNumberOfCalls(t, "Deliver", 1)
 	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
 	state.AssertNumberOfCalls(t, "Save", 2)
@@ -1406,7 +1406,7 @@ func TestInFlightProposalInViewData(t *testing.T) {
 			vc.Stop()
 
 			reqTimer.AssertNumberOfCalls(t, "StopTimers", 1)
-			controller.AssertNumberOfCalls(t, "AbortView", 1)
+			controller.AssertNumberOfCalls(t, "AbortView", 2)
 			state.AssertNumberOfCalls(t, "Save", 1)
 		})
 	}
@@ -2049,7 +2049,7 @@ func TestCommitInFlight(t *testing.T) {
 	num = <-seqNumChan
 	assert.Equal(t, uint64(3), num)
 
-	controller.AssertNumberOfCalls(t, "AbortView", 1)
+	controller.AssertNumberOfCalls(t, "AbortView", 2)
 	pruner.AssertNumberOfCalls(t, "MaybePruneRevokedRequests", 1)
 
 	vc.Stop()

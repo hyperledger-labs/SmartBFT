@@ -25,6 +25,10 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+const (
+	realViewChangeTimeout = 90 * time.Second
+)
+
 func TestBasic(t *testing.T) {
 	t.Parallel()
 	network := NewNetwork()
@@ -76,10 +80,11 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	var viewChangeTimeoutWG sync.WaitGroup
 	viewChangeTimeoutWG.Add(1)
 
-	var deliverWG sync.WaitGroup
-	deliverWG.Add(1)
+	var viewChangeWG sync.WaitGroup
+	viewChangeWG.Add(1)
 
-	syncDelay := make(chan struct{})
+	var syncWG sync.WaitGroup
+	syncWG.Add(1)
 
 	baseLogger := nodes[3].logger.Desugar()
 	nodes[3].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
@@ -89,12 +94,12 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 			})
 		}
 
-		if strings.Contains(entry.Message, "Delivering to app from deliverDecision the last decision proposal") {
-			close(syncDelay)
+		if strings.Contains(entry.Message, "Node 4 is setting the checkpoint after sync returned with view 0 and seq 1") {
+			syncWG.Done()
 		}
 
-		if strings.Contains(entry.Message, "Attempted to deliver block 1 via view change but meanwhile view change already synced to seq 1, returning result from sync") {
-			deliverWG.Done()
+		if strings.Contains(entry.Message, "ViewChanged, the new view is 1") {
+			viewChangeWG.Done()
 		}
 
 		return nil
@@ -112,7 +117,6 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	startNodes(nodes, network)
 
 	// Ensure the last node is disconnected and control its Sync()
-	nodes[len(nodes)-1].DelaySync(syncDelay)
 	nodes[len(nodes)-1].Disconnect()
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to a node
@@ -137,10 +141,12 @@ func TestNodeViewChangeWhileInPartition(t *testing.T) {
 	viewChangeTimeoutWG.Wait()
 	// Connect the last node to let it participate in view change
 	nodes[len(nodes)-1].Connect()
-	// Ensure the last node calls deliver on top of calling sync
-	deliverWG.Wait()
+	// Ensure the last node calls sync
+	syncWG.Wait()
 	// Ensure the last node successfully delivers the block to the application
 	<-nodes[len(nodes)-1].Delivered
+	// Make sure view change occurred
+	viewChangeWG.Wait()
 }
 
 func TestRestartFollowers(t *testing.T) {
@@ -1075,7 +1081,7 @@ func TestFollowerStateTransfer(t *testing.T) {
 	syncedWG.Add(1)
 	baseLogger6 := nodes[6].logger.Desugar()
 	nodes[6].logger = baseLogger6.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		if strings.Contains(entry.Message, "The collected state") {
+		if strings.Contains(entry.Message, "collected state") {
 			syncedWG.Done()
 		}
 		return nil
@@ -2675,7 +2681,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -2687,12 +2693,14 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 
@@ -2793,7 +2801,7 @@ func TestFetchStateWhenSyncReturnsPrevView(t *testing.T) {
 				}
 			}
 
-			if strings.Contains(entry.Message, "Collected state with view 2 and sequence 2") {
+			if strings.Contains(entry.Message, "collected state with view 2 and sequence 2") {
 				stateWG.Done()
 			}
 
@@ -2973,7 +2981,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[2].Connect()
 	nodes[3].Connect()
 
-	fail = time.After(1 * time.Minute)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 4; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3240,7 +3248,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(1 * time.Minute)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3252,12 +3260,14 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	data := make([]*AppRecord, 0, 7)
 	storeI := -1
 	fail = time.After(1 * time.Minute)
+ExternalLoop:
 	for i := 0; i < numberOfNodes; i++ {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
 		case <-fail:
 			storeI = i
+			break ExternalLoop
 		}
 	}
 

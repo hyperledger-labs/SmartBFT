@@ -1191,3 +1191,384 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 
 	controller.Stop()
 }
+
+func TestDeliverTwiceOnceFromSyncAndOnceFromViewData(t *testing.T) {
+
+	// In this scenario a decision is delivered twice.
+	// Once by the synchronizer and a second time by the view data received during a view change.
+	// In the beginning there is a view change timeout and there is a view still running concurrently.
+	// Afterwards the view change is successful, but it does not include a decision made during the concurrent view.
+	// Later there is a second view change timeout and the synchronizer is called and delivers the decision.
+	// The checkpoint should be updated accordingly.
+	// Then the node receives a view data message which include the decision.
+	// If the checkpoint was updated correctly then this decision should not be delivered twice.
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+
+	testDir, err := os.MkdirTemp("", "controller-unittest")
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+	wal, err := wal.Create(log, testDir, nil)
+	assert.NoError(t, err)
+
+	comm := &mocks.CommMock{}
+	comm.On("BroadcastConsensus", mock.Anything)
+	commSendWG := sync.WaitGroup{}
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		commSendWG.Done()
+	})
+
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+
+	ticker := make(chan time.Time)
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return(nil)
+	signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
+		ID:    4,
+		Value: []byte{4},
+	})
+
+	batcher := &mocks.Batcher{}
+	batcher.On("Close")
+
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerificationSequence").Return(uint64(1))
+	verifierSigWG := sync.WaitGroup{}
+	verifier.On("VerifySignature", mock.Anything).Run(func(args mock.Arguments) {
+		verifierSigWG.Done()
+	}).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(bft.MarshalOrPanic(&protos.PreparesFrom{
+		Ids: []uint64{1},
+	}), nil)
+	verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+
+	assembler := &mocks.AssemblerMock{}
+
+	reqPool := &mocks.RequestPool{}
+	reqPool.On("Close")
+
+	leaderMon := &mocks.LeaderMonitor{}
+	leaderMonWG := sync.WaitGroup{}
+	leaderMon.On("ChangeRole", bft.Follower, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		leaderMonWG.Done()
+	})
+	leaderMon.On("InjectArtificialHeartbeat", uint64(1), mock.Anything)
+	leaderMon.On("Close")
+
+	collector := bft.StateCollector{
+		SelfID:         4,
+		N:              7,
+		Logger:         log,
+		CollectTimeout: 100 * time.Millisecond,
+	}
+	collector.Start()
+
+	// The synchronizer returns on the first call a proposal with sequence 0 and on the second call a proposal with sequence 1.
+	// In both times the synchronizer is called after a view change timeout.
+	synchronizer := &mocks.SynchronizerMock{}
+	synchronizerWG := sync.WaitGroup{}
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	}).Return(types.SyncResponse{Latest: types.Decision{
+		Proposal: types.Proposal{
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence: 0,
+				ViewId:         0,
+			}),
+			VerificationSequence: 1,
+		},
+		Signatures: []types.Signature{
+			{ID: 1}, {ID: 2}, {ID: 3}, {ID: 4}, {ID: 5},
+		},
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}}).Once()
+	synchronizer.On("Sync").Run(func(args mock.Arguments) {
+		synchronizerWG.Done()
+	}).Return(types.SyncResponse{Latest: types.Decision{
+		Proposal: types.Proposal{
+			Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence: 1,
+				ViewId:         0,
+			}),
+			VerificationSequence: 1,
+		},
+		Signatures: []types.Signature{
+			{ID: 1}, {ID: 2}, {ID: 3}, {ID: 4}, {ID: 5},
+		},
+	}, Reconfig: types.ReconfigSync{InReplicatedDecisions: false}}).Once()
+
+	// If deliver is called with sequence 1 then the test fails.
+	// This is after the synchronizer returns with sequence 1.
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		proposal := args.Get(0).(types.Proposal)
+		md := &protos.ViewMetadata{}
+		if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
+			panic("Error unmarshaling metadata")
+		}
+		if md.LatestSequence == 1 {
+			panic("Delivering sequence 1 twice")
+		}
+	}).Return(types.Reconfig{InLatestDecision: false})
+
+	vc := &bft.ViewChanger{
+		SelfID:            4,
+		N:                 7,
+		NodesList:         []uint64{1, 2, 3, 4, 5, 6, 7},
+		Logger:            log,
+		Comm:              comm,
+		Application:       app,
+		Verifier:          verifier,
+		Signer:            signer,
+		RequestsTimer:     reqTimer,
+		State:             state,
+		InFlight:          &bft.InFlightData{},
+		Ticker:            ticker,
+		InMsqQSize:        100,
+		MetricsViewChange: api.NewMetricsViewChange(&disabled.Provider{}),
+		ViewChangeTimeout: 10 * time.Second,
+		ResendTimeout:     20 * time.Second,
+	}
+
+	vc.ControllerStartedWG.Add(1)
+
+	controller := &bft.Controller{
+		InFlight:      &bft.InFlightData{},
+		Signer:        signer,
+		State:         state,
+		WAL:           wal,
+		ID:            4,
+		N:             7,
+		NodesList:     []uint64{1, 2, 3, 4, 5, 6, 7},
+		Logger:        log,
+		Batcher:       batcher,
+		Verifier:      verifier,
+		Assembler:     assembler,
+		Comm:          comm,
+		RequestPool:   reqPool,
+		LeaderMonitor: leaderMon,
+		Synchronizer:  synchronizer,
+		ViewChanger:   vc,
+		Checkpoint:    &types.Checkpoint{},
+		Collector:     &collector,
+		StartedWG:     &vc.ControllerStartedWG,
+	}
+	configureProposerBuilder(controller)
+
+	controller.Checkpoint.Set(proposal, []types.Signature{{ID: 1}, {ID: 2}, {ID: 3}, {ID: 4}, {ID: 5}})
+
+	vc.Controller = controller
+	vc.Synchronizer = controller
+	vc.Checkpoint = controller.Checkpoint
+	vc.Start(0)
+
+	vs := configureProposerBuilder(controller)
+	controller.ViewSequences = vs
+
+	leaderMonWG.Add(1)
+	controller.Start(0, 1, 0, false)
+	leaderMonWG.Wait()
+
+	// Starting view change
+
+	startTime := time.Now()
+	vc.StartViewChange(1, true)
+
+	vc.HandleMessage(1, viewChangeMsg)
+	vc.HandleMessage(2, viewChangeMsg)
+	vc.HandleMessage(3, viewChangeMsg)
+	commSendWG.Add(1) // sending view data msg and joining the view change
+	vc.HandleMessage(5, viewChangeMsg)
+	commSendWG.Wait()
+
+	// View change timeout, synchronizer is called
+
+	synchronizerWG.Add(1)
+	commSendWG.Add(6) // fetch and send state after sync
+	leaderMonWG.Add(1)
+	ticker <- startTime.Add(5 * time.Second)
+	ticker <- startTime.Add(10 * time.Second)
+	ticker <- startTime.Add(9 * time.Second)
+	ticker <- startTime.Add(12 * time.Second)
+	ticker <- startTime.Add(15 * time.Second) // view change timeout
+	synchronizerWG.Wait()
+	commSendWG.Wait()
+	synchronizer.AssertNumberOfCalls(t, "Sync", 1)
+	leaderMonWG.Wait()
+
+	// Concurrent view is running and a decision is delivered (by the other nodes)
+
+	commSendWG.Add(6) // send prepares
+	controller.ProcessMessages(1, prePrepareSeq1View0)
+	commSendWG.Wait()
+
+	commSendWG.Add(6) // send commits
+	controller.ProcessMessages(1, prepareSeq1View0)
+	controller.ProcessMessages(2, prepareSeq1View0)
+	controller.ProcessMessages(3, prepareSeq1View0)
+	controller.ProcessMessages(7, prepareSeq1View0)
+	commSendWG.Wait()
+
+	// A view change occurs (the new view message does not include the decision made by the concurrent view)
+
+	verifierSigWG.Add(5)
+	leaderMonWG.Add(1)
+	vc.HandleMessage(2, createNewViewMsgForDeliverTwiceTest(1))
+	verifierSigWG.Wait() // got the new view msg
+	leaderMonWG.Wait()   // changed view and created the view
+
+	// Starting another view change
+
+	startTime = time.Now()
+	vc.StartViewChange(2, true)
+
+	viewChangeMsg2 := proto.Clone(viewChangeMsg).(*protos.Message)
+	viewChangeMsg2.GetViewChange().NextView = 2
+	vc.HandleMessage(1, viewChangeMsg2)
+	vc.HandleMessage(2, viewChangeMsg2)
+	vc.HandleMessage(3, viewChangeMsg2)
+	commSendWG.Add(1) // sending view data msg and joining the view change
+	vc.HandleMessage(5, viewChangeMsg2)
+	commSendWG.Wait()
+
+	// Again there is a view change timeout
+	// The synchronizer returns the decision
+
+	synchronizerWG.Add(1)
+	commSendWG.Add(6) // fetch and send state after sync
+	leaderMonWG.Add(1)
+	ticker <- startTime.Add(5 * time.Second)
+	ticker <- startTime.Add(10 * time.Second)
+	ticker <- startTime.Add(9 * time.Second)
+	ticker <- startTime.Add(12 * time.Second)
+	ticker <- startTime.Add(15 * time.Second)
+	ticker <- startTime.Add(20 * time.Second)
+	ticker <- startTime.Add(25 * time.Second) // view change timeout (with backoff)
+	synchronizerWG.Wait()
+	commSendWG.Wait()
+	leaderMonWG.Wait() // change view after sync returns
+	synchronizer.AssertNumberOfCalls(t, "Sync", 2)
+
+	// The view change continues
+
+	viewChangeMsg3 := proto.Clone(viewChangeMsg).(*protos.Message)
+	viewChangeMsg3.GetViewChange().NextView = 3
+	vc.HandleMessage(1, viewChangeMsg3)
+	vc.HandleMessage(2, viewChangeMsg3)
+	vc.HandleMessage(3, viewChangeMsg3)
+	vc.HandleMessage(5, viewChangeMsg3)
+
+	// The node receives a view data message which includes the decision
+
+	verifierSigWG.Add(1)
+	vc.HandleMessage(1, viewDataMsgSeq1View3)
+	verifierSigWG.Wait()
+
+	controller.Stop()
+	vc.Stop()
+	collector.Stop()
+	wal.Close()
+}
+
+var (
+	prePrepareSeq1View0 = &protos.Message{
+		Content: &protos.Message_PrePrepare{
+			PrePrepare: &protos.PrePrepare{
+				View: 0,
+				Seq:  1,
+				Proposal: &protos.Proposal{
+					Header:  []byte{0},
+					Payload: []byte{1},
+					Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+						LatestSequence: 1,
+						ViewId:         0,
+					}),
+					VerificationSequence: 1,
+				},
+			},
+		},
+	}
+	proposalSeq1View0 = &types.Proposal{
+		Header:  []byte{0},
+		Payload: []byte{1},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 1,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+	prepareSeq1View0 = &protos.Message{
+		Content: &protos.Message_Prepare{
+			Prepare: &protos.Prepare{
+				View:   0,
+				Seq:    1,
+				Digest: proposalSeq1View0.Digest(),
+			},
+		},
+	}
+	viewDataSeq1View3    = createViewDataForDeliverTwiceTest(3, 1)
+	viewDataMsgSeq1View3 = &protos.Message{
+		Content: &protos.Message_ViewData{
+			ViewData: &protos.SignedViewData{
+				RawViewData: bft.MarshalOrPanic(viewDataSeq1View3),
+				Signer:      1,
+				Signature:   nil,
+			},
+		},
+	}
+)
+
+func createViewDataForDeliverTwiceTest(nextView, lastDecisionSequence uint64) *protos.ViewData {
+	lastDecision := types.Proposal{
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: lastDecisionSequence,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+	lastDecisionSignaturesProtos := []*protos.Signature{{Signer: 1, Value: []byte{4}, Msg: []byte{5}}, {Signer: 2, Value: []byte{4}, Msg: []byte{5}}, {Signer: 3, Value: []byte{4}, Msg: []byte{5}}, {Signer: 4, Value: []byte{4}, Msg: []byte{5}}, {Signer: 5, Value: []byte{4}, Msg: []byte{5}}}
+	return &protos.ViewData{
+		NextView: nextView,
+		LastDecision: &protos.Proposal{
+			Header:               lastDecision.Header,
+			Payload:              lastDecision.Payload,
+			Metadata:             lastDecision.Metadata,
+			VerificationSequence: uint64(lastDecision.VerificationSequence),
+		},
+		LastDecisionSignatures: lastDecisionSignaturesProtos,
+	}
+}
+
+func createNewViewMsgForDeliverTwiceTest(nextView uint64) *protos.Message {
+	q := 5
+	vd := createViewDataForDeliverTwiceTest(nextView, 0)
+	vdBytes := bft.MarshalOrPanic(vd)
+
+	signed := make([]*protos.SignedViewData, 0)
+	for len(signed) < q { // quorum
+		msg := &protos.Message{
+			Content: &protos.Message_ViewData{
+				ViewData: &protos.SignedViewData{
+					RawViewData: vdBytes,
+					Signer:      uint64(len(signed) + 1),
+					Signature:   nil,
+				},
+			},
+		}
+		signed = append(signed, msg.GetViewData())
+	}
+	return &protos.Message{
+		Content: &protos.Message_NewView{
+			NewView: &protos.NewView{
+				SignedViewData: signed,
+			},
+		},
+	}
+}
