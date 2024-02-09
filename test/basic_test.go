@@ -25,6 +25,10 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+const (
+	realViewChangeTimeout = 90 * time.Second
+)
+
 func TestBasic(t *testing.T) {
 	t.Parallel()
 	network := NewNetwork()
@@ -2675,7 +2679,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(90 * time.Second)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -2975,7 +2979,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[2].Connect()
 	nodes[3].Connect()
 
-	fail = time.After(90 * time.Second)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 4; i++ {
 		select {
 		case <-realViewChangeCh:
@@ -3242,7 +3246,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	nodes[4].Connect()
 
 	// Waiting for a real change of leader and view
-	fail = time.After(90 * time.Second)
+	fail = time.After(realViewChangeTimeout)
 	for i := 0; i < 7; i++ {
 		select {
 		case <-realViewChangeCh:
