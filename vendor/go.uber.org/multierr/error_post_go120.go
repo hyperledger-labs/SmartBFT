@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Uber Technologies, Inc.
+// Copyright (c) 2017-2023 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,23 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package atomic
+//go:build go1.20
+// +build go1.20
 
-import "time"
+package multierr
 
-//go:generate bin/gen-atomicwrapper -name=Duration -type=time.Duration -wrapped=Int64 -pack=int64 -unpack=time.Duration -cas -swap -json -imports time -file=duration.go
-
-// Add atomically adds to the wrapped time.Duration and returns the new value.
-func (d *Duration) Add(n time.Duration) time.Duration {
-	return time.Duration(d.v.Add(int64(n)))
+// Unwrap returns a list of errors wrapped by this multierr.
+func (merr *multiError) Unwrap() []error {
+	return merr.Errors()
 }
 
-// Sub atomically subtracts from the wrapped time.Duration and returns the new value.
-func (d *Duration) Sub(n time.Duration) time.Duration {
-	return time.Duration(d.v.Sub(int64(n)))
+type multipleErrors interface {
+	Unwrap() []error
 }
 
-// String encodes the wrapped value as a string.
-func (d *Duration) String() string {
-	return d.Load().String()
+func extractErrors(err error) []error {
+	if err == nil {
+		return nil
+	}
+
+	// check if the given err is an Unwrapable error that
+	// implements multipleErrors interface.
+	eg, ok := err.(multipleErrors)
+	if !ok {
+		return []error{err}
+	}
+
+	return append(([]error)(nil), eg.Unwrap()...)
 }
