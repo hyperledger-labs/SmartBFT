@@ -338,6 +338,46 @@ func TestReqPoolTimeout(t *testing.T) {
 		err = pool.Submit(request)
 		assert.Contains(t, err.Error(), "is bigger than request max bytes")
 	})
+	t.Run("change request size", func(t *testing.T) {
+		timeoutHandler := &mocks.RequestTimeoutHandler{}
+
+		timeoutHandler.On("OnRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Return()
+		timeoutHandler.On("OnLeaderFwdRequestTimeout", byteReq1, insp.RequestID(byteReq1)).Return()
+		timeoutHandler.On("OnAutoRemoveTimeout", insp.RequestID(byteReq1)).Return()
+
+		pool := bft.NewPool(log, insp, timeoutHandler,
+			bft.PoolOptions{
+				QueueSize:         3,
+				ForwardTimeout:    10 * time.Millisecond,
+				ComplainTimeout:   time.Hour,
+				AutoRemoveTimeout: time.Hour,
+				RequestMaxBytes:   1024,
+			},
+			nil,
+		)
+		defer pool.Close()
+
+		payload := make([]byte, 2048)
+		rand.Read(payload)
+		request := makeTestRequest("1", "1", string(payload))
+		assert.Equal(t, 0, pool.Size())
+		err = pool.Submit(request)
+		assert.Contains(t, err.Error(), "is bigger than request max bytes")
+
+		pool.StopTimers()
+		opts := bft.PoolOptions{
+			ForwardTimeout:    10 * time.Millisecond,
+			ComplainTimeout:   time.Hour,
+			AutoRemoveTimeout: time.Hour,
+			RequestMaxBytes:   1024 * 3,
+		}
+		pool.ChangeOptions(timeoutHandler, opts)
+		pool.RestartTimers()
+
+		err = pool.Submit(request)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, pool.Size())
+	})
 	t.Run("request timeout", func(t *testing.T) {
 		timeoutHandler := &mocks.RequestTimeoutHandler{}
 
