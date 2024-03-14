@@ -11,8 +11,8 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
+	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 )
 
 const (

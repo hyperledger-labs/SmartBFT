@@ -13,8 +13,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )

@@ -8,10 +8,10 @@ package bft
 import (
 	"fmt"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/pkg/types"
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
+	"github.com/hyperledger-labs/SmartBFT/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/pkg/types"
+	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 	"github.com/pkg/errors"
 )
 

@@ -6,8 +6,8 @@
 package api
 
 import (
-	bft "github.com/SmartBFT-Go/consensus/pkg/types"
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
+	bft "github.com/hyperledger-labs/SmartBFT/pkg/types"
+	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 )
 
 // Application delivers the consented proposal and corresponding signatures.
