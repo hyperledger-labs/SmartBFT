@@ -666,6 +666,7 @@ func createView(c *bft.Controller, leader, proposalSequence, viewNum, decisionsI
 	return &bft.View{
 		RetrieveCheckpoint: c.Checkpoint.Get,
 		N:                  c.N,
+		NodesList:          c.NodesList,
 		LeaderID:           leader,
 		SelfID:             c.ID,
 		Quorum:             quorumSize,
