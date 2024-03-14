@@ -2,4 +2,4 @@
 
 export GOPATH=$(go env GOPATH)
 cd ..
-mv consensus /home/runner/work/consensus/
+mv SmartBFT /home/runner/work/SmartBFT/

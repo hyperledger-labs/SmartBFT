@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 )
 
 // A node could either be a leader or a follower

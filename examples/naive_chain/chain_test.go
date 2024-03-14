@@ -11,10 +11,10 @@ import (
 	"testing"
 	"time"
 
-	smart "github.com/SmartBFT-Go/consensus/pkg/api"
-	"github.com/SmartBFT-Go/consensus/pkg/metrics/disabled"
-	"github.com/SmartBFT-Go/consensus/pkg/wal"
 	"github.com/golang/protobuf/proto"
+	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
+	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )

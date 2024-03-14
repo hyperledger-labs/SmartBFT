@@ -13,9 +13,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/SmartBFT-Go/consensus/pkg/api"
-	protos "github.com/SmartBFT-Go/consensus/smartbftprotos"
 	"github.com/golang/protobuf/proto"
+	"github.com/hyperledger-labs/SmartBFT/pkg/api"
+	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 )
 
 type LogRecordReader struct {

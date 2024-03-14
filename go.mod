@@ -1,4 +1,4 @@
-module github.com/SmartBFT-Go/consensus
+module github.com/hyperledger-labs/SmartBFT
 
 go 1.20
 

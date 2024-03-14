@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/SmartBFT-Go/consensus/pkg/types"
+	"github.com/hyperledger-labs/SmartBFT/pkg/types"
 	"github.com/stretchr/testify/assert"
 )
 
