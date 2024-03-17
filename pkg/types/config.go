@@ -78,11 +78,11 @@ type Configuration struct {
 	// DecisionsPerLeader is the number of decisions reached by a leader before there is a leader rotation.
 	DecisionsPerLeader uint64
 
-	// RequestMaxBytes total allowed size of the single request
+	// RequestMaxBytes total allowed size of a single request.
 	RequestMaxBytes uint64
 
-	// RequestPoolSubmitTimeout the total amount of time client can wait for submission of single
-	// request into request pool
+	// RequestPoolSubmitTimeout the total amount of time a client can wait for the submission of a single
+	// request into the request pool.
 	RequestPoolSubmitTimeout time.Duration
 }
 
@@ -115,7 +115,7 @@ var DefaultConfig = Configuration{
 
 func (c Configuration) Validate() error {
 	if c.SelfID == 0 {
-		return errors.Errorf("SelfID is lower than or equal to zero")
+		return errors.Errorf("SelfID should be greater than zero")
 	}
 	if c.RequestBatchMaxCount == 0 {
 		return errors.Errorf("RequestBatchMaxCount should be greater than zero")
@@ -171,14 +171,15 @@ func (c Configuration) Validate() error {
 	if c.ViewChangeResendInterval > c.ViewChangeTimeout {
 		return errors.Errorf("ViewChangeResendInterval is bigger than ViewChangeTimeout")
 	}
-	if c.LeaderRotation && c.DecisionsPerLeader <= 0 {
+	if c.LeaderRotation && c.DecisionsPerLeader == 0 {
 		return errors.Errorf("DecisionsPerLeader should be greater than zero when leader rotation is active")
 	}
-
+	if !c.LeaderRotation && c.DecisionsPerLeader != 0 {
+		return errors.Errorf("DecisionsPerLeader should be zero when leader rotation is off")
+	}
 	if c.RequestMaxBytes == 0 {
 		return errors.Errorf("RequestMaxBytes should be greater than zero")
 	}
-
 	if c.RequestPoolSubmitTimeout <= 0 {
 		return errors.Errorf("RequestPoolSubmitTimeout should be greater than zero")
 	}
