@@ -6,6 +6,7 @@
 package bft_test
 
 import (
+	"errors"
 	"os"
 	"sync"
 	"sync/atomic"
@@ -20,7 +21,6 @@ import (
 	"github.com/hyperledger-labs/SmartBFT/pkg/types"
 	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
 	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
