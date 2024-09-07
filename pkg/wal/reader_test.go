@@ -12,10 +12,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestLogRecordReader(t *testing.T) {

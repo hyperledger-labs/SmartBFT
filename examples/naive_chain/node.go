@@ -13,12 +13,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	smartbft "github.com/hyperledger-labs/SmartBFT/pkg/consensus"
 	bft "github.com/hyperledger-labs/SmartBFT/pkg/types"
 	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
 	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"google.golang.org/protobuf/proto"
 )
 
 type (

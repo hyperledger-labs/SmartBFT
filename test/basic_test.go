@@ -17,12 +17,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger-labs/SmartBFT/internal/bft"
 	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"google.golang.org/protobuf/proto"
 )
 
 const (

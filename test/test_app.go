@@ -13,7 +13,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/consensus"
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics"
@@ -23,6 +22,7 @@ import (
 	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"google.golang.org/protobuf/proto"
 )
 
 var fastConfig = types.Configuration{
