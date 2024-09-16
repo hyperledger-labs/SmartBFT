@@ -5,6 +5,8 @@
 
 syntax = "proto3";
 
+option go_package = "github.com/hyperledger-labs/SmartBFT/naive";
+
 package naive;
 
 message FwdMessage {

@@ -11,8 +11,7 @@ err() {
 echo -e "\nTesting commit: ------${ANSI_GREEN}" $(git log -1 --no-merges | head -$(( $(git log -1 --no-merges | wc -l) - 2 )) | tail -1) "${ANSI_RESET}------\n"
 
 go get -u golang.org/x/tools/cmd/goimports
-go get -u github.com/golang/protobuf/protoc-gen-go
-
+go get -u google.golang.org/protobuf/cmd/protoc-gen-go
 
 
 BUILDDIR=.build

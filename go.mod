@@ -3,7 +3,6 @@ module github.com/hyperledger-labs/SmartBFT
 go 1.22
 
 require (
-	github.com/golang/protobuf v1.5.4
 	github.com/stretchr/testify v1.9.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.8.0

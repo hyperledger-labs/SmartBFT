@@ -13,7 +13,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger-labs/SmartBFT/internal/bft"
 	"github.com/hyperledger-labs/SmartBFT/internal/bft/mocks"
 	"github.com/hyperledger-labs/SmartBFT/pkg/api"
@@ -24,6 +23,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"google.golang.org/protobuf/proto"
 )
 
 var (
