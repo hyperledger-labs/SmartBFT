@@ -145,6 +145,97 @@ func TestViewBasic(t *testing.T) {
 	view.Abort()
 }
 
+func TestPrePrepareAndPrevCommits(t *testing.T) {
+	for _, testCase := range []struct {
+		description        string
+		decisionsPerLeader uint64
+		expectedCall       int
+	}{
+		{
+			description:        "sent with leaderRotation is off",
+			decisionsPerLeader: 0,
+			expectedCall:       0,
+		},
+		{
+			description:        "sent with leaderRotation is on",
+			decisionsPerLeader: 1,
+			expectedCall:       3,
+		},
+	} {
+		t.Run(testCase.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+			log := basicLog.Sugar()
+			comm := &mocks.CommMock{}
+			commWG := sync.WaitGroup{}
+			comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+				commWG.Done()
+			})
+			decider := &mocks.Decider{}
+			deciderWG := sync.WaitGroup{}
+			decidedProposal := make(chan types.Proposal)
+			decidedSigs := make(chan []types.Signature)
+			decider.On("Decide", mock.Anything, mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				deciderWG.Done()
+				proposal, _ := args.Get(0).(types.Proposal)
+				decidedProposal <- proposal
+				sigs, _ := args.Get(1).([]types.Signature)
+				decidedSigs <- sigs
+			})
+			verifier := &mocks.VerifierMock{}
+			verifier.On("VerificationSequence").Return(uint64(1))
+			verifier.On("VerifyProposal", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("AuxiliaryData", mock.Anything).Return(nil)
+			signer := &mocks.SignerMock{}
+			signer.On("SignProposal", mock.Anything, mock.Anything).Return(&types.Signature{
+				ID:    4,
+				Value: []byte{4},
+			})
+			viewSeq := &atomic.Value{}
+			state := &bft.StateRecorder{}
+			cp := &types.Checkpoint{}
+			view := &bft.View{
+				RetrieveCheckpoint: cp.Get,
+				DecisionsPerLeader: testCase.decisionsPerLeader,
+				State:              state,
+				Logger:             log,
+				N:                  4,
+				NodesList:          []uint64{1, 2, 3, 4},
+				LeaderID:           1,
+				SelfID:             1,
+				Quorum:             3,
+				Number:             1,
+				ProposalSequence:   0,
+				Comm:               comm,
+				Decider:            decider,
+				Verifier:           verifier,
+				Signer:             signer,
+				ViewSequences:      viewSeq,
+				InMsgQSize:         40,
+				MetricsView:        api.NewMetricsView(&disabled.Provider{}),
+				MetricsBlacklist:   api.NewMetricsBlacklist(&disabled.Provider{}),
+			}
+			view.Start()
+
+			commWG.Add(2)
+			proposal1 := proposal
+			proposal1.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+				LatestSequence:            0,
+				ViewId:                    1,
+				PrevCommitSignatureDigest: bft.CommitSignaturesDigest([]*protos.Signature{{Signer: 1}, {Signer: 2}, {Signer: 3}}),
+			})
+			cp.Set(proposal1, []types.Signature{{ID: 1}, {ID: 2}, {ID: 3}})
+			view.Propose(proposal1)
+			commWG.Wait()
+
+			verifier.AssertNumberOfCalls(t, "VerifyConsenterSig", testCase.expectedCall)
+			view.Abort()
+		})
+	}
+}
+
 func TestBadPrePrepare(t *testing.T) {
 	// Ensure that a prePrepare with a wrong view number sent by the leader causes a view abort,
 	// and that if the same message is from a follower then it is simply ignored.
