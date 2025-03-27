@@ -1,11 +1,66 @@
 name: Build
 
 on:
+  push:
+    branches: [ "**" ]
   pull_request:
+    branches: [ "**" ]
+  workflow_dispatch:
+
+env:
+  GO_VER: 1.24.1
+  PROTOC_VER: 29.3
+  PROTOC_GEN_GO_VER: v1.36.5
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout Code
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VER }}
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          version: ${{ env.PROTOC_VER }}
+
+      - name: check go.mod
+        run: |
+          go mod tidy
+          git diff --exit-code go.mod
+
+      - name: check vendor
+        run: |
+          go mod vendor
+          git diff --exit-code
+
+      - name: go fmt
+        run: |
+          go fmt ./...
+          git diff --exit-code
+
+      - name: goimports
+        run: |
+          go install golang.org/x/tools/cmd/goimports@latest
+          goimports -l -w `find . -name '*.go' | grep -v vendor | grep -v 'pb.go'`
+          git diff --exit-code
+
+      - name: check protobuf
+        run: |
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@${{ env.PROTOC_GEN_GO_VER }}
+          protoc --go_opt=paths=source_relative --go_out=. smartbftprotos/*.proto
+          protoc --go_opt=paths=source_relative --go_out=. examples/naive_chain/*.proto
+          protoc --go_opt=paths=source_relative --go_out=. test/*.proto
+          git diff --exit-code
 
   build:
+    needs:
+      - validate
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -14,15 +69,8 @@ jobs:
     - name: Install Go
       uses: actions/setup-go@v5
       with:
-        go-version: 1.22.4
-
-    - name: Prepare Env
-      run: bash scripts/prepare_environ.sh
+        go-version: ${{ env.GO_VER }}
 
     - name: Test
-      working-directory: /home/runner/go/src/github.com/hyperledger-labs/SmartBFT
-      run:  make all
-
-    - name: Post
-      working-directory: /home/runner/go/src/github.com/hyperledger-labs/SmartBFT
-      run: ./scripts/post.sh
+      run: |
+        go test -count 1 -race ./...
