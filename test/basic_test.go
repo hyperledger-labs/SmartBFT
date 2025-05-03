@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -3303,6 +3304,106 @@ ExternalLoop:
 
 	for i := 0; i < numberOfNodes-1; i++ {
 		assert.Equal(t, data1[i], data1[i+1])
+	}
+}
+
+// Decide and abort view at the same time
+func TestDecideAndAbortViewAtSameTime(t *testing.T) {
+	t.Parallel()
+
+	done := make(chan struct{})
+	defer close(done)
+
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.LeaderHeartbeatTimeout = 5 * time.Second
+		n.Consensus.Config.LeaderHeartbeatCount = 2
+		n.Consensus.Config.ViewChangeTimeout = 20 * time.Second
+		nodes = append(nodes, n)
+	}
+
+	var (
+		once  sync.Once
+		once1 sync.Once
+	)
+	leaderComplaneCh := make(chan struct{})
+	abortingCh := make(chan struct{}, 1)
+	nextSeqCh := make(chan struct{}, 1)
+	nextStep := make(chan struct{}, 1)
+
+	baseLogger := nodes[3].logger.Desugar()
+	nodes[3].logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "Heartbeat timeout expired") {
+			once.Do(func() {
+				leaderComplaneCh <- struct{}{}
+			})
+		}
+		if strings.Contains(entry.Message, "Aborting current view with number") {
+			once1.Do(func() {
+				abortingCh <- struct{}{}
+				<-nextStep
+			})
+		}
+		if strings.Contains(entry.Message, "Sequence: 2-->3") {
+			nextSeqCh <- struct{}{}
+			<-nextStep
+		}
+		return nil
+	})).Sugar()
+
+	nodes[3].Setup()
+
+	startNodes(nodes, network)
+
+	var counter uint64
+	accelerateTime(nodes, done, true, true, &counter)
+
+	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
+	data := make([]*AppRecord, 0)
+	for i := 0; i < numberOfNodes; i++ {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
+	<-nextSeqCh
+
+	// Emulation of node removal from the consensus in the absence of heartbeat
+	nodes[3].Disconnect()
+	<-leaderComplaneCh
+	nodes[3].Connect()
+
+	<-abortingCh
+
+	close(nextStep)
+	data = make([]*AppRecord, 0, 4)
+	fail := time.After(15 * time.Second)
+	for i := 0; i < numberOfNodes; i++ {
+		select {
+		case d := <-nodes[i].Delivered:
+			data = append(data, d)
+		case <-fail:
+			buf := make([]byte, 1<<16)
+			runtime.Stack(buf, true)
+			fmt.Printf("%s", buf)
+			t.Fatal("Didn't deliver two msg")
+		}
+	}
+
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
 	}
 }
 
