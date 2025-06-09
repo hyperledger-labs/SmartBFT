@@ -1470,7 +1470,6 @@ func newNetwork(t *testing.T, size int) testedNetwork {
 
 type testedView struct {
 	offline   uint32
-	network   *testedNetwork
 	deciderWG sync.WaitGroup
 	*bft.View
 }
