@@ -397,7 +397,7 @@ func (rp *Pool) deleteRequest(element *list.Element, requestInfo types.RequestIn
 	rp.metrics.LatencyOfRequestPool.Observe(time.Since(item.additionTimestamp).Seconds())
 	delete(rp.existMap, requestInfo)
 	rp.moveToDelSlice(requestInfo)
-	rp.logger.Infof("Removed request %s from request pool", requestInfo)
+	rp.logger.Debugf("Removed request %s from request pool", requestInfo)
 	rp.semaphore.Release(1)
 
 	if len(rp.existMap) != rp.fifo.Len() {
