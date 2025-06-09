@@ -824,12 +824,12 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, n uint64, ver
 		}
 
 		if vd.InFlightProposal.Metadata == nil { // should have been validated earlier
-			return false, false, nil, errors.New("Node has a view data message where the in flight proposal metadata is nil")
+			return false, false, nil, errors.New("node has a view data message where the in flight proposal metadata is nil")
 		}
 
 		inFlightMetadata := &protos.ViewMetadata{}
 		if err = proto.Unmarshal(vd.InFlightProposal.Metadata, inFlightMetadata); err != nil { // should have been validated earlier
-			return false, false, nil, fmt.Errorf("Node was unable to unmarshal the in flight proposal metadata, error: %w", err)
+			return false, false, nil, fmt.Errorf("node was unable to unmarshal the in flight proposal metadata, error: %w", err)
 		}
 
 		proposalsAndMetadata = append(proposalsAndMetadata, &proposalAndMetadata{vd.InFlightProposal, inFlightMetadata})
