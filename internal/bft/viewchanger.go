@@ -1002,7 +1002,7 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 		}
 
 		if lastDecisionMD.LatestSequence > mySequence+1 { // this is a decision in the future, can't verify it and should sync
-			v.Synchronizer.Sync() // TODO check if I manged to sync to latest decision, revalidate new view, and join the other nodes
+			v.Synchronizer.Sync() // TODO check if I managed to sync to latest decision, revalidate new view, and join the other nodes
 			return true, true, false
 		}
 
