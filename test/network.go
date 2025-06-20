@@ -8,6 +8,7 @@ package test
 import (
 	"fmt"
 	"math/rand"
+	"slices"
 	"sort"
 	"sync"
 
@@ -213,7 +214,7 @@ func (node *Node) SendTransaction(targetID uint64, request []byte) {
 // Nodes returns the ids of all nodes in the network
 func (node *Node) Nodes() []uint64 {
 	res := node.n.getAll()
-	sort.Slice(res, func(i, j int) bool { return res[i] < res[j] })
+	slices.Sort(res)
 	return res
 }
 
