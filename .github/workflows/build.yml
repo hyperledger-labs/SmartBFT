@@ -20,7 +20,7 @@ jobs:
         name: Checkout Code
 
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GO_VER }}
 
@@ -67,7 +67,7 @@ jobs:
       name: Checkout Code
 
     - name: Install Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         go-version: ${{ env.GO_VER }}
 
