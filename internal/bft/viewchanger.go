@@ -48,7 +48,7 @@ type change struct {
 	stopView bool
 }
 
-// ViewChanger is responsible for running the view change protocol
+// ViewChanger is responsible for running the view change protocol.
 type ViewChanger struct {
 	// Configuration
 	SelfID             uint64

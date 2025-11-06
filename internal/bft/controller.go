@@ -254,7 +254,7 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 	c.addRequest(reqInfo, req)
 }
 
-// SubmitRequest Submits a request to go through consensus.
+// SubmitRequest submits a request to go through consensus.
 func (c *Controller) SubmitRequest(request []byte) error {
 	info := c.RequestInspector.RequestID(request)
 	return c.addRequest(info, request)
