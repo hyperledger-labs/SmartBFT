@@ -8,7 +8,7 @@ package consensus
 import (
 	"errors"
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -378,9 +378,7 @@ func (c *Consensus) setNodes(nodes []uint64) {
 func sortNodes(nodes []uint64) []uint64 {
 	sorted := make([]uint64, len(nodes))
 	copy(sorted, nodes)
-	sort.Slice(sorted, func(i, j int) bool {
-		return sorted[i] < sorted[j]
-	})
+	slices.Sort(sorted)
 	return sorted
 }
 
