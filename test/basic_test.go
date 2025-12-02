@@ -1191,7 +1191,6 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 			},
 		},
 	} {
-		test := test
 		t.Run(test.description, func(t *testing.T) {
 			t.Parallel()
 			network := NewNetwork()
