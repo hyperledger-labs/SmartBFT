@@ -9,7 +9,7 @@ on:
 
 env:
   GO_VER: 1.25.3
-  PROTOC_VER: 33.0
+  PROTOC_VER: "33.0"
   PROTOC_GEN_GO_VER: v1.36.10
 
 jobs:
