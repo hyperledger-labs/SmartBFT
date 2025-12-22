@@ -223,7 +223,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	v.Logger.Debugf("%d got message %s from %d with seq %d", v.SelfID, MsgToString(m), sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
-		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
+		v.Logger.Infof("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
 		v.discoverIfSyncNeeded(sender, m)
 		return
 	}
