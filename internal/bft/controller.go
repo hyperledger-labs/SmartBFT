@@ -638,6 +638,8 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 		c.Checkpoint.Set(latestDecision.Proposal, latestDecision.Signatures)
 		c.verificationSequence.Store(uint64(latestDecision.Proposal.VerificationSequence))
 		newProposalSequence = latestDecisionSeq + 1
+	}
+	if latestDecisionMetadata != nil {
 		newDecisionsInView = latestDecisionDecisions + 1
 	}
 
