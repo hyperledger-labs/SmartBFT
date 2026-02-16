@@ -122,7 +122,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 	batcher := bft.NewBatchBuilder(pool, submittedChan, 100, 5000, 100*time.Second)
 
 	go func() {
-		for i := 0; i < 300; i++ {
+		for i := range 300 {
 			iStr := fmt.Sprintf("%d", i)
 			byteReq := makeTestRequest(iStr, iStr, "foo")
 			err := pool.Submit(byteReq)
@@ -132,7 +132,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 
 	res := batcher.NextBatch()
 	assert.Len(t, res, 100)
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		iStr := fmt.Sprintf("%d", i)
 		reqInfo := insp.RequestID(res[i])
 		assert.Equal(t, iStr, reqInfo.ID)
@@ -142,7 +142,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 100)
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		iStr := fmt.Sprintf("%d", i+100)
 		reqInfo := insp.RequestID(res[i])
 		assert.Equal(t, iStr, reqInfo.ID)
@@ -152,7 +152,7 @@ func TestBatcherWhileSubmitting(t *testing.T) {
 
 	res = batcher.NextBatch()
 	assert.Len(t, res, 100)
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		iStr := fmt.Sprintf("%d", i+200)
 		reqInfo := insp.RequestID(res[i])
 		assert.Equal(t, iStr, reqInfo.ID)

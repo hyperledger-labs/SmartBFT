@@ -194,11 +194,8 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.collector.Stop()
 
 	var exist bool
-	for _, n := range reconfig.CurrentNodes {
-		if c.Config.SelfID == n {
-			exist = true
-			break
-		}
+	if slices.Contains(reconfig.CurrentNodes, c.Config.SelfID) {
+		exist = true
 	}
 
 	if !exist {

@@ -52,7 +52,7 @@ func TestBasic(t *testing.T) {
 	}
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -270,7 +270,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -281,7 +281,7 @@ func TestAfterDecisionLeaderInPartition(t *testing.T) {
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -339,7 +339,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -350,7 +350,7 @@ func TestLeaderInPartitionWithHealing(t *testing.T) {
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -666,7 +666,7 @@ func TestLeaderCatchingUpAfterViewChange(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -879,7 +879,7 @@ func TestLeaderForwarding(t *testing.T) {
 	committedBatches := make([][]AppRecord, 3)
 	for nodeIndex, n := range []*App{nodes[1], nodes[2], nodes[3]} {
 		committedBatches = append(committedBatches, make([]AppRecord, numBatchesCreated))
-		for i := 0; i < numBatchesCreated; i++ {
+		for range numBatchesCreated {
 			record := <-n.Delivered
 			committedBatches[nodeIndex] = append(committedBatches[nodeIndex], *record)
 		}
@@ -1227,14 +1227,14 @@ func TestLeaderModifiesPreprepare(t *testing.T) {
 				nodes[0].MutateSend(uint64(i), test.mutatingFunc)
 			}
 
-			for i := 0; i < numberOfNodes; i++ {
+			for i := range numberOfNodes {
 				nodes[i].Submit(Request{ID: fmt.Sprintf("%d", 1), ClientID: "alice"})
 			}
 
 			viewChangeWG.Wait()
 
 			data := make([]*AppRecord, 0)
-			for i := 0; i < numberOfNodes; i++ {
+			for i := range numberOfNodes {
 				d := <-nodes[i].Delivered
 				data = append(data, d)
 			}
@@ -1305,7 +1305,7 @@ func TestLeaderCatchUpWithoutSync(t *testing.T) {
 	restoredWG.Wait()
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1316,7 +1316,7 @@ func TestLeaderCatchUpWithoutSync(t *testing.T) {
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1392,7 +1392,7 @@ func TestLeaderProposeAfterRestartWithoutSync(t *testing.T) {
 	nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1401,7 +1401,7 @@ func TestLeaderProposeAfterRestartWithoutSync(t *testing.T) {
 	}
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1555,7 +1555,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 	}
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1563,7 +1563,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		nodes[i].Consensus.Stop() // stop all nodes
 	}
 
@@ -1574,7 +1574,7 @@ func TestReconfigAndViewChange(t *testing.T) {
 	nodes = append(nodes, newNode)
 	startNodes(nodes[4:], network)
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		nodes[i].Restart() // restart all stopped nodes
 	}
 
@@ -1583,12 +1583,12 @@ func TestReconfigAndViewChange(t *testing.T) {
 
 	nodes[4].Disconnect() // leader in partition
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		nodes[i].Submit(Request{ID: "10", ClientID: "alice"}) // submit while leader in partition will cause a view change
 	}
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1658,7 +1658,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to first leader
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1669,7 +1669,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	nodes[1].Submit(Request{ID: "2", ClientID: "alice"}) // submit to second leader
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1680,7 +1680,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	nodes[2].Submit(Request{ID: "3", ClientID: "alice"}) // submit to third leader
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1704,7 +1704,7 @@ func TestRotateAndViewChange(t *testing.T) {
 	nodes[1].Submit(Request{ID: "4", ClientID: "alice"}) // submit to current leader
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -1754,7 +1754,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1763,7 +1763,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "2", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1784,7 +1784,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "3", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1793,7 +1793,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "4", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1815,7 +1815,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "5", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1823,7 +1823,7 @@ func TestMigrateToBlacklistAndBackAgain(t *testing.T) {
 
 		nodes[0].Submit(Request{ID: "6", ClientID: "alice"})
 
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			<-nodes[i].Delivered
 		}
 
@@ -1922,7 +1922,7 @@ func TestNodeInFlightFails(t *testing.T) {
 	var doNotCommitWG sync.WaitGroup
 	doNotCommitWG.Add(numberOfNodes)
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		go func(deliverChannel chan *AppRecord) {
 			defer doNotCommitWG.Done()
 			select {
@@ -2037,7 +2037,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 
 	// Rotate the leader and ensure the view doesn't change, which proves
 	// node 1 never became the leader again
-	for j := 0; j < numberOfNodes; j++ {
+	for j := range numberOfNodes {
 		nodes[1].Submit(Request{ID: fmt.Sprintf("%d", j), ClientID: "alice"})
 		for i := 1; i < numberOfNodes; i++ {
 			<-nodes[i].Delivered
@@ -2057,7 +2057,7 @@ func TestBlacklistAndRedemption(t *testing.T) {
 	// Accelerate time to wait for it to synchronize
 	done = make(chan struct{})
 	accelerateTime(nodes, done, true, true, &counter)
-	for j := 0; j < numberOfNodes; j++ {
+	for range numberOfNodes {
 		<-nodes[0].Delivered
 	}
 	close(done)
@@ -2139,7 +2139,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 
 	// Put a single decision
 	nodes[0].Submit(Request{ID: "genesis", ClientID: "alice"})
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		<-nodes[i].Delivered
 	}
 
@@ -2161,7 +2161,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 
 	// Rotate the leader and ensure the view doesn't change, which proves
 	// nodes 2 and 3 never became the leader again
-	for j := 0; j < numberOfNodes; j++ {
+	for j := range numberOfNodes {
 		nodes[5].Submit(Request{ID: fmt.Sprintf("%d", j), ClientID: "alice"})
 		for i := 3; i < numberOfNodes; i++ {
 			<-nodes[i].Delivered
@@ -2182,7 +2182,7 @@ func TestBlacklistMultipleViewChanges(t *testing.T) {
 	// Accelerate time to wait for them to synchronize
 	done = make(chan struct{})
 	accelerateTime(nodes, done, true, true, &counter)
-	for j := 0; j < numberOfNodes; j++ {
+	for range numberOfNodes {
 		<-nodes[1].Delivered
 		<-nodes[2].Delivered
 	}
@@ -2246,7 +2246,7 @@ func TestNodeInFlightThenViewChange(t *testing.T) {
 	var wg sync.WaitGroup
 	wg.Add(numberOfNodes)
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		go func(deliverChannel chan *AppRecord) {
 			defer wg.Done()
 			select {
@@ -2542,7 +2542,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	realViewChangeMap := make(map[uint64]struct{}, 7)
 	realViewChangeSync := sync.RWMutex{}
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		id := nodes[i].ID
 		baseLogger := nodes[i].Node.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
@@ -2642,7 +2642,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	nodes[6].Disconnect()
 
 	// Expect all nodes to see the 7th node's proposal to change the leader
-	for i := 0; i < 6; i++ {
+	for range 6 {
 		<-addFirstViewCh
 	}
 
@@ -2657,7 +2657,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 
 	// Expect the desire of all living nodes to change the leader
 	fail := time.After(1 * time.Minute)
-	for i := 0; i < 4; i++ {
+	for range 4 {
 		select {
 		case <-viewChange1Ch:
 		case <-fail:
@@ -2667,7 +2667,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 
 	// Expect leader changes to begin from all live nodes
 	fail = time.After(1 * time.Minute)
-	for i := 0; i < 4; i++ {
+	for range 4 {
 		select {
 		case <-viewChange2Ch:
 		case <-fail:
@@ -2682,7 +2682,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 
 	// Waiting for a real change of leader and view
 	fail = time.After(realViewChangeTimeout)
-	for i := 0; i < 7; i++ {
+	for range 7 {
 		select {
 		case <-realViewChangeCh:
 		case <-fail:
@@ -2694,7 +2694,7 @@ func TestViewChangeAfterTryingToFork(t *testing.T) {
 	storeI := -1
 	fail = time.After(1 * time.Minute)
 ExternalLoop:
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
@@ -2705,7 +2705,7 @@ ExternalLoop:
 	}
 
 	if storeI != -1 {
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			nodes[i].Submit(Request{ID: "2", ClientID: "bob"})
 		}
 
@@ -2725,7 +2725,7 @@ ExternalLoop:
 
 	data1 := make([]*AppRecord, 0, 7)
 	fail = time.After(1 * time.Minute)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		select {
 		case d := <-nodes[i].Delivered:
 			data1 = append(data1, d)
@@ -2864,7 +2864,7 @@ func TestFetchStateWhenSyncReturnsPrevView(t *testing.T) {
 
 	stateWG.Wait()
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		nodes[i].Submit(Request{ID: "2", ClientID: "alice"}) // submit to all nodes
 	}
 
@@ -2917,7 +2917,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	realViewChangeMap := make(map[uint64]struct{}, 4)
 	realViewChangeSync := sync.RWMutex{}
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		id := nodes[i].ID
 		baseLogger := nodes[i].Node.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
@@ -2970,7 +2970,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	fail := time.After(1 * time.Minute)
-	for i := 0; i < 2; i++ {
+	for range 2 {
 		select {
 		case <-prepareFirstCh:
 		case <-fail:
@@ -2982,7 +2982,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	nodes[3].Connect()
 
 	fail = time.After(realViewChangeTimeout)
-	for i := 0; i < 4; i++ {
+	for range 4 {
 		select {
 		case <-realViewChangeCh:
 		case <-fail:
@@ -2993,7 +2993,7 @@ func TestLeaderStopSendHeartbeat(t *testing.T) {
 	close(done)
 
 	data := make([]*AppRecord, 0, 4)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -3079,7 +3079,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 		close(deliverViewChangerCh)
 	}()
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		id := nodes[i].ID
 		baseLogger := nodes[i].Node.app.Consensus.Logger.(*zap.SugaredLogger).Desugar()
 		nodes[i].Node.app.Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
@@ -3209,7 +3209,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	nodes[6].Disconnect()
 
 	// Expect all nodes to see the 7th node's proposal to change the leader
-	for i := 0; i < 6; i++ {
+	for range 6 {
 		<-addFirstViewCh
 	}
 
@@ -3224,7 +3224,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 
 	// Expect the desire of all living nodes to change the leader
 	fail := time.After(1 * time.Minute)
-	for i := 0; i < 4; i++ {
+	for range 4 {
 		select {
 		case <-viewChange1Ch:
 		case <-fail:
@@ -3234,7 +3234,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 
 	// Expect leader changes to begin from all live nodes
 	fail = time.After(1 * time.Minute)
-	for i := 0; i < 4; i++ {
+	for range 4 {
 		select {
 		case <-viewChange2Ch:
 		case <-fail:
@@ -3249,7 +3249,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 
 	// Waiting for a real change of leader and view
 	fail = time.After(realViewChangeTimeout)
-	for i := 0; i < 7; i++ {
+	for range 7 {
 		select {
 		case <-realViewChangeCh:
 		case <-fail:
@@ -3261,7 +3261,7 @@ func TestTryCommittedSequenceTwice(t *testing.T) {
 	storeI := -1
 	fail = time.After(1 * time.Minute)
 ExternalLoop:
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)
@@ -3272,7 +3272,7 @@ ExternalLoop:
 	}
 
 	if storeI != -1 {
-		for i := 0; i < numberOfNodes; i++ {
+		for i := range numberOfNodes {
 			nodes[i].Submit(Request{ID: "2", ClientID: "bob"})
 		}
 
@@ -3292,7 +3292,7 @@ ExternalLoop:
 
 	data1 := make([]*AppRecord, 0, 7)
 	fail = time.After(1 * time.Minute)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		select {
 		case d := <-nodes[i].Delivered:
 			data1 = append(data1, d)
@@ -3368,7 +3368,7 @@ func TestDecideAndAbortViewAtSameTime(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"}) // submit to leader
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -3389,7 +3389,7 @@ func TestDecideAndAbortViewAtSameTime(t *testing.T) {
 	close(nextStep)
 	data = make([]*AppRecord, 0, 4)
 	fail := time.After(15 * time.Second)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		select {
 		case d := <-nodes[i].Delivered:
 			data = append(data, d)

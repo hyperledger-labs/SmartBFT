@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VER: 1.25.5
+  GO_VER: 1.26.0
   PROTOC_VER: "33.1"
   PROTOC_GEN_GO_VER: v1.36.10
 
