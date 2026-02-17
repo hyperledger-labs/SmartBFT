@@ -282,7 +282,7 @@ func make8LogFiles(t *testing.T, logger api.Logger, testDir string) {
 		Data:       make([]byte, 512),
 	}
 
-	for i := 0; i < 30; i++ {
+	for range 30 {
 		err = wal.Append(rec1.Data, rec1.TruncateTo)
 		assert.NoError(t, err)
 	}

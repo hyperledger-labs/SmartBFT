@@ -32,7 +32,7 @@ func TestBasicReconfig(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -56,7 +56,7 @@ func TestBasicReconfig(t *testing.T) {
 	})
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -66,7 +66,7 @@ func TestBasicReconfig(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -379,7 +379,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data1 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data1 = append(data1, d)
 	}
@@ -405,7 +405,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 	})
 
 	data2 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data2 = append(data2, d)
 	}
@@ -424,7 +424,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
 	data3 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data3 = append(data3, d)
 	}
@@ -434,7 +434,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "12", ClientID: "alice"})
 	data4 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data4 = append(data4, d)
 	}
@@ -444,7 +444,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 
 	nodes[0].Submit(Request{ID: "13", ClientID: "alice"})
 	data5 := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data5 = append(data5, d)
 	}
@@ -475,7 +475,7 @@ func TestAddRemoveAddNodes(t *testing.T) {
 			t.Fatal("Didn't get delivered")
 		}
 	}
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		assert.Equal(t, data6[i], data6[i+1])
 	}
 }
@@ -504,7 +504,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	nodes[0].Submit(Request{ID: "1", ClientID: "alice"})
 
 	data := make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -532,7 +532,7 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 	})
 
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}
@@ -540,11 +540,11 @@ func TestViewChangeAfterReconfig(t *testing.T) {
 		assert.Equal(t, data[i], data[i+1])
 	}
 
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		nodes[i].Submit(Request{ID: "11", ClientID: "alice"})
 	}
 	data = make([]*AppRecord, 0)
-	for i := 0; i < numberOfNodes; i++ {
+	for i := range numberOfNodes {
 		d := <-nodes[i].Delivered
 		data = append(data, d)
 	}

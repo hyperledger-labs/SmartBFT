@@ -1731,7 +1731,7 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			messages := make([]*protos.ViewData, 0)
-			for i := 0; i < 4; i++ {
+			for range 4 {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
@@ -1891,7 +1891,7 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 			verifier := &mocks.VerifierMock{}
 			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
 			messages := make([]*protos.ViewData, 0)
-			for i := 0; i < 4; i++ {
+			for range 4 {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)

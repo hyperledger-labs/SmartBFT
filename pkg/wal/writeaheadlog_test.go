@@ -115,9 +115,9 @@ func TestWriteAheadLogFile_Open(t *testing.T) {
 
 		const NumBytes = 1024
 		const NumRec = 20
-		for m := 0; m < NumRec; m++ {
+		for m := range NumRec {
 			data1 := make([]byte, NumBytes)
-			for n := 0; n < NumBytes; n++ {
+			for n := range NumBytes {
 				data1[n] = byte(n % (m + 1))
 			}
 			err = wal.Append(data1, false)
@@ -288,9 +288,9 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		const NumRec = 20
 		records := make([]*smartbftprotos.LogRecord, NumRec)
 		var crc1, crc2 uint32
-		for m := 0; m < NumRec; m++ {
+		for m := range NumRec {
 			data1 := make([]byte, NumBytes)
-			for n := 0; n < NumBytes; n++ {
+			for n := range NumBytes {
 				data1[n] = byte(n % (m + 1))
 			}
 
@@ -337,9 +337,9 @@ func TestWriteAheadLogFile_Append(t *testing.T) {
 		const NumRec = 41
 		records := make([]*smartbftprotos.LogRecord, NumRec)
 		var crc1, crc2 uint32
-		for m := 0; m < NumRec; m++ {
+		for m := range NumRec {
 			data1 := make([]byte, NumBytes)
-			for n := 0; n < NumBytes; n++ {
+			for n := range NumBytes {
 				data1[n] = byte(n % (m + 1))
 			}
 
@@ -509,8 +509,8 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		const NumBytes = 1024
 		const NumRec = 100
 		data1 := make([]byte, NumBytes)
-		for m := 0; m < NumRec; m++ {
-			for n := 0; n < NumBytes; n++ {
+		for m := range NumRec {
+			for n := range NumBytes {
 				data1[n] = byte(m)
 			}
 			err = wal.Append(data1, false)
@@ -542,8 +542,8 @@ func TestWriteAheadLogFile_ReadAll(t *testing.T) {
 		// continue to write
 		logger.Infof(">>> Continue to write")
 
-		for m := 0; m < NumRec; m++ {
-			for n := 0; n < NumBytes; n++ {
+		for m := range NumRec {
+			for n := range NumBytes {
 				data1[n] = byte(m)
 			}
 
@@ -608,8 +608,8 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		const NumBytes = 1024
 		const NumRec = 102
 		data1 := make([]byte, NumBytes)
-		for m := 0; m < NumRec; m++ {
-			for n := 0; n < NumBytes; n++ {
+		for m := range NumRec {
+			for n := range NumBytes {
 				data1[n] = byte(m)
 			}
 			err = wal.Append(data1, false)
@@ -650,8 +650,8 @@ func TestWriteAheadLogFile_Repair(t *testing.T) {
 		const NumBytes = 1024
 		const NumRec = 102
 		data1 := make([]byte, NumBytes)
-		for m := 0; m < NumRec; m++ {
-			for n := 0; n < NumBytes; n++ {
+		for m := range NumRec {
+			for n := range NumBytes {
 				data1[n] = byte(m)
 			}
 			err = wal.Append(data1, false)
@@ -714,9 +714,9 @@ func TestWriteAheadLogFile_InitializeAndReadAll(t *testing.T) {
 		NumRec   = 20
 	)
 
-	for m := 0; m < NumRec; m++ {
+	for m := range NumRec {
 		data1 := make([]byte, NumBytes)
-		for n := 0; n < NumBytes; n++ {
+		for n := range NumBytes {
 			data1[n] = byte(n % (m + 1))
 		}
 

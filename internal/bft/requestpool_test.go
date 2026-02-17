@@ -184,7 +184,7 @@ func TestReqPoolCapacity(t *testing.T) {
 
 		wg := sync.WaitGroup{}
 		wg.Add(2 * numReq)
-		for i := 0; i < numReq; i++ {
+		for i := range numReq {
 			go func(i string) {
 				byteReq := makeTestRequest(i, i, "foo")
 				err := pool.Submit(byteReq)
@@ -198,7 +198,7 @@ func TestReqPoolCapacity(t *testing.T) {
 
 		time.Sleep(10 * time.Millisecond)
 
-		for i := 0; i < numReq; i++ {
+		for i := range numReq {
 			go func(i string) {
 				req := types.RequestInfo{
 					ID:       i,
@@ -223,7 +223,7 @@ func TestReqPoolCapacity(t *testing.T) {
 
 		var lengths []int
 		var totalLength int
-		for i := 0; i < 10; i++ {
+		for i := range 10 {
 			r := makeTestRequest("1", fmt.Sprintf("%d", i), "aaaaaa")
 			lengths = append(lengths, len(r))
 			err := pool.Submit(r)
