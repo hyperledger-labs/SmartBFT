@@ -632,14 +632,14 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 	controllerViewNum := c.currViewNumber
 	newViewNum = controllerViewNum
 
+	newDecisionsInView = c.getCurrentDecisionsInView()
+
 	if latestDecisionSeq > controllerSequence {
 		c.Logger.Infof("Synchronizer returned with sequence %d while the controller is at sequence %d", latestDecisionSeq, controllerSequence)
 		c.Logger.Debugf("Node %d is setting the checkpoint after sync returned with view %d and seq %d", c.ID, latestDecisionViewNum, latestDecisionSeq)
 		c.Checkpoint.Set(latestDecision.Proposal, latestDecision.Signatures)
 		c.verificationSequence.Store(uint64(latestDecision.Proposal.VerificationSequence))
 		newProposalSequence = latestDecisionSeq + 1
-	}
-	if latestDecisionMetadata != nil {
 		newDecisionsInView = latestDecisionDecisions + 1
 	}
 
