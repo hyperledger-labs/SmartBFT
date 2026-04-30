@@ -1049,6 +1049,105 @@ func TestCatchingUpWithSyncAutonomous(t *testing.T) {
 	assert.Equal(t, uint32(0), atomic.LoadUint32(&detectedSequenceGap))
 }
 
+func TestSyncSameHeightPreservesDecisionsInView(t *testing.T) {
+	// Scenario:
+	// we inject a fake heartbeat with a higher view number to node 4 (index 3).
+	// The HeartbeatMonitor sees hb.View > hm.view and calls handler.Sync()
+	// directly — no view change involved. Since node 4 already has all blocks,
+	// sync() returns the same height.
+	t.Parallel()
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		nodes = append(nodes, n)
+	}
+
+	// Hook node 4's logger to detect:
+	// 1. When sync is processed (so we know it's safe to submit more proposals)
+	// 2. The bug symptom: "Expected decisions in view" validation failure
+	var syncProcessed uint32
+	bugDetected := make(chan struct{}, 1)
+	baseLogger := nodes[3].Consensus.Logger.(*zap.SugaredLogger).Desugar()
+	nodes[3].Consensus.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		if strings.Contains(entry.Message, "get msg from syncChan") {
+			atomic.StoreUint32(&syncProcessed, 1)
+		}
+		if strings.Contains(entry.Message, "Expected decisions in view") {
+			select {
+			case bugDetected <- struct{}{}:
+			default:
+			}
+		}
+		return nil
+	})).Sugar()
+
+	startNodes(nodes, network)
+
+	// Phase 1: Submit 5 proposals to build up DecisionsInView on all nodes.
+	for i := 1; i <= 5; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		for j := 0; j < numberOfNodes; j++ {
+			<-nodes[j].Delivered
+		}
+	}
+
+	// Phase 2:
+	// the bug this test validate depended on non-deterministic Go select ordering
+	// in the [internal.bft.Controller] run() function:
+	//  select {
+	//  case newView := <-c.viewChange:
+	//  case <-c.syncChan:
+	//  }
+	// That's why it can't be reliably reproduced through the natural path
+	// in tests — hence the fake heartbeat that triggers only sync, guaranteeing
+	// the bug path.
+	//
+	// The test injects a fake heartbeat with View=1 (higher than current view 0)
+	// to node 4. The HeartbeatMonitor sees hb.View > hm.view and calls
+	// handler.Sync() directly, bypassing any view change.
+	// The sender must be the leader (ID 1) to pass the leaderID check.
+	fakeHeartbeat := &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeat{
+			HeartBeat: &smartbftprotos.HeartBeat{
+				View: 1, // higher than node 4's current view (0)
+				Seq:  6,
+			},
+		},
+	}
+	nodes[3].Consensus.HandleMessage(1, fakeHeartbeat)
+
+	// Wait for the sync to be processed by the controller's run loop.
+	assert.Eventually(t, func() bool {
+		return atomic.LoadUint32(&syncProcessed) == 1
+	}, 30*time.Second, 50*time.Millisecond,
+		"Node 4 should process sync triggered by fake heartbeat")
+
+	// Phase 3: Submit more proposals. Without the bug fix, node 4's view was
+	// restarted with DecisionsInView=0, so it rejects proposals from the
+	// leader (which has DecisionsInView=5).
+	for i := 6; i <= 10; i++ {
+		nodes[0].Submit(Request{ID: fmt.Sprintf("%d", i), ClientID: "alice"})
+		for j := 0; j < numberOfNodes; j++ {
+			select {
+			case <-nodes[j].Delivered:
+			case <-bugDetected:
+				t.Fatalf("DecisionsInView validation failed on node: sync at same height reset DecisionsInView to 0")
+			case <-time.After(30 * time.Second):
+				t.Fatalf("Node %d did not deliver proposal %d within timeout", j+1, i)
+			}
+		}
+	}
+
+}
+
 func TestFollowerStateTransfer(t *testing.T) {
 	// Scenario: the leader (n0) is disconnected and so there is a view change
 	// a follower (n6) is also disconnected and misses the view change
