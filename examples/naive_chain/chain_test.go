@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
-	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
+	smart "github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/metrics/disabled"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/wal"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"

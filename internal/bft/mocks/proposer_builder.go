@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	bft "github.com/hyperledger-labs/SmartBFT/internal/bft"
+	bft "github.com/hyperledger-labs/SmartBFT/v2/internal/bft"
 	mock "github.com/stretchr/testify/mock"
 )
 

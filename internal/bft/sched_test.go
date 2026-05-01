@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/internal/bft"
+	"github.com/hyperledger-labs/SmartBFT/v2/internal/bft"
 	"github.com/stretchr/testify/assert"
 )
 

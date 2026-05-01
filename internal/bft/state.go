@@ -9,9 +9,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/types"
+	protos "github.com/hyperledger-labs/SmartBFT/v2/smartbftprotos"
 	"google.golang.org/protobuf/proto"
 )
 

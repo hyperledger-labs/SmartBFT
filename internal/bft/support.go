@@ -6,8 +6,8 @@
 package bft
 
 import (
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/v2/smartbftprotos"
 )
 
 // Generate mocks for a collection of interfaces that are defined in api/dependencies.go

@@ -13,12 +13,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/internal/bft"
-	"github.com/hyperledger-labs/SmartBFT/internal/bft/mocks"
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/v2/internal/bft"
+	"github.com/hyperledger-labs/SmartBFT/v2/internal/bft/mocks"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/metrics/disabled"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/types"
+	protos "github.com/hyperledger-labs/SmartBFT/v2/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
@@ -2165,7 +2165,6 @@ func TestCommitWhileHavingInFlight(t *testing.T) {
 	vc.HandleMessage(2, msg2)
 
 	reasonAboutInFlightLowerThanLatestDecision.Wait()
-
 }
 
 func TestDontCommitInFlight(t *testing.T) {

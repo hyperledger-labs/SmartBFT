@@ -15,7 +15,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
 )
 
 var padTable [][]byte

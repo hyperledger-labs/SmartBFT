@@ -9,8 +9,8 @@ on:
 
 env:
   GO_VER: 1.26.0
-  PROTOC_VER: "33.1"
-  PROTOC_GEN_GO_VER: v1.36.10
+  PROTOC_VER: "34.1"
+  PROTOC_GEN_GO_VER: v1.36.11
 
 jobs:
   validate:

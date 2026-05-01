@@ -13,8 +13,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger-labs/SmartBFT/v2/pkg/api"
+	protos "github.com/hyperledger-labs/SmartBFT/v2/smartbftprotos"
 	"google.golang.org/protobuf/proto"
 )
 

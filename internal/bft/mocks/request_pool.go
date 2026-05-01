@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	types "github.com/hyperledger-labs/SmartBFT/pkg/types"
+	types "github.com/hyperledger-labs/SmartBFT/v2/pkg/types"
 	mock "github.com/stretchr/testify/mock"
 )
 
