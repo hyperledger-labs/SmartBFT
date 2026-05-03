@@ -166,7 +166,7 @@ func (c *Consensus) Start() error {
 
 func (c *Consensus) run() {
 	defer func() {
-		c.Logger.Infof("Exiting")
+		c.Logger.Infof("Exiting consensus run; ID: %d", c.Config.SelfID)
 		atomic.StoreUint64(&c.running, 0)
 		c.Stop()
 	}()
