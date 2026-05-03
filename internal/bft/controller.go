@@ -499,7 +499,7 @@ func (c *Controller) run() {
 	// At exit, always make sure to kill current view
 	// and wait for it to finish.
 	defer func() {
-		c.Logger.Infof("Exiting")
+		c.Logger.Infof("Exiting controller run; ID: %d", c.ID)
 		c.currView.Abort()
 	}()
 
