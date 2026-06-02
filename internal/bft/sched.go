@@ -19,15 +19,15 @@ type Stopper interface {
 type Task struct {
 	Deadline time.Time
 	F        func()
-	stopped  uint32
+	stopped  atomic.Uint32
 }
 
 func (t *Task) Stop() {
-	atomic.StoreUint32(&t.stopped, 1)
+	t.stopped.Store(1)
 }
 
 func (t *Task) isStopped() bool {
-	return atomic.LoadUint32(&t.stopped) == uint32(1)
+	return t.stopped.Load() == uint32(1)
 }
 
 type backingHeap []*Task
