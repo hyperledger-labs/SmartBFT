@@ -42,6 +42,44 @@ func TestControllerDecideDoesNotBlockIfDeliveryWaiterLeft(t *testing.T) {
 	})
 }
 
+func TestViewChangerDecideDoesNotBlockIfInFlightWaiterLeft(t *testing.T) {
+	inFlightView := &View{abortChan: make(chan struct{})}
+
+	viewChanger := &ViewChanger{
+		Logger:        zap.NewNop().Sugar(),
+		Application:   applicationFunc(func(types.Proposal, []types.Signature) types.Reconfig { return types.Reconfig{} }),
+		RequestsTimer: noopRequestsTimer{},
+		Pruner:        noopPruner{},
+		// Unbuffered and unread: the attempt's waiter has already left.
+		inFlightAttempt: &inFlightAttempt{
+			id:       1,
+			decideCh: make(chan struct{}),
+			syncCh:   make(chan struct{}),
+			viewRef:  inFlightView,
+		},
+		inFlightView: inFlightView,
+	}
+
+	requireReturns(t, func() {
+		viewChanger.Decide(types.Proposal{}, nil, nil)
+	})
+}
+
+func TestViewChangerSyncDoesNotBlockIfInFlightWaiterLeft(t *testing.T) {
+	viewChanger := &ViewChanger{
+		Logger:       zap.NewNop().Sugar(),
+		Synchronizer: synchronizerFunc(func() {}),
+		// Unbuffered and unread: the attempt's waiter has already left.
+		inFlightAttempt: &inFlightAttempt{
+			id:       1,
+			decideCh: make(chan struct{}),
+			syncCh:   make(chan struct{}),
+		},
+	}
+
+	requireReturns(t, viewChanger.Sync)
+}
+
 func requireReturns(t *testing.T, f func()) {
 	t.Helper()
 
@@ -95,4 +133,24 @@ func (noopVerifier) RequestsFromProposal(types.Proposal) []types.RequestInfo {
 
 func (noopVerifier) AuxiliaryData([]byte) []byte {
 	panic("unexpected AuxiliaryData call")
+}
+
+type noopRequestsTimer struct{}
+
+func (noopRequestsTimer) StopTimers() {}
+
+func (noopRequestsTimer) RestartTimers() {}
+
+func (noopRequestsTimer) RemoveRequest(types.RequestInfo) error {
+	return nil
+}
+
+type noopPruner struct{}
+
+func (noopPruner) MaybePruneRevokedRequests() {}
+
+type synchronizerFunc func()
+
+func (f synchronizerFunc) Sync() {
+	f()
 }
