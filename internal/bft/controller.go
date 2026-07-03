@@ -132,7 +132,6 @@ type Controller struct {
 
 	syncChan             chan struct{}
 	decisionChan         chan decision
-	deliverChan          chan struct{}
 	leaderToken          chan struct{}
 	verificationSequence atomic.Uint64
 
@@ -542,9 +541,10 @@ func (c *Controller) decide(d decision) {
 	}
 	c.Logger.Debugf("Node %d delivered proposal", c.ID)
 	c.removeDeliveredFromPool(d)
-	select {
-	case c.deliverChan <- struct{}{}:
-	case <-c.stopChan:
+	if d.delivered != nil {
+		close(d.delivered)
+	}
+	if c.stopped() {
 		return
 	}
 	c.incrementCurrentDecisionsInView()
@@ -797,7 +797,6 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.stopChan = make(chan struct{})
 	c.leaderToken = make(chan struct{}, 1)
 	c.decisionChan = make(chan decision, 1)
-	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan uint64, 1)
 
@@ -882,11 +881,13 @@ func (c *Controller) stopped() bool {
 
 // Decide delivers the decision to the application
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	delivered := make(chan struct{})
 	select {
 	case c.decisionChan <- decision{
 		proposal:   proposal,
 		requests:   requests,
 		signatures: signatures,
+		delivered:  delivered,
 	}:
 	case <-c.stopChan:
 		// In case we are in the middle of shutting down,
@@ -895,7 +896,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	}
 
 	select {
-	case <-c.deliverChan: // wait for the delivery of the decision to the application
+	case <-delivered: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
 	case <-c.currentViewAbortChan(): // If we stopped the view, abort delivery
 	}
@@ -918,6 +919,7 @@ type decision struct {
 	proposal   types.Proposal
 	signatures []types.Signature
 	requests   []types.RequestInfo
+	delivered  chan struct{}
 }
 
 // BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
