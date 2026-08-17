@@ -25,9 +25,12 @@ jobs:
           go-version: ${{ env.GO_VER }}
 
       - name: Install Protoc
-        uses: arduino/setup-protoc@v3
-        with:
-          version: ${{ env.PROTOC_VER }}
+        run: |
+          curl -fL --retry 3 -o /tmp/protoc.zip "https://github.com/protocolbuffers/protobuf/releases/download/v${{ env.PROTOC_VER }}/protoc-${{ env.PROTOC_VER }}-linux-x86_64.zip"
+          # update this hash whenever PROTOC_VER is bumped
+          echo "f3340e28a83d1c637d8bafdeed92b9f7db6a384c26bca880a6e5217b40a4328b  /tmp/protoc.zip" | sha256sum -c -
+          unzip -o /tmp/protoc.zip -d "$HOME/protoc" 'bin/*' 'include/*'
+          echo "$HOME/protoc/bin" >> "$GITHUB_PATH"
 
       - name: check go.mod
         run: |
