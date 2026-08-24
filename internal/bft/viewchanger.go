@@ -48,6 +48,28 @@ type change struct {
 	stopView bool
 }
 
+type inFlightAttempt struct {
+	id       uint64
+	view     uint64
+	sequence uint64
+	decideCh chan struct{}
+	syncCh   chan struct{}
+	viewRef  *View
+}
+
+type inFlightAttemptCallbacks struct {
+	vc      *ViewChanger
+	attempt *inFlightAttempt
+}
+
+func (c *inFlightAttemptCallbacks) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	c.vc.decideInFlight(c.attempt, proposal, signatures, requests)
+}
+
+func (c *inFlightAttemptCallbacks) Sync() {
+	c.vc.syncInFlight(c.attempt)
+}
+
 // ViewChanger is responsible for running the view change protocol.
 type ViewChanger struct {
 	// Configuration
@@ -77,8 +99,8 @@ type ViewChanger struct {
 
 	// for the in flight proposal view
 	ViewSequences      *atomic.Value
-	inFlightDecideChan chan struct{}
-	inFlightSyncChan   chan struct{}
+	inFlightAttemptSeq uint64
+	inFlightAttempt    *inFlightAttempt
 	inFlightView       *View
 	inFlightViewLock   sync.RWMutex
 
@@ -147,9 +169,6 @@ func (v *ViewChanger) Start(startViewNumber uint64) {
 	v.lastResend = v.lastTick
 
 	v.backOffFactor = 1
-
-	v.inFlightDecideChan = make(chan struct{})
-	v.inFlightSyncChan = make(chan struct{})
 
 	go func() {
 		defer v.vcDone.Done()
@@ -1219,6 +1238,18 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	inFlightViewLatestSeq := proposalMD.LatestSequence
 
 	v.inFlightViewLock.Lock()
+	v.inFlightAttemptSeq++
+	attempt := &inFlightAttempt{
+		id:       v.inFlightAttemptSeq,
+		view:     inFlightViewNum,
+		sequence: inFlightViewLatestSeq,
+		decideCh: make(chan struct{}, 1),
+		syncCh:   make(chan struct{}, 1),
+	}
+	callbacks := &inFlightAttemptCallbacks{
+		vc:      v,
+		attempt: attempt,
+	}
 	inFlightView := &View{
 		RetrieveCheckpoint: v.Checkpoint.Get,
 		DecisionsPerLeader: v.DecisionsPerLeader,
@@ -1228,9 +1259,9 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		Number:             inFlightViewNum,
 		LeaderID:           v.SelfID, // so that no byzantine leader will cause a complain
 		Quorum:             v.quorum,
-		Decider:            v,
+		Decider:            callbacks,
 		FailureDetector:    v,
-		Sync:               v,
+		Sync:               callbacks,
 		Logger:             v.Logger,
 		Comm:               v.Comm,
 		Verifier:           v.Verifier,
@@ -1243,6 +1274,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 		MetricsBlacklist:   v.MetricsBlacklist,
 		MetricsView:        v.MetricsView,
 	}
+	attempt.viewRef = inFlightView
 	inFlightView.MetricsView.ViewNumber.Set(float64(inFlightView.Number))
 	inFlightView.MetricsView.LeaderID.Set(float64(inFlightView.LeaderID))
 	inFlightView.MetricsView.ProposalSequence.Set(float64(inFlightView.ProposalSequence))
@@ -1250,6 +1282,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	inFlightView.MetricsView.Phase.Set(float64(inFlightView.Phase))
 
 	v.inFlightView = inFlightView
+	v.inFlightAttempt = attempt
 	v.inFlightView.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(proposal.VerificationSequence),
 		Metadata:             proposal.Metadata,
@@ -1277,7 +1310,17 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	<-v.Ticker
 
 	inFlightView.Start()
-	defer inFlightView.Abort()
+	defer func() {
+		inFlightView.Abort()
+		v.inFlightViewLock.Lock()
+		if v.inFlightAttempt == attempt {
+			v.inFlightAttempt = nil
+		}
+		if v.inFlightView == inFlightView {
+			v.inFlightView = nil
+		}
+		v.inFlightViewLock.Unlock()
+	}()
 
 	v.inFlightViewLock.Unlock()
 
@@ -1286,10 +1329,10 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	// wait for view to finish or time out
 	for {
 		select {
-		case <-v.inFlightDecideChan:
+		case <-attempt.decideCh:
 			v.Logger.Infof("In-flight view %d with latest sequence %d has committed a decision", inFlightViewNum, inFlightViewLatestSeq)
 			return true
-		case <-v.inFlightSyncChan:
+		case <-attempt.syncCh:
 			v.Logger.Infof("In-flight view %d with latest sequence %d has asked to sync", inFlightViewNum, inFlightViewLatestSeq)
 			return false
 		case now := <-v.Ticker:
@@ -1305,9 +1348,22 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	}
 }
 
-// Decide delivers to the application and informs the view changer after delivery
+func (v *ViewChanger) currentInFlightAttempt() *inFlightAttempt {
+	v.inFlightViewLock.RLock()
+	defer v.inFlightViewLock.RUnlock()
+	return v.inFlightAttempt
+}
+
+// Decide delivers to the application and informs the view changer after delivery.
+// It is kept for compatibility; in-flight views use per-attempt callbacks.
 func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	v.inFlightView.stop()
+	v.decideInFlight(v.currentInFlightAttempt(), proposal, signatures, requests)
+}
+
+func (v *ViewChanger) decideInFlight(attempt *inFlightAttempt, proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	if attempt != nil && attempt.viewRef != nil {
+		attempt.viewRef.stop()
+	}
 	v.Logger.Debugf("Delivering to app from Decide the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
@@ -1322,8 +1378,13 @@ func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signatu
 	}
 	v.Pruner.MaybePruneRevokedRequests()
 
+	if attempt == nil {
+		return
+	}
 	select {
-	case v.inFlightDecideChan <- struct{}{}:
+	case attempt.decideCh <- struct{}{}:
+		return
+	default:
 		return
 	case <-v.stopChan:
 		return
@@ -1335,12 +1396,23 @@ func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
 	v.Logger.Panicf("Node %d has complained while in the view for the in flight proposal", v.SelfID)
 }
 
-// Sync calls the synchronizer and informs the view changer of the sync
+// Sync calls the synchronizer and informs the view changer of the sync.
+// It is kept for compatibility; in-flight views use per-attempt callbacks.
 func (v *ViewChanger) Sync() {
+	v.syncInFlight(v.currentInFlightAttempt())
+}
+
+func (v *ViewChanger) syncInFlight(attempt *inFlightAttempt) {
 	// the in flight proposal view asked to sync
 	v.Logger.Debugf("Node %d is calling sync because the in flight proposal view has asked to sync", v.SelfID)
 	v.Synchronizer.Sync()
-	v.inFlightSyncChan <- struct{}{}
+	if attempt == nil {
+		return
+	}
+	select {
+	case attempt.syncCh <- struct{}{}:
+	default:
+	}
 }
 
 // HandleViewMessage passes a message to the in flight proposal view if applicable
