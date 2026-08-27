@@ -171,14 +171,6 @@ func (c *Controller) currentViewStopped() bool {
 	return view.Stopped()
 }
 
-func (c *Controller) currentViewAbortChan() <-chan struct{} {
-	c.currViewLock.RLock()
-	view := c.currView
-	c.currViewLock.RUnlock()
-
-	return view.AbortChan()
-}
-
 func (c *Controller) currentViewLeader() uint64 {
 	c.currViewLock.RLock()
 	view := c.currView
@@ -547,6 +539,14 @@ func (c *Controller) decide(d decision) {
 	if c.stopped() {
 		return
 	}
+	if !c.isRunningCurrentView(d.view) {
+		// The view that decided was aborted or replaced while the decision was waiting
+		// to be delivered, so the decision must not be accounted to the current view,
+		// and the current view must not be rotated or lead because of it.
+		c.Logger.Debugf("Node %d delivered a decision from a view that is no longer running, skipping view bookkeeping", c.ID)
+		c.MaybePruneRevokedRequests()
+		return
+	}
 	c.incrementCurrentDecisionsInView()
 
 	md := &protos.ViewMetadata{}
@@ -564,6 +564,19 @@ func (c *Controller) decide(d decision) {
 	if iAm, _ := c.iAmTheLeader(); iAm {
 		c.acquireLeaderToken()
 	}
+}
+
+// isRunningCurrentView returns whether the given view is the current view and has not been stopped.
+func (c *Controller) isRunningCurrentView(view Proposer) bool {
+	if view == nil {
+		c.Logger.Panicf("Decision without a deciding view")
+	}
+
+	c.currViewLock.RLock()
+	currView := c.currView
+	c.currViewLock.RUnlock()
+
+	return view == currView && !view.Stopped()
 }
 
 func (c *Controller) checkIfRotate(blacklist []uint64) bool {
@@ -881,12 +894,17 @@ func (c *Controller) stopped() bool {
 
 // Decide delivers the decision to the application
 func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
+	c.currViewLock.RLock()
+	view := c.currView
+	c.currViewLock.RUnlock()
+
 	delivered := make(chan struct{})
 	select {
 	case c.decisionChan <- decision{
 		proposal:   proposal,
 		requests:   requests,
 		signatures: signatures,
+		view:       view,
 		delivered:  delivered,
 	}:
 	case <-c.stopChan:
@@ -898,7 +916,7 @@ func (c *Controller) Decide(proposal types.Proposal, signatures []types.Signatur
 	select {
 	case <-delivered: // wait for the delivery of the decision to the application
 	case <-c.stopChan: // If we stopped the controller, abort delivery
-	case <-c.currentViewAbortChan(): // If we stopped the view, abort delivery
+	case <-view.AbortChan(): // If we stopped the view, abort delivery
 	}
 }
 
@@ -919,7 +937,8 @@ type decision struct {
 	proposal   types.Proposal
 	signatures []types.Signature
 	requests   []types.RequestInfo
-	delivered  chan struct{}
+	view       Proposer      // the view that decided
+	delivered  chan struct{} // closed once the decision was delivered to the application
 }
 
 // BroadcastConsensus broadcasts the message and informs the heartbeat monitor if necessary
