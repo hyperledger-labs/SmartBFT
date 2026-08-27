@@ -49,10 +49,9 @@ type change struct {
 	stopView bool
 }
 
+// inFlightAttempt is one run of the in-flight proposal view, so that the view's
+// completion is signaled to the waiter of that run only.
 type inFlightAttempt struct {
-	id       uint64
-	view     uint64
-	sequence uint64
 	decideCh chan struct{}
 	syncCh   chan struct{}
 	viewRef  *View
@@ -99,11 +98,9 @@ type ViewChanger struct {
 	Pruner        Pruner
 
 	// for the in flight proposal view
-	ViewSequences      *atomic.Value
-	inFlightAttemptSeq uint64
-	inFlightAttempt    *inFlightAttempt
-	inFlightView       *View
-	inFlightViewLock   sync.RWMutex
+	ViewSequences    *atomic.Value
+	inFlightView     *View
+	inFlightViewLock sync.RWMutex
 
 	Ticker              <-chan time.Time
 	lastTick            time.Time
@@ -1264,11 +1261,7 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	inFlightViewLatestSeq := proposalMD.LatestSequence
 
 	v.inFlightViewLock.Lock()
-	v.inFlightAttemptSeq++
 	attempt := &inFlightAttempt{
-		id:       v.inFlightAttemptSeq,
-		view:     inFlightViewNum,
-		sequence: inFlightViewLatestSeq,
 		decideCh: make(chan struct{}, 1),
 		syncCh:   make(chan struct{}, 1),
 	}
@@ -1308,7 +1301,6 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	inFlightView.MetricsView.Phase.Set(float64(inFlightView.Phase))
 
 	v.inFlightView = inFlightView
-	v.inFlightAttempt = attempt
 	v.inFlightView.inFlightProposal = &types.Proposal{
 		VerificationSequence: int64(proposal.VerificationSequence),
 		Metadata:             proposal.Metadata,
@@ -1339,9 +1331,6 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	defer func() {
 		inFlightView.Abort()
 		v.inFlightViewLock.Lock()
-		if v.inFlightAttempt == attempt {
-			v.inFlightAttempt = nil
-		}
 		if v.inFlightView == inFlightView {
 			v.inFlightView = nil
 		}
@@ -1374,22 +1363,10 @@ func (v *ViewChanger) commitInFlightProposal(proposal *protos.Proposal) (success
 	}
 }
 
-func (v *ViewChanger) currentInFlightAttempt() *inFlightAttempt {
-	v.inFlightViewLock.RLock()
-	defer v.inFlightViewLock.RUnlock()
-	return v.inFlightAttempt
-}
-
-// Decide delivers to the application and informs the view changer after delivery.
-// It is kept for compatibility; in-flight views use per-attempt callbacks.
-func (v *ViewChanger) Decide(proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	v.decideInFlight(v.currentInFlightAttempt(), proposal, signatures, requests)
-}
-
+// decideInFlight delivers the decision of the in-flight proposal view to the application
+// and informs the waiter of the given attempt after delivery.
 func (v *ViewChanger) decideInFlight(attempt *inFlightAttempt, proposal types.Proposal, signatures []types.Signature, requests []types.RequestInfo) {
-	if attempt != nil && attempt.viewRef != nil {
-		attempt.viewRef.stop()
-	}
+	attempt.viewRef.stop()
 	v.Logger.Debugf("Delivering to app from Decide the last decision proposal")
 	reconfig := v.Application.Deliver(proposal, signatures)
 	if reconfig.InLatestDecision {
@@ -1404,16 +1381,10 @@ func (v *ViewChanger) decideInFlight(attempt *inFlightAttempt, proposal types.Pr
 	}
 	v.Pruner.MaybePruneRevokedRequests()
 
-	if attempt == nil {
-		return
-	}
+	// The waiter may have already left (timed out or stopped), so never block on it.
 	select {
 	case attempt.decideCh <- struct{}{}:
-		return
 	default:
-		return
-	case <-v.stopChan:
-		return
 	}
 }
 
@@ -1422,19 +1393,12 @@ func (v *ViewChanger) Complain(viewNum uint64, stopView bool) {
 	v.Logger.Panicf("Node %d has complained while in the view for the in flight proposal", v.SelfID)
 }
 
-// Sync calls the synchronizer and informs the view changer of the sync.
-// It is kept for compatibility; in-flight views use per-attempt callbacks.
-func (v *ViewChanger) Sync() {
-	v.syncInFlight(v.currentInFlightAttempt())
-}
-
+// syncInFlight calls the synchronizer and informs the waiter of the given attempt of the sync.
 func (v *ViewChanger) syncInFlight(attempt *inFlightAttempt) {
 	// the in flight proposal view asked to sync
 	v.Logger.Debugf("Node %d is calling sync because the in flight proposal view has asked to sync", v.SelfID)
 	v.Synchronizer.Sync()
-	if attempt == nil {
-		return
-	}
+	// The waiter may have already left (timed out or stopped), so never block on it.
 	select {
 	case attempt.syncCh <- struct{}{}:
 	default:

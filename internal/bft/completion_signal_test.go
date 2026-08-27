@@ -44,40 +44,39 @@ func TestControllerDecideDoesNotBlockIfDeliveryWaiterLeft(t *testing.T) {
 
 func TestViewChangerDecideDoesNotBlockIfInFlightWaiterLeft(t *testing.T) {
 	inFlightView := &View{abortChan: make(chan struct{})}
-
 	viewChanger := &ViewChanger{
 		Logger:        zap.NewNop().Sugar(),
 		Application:   applicationFunc(func(types.Proposal, []types.Signature) types.Reconfig { return types.Reconfig{} }),
 		RequestsTimer: noopRequestsTimer{},
 		Pruner:        noopPruner{},
-		// Unbuffered and unread: the attempt's waiter has already left.
-		inFlightAttempt: &inFlightAttempt{
-			id:       1,
-			decideCh: make(chan struct{}),
-			syncCh:   make(chan struct{}),
-			viewRef:  inFlightView,
-		},
-		inFlightView: inFlightView,
+	}
+	// Unbuffered and unread: the attempt's waiter has already left.
+	attempt := &inFlightAttempt{
+		decideCh: make(chan struct{}),
+		syncCh:   make(chan struct{}),
+		viewRef:  inFlightView,
 	}
 
 	requireReturns(t, func() {
-		viewChanger.Decide(types.Proposal{}, nil, nil)
+		viewChanger.decideInFlight(attempt, types.Proposal{}, nil, nil)
 	})
+	assert.True(t, inFlightView.Stopped())
 }
 
 func TestViewChangerSyncDoesNotBlockIfInFlightWaiterLeft(t *testing.T) {
 	viewChanger := &ViewChanger{
 		Logger:       zap.NewNop().Sugar(),
 		Synchronizer: synchronizerFunc(func() {}),
-		// Unbuffered and unread: the attempt's waiter has already left.
-		inFlightAttempt: &inFlightAttempt{
-			id:       1,
-			decideCh: make(chan struct{}),
-			syncCh:   make(chan struct{}),
-		},
+	}
+	// Unbuffered and unread: the attempt's waiter has already left.
+	attempt := &inFlightAttempt{
+		decideCh: make(chan struct{}),
+		syncCh:   make(chan struct{}),
 	}
 
-	requireReturns(t, viewChanger.Sync)
+	requireReturns(t, func() {
+		viewChanger.syncInFlight(attempt)
+	})
 }
 
 func requireReturns(t *testing.T, f func()) {
