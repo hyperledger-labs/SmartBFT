@@ -15,7 +15,7 @@ The source code files are made available under the Apache License, Version 2.0 (
 
 ## Contact
 
-* Yacov Manevich - [yacovm@il.ibm.com](mailto:yacovm@il.ibm.com)
+* Yacov Manevich - [yacov.manevich@gmail.com](mailto:yacov.manevich@gmail.com)
 * Hagar Meir - [hagar.meir@ibm.com](mailto:hagar.meir@ibm.com)
-* Artem Barger - [bartem@il.ibm.com](mailto:bartem@il.ibm.com)
+* Artem Barger - [artem@bargr.net](mailto:artem@bargr.net)
 * Yoav Tock - [tock@il.ibm.com](mailto:tock@il.ibm.com)
