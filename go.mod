@@ -1,4 +1,4 @@
-module github.com/hyperledger-labs/SmartBFT
+module github.com/hyperledger/SmartBFT
 
 go 1.26.3
 

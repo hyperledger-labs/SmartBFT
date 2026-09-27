@@ -5,7 +5,7 @@
 This is a Byzantine fault-tolerant (BFT) state machine replication (SMR) library. 
 It is an open source library written in Go.
 The implementation is inspired by the [BFT-SMaRt project](https://github.com/bft-smart/library). 
-For more information on this library see our [wiki page](https://github.com/hyperledger-labs/SmartBFT/wiki).
+For more information on this library see our [wiki page](https://github.com/hyperledger/SmartBFT/wiki).
 
 
 ## License

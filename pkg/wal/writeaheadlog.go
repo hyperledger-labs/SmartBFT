@@ -16,9 +16,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger/SmartBFT/pkg/api"
+	"github.com/hyperledger/SmartBFT/pkg/metrics/disabled"
+	protos "github.com/hyperledger/SmartBFT/smartbftprotos"
 	"google.golang.org/protobuf/proto"
 )
 
