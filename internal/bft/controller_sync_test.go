@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger/SmartBFT/pkg/types"
+	protos "github.com/hyperledger/SmartBFT/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )

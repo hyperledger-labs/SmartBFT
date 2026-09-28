@@ -13,9 +13,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
+	"github.com/hyperledger/SmartBFT/pkg/api"
+	"github.com/hyperledger/SmartBFT/pkg/metrics/disabled"
+	"github.com/hyperledger/SmartBFT/pkg/types"
 	"golang.org/x/sync/semaphore"
 )
 

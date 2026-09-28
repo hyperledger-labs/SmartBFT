@@ -13,11 +13,11 @@ import (
 	"sync"
 	"time"
 
-	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
-	smartbft "github.com/hyperledger-labs/SmartBFT/pkg/consensus"
-	bft "github.com/hyperledger-labs/SmartBFT/pkg/types"
-	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
-	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	smart "github.com/hyperledger/SmartBFT/pkg/api"
+	smartbft "github.com/hyperledger/SmartBFT/pkg/consensus"
+	bft "github.com/hyperledger/SmartBFT/pkg/types"
+	"github.com/hyperledger/SmartBFT/pkg/wal"
+	"github.com/hyperledger/SmartBFT/smartbftprotos"
 	"google.golang.org/protobuf/proto"
 )
 

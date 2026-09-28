@@ -13,13 +13,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/internal/bft"
-	"github.com/hyperledger-labs/SmartBFT/internal/bft/mocks"
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
-	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger/SmartBFT/internal/bft"
+	"github.com/hyperledger/SmartBFT/internal/bft/mocks"
+	"github.com/hyperledger/SmartBFT/pkg/api"
+	"github.com/hyperledger/SmartBFT/pkg/metrics/disabled"
+	"github.com/hyperledger/SmartBFT/pkg/types"
+	"github.com/hyperledger/SmartBFT/pkg/wal"
+	protos "github.com/hyperledger/SmartBFT/smartbftprotos"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
@@ -1194,7 +1194,6 @@ func TestRotateFromFollowerToLeader(t *testing.T) {
 }
 
 func TestDeliverTwiceOnceFromSyncAndOnceFromViewData(t *testing.T) {
-
 	// In this scenario a decision is delivered twice.
 	// Once by the synchronizer and a second time by the view data received during a view change.
 	// In the beginning there is a view change timeout and there is a view still running concurrently.

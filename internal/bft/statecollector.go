@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/pkg/types"
-	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/hyperledger/SmartBFT/pkg/api"
+	"github.com/hyperledger/SmartBFT/pkg/types"
+	protos "github.com/hyperledger/SmartBFT/smartbftprotos"
 )
 
 // StateCollector collects the current state from other nodes
