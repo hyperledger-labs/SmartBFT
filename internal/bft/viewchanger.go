@@ -8,6 +8,7 @@ package bft
 import (
 	"errors"
 	"fmt"
+	"slices"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -90,6 +91,7 @@ type ViewChanger struct {
 	startViewChangeTime time.Time
 	checkTimeout        bool
 	backOffFactor       uint64
+	syncedForNewView    bool
 
 	// Runtime
 	MetricsViewChange         *api.MetricsViewChange
@@ -349,6 +351,7 @@ func (v *ViewChanger) informNewView(view uint64) {
 	v.viewDataMsgs.clear(v.N)
 	v.checkTimeout = false
 	v.backOffFactor = 1 // reset
+	v.syncedForNewView = false
 	v.RequestsTimer.RestartTimers()
 }
 
@@ -419,7 +422,8 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 	v.currView = v.nextView
 	v.MetricsViewChange.CurrentView.Set(float64(v.currView))
 	v.viewChangeMsgs.clear(v.N)
-	v.viewDataMsgs.clear(v.N) // clear because currView changed
+	v.viewDataMsgs.clear(v.N)  // clear because currView changed
+	v.syncedForNewView = false // clear because currView changed
 	msg := v.prepareViewDataMsg()
 	leader := v.getLeader()
 	if leader == v.SelfID {
@@ -784,16 +788,19 @@ func (v *ViewChanger) processViewDataMsg() {
 	v.Logger.Debugf("Node %d sent a new view msg", v.SelfID)
 }
 
-// returns view data messages included in votes
-func (v *ViewChanger) getViewDataMessages() []*protos.ViewData {
-	var messages []*protos.ViewData
+// returns view data messages included in votes, keyed by the ID of the node that sent them,
+// so that a single node is counted at most once
+func (v *ViewChanger) getViewDataMessages() map[uint64]*protos.ViewData {
+	messages := make(map[uint64]*protos.ViewData)
 	for range len(v.viewDataMsgs.votes) {
 		vt := <-v.viewDataMsgs.votes
 		vd := &protos.ViewData{}
 		if err := proto.Unmarshal(vt.GetViewData().RawViewData, vd); err != nil {
 			v.Logger.Panicf("Node %d was unable to unmarshal viewData message, error: %v", v.SelfID, err)
 		}
-		messages = append(messages, vd)
+		if _, exist := messages[vt.sender]; !exist {
+			messages[vt.sender] = vd
+		}
 		v.viewDataMsgs.votes <- vt
 	}
 	return messages
@@ -811,7 +818,8 @@ type proposalAndMetadata struct {
 }
 
 // CheckInFlight checks if there is an in-flight proposal that needs to be decided on (because a node might decided on it already)
-func CheckInFlight(messages []*protos.ViewData, f int, quorum int, n uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal, err error) {
+// messages maps the ID of the node that sent the view data to the view data itself, so that every node is counted at most once.
+func CheckInFlight(messages map[uint64]*protos.ViewData, f int, quorum int, n uint64, verifier api.Verifier) (ok, noInFlight bool, inFlightProposal *protos.Proposal, err error) {
 	expectedSequence := maxLastDecisionSequence(messages) + 1
 	possibleProposals := make([]*possibleProposal, 0)
 	proposalsAndMetadata := make([]*proposalAndMetadata, 0)
@@ -908,7 +916,7 @@ func CheckInFlight(messages []*protos.ViewData, f int, quorum int, n uint64, ver
 }
 
 // returns the highest sequence of a last decision within the given view data messages
-func maxLastDecisionSequence(messages []*protos.ViewData) uint64 {
+func maxLastDecisionSequence(messages map[uint64]*protos.ViewData) uint64 {
 	max := uint64(0)
 	for _, vd := range messages {
 		if vd.LastDecision == nil {
@@ -928,31 +936,43 @@ func maxLastDecisionSequence(messages []*protos.ViewData) uint64 {
 	return max
 }
 
-func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync bool, deliver bool) {
+// validateNewViewMsg validates a newView message and returns, in addition to its verdict,
+// the view data it authenticated, keyed by the ID of the node that signed it.
+// Only authenticated view data is counted when deciding on an in flight proposal.
+func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync bool, deliver bool, authenticated map[uint64]*protos.ViewData) {
 	signed := msg.GetSignedViewData()
-	nodesMap := make(map[uint64]struct{}, v.N)
-	validViewDataMsgs := 0
+	authenticated = make(map[uint64]*protos.ViewData, v.N)
+	seenSigners := make(map[uint64]struct{}, v.N)
 	mySequence, myLastDecision := v.extractCurrentSequence()
 	for _, svd := range signed {
-		if _, exist := nodesMap[svd.Signer]; exist {
-			continue // seen data from this node already
+		if _, exist := seenSigners[svd.Signer]; exist {
+			// an honest leader never includes the same signer twice
+			v.Logger.Warnf("Node %d is processing newView message, but %s is included more than once", v.SelfID, signedViewDataToString(svd))
+			return false, false, false, nil
 		}
-		nodesMap[svd.Signer] = struct{}{}
+		seenSigners[svd.Signer] = struct{}{}
+
+		if !slices.Contains(v.NodesList, svd.Signer) {
+			// the signer is not authenticated, hence its view data is not counted,
+			// but the rest of the view data might still be
+			v.Logger.Warnf("Node %d is processing newView message, but the signer of %s is not a member of the cluster, ignoring it", v.SelfID, signedViewDataToString(svd))
+			continue
+		}
 
 		vd := &protos.ViewData{}
 		if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
 			v.Logger.Errorf("Node %d was unable to unmarshal viewData from the newView message, error: %v", v.SelfID, err)
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		if vd.NextView != v.currView {
 			v.Logger.Warnf("Node %d is processing newView message, but nextView of %s is %d, while the currView is %d", v.SelfID, signedViewDataToString(svd), vd.NextView, v.currView)
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		if vd.LastDecision == nil {
 			v.Logger.Warnf("Node %d is processing newView message, but the last decision of %s is not set", v.SelfID, signedViewDataToString(svd))
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		// Begin to check the last decision within the view data message.
@@ -968,51 +988,53 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 		//
 		// Lastly, this node is behind by one sequence, and so it validates the decision and delivers it.
 		// Only after delivery the message signature is verified, again since this decision might have been a reconfig.
+		//
+		// The signature on the view data itself is verified in every branch, since the signer of a view data
+		// is counted towards the quorum that decides on an in flight proposal.
+		// On the branches where this node is ahead of the view data it might not have the right configuration
+		// to verify the signature, for example when the last decision it is ahead by was a reconfiguration.
+		// Such a view data is ignored rather than invalidating the whole message, and if that leaves too few
+		// authenticated view data then this node syncs and expects to be able to process the new view afterwards.
 
 		if vd.LastDecision.Metadata == nil { // this is a genesis proposal
-			if mySequence > 0 {
-				// can't validate the signature since I am ahead
-				if err := ValidateInFlight(vd.InFlightProposal, 0); err != nil {
-					v.Logger.Warnf("Node %d is processing newView message, but the in flight proposal of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-					return false, false, false
-				}
-				validViewDataMsgs++
-				continue
-			}
 			if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
-				v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-				return false, false, false
+				v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, ignoring it, error: %v", v.SelfID, signedViewDataToString(svd), err)
+				continue
 			}
 			if err := ValidateInFlight(vd.InFlightProposal, 0); err != nil {
 				v.Logger.Warnf("Node %d is processing newView message, but the in flight proposal of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-				return false, false, false
+				return false, false, false, nil
 			}
-			validViewDataMsgs++
+			authenticated[svd.Signer] = vd
 			continue
 		}
 
 		lastDecisionMD := &protos.ViewMetadata{}
 		if err := proto.Unmarshal(vd.LastDecision.Metadata, lastDecisionMD); err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but was unable to unmarshal the last decision of %s, err: %v", v.SelfID, signedViewDataToString(svd), err)
-			return false, false, false
+			return false, false, false, nil
 		}
 		if lastDecisionMD.ViewId >= vd.NextView {
 			v.Logger.Warnf("Node %d is processing newView message, but the last decision view %d is greater or equal to requested next view %d of %s", v.SelfID, lastDecisionMD.ViewId, vd.NextView, signedViewDataToString(svd))
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		if lastDecisionMD.LatestSequence > mySequence+1 { // this is a decision in the future, can't verify it and should sync
 			v.Synchronizer.Sync() // TODO check if I managed to sync to latest decision, revalidate new view, and join the other nodes
-			return true, true, false
+			return true, true, false, nil
 		}
 
 		if lastDecisionMD.LatestSequence < mySequence { // this is a decision in the past
-			// can't validate the signature since I am ahead
+			// the signature on the view data is verified as well, it does not depend on the last decision
+			if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
+				v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, ignoring it, error: %v", v.SelfID, signedViewDataToString(svd), err)
+				continue
+			}
 			if err := ValidateInFlight(vd.InFlightProposal, lastDecisionMD.LatestSequence); err != nil {
 				v.Logger.Warnf("Node %d is processing newView message, but the in flight proposal of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-				return false, false, false
+				return false, false, false, nil
 			}
-			validViewDataMsgs++
+			authenticated[svd.Signer] = vd
 			continue
 		}
 
@@ -1020,33 +1042,33 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 			// the signature on this message can be verified
 			if err := v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
 				v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-				return false, false, false
+				return false, false, false, nil
 			}
 
 			// compare the last decision itself
 			if !proto.Equal(vd.LastDecision, myLastDecision) {
 				v.Logger.Warnf("Node %d is processing newView message, but the last decision of %s is with the same sequence but is not equal", v.SelfID, signedViewDataToString(svd))
-				return false, false, false
+				return false, false, false, nil
 			}
 
 			if err := ValidateInFlight(vd.InFlightProposal, lastDecisionMD.LatestSequence); err != nil {
 				v.Logger.Warnf("Node %d is processing newView message, but the in flight proposal of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-				return false, false, false
+				return false, false, false, nil
 			}
 
-			validViewDataMsgs++
+			authenticated[svd.Signer] = vd
 			continue
 		}
 
 		if lastDecisionMD.LatestSequence != mySequence+1 {
 			v.Logger.Warnf("Node %d is processing newView message, but the last decision sequence is not equal to this node's sequence + 1", v.SelfID)
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		_, err := ValidateLastDecision(vd, v.quorum, v.N, v.Verifier)
 		if err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but the last decision of %s is invalid, reason: %v", v.SelfID, signedViewDataToString(svd), err)
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		proposal := types.Proposal{
@@ -1068,50 +1090,53 @@ func (v *ViewChanger) validateNewViewMsg(msg *protos.NewView) (valid bool, sync 
 
 		select { // if there was a delivery with a reconfig we need to stop here before verify signature
 		case <-v.stopChan:
-			return false, false, false
+			return false, false, false, nil
 		default:
 		}
 
 		if err = v.Verifier.VerifySignature(types.Signature{ID: svd.Signer, Value: svd.Signature, Msg: svd.RawViewData}); err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but signature of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-			return false, false, false
+			return false, false, false, nil
 		}
 
 		if err = ValidateInFlight(vd.InFlightProposal, lastDecisionMD.LatestSequence); err != nil {
 			v.Logger.Warnf("Node %d is processing newView message, but the in flight proposal of %s is invalid, error: %v", v.SelfID, signedViewDataToString(svd), err)
-			return false, false, false
+			return false, false, false, nil
 		}
 
-		return true, false, true
+		return true, false, true, nil
 	}
 
-	if validViewDataMsgs < v.quorum {
-		v.Logger.Warnf("Node %d is processing newView message, but there was only %d valid view data messages while the quorum is %d", v.SelfID, validViewDataMsgs, v.quorum)
-		return false, false, false
+	if len(authenticated) < v.quorum {
+		v.Logger.Warnf("Node %d is processing newView message, but there were only %d authenticated view data messages while the quorum is %d", v.SelfID, len(authenticated), v.quorum)
+		// this node might be missing the configuration needed to authenticate the view data,
+		// hence it syncs and expects to be able to process the new view message afterwards
+		v.syncForUnauthenticatedNewView()
+		return true, true, false, nil
 	}
 
-	v.Logger.Debugf("Node %d found a quorum of valid view data messages within the new view message", v.SelfID)
-	return true, false, false
+	v.Logger.Debugf("Node %d found a quorum of authenticated view data messages within the new view message", v.SelfID)
+	return true, false, false, authenticated
 }
 
-func (v *ViewChanger) extractViewDataMessages(msg *protos.NewView) []*protos.ViewData {
-	signed := msg.GetSignedViewData()
-	vds := make([]*protos.ViewData, 0)
-	for _, svd := range signed {
-		vd := &protos.ViewData{}
-		if err := proto.Unmarshal(svd.RawViewData, vd); err != nil {
-			v.Logger.Panicf("Node %d was unable to unmarshal viewData from the newView message, error: %v", v.SelfID, err)
-		}
-		vds = append(vds, vd)
+// syncForUnauthenticatedNewView syncs when a new view message does not contain a quorum of view data
+// this node is able to authenticate, since it might be missing the state or the configuration needed
+// to authenticate the rest of them. It syncs at most once per view, so that a faulty leader cannot
+// make this node sync over and over again.
+func (v *ViewChanger) syncForUnauthenticatedNewView() {
+	if v.syncedForNewView {
+		v.Logger.Warnf("Node %d already synced in view %d because of a new view message it could not authenticate, not syncing again", v.SelfID, v.currView)
+		return
 	}
-	return vds
+	v.syncedForNewView = true
+	v.Synchronizer.Sync()
 }
 
 func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
-	valid, calledSync, calledDeliver := v.validateNewViewMsg(msg)
+	valid, calledSync, calledDeliver, authenticated := v.validateNewViewMsg(msg)
 	for calledDeliver {
 		v.Logger.Debugf("Node %d is processing a newView message, and delivered a proposal", v.SelfID)
-		valid, calledSync, calledDeliver = v.validateNewViewMsg(msg)
+		valid, calledSync, calledDeliver, authenticated = v.validateNewViewMsg(msg)
 	}
 	if !valid {
 		v.Logger.Warnf("Node %d is processing a newView message, but the message is invalid", v.SelfID)
@@ -1122,7 +1147,8 @@ func (v *ViewChanger) processNewViewMsg(msg *protos.NewView) {
 		return
 	}
 
-	ok, noInFlight, inFlightProposal, err := CheckInFlight(v.extractViewDataMessages(msg), v.f, v.quorum, v.N, v.Verifier)
+	// only the view data that was authenticated is counted when deciding on the in flight proposal
+	ok, noInFlight, inFlightProposal, err := CheckInFlight(authenticated, v.f, v.quorum, v.N, v.Verifier)
 	if err != nil {
 		v.Logger.Panicf("The check of the in flight proposal by node %d returned an error: %v", v.SelfID, err)
 	}
