@@ -843,7 +843,7 @@ func TestBadNewViewMessage(t *testing.T) {
 		},
 		{
 			description:           "not enough",
-			expectedMessageLogged: "valid view data messages while the quorum is",
+			expectedMessageLogged: "authenticated view data messages while the quorum is",
 			mutateVerifySig: func(verifierMock *mocks.VerifierMock) {
 			},
 			mutateNewView: func(m *protos.Message) {
@@ -1664,6 +1664,15 @@ func TestRestoreViewChange(t *testing.T) {
 	vc.Stop()
 }
 
+// viewDataBySender maps view data messages to the ID of the node that sent them, as expected by CheckInFlight.
+func viewDataBySender(messages []*protos.ViewData) map[uint64]*protos.ViewData {
+	bySender := make(map[uint64]*protos.ViewData, len(messages))
+	for i, msg := range messages {
+		bySender[uint64(i)] = msg
+	}
+	return bySender
+}
+
 func TestCheckInFlightNoProposal(t *testing.T) {
 	expectedProposal := &protos.Proposal{
 		Header:  []byte{0},
@@ -1735,7 +1744,7 @@ func TestCheckInFlightNoProposal(t *testing.T) {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
-			ok, _, _, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			ok, _, _, err := bft.CheckInFlight(viewDataBySender(messages), 1, 3, 4, verifier)
 			assert.NoError(t, err)
 			assert.True(t, ok)
 		})
@@ -1895,7 +1904,7 @@ func TestCheckInFlightWithProposal(t *testing.T) {
 				messages = append(messages, proto.Clone(vd).(*protos.ViewData))
 			}
 			test.mutateMessages(messages)
-			ok, no, proposal, err := bft.CheckInFlight(messages, 1, 3, 4, verifier)
+			ok, no, proposal, err := bft.CheckInFlight(viewDataBySender(messages), 1, 3, 4, verifier)
 			assert.NoError(t, err)
 			assert.Equal(t, test.ok, ok)
 			assert.Equal(t, test.no, no)
@@ -2263,4 +2272,242 @@ func TestDontCommitInFlight(t *testing.T) {
 	vc.Stop()
 
 	app.AssertNotCalled(t, "Deliver")
+}
+
+// newViewChangerWithInFlight returns a view changer that has an in flight proposal on sequence 2,
+// which is the state a node is in after it delivered the decision on sequence 1.
+func newViewChangerWithInFlight(t *testing.T, verifier api.Verifier) (*bft.ViewChanger, *mocks.ApplicationMock, chan uint64) {
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+	log := basicLog.Sugar()
+	viewChangedChan := make(chan uint64, 1)
+	controller := &mocks.ViewController{}
+	controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		viewChangedChan <- args.Get(0).(uint64)
+	}).Return(nil).Maybe()
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("RestartTimers")
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything)
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	vc := &bft.ViewChanger{
+		SelfID:        3,
+		N:             4,
+		NodesList:     []uint64{0, 1, 2, 3},
+		Logger:        log,
+		Verifier:      verifier,
+		Controller:    controller,
+		Ticker:        make(chan time.Time),
+		RequestsTimer: reqTimer,
+		Application:   app,
+		State:         state,
+	}
+
+	inFlightProposal := types.Proposal{
+		Payload: []byte{1},
+		Header:  []byte{2},
+		Metadata: bft.MarshalOrPanic(&protos.ViewMetadata{
+			LatestSequence: 2,
+			ViewId:         0,
+		}),
+		VerificationSequence: 1,
+	}
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(inFlightProposal, lastDecisionSignatures)
+	vc.Checkpoint = &checkpoint
+
+	return vc, app, viewChangedChan
+}
+
+// preparedInFlightViewData returns view data that claims the in flight proposal of the node was prepared.
+func preparedInFlightViewData() *protos.ViewData {
+	viewData := proto.Clone(vd).(*protos.ViewData)
+	viewData.InFlightProposal = &protos.Proposal{
+		Payload:              []byte{1},
+		Header:               []byte{2},
+		Metadata:             bft.MarshalOrPanic(&protos.ViewMetadata{LatestSequence: 2, ViewId: 0}),
+		VerificationSequence: uint64(1),
+	}
+	viewData.InFlightPrepared = true
+	return viewData
+}
+
+// TestNewViewWithForgedQuorum makes sure that a faulty leader cannot make this node commit an in flight
+// proposal that was never prepared, neither by repeating the view data of a single node, nor by putting
+// another node's ID on it.
+func TestNewViewWithForgedQuorum(t *testing.T) {
+	for _, test := range []struct {
+		description string
+		expectedLog string
+		signed      func(prepared []byte) []*protos.SignedViewData
+		mutate      func(verifier *mocks.VerifierMock)
+	}{
+		{
+			description: "the same node is included twice",
+			expectedLog: "is included more than once",
+			signed: func(prepared []byte) []*protos.SignedViewData {
+				return []*protos.SignedViewData{
+					{RawViewData: prepared, Signer: 1},
+					{RawViewData: prepared, Signer: 1},
+					{RawViewData: bft.MarshalOrPanic(vd), Signer: 2},
+					{RawViewData: bft.MarshalOrPanic(vd), Signer: 3},
+				}
+			},
+		},
+		{
+			description: "the view data of a single node is signed by other nodes",
+			signed: func(prepared []byte) []*protos.SignedViewData {
+				return []*protos.SignedViewData{
+					{RawViewData: prepared, Signer: 1},
+					{RawViewData: prepared, Signer: 0, Signature: []byte("garbage")},
+					{RawViewData: bft.MarshalOrPanic(vd), Signer: 2},
+					{RawViewData: bft.MarshalOrPanic(vd), Signer: 3},
+				}
+			},
+			mutate: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifySignature", mock.MatchedBy(func(s types.Signature) bool {
+					return s.ID == 0
+				})).Return(errors.New("forged"))
+			},
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			if test.mutate != nil {
+				test.mutate(verifier)
+			}
+
+			// the generic expectation is registered last, so that the more specific ones take precedence
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+
+			signed := test.signed(bft.MarshalOrPanic(preparedInFlightViewData()))
+
+			vc, app, viewChangedChan := newViewChangerWithInFlight(t, verifier)
+			logged := make(chan struct{}, 1)
+			baseLogger := vc.Logger.(*zap.SugaredLogger).Desugar()
+			vc.Logger = baseLogger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, test.expectedLog) {
+					select {
+					case logged <- struct{}{}:
+					default:
+					}
+				}
+				return nil
+			})).Sugar()
+
+			vc.Start(1)
+
+			vc.HandleMessage(1, &protos.Message{
+				Content: &protos.Message_NewView{
+					NewView: &protos.NewView{
+						SignedViewData: signed,
+					},
+				},
+			})
+
+			select {
+			case <-viewChangedChan:
+				assert.Fail(t, "the view was changed although a single node reported the in flight proposal as prepared")
+			case <-time.After(100 * time.Millisecond):
+			}
+
+			if test.expectedLog != "" {
+				select {
+				case <-logged:
+				case <-time.After(3 * time.Second):
+					assert.Fail(t, "the faulty leader was not reported", test.expectedLog)
+				}
+			}
+
+			vc.Stop()
+
+			app.AssertNotCalled(t, "Deliver")
+		})
+	}
+}
+
+// TestNewViewWithoutQuorumSyncs makes sure that when there is no quorum of view data messages this node
+// is able to authenticate within a new view message, it syncs instead of deciding on the in flight
+// proposal, and that it syncs at most once per view.
+func TestNewViewWithoutQuorumSyncs(t *testing.T) {
+	for _, test := range []struct {
+		description string
+		// a signature this node cannot verify stands for a node that this node has no matching
+		// configuration for, for example when the decision it is ahead by was a reconfiguration
+		mutate   func(verifier *mocks.VerifierMock)
+		signed   []*protos.SignedViewData
+		expected string
+	}{
+		{
+			description: "not enough view data",
+			signed: []*protos.SignedViewData{
+				{RawViewData: bft.MarshalOrPanic(vd), Signer: 0},
+			},
+			expected: "did not contain a quorum of view data",
+		},
+		{
+			description: "a quorum of view data this node cannot verify",
+			mutate: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifySignature", mock.Anything).Return(errors.New("unknown signer"))
+			},
+			signed: []*protos.SignedViewData{
+				{RawViewData: bft.MarshalOrPanic(vd), Signer: 0},
+				{RawViewData: bft.MarshalOrPanic(vd), Signer: 1},
+				{RawViewData: bft.MarshalOrPanic(vd), Signer: 2},
+			},
+			expected: "could not verify the view data of a quorum of nodes",
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			verifier := &mocks.VerifierMock{}
+			if test.mutate != nil {
+				test.mutate(verifier)
+			}
+			// the generic expectation is registered last, so that the more specific ones take precedence
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+
+			vc, app, viewChangedChan := newViewChangerWithInFlight(t, verifier)
+
+			var syncCount atomic.Int32
+			synchronizer := &mocks.Synchronizer{}
+			synchronizer.On("Sync").Run(func(args mock.Arguments) {
+				syncCount.Add(1)
+			}).Return()
+			vc.Synchronizer = synchronizer
+
+			vc.Start(1)
+
+			msg := &protos.Message{
+				Content: &protos.Message_NewView{
+					NewView: &protos.NewView{
+						SignedViewData: test.signed,
+					},
+				},
+			}
+
+			vc.HandleMessage(1, msg)
+			vc.HandleMessage(1, msg) // the leader may resend the new view, the node should not sync again
+
+			assert.Eventually(t, func() bool {
+				return syncCount.Load() == 1
+			}, 3*time.Second, 10*time.Millisecond, "the node did not sync, although it "+test.expected)
+
+			time.Sleep(100 * time.Millisecond)
+			assert.Equal(t, int32(1), syncCount.Load(), "the node synced more than once for the same view")
+
+			select {
+			case <-viewChangedChan:
+				assert.Fail(t, "the view was changed although the new view message "+test.expected)
+			case <-time.After(100 * time.Millisecond):
+			}
+
+			vc.Stop()
+
+			app.AssertNotCalled(t, "Deliver")
+		})
+	}
 }
