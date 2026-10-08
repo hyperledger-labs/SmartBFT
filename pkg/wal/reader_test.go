@@ -6,6 +6,7 @@
 package wal
 
 import (
+	"encoding/binary"
 	"fmt"
 	"io"
 	"os"
@@ -269,6 +270,83 @@ func TestLogRecordReader(t *testing.T) {
 		record, err := r.Read()
 		assert.Contains(t, err.Error(), "wal: failed to unmarshal payload")
 		assert.Nil(t, record)
+	})
+
+	t.Run("record length in header is bounded", func(t *testing.T) {
+		fileName := filepath.Join(testDir, "test7.wal")
+		sourceName := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 1))
+		assert.NoError(t, copyFile(sourceName, fileName))
+
+		r, err := NewLogRecordReader(logger, fileName)
+		assert.NoError(t, err)
+		assertReadRecord(t, r, rec1, crc1)
+		assertReadRecord(t, r, rec2, crc2)
+		offset, err := r.logFile.Seek(0, io.SeekCurrent)
+		assert.NoError(t, err)
+		err = r.Close()
+		assert.NoError(t, err)
+
+		f, err := os.OpenFile(fileName, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		_, err = f.Seek(offset, io.SeekStart)
+		assert.NoError(t, err)
+		// a header claiming a record of 0xFFFFFFFF bytes, i.e. ~4GB
+		header := make([]byte, recordHeaderSize)
+		binary.LittleEndian.PutUint64(header, 0xFFFFFFFF)
+		_, err = f.Write(header)
+		assert.NoError(t, err)
+		err = f.Close()
+		assert.NoError(t, err)
+
+		r, err = NewLogRecordReader(logger, fileName)
+		assert.NoError(t, err)
+		assertReadRecord(t, r, rec1, crc1)
+		assertReadRecord(t, r, rec2, crc2)
+
+		record, err := r.Read()
+		assert.ErrorIs(t, err, ErrRecordTooBig)
+		assert.Nil(t, record)
+		assert.NoError(t, r.Close())
+	})
+
+	t.Run("record bound follows the file size, not the default", func(t *testing.T) {
+		fileName := filepath.Join(testDir, "test8.wal")
+		sourceName := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 1))
+		assert.NoError(t, copyFile(sourceName, fileName))
+
+		fileInfo, err := os.Stat(fileName)
+		assert.NoError(t, err)
+
+		r, err := NewLogRecordReader(logger, fileName)
+		assert.NoError(t, err)
+		assert.Equal(t, fileInfo.Size(), r.fileSizeBytes)
+
+		assertReadRecord(t, r, rec1, crc1)
+		assertReadRecord(t, r, rec2, crc2)
+		offset, err := r.logFile.Seek(0, io.SeekCurrent)
+		assert.NoError(t, err)
+		assert.NoError(t, r.Close())
+
+		// A header claiming more than the file holds, as after a torn write.
+		f, err := os.OpenFile(fileName, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		_, err = f.Seek(offset, io.SeekStart)
+		assert.NoError(t, err)
+		header := make([]byte, recordHeaderSize)
+		binary.LittleEndian.PutUint64(header, uint64(fileInfo.Size()))
+		_, err = f.Write(header)
+		assert.NoError(t, err)
+		assert.NoError(t, f.Close())
+
+		r, err = NewLogRecordReader(logger, fileName)
+		assert.NoError(t, err)
+		assertReadRecord(t, r, rec1, crc1)
+		assertReadRecord(t, r, rec2, crc2)
+
+		record, err := r.Read()
+		assert.ErrorIs(t, err, ErrRecordTooBig)
+		assert.Nil(t, record)
+		assert.NoError(t, r.Close())
 	})
 }
 

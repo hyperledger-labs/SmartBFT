@@ -157,13 +157,29 @@ func parseWalFileName(fileName string) (index uint64, err error) {
 	return index, nil
 }
 
+// copyFile copies the source file to the target, readable and writable by the owner only,
+// just like the WAL files themselves (walFilePermPrivateRW). Permissions of an already
+// existing target are tightened as well, since os.WriteFile does not touch them.
 func copyFile(source, target string) error {
 	input, err := os.ReadFile(source)
 	if err != nil {
 		return err
 	}
 
-	return os.WriteFile(target, input, 0o644)
+	output, err := os.OpenFile(target, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, walFilePermPrivateRW)
+	if err != nil {
+		return err
+	}
+	if err = output.Chmod(walFilePermPrivateRW); err != nil {
+		_ = output.Close()
+		return err
+	}
+	if _, err = output.Write(input); err != nil {
+		_ = output.Close()
+		return err
+	}
+
+	return output.Close()
 }
 
 func truncateCloseFile(f *os.File, offset int64) error {
