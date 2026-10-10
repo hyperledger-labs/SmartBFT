@@ -2511,3 +2511,178 @@ func TestNewViewWithoutQuorumSyncs(t *testing.T) {
 		})
 	}
 }
+
+// The new leader is the node that collected the view data messages of the others,
+// so a newView message that does not carry the new leader's own signed view data
+// message must not be accepted, regardless of where in the list the entries sit.
+func TestNewViewWithoutLeaderViewData(t *testing.T) {
+	for _, test := range []struct {
+		description string
+		signers     []uint64
+		accepted    bool
+		// expectedRejection is the reason the node must reject the message with.
+		// Empty when the message is expected to be accepted.
+		expectedRejection string
+		mutateVerify      func(*mocks.VerifierMock)
+		mutateViewData    func(uint64, *protos.SignedViewData)
+	}{
+		{
+			description: "leader is first",
+			signers:     []uint64{1, 0, 2},
+			accepted:    true,
+		},
+		{
+			description: "leader is last",
+			signers:     []uint64{0, 2, 1},
+			accepted:    true,
+		},
+		{
+			description: "leader is in the middle",
+			signers:     []uint64{0, 1, 2},
+			accepted:    true,
+		},
+		{
+			description:       "leader is missing",
+			signers:           []uint64{0, 2, 3},
+			accepted:          false,
+			expectedRejection: "but it does not contain an authenticated signed view data message of the new leader",
+		},
+		{
+			// The leader's view data is included, but it is ignored since it carries a decision
+			// from the past with a signature that does not verify. The other three still form
+			// a quorum, so the leader check must be what rejects the message.
+			description:       "leader's view data is not authenticated",
+			signers:           []uint64{0, 2, 3, 1},
+			accepted:          false,
+			expectedRejection: "but it does not contain an authenticated signed view data message of the new leader",
+			mutateVerify: func(verifier *mocks.VerifierMock) {
+				verifier.On("VerifySignature", mock.Anything).Return(func(sig types.Signature) error {
+					if sig.ID == 1 {
+						return errors.New("")
+					}
+					return nil
+				})
+			},
+			mutateViewData: func(signer uint64, svd *protos.SignedViewData) {
+				if signer == 1 { // the leader of view 1
+					pastViewData := proto.Clone(vd).(*protos.ViewData)
+					pastViewData.LastDecision.Metadata = bft.MarshalOrPanic(&protos.ViewMetadata{
+						LatestSequence: 0,
+						ViewId:         0,
+					})
+					svd.RawViewData = bft.MarshalOrPanic(pastViewData)
+				}
+			},
+		},
+		{
+			// Every signer appears at most once, so repeating two non-leader
+			// signers is rejected before the leader is even looked at.
+			description:       "leader is missing and the signers are repeated",
+			signers:           []uint64{0, 2, 0, 2, 0},
+			accepted:          false,
+			expectedRejection: "is included more than once",
+		},
+	} {
+		t.Run(test.description, func(t *testing.T) {
+			basicLog, err := zap.NewDevelopment()
+			assert.NoError(t, err)
+
+			rejected := make(chan struct{}, 1)
+			log := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+				if strings.Contains(entry.Message, test.expectedRejection) {
+					select {
+					case rejected <- struct{}{}:
+					default:
+					}
+				}
+				return nil
+			})).Sugar()
+
+			verifier := &mocks.VerifierMock{}
+			if test.mutateVerify != nil {
+				test.mutateVerify(verifier)
+			}
+			verifier.On("VerifySignature", mock.Anything).Return(nil)
+			verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+			verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
+			controller := &mocks.ViewController{}
+			viewNumChan := make(chan uint64, 1)
+			seqNumChan := make(chan uint64, 1)
+			controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+				viewNumChan <- args.Get(0).(uint64)
+				seqNumChan <- args.Get(1).(uint64)
+			})
+			reqTimer := &mocks.RequestsTimer{}
+			reqTimer.On("StopTimers")
+			reqTimer.On("RestartTimers")
+			app := &mocks.ApplicationMock{}
+			app.On("Deliver", mock.Anything, mock.Anything)
+			pruner := &mocks.Pruner{}
+			pruner.On("MaybePruneRevokedRequests")
+			state := &mocks.State{}
+			state.On("Save", mock.Anything).Return(nil)
+
+			checkpoint := types.Checkpoint{}
+			checkpoint.Set(lastDecision, lastDecisionSignatures)
+
+			vc := &bft.ViewChanger{
+				SelfID:        3,
+				N:             4,
+				NodesList:     []uint64{0, 1, 2, 3},
+				Logger:        log,
+				Verifier:      verifier,
+				Controller:    controller,
+				Ticker:        make(chan time.Time),
+				RequestsTimer: reqTimer,
+				Application:   app,
+				Pruner:        pruner,
+				State:         state,
+				Checkpoint:    &checkpoint,
+				InFlight:      &bft.InFlightData{},
+			}
+
+			// view 1 leader is node 1, so it is the sender and it must also be a signer
+			signed := make([]*protos.SignedViewData, 0)
+			for _, signer := range test.signers {
+				svd := &protos.SignedViewData{
+					RawViewData: vdBytes,
+					Signer:      signer,
+					Signature:   nil,
+				}
+				if test.mutateViewData != nil {
+					test.mutateViewData(signer, svd)
+				}
+				signed = append(signed, svd)
+			}
+
+			msg := &protos.Message{
+				Content: &protos.Message_NewView{
+					NewView: &protos.NewView{
+						SignedViewData: signed,
+					},
+				},
+			}
+
+			vc.Start(1)
+			vc.HandleMessage(1, msg)
+
+			if test.accepted {
+				assert.Equal(t, uint64(1), <-viewNumChan)
+				assert.Equal(t, uint64(2), <-seqNumChan)
+			} else {
+				select {
+				case <-rejected:
+				case <-time.After(5 * time.Second):
+					assert.Fail(t, "the new view message was not rejected", "expected log: %q", test.expectedRejection)
+				}
+				select {
+				case <-viewNumChan:
+					assert.Fail(t, "the view was changed even though the new view message was rejected")
+				default:
+				}
+			}
+
+			vc.Stop()
+		})
+	}
+}
