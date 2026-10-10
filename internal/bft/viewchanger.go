@@ -83,15 +83,17 @@ type ViewChanger struct {
 	inFlightView       *View
 	inFlightViewLock   sync.RWMutex
 
-	Ticker              <-chan time.Time
-	lastTick            time.Time
-	ResendTimeout       time.Duration
-	lastResend          time.Time
-	ViewChangeTimeout   time.Duration
-	startViewChangeTime time.Time
-	checkTimeout        bool
-	backOffFactor       uint64
-	syncedForNewView    bool
+	Ticker                    <-chan time.Time
+	lastTick                  time.Time
+	ResendTimeout             time.Duration
+	lastResend                time.Time
+	ViewChangeTimeout         time.Duration
+	startViewChangeTime       time.Time
+	checkTimeout              bool
+	backOffFactor             uint64
+	syncedForNewView          bool
+	syncedForAnnouncedView    uint64
+	hasSyncedForAnnouncedView bool
 
 	// Runtime
 	MetricsViewChange         *api.MetricsViewChange
@@ -240,15 +242,19 @@ func (v *ViewChanger) checkIfResendViewChange(now time.Time) {
 		return
 	}
 	if v.checkTimeout { // during view change process
+		// Announce the view after the one this node is in, since that is the view the other
+		// nodes count. Announcing the view this node is already in would be equal to their
+		// current view, so none of them could count it.
+		nextView := v.currView + 1
 		msg := &protos.Message{
 			Content: &protos.Message_ViewChange{
 				ViewChange: &protos.ViewChange{
-					NextView: v.nextView,
+					NextView: nextView,
 				},
 			},
 		}
 		v.Comm.BroadcastConsensus(msg)
-		v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, v.nextView)
+		v.Logger.Debugf("Node %d resent a view change message with next view %d", v.SelfID, nextView)
 		v.lastResend = now // update last resend time, or at least last time we checked if we should resend
 	}
 }
@@ -282,10 +288,26 @@ func (v *ViewChanger) processMsg(sender uint64, m *protos.Message) {
 			v.processViewChangeMsg(false)
 			return
 		}
+		if vc.NextView > v.currView+1 {
+			// The sender wants to change into a view that is more than one ahead of this node.
+			// Either this node is behind and has to catch up, or the sender is byzantine.
+			// Syncing resolves both cases: if this node is behind it learns the current view
+			// and moves to it, and if the sender is lying nothing changes.
+			// It syncs at most once per announced view, so that a faulty node cannot make
+			// this node sync over and over again.
+			if !v.hasSyncedForAnnouncedView || v.syncedForAnnouncedView != vc.NextView {
+				v.hasSyncedForAnnouncedView = true
+				v.syncedForAnnouncedView = vc.NextView
+				v.Logger.Debugf("Node %d got a view change message for view %d, while it is in view %d, syncing", v.SelfID, vc.NextView, v.currView)
+				v.Synchronizer.Sync()
+			}
+			return
+		}
 		if v.nextView == v.currView+1 && // node has already started view change with last view
 			vc.NextView > v.realView &&
 			vc.NextView < v.currView+1 &&
-			v.nvs.sendRecv(vc.NextView, sender) {
+			v.nvs.sendRecv(vc.NextView, sender) &&
+			v.nvs.shouldHelp(vc.NextView, sender) {
 			// Let's help the lagging nodes.
 			msg := &protos.Message{
 				Content: &protos.Message_ViewChange{
@@ -352,6 +374,8 @@ func (v *ViewChanger) informNewView(view uint64) {
 	v.checkTimeout = false
 	v.backOffFactor = 1 // reset
 	v.syncedForNewView = false
+	v.hasSyncedForAnnouncedView = false // reset
+	v.syncedForAnnouncedView = 0
 	v.RequestsTimer.RestartTimers()
 }
 
@@ -422,8 +446,10 @@ func (v *ViewChanger) processViewChangeMsg(restore bool) {
 	v.currView = v.nextView
 	v.MetricsViewChange.CurrentView.Set(float64(v.currView))
 	v.viewChangeMsgs.clear(v.N)
-	v.viewDataMsgs.clear(v.N)  // clear because currView changed
-	v.syncedForNewView = false // clear because currView changed
+	v.viewDataMsgs.clear(v.N)           // clear because currView changed
+	v.syncedForNewView = false          // clear because currView changed
+	v.hasSyncedForAnnouncedView = false // clear because currView changed
+	v.syncedForAnnouncedView = 0
 	msg := v.prepareViewDataMsg()
 	leader := v.getLeader()
 	if leader == v.SelfID {

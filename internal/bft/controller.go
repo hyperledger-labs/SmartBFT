@@ -659,7 +659,12 @@ func (c *Controller) sync() (viewNum uint64, seq uint64, decisions uint64) {
 		if response.View <= controllerViewNum && latestDecisionViewNum < controllerViewNum {
 			return 0, 0, 0 // no new view to report
 		}
-		if response.View > newViewNum && response.Seq == latestDecisionSeq+1 {
+		// The peers report the sequence they are at. Accept their view as long as it is
+		// ahead of what this node knows, no matter how many sequences ahead they are: the
+		// synchronizer catches up the decisions, and a node that refuses to move on because
+		// the cluster is more than one sequence ahead would stay in a view the cluster left
+		// and no quorum could be formed again.
+		if response.View > newViewNum && response.Seq > latestDecisionSeq {
 			c.Logger.Infof("Node %d collected state with view %d and sequence %d", c.ID, response.View, response.Seq)
 			newViewToSave := &protos.SavedMessage{
 				Content: &protos.SavedMessage_NewView{

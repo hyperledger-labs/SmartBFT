@@ -135,12 +135,16 @@ func (vs *voteSet) registerVote(voter uint64, message *protos.Message) {
 	vs.votes <- &vote{Message: message, sender: voter}
 }
 
+// nextViews tracks the highest view each node announced in a view change message, and the
+// highest view this node already rebroadcast on behalf of each of them.
 type nextViews struct {
-	n map[uint64]uint64
+	n      map[uint64]uint64
+	helped map[uint64]uint64
 }
 
 func (nv *nextViews) clear() {
 	nv.n = make(map[uint64]uint64)
+	nv.helped = make(map[uint64]uint64)
 }
 
 func (nv *nextViews) registerNext(next uint64, sender uint64) {
@@ -153,6 +157,18 @@ func (nv *nextViews) registerNext(next uint64, sender uint64) {
 
 func (nv *nextViews) sendRecv(next uint64, sender uint64) bool {
 	return next == nv.n[sender]
+}
+
+// shouldHelp reports whether this node should rebroadcast the view change a lagging node
+// announced for the given view. Repeating the same announcement back only adds noise that the
+// lagging node cannot act on anyway, so each view is helped at most once per node.
+func (nv *nextViews) shouldHelp(next uint64, sender uint64) bool {
+	if next <= nv.helped[sender] {
+		return false
+	}
+
+	nv.helped[sender] = next
+	return true
 }
 
 type incMsg struct {

@@ -163,6 +163,8 @@ func TestViewChangeProcess(t *testing.T) {
 			controller.On("AbortView", mock.Anything)
 			state := &mocks.State{}
 			state.On("Save", mock.Anything).Return(nil)
+			synchronizer := &mocks.Synchronizer{}
+			synchronizer.On("Sync").Return()
 
 			vc := &bft.ViewChanger{
 				SelfID:            0,
@@ -178,6 +180,7 @@ func TestViewChangeProcess(t *testing.T) {
 				Controller:        controller,
 				InMsqQSize:        100,
 				State:             state,
+				Synchronizer:      synchronizer,
 				SpeedUpViewChange: testCase.speedup,
 			}
 
@@ -2685,4 +2688,435 @@ func TestNewViewWithoutLeaderViewData(t *testing.T) {
 			vc.Stop()
 		})
 	}
+}
+
+// viewChangeRig is a view changer wired with the mocks it needs, which records the
+// consensus messages it sends and broadcasts, the views it completed a view change
+// into, and the log entries it wrote, so that a test can inspect all of it.
+type viewChangeRig struct {
+	vc         *bft.ViewChanger
+	controller *mocks.ViewController
+	ticker     chan time.Time
+	t          *testing.T
+
+	mu          sync.Mutex
+	broadcasted []*protos.Message
+	sent        []sentMessage
+	logged      []string
+	completed   []uint64
+	syncs       int
+}
+
+type sentMessage struct {
+	to  uint64
+	msg *protos.Message
+}
+
+func newViewChangeRig(t *testing.T, selfID uint64, nodes []uint64) *viewChangeRig {
+	t.Helper()
+
+	basicLog, err := zap.NewDevelopment()
+	assert.NoError(t, err)
+
+	r := &viewChangeRig{t: t}
+
+	logger := basicLog.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.logged = append(r.logged, entry.Message)
+		return nil
+	})).Sugar()
+
+	comm := &mocks.CommMock{}
+	comm.On("BroadcastConsensus", mock.Anything).Run(func(args mock.Arguments) {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.broadcasted = append(r.broadcasted, args.Get(0).(*protos.Message))
+	})
+	comm.On("SendConsensus", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.sent = append(r.sent, sentMessage{to: args.Get(0).(uint64), msg: args.Get(1).(*protos.Message)})
+	})
+	comm.On("Nodes").Return(nodes)
+
+	signer := &mocks.SignerMock{}
+	signer.On("Sign", mock.Anything).Return([]byte{1, 2, 3})
+
+	verifier := &mocks.VerifierMock{}
+	verifier.On("VerifySignature", mock.Anything).Return(nil)
+	verifier.On("VerifyConsenterSig", mock.Anything, mock.Anything).Return(nil, nil)
+	verifier.On("RequestsFromProposal", mock.Anything).Return(nil)
+	verifier.On("VerificationSequence").Return(uint64(0))
+
+	app := &mocks.ApplicationMock{}
+	app.On("Deliver", mock.Anything, mock.Anything).Return(types.Reconfig{})
+
+	synchronizer := &mocks.Synchronizer{}
+	synchronizer.On("Sync").Run(func(mock.Arguments) {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.syncs++
+	}).Return()
+
+	state := &mocks.State{}
+	state.On("Save", mock.Anything).Return(nil)
+
+	reqTimer := &mocks.RequestsTimer{}
+	reqTimer.On("StopTimers")
+	reqTimer.On("RestartTimers")
+	reqTimer.On("RemoveRequest", mock.Anything).Return(nil)
+
+	r.controller = &mocks.ViewController{}
+	r.controller.On("AbortView", mock.Anything)
+	r.controller.On("ViewChanged", mock.Anything, mock.Anything).Run(func(args mock.Arguments) {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.completed = append(r.completed, args.Get(0).(uint64))
+	})
+
+	pruner := &mocks.Pruner{}
+	pruner.On("MaybePruneRevokedRequests")
+
+	checkpoint := types.Checkpoint{}
+	checkpoint.Set(lastDecision, lastDecisionSignatures)
+
+	r.ticker = make(chan time.Time)
+
+	r.vc = &bft.ViewChanger{
+		SelfID:             selfID,
+		N:                  uint64(len(nodes)),
+		NodesList:          nodes,
+		LeaderRotation:     false,
+		DecisionsPerLeader: 0,
+		Logger:             logger,
+		Comm:               comm,
+		Signer:             signer,
+		Verifier:           verifier,
+		Application:        app,
+		Synchronizer:       synchronizer,
+		State:              state,
+		Checkpoint:         &checkpoint,
+		InFlight:           &bft.InFlightData{},
+		Controller:         r.controller,
+		RequestsTimer:      reqTimer,
+		Pruner:             pruner,
+		Ticker:             r.ticker,
+		InMsqQSize:         100,
+		ResendTimeout:      time.Millisecond,
+		ViewChangeTimeout:  time.Millisecond,
+	}
+
+	return r
+}
+
+// forgetRecorded discards everything that was recorded so far, so that a test can
+// assert on what happens from this point onwards.
+func (r *viewChangeRig) forgetRecorded() {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.broadcasted = nil
+	r.sent = nil
+	r.completed = nil
+}
+
+func (r *viewChangeRig) viewChangeBroadcastsTo(view uint64) int {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	count := 0
+	for _, m := range r.broadcasted {
+		if vc := m.GetViewChange(); vc != nil && vc.NextView == view {
+			count++
+		}
+	}
+	return count
+}
+
+func (r *viewChangeRig) newViewBroadcasts() int {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	count := 0
+	for _, m := range r.broadcasted {
+		if m.GetNewView() != nil {
+			count++
+		}
+	}
+	return count
+}
+
+func (r *viewChangeRig) sentMessages() []sentMessage {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return append([]sentMessage(nil), r.sent...)
+}
+
+func (r *viewChangeRig) completedViews() []uint64 {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return append([]uint64(nil), r.completed...)
+}
+
+func (r *viewChangeRig) syncCount() int {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.syncs
+}
+
+func (r *viewChangeRig) logCountContaining(sub string) int {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	count := 0
+	for _, l := range r.logged {
+		if strings.Contains(l, sub) {
+			count++
+		}
+	}
+	return count
+}
+
+// waitForLog blocks until the node logged a message containing sub, so that a test does not
+// race with the messages the view changer is processing in the background.
+func (r *viewChangeRig) waitForLog(sub string) {
+	r.mu.Lock()
+	seen := 0
+	for _, l := range r.logged {
+		if strings.Contains(l, sub) {
+			seen++
+		}
+	}
+	r.mu.Unlock()
+	assert.Eventually(r.t, func() bool {
+		return r.logCountContaining(sub) > seen
+	}, 3*time.Second, 10*time.Millisecond, "the node never logged a message containing %q", sub)
+}
+
+func viewChangeFor(view uint64) *protos.Message {
+	return &protos.Message{
+		Content: &protos.Message_ViewChange{
+			ViewChange: &protos.ViewChange{NextView: view},
+		},
+	}
+}
+
+// TestViewChangeLaggingNodeCatchesUpAfterViewSkip shows that a node that is behind can join the
+// cluster again after the cluster skipped a view.
+//
+// The node that skipped a view reached its current view through a synchronization, which only
+// tells the view changer about a higher view number, it does not run the view change of the
+// views in between. The lagging node still has to go through those views one by one, and the
+// leader of the view it needs to complete has already moved on, so it rejects the view data and
+// no newView message for that view is ever formed. The lagging node then hears the rest of the
+// cluster announce a view beyond it, and syncs its way to them instead of getting stuck.
+//
+// The view numbers below are small, what matters is the gap of two between the lagging node and
+// the rest of the cluster, which is what a node is left with when the cluster moved on while it
+// was restarting or losing messages.
+func TestViewChangeLaggingNodeCatchesUpAfterViewSkip(t *testing.T) {
+	nodes := []uint64{0, 1, 2, 3}
+
+	// the lagging node, at view 1, while the rest of the cluster is at view 3
+	lagging := newViewChangeRig(t, 0, nodes)
+	lagging.vc.Start(1)
+	defer lagging.vc.Stop()
+
+	// node 2 is the leader of view 2, the view the lagging node needs, but it already moved on
+	// to view 3, which is what happens when a node is told about a higher view through a
+	// synchronization instead of taking part in the view change of view 2
+	leader := newViewChangeRig(t, 2, nodes)
+	leader.vc.Start(3)
+	defer leader.vc.Stop()
+
+	// the lagging node gathers a quorum of view change messages for view 2, moves to view 2,
+	// and sends its view data to the leader of view 2, which is node 2
+	lagging.vc.HandleMessage(1, viewChangeFor(2))
+	lagging.vc.HandleMessage(3, viewChangeFor(2))
+
+	assert.Eventually(t, func() bool {
+		return len(lagging.sentMessages()) == 1
+	}, 3*time.Second, 10*time.Millisecond, "the lagging node did not send its view data")
+
+	viewData := lagging.sentMessages()[0]
+	assert.Equal(t, uint64(2), viewData.to, "the view data was not sent to the leader of view 2")
+
+	// the leader of view 2 rejects it, since it is not the leader of view 3 anymore, so the
+	// lagging node cannot complete view 2 by changing into it
+	leader.vc.HandleMessage(0, viewData.msg)
+	assert.Eventually(t, func() bool {
+		return leader.logCountContaining("is not the next leader of view 3") == 1
+	}, 3*time.Second, 10*time.Millisecond, "the leader of the skipped view did not reject the view data")
+
+	assert.Equal(t, 0, leader.newViewBroadcasts(), "a new view message was formed for the skipped view")
+	assert.Empty(t, lagging.completedViews(), "the lagging node completed the skipped view")
+
+	lagging.forgetRecorded()
+
+	// the rest of the cluster announces its own view change, from view 3 to view 4, which is
+	// beyond the view the lagging node is in, so the lagging node realizes it is behind
+	for i := 0; i < 5; i++ {
+		lagging.vc.HandleMessage(1, viewChangeFor(4))
+		lagging.vc.HandleMessage(3, viewChangeFor(4))
+	}
+
+	assert.Eventually(t, func() bool {
+		return lagging.syncCount() > 0
+	}, 3*time.Second, 10*time.Millisecond, "the lagging node did not sync when it heard of a view beyond it")
+
+	// the sync learns the current view and the node is told about it, which is how it catches up
+	lagging.vc.InformNewView(3)
+	lagging.waitForLog("was informed of a new view 3")
+
+	// once it is in view 3 it takes part in the view change to view 4 like everyone else
+	lagging.vc.HandleMessage(1, viewChangeFor(4))
+	lagging.vc.HandleMessage(3, viewChangeFor(4))
+
+	// node 0 leads view 4, so it keeps its own view data rather than sending it, but it does
+	// announce the view change, which is what it could not do while it was stuck behind
+	assert.Eventually(t, func() bool {
+		return lagging.viewChangeBroadcastsTo(4) >= 1
+	}, 3*time.Second, 10*time.Millisecond, "the lagging node did not join the view change of view 4")
+
+	assert.Eventually(t, func() bool {
+		return lagging.logCountContaining("sent view data msg, with next view 4") == 1
+	}, 3*time.Second, 10*time.Millisecond, "the lagging node did not prepare the view data of view 4")
+
+	// it is no longer announcing the view it is already in, which no node could ever count
+	assert.Equal(t, 0, lagging.viewChangeBroadcastsTo(3),
+		"the node announced a view change for the view it is already in, which no node can count")
+}
+
+// TestStaleViewChangeIsHelpedOnlyOnce shows that a node that moved ahead helps a lagging node
+// once per view it announces, instead of rebroadcasting the same view change back on every
+// message it receives, which is what floods the logs and the network with no new information.
+func TestStaleViewChangeIsHelpedOnlyOnce(t *testing.T) {
+	nodes := []uint64{0, 1, 2, 3}
+
+	rig := newViewChangeRig(t, 2, nodes)
+	rig.vc.Start(1)
+	defer rig.vc.Stop()
+
+	// the node goes from view 1 into view 2 without ever completing either of them, so it holds
+	// a view whose real view is still view 1
+	rig.vc.HandleMessage(1, viewChangeFor(2))
+	rig.vc.HandleMessage(3, viewChangeFor(2))
+
+	// wait for the node to actually be in view 2 before asking it to change view again
+	rig.waitForLog("sent view data msg, with next view 2")
+
+	// and then it starts a view change into view 3
+	rig.vc.StartViewChange(2, false)
+	assert.Eventually(t, func() bool {
+		return rig.viewChangeBroadcastsTo(3) == 1
+	}, 3*time.Second, 10*time.Millisecond, "the node did not start a view change into view 3")
+
+	rig.forgetRecorded()
+
+	// a node that is still in view 1 keeps announcing a view change for view 2
+	const laggingMessages = 5
+	for i := 0; i < laggingMessages; i++ {
+		rig.vc.HandleMessage(3, viewChangeFor(2))
+	}
+
+	assert.Eventually(t, func() bool {
+		return rig.logCountContaining("help the lagging nodes") == 1
+	}, 3*time.Second, 10*time.Millisecond, "the node did not help the lagging node at all")
+
+	assert.Equal(t, 1, rig.viewChangeBroadcastsTo(2),
+		"the node rebroadcast the same view change of the lagging node over and over again")
+
+	assert.Empty(t, rig.completedViews(), "the node completed a view change although it never received a new view message")
+}
+
+// TestViewChangeResendAnnouncesNextView shows that a node that changed into a view does not
+// keep announcing a view change for the view it is already in. Such an announcement is equal
+// to the current view of every other node, so no node can count it and it is pure noise.
+func TestViewChangeResendAnnouncesNextView(t *testing.T) {
+	nodes := []uint64{0, 1, 2, 3}
+
+	rig := newViewChangeRig(t, 0, nodes)
+	rig.vc.Start(1)
+	defer rig.vc.Stop()
+
+	// the node changes into view 2
+	rig.vc.HandleMessage(1, viewChangeFor(2))
+	rig.vc.HandleMessage(3, viewChangeFor(2))
+	rig.waitForLog("sent view data msg, with next view 2")
+
+	rig.forgetRecorded()
+
+	// it is still in the middle of the view change, so it resends, and the announcement must
+	// be for the view after the one it is in
+	for i := 0; i < 3; i++ {
+		rig.ticker <- time.Now()
+	}
+
+	assert.Eventually(t, func() bool {
+		return rig.viewChangeBroadcastsTo(3) >= 1
+	}, 3*time.Second, 10*time.Millisecond, "the node did not announce a view change after the one it is in")
+
+	assert.Equal(t, 0, rig.viewChangeBroadcastsTo(2),
+		"the node announced a view change for the view it is already in, which no node can count")
+}
+
+// TestRestartedNodeJoinsViaSync covers the case where the cluster did not skip a view on
+// purpose, but a node lost the view change it was part of. The node restarts from the view
+// it persisted, which is behind the view the cluster moved to, and from there it cannot
+// gather a quorum for the view it is in: the nodes ahead only announce the view after the one
+// it is in, never the one it needs. It has to notice it is behind and sync its way back in.
+func TestRestartedNodeJoinsViaSync(t *testing.T) {
+	nodes := []uint64{0, 1, 2, 3}
+
+	// node 0 restarts from view 1, the view it persisted before it went down
+	restarted := newViewChangeRig(t, 0, nodes)
+	restarted.vc.Start(1)
+	defer restarted.vc.Stop()
+
+	// the rest of the cluster made it to view 3 without node 0
+	restarted.vc.HandleMessage(1, viewChangeFor(4))
+	restarted.vc.HandleMessage(3, viewChangeFor(4))
+
+	// the node cannot count either announcement, they are for a view beyond the one it is in,
+	// so it has to sync to find out where the cluster actually is
+	assert.Eventually(t, func() bool {
+		return restarted.syncCount() > 0
+	}, 3*time.Second, 10*time.Millisecond,
+		"the node did not sync when it heard of a view beyond it, so it cannot rejoin")
+
+	// it does not spin syncing on the same information, one announcement is enough
+	assert.LessOrEqual(t, restarted.syncCount(), 2,
+		"the node kept syncing on the same view change announcements")
+
+	// once the sync tells it the cluster is at view 3, it is told about it and is back in
+	restarted.vc.InformNewView(3)
+	restarted.waitForLog("was informed of a new view 3")
+
+	restarted.forgetRecorded()
+
+	// and it takes part in the view change to view 4, like any other node
+	restarted.vc.HandleMessage(1, viewChangeFor(4))
+	restarted.vc.HandleMessage(3, viewChangeFor(4))
+
+	assert.Eventually(t, func() bool {
+		return restarted.viewChangeBroadcastsTo(4) >= 1
+	}, 3*time.Second, 10*time.Millisecond, "the restarted node did not join the view change of view 4")
+}
+
+// TestRepeatedDistantViewChangeSyncsOnce makes sure a faulty node cannot make this node sync
+// over and over again by repeatedly announcing a view that is far ahead of it.
+func TestRepeatedDistantViewChangeSyncsOnce(t *testing.T) {
+	nodes := []uint64{0, 1, 2, 3}
+
+	rig := newViewChangeRig(t, 0, nodes)
+	rig.vc.Start(1)
+	defer rig.vc.Stop()
+
+	for i := 0; i < 10; i++ {
+		rig.vc.HandleMessage(1, viewChangeFor(50))
+	}
+
+	assert.Eventually(t, func() bool {
+		return rig.syncCount() > 0
+	}, 3*time.Second, 10*time.Millisecond, "the node did not sync when it heard of a view far beyond it")
+
+	assert.LessOrEqual(t, rig.syncCount(), 2,
+		"the node kept syncing on every message, a faulty node can make it sync indefinitely this way")
 }
