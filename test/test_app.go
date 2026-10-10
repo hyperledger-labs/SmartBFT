@@ -63,6 +63,8 @@ type App struct {
 	metricsProvider metrics.Provider
 	lastRecord      lastRecord
 	verificationSeq uint64
+	clientsToRevoke []string // clients whose requests become invalid once a reconfig is delivered
+	revokedClients  sync.Map
 	messageLost     func(*smartbftprotos.Message) bool
 	lock            sync.Mutex
 }
@@ -230,6 +232,9 @@ func (a *App) RequestsFromProposal(proposal types.Proposal) []types.RequestInfo 
 // VerifyRequest verifies the given request and returns its info
 func (a *App) VerifyRequest(val []byte) (types.RequestInfo, error) {
 	req := requestFromBytes(val)
+	if _, revoked := a.revokedClients.Load(req.ClientID); revoked {
+		return types.RequestInfo{}, fmt.Errorf("client %s is revoked", req.ClientID)
+	}
 	return types.RequestInfo{ID: req.ID, ClientID: req.ClientID}, nil
 }
 
@@ -316,12 +321,24 @@ func (a *App) Deliver(proposal types.Proposal, signatures []types.Signature) typ
 	for _, req := range record.Batch.Requests {
 		request := requestFromBytes(req)
 		if request.Reconfig.InLatestDecision {
+			a.revokeClients()
 			reconfig := request.Reconfig.recconfigToUint(a.ID)
 			return types.Reconfig{InLatestDecision: true, CurrentNodes: reconfig.CurrentNodes, CurrentConfig: reconfig.CurrentConfig}
 		}
 	}
 
 	return types.Reconfig{InLatestDecision: false}
+}
+
+// revokeClients revokes the clients in clientsToRevoke and advances the verification sequence
+func (a *App) revokeClients() {
+	if len(a.clientsToRevoke) == 0 {
+		return
+	}
+	for _, client := range a.clientsToRevoke {
+		a.revokedClients.Store(client, struct{}{})
+	}
+	atomic.AddUint64(&a.verificationSeq, 1)
 }
 
 type committedBatches struct {

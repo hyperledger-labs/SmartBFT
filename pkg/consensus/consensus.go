@@ -229,6 +229,13 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 	c.Pool.ChangeOptions(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()
 
+	// Prune requests that are invalid under the new configuration now, while all components are stopped.
+	c.Logger.Infof("Pruning the request pool after reconfig")
+	c.Pool.Prune(func(req []byte) error {
+		_, err := c.Verifier.VerifyRequest(req)
+		return err
+	})
+
 	proposal, _ := c.checkpoint.Get()
 	md := &protos.ViewMetadata{}
 	if err := proto.Unmarshal(proposal.Metadata, md); err != nil {
