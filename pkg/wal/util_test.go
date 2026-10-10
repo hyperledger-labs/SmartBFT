@@ -219,6 +219,38 @@ func TestWALUtil(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
+	t.Run("repair makes a private copy of the last file", func(t *testing.T) {
+		testDir, err := os.MkdirTemp("", "unittest")
+		assert.NoErrorf(t, err, "generate temporary test dir")
+		defer os.RemoveAll(testDir)
+
+		make8LogFiles(t, logger, testDir)
+
+		lastFile := filepath.Join(testDir, fmt.Sprintf(walFileTemplate, 8))
+		// pre-existing world readable copy must be tightened
+		lastFileCopy := lastFile + ".copy"
+		assert.NoError(t, os.WriteFile(lastFileCopy, []byte("junk"), 0o644))
+
+		// corrupt the last file, so that Repair has something to do
+		f, err := os.OpenFile(lastFile, os.O_RDWR, walFilePermPrivateRW)
+		assert.NoError(t, err)
+		_, err = f.Seek(0, io.SeekStart)
+		assert.NoError(t, err)
+		_, err = f.Write(make([]byte, 64))
+		assert.NoError(t, err)
+		assert.NoError(t, f.Close())
+
+		assert.NoError(t, Repair(logger, testDir))
+
+		fi, err := os.Stat(lastFileCopy)
+		assert.NoError(t, err)
+		assert.Equal(t, os.FileMode(walFilePermPrivateRW), fi.Mode().Perm())
+
+		names, err := dirReadWalNames(testDir)
+		assert.NoError(t, err)
+		assert.NoError(t, scanVerifyFiles(logger, testDir, names))
+	})
+
 	t.Run("scan-repair-bad-anchor", func(t *testing.T) {
 		testDir, err := os.MkdirTemp("", "unittest")
 		assert.NoErrorf(t, err, "generate temporary test dir")
