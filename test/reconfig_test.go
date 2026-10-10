@@ -75,6 +75,74 @@ func TestBasicReconfig(t *testing.T) {
 	}
 }
 
+func TestPoolPrunedAfterReconfig(t *testing.T) {
+	// A follower holds a request in its pool that becomes invalid once a reconfig is delivered,
+	// so the request must be pruned from the pool after the reconfig.
+
+	t.Parallel()
+	network := NewNetwork()
+	defer network.Shutdown()
+
+	testDir, err := os.MkdirTemp("", t.Name())
+	assert.NoErrorf(t, err, "generate temporary test dir")
+	defer os.RemoveAll(testDir)
+
+	// Long enough for the follower to never forward the request to the leader during the test
+	forwardTimeout := time.Minute
+
+	numberOfNodes := 4
+	nodes := make([]*App, 0)
+	for i := 1; i <= numberOfNodes; i++ {
+		n := newNode(uint64(i), network, t.Name(), testDir, false, 0)
+		n.Consensus.Config.RequestForwardTimeout = forwardTimeout
+		n.Consensus.Config.RequestComplainTimeout = 2 * forwardTimeout
+		n.clientsToRevoke = []string{"bob"}
+		nodes = append(nodes, n)
+	}
+	startNodes(nodes, network)
+
+	follower := nodes[1]
+	follower.Submit(Request{ID: "1", ClientID: "bob"})
+	assert.Equal(t, 1, follower.Consensus.Pool.Size())
+
+	newConfig := fastConfig
+	newConfig.RequestForwardTimeout = forwardTimeout
+	newConfig.RequestComplainTimeout = 2 * forwardTimeout
+
+	nodes[0].Submit(Request{
+		ClientID: "reconfig",
+		ID:       "10",
+		Reconfig: Reconfig{
+			InLatestDecision: true,
+			CurrentNodes:     nodesToInt(nodes[0].Node.Nodes()),
+			CurrentConfig:    recconfigToInt(types.Reconfig{CurrentConfig: newConfig}).CurrentConfig,
+		},
+	})
+
+	data := make([]*AppRecord, 0)
+	for i := range numberOfNodes {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+
+	assert.Eventually(t, func() bool {
+		return follower.Consensus.Pool.Size() == 0
+	}, 10*time.Second, 100*time.Millisecond)
+
+	nodes[0].Submit(Request{ID: "11", ClientID: "alice"})
+	data = make([]*AppRecord, 0)
+	for i := range numberOfNodes {
+		d := <-nodes[i].Delivered
+		data = append(data, d)
+	}
+	for i := 0; i < numberOfNodes-1; i++ {
+		assert.Equal(t, data[i], data[i+1])
+	}
+}
+
 func TestBasicAddNodes(t *testing.T) {
 	t.Parallel()
 	network := NewNetwork()
